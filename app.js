@@ -11,6 +11,9 @@ var users = require('./routes/user');
 
 var app = express();
 
+// At the top of your web.js
+process.env.PWD = process.cwd()
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -20,14 +23,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-
-console.log(process.cwd());
-
-app.use(express.static(process.cwd() + '/public'));
 app.use(app.router);
+app.use(express.static(process.env.PWD + '/public'));
+
+console.log(process.env.PORT)
+//app.use(express.static(process.cwd() + '/public'));
+// Then
 
 app.get('/', routes.index);
 app.get('/users', users.list);
+
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
