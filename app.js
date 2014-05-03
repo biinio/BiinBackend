@@ -18,17 +18,15 @@ process.env.PWD = process.cwd()
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(express.static(process.env.PWD + '/public'));
+
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(app.router);
-app.use(express.static(process.env.PWD + '/public'));
 
-console.log(process.env.PORT)
-//app.use(express.static(process.cwd() + '/public'));
-// Then
+app.use(app.router);
 
 app.get('/', routes.index);
 app.get('/users', users.list);
