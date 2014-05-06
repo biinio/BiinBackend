@@ -9,16 +9,19 @@ passport.use(new LocalStrategy(
 
 		//var user = userSchema.find();
 		userSchema.findOne({ name: username},function (err, user) {
-		  if (user.password==password)
-			return done(null, user);
-			
+
+		if(user!=null && user!=undefined){
+			//Test the Password 
+			user.comparePassword(password, function(err, isMatch) {
+			    if (err) throw err;		   
+			    if (isMatch)
+					return done(null, user);
+			});			
+		}
 		return done(null, false);
-		});
-		
-		/*
-		*/
-	}
-));
+	});	
+})
+);
 
 passport.serializeUser(function(user, done) {
 	done(null, user);

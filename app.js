@@ -12,7 +12,7 @@ module.exports = function (db) {
     var bodyParser = require('body-parser');
 
     //Others routes
-    var users = require('./routes/user');
+    var users = require('./routes/users')(db);
     var organizations = require('./routes/organizations')(db);
     var showcases = require('./routes/showcases')(db);
 
@@ -56,6 +56,8 @@ module.exports = function (db) {
         successRedirect:'/dashboard'
     }));
     app.get('/dashboard', routes.dashboard);
+    app.get('/user',users.create);
+
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {
@@ -64,8 +66,7 @@ module.exports = function (db) {
         next(err);
     });
 
-    /// error handlers
-
+    /// error handlerslogger
     // development error handler
     // will print stacktrace
     if (app.get('env') === 'development') {
