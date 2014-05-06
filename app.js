@@ -10,7 +10,11 @@ module.exports = function (db) {
     var logger = require('morgan');
     var cookieParser = require('cookie-parser');
     var bodyParser = require('body-parser');
-    //var users = require('./routes/user');
+
+    //Others routes
+    var users = require('./routes/user');
+    var organizations = require('./routes/organizations')(db);
+    var showcases = require('./routes/showcases')(db);
 
     // At the top of your web.js
     process.env.PWD = process.cwd()
@@ -45,6 +49,8 @@ module.exports = function (db) {
     app.use(app.router);
     app.get('/', routes.index);
     app.get('/login',routes.login);
+    app.get('/organizations',organizations.index);
+    app.get('/showcases',showcases.index);
     app.post('/login',passport.authenticate('local',{
         failureRedirect:'/login',
         successRedirect:'/dashboard'

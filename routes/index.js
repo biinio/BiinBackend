@@ -1,4 +1,3 @@
-/* GET home page. */
 module.exports = function () {
 	var functions = {};
 	
@@ -14,7 +13,7 @@ module.exports = function () {
 		if(req.session.passport.user==undefined){
 			res.redirect('/login');
 		}else{
-			res.render('dashboard',{title:'Welcome!',				
+			res.render('homeDashboard',{title:'Welcome!',				
 			 user:req.user});
 		}
 	};
