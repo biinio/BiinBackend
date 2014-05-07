@@ -2,13 +2,18 @@ extends ../layout_dashboard
 block content	
 	#wrapperHeader.row
 		h1 Showcases
-	#wrapperContent.row
+	#wrapperContent.row(ng-app="biinApp")
 		.panel.panel-default
 			.panel-heading
 				p Showcases
 				.options
-					a.button(href="#") Add Button
-			.panel-body
+					input( ng-model="query" placeholder="Search" autofocus)
+					select(ng-model="orderShowcases")
+						option(value="title") Name
+						option(value="description")	Desciption
+					a.button(href="#") Add
+			.panel-body(ng-controller="showcasesController")
 				.list-group
-					a.list-group-item(href="#") Cras justo odio
-					a.list-group-item(href="#") Dapibus ac facilisis in
+					a.list-group-item(href="#", ng-repeat="item in showcases | filter: query | orderBy:orderShowcases")
+						p {{item.title}}
+						p {{item.description}}

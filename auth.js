@@ -1,4 +1,6 @@
 
+//Passport Login
+
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	userSchema = require('./schemas/user');

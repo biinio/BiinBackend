@@ -1,0 +1,5 @@
+section.showcasepage
+.list-group
+	a.list-group-item(href="#", ng-repeat="item in showcases | filter: query | orderBy:orderShowcases")
+		p {{item.title}}
+		p {{item.description}}

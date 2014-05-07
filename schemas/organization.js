@@ -1,11 +1,12 @@
 var mongoose = require('mongoose');
 
-module.exports = mongoose.model('organization', {
+module.exports = mongoose.model('organizations', {
 	id: Number,
 	origin: String,
 	destination: String,
 	departs: String,
 	arrives: String,
 	actualDepart: Number,
-	actualArrive: Number
+	actualArrive: Number,
+	
 });

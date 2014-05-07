@@ -47,10 +47,13 @@ module.exports = function (db) {
     });
 
     app.use(app.router);
+    app.get('/partials/:filename', routes.partials);
     app.get('/', routes.index);
     app.get('/login',routes.login);
+    app.get('/test',routes.angularTest);
     app.get('/organizations',organizations.index);
     app.get('/showcases',showcases.index);
+    app.get('/showcasesList',showcases.list);
     app.post('/login',passport.authenticate('local',{
         failureRedirect:'/login',
         successRedirect:'/dashboard'
