@@ -20,10 +20,8 @@ passport.use(new LocalStrategy(
 					return done(null, user);
 			});			
 		}
-		else
-		{
-			return done(null, false);
-		}
+		//If error or other situation
+		return done(null, false);		
 	});	
 })
 );
