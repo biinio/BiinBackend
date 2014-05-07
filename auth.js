@@ -18,10 +18,13 @@ passport.use(new LocalStrategy(
 			    if (err) throw err;		   
 			    if (isMatch)
 					return done(null, user);
+				else
+					return done(null, false);					
 			});			
+		}else{
+			return done(null, false);			
 		}
-		//If error or other situation
-		return done(null, false);		
+		
 	});	
 })
 );
