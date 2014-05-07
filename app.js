@@ -15,6 +15,8 @@ module.exports = function (db) {
     var users = require('./routes/users')(db);
     var organizations = require('./routes/organizations')(db);
     var showcases = require('./routes/showcases')(db);
+    var regions = require('./routes/regions')(db);
+    var biins = require('./routes/biins')(db);
 
     // At the top of your web.js
     process.env.PWD = process.cwd()
@@ -54,6 +56,8 @@ module.exports = function (db) {
     app.get('/organizations',organizations.index);
     app.get('/showcases',showcases.index);
     app.get('/showcasesList',showcases.list);
+    app.get('/regions/list',regions.list);
+    app.get('/regions/:region/biins',biins.list);
     app.post('/login',passport.authenticate('local',{
         failureRedirect:'/login',
         successRedirect:'/dashboard'
