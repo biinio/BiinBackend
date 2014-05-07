@@ -9,8 +9,8 @@ module.exports = function () {
 
 	//GET the list of regions
 	functions.list = function(req,res){
-		region.find({},function (err, data) {
-			   res.json(data);
+		region.find({},"identifier radious latitude longitude",function (err, data) {
+			   res.json({"data":{"regions":data}});
 		});		
 	}
 
