@@ -56,6 +56,7 @@ module.exports = function (db) {
     app.get('/organizations',organizations.index);
     app.get('/showcases',showcases.index);
     app.get('/showcasesList',showcases.list);
+    app.get('/biins/:biin/showcase',showcases.listByBiin);
     app.get('/regions',regions.list);
     app.get('/regions/:region/biins',biins.list);
     app.post('/login',passport.authenticate('local',{

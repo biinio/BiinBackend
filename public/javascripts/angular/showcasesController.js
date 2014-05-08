@@ -1,6 +1,13 @@
-var biinApp = angular.module('biinApp',[]);
-biinApp.controller('showcasesController',['$scope','$http',function($scope,$http){
-	$http.get("/showcasesList").success(function(data, status, headers, config) {
-		$scope.showcases =data;
-	});
+var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute']);
+
+biinAppShowCases.config(['$routeProvider',
+	function($routeProvider){
+	$routeProvider.
+		when('/list',{
+			templateUrl:'partials/showcaseList',
+			controller:'showcasesController'
+		}).
+    otherwise({
+        redirectTo: '/list'
+      });
 }]);

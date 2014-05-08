@@ -11,7 +11,8 @@ module.exports = mongoose.model('regions', {
 			major:Number,
 			minor:Number,
 			proximityUUID:String,
-			lastUpdate:String
+			lastUpdate:String,
+			showcaseIdentifier:String
 		}
 	]	
 });

@@ -1,19 +1,8 @@
 extends ../layout_dashboard
 block content	
-	#wrapperHeader.row
-		h1 Showcases
-	#wrapperContent.row(ng-app="biinApp")
-		.panel.panel-default
-			.panel-heading
-				p Showcases
-				.options
-					input( ng-model="query" placeholder="Search" autofocus)
-					select(ng-model="orderShowcases")
-						option(value="title") Name
-						option(value="description")	Desciption
-					a.button(href="#") Add
-			.panel-body(ng-controller="showcasesController")
-				.list-group
-					a.list-group-item(href="#", ng-repeat="item in showcases | filter: query | orderBy:orderShowcases")
-						p {{item.title}}
-						p {{item.description}}
+	#sectionContent
+		#wrapper(ng-controller="showcasesController")
+			#wrapperHeader.row
+				h1 Showcases
+			#wrapperContent.row
+				div(ng-view)
