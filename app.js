@@ -49,21 +49,32 @@ module.exports = function (db) {
     });
 
     app.use(app.router);
+
+    //Application routes
     app.get('/partials/:filename', routes.partials);
     app.get('/', routes.index);
-    app.get('/login',routes.login);
-    app.get('/test',routes.angularTest);
-    app.get('/organizations',organizations.index);
-    app.get('/showcases',showcases.index);
-    app.get('/showcasesList',showcases.list);
-    app.get('/biins/:biin/showcase',showcases.listByBiin);
-    app.get('/regions',regions.list);
-    app.get('/regions/:region/biins',biins.list);
     app.post('/login',passport.authenticate('local',{
         failureRedirect:'/login',
         successRedirect:'/dashboard'
     }));
-    app.get('/dashboard', routes.dashboard);
+    app.get('/dashboard', routes.dashboard);    
+    app.get('/login',routes.login);
+
+    //Regions organization
+    app.get('/organizations',organizations.index);
+
+    //Showcase routes
+    app.get('/showcases',showcases.index);
+    app.get('/showcases/:identifier',showcases.get);
+    app.get('/showcasesList',showcases.list);
+    app.get('/biins/:biin/showcase',showcases.getByBiin);
+
+    //Regions routes
+    app.get('/regions',regions.list);
+    app.get('/regions/:region/biins',biins.list);
+
+
+
     app.get('/user',users.create);
 
 

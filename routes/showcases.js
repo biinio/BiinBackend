@@ -15,8 +15,19 @@ module.exports = function () {
 		});		
 	}
 
+	//GET a showcase By Id
+	functions.get=function(req,res){
+		var showcaseIdentifier = req.param("identifier");
+   		showcase.findOne({"identifier":showcaseIdentifier},'',function(err,data){
+   			if(data)
+   				res.json({data:{showcase:data}});
+   			else
+   				res.json(null);
+   		});
+	}
+
 	//GET the list of showcases by Biin ID
-	functions.listByBiin=function(req,res){
+	functions.getByBiin=function(req,res){
 		var biinIdentifier = req.param("biin");
 		region.findOne({"biins.identifier":biinIdentifier},{"biins.$.showcaseIdentifier":1},function (err, data) {
 					   if(data){
@@ -25,7 +36,7 @@ module.exports = function () {
 					   			res.json({data:dataShowCase});
 					   		});
 					   	}else
-					   		res.json({data:null});	   
+					   		res.json(null);	   
 				});	
 	}
 

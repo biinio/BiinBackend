@@ -28,10 +28,6 @@ module.exports = function () {
 	  console.log("_partials/" + filename);
 	  res.render("_partials/" + filename );
 	}
-
-	//Get angular test page
-	functions.angularTest = function(req,res){
-		res.render("test");
-	}
+	
 	return functions;
 };
