@@ -47,7 +47,7 @@ module.exports = mongoose.model('showcases', {
 		{
 			objectId:String,
 			number:String,
-			type:String,
+			type:{type:String},
 			likes:String,
 			title:String,
 			objectDescription:[
@@ -70,7 +70,7 @@ module.exports = mongoose.model('showcases', {
 			theme:String,
 			categories:[
 				{
-					category:Number
+					category:String
 				}
 			]
 

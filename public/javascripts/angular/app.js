@@ -1,4 +1,4 @@
-var biinApp = angular.module('biinApp',[
+/*inApp = angular.module('biinApp',[
 		'ngRoute',
 		'showcasesController'
 	]);
@@ -10,4 +10,4 @@ biinApp.config(['$routeProvider',function($routeProvider){
 	otherwise({
 		redirectTo:'/list'
 	});
-}]);
+}]);*/
