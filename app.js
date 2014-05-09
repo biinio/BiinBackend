@@ -66,15 +66,17 @@ module.exports = function (db) {
     //Showcase routes
     app.get('/showcases',showcases.index);
     app.get('/showcases/:identifier',showcases.get);
-    app.get('/showcasesList',showcases.list);
-    app.get('/biins/:biin/showcase',showcases.getByBiin);
+    app.get('/api/showcases',showcases.list);
+    app.get('/api/biins/:biin/showcase',showcases.getByBiin);
 
     //Regions routes
-    app.get('/regions',regions.list);
-    app.get('/regions/:region/biins',biins.list);
+    app.get('/regions',regions.index)
+    app.get('/regions/add',regions.create);
+    app.post('/regions/add',regions.createPost);
+    app.get('/api/regions',regions.listJson);
+    app.get('/api/regions/:region/biins',biins.listJson);
 
-
-
+    //Regions routes
     app.get('/user',users.create);
 
 

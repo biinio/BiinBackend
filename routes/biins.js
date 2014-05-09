@@ -8,7 +8,7 @@ module.exports = function () {
 	}
 
 	//GET the list of regions
-	functions.list = function(req,res){
+	functions.listJson = function(req,res){
 		var regionParam = req.param('region');
 		console.log("region: "+regionParam);
 		region.findOne({identifier:regionParam},'biins',function (err, data) {

@@ -1,0 +1,22 @@
+extends ../layout_dashboard
+block content	
+	#sectionContent
+		#wrapper
+			#wrapperHeader.row
+				h1 Regions
+			#wrapperContent.row
+				.panel.panel-default
+					.panel-heading
+						p Add a new Region
+					.panel-body
+						.list-group
+							form(method="POST" action="/regions/add")
+								p Identifier
+								input(type="text" name="identifier")
+								p Radious
+								input(type="text" name="radious")
+								p Latitude
+								input(type="text" name="latitude")
+								p Longitude
+								input(type="text" name="longitude")
+								input.btn(type="submit" value="Save")
