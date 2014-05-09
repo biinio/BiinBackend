@@ -8,5 +8,5 @@
 			a.button(href="#") Add
 	.panel-body
 		.list-group
-			a.list-group-item(href="#", ng-repeat="item in showcases | filter: query | orderBy:orderShowcases")
+			a.list-group-item(href="#", ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(item.identifier)")
 				p {{item.title}}

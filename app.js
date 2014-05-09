@@ -73,12 +73,13 @@ module.exports = function (db) {
     app.get('/regions',regions.index)
     app.get('/regions/add',regions.create);
     app.post('/regions/add',regions.createPost);
+    app.get('/regions/:identifier',regions.edit);
+    app.post('/regions/:identifier',regions.editPost);
     app.get('/api/regions',regions.listJson);
     app.get('/api/regions/:region/biins',biins.listJson);
 
     //Regions routes
     app.get('/user',users.create);
-
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {

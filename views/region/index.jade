@@ -13,7 +13,7 @@ block content
 					.panel-body
 						.list-group
 							each item in regions
-								a.list-group-item
+								a.list-group-item(href="/regions/"+item.identifier)									
 									p= item.identifier
 									p= item.radious
 									p= item.latitude

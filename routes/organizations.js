@@ -3,8 +3,6 @@ module.exports =function(db){
 
 	functions.index = function(req,res){
 		res.render('organization/index', { title: 'Organizations list' ,user:req.user});
-	}
-
-	
+	}	
 	return functions;
 }
