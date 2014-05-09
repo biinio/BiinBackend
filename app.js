@@ -65,7 +65,7 @@ module.exports = function (db) {
 
     //Showcase routes
     app.get('/showcases',showcases.index);
-    app.get('/showcases/:identifier',showcases.get);
+    app.get('/api/showcases/:identifier',showcases.get);
     app.get('/api/showcases',showcases.list);
     app.get('/api/biins/:biin/showcase',showcases.getByBiin);
 

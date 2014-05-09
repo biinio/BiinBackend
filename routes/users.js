@@ -16,9 +16,9 @@ module.exports = function(db){
 	functions.create = function(req,res){
 		// create a user a new user
 		var admin = new user({
-		    name: 'lbonilla',
-		    password: 'lbonilla',
-		    displayName:'Luis Bonilla H'
+		    name: 'epadilla',
+		    password: 'epadilla',
+		    displayName:'Esteban Padilla'
 		});
 
 		// save user to database
