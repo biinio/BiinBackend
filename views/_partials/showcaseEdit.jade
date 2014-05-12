@@ -1,0 +1,35 @@
+.panel.panel-default
+	.panel-heading
+		p Editing {{showcaseEdit.title}}
+		ul.nav.nav-tabs
+			li(ng-class="{active:activeTab == 'details'}")
+				a(ng-click="activeTab='details'") Details
+			li(ng-class="{active:activeTab == 'objects'}")
+				a(ng-click="activeTab='objects'") Objects
+	.panel-body.tab-content(ng-switch='activeTab')
+		form(action="#" role="form")
+			#details.tab-pane.row(ng-switch-when='details')
+				.col-md-4
+					img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;")								
+				.col-md-8
+					label Identifier:
+					input.form-control( ng-model="showcaseEdit.identifier")
+					label Title:
+					input.form-control( ng-model="showcaseEdit.title")
+					label Customer Id:
+					input.form-control( ng-model="showcaseEdit.customerId")
+					label Organization:
+					input.form-control( ng-model="showcaseEdit.organizationId")
+					label Type:				
+					input.form-control( ng-model="showcaseEdit.type")
+					label Theme:				
+					input.form-control( ng-model="showcaseEdit.theme")
+					label Description:				
+					textarea.form-control( ng-model="showcaseEdit.showcaseDescription")
+			#objects.tab-pane.row(ng-switch-when='objects')
+				label Objects
+					.list-group
+						a.list-group-item(ng-repeat="item in showcaseEdit.objects")
+							label {{item.number}} {{item.objectDescription[0].value}}
+							a.list-group-item(ng-repeat="objDesc in item.objectDescription")
+								label {{objDesc.value}}						

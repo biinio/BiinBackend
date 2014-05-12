@@ -27,17 +27,6 @@ module.exports = mongoose.model('showcases', {
 			street:String	
 		}
 	],
-	position:[
-		{
-			latitud:String,
-			longitud:String
-		}
-	],
-	logoImageUrl:[
-		{
-			value:String
-		}
-	],
 	mainImageUrl:[
 		{
 			value:String
