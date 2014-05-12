@@ -32,3 +32,35 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
   });
 
 }]);
+
+
+biinAppShowCases.directive('pendingIndicator', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element) {
+            // setup the container for ImagesLoaded ... note instead of using
+            // this directive on an individual image, you may consider using
+            // it on the element that contains many images...
+            scope.imagesLoaded = imagesLoaded(element);
+            // start your progress/loading animation here
+            // (or whenever you attempt to load the images)
+            scope.imagesLoaded.on('always', function() {
+              console.log('always event: Triggered after all images have been either loaded or confirmed broken.');
+              // end the progress/loading animation here for all images or do
+              // it individually in the progress event handler below
+            });
+            scope.imagesLoaded.on('done', function() {
+              console.log('done event: Triggered after all images have successfully loaded without any broken images.');
+            });
+            scope.imagesLoaded.on('fail', function() {
+              console.log('fail event: Triggered after all images have been loaded with at least one broken image.');
+            });
+            scope.imagesLoaded.on('progress', function(instance, image) {
+              console.log('proress event: Triggered after each image has been loaded.', instance, image);
+              // end the progress/loading animation here or do it for all images in the always
+              // event handler above
+            });
+
+        }
+    };
+});

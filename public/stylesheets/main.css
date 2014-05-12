@@ -54,3 +54,19 @@
 	border-style: none;
 	margin-top: 10px;
 }
+
+
+/*Isotope Modules*/
+.isotopeModule {
+	background: #fffef9;
+	box-shadow: -1px 1px 1px rgba(0,0,0,.1);
+	padding: 8px;
+	position: relative;
+	width: 196px;
+	display: inline-block;
+	margin: 7px;
+	vertical-align: top;	
+	width: 25%; 
+
+}
+.isotopeModule.w2 { width: 50%; }

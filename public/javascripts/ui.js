@@ -14,3 +14,11 @@ $('body','a[data-toggle="tab"]').on('click touch',function (e) {
   e.preventDefault();
   $(this).tab('show');
 });
+
+
+//Initialize isotope module
+var $container = $('#isotopeModules').isotope({
+  // options
+  itemSelector: '.isotopeModule',
+  layoutMode: 'fitRows'
+});

@@ -10,7 +10,7 @@
 		form(action="#" role="form")
 			#details.tab-pane.row(ng-switch-when='details')
 				.col-md-4
-					img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;")								
+					img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;" pendingIndicator)								
 				.col-md-8
 					label Identifier:
 					input.form-control( ng-model="showcaseEdit.identifier")
@@ -26,10 +26,10 @@
 					input.form-control( ng-model="showcaseEdit.theme")
 					label Description:				
 					textarea.form-control( ng-model="showcaseEdit.showcaseDescription")
-			#objects.tab-pane.row(ng-switch-when='objects')
-				label Objects
-					.list-group
-						a.list-group-item(ng-repeat="item in showcaseEdit.objects")
-							label {{item.number}} {{item.objectDescription[0].value}}
+			#objects.tab-pane.row(ng-switch-when='objects')				
+					.isotopeModules.col-md-12
+						a.isotopeModule(ng-repeat="item in showcaseEdit.objects")
+							img.img-responsive(ng-src="{{item.imageUrl[0].value}}" pendingIndicator)
+							label {{item.number}} - {{item.title}}
 							a.list-group-item(ng-repeat="objDesc in item.objectDescription")
-								label {{objDesc.value}}						
+								label {{objDesc.title}}					
