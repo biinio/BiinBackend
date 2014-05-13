@@ -1,12 +1,17 @@
 .panel.panel-default
 	.panel-heading
-		p Editing {{showcaseEdit.title}}
+		h4 Editing: {{showcaseEdit.title}}
+		button.btn.btn-default.btn-lg.pull-right(ng-click="saveDetail()")
+			a.glyphicon.glyphicon-floppy-disk(href="#" tooltip="Save")
 		ul.nav.nav-tabs
 			li(ng-class="{active:activeTab == 'details'}")
 				a(ng-click="activeTab='details'") Details
 			li(ng-class="{active:activeTab == 'objects'}")
 				a(ng-click="activeTab='objects'") Objects
 	.panel-body.tab-content(ng-switch='activeTab')
+		.alert.alert-success.alert-dismissable(ng-if="succesSaveShow")
+			button.close(type="button" data-dismiss="alert" aria-hidden="true" ng-click="succesSaveShow=false") &times;
+			p The Showcase was successfully updated.
 		form(action="#" role="form")
 			#details.tab-pane.row(ng-switch-when='details')
 				.col-md-4

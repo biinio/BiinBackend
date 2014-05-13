@@ -17,6 +17,7 @@ module.exports = function (db) {
     var showcases = require('./routes/showcases')(db);
     var regions = require('./routes/regions')(db);
     var biins = require('./routes/biins')(db);
+    var errors = require('./routes/errors')(db);
 
     // At the top of your web.js
     process.env.PWD = process.cwd()
@@ -66,6 +67,7 @@ module.exports = function (db) {
     //Showcase routes
     app.get('/showcases',showcases.index);
     app.get('/api/showcases/:identifier',showcases.get);
+    app.put('/api/showcases/:showcase',showcases.set);
     app.get('/api/showcases',showcases.list);
     app.get('/api/biins/:biin/showcase',showcases.getByBiin);
 
@@ -78,6 +80,8 @@ module.exports = function (db) {
     app.get('/api/regions',regions.listJson);
     app.get('/api/regions/:region/biins',biins.listJson);
 
+    //Utilities Routes
+    app.post('/api/errors/add/:code/:title/:description/:proximityUUID/:region',errors.create);
     //Regions routes
     app.get('/user',users.create);
 

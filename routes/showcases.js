@@ -19,11 +19,38 @@ module.exports = function () {
 	functions.get=function(req,res){
 		var showcaseIdentifier = req.param("identifier");
    		showcase.findOne({"identifier":showcaseIdentifier},'',function(err,data){
-   			if(data)
+   			if(data){
+   				if(req.session)
+   					req.session.current = data;
    				res.json({data:{showcase:data}});
+   			}   				
    			else
    				res.json(null);
    		});
+	}
+
+	//POST a showcase
+	functions.set=function(req,res){
+		
+		console.log("sessioncurren: "+req.session.current);
+		var model = req.session.current;
+		console.log("model:"+req.body.model);
+		if(model)
+		{
+			var model = req.body.model;
+			delete model._id;
+			showcase.update(
+                     { identifier:req.param("showcase")},
+                     { $set :model },
+                     { upsert : true },
+                     function(err){
+                     	if(err)
+							res.json(null);
+						else
+							res.json({state:'updated'});
+                     }
+                   );
+		}
 	}
 
 	//GET the list of showcases by Biin ID

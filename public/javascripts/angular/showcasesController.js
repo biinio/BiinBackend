@@ -27,10 +27,20 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http', function(
 //App define controllers
 biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$http',"$routeParams", function($scope,$route,$http,$routeParams) {  
 	$scope.activeTab='details';
+  $scope.currentModelId = $routeParams.identifier;
+  $scope.succesSaveShow = false;
   $http.get('api/showcases/'+$routeParams.identifier).success(function(data){
   	$scope.showcaseEdit = data.data.showcase;
   });
 
+  //Save detail model object
+  $scope.saveDetail= function(){
+    console.log('identifier'+$scope.currentModelId);
+    $http.put('api/showcases/'+$scope.currentModelId,{model:$scope.showcaseEdit}).success(function(data,status){
+      if(data.state=="updated")
+        $scope.succesSaveShow=true;
+    });
+  }
 }]);
 
 

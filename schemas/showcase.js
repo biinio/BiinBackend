@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-
-module.exports = mongoose.model('showcases', {
+var Schema = mongoose.Schema;
+var showcaseSchema = new Schema( {
 	customerId: String,
 	organizationId: String,
 	identifier:{ type: String, index: true },
@@ -8,25 +8,6 @@ module.exports = mongoose.model('showcases', {
 	title:String,
 	showcaseDescription:String,
 	theme:String,
-	categories:[
-		{
-			category:String
-		}
-	],
-	phoneNumbers:[
-		{
-			phoneNumber:String
-		}
-	],
-	address:[
-		{
-			country:String,
-			state:String,
-			town:String,
-			zipCode:String,
-			street:String	
-		}
-	],
 	mainImageUrl:[
 		{
 			value:String
@@ -65,6 +46,6 @@ module.exports = mongoose.model('showcases', {
 
 		}
 	]
-
-
 });
+
+module.exports = mongoose.model('showcases', showcaseSchema);

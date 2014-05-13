@@ -7,6 +7,5 @@ module.exports = mongoose.model('organizations', {
 	departs: String,
 	arrives: String,
 	actualDepart: Number,
-	actualArrive: Number,
-	
+	actualArrive: Number	
 });
