@@ -32,7 +32,7 @@
 					label Description:				
 					textarea.form-control( ng-model="showcaseEdit.showcaseDescription")
 			#objects.tab-pane.row(ng-switch-when='objects')				
-					.isotopeModules.col-md-12
+					.isotopeModules.col-md-12.showcaseObjectsScroll
 						a.isotopeModule(ng-repeat="item in showcaseEdit.objects")
 							img.img-responsive(ng-src="{{item.imageUrl[0].value}}" pendingIndicator)
 							label {{item.number}} - {{item.title}}

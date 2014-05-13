@@ -4,22 +4,28 @@ module.exports = function(db){
 
 	//Post a new Error
 	functions.create = function(req,res){
-		// create a new error
-		var newError = new error({
-		    	code:req.param("code"),
-				title:req.param("title"),
-				description:req.param("description"),
-				proximityUUID:req.param("proximityUUID"),
-				region:req.param("region")
-		});
+		if(req.body)
+		{
+			// create a new error
+			var newError = new error({
+			    	code:req.body.code,
+					title:req.body.title,
+					description:req.body.description,
+					proximityUUID:req.body.proximityUUID,
+					region:req.body.region
+			});
 
-		// save error to database
-		newError.save(function(err) {
-			if(err)
-				res.json({"status":"error"});
-			else
-				res.json({"status":"success"});
-		});
+			// save error to database
+			newError.save(function(err) {
+				if(err)
+					res.json({"status":"error"});
+				else
+					res.json({"status":"success"});
+			});
+		}
+		else{
+			res.json({"status":"error"});
+		}
 	}
 
 	return functions;

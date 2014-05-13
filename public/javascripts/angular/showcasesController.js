@@ -33,9 +33,13 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
   	$scope.showcaseEdit = data.data.showcase;
   });
 
+  //Edit and Object
+  $scope.editObject= function(index){
+    
+  }
+
   //Save detail model object
   $scope.saveDetail= function(){
-    console.log('identifier'+$scope.currentModelId);
     $http.put('api/showcases/'+$scope.currentModelId,{model:$scope.showcaseEdit}).success(function(data,status){
       if(data.state=="updated")
         $scope.succesSaveShow=true;

@@ -67,6 +67,12 @@
 	margin: 7px;
 	vertical-align: top;	
 	width: 25%; 
+	overflow: auto;
 
 }
 .isotopeModule.w2 { width: 50%; }
+
+/*Set hte Showcase objects controll*/
+.showcaseObjectsScroll{
+	height: 100px;
+}
