@@ -5,9 +5,7 @@ module.exports = function(db){
 	//Get Erros List
 	functions.index = function(req,res){
 		error.find({},'',function(err,data){
-			console.log("Error data:"+data);
-			res.json(data);
-			//res.render('error/index', { title: 'Organizations list' ,user:req.user,errors:data});		
+			res.render('error/index', { title: 'Organizations list' ,user:req.user,errors:data});		
 
 		})		
 	}
