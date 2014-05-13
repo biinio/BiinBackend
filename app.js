@@ -81,7 +81,7 @@ module.exports = function (db) {
     app.get('/api/regions/:region/biins',biins.listJson);
 
     //Utilities Routes
-    //app.post('/api/errors/add/:code/:title/:description/:proximityUUID/:region',errors.create);
+    app.get('/errors',errors.index);
     app.post('/api/errors/add',errors.create);
     //Regions routes
     app.get('/user',users.create);

@@ -2,6 +2,14 @@ module.exports = function(db){
 	var error = require('../schemas/error');
 	var functions ={}
 
+	//Get Erros List
+	functions.index = function(req,res){
+		error.find({},'',function(err,data){
+			console.log("Error data:"+data);
+			res.render('error/index', { title: 'Organizations list' ,user:req.user,errors:data});		
+		})		
+	}
+
 	//Post a new Error
 	functions.create = function(req,res){
 		if(req.body)
