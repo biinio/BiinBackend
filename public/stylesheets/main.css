@@ -61,12 +61,8 @@
 	background: #fffef9;
 	box-shadow: -1px 1px 1px rgba(0,0,0,.1);
 	padding: 8px;
-	position: relative;
-	width: 196px;
-	display: inline-block;
 	margin: 7px;
-	vertical-align: top;	
-	width: 25%; 
+	vertical-align: top;	 
 	overflow: auto;
 
 }
@@ -74,5 +70,10 @@
 
 /*Set hte Showcase objects controll*/
 .showcaseObjectsScroll{
-	height: 100px;
+	height: 800px;
+	overflow: auto;
+}
+
+.isotopeModule.active{
+	background-color: #000;
 }

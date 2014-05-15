@@ -28,18 +28,22 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http', function(
 biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$http',"$routeParams", function($scope,$route,$http,$routeParams) {  
 	$scope.activeTab='details';
   $scope.currentModelId = $routeParams.identifier;
+  $scope.currentObjectIndexSelected =0;
   $scope.succesSaveShow = false;
   $http.get('api/showcases/'+$routeParams.identifier).success(function(data){
   	$scope.showcaseEdit = data.data.showcase;
+    console.log("object Prototype: " +data.propotypeObj.title);
   });
 
   //Edit and Object
   $scope.editObject= function(index){
-    
+    $scope.currentObjectIndexSelected =index;
+    console.log("Editing the object:" +index);
   }
 
   //Save detail model object
   $scope.saveDetail= function(){
+    console.log("Saving")
     $http.put('api/showcases/'+$scope.currentModelId,{model:$scope.showcaseEdit}).success(function(data,status){
       if(data.state=="updated")
         $scope.succesSaveShow=true;

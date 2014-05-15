@@ -20,7 +20,9 @@ module.exports = function () {
 		var showcaseIdentifier = req.param("identifier");
    		showcase.findOne({"identifier":showcaseIdentifier},'',function(err,data){
    			if(data){
-   				res.json({data:{showcase:data}});
+   				var showcaseInstance = new showcase();
+   				showcaseInstance.title="hellow";
+   				res.json({data:{showcase:data}, propotypeObj : showcaseInstance});
    			}   				
    			else
    				res.json(null);
@@ -30,8 +32,7 @@ module.exports = function () {
 	//POST an update of the showcase
 	functions.set=function(req,res){
 	
-		var model = req.session.current;
-		console.log("model:"+req.body.model);
+		var model =req.body.model;
 		if(model)
 		{
 			var model = req.body.model;

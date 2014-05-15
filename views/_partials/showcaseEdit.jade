@@ -2,12 +2,12 @@
 	.panel-heading
 		h4 Editing: {{showcaseEdit.title}}
 		button.btn.btn-default.btn-lg.pull-right(ng-click="saveDetail()")
-			a.glyphicon.glyphicon-floppy-disk(href="#" tooltip="Save")
+			a.glyphicon.glyphicon-floppy-disk(tooltip="Save")
 		ul.nav.nav-tabs
 			li(ng-class="{active:activeTab == 'details'}")
 				a(ng-click="activeTab='details'") Details
 			li(ng-class="{active:activeTab == 'objects'}")
-				a(ng-click="activeTab='objects'") Objects
+				a(ng-click="activeTab='objects'") Elements
 	.panel-body.tab-content(ng-switch='activeTab')
 		.alert.alert-success.alert-dismissable(ng-if="succesSaveShow")
 			button.close(type="button" data-dismiss="alert" aria-hidden="true" ng-click="succesSaveShow=false") &times;
@@ -32,9 +32,46 @@
 					label Description:				
 					textarea.form-control( ng-model="showcaseEdit.showcaseDescription")
 			#objects.tab-pane.row(ng-switch-when='objects')				
-					.isotopeModules.col-md-12.showcaseObjectsScroll
-						a.isotopeModule(ng-repeat="item in showcaseEdit.objects")
-							img.img-responsive(ng-src="{{item.imageUrl[0].value}}" pendingIndicator)
-							label {{item.number}} - {{item.title}}
-							a.list-group-item(ng-repeat="objDesc in item.objectDescription")
-								label {{objDesc.title}}					
+					.row
+						.col-md-7
+							#slideFrame.showcaseObjectsScroll
+								div.row
+									div.isotopeModule.col-md-2(ng-repeat="item in showcaseEdit.objects" ng-click="editObject($index)" ng-class="{active: $index == currentObjectIndexSelected}")								
+										p {{item.number}} - {{item.title}}
+										img.img-responsive(ng-src="{{item.imageUrl[0].value}}" pendingIndicator)
+						.col-md-5
+							label Title
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].title")								
+							label Object Id
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].objectId")
+							label Number
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].number")
+							label Type
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].type")
+							label Likes
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].likes")			
+							label Description
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].objectDescription[0].value")
+							label Action Type
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].actionType")
+							label Original Price
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].originalPrice")
+							label Biin Price
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].biinPrice")
+							label Discount
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].discount")
+							label Savings
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].savings")
+							label Biin Sold
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].biinSold")
+							label Time Frame
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].timeFrame")
+							label Image Url
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].imageUrl[0].value")
+							label Theme
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].theme")
+							label Categories
+							div(ng-repeat="category in showcaseEdit.objects[currentObjectIndexSelected].categories")
+									p{{category.category}}
+
+
