@@ -58,7 +58,6 @@
 
 /*Isotope Modules*/
 .isotopeModule {
-	background: #fffef9;
 	box-shadow: -1px 1px 1px rgba(0,0,0,.1);
 	padding: 8px;
 	margin: 7px;
@@ -76,4 +75,7 @@
 
 .isotopeModule.active{
 	background-color: #000;
+}
+.hidden{
+	display: none;
 }

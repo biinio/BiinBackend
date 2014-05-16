@@ -1,3 +1,60 @@
+//Rounded Progress Bar
+function roundedProgressBar(val){
+   return new  $(".dial").knob({
+         value: val,
+        'readOnly': true,
+        'width': 300,
+        'height': 300,
+        'dynamicDraw': true,
+        'thickness': 0.2,
+        'tickColorizeValues': true,
+        'skin': 'tron'
+    });
+}
+
+//Files Uploader
+function s3_upload(elId){
+    var elementId =  "#"+elId;
+    var element = $(elementId);
+    var elementToUpdate = $(element).data("update-value");
+    var $parent = element.parent();
+    var $process = $(".dial");
+
+    //Hide the image section
+    $parent.addClass('hidden');
+    var wrapperProcess = $process.closest(".hidden");
+    wrapperProcess.removeClass('hidden');
+    var s3upload = new S3Upload({
+        file_dom_selector:elementId,
+        s3_sign_put_url: $(element).data("img-url"),        
+        onProgress: function(percent, message) {
+            var showcaseRoundedProgress = roundedProgressBar(percent);
+            $('#status').html('Upload progress: ' + percent + '% ' + message);
+            $process.val(percent);
+            showcaseRoundedProgress.val = percent;
+            
+        },
+        onFinishS3Put: function(public_url) {
+            $('#status').html('Upload completed. Uploaded to: '+ public_url);
+            var $element=$(elementToUpdate);
+            var $scope=angular.element($element).scope();
+            $scope.change(public_url);
+
+            //Switch view
+            $parent.removeClass('hidden');
+            wrapperProcess.addClass('hidden');
+        },
+        onError: function(status,err) {
+            console.log(err);
+            $('#status').html('Upload error: ' + status);
+
+            //Switch view
+            $parent.removeClass('hidden');
+            wrapperProcess.addClass('hidden');
+        }
+    });
+}
+
 jQuery(function ($) {
     //Update bootstrap menu selection
     var url = window.location;
@@ -15,5 +72,5 @@ jQuery(function ($) {
       e.preventDefault();
       $(this).tab('show');
     });
-    
+
 });

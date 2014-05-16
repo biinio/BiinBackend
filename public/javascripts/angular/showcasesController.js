@@ -32,13 +32,11 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
   $scope.succesSaveShow = false;
   $http.get('api/showcases/'+$routeParams.identifier).success(function(data){
   	$scope.showcaseEdit = data.data.showcase;
-    console.log("object Prototype: " +data.propotypeObj.title);
   });
 
   //Edit and Object
   $scope.editObject= function(index){
     $scope.currentObjectIndexSelected =index;
-    console.log("Editing the object:" +index);
   }
 
   //Save detail model object
@@ -49,6 +47,18 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
         $scope.succesSaveShow=true;
     });
   }
+
+  $scope.change=function(value){
+    console.log("value");
+    $scope.showcaseEdit.mainImageUrl[0].value = value;
+    $scope.$digest();
+    //$scope.$digest();
+  }
+
+/* $scope.$watch('myVar', function() {
+     alert('hey, myVar has changed!');
+ });*/
+
 }]);
 
 
@@ -82,3 +92,68 @@ biinAppShowCases.directive('pendingIndicator', function(){
         }
     };
 });
+
+biinAppShowCases.directive('uploadChange', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, elem, attrs) {
+            // on blur, update the value in scope
+            $(elem).on('change',function(e){
+              console.log(this);
+                s3_upload($(this).attr("id"));
+            });
+      }
+    }
+  });
+
+
+
+//Schemas
+/*
+var showcaseSchema = new Schema( {
+  customerId: String,
+  organizationId: String,
+  identifier:{ type: String, index: true },
+  type:String,
+  title:String,
+  showcaseDescription:String,
+  theme:String,
+  mainImageUrl:[
+    {
+      value:String
+    }
+  ],
+  objects:[
+    {
+      objectId:String,
+      number:String,
+      type:{type:String},
+      likes:String,
+      title:String,
+      objectDescription:[
+        {
+          value:String
+        }
+      ],
+      actionType:String,
+      originalPrice:String,
+      biinPrice:String,
+      discount:String,
+      savings:String,
+      biinSold:String,
+      timeFrame:String,
+      imageUrl:[
+        {
+          value:String
+        }
+      ],
+      theme:String,
+      categories:[
+        {
+          category:String
+        }
+      ]
+
+    }
+  ]
+});*/

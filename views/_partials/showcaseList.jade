@@ -2,9 +2,7 @@
 	.panel-heading
 		p Showcases
 		.options
-			input( ng-model="query" placeholder="Search" autofocus)
-			select(ng-model="orderShowcases")
-				option(value="title") Name
+			input.form-control( ng-model="query" placeholder="Search" autofocus)
 			a.button(href="#") Add
 	.panel-body
 		.list-group

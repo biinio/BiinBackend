@@ -15,8 +15,14 @@
 		form(action="#" role="form")
 			#details.tab-pane.row(ng-switch-when='details')
 				.col-md-4
-					img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;" pendingIndicator)								
+					.processWrapper.hidden
+						input.dial(data-thickness=".3" data-fgColor="#222222")
+					.imageWrapper
+						input#files(type="file" data-img-url="/sign_s3" data-update-value="#showcaseImage" upload-change)
+						img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;" pendingIndicator)								
+						#status
 				.col-md-8
+					input#showcaseImage.hidden(ng-model="showcaseEdit.mainImageUrl[0].value" ng-change="change()")
 					label Identifier:
 					input.form-control( ng-model="showcaseEdit.identifier")
 					label Title:
