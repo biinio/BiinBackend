@@ -1,3 +1,5 @@
+ var croppeShowcasesHeader =null;
+
 //Rounded Progress Bar
 function roundedProgressBar(val){
    return new  $(".dial").knob({
@@ -12,48 +14,6 @@ function roundedProgressBar(val){
     });
 }
 
-//Files Uploader
-function s3_upload(elId){
-    var elementId =  "#"+elId;
-    var element = $(elementId);
-    var elementToUpdate = $(element).data("update-value");
-    var $parent = element.parent();
-    var $process = $(".dial");
-
-    //Hide the image section
-    $parent.addClass('hidden');
-    var wrapperProcess = $process.closest(".hidden");
-    wrapperProcess.removeClass('hidden');
-    var s3upload = new S3Upload({
-        file_dom_selector:elementId,
-        s3_sign_put_url: $(element).data("img-url"),        
-        onProgress: function(percent, message) {
-            var showcaseRoundedProgress = roundedProgressBar(percent);
-            $('#status').html('Upload progress: ' + percent + '% ' + message);
-            $process.val(percent);
-            showcaseRoundedProgress.val = percent;
-            
-        },
-        onFinishS3Put: function(public_url) {
-            $('#status').html('Upload completed. Uploaded to: '+ public_url);
-            var $element=$(elementToUpdate);
-            var $scope=angular.element($element).scope();
-            $scope.change(public_url);
-
-            //Switch view
-            $parent.removeClass('hidden');
-            wrapperProcess.addClass('hidden');
-        },
-        onError: function(status,err) {
-            console.log(err);
-            $('#status').html('Upload error: ' + status);
-
-            //Switch view
-            $parent.removeClass('hidden');
-            wrapperProcess.addClass('hidden');
-        }
-    });
-}
 
 //Jquery Controls
 function controls(){
@@ -66,23 +26,26 @@ function controls(){
     modalControls();
 }
 
+//Modal Controls to init
 function modalControls(){
 
-    var croppeShowcasesHeader = new Croppic('showcaseImages',{
-        uploadUrl:'showcases/imageUpload',
-        cropData:{
-            "section":"showcase"
-        },
-        cropUrl:'/showcases/imageCrop',
-        modal:false,
-        loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
-        onBeforeImgUpload: function(){ console.log('onBeforeImgUpload') },
-        onAfterImgUpload: function(){ console.log('onAfterImgUpload') },
-        onImgDrag: function(){ console.log('onImgDrag') },
-        onImgZoom: function(){ console.log('onImgZoom') },
-        onBeforeImgCrop: function(){ console.log('onBeforeImgCrop') },
-        onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
-    });
+    //Init the cropper for showcases
+    if(!croppeShowcasesHeader && $("#showcaseImages").length>0)
+        croppeShowcasesHeader = new Croppic('showcaseImages',{
+            uploadUrl:'showcases/imageUpload',
+            cropData:{
+                "section":"showcase"
+            },
+            cropUrl:'/showcases/imageCrop',
+            modal:false,
+            loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
+            onBeforeImgUpload: function(){ console.log('onBeforeImgUpload') },
+            onAfterImgUpload: function(){ console.log('onAfterImgUpload') },
+            onImgDrag: function(){ console.log('onImgDrag') },
+            onImgZoom: function(){ console.log('onImgZoom') },
+            onBeforeImgCrop: function(){ console.log('onBeforeImgCrop') },
+            onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
+        });
 }
 
 jQuery(function ($) {
@@ -108,5 +71,12 @@ jQuery(function ($) {
     //Modal Events
     $('body').on('shown.bs.modal',function(e){
        modalControls();
+    });
+
+    $('body').on('hidden.bs.modal', function () {
+        if($("#showcaseImages").length>0 && croppeShowcasesHeader){
+            croppeShowcasesHeader.destroy()   // no need explaining here :) 
+            croppeShowcasesHeader = null;
+        }
     });
 });
