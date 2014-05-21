@@ -3,7 +3,7 @@
 		p Showcases
 		.options
 			input.form-control( ng-model="query" placeholder="Search" autofocus)
-			a.button(href="#") Add
+			a.btn.btn-primary.btn-sm(href="#") Add
 	.panel-body
 		.list-group
 			a.list-group-item(href="#/edit/{{item.identifier}}", ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(item.identifier)")

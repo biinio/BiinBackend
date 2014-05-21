@@ -20,6 +20,7 @@
 					.imageWrapper
 						input#files(type="file" data-img-url="/sign_s3" data-update-value="#showcaseImage" upload-change)
 						img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;" pendingIndicator)								
+						a.btn.btn-lg.btn-success.fullWidth(data-toggle="modal" data-target="#basicModal") Change
 						#status
 				.col-md-8
 					input#showcaseImage.hidden(ng-model="showcaseEdit.mainImageUrl[0].value" ng-change="change()")
@@ -79,5 +80,16 @@
 							label Categories
 							div(ng-repeat="category in showcaseEdit.objects[currentObjectIndexSelected].categories")
 									p{{category.category}}
-
-
+#basicModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true")
+	.modal-dialog.modal-lg
+		.modal-content
+			.modal-header
+				button.close(type="button" data-dismiss="modal" aria-hidden="true")&times;
+				h3 Showcase Image Editor
+			.modal-body
+				.row
+					.col-lg-1.col-centered
+						div#showcaseImages
+			.modal-footer
+				a.btn(href="#")
+				a.btn.btn-primary(href="#") Save changes

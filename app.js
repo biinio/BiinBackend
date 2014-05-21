@@ -11,7 +11,9 @@ module.exports = function (db) {
     var cookieParser = require('cookie-parser');
     var bodyParser = require('body-parser');
     var crypto = require('crypto');
-
+    var busboy = require('connect-busboy');
+    var multipart = require('connect-multiparty');
+    var multipartMiddleware = multipart();
     //Others routes
     var users = require('./routes/users')(db);
     var organizations = require('./routes/organizations')(db);
@@ -44,6 +46,9 @@ module.exports = function (db) {
     app.use(passport.session());
     app.use(bodyParser.json());
     app.use(express.methodOverride());
+
+    //Busboy files
+    app.use(busboy()); 
 
     app.use(function (req, res, next) {
         res.set('X-Powered-By', 'Ludusy');
@@ -90,8 +95,26 @@ module.exports = function (db) {
     //Utilities Routes
     app.get('/errors',errors.index);
     app.post('/api/errors/add',errors.create);
+
     //Regions routes
     app.get('/user',users.create);
+
+    //Image routes
+    app.post('/showcases/imageUpload',showcases.imagePost);
+    app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
+
+     // busboy middleware to grab req. post data for multipart submissions.
+     app.use(busboy({ immediate: true }));
+     app.use(function(req, res, next) {
+       req.busboy.on('field', function(fieldname, val) {
+         // console.log(fieldname, val);
+         req.body[fieldname] = val;
+       });
+
+       req.busboy.on('finish', function(){
+         next();
+       });
+     });
 
     /*
      * Respond to GET requests to /sign_s3.
