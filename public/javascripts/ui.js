@@ -33,6 +33,7 @@ function modalControls(){
     if(!croppeShowcasesHeader && $("#showcaseImages").length>0)
         croppeShowcasesHeader = new Croppic('showcaseImages',{
             uploadUrl:'showcases/imageUpload',
+            outputUrlId:'showcaseImageUrlCropped',
             cropData:{
                 "section":"showcase"
             },
@@ -73,9 +74,10 @@ jQuery(function ($) {
        modalControls();
     });
 
+    //On modal hide
     $('body').on('hidden.bs.modal', function () {
         if($("#showcaseImages").length>0 && croppeShowcasesHeader){
-            croppeShowcasesHeader.destroy()   // no need explaining here :) 
+            croppeShowcasesHeader.destroy();
             croppeShowcasesHeader = null;
         }
     });

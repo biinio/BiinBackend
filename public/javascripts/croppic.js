@@ -500,6 +500,14 @@
 			if( !$.isEmptyObject( that.loader ) ){   that.loader.remove(); }
 			if( !$.isEmptyObject( that.form ) ){   that.form.remove(); }
 			that.obj.html('');
+		},
+		//Biin Custom Modification
+		preInitImage:function(imgUrl){
+
+		},
+		createCropetImage:function(){
+
 		}
+
 	};
 })(window, document);

@@ -49,15 +49,9 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
   }
 
   $scope.change=function(value){
-    console.log("value");
     $scope.showcaseEdit.mainImageUrl[0].value = value;
     $scope.$digest();
-    //$scope.$digest();
   }
-
-/* $scope.$watch('myVar', function() {
-     alert('hey, myVar has changed!');
- });*/
 
 }]);
 
@@ -93,14 +87,19 @@ biinAppShowCases.directive('pendingIndicator', function(){
     };
 });
 
-biinAppShowCases.directive('uploadChange', function () {
+biinAppShowCases.directive('imageSave', function () {
     return {
       restrict: 'A',
       link: function (scope, elem, attrs) {
             // on blur, update the value in scope
-            $(elem).on('change',function(e){
-              console.log(this);
-                s3_upload($(this).attr("id"));
+            $(elem).on('click',function(e){
+              var imageUrl= $(elem[0].attributes["data-image-cropped"].value).val();
+              console.log(imageUrl)
+              scope.showcaseEdit.mainImageUrl[0].value = imageUrl;
+              scope.$digest();       
+              
+            //Close bootstrap Modal
+            $("#basicModal").modal("toggle");         
             });
       }
     }
