@@ -18,9 +18,8 @@
 					.processWrapper.hidden
 						input.dial(data-thickness=".3" data-fgColor="#222222")
 					.imageWrapper
-						img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;" pendingIndicator)								
+						img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;" pending-indicator)								
 						a.btn.btn-lg.btn-success.fullWidth(data-toggle="modal" data-target="#basicModal") Change
-						#status
 				.col-md-8
 					input#showcaseImage.hidden(ng-model="showcaseEdit.mainImageUrl[0].value" ng-change="change()")
 					label Identifier:
@@ -42,9 +41,10 @@
 						.col-md-7
 							#slideFrame.showcaseObjectsScroll
 								div.row
-									div.isotopeModule.col-md-2(ng-repeat="item in showcaseEdit.objects" ng-click="editObject($index)" ng-class="{active: $index == currentObjectIndexSelected}")								
+									div.isotopeModule.col-md-4(ng-repeat="item in showcaseEdit.objects" ng-click="editObject($index)" ng-class="{active: $index == currentObjectIndexSelected}")								
 										p {{item.number}} - {{item.title}}
-										img.img-responsive(ng-src="{{item.imageUrl[0].value}}" pendingIndicator)
+										img.img-responsive(ng-src="{{item.imageUrl[0].value}}" pending-indicator)
+										a.btn.btn-sm.btn-success.fullWidth(data-toggle="modal" data-target="#elementModal") Change
 						.col-md-5
 							label Title
 							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].title")								
@@ -72,8 +72,8 @@
 							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].biinSold")
 							label Time Frame
 							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].timeFrame")
-							label Image Url
-							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].imageUrl[0].value")
+							label Image
+							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].imageUrl[0].value")							
 							label Theme
 							input.form-control(ng-model="showcaseEdit.objects[currentObjectIndexSelected].theme")
 							label Categories
@@ -88,8 +88,20 @@
 			.modal-body
 				.row
 					.fullWidth
-						div#showcaseImages
+						#showcaseImages.copperEditor
 					input#showcaseImageUrlCropped.hidden
 			.modal-footer
-				a.btn(href="#")
 				a.btn.btn-primary(image-save="" data-image-cropped="#showcaseImageUrlCropped") Done
+#elementModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="elementModal" aria-hidden="true")
+	.modal-dialog.modal-lg
+		.modal-content
+			.modal-header
+				button.close(type="button" data-dismiss="modal" aria-hidden="true")&times;
+				h3 Element: {{showcaseEdit.objects[currentObjectIndexSelected].title}}
+			.modal-body
+				.row
+					.fullWidth
+						#elementImages.copperEditor
+					input#elementImageUrlCropped.hidden
+			.modal-footer
+				a.btn.btn-primary(image-element-Save="" data-image-cropped="#elementImageUrlCropped") Done				

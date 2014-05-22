@@ -48,14 +48,9 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
     });
   }
 
-  $scope.change=function(value){
-    $scope.showcaseEdit.mainImageUrl[0].value = value;
-    $scope.$digest();
-  }
-
 }]);
 
-
+//Image uploades pending indicator
 biinAppShowCases.directive('pendingIndicator', function(){
     return {
         restrict: 'A',
@@ -87,6 +82,7 @@ biinAppShowCases.directive('pendingIndicator', function(){
     };
 });
 
+//Update image for a ShowCase
 biinAppShowCases.directive('imageSave', function () {
     return {
       restrict: 'A',
@@ -94,65 +90,30 @@ biinAppShowCases.directive('imageSave', function () {
             // on blur, update the value in scope
             $(elem).on('click',function(e){
               var imageUrl= $(elem[0].attributes["data-image-cropped"].value).val();
-              console.log(imageUrl)
               scope.showcaseEdit.mainImageUrl[0].value = imageUrl;
               scope.$digest();       
-              
-            //Close bootstrap Modal
-            $("#basicModal").modal("toggle");         
+
+              //Close bootstrap Modal
+              $("#basicModal").modal("toggle");         
             });
       }
     }
   });
 
+//Update image for a ShowCase
+biinAppShowCases.directive('imageElementSave', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, elem, attrs) {
+            // on blur, update the value in scope
+            $(elem).on('click',function(e){
+              var imageUrl= $(elem[0].attributes["data-image-cropped"].value).val();
+              scope.showcaseEdit.objects[scope.currentObjectIndexSelected].imageUrl[0].value = imageUrl;
+              scope.$digest();       
 
-
-//Schemas
-/*
-var showcaseSchema = new Schema( {
-  customerId: String,
-  organizationId: String,
-  identifier:{ type: String, index: true },
-  type:String,
-  title:String,
-  showcaseDescription:String,
-  theme:String,
-  mainImageUrl:[
-    {
-      value:String
+              //Close bootstrap Modal
+              $("#elementModal").modal("toggle");         
+            });
+      }
     }
-  ],
-  objects:[
-    {
-      objectId:String,
-      number:String,
-      type:{type:String},
-      likes:String,
-      title:String,
-      objectDescription:[
-        {
-          value:String
-        }
-      ],
-      actionType:String,
-      originalPrice:String,
-      biinPrice:String,
-      discount:String,
-      savings:String,
-      biinSold:String,
-      timeFrame:String,
-      imageUrl:[
-        {
-          value:String
-        }
-      ],
-      theme:String,
-      categories:[
-        {
-          category:String
-        }
-      ]
-
-    }
-  ]
-});*/
+  });

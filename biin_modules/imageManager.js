@@ -38,7 +38,6 @@ module.exports = function(){
 
 	//Crop an Image
 	functions.cropImage = function(moduleOwner, imageUrl, resizeW, resizeH, cropW, cropH, positionX, positionY, callback){
-		console.log("Image Url: " +imageUrl);
 		var imageName= path.basename(imageUrl);
 		var pathImage = _workingImagePath+imageName;
 

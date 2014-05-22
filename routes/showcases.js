@@ -1,7 +1,4 @@
 module.exports = function () {
-	var fs = require("fs");
-	var gm = require('gm')
-  	,imageMagick = gm.subClass({ imageMagick: true });
   	var imageManager = require("../biin_modules/imageManager")();
 
 	var path = require('path');
@@ -12,6 +9,7 @@ module.exports = function () {
 
 	//GET the index view of a showcases
 	functions.index = function(req,res){
+
 		res.render('showcase/index', { title: 'Organizations list' ,user:req.user});
 	}
 

@@ -78,8 +78,8 @@
 	background-color: #000;
 }
 
-/*Showcase images cropping*/
-#showcaseImages {
+/*Cropper editor size*/
+.copperEditor {
 	width: 640px;
 	height: 640px;
 	position:relative; /* or fixed or absolute */

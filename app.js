@@ -68,10 +68,18 @@ module.exports = function (db) {
 
     //Showcase routes
     app.get('/showcases',showcases.index);
+    app.post('/showcases/imageUpload',multipartMiddleware,showcases.imagePost);
+    app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
+
     app.get('/api/showcases/:identifier',showcases.get);
     app.put('/api/showcases/:showcase',showcases.set);
     app.get('/api/showcases',showcases.list);
     app.get('/api/biins/:biin/showcase',showcases.getByBiin);
+
+    
+    //Elements
+    app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
+    app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
 
     //Regions routes
     app.get('/regions',regions.index)
@@ -89,9 +97,6 @@ module.exports = function (db) {
     //Regions routes
     app.get('/user',users.create);
 
-    //Image routes
-    app.post('/showcases/imageUpload',multipartMiddleware,showcases.imagePost);
-    app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {

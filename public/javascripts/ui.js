@@ -1,5 +1,5 @@
  var croppeShowcasesHeader =null;
-
+ var croppeElementHeader = null;
 //Rounded Progress Bar
 function roundedProgressBar(val){
    return new  $(".dial").knob({
@@ -19,7 +19,7 @@ function roundedProgressBar(val){
 function controls(){
 
     //Boostrap Modal
-   var modal =  $('#basicModal').modal({
+   var modal =  $('.modal').modal({
         "backdrop" : "static"
     });
 
@@ -38,6 +38,25 @@ function modalControls(){
                 "section":"showcase"
             },
             cropUrl:'/showcases/imageCrop',
+            modal:false,
+            loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
+            onBeforeImgUpload: function(){ console.log('onBeforeImgUpload') },
+            onAfterImgUpload: function(){ console.log('onAfterImgUpload') },
+            onImgDrag: function(){ console.log('onImgDrag') },
+            onImgZoom: function(){ console.log('onImgZoom') },
+            onBeforeImgCrop: function(){ console.log('onBeforeImgCrop') },
+            onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
+        });
+
+       //Init the cropper for elements
+    if(!croppeElementHeader && $("#elementImages").length>0)
+        croppeElementHeader = new Croppic('elementImages',{
+            uploadUrl:'elements/imageUpload',
+            outputUrlId:'elementImageUrlCropped',
+            cropData:{
+                "section":"element"
+            },
+            cropUrl:'/elements/imageCrop',
             modal:false,
             loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
             onBeforeImgUpload: function(){ console.log('onBeforeImgUpload') },
@@ -72,6 +91,12 @@ jQuery(function ($) {
     //Modal Events
     $('body').on('shown.bs.modal',function(e){
        modalControls();
+
+       //Open the modal of select an image
+       if($(".cropControlUpload",".modal:visible").length>0){
+            //$(".cropControlUpload",".modal:visible").trigger('click');
+            $('input[type="file"]',".modal:visible").trigger('click');
+       }
     });
 
     //On modal hide
