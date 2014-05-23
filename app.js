@@ -60,8 +60,10 @@ module.exports = function (db) {
         failureRedirect:'/login',
         successRedirect:'/dashboard'
     }));
+
     app.get('/dashboard', routes.dashboard);    
     app.get('/login',routes.login);
+    app.get('/home',routes.home);
 
     //Regions organization
     app.get('/organizations',organizations.index);

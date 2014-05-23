@@ -3,21 +3,54 @@ module.exports = function () {
 	
 	//Get the index page
 	functions.index = function(req, res){
-	  res.render('index', { title: 'Express' });
+	  //res.render('index', { title: 'Express' });
+	  res.sendfile('views/index.html');
 	};
 
 	//Get the Login
 	functions.login = function (req,res) {
-		res.render('login',{title:'login'});
+		var is_ajax_request = req.xhr;
+		if(!is_ajax_request){
+			res.render('login',{title:'login'});
+		}
+		else{
+			var obj={
+				status:"error",
+				url: '/login'
+			}
+			res.json(obj);			
+		}
 	};
+
+	//Get the Dashboard
+	functions.home = function(req,res){
+		res.render('homeDashboard',{title:'Welcome!',user:req.user});	
+	}
 
 	//Get the dashboard
 	functions.dashboard = function (req,res) {
-		if(req.session.passport.user==undefined){
-			res.redirect('/login');
+		var is_ajax_request = req.xhr;
+		console.log("Is ajax request:"+is_ajax_request);
+		if(!is_ajax_request){
+			if(req.session.passport.user==undefined){
+				res.redirect('/login');
+			}else{
+				 res.render('homeDashboard',{title:'Welcome!',				
+				 user:req.user});
+			}
 		}else{
-			res.render('homeDashboard',{title:'Welcome!',				
-			 user:req.user});
+			var obj={
+				status:"error"
+			}
+
+			if(req.session.passport.user==undefined){
+				obj.url= '/login';
+			}else{
+				obj.url ="/home";
+				obj.status="success"
+			}
+
+			res.json(obj);			
 		}
 	};
 

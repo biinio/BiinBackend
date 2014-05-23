@@ -101,9 +101,17 @@ jQuery(function ($) {
 
     //On modal hide
     $('body').on('hidden.bs.modal', function () {
+        
+        //Remove the control for the showcase images
         if($("#showcaseImages").length>0 && croppeShowcasesHeader){
             croppeShowcasesHeader.destroy();
             croppeShowcasesHeader = null;
         }
+
+        //Remove the control for the element imaeges
+        if($("#elementImages").length>0 && croppeElementHeader){
+            croppeElementHeader.destroy();
+            croppeElementHeader = null;
+        }        
     });
 });
