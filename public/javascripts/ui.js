@@ -114,4 +114,5 @@ jQuery(function ($) {
             croppeElementHeader = null;
         }        
     });
+
 });

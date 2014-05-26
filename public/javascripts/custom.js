@@ -393,6 +393,9 @@
 	/*----------------------------------------------------*/	
 	$(document).ready(function() {
 
+		//Bootstrap Checkbox
+    	$('.checkbox').checkbox();
+
 		$("body").on("click touch",".loginDropDown", function(e){
 			e.stopPropagation();
 			e.stopImmediatePropagation();
@@ -421,4 +424,5 @@
 		$("body").on("click touch","#buttonLogin",function(e){
 			$("form.loginForm").submit();
 		});
+
 	});

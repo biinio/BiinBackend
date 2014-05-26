@@ -19,7 +19,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">		
 			
 		<!-- Libs CSS -->
-		<link href="/stylesheets/bootstrap.css" rel="stylesheet"> 		
+		<link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> 		
 		<link href="/stylesheets/font-awesome.min.css" rel="stylesheet">
 		<link href="/stylesheets/flexslider.css" rel="stylesheet">
 		<link href="/stylesheets/magnific-popup.css" rel="stylesheet">
@@ -86,12 +86,20 @@
 								<a data-toggle="dropdown" class="dropdown-toggle">Login <b class="caret"></b> </a>
 								<ul class="dropdown-menu loginDropDown">
 									<li>
+										<h4>Biin Dashboard login.</h4>
 										<form action="/login" method="POST" class="loginForm">
 											<input  name="username" class="form-control input-block-level" type="text" placeholder="e-mail">
 											<input id="passwordInput" name="password" class="form-control input-block-level" type="password" placeholder="password">
-											<div class="form-inline">
-												<a href=""><p>sign up</p></a>
-												<a id="buttonLogin" class="btn btn-primary" >Login</a>
+											<a href="" class="forgotPass pull-right">Forgot password?</a>
+											<div>												
+												<div class="checkbox stayLogged">
+													<label>
+														<input type="checkbox"> Stay Logged In
+													</label>
+												</div>
+												<span class="adviceLoggedIn pull-left">Keep me logged in until I log out</span>
+												<a id="buttonLogin" class="btn btn-theme fulllWidth">Login</a>
+												<a id="buttonLogin" class="btn btn-theme btn-signUp fulllWidth">Sign up</a>
 											</div>
 										</form>
 									</li>

@@ -2,8 +2,26 @@
 	.panel-heading
 		p Showcases
 		.options
-			input.form-control( ng-model="query" placeholder="Search" autofocus)
-			a.btn.btn-primary.btn-sm(href="#") Add
+			.row
+				.col-md-10
+					.form-inline
+						.form-inline
+							a.btn.btn-primary.btn-sm.btn-success(href="#") Add
+							input.form-control( ng-model="query" placeholder="Search" autofocus)
+							.dropdown
+								button#dropdownMenu1.btn.dropdown-toggle.sr-only(type='button', data-toggle='dropdown')
+									| Dropdown
+									span.caret
+								ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu1')
+									li(role='presentation')
+										a(role='menuitem', tabindex='-1', href='#') Action
+									li(role='presentation')
+										a(role='menuitem', tabindex='-1', href='#') Another action
+									li(role='presentation')
+										a(role='menuitem', tabindex='-1', href='#') Something else here
+									li.divider(role='presentation')
+									li(role='presentation')
+										a(role='menuitem', tabindex='-1', href='#') Separated link
 	.panel-body
 		.list-group
 			a.list-group-item(href="#/edit/{{item.identifier}}", ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(item.identifier)")
