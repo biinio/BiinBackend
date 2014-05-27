@@ -24,6 +24,7 @@ function controls(){
     });
 
     modalControls();
+
 }
 
 //Modal Controls to init
