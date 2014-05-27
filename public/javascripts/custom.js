@@ -396,7 +396,6 @@
 		$("body").on("click touch",".loginDropDown", function(e){
 			e.stopPropagation();
 			e.stopImmediatePropagation();
-			e.preventDefault();
 		});
 
 		//On submit the login form
@@ -423,14 +422,3 @@
 		});
 
 	});
-
-$(function() {
-
-	//Bootstrap Checkbox
-	setTimeout(function(){
-		/*if($('.checkbox').length>0)
-			$('input[type="checkbox"]').checkbox();	
-			*/
-	},600);
-	
-});
