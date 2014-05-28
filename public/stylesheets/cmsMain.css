@@ -1,3 +1,70 @@
+/****
+	Body Principal Style
+	***/
+
+body{
+
+}
+
+h1{
+	font-size: 15px;
+}
+
+/****
+	Panels and Nav-var Custom Style
+	***/
+
+.panel-default{
+	border-style: none;
+}	
+
+.panel-default>.panel-heading{
+	color: #333;
+	background-color:initial;
+	border-color: initial;
+	border:none;
+	margin-top: -15px;
+}
+
+.panel-heading label{
+	margin-right: 10px;
+}
+.panel-body {
+	padding: 0px;
+	margin-left: -25px;
+}
+
+.moduleWrapper{
+	height: 250px;
+	width: 250px;
+	background-color: #fff;
+	border-radius: 7px;
+	margin-top: 5px;
+}
+
+.moduleWrapper img{
+    height: auto;
+    max-height: 250px;
+    max-width: 250px;
+	margin-left: auto;
+	margin-right: auto;    
+	width: 100%;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+.module{
+	margin-right: 7px;
+	min-height: 250px;
+	min-width: 250px;
+}
+
+/****
+	Nav Var Header Style
+	***/
+
 .navbar {
 	 padding: 0px 0px;
 }
@@ -45,6 +112,14 @@
 	margin-left: -5px;
 }
 
+.body-list {
+    margin-left: -25px;
+}
+
+.col-list{
+	background-color:  #ECEDEE;
+}
+
 @media (min-width: 768px){
 	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
 		margin-right: 50px;
@@ -55,4 +130,28 @@
 		padding-top: 0px; 
 		padding-bottom: 0px; 
 	}
+}
+
+
+/****
+	Buttons
+	***/
+.btn-rounded{
+	border-radius: 50%;
+	font-size: 25px;
+	margin-top: 0px;
+	font-weight: -3;
+	margin-left: -2px;
+	background-color: #069FCE;
+	height: 30px;
+	width: 30px;
+}
+
+.btn-rounded i{
+	font-size: 31px;
+	margin-left: -7.3px;
+	color: #fff;
+	position: relative;
+	top: -17px;
+	font-weight: 100;
 }

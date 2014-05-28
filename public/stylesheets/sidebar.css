@@ -38,7 +38,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: #069FCE;
-    border-right: 1px solid #eee;
+    border-right: none;
     max-width: 259px;
   }
 }
