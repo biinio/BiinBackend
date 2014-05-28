@@ -71,7 +71,7 @@ function modalControls(){
 
 jQuery(function ($) {
     //Update bootstrap menu selection
-    var url = window.location;
+    var url = window.location.pathname;
     // Will only work if string in href matches with location
     $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
 
