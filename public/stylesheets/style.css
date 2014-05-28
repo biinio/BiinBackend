@@ -241,7 +241,7 @@ ul {
 /*------------------------------------------*/
 
 .navbar-brand {
-	padding: 10px 15px;
+	padding: 0px 15px;
 }  
 
 .navbar-brand:hover {
@@ -1397,3 +1397,15 @@ nav a#pull {
 	border-color: #428bca;
 	color: #000!important;
 }
+.avatar{
+	height: 30px;
+}
+
+.nav-user a{
+  color: #fff;
+}
+
+/* ==========================================================================
+   15. CONTACT FORM RESPONSE PAGE   
+   ========================================================================== */
+   

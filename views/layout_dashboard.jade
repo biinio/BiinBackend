@@ -25,19 +25,83 @@ html
     .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .container-fluid
           .navbar-header
-            a.navbar-brand(href="#")='biin'
+            a.navbar-brand(href="#")
+              img(src="images/icons/biinCMSLogoIcon.png")
             #main-fixed-nav.collapse.navbar-collapse.navSearchSection
               // Begin nav search form
               form.navbar-form.navbar-left(role='search')
                 .form-group
                   input.form-control(type='text', placeholder='Search')
               // End nav search form
-              ul.nav.navbar-nav.navbar-left
-                // Begin nav notification
+              ul.nav.navbar-nav.navbar-left.notifications
+                // Begin nav message
                 li.dropdown
-                  a.dropdown-toggle(href='#fakelink', data-toggle='dropdown')
-                    span.badge.badge-danger.icon-count 7
-                    i.fa.fa-bell
+                  a.dropdown-toggle.notificationIcon(href='#fakelink', data-toggle='dropdown')
+                    img(src="images/icons/bnMailIcon.png")
+                    span.badge.message.icon-count 9
+                  ul.dropdown-menu.square.margin-list-rounded.with-triangle
+                    li
+                      .nav-dropdown-heading
+                        | Messages
+                      // /.nav-dropdown-heading
+                      .slimScrollDiv(style='position: relative; overflow: hidden; width: auto; height: 350px;')
+                        .nav-dropdown-content.scroll-nav-dropdown(style='overflow: hidden; width: auto; height: 350px;')
+                          ul
+                            li.unread
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-25.jpg', alt='Avatar')
+                                | Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                                span.small-caps 17 seconds ago
+                            li.unread
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-24.jpg', alt='Avatar')
+                                | Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat
+                                span.small-caps 10 minutes ago
+                            li
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-23.jpg', alt='Avatar')
+                                | I think so
+                                span.small-caps 40 minutes ago
+                            li.unread
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-22.jpg', alt='Avatar')
+                                | Yes, I'll be waiting
+                                span.small-caps 2 hours ago
+                            li.unread
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-21.jpg', alt='Avatar')
+                                | Thank you!
+                                span.small-caps Yesterday
+                            li.unread
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-20.jpg', alt='Avatar')
+                                | No problem! I will never remember that
+                                span.small-caps Yesterday
+                            li.unread
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-19.jpg', alt='Avatar')
+                                | Tak gepuk ndasmu sisan lho dab!
+                                span.small-caps A week ago
+                            li
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-18.jpg', alt='Avatar')
+                                | Sorry bro, aku or atau sing jenenge ngono kui
+                                span.small-caps April 15, 2014
+                            li
+                              a(href='#fakelink')
+                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-17.jpg', alt='Avatar')
+                                | Will you send me an invitation for your weeding party?
+                                span.small-caps April 01, 2014
+                        .slimScrollBar(style='width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background: rgb(0, 0, 0);')
+                        .slimScrollRail(style='width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.3; z-index: 90; right: 1px; background: rgb(51, 51, 51);')
+                      // /.nav-dropdown-content scroll-nav-dropdown
+                      button.btn.btn-primary.btn-square.btn-block See all message
+                // End nav message                
+                // Begin nav chat
+                li.dropdown
+                  a.dropdown-toggle.notificationIcon(href='#fakelink', data-toggle='dropdown')
+                    img(src="images/icons/bnChatIcon.png")
+                    span.badge.chat.icon-count 7
                   ul.dropdown-menu.square.with-triangle
                     li
                       .nav-dropdown-heading
@@ -104,73 +168,28 @@ html
                         .slimScrollRail(style='width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.3; z-index: 90; right: 1px; background: rgb(51, 51, 51);')
                       // /.nav-dropdown-content scroll-nav-dropdown
                       button.btn.btn-primary.btn-square.btn-block See all notifications
-                //End nav notification
-                // Begin nav message
-                li.dropdown
-                  a.dropdown-toggle(href='#fakelink', data-toggle='dropdown')
-                    span.badge.badge-success.icon-count 9
-                    i.fa.fa-envelope
-                  ul.dropdown-menu.square.margin-list-rounded.with-triangle
-                    li
-                      .nav-dropdown-heading
-                        | Messages
-                      // /.nav-dropdown-heading
-                      .slimScrollDiv(style='position: relative; overflow: hidden; width: auto; height: 350px;')
-                        .nav-dropdown-content.scroll-nav-dropdown(style='overflow: hidden; width: auto; height: 350px;')
-                          ul
-                            li.unread
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-25.jpg', alt='Avatar')
-                                | Lorem ipsum dolor sit amet, consectetuer adipiscing elit
-                                span.small-caps 17 seconds ago
-                            li.unread
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-24.jpg', alt='Avatar')
-                                | Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat
-                                span.small-caps 10 minutes ago
-                            li
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-23.jpg', alt='Avatar')
-                                | I think so
-                                span.small-caps 40 minutes ago
-                            li.unread
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-22.jpg', alt='Avatar')
-                                | Yes, I'll be waiting
-                                span.small-caps 2 hours ago
-                            li.unread
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-21.jpg', alt='Avatar')
-                                | Thank you!
-                                span.small-caps Yesterday
-                            li.unread
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-20.jpg', alt='Avatar')
-                                | No problem! I will never remember that
-                                span.small-caps Yesterday
-                            li.unread
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-19.jpg', alt='Avatar')
-                                | Tak gepuk ndasmu sisan lho dab!
-                                span.small-caps A week ago
-                            li
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-18.jpg', alt='Avatar')
-                                | Sorry bro, aku or atau sing jenenge ngono kui
-                                span.small-caps April 15, 2014
-                            li
-                              a(href='#fakelink')
-                                img.absolute-left-content.img-circle(src='assets/img/avatar/avatar-17.jpg', alt='Avatar')
-                                | Will you send me an invitation for your weeding party?
-                                span.small-caps April 01, 2014
-                        .slimScrollBar(style='width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background: rgb(0, 0, 0);')
-                        .slimScrollRail(style='width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.3; z-index: 90; right: 1px; background: rgb(51, 51, 51);')
-                      // /.nav-dropdown-content scroll-nav-dropdown
-                      button.btn.btn-primary.btn-square.btn-block See all message
-                // End nav message
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href="#")='Hi ' + user.displayName + '!'
+                //End nav chat
+            ul.nav-user.navbar-right
+              li.dropdown
+                a.dropdown-toggle(href='#fakelink', data-toggle='dropdown')
+                  img.avatar.img-circle(src='images/icons/avatar.png', alt='Avatar')
+                  | Hi, 
+                  strong=user.displayName
+                  img.avatarSettings(src='images/icons/bnSettingsIcon.png', alt='Avatar')
+                ul.dropdown-menu.square.primary.margin-list-rounded.with-triangle
+                  li
+                    a(href='#fakelink') Account setting
+                  li
+                    a(href='#fakelink') Payment setting
+                  li
+                    a(href='#fakelink') Change password
+                  li
+                    a(href='#fakelink') My public profile
+                  li.divider
+                  li
+                    a(href='lock-screen.html') Lock screen
+                  li
+                    a(href='login.html') Log out
     .container-fluid
       .row
         .col-sm-3.col-md-2.sidebar
