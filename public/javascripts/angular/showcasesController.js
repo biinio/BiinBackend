@@ -7,7 +7,12 @@ biinAppShowCases.config(['$routeProvider',
 		when('/edit/:identifier',{
 			templateUrl:'partials/showcaseEdit',
 			controller:'showcasesEditController'
-		}).	
+		})
+    .
+    when('/editShowcase/:identifier',{
+      action:"editShowcase",
+      controller:'showcasesController'
+    }).	
 		when('/list',{
 			templateUrl:'partials/showcaseList',
 			controller:'showcasesController'
@@ -19,9 +24,17 @@ biinAppShowCases.config(['$routeProvider',
 
 //App define controllers
 biinAppShowCases.controller('showcasesController', ['$scope', '$http', function($scope,$http) {
+  $scope.activeTab='details';
+  $scope.selectedShowcase = null;
   $http.get('api/showcases').success(function(data){
   	$scope.showcases = data;
   });
+
+  //Edit an showcase
+  $scope.edit = function(identifier){
+    console.log("selected showcase: "+ identifier);
+    $scope.selectedShowcase = identifier;
+  }
 }]);
 
 //App define controllers
@@ -30,6 +43,7 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
   $scope.currentModelId = $routeParams.identifier;
   $scope.currentObjectIndexSelected =0;
   $scope.succesSaveShow = false;
+
   $http.get('api/showcases/'+$routeParams.identifier).success(function(data){
   	$scope.showcaseEdit = data.data.showcase;
   });
@@ -39,13 +53,18 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
     $scope.currentObjectIndexSelected =index;
   }
 
+
   //Save detail model object
-  $scope.saveDetail= function(){
-    console.log("Saving")
+  $scope.saveDetail= function(){  
     $http.put('api/showcases/'+$scope.currentModelId,{model:$scope.showcaseEdit}).success(function(data,status){
       if(data.state=="updated")
         $scope.succesSaveShow=true;
     });
+  }
+
+  //Edit a showcase
+  $scope.editShowcase= function(){
+    console.log("edit Showcase");
   }
 
 }]);

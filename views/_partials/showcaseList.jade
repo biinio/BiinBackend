@@ -24,9 +24,38 @@
 									li(role='presentation')
 										a(role='menuitem', tabindex='-1', href='#') Separated link
 	.body-list
-		.col-md-7.col-list
+		.col-md-5.col-list
 			.row
-				a.col-md-1.module(href="#/edit/{{item.identifier}}", ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(item.identifier)")					
+				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit($index)")					
 					.moduleWrapper				
 						img.img-responsive(ng-src="{{item.mainImageUrl[0].value}}" style="max-width: 250px;height: auto;" pending-indicator)
-		.col-md-5
+		.col-md-7
+			.animate-switch(ng-if="selectedShowcase!=null")
+				p="{{activeTab}}"
+				ul.nav.nav-tabs
+					li(ng-class="{active:activeTab == 'details'}")
+						a(ng-click="activeTab='details'") Details
+					li(ng-class="{active:activeTab == 'objects'}")
+						a(ng-click="activeTab='objects'") Elements
+					.preview(style="background-color='black'")
+					input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl[0].value" ng-change="change()")     			
+				.tab-content(ng-switch='activeTab')					
+					#details(ng-switch-when='details')
+						label Identifier:
+						input.form-control( ng-model="showcases[selectedShowcase].identifier")
+						label Title:
+						input.form-control( ng-model="showcases[selectedShowcase].title")
+						label Customer Id:
+						input.form-control( ng-model="showcases[selectedShowcase].customerId")
+						label Organization:
+						input.form-control( ng-model="showcases[selectedShowcase].organizationId")
+						label Type:				
+						input.form-control( ng-model="showcases[selectedShowcase].type")
+						label Theme:				
+						input.form-control( ng-model="showcases[selectedShowcase].theme")
+						label Description:				
+						textarea.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")					
+					#objects(ng-switch-when='objects')
+						The objects
+			.animate-switch(ng-if="selectedShowcase==null")
+				p Select an showcase

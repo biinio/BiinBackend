@@ -43,7 +43,7 @@
 								div.row
 									div.isotopeModule.col-md-4(ng-repeat="item in showcaseEdit.objects" ng-click="editObject($index)" ng-class="{active: $index == currentObjectIndexSelected}")								
 										p {{item.number}} - {{item.title}}
-										img.img-responsive(ng-src="{{item.imageUrl[0].value}}" pending-indicator)
+										img.img-responsive(ng-src="{{item.imageUrl[0].value}}")
 										a.btn.btn-sm.btn-success.fullWidth(data-toggle="modal" data-target="#elementModal") Change
 						.col-md-5
 							label Title
