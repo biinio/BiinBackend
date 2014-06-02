@@ -31,9 +31,8 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http', function(
   });
 
   //Edit an showcase
-  $scope.edit = function(identifier){
-    console.log("selected showcase: "+ identifier);
-    $scope.selectedShowcase = identifier;
+  $scope.edit = function(index){
+    $scope.selectedShowcase = index;
   }
 }]);
 

@@ -136,6 +136,11 @@ h1{
 /****
 	Buttons
 	***/
+	
+.roundedOptionsForm{
+	margin-top: -28px
+}
+
 .btn-rounded{
 	border-radius: 50%;
 	font-size: 25px;
@@ -154,4 +159,56 @@ h1{
 	position: relative;
 	top: -17px;
 	font-weight: 100;
+}
+
+/****
+	Modules
+	***/
+.moduleWrapper.active{
+	background-color: #069FCE;
+}
+
+/****
+	Tabs
+	***/
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	color: #fff;
+	background-color: #000;
+	border: 1px solid #000;
+	cursor:pointer;
+	border-radius: 0;
+	min-width: 100px;
+}
+.nav-tabs{
+	background-color: #069FCE;
+}
+
+.nav-tabs>li>a {
+	margin-right: 2px;
+	border-radius: 4px 4px 0 0;
+	color: #fff;
+	min-width: 100px;
+}
+.nav-tabs>li {
+ float: left;
+ margin-bottom: 0px; 
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	color: #fff;
+	background-color: #000;
+	border: 1px solid #000;
+	cursor: pointer;
+	border-radius: 0;
+	min-width: 100px;
+}
+.nav>li>a:hover, .nav>li>a:focus {
+	text-decoration: none;
+	background-color: #00adef;
+	cursor: pointer;
+}
+
+.nav-tabs>li>a:hover {
+	border-color: #00adef #00adef #00adef;
 }

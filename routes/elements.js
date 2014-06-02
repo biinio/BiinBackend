@@ -1,6 +1,14 @@
 modeule.exports = function(){
 	var functions ={};
+	var showcase = require('../schemas/element');
 	var imageManager = require("../biin_modules/imageManager")();
+
+	//GET the list of elements
+	functions.list = function(req,res){
+		element.find({},function (err, data) {
+			   res.json(data);
+		});		
+	}
 
 	//POST an image for a showcase
 	functions.imagePost=function(req,res,next){	  		
