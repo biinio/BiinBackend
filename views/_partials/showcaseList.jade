@@ -40,8 +40,7 @@
 				.row
 					.col-md-7.colPreview
 						.imageWrapper
-							img.imgPreview.img-responsive(ng-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" pending-indicator)								
-							a.btn.btn-lg.btn-success.fullWidth(data-toggle="modal" data-target="#basicModal") Change							
+							img.imgPreview.img-responsive(ng-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" pending-indicator)
 					.col-md-5.colPreview
 						.tab-content(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
@@ -61,8 +60,9 @@
 							#objects(ng-switch-when='objects')		
 								.body-list
 									.col-list
+										input.form-control( ng-model="queryElements" placeholder="Search" autofocus)
 										.row.elementList											
-											a.col-md1(ng-repeat="element in elements")
+											a.col-md1(ng-repeat="element in elements | filter:queryElements")
 												.moduleWrapperElement
 														img.imgElementPreview(ng-src="{{element.imageUrl[0].value}}" pending-indicator)
 
