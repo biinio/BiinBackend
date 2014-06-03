@@ -25,12 +25,12 @@
 									li(role='presentation')
 										a(role='menuitem', tabindex='-1', href='#') Separated link
 	.body-list
-		.col-md-5.col-list
+		.col-lg-4.col-md-3.col-sm-3.col-list
 			.row
 				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit($index)")					
 					.moduleWrapper(ng-class="{active: $index == selectedShowcase}")				
 						img.img-responsive(ng-src="{{item.mainImageUrl[0].value}}" style="max-width: 250px;height: auto;" pending-indicator)
-		.col-md-7
+		.col-lg-8.col-md-9.col-sm-9.colOptions
 			.animate-switch(ng-if="selectedShowcase!=null")
 				ul.nav.nav-tabs
 					li(ng-class="{active:activeTab == 'details'}")
@@ -38,11 +38,11 @@
 					li(ng-class="{active:activeTab == 'objects'}")
 						a(ng-click="activeTab='objects'") Elements
 				.row
-					.col-md-7
+					.col-md-7.colPreview
 						.imageWrapper
-							img.img-responsive(ng-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" style="max-width: 100%;height: auto;" pending-indicator)								
+							img.imgPreview.img-responsive(ng-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" pending-indicator)								
 							a.btn.btn-lg.btn-success.fullWidth(data-toggle="modal" data-target="#basicModal") Change							
-					.col-md-5
+					.col-md-5.colPreview
 						.tab-content(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
 								.hidden
@@ -58,6 +58,12 @@
 								input.form-control( ng-model="showcases[selectedShowcase].theme")
 								label Description:				
 								textarea.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")													
-							#objects(ng-switch-when='objects')								
-			.animate-switch(ng-if="selectedShowcase==null")
-				p Select an showcase
+							#objects(ng-switch-when='objects')		
+								.body-list
+									.col-list
+										.row.elementList											
+											a.col-md1(ng-repeat="element in elements")
+												.moduleWrapperElement
+														img.imgElementPreview(ng-src="{{element.imageUrl[0].value}}" pending-indicator)
+
+			.animate-switch(ng-if="selectedShowcase==null")				

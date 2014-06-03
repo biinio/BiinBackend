@@ -23,18 +23,42 @@ biinAppShowCases.config(['$routeProvider',
 }]);
 
 //App define controllers
-biinAppShowCases.controller('showcasesController', ['$scope', '$http', function($scope,$http) {
+biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSrv', function($scope,$http, elementSrv) {
   $scope.activeTab='details';
   $scope.selectedShowcase = null;
+  
+  //Get the List of Showcases
   $http.get('api/showcases').success(function(data){
   	$scope.showcases = data;
+  });
+
+  //Get the List of Elements
+  elementSrv.getList().then(function(promise){
+    $scope.elements = promise.data.data;    
   });
 
   //Edit an showcase
   $scope.edit = function(index){
     $scope.selectedShowcase = index;
-  }
+  }  
 }]);
+
+// Define the Elements Services
+biinAppShowCases.factory('elementSrv', ['$http', function (async) {
+    return {
+      getList: function () {
+        var promise = async({method:'GET', url:'/api/elements'})
+            .success(function (data, status, headers, config) {
+              return data;
+            })
+            .error(function (data, status, headers, config) {
+              return {"status": false};
+            });
+          
+          return promise;
+      }
+    }
+    }]);
 
 //App define controllers
 biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$http',"$routeParams", function($scope,$route,$http,$routeParams) {  
@@ -65,7 +89,6 @@ biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$htt
   $scope.editShowcase= function(){
     console.log("edit Showcase");
   }
-
 }]);
 
 //Image uploades pending indicator
