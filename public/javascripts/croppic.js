@@ -294,7 +294,7 @@
 		initDrag:function(){
 			var that = this;
 			
-			that.img.on("mousedown", function(e) {
+			that.img.on("mousedown touchstart", function(e) {
 				
 				e.preventDefault(); // disable selection
 
