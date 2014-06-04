@@ -304,7 +304,7 @@
                 pos_y = that.img.offset().top + drg_h - e.pageY,
                 pos_x = that.img.offset().left + drg_w - e.pageX;
 				
-				that.img.css('z-index', 1000).on("mousemove", function(e) {
+				that.img.css('z-index', 1000).on("mousemove touchmove", function(e) {
 					
 					var imgTop = e.pageY + pos_y - drg_h;
 					var imgLeft = e.pageX + pos_x - drg_w;
@@ -312,7 +312,7 @@
 					that.img.offset({
 						top:imgTop,
 						left:imgLeft
-					}).on("mouseup", function() {
+					}).on("mouseup touchend", function() {
 						$(this).removeClass('draggable').css('z-index', z_idx);
 					});
 					
@@ -328,9 +328,9 @@
 					
 				});
 	
-			}).on("mouseup", function() {
+			}).on("mouseup touchend", function() {
 				that.img.off("mousemove");
-			}).on("mouseout", function() {
+			}).on("mouseout blur", function() {
 				that.img.off("mousemove");
 			});
 			
