@@ -5,6 +5,8 @@
 		.roundedOptionsForm
 			a.btn.btn-rounded.pull-right(href="#")
 				i +
+			a.btn.btn-rounded.pull-right(href="#")
+				i S		
 		.options
 			.row
 				.col-md-10
@@ -39,16 +41,15 @@
 						a(ng-click="activeTab='objects'") Elements
 				.row
 					.col-md-6.colPreview
-						.imageWrapper
-							img.imgPreview.img-responsive(ng-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" pending-indicator)								
+						#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" image-cropper)
+						input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl[0].value" input-change="")							
 					.col-md-6.colPreview
 						.tab-content(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
 								.hidden
 									input.form-control( ng-model="showcases[selectedShowcase].identifier")				
 									input.form-control( ng-model="showcases[selectedShowcase].customerId")														
-									input.form-control( ng-model="showcases[selectedShowcase].organizationId")							
-									input#showcaseImage(ng-model="showcases[selectedShowcase].mainImageUrl[0].value" ng-change="change()")     				
+									input.form-control( ng-model="showcases[selectedShowcase].organizationId")																     				
 								label Title:
 								input.form-control( ng-model="showcases[selectedShowcase].title")
 								label Type:				
@@ -59,11 +60,11 @@
 								textarea.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")													
 							#objects(ng-switch-when='objects')		
 								.body-list
-									.col-list
-											input.form-control( ng-model="queryElements" placeholder="Search" autofocus)																				
+									.col-list																				
 										.row.elementList											
+											.col-md1.moduleWrapperElement.searchElements
+												input.form-control( ng-model="queryElements" placeholder="Search" autofocus)										
 											a.col-md1(ng-repeat="element in elements | filter:queryElements")
 												.moduleWrapperElement
 														img.imgElementPreview(ng-src="{{element.imageUrl[0].value}}" pending-indicator)
-
 			.animate-switch(ng-if="selectedShowcase==null")				

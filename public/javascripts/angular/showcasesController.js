@@ -1,5 +1,6 @@
 var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute']);
 
+var showCaseCropper = null
 //App configuration
 biinAppShowCases.config(['$routeProvider',
 	function($routeProvider){
@@ -40,7 +41,17 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
   //Edit an showcase
   $scope.edit = function(index){
     $scope.selectedShowcase = index;
+    if(showCaseCropper !=null){
+      showCaseCropper.destroy();
+      showCaseCropper = null;
+    }
+
+    //Instanciate cropper
+   showCaseCropper= createShowcaseCropper("wrapperShowcase");
+   var imgUrl = $scope.showcases[index].mainImageUrl[0].value;
+   showCaseCropper.preInitImage(imgUrl);
   }  
+
 }]);
 
 // Define the Elements Services
@@ -59,6 +70,37 @@ biinAppShowCases.factory('elementSrv', ['$http', function (async) {
       }
     }
     }]);
+
+//Define the Directives
+biinAppShowCases.directive('imageCropper',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element){       
+       showCaseCropper= createShowcaseCropper(element[0].attributes["id"].value);
+       var index =scope.selectedShowcase;
+       var imgUrl = scope.showcases[index].mainImageUrl[0].value;
+       showCaseCropper.preInitImage(imgUrl);
+    }
+  }
+})
+
+//Change of image directive
+biinAppShowCases.directive('inputChange',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element){       
+      $el = $(element);
+       $el.on('change',function(e){
+          console.log("image value: "+$el.val());
+          var index =scope.selectedShowcase;
+          scope.showcases[index].mainImageUrl[0].value= $el.val();
+          scope.$digest();
+          scope.$apply();
+       });
+    }
+  }
+});
+
 
 //App define controllers
 biinAppShowCases.controller('showcasesEditController', ['$scope','$route', '$http',"$routeParams", function($scope,$route,$http,$routeParams) {  
@@ -103,12 +145,13 @@ biinAppShowCases.directive('pendingIndicator', function(){
             // start your progress/loading animation here
             // (or whenever you attempt to load the images)
             scope.imagesLoaded.on('always', function() {
-              console.log('always event: Triggered after all images have been either loaded or confirmed broken.');
+              //console.log('always event: Triggered after all images have been either loaded or confirmed broken.');
               // end the progress/loading animation here for all images or do
               // it individually in the progress event handler below
             });
             scope.imagesLoaded.on('done', function() {
               console.log('done event: Triggered after all images have successfully loaded without any broken images.');
+
             });
             scope.imagesLoaded.on('fail', function() {
               console.log('fail event: Triggered after all images have been loaded with at least one broken image.');
@@ -133,7 +176,7 @@ biinAppShowCases.directive('imageSave', function () {
               var imageUrl= $(elem[0].attributes["data-image-cropped"].value).val();
               scope.showcaseEdit.mainImageUrl[0].value = imageUrl;
               scope.$digest();       
-
+              scope.$apply();
               //Close bootstrap Modal
               $("#basicModal").modal("toggle");         
             });
@@ -150,8 +193,7 @@ biinAppShowCases.directive('imageElementSave', function () {
             $(elem).on('click',function(e){
               var imageUrl= $(elem[0].attributes["data-image-cropped"].value).val();
               scope.showcaseEdit.objects[scope.currentObjectIndexSelected].imageUrl[0].value = imageUrl;
-              scope.$digest();       
-
+              scope.$digest();                     
               //Close bootstrap Modal
               $("#elementModal").modal("toggle");         
             });

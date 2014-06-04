@@ -7,16 +7,13 @@ body {
   padding-top: 50px;
 }
 
-
 /*
  * Global add-ons
  */
-
 .sub-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
-
 
 /*
  * Sidebar
@@ -164,7 +161,7 @@ ul.menu li a .angle-icon-sidebar {
     top: 5px;
     right: 50px;
   }
-
+  
   @media (min-width: 768px){
     .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
       margin-left: 14px;

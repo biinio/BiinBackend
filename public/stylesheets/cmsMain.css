@@ -184,7 +184,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		height: 160px;
-		width: 300px;
+		width: 290px;
 		background-color: #fff;
 
 	}
@@ -237,25 +237,28 @@
 		border-color: #00adef #00adef #00adef;
 	}
 
+	.searchElements{
+		height: auto;
+	}
 /****
 	Images
 	****/
 	.imgPreview{
-		height: 300px;
-		width: 300px;
+		height: 290px;
+		width: 290px;
+		margin-right: auto;
+		margin-left: auto;
 	}
 
 	.imgElementPreview{
 		height: 160px;
-		min-width: 300px;
-		max-height:300px;
+		min-width: 290px;
+		max-height:290px;
 	}
 
 	.colPreview{
 		padding-left: 0px; 
-		padding-right: 5px; 
-		max-width: 300px;
-		min-width: 300px;
+		padding-right: 0px; 
 	}
 /**** 
 	Bootstrap
@@ -271,3 +274,15 @@
 	 margin-left: 0px; 
 	 margin-right: 0px; 
 	}
+
+/****
+	Image Crooper
+	****/
+
+/*Cropper editor size*/
+.copperEditor {
+	position:relative; /* or fixed or absolute */
+	width: 300px;
+	height: 300px;
+    overflow: hidden;
+}

@@ -451,7 +451,15 @@
 						that.destroy();
 						
 						that.obj.append('<img class="croppedImg" src="'+response.url+'">');
-						if(that.options.outputUrlId !== ''){	$('#'+that.options.outputUrlId).val(response.url);	}
+						if(that.options.outputUrlId !== ''){
+							/****Biin App modification****/
+							//Output control
+							var $outputControl=$('#'+that.options.outputUrlId);							
+							$outputControl.val(response.url);	
+							//trigguer the change method
+							$outputControl.change();
+							/****End Biin App modification****/
+						}
 						
 						that.croppedImg = that.obj.find('.croppedImg');
 
@@ -503,7 +511,8 @@
 		},
 		//Biin Custom Modification
 		preInitImage:function(imgUrl){
-
+			var that = this;
+			that.obj.append('<img src="'+imgUrl+'">');	
 		},
 		createCropetImage:function(){
 

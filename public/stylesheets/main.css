@@ -78,16 +78,6 @@
 	background-color: #000;
 }
 
-/*Cropper editor size*/
-.copperEditor {
-	width: 640px;
-	height: 640px;
-	position:relative; /* or fixed or absolute */
-	margin-left: auto;
-    margin-right: auto;
-    overflow: hidden;
-}
-
 /*Helpers*/
 .hidden
 {

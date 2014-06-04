@@ -14,7 +14,6 @@ function roundedProgressBar(val){
     });
 }
 
-
 //Jquery Controls
 function controls(){
 
@@ -117,3 +116,24 @@ jQuery(function ($) {
     });
 
 });
+
+//Cropper Controls
+createShowcaseCropper=function(id){
+     console.log($('#'+id).data('src')); 
+      return croppeShowcasesHeader = new Croppic(id,{
+            uploadUrl:'showcases/imageUpload',
+            outputUrlId:'showcaseImage',
+            cropData:{
+                "section":"showcase"
+            },
+            cropUrl:'/showcases/imageCrop',
+            modal:false,
+            loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
+            onBeforeImgUpload: function(){ console.log('onBeforeImgUpload') },
+            onAfterImgUpload: function(){ console.log('onAfterImgUpload') },
+            onImgDrag: function(){ console.log('onImgDrag') },
+            onImgZoom: function(){ console.log('onImgZoom') },
+            onBeforeImgCrop: function(){ console.log('onBeforeImgCrop') },
+            onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
+        });   
+}
