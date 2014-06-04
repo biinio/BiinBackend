@@ -128,6 +128,11 @@
 		padding-left: 0px;
 	}
 
+	.main {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
 	@media (min-width: 768px){
 		.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
 			margin-right: 50px;
@@ -137,12 +142,6 @@
 		.navbar-nav>li>a {
 			padding-top: 0px; 
 			padding-bottom: 0px; 
-		}
-
-		.main {
-			padding-left: 0px;
-			padding-right: 0px;
-			margin-left: 180px;
 		}
 	}
 
@@ -243,6 +242,7 @@
 	****/
 	.imgPreview{
 		height: 320px;
+		width: 320px;
 	}
 
 	.imgElementPreview{
@@ -252,6 +252,8 @@
 	}
 
 	.colPreview{
+		padding-left: 0px; 
+		padding-right: 5px; 
 		max-width: 320px;
 		min-width: 320px;
 	}
