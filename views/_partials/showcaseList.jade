@@ -38,10 +38,10 @@
 					li(ng-class="{active:activeTab == 'objects'}")
 						a(ng-click="activeTab='objects'") Elements
 				.row
-					.col-md-7.colPreview
+					.col-md-6.colPreview
 						.imageWrapper
 							img.imgPreview.img-responsive(ng-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" pending-indicator)								
-					.col-md-5.colPreview
+					.col-md-6.colPreview
 						.tab-content(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
 								.hidden
