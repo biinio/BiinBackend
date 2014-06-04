@@ -40,10 +40,10 @@
 					li(ng-class="{active:activeTab == 'objects'}")
 						a(ng-click="activeTab='objects'") Elements
 				.row
-					.col-md-6.colPreview
+					.col-md-6.col-sm-6.colPreview
 						#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" image-cropper)
 						input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl[0].value" input-change="")							
-					.col-md-6.colPreview
+					.col-md-6.col-sm-6.colPreview
 						.tab-content(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
 								.hidden
