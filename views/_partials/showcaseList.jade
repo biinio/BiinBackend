@@ -1,11 +1,11 @@
 .panel.panel-default
 	.panel-heading.control-group.form-inline
 		label Showcase  	
-		input.form-control( ng-model="query" placeholder="Search" autofocus)		
+		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
 		.roundedOptionsForm
 			a.btn.btn-rounded.pull-right(href="#")
 				i +
-			a.btn.btn-rounded.pull-right(href="#")
+			a.btn.btn-rounded.pull-right(href="#" ng-click="saveDetail()")
 				i S		
 		.options
 			.row

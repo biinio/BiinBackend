@@ -41,6 +41,11 @@ module.exports = function () {
 		if(model)
 		{
 			var model = req.body.model;
+
+			//Todo remove this
+			console.log(model);
+			console.log(req.param("showcase"));
+
 			delete model._id;
 			showcase.update(
                      { identifier:req.param("showcase")},

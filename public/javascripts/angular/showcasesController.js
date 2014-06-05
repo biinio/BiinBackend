@@ -27,7 +27,8 @@ biinAppShowCases.config(['$routeProvider',
 biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSrv', function($scope,$http, elementSrv) {
   $scope.activeTab='details';
   $scope.selectedShowcase = null;
-  
+  $scope.currentModelId = null;
+
   //Get the List of Showcases
   $http.get('api/showcases').success(function(data){
   	$scope.showcases = data;
@@ -41,6 +42,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
   //Edit an showcase
   $scope.edit = function(index){
     $scope.selectedShowcase = index;
+    $scope.currentModelId = $scope.showcases[index].identifier;
     if(showCaseCropper !=null){
       showCaseCropper.destroy();
       showCaseCropper = null;
@@ -50,7 +52,15 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
    showCaseCropper= createShowcaseCropper("wrapperShowcase");
    var imgUrl = $scope.showcases[index].mainImageUrl[0].value;
    showCaseCropper.preInitImage(imgUrl);
-  }  
+  }
+
+//Save detail model object
+  $scope.saveDetail= function(){  
+    $http.put('api/showcases/'+$scope.currentModelId,{model:$scope.showcases[$scope.selectedShowcase]}).success(function(data,status){
+      if(data.state=="updated")
+        $scope.succesSaveShow=true;
+    });
+  }    
 
 }]);
 
