@@ -1,4 +1,4 @@
-var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute']);
+var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpectrumColorpicker']);
 
 var showCaseCropper = null
 //App configuration
@@ -165,38 +165,3 @@ biinAppShowCases.directive('pendingIndicator', function(){
         }
     };
 });
-
-//Update image for a ShowCase
-biinAppShowCases.directive('imageSave', function () {
-    return {
-      restrict: 'A',
-      link: function (scope, elem, attrs) {
-            // on blur, update the value in scope
-            $(elem).on('click',function(e){
-              var imageUrl= $(elem[0].attributes["data-image-cropped"].value).val();
-              scope.showcaseEdit.mainImageUrl[0].value = imageUrl;
-              scope.$digest();       
-              scope.$apply();
-              //Close bootstrap Modal
-              $("#basicModal").modal("toggle");         
-            });
-      }
-    }
-  });
-
-//Update image for a ShowCase
-biinAppShowCases.directive('imageElementSave', function () {
-    return {
-      restrict: 'A',
-      link: function (scope, elem, attrs) {
-            // on blur, update the value in scope
-            $(elem).on('click',function(e){
-              var imageUrl= $(elem[0].attributes["data-image-cropped"].value).val();
-              scope.showcaseEdit.objects[scope.currentObjectIndexSelected].imageUrl[0].value = imageUrl;
-              scope.$digest();                     
-              //Close bootstrap Modal
-              $("#elementModal").modal("toggle");         
-            });
-      }
-    }
-  });

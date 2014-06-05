@@ -9,7 +9,9 @@
 	h1{
 		font-size: 15px;
 	}
-
+	.form-control {
+		height: 33px;
+	}
 /****
 	Panels and Nav-var Custom Style
 	***/
@@ -285,4 +287,98 @@
 	width: 300px;
 	height: 300px;
     overflow: hidden;
+}
+
+/****
+	Spectrum Color Picker Override
+	****/
+.sp-replacer{
+	background-color:inherit;
+	border-radius: 50%;
+	border-color: #ECEDEE;
+	padding: 2px;
+}
+.sp-preview {
+	height: 18px;
+	width: 18px;
+	margin-right: 0px;
+	border-radius: 50%;
+	border-color: transparent;
+}
+.sp-dd{
+	display: none;
+}
+.sp-preview-inner{
+	border-radius: 50%;	
+	border-color: transparent;
+}
+
+/****
+	Form Picker
+	****/
+.form-picker{
+	position: relative;
+}
+
+.form-picker input{
+	border: none;
+	z-index: 2;
+	position: absolute;
+	display: block;
+	top: 5px;
+	width: 61%;
+	left: 11px;
+}
+
+.form-picker input:hover{
+	border: none;
+}
+
+.form-picker span.separator {
+	position: absolute;
+	border-left: solid;
+	border-left: 1px solid #ccc;
+	height: 100%;
+	top: 0px;
+	right: 47px;
+}
+
+.form-picker textarea:focus, input:focus{
+    outline: 0;
+}
+
+.form-picker .picker{
+	position: absolute;
+	right: 48px;
+	top: 4px;
+	z-index: 2;
+}
+
+.form-picker select{
+	border: none;
+	background-color: #fff;
+	position: absolute;
+	right: 0;
+	top: 7px;
+	z-index: 2;
+	outline: 0;
+}
+
+/**** Preview style
+****/
+.previewLabel{
+	position: absolute;
+	left: 30px;
+}
+
+.previewLabel.title1{
+	bottom: 100px;
+}
+
+.previewLabel.title2{
+	bottom: 70px;
+}
+
+.previewLabel.title3{
+	bottom: 40px;
 }

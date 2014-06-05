@@ -43,21 +43,60 @@
 					.col-md-6.col-sm-6.colPreview
 						#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" image-cropper)
 						input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl[0].value" input-change="")							
+						label.previewLabel.title1(style="color:{{showcases[selectedShowcase].titleColor}}; font-size:{{showcases[selectedShowcase].titleSize}}") {{showcases[selectedShowcase].title}}
+						label.previewLabel.title2(style="color:{{showcases[selectedShowcase].titleColor2}}; font-size:{{showcases[selectedShowcase].titleSize2}}") {{showcases[selectedShowcase].title2}}
+						label.previewLabel.title3(style="color:{{showcases[selectedShowcase].titleColor3}}; font-size:{{showcases[selectedShowcase].titleSize3}}") {{showcases[selectedShowcase].title3}}
 					.col-md-6.col-sm-6.colPreview
 						.tab-content(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
 								.hidden
 									input.form-control( ng-model="showcases[selectedShowcase].identifier")				
 									input.form-control( ng-model="showcases[selectedShowcase].customerId")														
-									input.form-control( ng-model="showcases[selectedShowcase].organizationId")																     				
-								label Title:
-								input.form-control( ng-model="showcases[selectedShowcase].title")
-								label Type:				
-								input.form-control( ng-model="showcases[selectedShowcase].type")
+									input.form-control( ng-model="showcases[selectedShowcase].organizationId")
+								.row
+									label Title 1:							
+								.row
+									span.form-group.form-control.form-picker														     				
+										input(ng-model="showcases[selectedShowcase].title")										
+										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].titleColor" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")				
+										span.separator
+										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize")
+											option(value="5px") XS
+											option(value="15px") S
+											option(value="25px") L
+											option(value="35px") XL
+								.row
+									label Title 2:		
+								.row									
+									span.form-group.form-control.form-picker
+										input( ng-model="showcases[selectedShowcase].title2")
+										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].titleColor2" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")									
+										span.separator
+										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize2")
+											option(value="5px") XS
+											option(value="15px") S
+											option(value="25px") L
+											option(value="35px") XL
+								.row
+									label Title 3:
+								.row
+									span.form-group.form-control.form-picker
+										input( ng-model="showcases[selectedShowcase].title3")
+										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].titleColor3" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")																		
+										span.separator
+										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize3")
+											option(value="5px") XS
+											option(value="15px") S
+											option(value="25px") L
+											option(value="35px") XL
+								.hidden										
+									label Type:				
+									input.form-control( ng-model="showcases[selectedShowcase].type")
 								label Theme:				
 								input.form-control( ng-model="showcases[selectedShowcase].theme")
 								label Description:				
-								textarea.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")													
+								textarea.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")																					
+								button.btn.btn-default.form-control Save
 							#objects(ng-switch-when='objects')		
 								.body-list
 									.col-list																				
