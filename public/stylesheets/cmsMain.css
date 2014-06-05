@@ -360,17 +360,50 @@
     background: none; 
     outline: none;     
     -webkit-appearance: none;  
+    -moz-appearance:none;
     filter: alpha(opacity=0);  
+    -moz-appearance:window;
 
-    border:solid;
-	background-color: #fff;
 	position: absolute;
 	right: 0;
-	top: 7px;
+	top: 0px;
 	z-index: 2;
 	outline: 0;
+	height: 30px;
+	width: 45px;
 }
 
+.form-picker .caret{
+	position: absolute;
+	right: 7px;
+	height: 4px;
+	width: 10px;
+	border-top-width: 5px;
+	border-right-width: 5px;
+	border-left-width: 5px;
+	top: 20px;
+}
+
+
+.form-picker .caret-reversed{
+	height: 4px;
+    position: absolute;
+    right: 7px;
+    top: 6px;
+    width: 10px;
+}
+
+.caret-reversed {
+	border-top-width: 0px;
+	border-left: 5px solid rgba(0, 0, 0, 0);
+    border-right: 5px solid rgba(0, 0, 0, 0);
+    border-bottom: 5px solid #555555;
+    display: inline-block;
+    margin-left: 2px;
+    vertical-align: middle;
+    height: 4px;
+	width: 10px;
+}
 /**** Preview style
 ****/
 .previewLabel{
