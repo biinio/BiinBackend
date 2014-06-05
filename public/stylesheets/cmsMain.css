@@ -9,8 +9,10 @@
 	h1{
 		font-size: 15px;
 	}
+
 	.form-control {
 		height: 33px;
+		width: 95%;
 	}
 
 	.search-box{
@@ -177,6 +179,12 @@
 		position: relative;
 		top: -17px;
 		font-weight: 100;
+	}
+	.btn-default
+	{
+		background-color: #069FCE;
+		color: #fff;
+		border-color: none;
 	}
 
 /****

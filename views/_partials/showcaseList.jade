@@ -5,8 +5,6 @@
 		.roundedOptionsForm
 			a.btn.btn-rounded.pull-right(href="#")
 				i +
-			a.btn.btn-rounded.pull-right(href="#" ng-click="saveDetail()")
-				i S		
 		.options
 			.row
 				.col-md-10
@@ -51,8 +49,10 @@
 							#details(ng-switch-when='details')
 								.hidden
 									input.form-control( ng-model="showcases[selectedShowcase].identifier")				
-									input.form-control( ng-model="showcases[selectedShowcase].customerId")														
+									input.form-control( ng-model="showcases[selectedShowcase].customerId")																						
 									input.form-control( ng-model="showcases[selectedShowcase].organizationId")
+									input.form-control( ng-model="showcases[selectedShowcase].type")
+									input.form-group.form-control( ng-model="showcases[selectedShowcase].theme")										
 								.row
 									label Title 1:							
 								.row
@@ -63,6 +63,7 @@
 										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize")
 											option(value="5px") XS
 											option(value="15px") S
+											option(value="20px") M
 											option(value="25px") L
 											option(value="35px") XL
 										span.caret-reversed
@@ -77,6 +78,7 @@
 										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize2")
 											option(value="5px") XS
 											option(value="15px") S
+											option(value="20px") M
 											option(value="25px") L
 											option(value="35px") XL
 										span.caret-reversed
@@ -91,18 +93,17 @@
 										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize3")
 											option(value="5px") XS
 											option(value="15px") S
+											option(value="20px") M
 											option(value="25px") L
 											option(value="35px") XL
 										span.caret-reversed
 										span.caret
-								.hidden										
-									label Type:				
-									input.form-control( ng-model="showcases[selectedShowcase].type")
-								label Theme:				
-								input.form-control( ng-model="showcases[selectedShowcase].theme")
-								label Description:				
-								textarea.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")																					
-								button.btn.btn-default.form-control Save
+								.row
+									label Description:				
+								.row
+									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")																					
+								.row									
+									button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE
 							#objects(ng-switch-when='objects')		
 								.body-list
 									.col-list																				
