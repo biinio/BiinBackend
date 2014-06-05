@@ -354,8 +354,15 @@
 	z-index: 2;
 }
 
-.form-picker select{
-	border: none;
+.forxm-picker select{
+	/**Remove style**/
+	border: none;  
+    background:  
+    none; outline:  
+    none; opacity: 0;  
+    -webkit-appearance: none;  
+    filter: alpha(opacity=0);  
+	
 	background-color: #fff;
 	position: absolute;
 	right: 0;
@@ -369,6 +376,9 @@
 .previewLabel{
 	position: absolute;
 	left: 30px;
+	overflow: hidden;
+	max-height: 39px;
+	max-width: 270px;
 }
 
 .previewLabel.title1{
