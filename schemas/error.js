@@ -5,5 +5,6 @@ module.exports = mongoose.model('errors', {
 	title:String,
 	description:String,
 	proximityUUID:String,
-	region:String
+	region:String,
+	issueDate:String
 });

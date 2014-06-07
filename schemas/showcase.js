@@ -1,57 +1,43 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var showcaseSchema = new Schema( {
-	customerId: String,
-	organizationId: String,
 	identifier:{ type: String, index: true },
-	type:String,
-	title:String,
+	customerIdentifier: String,
+	organizationIdentifier: String,
+	type:{type:Number},
+	title1:String,
 	title2:String,
 	title3:String,
-	titleColor:String,
-	titleColor2:String,
-	titleColor3:String,
-	titleSize:String,
-	titleSize2:String,
-	titleSize3:String,
+	title1Color:String,
+	title2Color:String,
+	title3Color:String,
+	title1Size:String,
+	title2Size:String,
+	title3Size:String,
 	showcaseDescription:String,
-	theme:String,
-	mainImageUrl:[
-		{
-			value:String
-		}
-	],
+	mainImageUrl: String,
 	objects:[
 		{
-			objectId:String,
-			number:String,
-			type:{type:String},
+			objectIdentifier:String,
+			position:Number,
+			type:{type:Number},
 			likes:String,
-			title:String,
-			objectDescription:[
-				{
-					value:String
-				}
-			],
-			actionType:String,
+            title1:String,
+	        title2:String,
+	        title1Color:String,
+	        title2Color:String,
+	        title1Size:String,
+	        title2Size:String,
+			objectDescription:String,
+			actionType:Number,
 			originalPrice:String,
 			biinPrice:String,
 			discount:String,
 			savings:String,
 			biinSold:String,
 			timeFrame:String,
-			imageUrl:[
-				{
-					value:String
-				}
-			],
-			theme:String,
-			categories:[
-				{
-					category:String
-				}
-			]
-
+			imageUrl:String,
+			categories:[]
 		}
 	]
 });
