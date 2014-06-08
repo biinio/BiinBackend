@@ -50,7 +50,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
 
     //Instanciate cropper
    showCaseCropper= createShowcaseCropper("wrapperShowcase");
-   var imgUrl = $scope.showcases[index].mainImageUrl[0].value;
+   var imgUrl = $scope.showcases[index].mainImageUrl;
    showCaseCropper.preInitImage(imgUrl);
   }
 
@@ -88,7 +88,7 @@ biinAppShowCases.directive('imageCropper',function(){
     link:function(scope,element){       
        showCaseCropper= createShowcaseCropper(element[0].attributes["id"].value);
        var index =scope.selectedShowcase;
-       var imgUrl = scope.showcases[index].mainImageUrl[0].value;
+       var imgUrl = scope.showcases[index].mainImageUrl;
        showCaseCropper.preInitImage(imgUrl);
     }
   }
@@ -103,7 +103,7 @@ biinAppShowCases.directive('inputChange',function(){
        $el.on('change',function(e){
           console.log("image value: "+$el.val());
           var index =scope.selectedShowcase;
-          scope.showcases[index].mainImageUrl[0].value= $el.val();
+          scope.showcases[index].mainImageUrl= $el.val();
           scope.$digest();
           scope.$apply();
        });

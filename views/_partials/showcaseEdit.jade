@@ -18,22 +18,20 @@
 					.processWrapper.hidden
 						input.dial(data-thickness=".3" data-fgColor="#222222")
 					.imageWrapper
-						img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl[0].value}}" style="max-width: 100%;height: auto;" pending-indicator)								
+						img.img-responsive(ng-src="{{showcaseEdit.mainImageUrl}}" style="max-width: 100%;height: auto;" pending-indicator)								
 						a.btn.btn-lg.btn-success.fullWidth(data-toggle="modal" data-target="#basicModal") Change
 				.col-md-8
-					input#showcaseImage.hidden(ng-model="showcaseEdit.mainImageUrl[0].value" ng-change="change()")
+					input#showcaseImage.hidden(ng-model="showcaseEdit.mainImageUrl" ng-change="change()")
 					label Identifier:
 					input.form-control( ng-model="showcaseEdit.identifier")
 					label Title:
 					input.form-control( ng-model="showcaseEdit.title")
 					label Customer Id:
-					input.form-control( ng-model="showcaseEdit.customerId")
+					input.form-control( ng-model="showcaseEdit.customerIdentifier")
 					label Organization:
-					input.form-control( ng-model="showcaseEdit.organizationId")
+					input.form-control( ng-model="showcaseEdit.organizationIdentifier")
 					label Type:				
 					input.form-control( ng-model="showcaseEdit.type")
-					label Theme:				
-					input.form-control( ng-model="showcaseEdit.theme")
 					label Description:				
 					textarea.form-control( ng-model="showcaseEdit.showcaseDescription")
 			#objects.tab-pane.row(ng-switch-when='objects')				

@@ -1,34 +1,26 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var elementSchema = new Schema({
-	objectId:String,
-	number:String,
-	type:{type:String},
+    objectIdentifier:String,
+    position:Number,
+	type:{type:Number},
 	likes:String,
-	title:String,
-	objectDescription:[
-		{
-			value:String
-		}
-	],
-	actionType:String,
+    title1:String,
+	title2:String,
+	title1Color:String,
+	title2Color:String,
+	title1Size:String,
+	title2Size:String,
+	objectDescription:String,
+	actionType:Number,
 	originalPrice:String,
 	biinPrice:String,
 	discount:String,
 	savings:String,
 	biinSold:String,
 	timeFrame:String,
-	imageUrl:[
-		{
-			value:String
-		}
-	],
-	theme:String,
-	categories:[
-		{
-			category:String
-		}
-	]
+	imageUrl:String,
+	categories:[]
 
 });
 

@@ -29,7 +29,7 @@
 			.row
 				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit($index)")					
 					.moduleWrapper(ng-class="{active: $index == selectedShowcase}")				
-						img.img-responsive(ng-src="{{item.mainImageUrl[0].value}}" style="max-width: 250px;height: auto;" pending-indicator)
+						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 		.col-lg-8.col-md-9.col-sm-9.colOptions
 			.animate-switch(ng-if="selectedShowcase!=null")
 				ul.nav.nav-tabs
@@ -39,28 +39,27 @@
 						a(ng-click="activeTab='objects'") Elements
 				.row
 					.col-md-6.col-sm-6.colPreview
-						#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl[0].value}}" image-cropper)
-						input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl[0].value" input-change="")							
-						label.previewLabel.title1(style="color:{{showcases[selectedShowcase].titleColor}}; font-size:{{showcases[selectedShowcase].titleSize}}") {{showcases[selectedShowcase].title}}
-						label.previewLabel.title2(style="color:{{showcases[selectedShowcase].titleColor2}}; font-size:{{showcases[selectedShowcase].titleSize2}}") {{showcases[selectedShowcase].title2}}
-						label.previewLabel.title3(style="color:{{showcases[selectedShowcase].titleColor3}}; font-size:{{showcases[selectedShowcase].titleSize3}}") {{showcases[selectedShowcase].title3}}
+						#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
+						input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
+						label.previewLabel.title1(style="color:{{showcases[selectedShowcase].title1Color}}; font-size:{{showcases[selectedShowcase].title1Size}}") {{showcases[selectedShowcase].title1}}
+						label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}") {{showcases[selectedShowcase].title2}}
+						label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}") {{showcases[selectedShowcase].title3}}
 					.col-md-6.col-sm-6.colPreview
 						.tab-content(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
 								.hidden
 									input.form-control( ng-model="showcases[selectedShowcase].identifier")				
-									input.form-control( ng-model="showcases[selectedShowcase].customerId")																						
-									input.form-control( ng-model="showcases[selectedShowcase].organizationId")
-									input.form-control( ng-model="showcases[selectedShowcase].type")
-									input.form-group.form-control( ng-model="showcases[selectedShowcase].theme")										
+									input.form-control( ng-model="showcases[selectedShowcase].customerIdentifier")																						
+									input.form-control( ng-model="showcases[selectedShowcase].organizationIdentifier")
+									input.form-control( ng-model="showcases[selectedShowcase].type")										
 								.row
 									label Title 1:							
 								.row
 									span.form-group.form-control.form-picker														     				
-										input(ng-model="showcases[selectedShowcase].title")										
-										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].titleColor" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")				
+										input(ng-model="showcases[selectedShowcase].title1")										
+										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].title1Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")				
 										span.separator
-										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize")
+										select.selectpicker(ng-model="showcases[selectedShowcase].title1Size")
 											option(value="5px") XS
 											option(value="15px") S
 											option(value="20px") M
@@ -73,9 +72,9 @@
 								.row									
 									span.form-group.form-control.form-picker
 										input( ng-model="showcases[selectedShowcase].title2")
-										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].titleColor2" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")									
+										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].title2Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")									
 										span.separator
-										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize2")
+										select.selectpicker(ng-model="showcases[selectedShowcase].title2Size")
 											option(value="5px") XS
 											option(value="15px") S
 											option(value="20px") M
@@ -88,9 +87,9 @@
 								.row
 									span.form-group.form-control.form-picker
 										input( ng-model="showcases[selectedShowcase].title3")
-										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].titleColor3" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")																		
+										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].title3Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")																		
 										span.separator
-										select.selectpicker(ng-model="showcases[selectedShowcase].titleSize3")
+										select.selectpicker(ng-model="showcases[selectedShowcase].title3Size")
 											option(value="5px") XS
 											option(value="15px") S
 											option(value="20px") M
@@ -112,5 +111,5 @@
 												input.form-control( ng-model="queryElements" placeholder="Search" autofocus)										
 											a.col-md1(ng-repeat="element in elements | filter:queryElements")
 												.moduleWrapperElement
-														img.imgElementPreview(ng-src="{{element.imageUrl[0].value}}" pending-indicator)
+														img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator)
 			.animate-switch(ng-if="selectedShowcase==null")				
