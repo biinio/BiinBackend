@@ -1,7 +1,5 @@
 extends ../layout_dashboard
 block content	
-	#sectionContent(ng-app="biinAppShowCases")
-		#wrapper(ng-controller="showcasesController")
+	#sectionContent.max-height(ng-app="biinAppShowCases" ng-controller="showcasesController")
 			#wrapperHeader.row
-			#wrapperContent.row
-				div(ng-view)
+			#wrapperContent.row.max-height(ng-view)

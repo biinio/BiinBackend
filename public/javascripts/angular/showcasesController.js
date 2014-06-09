@@ -1,4 +1,4 @@
-var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpectrumColorpicker']);
+var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpectrumColorpicker','ui.slimscroll']);
 
 var showCaseCropper = null
 //App configuration

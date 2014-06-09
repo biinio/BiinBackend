@@ -1,4 +1,4 @@
-.panel.panel-default
+.panel.panel-default.max-height
 	.panel-heading.control-group.form-inline
 		label Showcase  	
 		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
@@ -24,28 +24,33 @@
 									li.divider(role='presentation')
 									li(role='presentation')
 										a(role='menuitem', tabindex='-1', href='#') Separated link
-	.body-list
-		.col-lg-4.col-md-3.col-sm-3.col-list
-			.row
+	.body-list.max-height
+		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
+			.row(slimscroll="" slimscroll-option="{height: 'auto'}")
 				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit($index)")					
 					.moduleWrapper(ng-class="{active: $index == selectedShowcase}")				
 						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-		.col-lg-8.col-md-9.col-sm-9.colOptions
-			.animate-switch(ng-if="selectedShowcase!=null")
+		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
+			.animate-switch.max-height(ng-if="selectedShowcase!=null")
 				ul.nav.nav-tabs
 					li(ng-class="{active:activeTab == 'details'}")
 						a(ng-click="activeTab='details'") Details
 					li(ng-class="{active:activeTab == 'objects'}")
 						a(ng-click="activeTab='objects'") Elements
-				.row
-					.col-md-6.col-sm-6.colPreview
-						#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
-						input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
-						label.previewLabel.title1(style="color:{{showcases[selectedShowcase].title1Color}}; font-size:{{showcases[selectedShowcase].title1Size}}") {{showcases[selectedShowcase].title1}}
-						label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}") {{showcases[selectedShowcase].title2}}
-						label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}") {{showcases[selectedShowcase].title3}}
-					.col-md-6.col-sm-6.colPreview
-						.tab-content(ng-switch='activeTab')					
+				.row.max-height
+					.col-md-6.col-sm-6.colPreview.max-height
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}")
+							.previewShowcaseWrapper
+								#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
+								input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
+								label.previewLabel.title1(style="color:{{showcases[selectedShowcase].title1Color}}; font-size:{{showcases[selectedShowcase].title1Size}}") {{showcases[selectedShowcase].title1}}
+								label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}") {{showcases[selectedShowcase].title2}}
+								label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}") {{showcases[selectedShowcase].title3}}
+							.previewShowcaseElements.row
+								.col-md1.moduleWrapperShowcaseElement(ng-repeat="obj in showcases[selectedShowcase].objects")
+									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
+					.col-md-6.col-sm-6.colPreview.max-height
+						.tab-content.max-height(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
 								.hidden
 									input.form-control( ng-model="showcases[selectedShowcase].identifier")				
@@ -103,13 +108,12 @@
 									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")																					
 								.row									
 									button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE
-							#objects(ng-switch-when='objects')		
-								.body-list
-									.col-list																				
-										.row.elementList											
+							#objects.max-height(ng-switch-when='objects')		
+									.col-list.max-height																				
+										.row.elementList(slimscroll slimscroll-option="{height: 'auto'}")											
 											.col-md1.moduleWrapperElement.searchElements
-												input.form-control( ng-model="queryElements" placeholder="Search" autofocus)										
+												input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
 											a.col-md1(ng-repeat="element in elements | filter:queryElements")
 												.moduleWrapperElement
 														img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator)
-			.animate-switch(ng-if="selectedShowcase==null")				
+			.animate-switch(ng-if="selectedShowcase==null")
