@@ -32,6 +32,12 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
   //Get the List of Showcases
   $http.get('api/showcases').success(function(data){
   	$scope.showcases = data;
+
+    if($scope.selectedShowcase == null && $scope.showcases && $scope.showcases.length>0){
+      //Select the first element
+      $scope.edit(0);  
+    }
+    
   });
 
   //Get the List of Elements
