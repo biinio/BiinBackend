@@ -77,7 +77,11 @@ createShowcaseCropper=function(id){
         });   
 }
 
-
+var elementsDragAndDrop= function(){
+    $(".moduleWrapperElement").each(function(e){
+        //$(this).on()
+    })
+}
 
 var showcaseHammerManager = function(){
     var hammer_options = {drag:true, transform: false};
@@ -99,7 +103,9 @@ var showcaseHammerManager = function(){
                 case 'touch':
                     $moveDiv.css({top: $target.offset().top, left: $target.offset().left});
                     $moveDiv.translate3d({x:ev.gesture.deltaX,y:ev.gesture.deltaY.top,z:0});
-                    $moveDiv.innerHTML = $target[0].outerHTML;
+                    //$moveDiv.appendChild($target[0].outerHTML);
+                    $target.clone().appendTo($moveDiv);
+                    $target.closest(".moduleWrapperElement").toggle();
                     $moveDiv.hammer(hammer_options).on("drag dragend",function(ev){
                         var posX=0, posY=0,
                             lastPosX=0, lastPosY=0,

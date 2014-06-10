@@ -4,7 +4,7 @@ var showcaseSchema = new Schema( {
 	identifier:{ type: String, index: true },
 	customerIdentifier: String,
 	organizationIdentifier: String,
-	type:{type:Number},
+	showcaseType:{type:String},
 	title1:String,
 	title2:String,
 	title3:String,
@@ -19,8 +19,8 @@ var showcaseSchema = new Schema( {
 	objects:[
 		{
 			objectIdentifier:String,
-			position:Number,
-			type:{type:Number},
+			position:String,
+			objectType:{type:String},
 			likes:String,
             title1:String,
 	        title2:String,
@@ -29,7 +29,7 @@ var showcaseSchema = new Schema( {
 	        title1Size:String,
 	        title2Size:String,
 			objectDescription:String,
-			actionType:Number,
+			actionType:String,
 			originalPrice:String,
 			biinPrice:String,
 			discount:String,

@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var elementSchema = new Schema({
     objectIdentifier:String,
-    position:Number,
-	type:{type:Number},
+    position:String,
+	objectType:{type:String},
 	likes:String,
     title1:String,
 	title2:String,
@@ -12,7 +12,7 @@ var elementSchema = new Schema({
 	title1Size:String,
 	title2Size:String,
 	objectDescription:String,
-	actionType:Number,
+	actionType:String,
 	originalPrice:String,
 	biinPrice:String,
 	discount:String,
