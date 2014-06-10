@@ -43,9 +43,9 @@
 							.previewShowcaseWrapper
 								#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
 								input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
-								label.previewLabel.title1(style="color:{{showcases[selectedShowcase].title1Color}}; font-size:{{showcases[selectedShowcase].title1Size}}") {{showcases[selectedShowcase].title1}}
-								label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}") {{showcases[selectedShowcase].title2}}
-								label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}") {{showcases[selectedShowcase].title3}}
+								label.previewLabel.title1(style="color:{{showcases[selectedShowcase].title1Color}}; font-size:{{showcases[selectedShowcase].title1Size}}px") {{showcases[selectedShowcase].title1}}
+								label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}px") {{showcases[selectedShowcase].title2}}
+								label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}px") {{showcases[selectedShowcase].title3}}
 							.previewShowcaseElements.row
 								.col-md1.moduleWrapperShowcaseElement(ng-repeat="obj in showcases[selectedShowcase].objects")
 									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
@@ -65,11 +65,11 @@
 										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].title1Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")				
 										span.separator
 										select.selectpicker(ng-model="showcases[selectedShowcase].title1Size")
-											option(value="5px") XS
-											option(value="15px") S
-											option(value="20px") M
-											option(value="25px") L
-											option(value="35px") XL
+											option(value="5") XS
+											option(value="15") S
+											option(value="20") M
+											option(value="25") L
+											option(value="35") XL
 										span.caret-reversed
 										span.caret
 								.row
@@ -81,10 +81,10 @@
 										span.separator
 										select.selectpicker(ng-model="showcases[selectedShowcase].title2Size")
 											option(value="5px") XS
-											option(value="15px") S
-											option(value="20px") M
-											option(value="25px") L
-											option(value="35px") XL
+											option(value="15") S
+											option(value="20") M
+											option(value="25") L
+											option(value="35") XL
 										span.caret-reversed
 										span.caret											
 								.row
@@ -95,11 +95,11 @@
 										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].title3Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")																		
 										span.separator
 										select.selectpicker(ng-model="showcases[selectedShowcase].title3Size")
-											option(value="5px") XS
-											option(value="15px") S
-											option(value="20px") M
-											option(value="25px") L
-											option(value="35px") XL
+											option(value="5") XS
+											option(value="15") S
+											option(value="20") M
+											option(value="25") L
+											option(value="35") XL
 										span.caret-reversed
 										span.caret
 								.row
@@ -115,5 +115,5 @@
 												input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
 											a.col-md1(ng-repeat="element in elements | filter:queryElements")
 												.moduleWrapperElement
-														img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator)
+														img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator ="" data-draggable='true')
 			.animate-switch(ng-if="selectedShowcase==null")

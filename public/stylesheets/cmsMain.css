@@ -336,7 +336,7 @@
 	height: 290px;
 	padding-top: 10px;
 	padding-bottom: 0px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 /****
@@ -479,4 +479,14 @@
 
 .previewLabel.title3{
 	bottom: 40px;
+}
+
+/**** Draggin Elements effect**/
+.elementDragging{
+	position:absolute;
+	background-color: black;
+	height: 160px;
+	width: 290px;
+	opacity: 0.35;
+    z-index: 9999;
 }

@@ -81,45 +81,46 @@ createShowcaseCropper=function(id){
 
 var showcaseHammerManager = function(){
     var hammer_options = {drag:true, transform: false};
+    var $moveDiv = document.createElement('div');
+    document.body.appendChild($moveDiv);
+    $moveDiv =$($moveDiv);
+    $moveDiv.attr("data-draggable","true");
+
+    $moveDiv.addClass("elementDragging");
     $("[data-hm-showcase]")
       .hammer(hammer_options)
       .on("swipeleft", function(ev) { 
         console.log(ev); 
     })
-      .on("touch drag dragend",function(ev){
+      .on("touch drag dragend",function(ev){        
         var $target = $(ev.target);
-        var posX=0, posY=0,
-            lastPosX=0, lastPosY=0,
-            bufferX=0, bufferY=0,
-            scale=1, last_scale,
-            rotation= 1, last_rotation, dragReady=0;
-        switch(ev.type) {
-            case 'touch':
-                last_scale = scale;
-                last_rotation = rotation; 
-                break;
-            case 'drag':
-                    posX = ev.gesture.deltaX + lastPosX;
-                    posY = ev.gesture.deltaY + lastPosY;
-                break; 
-            case 'transform':
-                rotation = last_rotation + ev.gesture.rotation;
-                scale = Math.max(1, Math.min(last_scale * ev.gesture.scale, 10));
-                break;
-            case 'dragend':
-                lastPosX = posX;
-                lastPosY = posY;
-                break;
+        if($target.attr("data-draggable")){
+            switch(ev.type) {
+                case 'touch':
+                    $moveDiv.css({top: $target.offset().top, left: $target.offset().left});
+                    $moveDiv.translate3d({x:ev.gesture.deltaX,y:ev.gesture.deltaY.top,z:0});
+                    $moveDiv.innerHTML = $target[0].outerHTML;
+                    $moveDiv.hammer(hammer_options).on("drag dragend",function(ev){
+                        var posX=0, posY=0,
+                            lastPosX=0, lastPosY=0,
+                            bufferX=0, bufferY=0,
+                            scale=1, last_scale,
+                            rotation= 1, last_rotation, dragReady=0;
+                         switch(ev.type) {
+                            case 'drag':
+                                    posX = ev.gesture.deltaX + lastPosX;
+                                    posY = ev.gesture.deltaY + lastPosY;
+                                break;                             
+                            case 'dragend':
+                                lastPosX = posX;
+                                lastPosY = posY;
+                                break;                            
+                            }                            
+                        $moveDiv.addClass("elementDragging");
+                        $moveDiv.translate3d({x:posX,y:posY,z:0});    
+                    })    
+                } 
         }
-        $target.translate3d({x:posX,y:posY,z:0});
-        console.log(ev);
-        /*
-            $target[0].style.transform = transform;
-            $target[0].style.oTransform = transform;
-            $target[0].style.msTransform = transform;
-            $target[0].style.mozTransform = transform;
-            $target[0].style.webkitTransform = transform; 
-        */
-        //$target.css('webkitTransform', "rotateX("+xAngle+"deg) rotateY("+yAngle+"deg)" );
       });
+
 }
