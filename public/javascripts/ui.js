@@ -1,3 +1,31 @@
+;(function($) {
+    var delay = 0;
+    $.fn.translate3d = function(translations, speed, easing, complete) {
+        var opt = $.speed(speed, easing, complete);
+        opt.easing = opt.easing || 'ease';
+        translations = $.extend({x: 0, y: 0, z: 0}, translations);
+
+        return this.each(function() {
+            var $this = $(this);
+
+            $this.css({ 
+                transitionDuration: opt.duration + 'ms',
+                transitionTimingFunction: opt.easing,
+                transform: 'translate3d(' + translations.x + 'px, ' + translations.y + 'px, ' + translations.z + 'px)'
+            });
+
+            setTimeout(function() { 
+                $this.css({ 
+                    transitionDuration: '0s', 
+                    transitionTimingFunction: 'ease'
+                });
+
+                opt.complete();
+            }, opt.duration + (delay || 0));
+        });
+    };
+})(jQuery);
+
 //Jquery Controls
 function controls(){
 
@@ -47,4 +75,51 @@ createShowcaseCropper=function(id){
             onBeforeImgCrop: function(){ console.log('onBeforeImgCrop') },
             onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
         });   
+}
+
+
+
+var showcaseHammerManager = function(){
+    var hammer_options = {drag:true, transform: false};
+    $("[data-hm-showcase]")
+      .hammer(hammer_options)
+      .on("swipeleft", function(ev) { 
+        console.log(ev); 
+    })
+      .on("touch drag dragend",function(ev){
+        var $target = $(ev.target);
+        var posX=0, posY=0,
+            lastPosX=0, lastPosY=0,
+            bufferX=0, bufferY=0,
+            scale=1, last_scale,
+            rotation= 1, last_rotation, dragReady=0;
+        switch(ev.type) {
+            case 'touch':
+                last_scale = scale;
+                last_rotation = rotation; 
+                break;
+            case 'drag':
+                    posX = ev.gesture.deltaX + lastPosX;
+                    posY = ev.gesture.deltaY + lastPosY;
+                break; 
+            case 'transform':
+                rotation = last_rotation + ev.gesture.rotation;
+                scale = Math.max(1, Math.min(last_scale * ev.gesture.scale, 10));
+                break;
+            case 'dragend':
+                lastPosX = posX;
+                lastPosY = posY;
+                break;
+        }
+        $target.translate3d({x:posX,y:posY,z:0});
+        console.log(ev);
+        /*
+            $target[0].style.transform = transform;
+            $target[0].style.oTransform = transform;
+            $target[0].style.msTransform = transform;
+            $target[0].style.mozTransform = transform;
+            $target[0].style.webkitTransform = transform; 
+        */
+        //$target.css('webkitTransform', "rotateX("+xAngle+"deg) rotateY("+yAngle+"deg)" );
+      });
 }

@@ -68,6 +68,8 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     });
   }    
 
+  //Hammer managements
+  showcaseHammerManager();
 }]);
 
 // Define the Elements Services
