@@ -481,12 +481,8 @@
 	bottom: 40px;
 }
 
-/**** Draggin Elements effect**/
-.elementDragging{
-	position:absolute;
-	background-color: black;
-	height: 160px;
-	width: 290px;
-	opacity: 0.35;
-    z-index: 9999;
+.dropColumn{
+	background-color: #00adef;
+	width: 80%;
+	height: 100%;
 }

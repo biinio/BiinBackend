@@ -19,11 +19,12 @@
 				cursor: -webkit-grab;
 				cursor: grab;
 			}
+			
 			.cropImgWrapper:active{
 				cursor: -webkit-grabbing;
 				cursor: grabbing;
-			}
-			
+			}	
+
 			.cropImgUpload{
 				z-index:2;
 				position:absolute;
@@ -37,8 +38,8 @@
 				text-align:center;
 				line-height:20px;
 				color:#FFF;
-			}
-			
+			}			
+
 			.cropControls{
 				z-index:2;
 				position:absolute;
@@ -50,7 +51,7 @@
 				font-family:sans-serif;
 				background-color:rgba(0,0,0,0.35); 
 			}
-			
+
 			.cropControls i{
 				display:block;
 				float:left;

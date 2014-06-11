@@ -16,6 +16,7 @@ var showcaseSchema = new Schema( {
 	title3Size:String,
 	showcaseDescription:String,
 	mainImageUrl: String,
+	pushNotification:String,
 	objects:[
 		{
 			objectIdentifier:String,

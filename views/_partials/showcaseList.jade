@@ -29,7 +29,7 @@
 			.row(slimscroll="" slimscroll-option="{height: 'auto'}")
 				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit($index)")					
 					.moduleWrapper(ng-class="{active: $index == selectedShowcase}")				
-						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)						
 		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
 			.animate-switch.max-height(ng-if="selectedShowcase!=null")
 				ul.nav.nav-tabs
@@ -37,7 +37,7 @@
 						a(ng-click="activeTab='details'") Details
 					li(ng-class="{active:activeTab == 'objects'}")
 						a(ng-click="activeTab='objects'") Elements
-				.row.max-height
+				.row.max-height.showcaseWorkArea
 					.col-md-6.col-sm-6.colPreview.max-height
 						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}")
 							.previewShowcaseWrapper
@@ -47,8 +47,11 @@
 								label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}px") {{showcases[selectedShowcase].title2}}
 								label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}px") {{showcases[selectedShowcase].title3}}
 							.previewShowcaseElements.row
-								.col-md1.moduleWrapperShowcaseElement(ng-repeat="obj in showcases[selectedShowcase].objects")
+								.col-md1.moduleWrapperShowcaseElement(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-index="{{$index}}" droppable)
 									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
+									p {{obj.position}}
+								.col-md1.hide.dropColumn(ng-repeat-end)
+									.imgElementPreview				
 					.col-md-6.col-sm-6.colPreview.max-height
 						.tab-content.max-height(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
@@ -105,7 +108,7 @@
 								.row
 									label Description:				
 								.row
-									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")																					
+									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")									
 								.row									
 									button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE
 							#objects.max-height(ng-switch-when='objects')		
@@ -113,7 +116,7 @@
 										.row.elementList(slimscroll slimscroll-option="{height: 'auto'}")											
 											.col-md1.moduleWrapperElement.searchElements
 												input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
-											a.col-md1(ng-repeat="element in elements | filter:queryElements")
+											a.col-md1(ng-repeat="element in elements | filter:queryElements" element-index="{{$index}}" draggable)
 												.moduleWrapperElement
-														img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator ="" data-draggable='true')
+														img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator)
 			.animate-switch(ng-if="selectedShowcase==null")
