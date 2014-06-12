@@ -69,10 +69,10 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
   }    
 
   //Add element to a showcase
-  $scope.insertElementAfter= function(indexElementToDrop,indexShowcaseElement){
+  $scope.insertElementAfter= function(indexElementToDrop,position){
   
     var elementToPush = $scope.elements[indexElementToDrop];
-    var positionToGive=$scope.showcases[$scope.selectedShowcase].objects[indexShowcaseElement].position+1;
+    var positionToGive= eval(position)+1;
     //Give the position of the next element
     elementToPush.position= positionToGive;
     //Update the elements before
@@ -94,8 +94,9 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
   //Update the position of the rest of the elements
    updateShowcaseObjectsPosition= function(position){
     for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].objects.length;i++){
-      if($scope.showcases[$scope.selectedShowcase].objects[i].position>=position)
-        $scope.showcases[$scope.selectedShowcase].objects[i].position++;
+      var objPosition = eval($scope.showcases[$scope.selectedShowcase].objects[i].position);
+      if(objPosition>=position)
+        $scope.showcases[$scope.selectedShowcase].objects[i].position= objPosition+1;
     }
    }
 
@@ -172,8 +173,8 @@ biinAppShowCases.directive('droppable',function(){
     link:function(scope,element,attrs){
       $(element).droppable({
       drop: function( event, ui ) {
-        var dragAfterIndex = scope.$eval(attrs.elementIndex);
-        scope.insertElementAfter(scope.dragElementIndex,dragAfterIndex);
+        var dragPosition = scope.$eval(attrs.elementPosition);
+        scope.insertElementAfter(scope.dragElementIndex,dragPosition);
         $(element).next(".dropColumn").addClass('hide');              
       },
       over:function( event, ui ){

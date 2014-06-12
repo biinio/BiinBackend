@@ -47,7 +47,7 @@
 								label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}px") {{showcases[selectedShowcase].title2}}
 								label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}px") {{showcases[selectedShowcase].title3}}
 							.previewShowcaseElements.row
-								.col-md1.moduleWrapperShowcaseElement(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-index="{{$index}}" droppable)
+								.col-md1.moduleWrapperShowcaseElement(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
 									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
 									p {{obj.position}}
 								.col-md1.hide.dropColumn(ng-repeat-end)
