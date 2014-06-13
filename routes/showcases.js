@@ -71,7 +71,7 @@ module.exports = function () {
 	}
 
 	//POST an image for a showcase
-	functions.imagePost=function(req,res,next){	  		
+	functions.imagePost=function(req,res,next){	
 		imageManager.upload(req.headers.origin,req.files.img.path,req.files.img.name,function(err,data){
 			if(err)
 				throw err;

@@ -26,7 +26,7 @@
 										a(role='menuitem', tabindex='-1', href='#') Separated link
 	.body-list.max-height
 		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
-			.row(slimscroll="" slimscroll-option="{height: 'auto'}")
+			.row(slimscroll="" slimscroll-option="{height: 'auto'}" )
 				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit($index)")					
 					.moduleWrapper(ng-class="{active: $index == selectedShowcase}")				
 						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)						
@@ -39,17 +39,18 @@
 						a(ng-click="activeTab='objects'") Elements
 				.row.max-height.showcaseWorkArea
 					.col-md-6.col-sm-6.colPreview.max-height
-						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}")
-							.previewShowcaseWrapper
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+							.previewShowcaseWrapper(droppable-showcase-preview)
 								#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
 								input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
 								label.previewLabel.title1(style="color:{{showcases[selectedShowcase].title1Color}}; font-size:{{showcases[selectedShowcase].title1Size}}px") {{showcases[selectedShowcase].title1}}
 								label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}px") {{showcases[selectedShowcase].title2}}
 								label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}px") {{showcases[selectedShowcase].title3}}
 							.previewShowcaseElements.row
+								.col-md1.hide.dropColumn
+									.imgElementPreview
 								.col-md1.moduleWrapperShowcaseElement(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
 									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
-									p {{obj.position}}
 								.col-md1.hide.dropColumn(ng-repeat-end)
 									.imgElementPreview				
 					.col-md-6.col-sm-6.colPreview.max-height
@@ -116,7 +117,7 @@
 										.row.elementList(slimscroll slimscroll-option="{height: 'auto'}")											
 											.col-md1.moduleWrapperElement.searchElements
 												input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
-											a.col-md1(ng-repeat="element in elements | filter:queryElements" element-index="{{$index}}" draggable)
+											a.col-md1(ng-repeat="element in elements | identifierNotIn:showcases[selectedShowcase].objects | filter:queryElements" element-index="{{$index}}" draggable)
 												.moduleWrapperElement
 														img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator)
 			.animate-switch(ng-if="selectedShowcase==null")

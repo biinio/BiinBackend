@@ -8,7 +8,7 @@ module.exports = function(){
   	,imageMagick = gm.subClass({ imageMagick: true });
 	
 	var functions={},
-		_quality = 50,
+		_quality = 100,
 	    _workingImagePath='./public/workingFiles/',
 	    _uploadImageDirectory = "/workingFiles/";
 
@@ -71,7 +71,7 @@ module.exports = function(){
 
 			} else {
 
-			  var newPath = originUrl + _uploadImageDirectory + imageName;
+			  var newPath = process.env.IMAGES_REPOSITORY+imageName;
 			  var localPath = _workingImagePath + imageName;
 
 			  /// write file to uploads/fullsize folder

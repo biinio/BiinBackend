@@ -1,4 +1,4 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://lbonilla:ludusydb1@ds037358.mongolab.com:37358/biin');
+mongoose.connect(process.env.DB_CONNECTION);
 module.exports = mongoose.connection;
