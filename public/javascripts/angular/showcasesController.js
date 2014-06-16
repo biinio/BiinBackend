@@ -77,9 +77,11 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     elementToPush.position= positionToGive;
     //Update the elements before
     updateShowcaseObjectsPosition(positionToGive)
+
+    delete elementToPush._id;
+    
     //Push the element int he collection
     $scope.showcases[$scope.selectedShowcase].objects.push(elementToPush);
-    $scope.elements.splice(indexElementToDrop,1);
 
     //Appli the changes
     $scope.$digest();
@@ -270,13 +272,11 @@ biinAppShowCases.directive('pendingIndicator', function(){
 //Custom Filters
 
 //Filter for get the intersection of two list of objects
-biinAppShowCases.filter("identifierNotIn  ",function(){
-  return function identifierNotIn(haysTack, needle){
-    var result=[];
-    var item , i;
+biinAppShowCases.filter("difference",function(){
+  return function intersection(haysTack, needle){
     //call function in utilities
-    return intersectionObjects(haysTack,needle,function(item1,item2){
-      return item1.identifier===item2.identifier;
+    return differenceObjects(haysTack,needle,function(item1,item2){
+      return item1.objectIdentifier===item2.objectIdentifier;
     });
   }
 

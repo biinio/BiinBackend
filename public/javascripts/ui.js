@@ -59,6 +59,8 @@ jQuery(function ($) {
 
 //Cropper Controls
 createShowcaseCropper=function(id){
+      Croppic.imgInitW=320;
+      Croppic.imgInitH=320;
       return croppeShowcasesHeader = new Croppic(id,{
             uploadUrl:'showcases/imageUpload',
             outputUrlId:'showcaseImage',

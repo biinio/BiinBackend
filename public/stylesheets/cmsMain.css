@@ -332,9 +332,11 @@
 /*Cropper editor size*/
 .copperEditor {
 	position:relative; /* or fixed or absolute */
-	width: 290px;
-	height: 290px;
-	padding-top: 10px;
+	width: 320px;
+	height: 320px;
+	min-height: 320px;
+	min-width: 320px;
+	/*padding-top: 10px;*/
 	padding-bottom: 0px;
     /*overflow: hidden;*/
 }

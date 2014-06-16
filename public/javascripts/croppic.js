@@ -240,7 +240,7 @@
 		initialScaleImg:function(){
 			var that = this;
 			that.zoom(-that.imgInitW);
-			that.zoom(40);
+			//that.zoom(40);
 			
 			// initial center image
 			

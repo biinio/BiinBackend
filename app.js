@@ -69,5 +69,6 @@ module.exports = function (db) {
             error: {}
         });
     });
+
     return app;
 };
