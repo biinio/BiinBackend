@@ -156,28 +156,9 @@ biinAppShowCases.directive('draggable',function(){
   return{
     restrict:'A',
     link:function(scope,element,attrs){ 
-      $(element).draggable({appendTo: '.colOptions',containment: '.showcaseWorkArea', cursor: "move", scroll: true, helper: 'clone',snap: false, snapTolerance: 5,
-        stop: function() {
-            console.log("stop drag");
-        }, 
+      $(element).draggable({appendTo: '.colOptions',containment: '.showcaseWorkArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5,
         start:function(){          
           scope.setDragElement(scope.$eval(attrs.elementIndex));        
-        },
-        drag: function (event, ui) {
-            // change this multiplier to go faster
-            // you may have to do some flooring if you use
-            // non integer values
-            var mult = 1;
-            
-            var $dragme = $(event.target);
-            
-            ui.position.top = ui.position.top*mult;
-            ui.position.left = ui.position.left*mult;
-
-            $dragme.css({
-                top: ui.position.top,
-                left: ui.position.left
-            });
         }
       });
     }
@@ -198,14 +179,15 @@ biinAppShowCases.directive('droppable',function(){
       over:function( event, ui ){
         $(element).next(".dropColumn").removeClass('hide');
 
-        var moveScrollTo =$(element).offset().top-20;
+        /*var moveScrollTo =$(element).offset().top-20;
         console.log(moveScrollTo);
 
-      //  $(element).closest("[slimscroll]").slimscroll({ scrollTo: moveScrollTo+"px" });
-        /*var moveScrollTo =$(element).offset().top+200;
+      $(element).closest("[slimscroll]").slimscroll({ scrollTo: moveScrollTo+"px" });
+        var moveScrollTo =$(element).offset().top+200;
         console.log(moveScrollTo);
         //Scroll to the element
-        $(element).closest("[slimscroll]").slimscroll({ scrollTo: moveScrollTo+"px" });*/
+        $(element).closest("[slimscroll]").slimscroll({ scrollTo: moveScrollTo+"px" });
+      */
       },
       out:function( event, ui ){
         $(element).next(".dropColumn").addClass('hide');

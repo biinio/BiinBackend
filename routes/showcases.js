@@ -1,7 +1,11 @@
 module.exports = function () {
+    //Packages
+    var moment = require('moment');
+
+    //Custom Utils
   	var imageManager = require("../biin_modules/imageManager")();
 
-	var path = require('path');
+	//Schemas
 	var showcase = require('../schemas/showcase');
 	var region = require('../schemas/region');
 	var functions = {};
@@ -34,23 +38,28 @@ module.exports = function () {
    		});
 	}
 
-	//POST an update of the showcase
-	functions.set=function(req,res){
-	
+	//PUT an update of the showcase
+	functions.set=function(req,res){	   	   
 		var model =req.body.model;
 		if(model)
 		{
-			var model = req.body.model;
+			var showcaseIdentifier=req.param("showcase");
+			var model = req.body.model;			
 			delete model._id;
 			showcase.update(
-                     { identifier:req.param("showcase")},
+                     { identifier:showcaseIdentifier},
                      { $set :model },
                      { upsert : true },
                      function(err){
+                     	
                      	if(err)
 							res.json(null);
-						else
-							res.json({state:'updated'});
+						else{
+							//Update the biins last update property asynchronous
+                            updateBiinsLastUpdate(showcaseIdentifier);
+                            //Return the state
+							res.json({state:'updated'});							
+						}
                      }
                    );
 		}
@@ -94,5 +103,44 @@ module.exports = function () {
 		  	console.log(err);
 		}
 	}
+
+
+	//Update Biins Last Update in Regions
+    function updateBiinsLastUpdate(showcaseId){
+      	var updateDate = moment().format('YYYY-MM-DD h:mm:ss');
+      	region.find({"biins.showcaseIdentifier":showcaseId},"",function(err,data){
+      		if(err)
+      			throw err
+      		else
+      			if(data){
+      			  //Iterate over the regions
+      		      for(var i=0;i<data.length; i++){
+                      //Iterate over the biins
+                      var lengthOfBiins = data[i].biins.length;
+                      for(var j=0;j < lengthOfBiins;j++){
+
+                          if(data[i].biins[j].showcaseIdentifier===showcaseId){
+                          	console.log("Updating the showcase of biin: "+ data[i].biins[j].identifier);
+                          	data[i].biins[j].lastUpdate = updateDate;
+                          }
+                      }
+                      var objectId = data[i]._id;
+                      var model =  JSON.parse(JSON.stringify(data[i]));;
+                      delete model._id;
+                      //For each regions set the update
+                      region.update({ _id:objectId},
+                                    { $set :model },
+                                    { upsert : true },
+                                    function(err){
+                                    	if(err)
+                                    		throw err;
+                                    	else
+                                    		console.log("The regions and biins where updated for showcaseID: "+showcaseId);
+                                    });
+      		      }
+      		    }
+      	});
+    }
+
 	return functions;
 }

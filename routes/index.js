@@ -30,7 +30,6 @@ module.exports = function () {
 	//Get the dashboard
 	functions.dashboard = function (req,res) {
 		var is_ajax_request = req.xhr;
-		console.log("Is ajax request:"+is_ajax_request);
 		if(!is_ajax_request){
 			if(req.session.passport.user==undefined){
 				res.redirect('/login');
