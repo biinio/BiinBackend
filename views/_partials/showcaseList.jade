@@ -52,7 +52,9 @@
 								.col-md1.moduleWrapperShowcaseElement(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
 									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
 									button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeElementAt(showcases[selectedShowcase].objects.indexOf(obj))") Remove
-								.col-md1.hide.dropColumn(ng-repeat-end)
+									button.btnShowcasePreview.up.btn.btn-on-hover(ng-click="moveElementUp(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index>0") Up
+									button.btnShowcasePreview.down.btn.btn-on-hover(ng-click="moveElementDown(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index<showcases[selectedShowcase].objects.length-1") Dw
+								.col-md1.hide.dropColumn(ng-repeat-end)									
 									.imgElementPreview				
 					.col-md-6.col-sm-6.colPreview.max-height
 						.tab-content.max-height(ng-switch='activeTab')					

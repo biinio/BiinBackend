@@ -68,8 +68,43 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     });
   } 
 
+  //Remove an element of a Showcase
   $scope.removeElementAt=function(index){
+    var position = $scope.showcases[$scope.selectedShowcase].objects[index].position;
     $scope.showcases[$scope.selectedShowcase].objects.splice(index,1);
+
+    //Update the elements position
+    updateShowcaseObjectsPositionWhenDelete(eval(position));
+  }
+
+
+  //Move element of a showcase to up
+  $scope.moveElementUp=function(index){
+    var oldPosition =eval($scope.showcases[$scope.selectedShowcase].objects[index].position);
+    if(oldPosition>1){      
+      var newPosition =oldPosition-1;
+
+      var prevObj= _.find($scope.showcases[$scope.selectedShowcase].objects, function (obj) { return eval(obj.position) === newPosition})      
+      $scope.showcases[$scope.selectedShowcase].objects[index].position=""+newPosition;
+      
+      //Modify the position of the prev object
+      prevObj.position = ""+oldPosition;
+
+      if(!$scope.$$phase) {
+        $scope.$digest();
+      }
+    }
+  }  
+
+  //Move element of a showcase to down
+  $scope.moveElementDown=function(index){
+    var oldPosition =eval($scope.showcases[$scope.selectedShowcase].objects[index].position);
+    if(oldPosition<$scope.showcases[$scope.selectedShowcase].objects.length){        
+        var newPosition =oldPosition+1;
+        var nextObj= _.find($scope.showcases[$scope.selectedShowcase].objects, function (obj) { return eval(obj.position) === newPosition })      
+        $scope.showcases[$scope.selectedShowcase].objects[index].position= ""+newPosition;        
+        nextObj.position = ""+oldPosition;
+    }
   }
 
   //Add element to a showcase
@@ -78,7 +113,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     var elementToPush = $scope.elements[indexElementToDrop];
     var positionToGive= eval(position)+1;
     //Give the position of the next element
-    elementToPush.position= positionToGive;
+    elementToPush.position= ""+positionToGive;
     //Update the elements before
     updateShowcaseObjectsPosition(positionToGive)
 
@@ -87,7 +122,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     //Push the element int he collection
     $scope.showcases[$scope.selectedShowcase].objects.push(elementToPush);
 
-    //Appli the changes
+    //Apply the changes
     $scope.$digest();
     $scope.$apply();
   } 
@@ -97,15 +132,23 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     $scope.dragElementIndex=scopeIndex;
   }
 
-  //Update the position of the rest of the elements
+  //Update the position of the rest of the elements to add one when is added a new element
    updateShowcaseObjectsPosition= function(position){
     for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].objects.length;i++){
       var objPosition = eval($scope.showcases[$scope.selectedShowcase].objects[i].position);
       if(objPosition>=position)
-        $scope.showcases[$scope.selectedShowcase].objects[i].position= objPosition+1;
+        $scope.showcases[$scope.selectedShowcase].objects[i].position= ""+ eval(objPosition+1);
     }
    }
 
+  //Update the position of the rest of the elements when a element removed
+   updateShowcaseObjectsPositionWhenDelete= function(position){
+    for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].objects.length;i++){
+      var objPosition = eval($scope.showcases[$scope.selectedShowcase].objects[i].position);
+      if(objPosition>=position)
+        $scope.showcases[$scope.selectedShowcase].objects[i].position= ""+objPosition-1;
+    }
+   }
 }]);
 
 // Define the Elements Services

@@ -230,6 +230,18 @@
 		top:10px;
 		left: 10px;
 	}
+
+	.btnShowcasePreview.down{
+		top: initial;
+        bottom:20px;
+		left: 230px;        
+	}
+
+    .btnShowcasePreview.up{
+        top:20px;
+        left: 230px;
+	}
+
 /****
 	Modules
 	***/
