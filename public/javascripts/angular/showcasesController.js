@@ -66,7 +66,11 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
       if(data.state=="updated")
         $scope.succesSaveShow=true;
     });
-  }    
+  } 
+
+  $scope.removeElementAt=function(index){
+    $scope.showcases[$scope.selectedShowcase].objects.splice(index,1);
+  }
 
   //Add element to a showcase
   $scope.insertElementAfter= function(indexElementToDrop,position){
@@ -177,11 +181,11 @@ biinAppShowCases.directive('droppable',function(){
         $(element).next(".dropColumn").addClass('hide');              
       },
       over:function( event, ui ){
+
         $(element).next(".dropColumn").removeClass('hide');
 
-        /*var moveScrollTo =$(element).offset().top-20;
-        console.log(moveScrollTo);
-
+      /*var moveScrollTo =$(element).offset().top-20;
+      console.log(moveScrollTo);
       $(element).closest("[slimscroll]").slimscroll({ scrollTo: moveScrollTo+"px" });
         var moveScrollTo =$(element).offset().top+200;
         console.log(moveScrollTo);

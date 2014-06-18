@@ -105,6 +105,10 @@ module.exports = function () {
 	}
 
 
+/****
+ Other methods
+***/
+
 	//Update Biins Last Update in Regions
     function updateBiinsLastUpdate(showcaseId){
       	var updateDate = moment().format('YYYY-MM-DD h:mm:ss');
@@ -118,9 +122,7 @@ module.exports = function () {
                       //Iterate over the biins
                       var lengthOfBiins = data[i].biins.length;
                       for(var j=0;j < lengthOfBiins;j++){
-
                           if(data[i].biins[j].showcaseIdentifier===showcaseId){
-                          	console.log("Updating the showcase of biin: "+ data[i].biins[j].identifier);
                           	data[i].biins[j].lastUpdate = updateDate;
                           }
                       }
@@ -134,8 +136,6 @@ module.exports = function () {
                                     function(err){
                                     	if(err)
                                     		throw err;
-                                    	else
-                                    		console.log("The regions and biins where updated for showcaseID: "+showcaseId);
                                     });
       		      }
       		    }

@@ -84,6 +84,7 @@
 	}
 
 	.moduleWrapperShowcaseElement{
+		position: relative;
 		margin-left: 0px;
 	}
 
@@ -216,6 +217,19 @@
 		border-color: none;
 	}
 
+	.moduleWrapperShowcaseElement .btn-on-hover{
+		display: none;
+	}
+
+    .moduleWrapperShowcaseElement:hover .btn-on-hover{
+		display: block;
+	}
+
+	.btnShowcasePreview{
+		position: absolute;
+		top:10px;
+		left: 10px;
+	}
 /****
 	Modules
 	***/
