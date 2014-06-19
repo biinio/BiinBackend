@@ -30,6 +30,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/showcases/:identifier',showcases.get);
     app.put('/api/showcases/:showcase',showcases.set);
+    app.delete('/api/showcases/:showcase',showcases.delete);
     app.get('/api/showcases',showcases.list);
     app.get('/api/biins/:biin/showcase',showcases.getByBiin);
     

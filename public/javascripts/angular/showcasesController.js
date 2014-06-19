@@ -31,8 +31,9 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
   $scope.dragElementIndex=-1;
   //Get the List of Showcases
   $http.get('api/showcases').success(function(data){
-  	$scope.showcases = data;
-
+  	$scope.showcases = data.data;
+    $scope.showcasePrototype = data.prototypeObj;
+    $scope.showcasePrototypeBkp =  $.extend(true, {}, data.prototypeObj);
     if($scope.selectedShowcase == null && $scope.showcases && $scope.showcases.length>0){
       //Select the first element
       $scope.edit(0);  
@@ -44,15 +45,27 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
   elementSrv.getList().then(function(promise){
     $scope.elements = promise.data.data;    
   });
+  
+  //Push a new showcase in the list
+  $scope.create = function(){
+    var newObject=$scope.showcasePrototype;
+    if($scope.showcases.indexOf(newObject)>-1){      
+      $scope.selectedShowcase=$scope.showcases.indexOf(newObject); 
+    }else{
+        $scope.showcasePrototype =  $.extend(true, {}, $scope.showcasePrototypeBkp);
+        $scope.showcasePrototype.isNew=true;
+        $scope.showcases.push($scope.showcasePrototype);     
+        $scope.edit($scope.showcases.indexOf($scope.showcasePrototype)); 
+    }
+     
+  }
 
   //Edit an showcase
   $scope.edit = function(index){
     $scope.selectedShowcase = index;
     $scope.currentModelId = $scope.showcases[index].identifier;
-    if(showCaseCropper !=null){
-      showCaseCropper.destroy();
-      showCaseCropper = null;
-    }
+    //Remove the cropper
+    removeCropper();
 
     //Instanciate cropper
    showCaseCropper= createShowcaseCropper("wrapperShowcase");
@@ -60,12 +73,39 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
    showCaseCropper.preInitImage(imgUrl);
   }
 
+  //Remove showcase at specific position
+  $scope.removeShowcaseAt = function(index){
+    if($scope.selectedShowcase==index){
+      $scope.selectedShowcase =null;
+      $scope.currentModelId =null;
+
+      //Remove the cropper
+      removeCropper();
+    }
+    if('isNew' in $scope.showcases[index] ){
+      //remove the showcase
+      $scope.showcases.splice(index,1);
+    }else//If the element is new is not in the data base      
+      var showcaseId = $scope.showcases[index].identifier;      
+      $scope.showcases.splice(index,1);
+      $http.delete('api/showcases/'+showcaseId).success(function(data){
+          if(data.state=="success"){
+            //Todo: implement a pull of messages
+          }
+        }
+      );
+  }
+
   //Save detail model object
   $scope.saveDetail= function(){  
     $http.put('api/showcases/'+$scope.currentModelId,{model:$scope.showcases[$scope.selectedShowcase]}).success(function(data,status){
-      if(data.state=="updated")
+      if("replaceModel" in data){
+        $scope.showcases[$scope.selectedShowcase] = data.replaceModel;
+        $scope.showcasePrototype =  $.extend(true, {}, $scope.showcasePrototypeBkp);
+      }
+      if(data.state=="success")
         $scope.succesSaveShow=true;
-    });
+    });          
   } 
 
   //Remove an element of a Showcase
@@ -76,7 +116,6 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     //Update the elements position
     updateShowcaseObjectsPositionWhenDelete(eval(position));
   }
-
 
   //Move element of a showcase to up
   $scope.moveElementUp=function(index){
@@ -148,6 +187,16 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
       if(objPosition>=position)
         $scope.showcases[$scope.selectedShowcase].objects[i].position= ""+objPosition-1;
     }
+   }
+
+   //Others
+
+   //Remove the current cropper
+   removeCropper= function(){
+      if(showCaseCropper !=null){
+        showCaseCropper.destroy();
+        showCaseCropper = null;
+      }
    }
 }]);
 

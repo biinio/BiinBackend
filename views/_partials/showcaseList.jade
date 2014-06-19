@@ -3,7 +3,7 @@
 		label Showcase  	
 		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
 		.roundedOptionsForm
-			a.btn.btn-rounded.pull-right(href="#")
+			a.btn.btn-rounded.pull-right(ng-click="create()")
 				i +
 		.options
 			.row
@@ -27,9 +27,10 @@
 	.body-list.max-height
 		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
 			.row(slimscroll="" slimscroll-option="{height: 'auto'}" )
-				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit($index)")					
-					.moduleWrapper(ng-class="{active: $index == selectedShowcase}")				
-						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)						
+				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(showcases.indexOf(item))")					
+					.moduleWrapper.contentHideButtons(ng-class="{active: showcases.indexOf(item) == selectedShowcase}")				
+						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+						button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeShowcaseAt(showcases.indexOf(item))") Remove						
 		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
 			.animate-switch.max-height(ng-if="selectedShowcase!=null")
 				ul.nav.nav-tabs
@@ -49,7 +50,7 @@
 							.previewShowcaseElements.row
 								.col-md1.hide.dropColumn
 									.imgElementPreview
-								.col-md1.moduleWrapperShowcaseElement(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
+								.col-md1.moduleWrapperShowcaseElement.contentHideButtons(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
 									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
 									button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeElementAt(showcases[selectedShowcase].objects.indexOf(obj))") Remove
 									button.btnShowcasePreview.up.btn.btn-on-hover(ng-click="moveElementUp(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index>0") Up

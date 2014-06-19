@@ -3,7 +3,8 @@ module.exports = function () {
     var moment = require('moment');
 
     //Custom Utils
-  	var imageManager = require("../biin_modules/imageManager")();
+  	var imageManager = require("../biin_modules/imageManager")(),
+  	    utils = require('../biin_modules/utils')();
 
 	//Schemas
 	var showcase = require('../schemas/showcase');
@@ -20,7 +21,7 @@ module.exports = function () {
 	//GET the list of showcases
 	functions.list = function(req,res){
 		showcase.find({},function (err, data) {
-			   res.json(data);
+			   res.json({data:data, prototypeObj : new showcase()});
 		});		
 	}
 
@@ -29,9 +30,7 @@ module.exports = function () {
 		var showcaseIdentifier = req.param("identifier");
    		showcase.findOne({"identifier":showcaseIdentifier},'',function(err,data){
    			if(data){
-   				var showcaseInstance = new showcase();
-   				showcaseInstance.title="hellow";
-   				res.json({data:{showcase:data}, propotypeObj : showcaseInstance});
+   				res.json({data:{showcase:data}});
    			}   				
    			else
    				res.json(null);
@@ -41,30 +40,66 @@ module.exports = function () {
 	//PUT an update of the showcase
 	functions.set=function(req,res){	   	   
 		var model =req.body.model;
+		//Perform an update
+		var showcaseIdentifier=req.param("showcase");
+		var model = req.body.model;			
+		delete model._id;
+
 		if(model)
 		{
-			var showcaseIdentifier=req.param("showcase");
-			var model = req.body.model;			
-			delete model._id;
-			showcase.update(
-                     { identifier:showcaseIdentifier},
-                     { $set :model },
-                     { upsert : true },
-                     function(err){
-                     	
-                     	if(err)
-							res.json(null);
-						else{
-							//Update the biins last update property asynchronous
-                            updateBiinsLastUpdate(showcaseIdentifier);
-                            //Return the state
-							res.json({state:'updated'});							
-						}
-                     }
-                   );
+			if('isNew' in model){
+				console.log("is new saving");
+				delete model.isNew;
+
+                model.identifier=utils.getGUID();
+
+				//Todo Get the Customer Id
+				//Todo Get the Organization ID
+				model.customerIdentifier=0;
+				model.organizationIdentifier=0;
+                
+                var newModel = new showcase(model);
+				//Perform an create
+				newModel.save(function(err){
+					if(err)
+						throw err;
+					else{
+						//Return the state and the object
+						res.json({state:"success",replaceModel:model});
+					}
+				});
+			}else{
+				showcase.update(
+	                     { identifier:showcaseIdentifier},
+	                     { $set :model },
+	                     { upsert : true },
+	                     function(err){
+	                     	
+	                     	if(err)
+								res.json(null);
+							else{
+								//Update the biins last update property asynchronous
+	                            updateBiinsLastUpdate(showcaseIdentifier);
+	                            //Return the state
+								res.json({state:'success'});							
+							}
+	                     }
+	                   );
+			}
 		}
 	}
-
+	//DEL a 
+	functions.delete= function(req,res){
+		//Perform an update
+		var showcaseIdentifier=req.param("showcase");
+		console.log("delete of: "+ showcaseIdentifier);
+		showcase.remove({identifier:showcaseIdentifier},function(err){
+			if(err)
+				throw err;
+			else
+				res.json({state:"success"});
+		});
+	}
 	//GET the list of showcases by Biin ID
 	functions.getByBiin=function(req,res){
 		var biinIdentifier = req.param("biin");

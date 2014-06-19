@@ -217,11 +217,11 @@
 		border-color: none;
 	}
 
-	.moduleWrapperShowcaseElement .btn-on-hover{
+	.contentHideButtons .btn-on-hover{
 		display: none;
 	}
 
-    .moduleWrapperShowcaseElement:hover .btn-on-hover{
+    .contentHideButtons:hover .btn-on-hover{
 		display: block;
 	}
 
@@ -240,6 +240,10 @@
     .btnShowcasePreview.up{
         top:20px;
         left: 230px;
+	}
+
+	.moduleWrapperShowcase.down{
+
 	}
 
 /****
