@@ -1,5 +1,5 @@
 module.exports = function () {
-	var region = require('../schemas/region');
+	var region = require('../schemas/region');	
 	var functions = {};
 
 	//GET the index view of a regions
@@ -14,6 +14,13 @@ module.exports = function () {
 		region.findOne({identifier:regionParam},'biins',function (err, data) {
 			   res.json({"data":data});
 		});		
+	}
+
+	functions.getByShowcase=function(req,res){
+		var showcase =req.param('showcase');
+		region.findOne({'biins.$.showcaseIdentifier':showcase},'biins.identifier', function(err,data){
+
+		});
 	}
 
 	return functions;
