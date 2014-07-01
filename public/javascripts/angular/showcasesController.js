@@ -5,15 +5,6 @@ var showCaseCropper = null
 biinAppShowCases.config(['$routeProvider',
 	function($routeProvider){
 	$routeProvider.
-		when('/edit/:identifier',{
-			templateUrl:'partials/showcaseEdit',
-			controller:'showcasesEditController'
-		})
-    .
-    when('/editShowcase/:identifier',{
-      action:"editShowcase",
-      controller:'showcasesController'
-    }).	
 		when('/list',{
 			templateUrl:'partials/showcaseList',
 			controller:'showcasesController'
@@ -24,11 +15,13 @@ biinAppShowCases.config(['$routeProvider',
 }]);
 
 //App define controllers
-biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSrv', function($scope,$http, elementSrv) {
+biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSrv','biinSrv', function($scope,$http, elementSrv,biinSrv) {
   $scope.activeTab='details';
   $scope.selectedShowcase = null;
   $scope.currentModelId = null;
   $scope.dragElementIndex=-1;
+  $scope.dragBiinIndex =-1;
+  
   //Get the List of Showcases
   $http.get('api/showcases').success(function(data){
   	$scope.showcases = data.data;
@@ -37,15 +30,19 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     if($scope.selectedShowcase == null && $scope.showcases && $scope.showcases.length>0){
       //Select the first element
       $scope.edit(0);  
-    }
-    
+    }    
   });
 
   //Get the List of Elements
   elementSrv.getList().then(function(promise){
     $scope.elements = promise.data.data;    
   });
-  
+
+  //Get the List of Biins
+  biinSrv.getList().then(function(promise){
+    $scope.biins = promise.data.data;
+  });  
+
   //Push a new showcase in the list
   $scope.create = function(){
     var newObject=$scope.showcasePrototype;
@@ -86,6 +83,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
       //remove the showcase
       $scope.showcases.splice(index,1);
     }else//If the element is new is not in the data base      
+    {
       var showcaseId = $scope.showcases[index].identifier;      
       $scope.showcases.splice(index,1);
       $http.delete('api/showcases/'+showcaseId).success(function(data){
@@ -94,6 +92,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
           }
         }
       );
+    }
   }
 
   //Save detail model object
@@ -166,9 +165,24 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     $scope.$apply();
   } 
 
+  //Set the dragged biin showcase
+  $scope.setDropableBiinInShowcase=function(){
+    if($scope.dragBiinIndex>-1){
+      $scope.biins[$scope.dragBiinIndex].showcaseIdentifier = $scope.showcases[$scope.selectedShowcase].identifier;
+      //Apply the changes
+      $scope.$digest();
+      $scope.$apply();
+    }
+  }
+
   //Set current dragget element index in the scope
   $scope.setDragElement=function(scopeIndex){
     $scope.dragElementIndex=scopeIndex;
+  }
+
+  //Set current dragget biin index in the scope
+  $scope.setDragBiin=function(scopeIndex){
+    $scope.dragBiinIndex=scopeIndex;
   }
 
   //Update the position of the rest of the elements to add one when is added a new element
@@ -198,9 +212,10 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
         showCaseCropper = null;
       }
    }
+
 }]);
 
-// Define the Elements Services
+// Define the Elements Service
 biinAppShowCases.factory('elementSrv', ['$http', function (async) {
     return {
       getList: function () {
@@ -217,6 +232,22 @@ biinAppShowCases.factory('elementSrv', ['$http', function (async) {
     }
     }]);
 
+// Define the service for Biins
+biinAppShowCases.factory("biinSrv",['$http',function(async){
+    return {
+      getList: function(){
+        var promise = async({method:'GET',url:'/api/biins'})
+        .success(function (data,status,headers,config){
+          return data;
+        }).error(function(data,status,headers,config){
+          return {"status":false};
+        });
+
+        return promise;
+      }
+    }  
+}]);
+
 //Define the Directives
 biinAppShowCases.directive('imageCropper',function(){
   return{
@@ -228,7 +259,7 @@ biinAppShowCases.directive('imageCropper',function(){
        showCaseCropper.preInitImage(imgUrl);
     }
   }
-})
+});
 
 //Change of image directive
 biinAppShowCases.directive('inputChange',function(){
@@ -237,7 +268,6 @@ biinAppShowCases.directive('inputChange',function(){
     link:function(scope,element){       
       $el = $(element);
        $el.on('change',function(e){
-          console.log("image value: "+$el.val());
           var index =scope.selectedShowcase;
           scope.showcases[index].mainImageUrl= $el.val();
           scope.$digest();
@@ -248,13 +278,27 @@ biinAppShowCases.directive('inputChange',function(){
 });
 
 //Dragable elements 
-biinAppShowCases.directive('draggable',function(){
+biinAppShowCases.directive('draggableShowcaseElement',function(){
   return{
     restrict:'A',
     link:function(scope,element,attrs){ 
       $(element).draggable({appendTo: '.colOptions',containment: '.showcaseWorkArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5,
         start:function(){          
           scope.setDragElement(scope.$eval(attrs.elementIndex));        
+        }
+      });
+    }
+  }
+});  
+
+//Dragable elements 
+biinAppShowCases.directive('draggableBiin',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element,attrs){ 
+      $(element).draggable({appendTo: '.colOptions',containment: '#biins', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5,
+        start:function(){          
+          scope.setDragBiin(scope.$eval(attrs.elementIndex));        
         }
       });
     }
@@ -314,6 +358,28 @@ biinAppShowCases.directive('droppableShowcasePreview',function(){
   }
 });  
 
+//Dropable zones  of biins
+biinAppShowCases.directive('droppableBiin',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element,attrs){
+      $(element).droppable({
+      drop: function( event, ui ) {
+        scope.setDropableBiinInShowcase();
+        $(element).next(".dropColumn").addClass('hide');              
+      },
+      over:function( event, ui ){
+
+        $(element).next(".dropColumn").removeClass('hide');
+      },
+      out:function( event, ui ){
+        $(element).next(".dropColumn").addClass('hide');
+      }
+    });
+    }
+  }
+});  
+
 //Image uploades pending indicator
 biinAppShowCases.directive('pendingIndicator', function(){
     return {
@@ -347,7 +413,9 @@ biinAppShowCases.directive('pendingIndicator', function(){
     };
 });
 
-//Custom Filters
+/****
+    Custom Filters
+****/
 
 //Filter for get the intersection of two list of objects
 biinAppShowCases.filter("difference",function(){
@@ -357,5 +425,14 @@ biinAppShowCases.filter("difference",function(){
       return item1.objectIdentifier===item2.objectIdentifier;
     });
   }
+});
 
+//Filter for get  the objects with undefined value
+biinAppShowCases.filter("undefinedValue",function(){
+  return function undefinedValue(haysTack, prop){
+    var result= _.filter(haysTack, function(hay) {
+        return hay[prop]=== undefined || hay[prop]===null || hay==='';
+    });
+    return result;
+  }
 });

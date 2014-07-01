@@ -1,0 +1,95 @@
+.panel.panel-default.max-height(data-hm-showcase="")
+	.panel-heading.control-group.form-inline
+		label Objects
+		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
+		.roundedOptionsForm
+			a.btn.btn-rounded.pull-right(ng-click="create()")
+				i +
+	.body-list.max-height
+		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
+			.row(slimscroll="" slimscroll-option="{height: 'auto'}" )
+				a.col-md-1.module(ng-repeat="item in elements | filter: query" ng-click="edit(elements.indexOf(item))")					
+					.moduleWrapper.contentHideButtons(ng-class="{active: elements.indexOf(item) == selectedElement}")				
+						img.img-responsive(ng-src="{{item.imageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+						button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeElementAt(elements.indexOf(item))") Remove
+		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
+			.animate-switch.max-height
+				ul.nav.nav-tabs
+					li.activeTab
+						a Details
+					li
+						a Categories
+				.row.max-height.showcaseWorkArea
+					.col-md-6.col-sm-6.colPreview.max-height
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+							.previewShowcaseWrapper(droppable-showcase-preview)
+								#wrapperShowcase.copperEditor(data-image-src="{{elements[selectedElement].imageUrl}}" image-cropper)
+								input#elementImage.hidden(ng-model="elements[selectedElement].imageUrl" input-change="")							
+								label.previewLabel.title1(style="color:{{elements[selectedElement].title1Color}}; font-size:{{elements[selectedElement].title1Size}}px") {{elements[selectedElement].title1}}
+								label.previewLabel.title2(style="color:{{elements[selectedElement].title2Color}}; font-size:{{elements[selectedElement].title2Size}}px") {{elements[selectedElement].title2}}
+								label.previewLabel.title3(style="color:{{elements[selectedElement].title3Color}}; font-size:{{elments[selectedElement].title3Size}}px") {{elements[selectedElement].title3}}
+					.col-md-6.col-sm-6.colPreview.max-height
+						.tab-content.max-height
+							#details
+								.hidden
+									input.form-control( ng-model="elments[selectedElement].identifier")				
+									input.form-control( ng-model="elements[selectedElement].customerIdentifier")																						
+									input.form-control( ng-model="elements[selectedElement].organizationIdentifier")
+									input.form-control( ng-model="elements[selectedElement].objectType")
+									input.form-control( ng-model="elements[selectedElement].actionType")																													
+								.row
+									label Title 1:							
+								.row
+									span.form-group.form-control.form-picker														     				
+										input(ng-model="elements[selectedElement].title1")										
+										spectrum-colorpicker.picker(ng-model="elements[selectedElement].title1Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")				
+										span.separator
+										select.selectpicker(ng-model="elements[selectedElement].title1Size")
+											option(value="5") XS
+											option(value="15") S
+											option(value="20") M
+											option(value="25") L
+											option(value="35") XL
+										span.caret-reversed
+										span.caret
+								.row
+									label Title 2:		
+								.row									
+									span.form-group.form-control.form-picker
+										input( ng-model="elements[selectedElement].title2")
+										spectrum-colorpicker.picker(ng-model="elements[selectedElement].title2Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")									
+										span.separator
+										select.selectpicker(ng-model="elements[selectedElement].title2Size")
+											option(value="5px") XS
+											option(value="15") S
+											option(value="20") M
+											option(value="25") L
+											option(value="35") XL
+										span.caret-reversed
+										span.caret											
+								.row
+									label Description:				
+								.row
+									textarea.form-group.form-control( ng-model="elements[selectedElement].objectDescription")									
+								.row
+									label Original price
+								.row
+									input.form-group.form-control( ng-model="elements[selectedElement].originalPrice")										
+								.row
+									label Biin price
+								.row
+									input.form-group.form-control( ng-model="elements[selectedElement].biinPrice")									
+								.row
+									label Discount
+								.row
+									input.form-group.form-control(ng-model="elements[selectedElement].discount")																		
+								.row
+									label Savings
+								.row
+									input.form-group.form-control( ng-model="elements[selectedElement].savings")																											
+								.row
+									label Biin Sold
+								.row
+									input.form-group.form-control( ng-model="elements[selectedElement].biinSold")									
+								.row									
+									button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE															

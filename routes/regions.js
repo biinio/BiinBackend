@@ -62,7 +62,6 @@ module.exports = function () {
 		 		if(err){
 			 		throw err;
 			 	}else{
-			 		console.log(regionSaved)
 			 		res.redirect("/regions")
 			 	}
 			});

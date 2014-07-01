@@ -49,6 +49,7 @@
 		border-color: initial;
 		border:none;
 		margin-top: -15px;
+		min-height: 50px;
 	}
 
 	.panel-heading label{
@@ -159,12 +160,23 @@
 		padding-left: 0px;
 	}
 
-	.max-height{
-		height: 100%!important;
+	.middle-heigth{
+		height: 50% !important;
 	}
+
+	.max-height{
+		height: 100% !important;
+	}
+
 	.max-width{
 		width: 100%!important;
 	}
+
+	.center{
+ 		margin-left: auto;
+		margin-right: auto;
+	}
+
 	.main {
 		padding-left: 0px;
 		padding-right: 0px;
@@ -261,6 +273,15 @@
 		background-color: #fff;
 
 	}
+
+	.moduleWrapperBiin{
+		height: 100px;
+		width: 100px;
+		background-color: #fff;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
 	.row.elementList{
 		margin-left: auto;
 		margin-right: auto;

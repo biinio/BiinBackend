@@ -32,12 +32,18 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/api/showcases/:showcase',showcases.set);
     app.delete('/api/showcases/:showcase',showcases.delete);
     app.get('/api/showcases',showcases.list);
+
+    //Biins
+    app.get('/api/biins',biins.list);
     app.get('/api/biins/:biin/showcase',showcases.getByBiin);
     
     //Elements
+    app.get('/elements',elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/elements',elements.list)
+    app.put('/api/elements/:element',elements.set);
+    app.delete('/api/elements/:element',elements.delete);
 
     //Regions routes
     app.get('/regions',regions.index)

@@ -1,9 +1,10 @@
-var moongose = require('moongose');
+var moongose = require('mongoose');
 
 module.exports = moongose.model('biins',{
 			identifier:String,
 			major:String,
 			minor:String,
 			proximityUUID:String,
-			lastUpdate:String
+			customerIdentifier:String,
+			organizationIdentifier:String
 });

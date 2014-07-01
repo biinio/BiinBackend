@@ -14,7 +14,6 @@ module.exports = function () {
 
 	//GET the index view of a showcases
 	functions.index = function(req,res){
-
 		res.render('showcase/index', { title: 'Organizations list' ,user:req.user});
 	}
 
@@ -47,8 +46,8 @@ module.exports = function () {
 
 		if(model)
 		{
+			//If is pushing a new model
 			if('isNew' in model){
-				console.log("is new saving");
 				delete model.isNew;
 
                 model.identifier=utils.getGUID();
@@ -88,11 +87,11 @@ module.exports = function () {
 			}
 		}
 	}
-	//DEL a 
+
+	//DELETE an specific showcase
 	functions.delete= function(req,res){
 		//Perform an update
 		var showcaseIdentifier=req.param("showcase");
-		console.log("delete of: "+ showcaseIdentifier);
 		showcase.remove({identifier:showcaseIdentifier},function(err){
 			if(err)
 				throw err;
@@ -100,6 +99,7 @@ module.exports = function () {
 				res.json({state:"success"});
 		});
 	}
+
 	//GET the list of showcases by Biin ID
 	functions.getByBiin=function(req,res){
 		var biinIdentifier = req.param("biin");
@@ -140,9 +140,9 @@ module.exports = function () {
 	}
 
 
-/****
- Other methods
-***/
+	/****
+	 Other methods
+	***/
 
 	//Update Biins Last Update in Regions
     function updateBiinsLastUpdate(showcaseId){

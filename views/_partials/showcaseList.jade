@@ -5,25 +5,6 @@
 		.roundedOptionsForm
 			a.btn.btn-rounded.pull-right(ng-click="create()")
 				i +
-		.options
-			.row
-				.col-md-10
-					.form-inline
-						.form-inline
-							.dropdown
-								button#dropdownMenu1.btn.dropdown-toggle.sr-only(type='button', data-toggle='dropdown')
-									| Dropdown
-									span.caret
-								ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu1')
-									li(role='presentation')
-										a(role='menuitem', tabindex='-1', href='#') Action
-									li(role='presentation')
-										a(role='menuitem', tabindex='-1', href='#') Another action
-									li(role='presentation')
-										a(role='menuitem', tabindex='-1', href='#') Something else here
-									li.divider(role='presentation')
-									li(role='presentation')
-										a(role='menuitem', tabindex='-1', href='#') Separated link
 	.body-list.max-height
 		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
 			.row(slimscroll="" slimscroll-option="{height: 'auto'}" )
@@ -36,6 +17,8 @@
 				ul.nav.nav-tabs
 					li(ng-class="{active:activeTab == 'details'}")
 						a(ng-click="activeTab='details'") Details
+					li(ng-class="{active:activeTab == 'biins'}")
+						a(ng-click="activeTab='biins'") Biins						
 					li(ng-class="{active:activeTab == 'objects'}")
 						a(ng-click="activeTab='objects'") Elements
 				.row.max-height.showcaseWorkArea
@@ -116,12 +99,23 @@
 									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")									
 								.row									
 									button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE
+							#biins.max-height(ng-switch-when='biins')
+								.col-list.middle-heigth.biinColumn
+									.row.elementList(slimscroll slimscroll-option="{height: 'auto'}" droppable-biin)
+										a.col-md2(ng-repeat="biin in biins| filter:{'showcaseIdentifier': showcases[selectedShowcase].identifier}")
+												.moduleWrapperBiin.center(element-index="{{biins.indexOf(biin)}}" draggable-biin)
+													p {{biin.identifier}}
+								.col-list.middle-heigth.biinUnasocciatedColumn
+									.row.elementList(slimscroll slimscroll-option="{height: 'auto'}")
+										a.col-md2(ng-repeat="biinUnasocciated in biins|undefinedValue:'showcaseIdentifier'")
+												.moduleWrapperBiin.center(element-index="{{biins.indexOf(biinUnasocciated)}}" draggable-biin)
+													p  Identifier: {{biinUnasocciated.identifier}}
 							#objects.max-height(ng-switch-when='objects')		
-									.col-list.max-height																				
-										.row.elementList(slimscroll slimscroll-option="{height: 'auto'}")											
-											.col-md1.moduleWrapperElement.searchElements
-												input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
-											a.col-md1(ng-repeat="element in elements|difference:showcases[selectedShowcase].objects|filter:queryElements")
-												.moduleWrapperElement
-														img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator element-index="{{elements.indexOf(element)}}" draggable)
+								.col-list.max-height																				
+									.row.elementList(slimscroll slimscroll-option="{height: 'auto'}")											
+										.col-md1.moduleWrapperElement.searchElements
+											input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
+										a.col-md1(ng-repeat="element in elements|difference:showcases[selectedShowcase].objects|filter:queryElements")
+											.moduleWrapperElement
+													img.imgElementPreview(ng-src="{{element.imageUrl}}" pending-indicator element-index="{{elements.indexOf(element)}}" draggable-showcase-element)
 			.animate-switch(ng-if="selectedShowcase==null")

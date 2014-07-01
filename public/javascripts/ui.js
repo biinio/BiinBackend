@@ -78,3 +78,25 @@ createShowcaseCropper=function(id){
             onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
         });   
 }
+
+//Cropper Controls
+createElementCropper=function(id){
+      Croppic.imgInitW=320;
+      Croppic.imgInitH=320;
+      return croppeShowcasesHeader = new Croppic(id,{
+            uploadUrl:'elements/imageUpload',
+            outputUrlId:'elementImage',
+            cropData:{
+                "section":"element"
+            },
+            cropUrl:'/elements/imageCrop',
+            modal:false,
+            loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
+            onBeforeImgUpload: function(){ console.log('onBeforeImgUpload') },
+            onAfterImgUpload: function(){ console.log('onAfterImgUpload') },
+            onImgDrag: function(){ console.log('onImgDrag') },
+            onImgZoom: function(){ console.log('onImgZoom') },
+            onBeforeImgCrop: function(){ console.log('onBeforeImgCrop') },
+            onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
+        });   
+}
