@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var debug = require('debug')('BinnCMS'),
-	db=require('../db'),
-	app = require('../app')(db);
+	db=require('../biin_modules/db'),
+	app = require('../biin_modules/app')(db);
 
 app.set('port', process.env.PORT || 3000);
 

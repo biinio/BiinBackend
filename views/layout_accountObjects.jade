@@ -23,6 +23,8 @@ html
     script(src="/angular/angular.js")    
     script(src="/angular-route/angular-route.js")      
     script(src="/javascripts/angular/organizationsController.js")
+    script(src="/javascripts/angular/showcasesController.js")
+    script(src="/javascripts/angular/elementsController.js")  
     script(src="/javascripts/angular/naturalSortVersion.js") 
   body
     .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
@@ -116,8 +118,17 @@ html
               a(href="/Regions") REGIONS
                 i.fa.fa-angle-right.angle-icon-sidebar              
             li
-              a(href="/Organizations") ORGANIZATIONS/SITES
-                i.fa.fa-angle-right.angle-icon-sidebar          
+              a(href="/Organizations") ORGANIZATIONS
+                i.fa.fa-angle-right.angle-icon-sidebar              
+            li
+              a(href="#Stores") STORES
+                i.fa.fa-angle-right.angle-icon-sidebar              
+            li
+              a(href="/Showcases") SHOWCASES
+                i.fa.fa-angle-right.angle-icon-sidebar              
+            li
+              a(href="/Elements") OBJECTS    
+                i.fa.fa-angle-right.angle-icon-sidebar              
             li
               a(href="/Errors") ERRORS              
                 i.fa.fa-angle-right.angle-icon-sidebar            

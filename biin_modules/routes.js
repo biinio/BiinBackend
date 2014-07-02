@@ -23,6 +23,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Regions organization
     app.get('/organizations',organizations.index);
+    app.get('/api/organizations',organizations.list);
+    app.put('/api/organizations/:identifier',organizations.set);
+    app.delete('/api/organizations/:identifier',organizations.delete);
+    app.post('/organizations/imageUpload',multipartMiddleware,showcases.imagePost);
+    app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
 
     //Showcase routes
     app.get('/showcases',showcases.index);

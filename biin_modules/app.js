@@ -17,10 +17,10 @@ module.exports = function (db) {
     process.env.PWD = process.cwd()
 
     // view engine setup
-    app.set('views', path.join(__dirname, 'views'));
+    app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
     app.set('view engine', 'jade');
-    app.use(express.static(process.env.PWD + '/public'));
-    app.use(express.static(process.env.PWD+'/bower_components'));
+    app.use(express.static(path.join(process.env.PWD , 'public')));
+    app.use(express.static(path.join(process.env.PWD,'bower_components')));
     app.use(favicon());
     app.use(logger('dev'));
     app.use(bodyParser.urlencoded());
@@ -47,7 +47,7 @@ module.exports = function (db) {
     app.use(app.router);
     
     //Routes
-    var routes = require("./biin_modules/routes.js")(app,db,passport,multipartMiddleware);
+    var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
 
     /// error handlerslogger
     // development error handler

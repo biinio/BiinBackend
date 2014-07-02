@@ -1,0 +1,51 @@
+.panel.panel-default.max-height(data-hm-showcase="")
+	.panel-heading.control-group.form-inline
+		label Organizations
+		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
+	.body-list.max-height
+		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
+			.row.middle-heigth(ng-class="{'max-height':selectedOrganization==null}")
+				div(slimscroll="" slimscroll-option="{height: 'auto'}" )
+					a.col-md-1.module(ng-click="create()")
+						.moduleWrapper
+							p Add New
+					a.col-md-1.module(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
+						.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
+							img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+							button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))") Remove
+			.row.middle-heigth(ng-if="selectedOrganization!=null")
+				div(slimscroll="" slimscroll-option="{height: 'auto'}" )
+					a.col-md-1.module(ng-click="createSite()")
+						.moduleWrapper
+							p Add New
+					a.col-md-1.module(ng-repeat="item in sites | filter: querySites" ng-click="editSite(sites.indexOf(item))")
+						.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
+							img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+							button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))") Remove
+		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null")
+			.animate-switch.max-height
+				ul.nav.nav-tabs
+					li.activeTab
+						a Details
+				.row.max-height.showcaseWorkArea
+					.col-md-6.col-sm-6.colPreview.max-height
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+							.previewShowcaseWrapper
+								#wrapperOrganization.copperEditor(data-image-src="{{organizations[selectedOrganization].imgUrl}}" image-cropper)
+								input#organizationImage.hidden(ng-model="organizations[selectedOrganization].imgUrl" input-change="")							
+					.col-md-6.col-sm-6.colPreview.max-height
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+							.row
+								label Name:
+							.row
+								input.form-control( ng-model="organizations[selectedOrganization].name")
+							.row
+								label Brand:
+							.row
+								input.form-control( ng-model="organizations[selectedOrganization].brand")
+							.row
+								label Description:
+							.row
+								input.form-control( ng-model="organizations[selectedOrganization].description")
+							.row
+								button.form-group.btn.btn-default.form-control(ng-click="save()") SAVE																	

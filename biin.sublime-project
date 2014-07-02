@@ -2,7 +2,16 @@
 	"folders":
 	[
 		{
-			"path": "/Users/lbonilla/Developments/Biin"
+			"path": "~/Developments/Biin",
+			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace"]
+
 		}
-	]
+	],
+	"build_systems":
+    [
+        {
+            "name": "List",
+            "cmd": ["ls"]
+        }
+    ]
 }

@@ -3,7 +3,7 @@
 
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
-	userSchema = require('./schemas/user');
+	userSchema = require('../schemas/user');
 
 
 passport.use(new LocalStrategy(
@@ -34,7 +34,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-	done(null, {name: user.name,displayName:user.displayName});
+	done(null, new userSchema(user));
 });
 
 module.exports = passport;

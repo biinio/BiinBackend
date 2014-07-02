@@ -1,11 +1,15 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-module.exports = mongoose.model('organizations', {
-	id: Number,
-	origin: String,
-	destination: String,
-	departs: String,
-	arrives: String,
-	actualDepart: Number,
-	actualArrive: Number	
-});
+var orgObj ={
+	identifier:{type:String, default:"-1"},
+	accountIdentifier:{type:String, default:"000"},
+	name: {type:String, default:""},
+	brand: {type:String, default:""},
+	description: {type:String, default:""},
+	imgUrl:{type:String,default:""}
+}
+
+var orgSchema = new Schema(orgObj);
+
+module.exports = mongoose.model('organizations', orgSchema);

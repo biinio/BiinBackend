@@ -6,7 +6,11 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
 	name: {type:String, required:true,index:{unique:true}},
 	password:{type:String, required:true},
-	displayName:String
+	displayName:String,
+	addres:String,
+	accountIdentifier:String,
+	emails:[],
+	joinDate:Date
 })
 
 //Generation of Salt Password

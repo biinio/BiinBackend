@@ -1,4 +1,8 @@
 module.exports = function(db){
+	//Packages
+    var moment = require('moment');
+
+    //Schemas
 	var user = require('../schemas/user');
 	var functions ={}
 
@@ -16,9 +20,11 @@ module.exports = function(db){
 	functions.create = function(req,res){
 		// create a user a new user
 		var admin = new user({
-		    name: 'epadilla',
-		    password: 'epadilla',
-		    displayName:'Esteban Padilla'
+		    name: 'lbonilla@biinapp.com',
+		    password: 'abc1236',
+		    displayName:'Luis Bonilla Hernández',
+		    accountIdentifier:'10001',
+		    emails:['lbonilla@biinapp.com','luisbonillah@gmail.com','ti.lbonilla@hotmail.com']
 		});
 
 		// save user to database
