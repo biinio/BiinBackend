@@ -87,6 +87,7 @@
 	.moduleWrapperShowcaseElement{
 		position: relative;
 		margin-left: 0px;
+		max-width: 290px;
 	}
 
 	.module{
@@ -222,8 +223,8 @@
 		top: -17px;
 		font-weight: 100;
 	}
-	.btn-default
-	{
+
+	.btn-default{
 		background-color: #069FCE;
 		color: #fff;
 		border-color: none;
@@ -239,24 +240,49 @@
 
 	.btnShowcasePreview{
 		position: absolute;
-		top:10px;
+		top: 20px;
 		left: 10px;
 	}
 
 	.btnShowcasePreview.down{
 		top: initial;
-        bottom:20px;
-		left: 230px;        
+		bottom: 20px;
+		left: initial;
+		right: 10px;      
 	}
 
     .btnShowcasePreview.up{
         top:20px;
-        left: 230px;
+        left: 250px;
 	}
 
-	.moduleWrapperShowcase.down{
-
+	.moduleWrapper .btnShowcasePreview.btnDelete{
+		position: absolute;
+		top: 20px;
+		left: 95px;	
 	}
+
+	.icon-round-control{
+		height: 30px;
+		width: 30px;
+		border-radius: 50%;
+		background-color: #069FCE;
+		opacity: 0.7;
+		border: none;
+		text-align: center;
+	}
+
+	.icon-round-control .icon{
+		position: relative;
+		display: block;
+		color: #ffffff;
+		margin-top: 25%;
+		margin-bottom: 25%;
+		margin-left: auto;
+		margin-right: auto;
+		cursor: pointer;
+	}	
+
 
 /****
 	Modules
@@ -408,9 +434,11 @@
 	border-radius: 50%;
 	border-color: transparent;
 }
+
 .sp-dd{
 	display: none;
 }
+
 .sp-preview-inner{
 	border-radius: 50%;	
 	border-color: transparent;

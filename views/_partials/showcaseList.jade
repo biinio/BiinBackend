@@ -11,7 +11,8 @@
 				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(showcases.indexOf(item))")					
 					.moduleWrapper.contentHideButtons(ng-class="{active: showcases.indexOf(item) == selectedShowcase}")				
 						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-						button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeShowcaseAt(showcases.indexOf(item))") Remove						
+						div.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeShowcaseAt(showcases.indexOf(item))")
+										.icon.icon-bin-2 	
 		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
 			.animate-switch.max-height(ng-if="selectedShowcase!=null")
 				ul.nav.nav-tabs
@@ -35,9 +36,12 @@
 									.imgElementPreview
 								.col-md1.moduleWrapperShowcaseElement.contentHideButtons(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
 									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
-									button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeElementAt(showcases[selectedShowcase].objects.indexOf(obj))") Remove
-									button.btnShowcasePreview.up.btn.btn-on-hover(ng-click="moveElementUp(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index>0") Up
-									button.btnShowcasePreview.down.btn.btn-on-hover(ng-click="moveElementDown(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index<showcases[selectedShowcase].objects.length-1") Dw
+									div.btnShowcasePreview.icon-round-control.btn-on-hover(ng-click="removeElementAt(showcases[selectedShowcase].objects.indexOf(obj))")
+											.icon.icon-bin-2 
+									div.btnShowcasePreview.icon-round-control.up.btn-on-hover(ng-click="moveElementUp(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index>0")
+											.icon.icon-arrow-33
+									div.btnShowcasePreview.icon-round-control.down.btn-on-hover(ng-click="moveElementDown(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index<showcases[selectedShowcase].objects.length-1") 
+											.icon.icon-minus-1
 								.col-md1.hide.dropColumn(ng-repeat-end)									
 									.imgElementPreview				
 					.col-md-6.col-sm-6.colPreview.max-height
