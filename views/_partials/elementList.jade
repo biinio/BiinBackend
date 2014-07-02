@@ -11,7 +11,8 @@
 				a.col-md-1.module(ng-repeat="item in elements | filter: query" ng-click="edit(elements.indexOf(item))")					
 					.moduleWrapper.contentHideButtons(ng-class="{active: elements.indexOf(item) == selectedElement}")				
 						img.img-responsive(ng-src="{{item.imageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-						button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeElementAt(elements.indexOf(item))") Remove
+						div.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeElementAt(elements.indexOf(item))")
+							.icon.icon-bin-2
 		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
 			.animate-switch.max-height
 				ul.nav.nav-tabs

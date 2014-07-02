@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: "streamline-30px";
-  src:url("fonts/streamline-30px.eot");
-  src:url("fonts/streamline-30px.eot?#iefix") format("embedded-opentype"),
-    url("fonts/streamline-30px.woff") format("woff"),
-    url("fonts/streamline-30px.ttf") format("truetype"),
-    url("fonts/streamline-30px.svg#streamline-30px") format("svg");
+  src:url("../fonts/streamline-30px.eot");
+  src:url("../fonts/streamline-30px.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/streamline-30px.woff") format("woff"),
+    url("../fonts/streamline-30px.ttf") format("truetype"),
+    url("../fonts/streamline-30px.svg#streamline-30px") format("svg");
   font-weight: normal;
   font-style: normal;
 
