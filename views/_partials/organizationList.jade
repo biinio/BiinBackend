@@ -5,7 +5,7 @@
 	.body-list.max-height
 		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
 			.row.middle-heigth(ng-class="{'max-height':selectedOrganization==null}")
-				div(slimscroll="" slimscroll-option="{height: 'auto'}" )
+				div(slimscroll="" slimscroll-option="{height: '90%'}" )
 					a.col-md-1.module(ng-click="create()")
 						.moduleWrapper
 							p Add New
@@ -14,14 +14,18 @@
 							img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 							button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))") Remove
 			.row.middle-heigth(ng-if="selectedOrganization!=null")
-				div(slimscroll="" slimscroll-option="{height: 'auto'}" )
-					a.col-md-1.module(ng-click="createSite()")
-						.moduleWrapper
-							p Add New
-					a.col-md-1.module(ng-repeat="item in sites | filter: querySites" ng-click="editSite(sites.indexOf(item))")
-						.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
-							img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-							button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))") Remove
+				.row 
+					.col-md-1
+						p sites
+				.row
+					div(slimscroll="" slimscroll-option="{height: '90%'}" )
+						a.col-md-1.module(ng-click="createSite()")
+							.moduleWrapper
+								p Add New
+						a.col-md-1.module(ng-repeat="item in sites | filter: querySites" ng-click="editSite(sites.indexOf(item))")
+							.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
+								img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+								button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))") Remove
 		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null")
 			.animate-switch.max-height
 				ul.nav.nav-tabs

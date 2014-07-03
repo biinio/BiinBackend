@@ -12,13 +12,36 @@ module.exports = function (db) {
     var crypto = require('crypto');
     var multipart = require('connect-multiparty');
     var multipartMiddleware = multipart();
+    var lessMiddleware = require('less-middleware');
+
+    //Define local vars
+    var isDevelopment = app.get('env') === 'development';
 
     // At the top of your web.js
     process.env.PWD = process.cwd()
 
-    // view engine setup
+
+    // Less configuration
+    if(isDevelopment)
+        app.use(lessMiddleware(path.join(process.env.PWD , 'public')),{
+            force:true,
+            debug:true,
+            compress:false
+        });
+    else
+        app.use(lessMiddleware(path.join(process.env.PWD , 'public')),{
+            force:false,
+            debug:false,
+            once:true,
+            compress:true
+        });
+
+
+    // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
     app.set('view engine', 'jade');
+
+
     app.use(express.static(path.join(process.env.PWD , 'public')));
     app.use(express.static(path.join(process.env.PWD,'bower_components')));
     app.use(favicon());
@@ -52,23 +75,25 @@ module.exports = function (db) {
     /// error handlerslogger
     // development error handler
     // will print stacktrace
-    if (app.get('env') === 'development') {
+    if (isDevelopment) {
         app.use(function(err, req, res, next) {
+            console.log("Hellow error of development: " + err.message +" stack: "+error.stack);
             res.render('error', {
                 message: err.message,
                 error: err
             });
         });
-    }
-
-    // production error handler
-    // no stacktraces leaked to user
-    app.use(function(err, req, res, next) {
-        res.render('error', {
-            message: err.message,
-            error: {}
+    }else{
+        // production error handler
+        // no stacktraces leaked to user
+        app.use(function(err, req, res, next) {
+            console.log("Hellow error of production");
+            res.render('error', {
+                message: err.message,
+                error: {}
+            });
         });
-    });
+    }
 
     return app;
 };
