@@ -3,16 +3,17 @@
 		label Showcase  	
 		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
 		.roundedOptionsForm
-			a.btn.btn-rounded.pull-right(ng-click="create()")
-				i +
 	.body-list.max-height
 		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
 			.row(slimscroll="" slimscroll-option="{height: 'auto'}" )
+				a.col-md-1.module(ng-click="create()")				
+					.moduleWrapper.remove-module
+						.btn-rounded.center.icon.icon-add-1
 				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(showcases.indexOf(item))")					
 					.moduleWrapper.contentHideButtons(ng-class="{active: showcases.indexOf(item) == selectedShowcase}")				
 						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-						div.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeShowcaseAt(showcases.indexOf(item))")
-										.icon.icon-bin-2 	
+						.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeShowcaseAt(showcases.indexOf(item))")
+							.icon.icon-bin-2 	
 		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
 			.animate-switch.max-height(ng-if="selectedShowcase!=null")
 				ul.nav.nav-tabs
@@ -41,7 +42,7 @@
 									div.btnShowcasePreview.icon-round-control.up.btn-on-hover(ng-click="moveElementUp(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index>0")
 											.icon.icon-arrow-33
 									div.btnShowcasePreview.icon-round-control.down.btn-on-hover(ng-click="moveElementDown(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index<showcases[selectedShowcase].objects.length-1") 
-											.icon.icon-minus-1
+											.icon.icon-arrow-34
 								.col-md1.hide.dropColumn(ng-repeat-end)									
 									.imgElementPreview				
 					.col-md-6.col-sm-6.colPreview.max-height

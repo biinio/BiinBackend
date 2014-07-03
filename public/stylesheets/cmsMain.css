@@ -96,6 +96,23 @@
 		min-width: 125px;
 	}
 
+	.moduleWrapper.remove-module{
+		background-color:  #00adef;
+		padding-top: 47.4px;
+	}
+
+	.moduleWrapper.remove-module .btn-rounded{
+		background-color: #fff;
+		padding: initial;
+		text-align: center;
+		line-height: 36px;
+	}
+
+	.moduleWrapper.remove-module .btn-rounded .icon{
+		color:  #00adef;
+
+	}
+
 
 /****
 	Nav Var Header Style
@@ -174,8 +191,9 @@
 	}
 
 	.center{
- 		margin-left: auto;
-		margin-right: auto;
+ 		margin-left: auto!important;
+		margin-right: auto!important;
+		display: block;
 	}
 
 	.main {
