@@ -1,9 +1,5 @@
-@nice-blue: #5B83AD;
-@light-blue: @nice-blue + #111;
-
-#header {
-  color: @light-blue;
-}
+@firstColor: #069fce;
+@firstLigthColor:#00adef;
 
 /****
 	Body Principal Style
@@ -103,6 +99,23 @@
 		min-width: 125px;
 	}
 
+	.moduleWrapper.remove-module{
+		background-color:  @firstColor;
+		padding-top: 47.4px;
+	}
+
+	.moduleWrapper.remove-module .btn-rounded{
+		background-color: #fff;
+		padding: initial;
+		text-align: center;
+		line-height: 36px;
+	}
+
+	.moduleWrapper.remove-module .btn-rounded .icon{
+		color:  @firstColor;
+
+	}
+
 
 /****
 	Nav Var Header Style
@@ -181,8 +194,9 @@
 	}
 
 	.center{
- 		margin-left: auto;
-		margin-right: auto;
+ 		margin-left: auto!important;
+		margin-right: auto!important;
+		display: block;
 	}
 
 	.main {
@@ -217,7 +231,7 @@
 		margin-top: 0px;
 		font-weight: -3;
 		margin-left: -2px;
-		background-color: #069FCE;
+		background-color: @firstColor;
 		height: 30px;
 		width: 30px;
 	}
@@ -232,7 +246,7 @@
 	}
 
 	.btn-default{
-		background-color: #069FCE;
+		background-color: @firstColor;
 		color: #fff;
 		border-color: none;
 	}
@@ -273,7 +287,7 @@
 		height: 30px;
 		width: 30px;
 		border-radius: 50%;
-		background-color: #069FCE;
+		background-color: @firstColor;
 		opacity: 0.7;
 		border: none;
 		text-align: center;
@@ -295,7 +309,7 @@
 	Modules
 	***/
 	.moduleWrapper.active{
-		background-color: #069FCE;
+		background-color: @firstColor;;
 	}
 
 	.moduleWrapperElement {
@@ -332,7 +346,7 @@
 		min-width: 100px;
 	}
 	.nav-tabs{
-		background-color: #069FCE;
+		background-color: @firstColor;
 	}
 
 	.nav-tabs>li>a {
@@ -356,12 +370,12 @@
 	}
 	.nav>li>a:hover, .nav>li>a:focus {
 		text-decoration: none;
-		background-color: #00adef;
+		background-color: @firstLigthColor;
 		cursor: pointer;
 	}
 
 	.nav-tabs>li>a:hover {
-		border-color: #00adef #00adef #00adef;
+		border-color: @firstLigthColor @firstLigthColor @firstLigthColor;
 	}
 
 	.searchElements{
@@ -570,7 +584,7 @@
 }
 
 .dropColumn{
-	background-color: #00adef;
+	background-color: @firstLigthColor;
 	width: 290px;
 	height: 10px;
 }
