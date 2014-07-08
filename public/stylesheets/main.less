@@ -1,83 +1,98 @@
-@firstColor: #069fce;
-@firstLigthColor:#00adef;
-
-/****
-	Body Principal Style
-	***/
-
-	html,body
-	{
-	  height: 100%;
-	}
-
-	body{
-
-	}
-
-	h1{
-		font-size: 15px;
-	}
-
-	.form-control {
-		height: 33px;
-		width: 95%;
-	}
+/* ------------------------------------------------------
+			Main CSS Style for Biin App CMS]
+   ------------------------------------------------------*/
 
 
-	.search-box{
-		height: 25px;
-	}
+/*------------------------------------------*/
+/*	Variables
+/*------------------------------------------*/
 
-/****
-	Main Containers
-****/
-	.main-container{
-			height: 100%;
-		}
+@firstColor: #069fce; //Navigation var and  Buttons color
+@firstLigthColor:#00adef; //Buttons over color
+@secondColor: #fff; //Buttons and Contrast Wrapper
+@thirthColor: #000;//Top Navigation bar and selected Button
+@forthColor:#ECEDEE;//Contrast List Color grey
 
-	.main-container-row{
-		height: 100%;
-	}
-/****
-	Panels and Nav-var Custom Style
-	***/
+@formControlBorderColor:#ccc;
+@colorChat:#16da06;
+@colorMessage:#f00;
 
-	.panel-default{
-		border-style: none;
-	}	
+/*------------------------------------------*/
+/*	Body Principal Style
+/*------------------------------------------*/
 
-	.panel-default>.panel-heading{
-		color: #333;
-		background-color:initial;
-		border-color: initial;
-		border:none;
-		margin-top: -15px;
-		min-height: 50px;
-	}
+html,body {
+	height: 100%;
+}
 
-	.panel-heading label{
-		margin-right: 10px;
-	}
+body {
 
-	.panel-body {
-		padding: 0px;
-		margin-left: -25px;
-	}	
+}
 
-	.moduleWrapper{
-		height: 125px;
-		width: 125px;
-		background-color: #fff;
-		border-radius: 7px;
-		margin-top: 5px;
-		margin-left: auto;
-		margin-right: auto;
-	}
+h1 {
+	font-size: 15px;
+}
 
-	.moduleWrapper img{
-	    height: auto;
-	    max-height: 125px;
-	    max-width: 125px;
+.form-control {
+	height: 33px;
+	width: 95%;
+}
+
+.search-box { 
+	height: 25px;
+}
+
+/*------------------------------------------*/
+/*	Main Containers
+/*------------------------------------------*/
+
+.main-container {
+	height: 100%;
+}
+
+.main-container-row {
+	height: 100%;
+}
+
+/*------------------------------------------*/
+/*	Panels and Nav-var Custom Style
+/*------------------------------------------*/
+
+.panel-default {
+	border-style: none;
+}	
+
+.panel-default>.panel-heading {
+	background-color:initial;
+	border-color: initial;
+	border:none;
+	margin-top: -15px;
+	min-height: 50px;
+}
+
+.panel-heading label {
+	margin-right: 10px;
+}
+
+.panel-body {
+	padding: 0px;
+	margin-left: -25px;
+}	
+
+.moduleWrapper {
+	height: 125px;
+	width: 125px;
+	background-color: @secondColor;
+	border-radius: 7px;
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+
+	//Wrapper Image
+	img {
+		height: auto;
+		max-height: 125px;
+		max-width: 125px;
 		margin-left: auto;
 		margin-right: auto;    
 		width: 100%;
@@ -86,214 +101,218 @@
 		padding-top: 7px;
 		padding-bottom: 7px;
 	}
+}
 
-	.moduleWrapperShowcaseElement{
-		position: relative;
-		margin-left: 0px;
-		max-width: 290px;
-	}
+.moduleWrapperShowcaseElement {
+	position: relative;
+	margin-left: 0px;
+	max-width: 290px;
+}
 
-	.module{
-		margin-right: 7px;
-		min-height: 125px;
-		min-width: 125px;
-	}
+.module {
+	margin-right: 7px;
+	min-height: 125px;
+	min-width: 125px;
+}
 
-	.moduleWrapper.remove-module{
-		background-color:  @firstColor;
-		padding-top: 47.4px;
-	}
+//Remove Element of Grids
+.moduleWrapper.remove-module {
+	background-color:  @firstColor;
+	padding-top: 47.4px;
 
-	.moduleWrapper.remove-module .btn-rounded{
-		background-color: #fff;
+	//Button Module
+	.btn-rounded {
+		background-color: @secondColor;
 		padding: initial;
 		text-align: center;
 		line-height: 36px;
+
+		//Rounded button icon of remove
+		.icon {
+			color:  @firstColor;
+		}
 	}
+}
 
-	.moduleWrapper.remove-module .btn-rounded .icon{
-		color:  @firstColor;
+/*------------------------------------------*/
+/*	Nav Var Header Style
+/*------------------------------------------*/
 
-	}
+.navbar {
+	padding: 0px 0px;
+}
 
+.navbar-brand img {
+	height: 50px;
+}
 
-/****
-	Nav Var Header Style
-	***/
+.avatar {
+	height: 30px;
+	margin-right: 10px;
+	border: solid;
+	border-width: 1px;
+}
 
-	.navbar {
-		 padding: 0px 0px;
-	}
+.avatarSettings {
+	height: 23px;
+	margin-left: 10px;
+}
 
-	.navbar-brand img {
-		height: 50px;
-	}
-
-	.avatar{
+.notificationIcon {
+	img {
 		height: 30px;
-		margin-right: 10px;
-		border: solid;
-		border-width: 1px;
 	}
 
-	.avatarSettings{
-		height: 23px;
-		margin-left: 10px;
-	}
-
-	.notificationIcon img{
-		height: 30px;
-	}
-	.notificationIcon .badge{
+	.badge {
 		min-width: 5px;
 		font-size: 8px;
 		padding-bottom: 5px;
 		padding-top: 5px;
 		position: relative;
 		top: -8px;
-		left: -15px;
-		
+		left: -15px;	
 	}
 
-	.notificationIcon .badge.chat{
-		background-color: rgb(22, 218, 6);
+	.chat {
+		background-color: @colorChat;
 	}
 
-	.notificationIcon .badge.message{
-		background-color: rgb(255, 0, 0);
-	}
+	.message {
+		background-color: @colorMessage;
+	}	
+}
 
-	.navbar-left.notifications > li > a {
-		margin-right: -11px;
-		margin-left: -5px;
-	}
+.navbar-left.notifications > li > a {
+	margin-right: -11px;
+	margin-left: -5px;
+}
 
-	.body-list {
-	    margin-left: -25px;
-	}
+.body-list {
+	margin-left: -25px;
+}
 
-	.col-list{
-		background-color:  #ECEDEE;
-	}
+.col-list {
+	background-color:  @forthColor;
+}
 
-	.colOptions{	
-		padding-right: 0px;
-		padding-left: 0px;
-	}
+.colOptions {	
+	padding-right: 0px;
+	padding-left: 0px;
+}
 
-	.middle-heigth{
-		height: 50% !important;
-	}
+.middle-heigth {
+	height: 50% !important;
+}
 
-	.max-height{
-		height: 100% !important;
-	}
+.max-height {
+	height: 100% !important;
+}
 
-	.max-width{
-		width: 100%!important;
-	}
+.max-width {
+	width: 100%!important;
+}
 
-	.center{
- 		margin-left: auto!important;
-		margin-right: auto!important;
-		display: block;
-	}
+.center {
+	margin-left: auto!important;
+	margin-right: auto!important;
+	display: block;
+}
 
-	.main {
-		padding-left: 0px;
-		padding-right: 0px;
-		height: 100%;
-	}
+.main {
+	padding-left: 0px;
+	padding-right: 0px;
+	height: 100%;
+}
 
-	@media (min-width: 768px){
-		.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-			margin-right: 50px;
-			margin-left: 30.5px;
-			margin-top: -3px;
-		}
-		.navbar-nav>li>a {
-			padding-top: 0px; 
-			padding-bottom: 0px; 
-		}
+@media (min-width: 768px) {
+	.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+		margin-right: 50px;
+		margin-left: 30.5px;
+		margin-top: -3px;
 	}
-
-/****
-	Buttons
-	***/
-	
-	.roundedOptionsForm{
-		margin-top: -28px
+	.navbar-nav>li>a {
+		padding-top: 0px; 
+		padding-bottom: 0px; 
 	}
+}
 
-	.btn-rounded{
-		border-radius: 50%;
-		font-size: 25px;
-		margin-top: 0px;
-		font-weight: -3;
-		margin-left: -2px;
-		background-color: @firstColor;
-		height: 30px;
-		width: 30px;
-	}
+/*------------------------------------------*/
+/*	Buttons
+/*------------------------------------------*/
 
-	.btn-rounded i{
+.roundedOptionsForm {
+	margin-top: -28px
+}
+
+.btn-rounded {
+	border-radius: 50%;
+	font-size: 25px;
+	margin-top: 0px;
+	font-weight: -3;
+	margin-left: -2px;
+	background-color: @firstColor;
+	height: 30px;
+	width: 30px;
+
+	i {
 		font-size: 31px;
 		margin-left: -7.3px;
-		color: #fff;
+		color: @secondColor;
 		position: relative;
 		top: -17px;
 		font-weight: 100;
 	}
+}
 
-	.btn-default{
-		background-color: @firstColor;
-		color: #fff;
-		border-color: none;
-	}
+.btn-default {
+	background-color: @firstColor;
+	color: @secondColor;
+	border-color: none;
+}
 
-	.contentHideButtons .btn-on-hover{
-		display: none;
-	}
+.contentHideButtons .btn-on-hover {
+	display: none;
+}
 
-    .contentHideButtons:hover .btn-on-hover{
-		display: block;
-	}
+.contentHideButtons:hover .btn-on-hover {
+	display: block;
+}
 
-	.btnShowcasePreview{
-		position: absolute;
-		top: 20px;
-		left: 10px;
-	}
+.btnShowcasePreview {
+	position: absolute;
+	top: 20px;
+	left: 10px;
+}
 
-	.btnShowcasePreview.down{
-		top: initial;
-		bottom: 20px;
-		left: initial;
-		right: 10px;      
-	}
+.btnShowcasePreview.down {
+	top: initial;
+	bottom: 20px;
+	left: initial;
+	right: 10px;   
+}   
 
-    .btnShowcasePreview.up{
-        top:20px;
-        left: 250px;
-	}
+.btnShowcasePreview.up {
+	top:20px;
+	left: 250px;
+}
 
-	.moduleWrapper .btnShowcasePreview.btnDelete{
-		position: absolute;
-		top: 20px;
-		left: 95px;	
-	}
 
-	.icon-round-control{
-		height: 30px;
-		width: 30px;
-		border-radius: 50%;
-		background-color: @firstColor;
-		opacity: 0.7;
-		border: none;
-		text-align: center;
-	}
+.moduleWrapper .btnShowcasePreview.btnDelete {
+	position: absolute;
+	top: 20px;
+	left: 95px;	
+}
 
-	.icon-round-control .icon{
+.icon-round-control {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	background-color: @firstColor;
+	opacity: 0.7;
+	border: none;
+	text-align: center;
+
+	.icon {
 		position: relative;
 		display: block;
 		color: #ffffff;
@@ -303,151 +322,153 @@
 		margin-right: auto;
 		cursor: pointer;
 	}	
+}
 
+/*------------------------------------------*/
+/*	Modules
+/*------------------------------------------*/	
 
-/****
-	Modules
-	***/
-	.moduleWrapper.active{
-		background-color: @firstColor;;
-	}
+.moduleWrapper.active {
+	background-color: @firstColor;;
+}
 
-	.moduleWrapperElement {
-		margin-left: auto;
-		margin-right: auto;
-		height: 160px;
-		width: 290px;
-		background-color: #fff;
+.moduleWrapperElement {
+	margin-left: auto;
+	margin-right: auto;
+	height: 160px;
+	width: 290px;
+	background-color: @secondColor;
+}
 
-	}
+.moduleWrapperBiin {
+	height: 100px;
+	width: 100px;
+	background-color:@secondColor;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 
-	.moduleWrapperBiin{
-		height: 100px;
-		width: 100px;
-		background-color: #fff;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
+.row.elementList {
+	margin-left: auto;
+	margin-right: auto;
+}
 
-	.row.elementList{
-		margin-left: auto;
-		margin-right: auto;
-	}
-/****
-	Tabs
-	***/
+/*------------------------------------------*/
+/*	Tabs
+/*------------------------------------------*/
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	color:@secondColor;
+	background-color: @thirthColor;
+	border: 1px solid @thirthColor;
+	cursor:pointer;
+	border-radius: 0;
+	min-width: 100px;
+}
 
-	.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
-		color: #fff;
-		background-color: #000;
-		border: 1px solid #000;
-		cursor:pointer;
-		border-radius: 0;
-		min-width: 100px;
-	}
-	.nav-tabs{
-		background-color: @firstColor;
-	}
+.nav-tabs {
+	background-color: @firstColor;
+}
 
-	.nav-tabs>li>a {
-		margin-right: 2px;
-		border-radius: 4px 4px 0 0;
-		color: #fff;
-		min-width: 100px;
-	}
-	.nav-tabs>li {
-	 float: left;
-	 margin-bottom: 0px; 
-	}
+.nav-tabs>li>a {
+	margin-right: 2px;
+	border-radius: 4px 4px 0 0;
+	color: @secondColor;
+	min-width: 100px;
+}
 
-	.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
-		color: #fff;
-		background-color: #000;
-		border: 1px solid #000;
-		cursor: pointer;
-		border-radius: 0;
-		min-width: 100px;
-	}
-	.nav>li>a:hover, .nav>li>a:focus {
-		text-decoration: none;
-		background-color: @firstLigthColor;
-		cursor: pointer;
-	}
+.nav-tabs>li {
+	float: left;
+	margin-bottom: 0px; 
+}
 
-	.nav-tabs>li>a:hover {
-		border-color: @firstLigthColor @firstLigthColor @firstLigthColor;
-	}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	color: @secondColor;
+	background-color: @thirthColor;
+	border: 1px solid @thirthColor;
+	cursor: pointer;
+	border-radius: 0;
+	min-width: 100px;
+} 
 
-	.searchElements{
-		height: auto;
-	}
-/****
-	Images
-	****/
+.nav>li>a:hover, .nav>li>a:focus {
+	text-decoration: none;
+	background-color: @firstLigthColor;
+	cursor: pointer;
+}
 
-	#wrapperShowcase img{
-		height: 290px;
-		width: 290px;
-	}
+.nav-tabs>li>a:hover {
+	border-color: @firstLigthColor @firstLigthColor @firstLigthColor;
+}
 
-	.imgPreview{
-		height: 290px;
-		width: 290px;
-		margin-right: auto;
-		margin-left: auto;
-	}
+.searchElements {
+	height: auto;
+}
 
-	.imgElementPreview{
-		height: 160px;
-		min-width: 290px;
-		max-height:290px;
-	}
+/*------------------------------------------*/
+/*	Images
+/*------------------------------------------*/
 
-	.colPreview{
-		padding-left: 0px; 
-		padding-right: 0px; 
-	}
+#wrapperShowcase img {
+	height: 290px;
+	width: 290px;
+}
 
-/**** 
-	Bootstrap
-	****/
+.imgPreview {
+	height: 290px;
+	width: 290px;
+	margin-right: auto;
+	margin-left: auto;
+}
 
-	.container-fluid {
-	 padding-left: 0px; 
-	 padding-right: 0px; 
-	}
+.imgElementPreview {
+	height: 160px;
+	min-width: 290px;
+	max-height:290px;
+}
 
-	.row 
-	{
-	 margin-left: 0px; 
-	 margin-right: 0px; 
-	}
+.colPreview {
+	padding-left: 0px; 
+	padding-right: 0px; 
+}
 
-/****
-	Image Crooper
-	****/
+/*------------------------------------------*/
+/*	Bootstrap
+/*------------------------------------------*/
 
-/*Cropper editor size*/
+.container-fluid {
+	padding-left: 0px; 
+	padding-right: 0px; 
+}
+
+.row {
+	margin-left: 0px; 
+	margin-right: 0px; 
+}
+
+/*------------------------------------------*/
+/*	Image Crooper
+/*------------------------------------------*/
+
 .copperEditor {
 	position:relative; /* or fixed or absolute */
 	width: 320px;
 	height: 320px;
 	min-height: 320px;
 	min-width: 320px;
-	/*padding-top: 10px;*/
 	padding-bottom: 0px;
-    /*overflow: hidden;*/
 }
 
-/****
-	Spectrum Color Picker Override
-	****/
-.sp-replacer{
+/*------------------------------------------*/
+/*	Spectrum Color Picker Override
+/*------------------------------------------*/	
+
+.sp-replacer {
 	background-color:inherit;
 	border-radius: 50%;
-	border-color: #ECEDEE;
+	border-color: @forthColor;
 	padding: 2px;
 }
+
 .sp-preview {
 	height: 18px;
 	width: 18px;
@@ -456,134 +477,139 @@
 	border-color: transparent;
 }
 
-.sp-dd{
+.sp-dd {
 	display: none;
 }
 
-.sp-preview-inner{
+.sp-preview-inner {
 	border-radius: 50%;	
 	border-color: transparent;
 }
 
-/****
-	Form Picker
-	****/
-.form-picker{
+/*------------------------------------------*/
+/*	Form Picker
+/*------------------------------------------*/	
+
+.form-picker {
 	position: relative;
-}
 
-.form-picker input{
-	border: none;
-	z-index: 2;
-	position: absolute;
-	display: block;
-	top: 5px;
-	width: 61%;
-	left: 11px;
-}
+	input {
+		border: none;
+		z-index: 2;
+		position: absolute;
+		display: block;
+		top: 5px;
+		width: 61%;
+		left: 11px;
+	}
 
-.form-picker input:hover{
-	border: none;
-}
+	input:hover {
+		border: none;
+	}
 
-.form-picker span.separator {
-	position: absolute;
-	border-left: solid;
-	border-left: 1px solid #ccc;
-	height: 100%;
-	top: 0px;
-	right: 47px;
-}
+	span.separator {
+		position: absolute;
+		border-left: solid;
+		border-left: 1px solid @formControlBorderColor;
+		height: 100%;
+		top: 0px;
+		right: 47px;
+	}
 
-.form-picker textarea:focus, input:focus{
-    outline: 0;
-}
+	textarea:focus, input:focus {
+		outline: 0;
+	}
 
-.form-picker .picker{
-	position: absolute;
-	right: 48px;
-	top: 4px;
-	z-index: 2;
-}
+	.picker {
+		position: absolute;
+		right: 48px;
+		top: 4px;
+		z-index: 2;
+	}
 
-.form-picker select{
+	select {
+		border: none;  
+		background: none; 
+		outline: none;     
+		-webkit-appearance: none;  
+		-moz-appearance:none;
+		filter: alpha(opacity=0);  
+		-moz-appearance:window;
+		
+		position: absolute;
+		right: 0;
+		top: 0px;
+		z-index: 2;
+		outline: 0;
+		height: 30px;
+		width: 45px;
+	}											
 
-	border: none;  
-    background: none; 
-    outline: none;     
-    -webkit-appearance: none;  
-    -moz-appearance:none;
-    filter: alpha(opacity=0);  
-    -moz-appearance:window;
+	.caret {
+		position: absolute;
+		right: 7px;
+		height: 4px;
+		width: 10px;
+		border-top-width: 5px;
+		border-right-width: 5px;
+		border-left-width: 5px;
+		top: 20px;
+	}
 
-	position: absolute;
-	right: 0;
-	top: 0px;
-	z-index: 2;
-	outline: 0;
-	height: 30px;
-	width: 45px;
-}
-
-.form-picker .caret{
-	position: absolute;
-	right: 7px;
-	height: 4px;
-	width: 10px;
-	border-top-width: 5px;
-	border-right-width: 5px;
-	border-left-width: 5px;
-	top: 20px;
-}
-
-
-.form-picker .caret-reversed{
-	height: 4px;
-    position: absolute;
-    right: 7px;
-    top: 6px;
-    width: 10px;
+	.caret-reversed {
+		height: 4px;
+		position: absolute;
+		right: 7px;
+		top: 6px;
+		width: 10px;
+	}
 }
 
 .caret-reversed {
 	border-top-width: 0px;
-	border-left: 5px solid rgba(0, 0, 0, 0);
-    border-right: 5px solid rgba(0, 0, 0, 0);
-    border-bottom: 5px solid #555555;
-    display: inline-block;
-    margin-left: 2px;
-    vertical-align: middle;
-    height: 4px;
+	border-left: 5px solid @secondColor;
+	border-right: 5px solid @secondColor;
+	border-bottom: 5px solid @formControlBorderColor;
+	display: inline-block;
+	margin-left: 2px;
+	vertical-align: middle;
+	height: 4px;
 	width: 10px;
 }
-/**** Preview style
-****/
 
-.previewShowcaseWrapper{
+.caret {
+	border-top: 5px solid @formControlBorderColor;
+}
+
+/*------------------------------------------*/
+/*	Preview style
+/*------------------------------------------*/
+
+.previewShowcaseWrapper {
 	position: relative;
 }
 
-.previewLabel{
+.previewLabel {
 	position: absolute;
 	left: 30px;
 	overflow: hidden;
 	max-height: 39px;
 	max-width: 270px;
+
+	.title1 {
+		bottom: 100px;
+	}
+
+	.title2 {
+		bottom: 70px;
+	}
+
+	.title3 {
+		bottom: 40px;
+	}
 }
 
-.previewLabel.title1{
-	bottom: 100px;
-}
-
-.previewLabel.title2{
-	bottom: 70px;
-}
-
-.previewLabel.title3{
-	bottom: 40px;
-}
-
-.dropColumn{
+.dropColumn {
 	background-color: @firstLigthColor;
 	width: 290px;
 	height: 10px;
