@@ -5,6 +5,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var users = require('../routes/users')(db);
     var organizations = require('../routes/organizations')(db);
     var showcases = require('../routes/showcases')(db);
+    var sites = require('../routes/sites')();
     var regions = require('../routes/regions')(db);
     var biins = require('../routes/biins')(db);
     var errors = require('../routes/errors')(db);
@@ -38,6 +39,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/api/showcases/:showcase',showcases.delete);
     app.get('/api/showcases',showcases.list);
 
+    //Sites routes
+    app.get('/api/sites',sites.list);
+
     //Biins
     app.get('/api/biins',biins.list);
     app.get('/api/biins/:biin/showcase',showcases.getByBiin);
@@ -63,7 +67,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/errors',errors.index);
     app.post('/api/errors/add',errors.create);
 
-    //Regions routes
+    //Users routes
     app.get('/user',users.create);
 
     /// catch 404 and forwarding to error handler

@@ -4,8 +4,7 @@ module.exports =function(db){
 	var utils = require('../biin_modules/utils')();
 
 	//Schemas
-	var organization = require('../schemas/organization');
-
+	var organization = require('../schemas/organization'), site = require('../schemas/site');
 	var functions ={};
 
 	functions.index = function(req,res){
@@ -15,7 +14,7 @@ module.exports =function(db){
 	//GET the list of organizations
 	functions.list = function(req,res){		
 		organization.find({"accountIdentifier":req.user.accountIdentifier},function (err, data) {
-			   res.json({data:data, prototypeObj : new organization()});
+			   res.json({data:data, prototypeObj : new organization(), sitePrototype: new site()});
 		});		
 	}
 
@@ -39,7 +38,6 @@ module.exports =function(db){
                 newModel.identifier=utils.getGUID();
 				newModel.accountIdentifier= req.user.accountIdentifier;
 
-				console.log("model to save: "+newModel);
 				//Perform an create
 				newModel.save(function(err){
 					if(err)

@@ -113,7 +113,11 @@ biinAppObjects.directive('imageCropper',function(){
     link:function(scope,element){       
        elementCropper= createElementCropper(element[0].attributes["id"].value);
        var index =scope.selectedElement;
-       var imgUrl = scope.elements[index].imageUrl;
+       if(scope.elements[index].imageUrl)
+          var imgUrl = scope.elements[index].imageUrl;
+        else
+          //set not found image
+          imgUrl="http://biinapp.com/biinApp/biinCMSImages/eeb9b58dc185-45aa-b2e1-1bfcc081e775.jpeg"
        elementCropper.preInitImage(imgUrl);
     }
   }

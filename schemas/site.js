@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var siteObj ={
 	identifier:{type:String, default:"-1"},
 	accountIdentifier:{type:String, default:"000"},
-	organization:{type:string,default:""},
+	organization:{type:String,default:""},
 	name: {type:String, default:""},
 	description: {type:String, default:""},
 	media:[
@@ -13,7 +13,7 @@ var siteObj ={
 		 title1:{type:String, default:""},
 		 imgUrl:{type:String,default:""}
 		}
-		}]
+		]
 }
 
 var siteSchema = new Schema(siteObj);

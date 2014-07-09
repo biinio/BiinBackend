@@ -16,24 +16,24 @@
 							.icon.icon-bin-2 	
 		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
 			.animate-switch.max-height(ng-if="selectedShowcase!=null")
-				ul.nav.nav-tabs
-					li(ng-class="{active:activeTab == 'details'}")
-						a(ng-click="activeTab='details'") Details
-					li(ng-class="{active:activeTab == 'biins'}")
-						a(ng-click="activeTab='biins'") Biins						
-					li(ng-class="{active:activeTab == 'objects'}")
-						a(ng-click="activeTab='objects'") Elements
-				.row.max-height.showcaseWorkArea
-					.col-md-6.col-sm-6.colPreview.max-height
+				ul.workAreaHeader.nav.nav-tabs
+									li(ng-class="{active:activeTab == 'details'}")
+										a(ng-click="activeTab='details'") Details
+									li(ng-class="{active:activeTab == 'biins'}")
+										a(ng-click="activeTab='biins'") Biins						
+									li(ng-class="{active:activeTab == 'objects'}")
+										a(ng-click="activeTab='objects'") Elements					
+				.row.workArea.max-height.showcaseWorkArea
+					.col-md-6.col-sm-6.colPreview.max-height.max-elementWidth-OverFlow
 						button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE
-						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '96%'}" slimscroll-obj="showCasePreviewScroll")
 							.previewShowcaseWrapper(droppable-showcase-preview)
 								#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
 								input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
 								label.previewLabel.title1(style="color:{{showcases[selectedShowcase].title1Color}}; font-size:{{showcases[selectedShowcase].title1Size}}px") {{showcases[selectedShowcase].title1}}
 								label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}px") {{showcases[selectedShowcase].title2}}
 								label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}px") {{showcases[selectedShowcase].title3}}
-							.previewShowcaseElements.row
+							.previewShowcaseElements.row.max-height
 								.col-md1.hide.dropColumn
 									.imgElementPreview
 								.col-md1.moduleWrapperShowcaseElement.contentHideButtons(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
@@ -105,7 +105,7 @@
 									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")
 							#biins.max-height(ng-switch-when='biins')
 								.col-list.middle-heigth.biinColumn
-									.row.elementList(slimscroll slimscroll-option="{height: 'auto'}" droppable-biin)
+									.row.elementList(slimscroll slimscroll-option="{height: '96%'}" droppable-biin)
 										a.col-md2(ng-repeat="biin in biins| filter:{'showcaseIdentifier': showcases[selectedShowcase].identifier}")
 												.moduleWrapperBiin.center(element-index="{{biins.indexOf(biin)}}" draggable-biin)
 													p {{biin.identifier}}

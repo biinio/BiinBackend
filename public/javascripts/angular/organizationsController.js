@@ -16,13 +16,18 @@ biinAppOrganization.config(['$routeProvider',
 
 biinAppOrganization.controller("organizationsController",['$scope','$http',function($scope,$http){
   $scope.selectedOrganization = null;
+  $scope.selectedSite = null;
   //Get the List of Objects
   $http.get('api/organizations').success(function(data){
   	$scope.organizations = data.data;
     $scope.currentModelId = null;
 
     $scope.organizationPrototype = data.prototypeObj;
+    $scope.sitePrototype = data.sitePrototypeObj;
+
+    //Site Prototypes Backup
     $scope.organizationPrototypeBkp =  $.extend(true, {}, data.prototypeObj);    
+    $scope.sitePrototypeBkp = $.extend(true, {}, data.sitePrototypeObj);    
 
     //Select the first showcase
     if(data.data.length>0)
@@ -35,8 +40,9 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
   //Push a new organization in the list
   $scope.create = function(){
     var newObject=$scope.organizationPrototype;
-    if($scope.organizations.indexOf(newObject)>-1){      
-      $scope.selectedOrganization=$scope.organizations.indexOf(newObject); 
+    var objIndex=$scope.organizations.indexOf(newObject);
+    if(objIndex>-1){      
+      $scope.selectedOrganization=objIndex; 
     }else{
         $scope.organizationPrototype =  $.extend(true, {}, $scope.organizationPrototypeBkp);
         $scope.organizationPrototype.isNew=true;
@@ -78,8 +84,6 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
     //Remove the cropper
     removeCropper();
 
-    $scope.getOrganizationsSites();
-
     //Instanciate cropper
     organizationsCropper= createOrganizationsCropper("wrapperOrganization");
     var imgUrl = $scope.organizations[index].imgUrl;
@@ -99,14 +103,6 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
     });     
   }
 
-  $scope.getOrganizationsSites= function(){
-    //Get the List of Objects
-    $http.get('api/sites/'+$scope.currentModelId).success(function(data){
-      $scope.sites = data.data;
-      $scope.currentSitexModelId = null;
-    });
-  }
-
    //Others
 
    //Remove the current cropper
@@ -116,6 +112,27 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
         organizationsCropper = null;
       }
    }
+
+   /*-----------------------------------------------------
+   /* Sites Functionality
+   /*-----------------------------------------------------*/
+
+  $scope.createSite= function(){
+    var newObj = $scope.sitePrototype;
+    var objIndex =$scope.organizations[$scope.selectedOrganization].sites.indexOf(newObj);
+    if(objIndex>-1)
+      $scope.selectedSite=objIndex
+    else
+    {
+      $scope.sitePrototype =$.extend(true, {}, $scope.sitePrototypeBkp);
+      $scope.sitePrototype.isNew = true;
+      $scope.organizations[$scope.selectedOrganization].sites.push($scope.sitePrototype);
+    }
+  }
+
+  $scope.removeSite= function(){
+
+  }
 
   }]);
 

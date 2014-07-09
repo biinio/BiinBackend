@@ -7,7 +7,21 @@ var orgObj ={
 	name: {type:String, default:""},
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
-	imgUrl:{type:String,default:""}
+	imgUrl:{type:String,default:""},
+	sites:[{
+		identifier:{type:String, default:"-1"},
+		accountIdentifier:{type:String, default:"000"},
+		organization:{type:String,default:""},
+		name: {type:String, default:""},
+		description: {type:String, default:""},
+		media:[
+			{
+			 title1:{type:String, default:""},
+			 title1:{type:String, default:""},
+			 imgUrl:{type:String,default:""}
+			}
+			]
+	}]
 }
 
 var orgSchema = new Schema(orgObj);
