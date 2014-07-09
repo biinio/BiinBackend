@@ -25,6 +25,7 @@
 						a(ng-click="activeTab='objects'") Elements
 				.row.max-height.showcaseWorkArea
 					.col-md-6.col-sm-6.colPreview.max-height
+						button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE
 						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
 							.previewShowcaseWrapper(droppable-showcase-preview)
 								#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
@@ -43,7 +44,7 @@
 											.icon.icon-arrow-33
 									div.btnShowcasePreview.icon-round-control.down.btn-on-hover(ng-click="moveElementDown(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index<showcases[selectedShowcase].objects.length-1") 
 											.icon.icon-arrow-34
-								.col-md1.hide.dropColumn(ng-repeat-end)									
+								.col-md1.hide.dropColumn(ng-repeat-end)							
 									.imgElementPreview				
 					.col-md-6.col-sm-6.colPreview.max-height
 						.tab-content.max-height(ng-switch='activeTab')					
@@ -101,9 +102,7 @@
 								.row
 									label Description:				
 								.row
-									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")									
-								.row									
-									button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE
+									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")
 							#biins.max-height(ng-switch-when='biins')
 								.col-list.middle-heigth.biinColumn
 									.row.elementList(slimscroll slimscroll-option="{height: 'auto'}" droppable-biin)

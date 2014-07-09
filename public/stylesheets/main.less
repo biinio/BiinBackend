@@ -17,6 +17,12 @@
 @colorChat:#16da06;
 @colorMessage:#f00;
 
+
+//Measures
+
+@elementHeight:300px;
+@elementWidth:300px;
+
 /*------------------------------------------*/
 /*	Body Principal Style
 /*------------------------------------------*/
@@ -60,6 +66,9 @@ h1 {
 
 .panel-default {
 	border-style: none;
+	border: initial;
+	-webkit-box-shadow: initial;
+	box-shadow: initial;
 }	
 
 .panel-default>.panel-heading {
@@ -106,7 +115,7 @@ h1 {
 .moduleWrapperShowcaseElement {
 	position: relative;
 	margin-left: 0px;
-	max-width: 290px;
+	max-width: @elementWidth;
 }
 
 .module {
@@ -293,7 +302,7 @@ h1 {
 
 .btnShowcasePreview.up {
 	top:20px;
-	left: 250px;
+	left: 280px;
 }
 
 
@@ -335,8 +344,8 @@ h1 {
 .moduleWrapperElement {
 	margin-left: auto;
 	margin-right: auto;
-	height: 160px;
-	width: 290px;
+	height: @elementHeight;
+	width: @elementWidth;
 	background-color: @secondColor;
 }
 
@@ -409,21 +418,21 @@ h1 {
 /*------------------------------------------*/
 
 #wrapperShowcase img {
-	height: 290px;
-	width: 290px;
+	height: @elementHeight;
+	width: @elementWidth;
 }
 
 .imgPreview {
-	height: 290px;
-	width: 290px;
+	height: @elementHeight;
+	width: @elementWidth;
 	margin-right: auto;
 	margin-left: auto;
 }
 
 .imgElementPreview {
-	height: 160px;
-	min-width: 290px;
-	max-height:290px;
+	height: @elementHeight;
+	min-width: @elementWidth;
+	max-height:@elementHeight;
 }
 
 .colPreview {
@@ -451,10 +460,10 @@ h1 {
 
 .copperEditor {
 	position:relative; /* or fixed or absolute */
-	width: 320px;
-	height: 320px;
-	min-height: 320px;
-	min-width: 320px;
+	width: @elementWidth;
+	height: @elementHeight;
+	min-height: @elementHeight;
+	min-width: @elementWidth;
 	padding-bottom: 0px;
 }
 
@@ -611,6 +620,6 @@ h1 {
 
 .dropColumn {
 	background-color: @firstLigthColor;
-	width: 290px;
+	width: @elementWidth;
 	height: 10px;
 }
