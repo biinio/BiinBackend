@@ -1,8 +1,9 @@
 .panel.panel-default.max-height(data-hm-showcase="")
 	.panel-heading.control-group.form-inline
-		label Showcase  	
-		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
-		.roundedOptionsForm
+		label Showcase
+		.search-control
+			input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)
+			i.icon.icon-magnifier
 	.body-list.max-height
 		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
 			.row(slimscroll="" slimscroll-option="{height: 'auto'}" )

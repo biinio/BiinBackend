@@ -1,5 +1,5 @@
 /* ------------------------------------------------------
-			Main CSS Style for Biin App CMS]
+			Main CSS Style for Biin App CMS
    ------------------------------------------------------*/
 
 
@@ -7,8 +7,8 @@
 /*	Variables
 /*------------------------------------------*/
 
-@firstColor: #069fce; //Navigation var and  Buttons color
-@firstLigthColor:#00adef; //Buttons over color
+@firstColor: #00adef; //Navigation var and  Buttons color 
+@firstLigthColor:#069fce;; //Buttons over color #00adef
 @secondColor: #fff; //Buttons and Contrast Wrapper
 @thirthColor: #000;//Top Navigation bar and selected Button
 @forthColor:#ECEDEE;//Contrast List Color grey
@@ -20,8 +20,8 @@
 
 //Measures
 
-@elementHeight:300px;
-@elementWidth:300px;
+@elementHeight:320px;
+@elementWidth:320px;
 
 /*------------------------------------------*/
 /*	Body Principal Style
@@ -44,8 +44,21 @@ h1 {
 	width: 95%;
 }
 
+/*.form-control input.reset{
+	border: none;
+}*/
+
 .search-box { 
 	height: 25px;
+}
+
+.search-control input{
+	display: table-cell;
+}
+
+.search-control .icon{
+	margin-left: -20px;
+	padding-top: 15px;
 }
 
 /*------------------------------------------*/
@@ -66,9 +79,6 @@ h1 {
 
 .panel-default {
 	border-style: none;
-	border: initial;
-	-webkit-box-shadow: initial;
-	box-shadow: initial;
 }	
 
 .panel-default>.panel-heading {
@@ -138,7 +148,7 @@ h1 {
 
 		//Rounded button icon of remove
 		.icon {
-			color:  @firstColor;
+			color: @firstColor;
 		}
 	}
 }
@@ -172,14 +182,22 @@ h1 {
 		height: 30px;
 	}
 
+	.icon {
+		position: relative;
+		margin-top: 6px;
+		margin-left: 1px;
+		font-size: 30px;
+		color: @secondColor;
+	}
+
 	.badge {
 		min-width: 5px;
-		font-size: 8px;
+		font-size: 6px;
 		padding-bottom: 5px;
 		padding-top: 5px;
 		position: relative;
-		top: -8px;
-		left: -15px;	
+		top: -20px;
+		left: -9px;	
 	}
 
 	.chat {
@@ -201,7 +219,7 @@ h1 {
 }
 
 .col-list {
-	background-color:  @forthColor;
+	background-color: @forthColor;
 }
 
 .colOptions {	
@@ -324,7 +342,7 @@ h1 {
 	.icon {
 		position: relative;
 		display: block;
-		color: #ffffff;
+		color: @secondColor;
 		margin-top: 25%;
 		margin-bottom: 25%;
 		margin-left: auto;
@@ -365,6 +383,7 @@ h1 {
 /*------------------------------------------*/
 /*	Tabs
 /*------------------------------------------*/
+
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
 	color:@secondColor;
 	background-color: @thirthColor;
