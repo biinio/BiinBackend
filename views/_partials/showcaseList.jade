@@ -26,8 +26,8 @@
 										a(ng-click="activeTab='objects'") Elements					
 				.row.workArea.max-height.showcaseWorkArea
 					.col-md-6.col-sm-6.colPreview.max-height.max-elementWidth-OverFlow
-						button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE
-						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '96%'}" slimscroll-obj="showCasePreviewScroll")
+						button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="saveDetail()") SAVE
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '96%', railVisible:true, wrapperClass:'slimScrollDivContrast'}" slimscroll-obj="showCasePreviewScroll")
 							.previewShowcaseWrapper(droppable-showcase-preview)
 								#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
 								input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
@@ -47,7 +47,7 @@
 											.icon.icon-arrow-34
 								.col-md1.hide.dropColumn(ng-repeat-end)							
 									.imgElementPreview				
-					.col-md-6.col-sm-6.colPreview.max-height
+					.col-md-6.col-sm-6.colPreview.max-height.col-splitter
 						.tab-content.max-height(ng-switch='activeTab')					
 							#details(ng-switch-when='details')
 								.hidden
@@ -105,19 +105,19 @@
 								.row
 									textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")
 							#biins.max-height(ng-switch-when='biins')
-								.col-list.middle-heigth.biinColumn
-									.row.elementList(slimscroll slimscroll-option="{height: '96%'}" droppable-biin)
+								.middle-heigth.biinColumn
+									.row.elementList(slimscroll slimscroll-option="{height: '96%', railVisible:true}" droppable-biin)
 										a.col-md2(ng-repeat="biin in biins| filter:{'showcaseIdentifier': showcases[selectedShowcase].identifier}")
 												.moduleWrapperBiin.center(element-index="{{biins.indexOf(biin)}}" draggable-biin)
 													p {{biin.identifier}}
-								.col-list.middle-heigth.biinUnasocciatedColumn
-									.row.elementList(slimscroll slimscroll-option="{height: 'auto'}")
+								.middle-heigth.biinUnasocciatedColumn
+									.row.elementList(slimscroll slimscroll-option="{height: 'auto', railVisible:true}")
 										a.col-md2(ng-repeat="biinUnasocciated in biins|undefinedValue:'showcaseIdentifier'")
 												.moduleWrapperBiin.center(element-index="{{biins.indexOf(biinUnasocciated)}}" draggable-biin)
 													p  Identifier: {{biinUnasocciated.identifier}}
 							#objects.max-height(ng-switch-when='objects')		
-								.col-list.max-height																				
-									.row.elementList(slimscroll slimscroll-option="{height: 'auto'}")											
+								.max-height																				
+									.row.elementList(slimscroll slimscroll-option="{height: 'auto', railVisible:true}")											
 										.col-md1.moduleWrapperElement.searchElements
 											input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
 										a.col-md1(ng-repeat="element in elements|difference:showcases[selectedShowcase].objects|filter:queryElements")

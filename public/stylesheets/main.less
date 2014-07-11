@@ -23,6 +23,14 @@
 @elementHeight:320px;
 @elementWidth:320px;
 
+//Padding
+@standardPadding:10px;
+
+//Radius
+@controlsRadius:4px;
+@controlsRadiusDisable:0px;
+@controlsRadiusRounded:50%;
+
 /*------------------------------------------*/
 /*	Body Principal Style
 /*------------------------------------------*/
@@ -227,6 +235,13 @@ h1 {
 	padding-left: 0px;
 }
 
+.col-splitter{
+	border-left-style: solid;
+	border-left-color: @forthColor;
+	border-left-width: thin;
+	padding-left: @standardPadding!important;
+}
+
 .middle-heigth {
 	height: 50% !important;
 }
@@ -303,6 +318,11 @@ h1 {
 	background-color: @firstColor;
 	color: @secondColor;
 	border-color: none;
+}
+
+.colPreview .btn-save{
+	margin-top: @standardPadding;
+	margin-bottom: @standardPadding;
 }
 
 .contentHideButtons .btn-on-hover {
@@ -658,4 +678,30 @@ h1 {
 	background-color: @firstLigthColor;
 	width: @elementWidth;
 	height: 10px;
+}
+
+/*------------------------------------------*/
+/*	Scroll style
+/*------------------------------------------*/
+
+.slimScrollBar{
+	background-color: @firstColor!important;
+	opacity: 0.7!important;
+}
+
+.slimScrollDivContrast{
+	background: @forthColor!important;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	padding-bottom: @standardPadding*2;
+	padding-top: @standardPadding*2;
+	margin-left: @standardPadding;
+	margin-right: @standardPadding;
+}
+
+.slimScrollRail{
+	background: @secondColor!important;
+	opacity: 1!important;
 }
