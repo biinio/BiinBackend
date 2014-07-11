@@ -20,6 +20,7 @@
 
 //Measures
 
+@standardPadding:20px;
 @elementHeight:320px;
 @elementWidth:320px;
 
@@ -69,6 +70,8 @@ h1 {
 	border: initial;
 	-webkit-box-shadow: initial;
 	box-shadow: initial;
+	//reset style of bootstrap panel
+	//margin-bottom: 0px;
 }	
 
 .panel-default>.panel-heading {
@@ -639,4 +642,16 @@ h1 {
 	background-color: @firstLigthColor;
 	width: @elementWidth;
 	height: 10px;
+}
+
+/*------------------------------------------*/
+/*	Drop Image Media Control Style
+/*------------------------------------------*/
+.dropImageMedia{
+	margin-top:@standardPadding/2;
+	margin-bottom: @standardPadding/2;
+	border: @firstColor;
+	border-style: dashed;
+	width: @elementWidth;
+	height:  @elementHeight/2;
 }

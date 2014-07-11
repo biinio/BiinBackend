@@ -14,9 +14,8 @@
 							img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 							button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))") Remove
 			.row.middle-heigth(ng-if="selectedOrganization!=null")
-				//
-					----------Sites section----------//
-				.row 
+				// ---------- Sites Section ----------
+				.row
 					.col-md-1
 						p sites
 				.row
@@ -24,11 +23,12 @@
 						a.col-md-1.module(ng-click="createSite()")
 							.moduleWrapper
 								p Add New
-						a.col-md-1.module(ng-repeat="item in organizations[selectedOrganization].sites | filter: querySites" ng-click="editSite(sites.indexOf(item))")
-							.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
-								img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-								button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))") Remove
-		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null")
+						a.col-md-1.module(ng-repeat="item in organizations[selectedOrganization].sites | filter: querySites" ng-click="editSite(organizations[selectedOrganization].sites.indexOf(item))")
+							.moduleWrapper.contentHideButtons(ng-class="{active: organizations[selectedOrganization].sites.indexOf(item) == selectedSite}")
+								h1  {{item.name}}
+								//img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+								button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeSiteAt(organizations[selectedOrganization].sites.indexOf(item))") Remove
+		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null && selectedSite==null")
 			.animate-switch.max-height
 				ul.nav.nav-tabs
 					li.activeTab
@@ -55,3 +55,30 @@
 								input.form-control( ng-model="organizations[selectedOrganization].description")
 							.row
 								button.form-group.btn.btn-default.form-control(ng-click="save()") SAVE																	
+		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null && selectedSite!=null")
+			.animate-switch.max-height
+				ul.nav.nav-tabs
+					li
+						a(ng-click="edit(selectedOrganization)"){{organizations[selectedOrganization].name}}/
+					li
+						a {{organizations[selectedOrganization].sites[selectedSite].name}}
+				.row.max-height.showcaseWorkArea
+					.col-md-6.col-sm-6.colPreview.max-height
+						button.form-group.btn.btn-default.form-control(ng-click="save()") SAVE
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+							.mediaImage(ng-repeat="siteMedia in organizations[selectedOrganization].sites[selectedSite].media")
+								img(ng-src="siteMedia.imgUrl")
+							.dropImageMedia.center(ng-repeat="it in mediaMissing()")
+								p drop media here {{it}}
+					.col-md-6.col-sm-6.colPreview.max-height
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+							.row
+								label Name:
+							.row
+								input.form-control( ng-model="organizations[selectedOrganization].sites[selectedSite].name")
+							.row
+								label Description:
+							.row
+								input.form-control( ng-model="organizations[selectedOrganization].sites[selectedSite].description")																	
+							.row(ng-if="!isSelectedSiteNew()")
+								button.form-group.btn.btn-default.form-control(ng-click="useSite()") USE								
