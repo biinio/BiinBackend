@@ -1,12 +1,17 @@
-node_modules/**
-public/workingFiles/*.jpg
-*.swp
-*.env
+#	Main ignore files for the BIIN.CMS Proyect
 
-public/stylesheets/main.css
+node_modules/**
+
+*.swp
+
+*.env
 
 public/stylesheets/sidebar.css
 
 public/stylesheets/controls.css
 
 public/stylesheets/main.css
+
+public/workingFiles/**
+
+public/workingFiles/!file!.txt
