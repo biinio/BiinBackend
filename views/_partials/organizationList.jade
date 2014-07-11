@@ -1,5 +1,5 @@
 .panel.panel-default.max-height(data-hm-showcase="")
-	.panel-heading.control-group.form-inline
+	//.panel-heading.control-group.form-inline
 		label Organizations
 		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
 	.body-list.max-height
@@ -14,6 +14,8 @@
 							img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 							button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))") Remove
 			.row.middle-heigth(ng-if="selectedOrganization!=null")
+				//
+					----------Sites section----------//
 				.row 
 					.col-md-1
 						p sites
@@ -22,7 +24,7 @@
 						a.col-md-1.module(ng-click="createSite()")
 							.moduleWrapper
 								p Add New
-						a.col-md-1.module(ng-repeat="item in sites | filter: querySites" ng-click="editSite(sites.indexOf(item))")
+						a.col-md-1.module(ng-repeat="item in organizations[selectedOrganization].sites | filter: querySites" ng-click="editSite(sites.indexOf(item))")
 							.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
 								img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 								button.btn.btnShowcasePreview.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))") Remove

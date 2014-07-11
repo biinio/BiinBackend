@@ -239,6 +239,14 @@ h1 {
 	width: 100%!important;
 }
 
+.max-elementWidth{
+	max-width: @elementWidth;
+}
+
+.max-elementWidth-OverFlow{
+	max-width: @elementWidth+25px;	
+}
+
 .center {
 	margin-left: auto!important;
 	margin-right: auto!important;
@@ -320,7 +328,7 @@ h1 {
 
 .btnShowcasePreview.up {
 	top:20px;
-	left: 280px;
+	left: @elementWidth - 40px;
 }
 
 
@@ -430,6 +438,15 @@ h1 {
 
 .searchElements {
 	height: auto;
+}
+
+.workAreaHeader.nav.nav-tabs{
+	position: absolute;
+	width: 100%;
+}
+
+.workArea{
+	padding-top: 42.222px;
 }
 
 /*------------------------------------------*/
