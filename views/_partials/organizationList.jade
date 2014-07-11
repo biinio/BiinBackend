@@ -1,11 +1,11 @@
-.panel.panel-default.max-height(data-hm-showcase="")
-	//.panel-heading.control-group.form-inline
+.panel-default.max-height(data-hm-showcase="")
+	.panel-heading.control-group.form-inline
 		label Organizations
 		input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)		
 	.body-list.max-height
 		.col-lg-4.col-md-3.col-sm-3.col-list.max-height
 			.row.middle-heigth(ng-class="{'max-height':selectedOrganization==null}")
-				div(slimscroll="" slimscroll-option="{height: '90%'}" )
+				div(slimscroll="" slimscroll-option="{height: '97%'}" )
 					a.col-md-1.module(ng-click="create()")
 						.moduleWrapper
 							p Add New
@@ -18,8 +18,8 @@
 				.row
 					.col-md-1
 						p sites
-				.row
-					div(slimscroll="" slimscroll-option="{height: '90%'}" )
+				.row.max-height
+					div(slimscroll="" slimscroll-option="{height: '97%'}" )
 						a.col-md-1.module(ng-click="createSite()")
 							.moduleWrapper
 								p Add New

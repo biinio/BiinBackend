@@ -1,4 +1,4 @@
-.panel.panel-default.max-height(data-hm-showcase="")
+.panel-default.max-height(data-hm-showcase="")
 	.panel-heading.control-group.form-inline
 		label Showcase
 		.search-control
@@ -27,7 +27,7 @@
 				.row.workArea.max-height.showcaseWorkArea
 					.col-md-6.col-sm-6.colPreview.max-height.max-elementWidth-OverFlow
 						button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="saveDetail()") SAVE
-						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '96%', railVisible:true, wrapperClass:'slimScrollDivContrast'}" slimscroll-obj="showCasePreviewScroll")
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '95%', railVisible:true, wrapperClass:'slimScrollDivContrast'}" slimscroll-obj="showCasePreviewScroll")
 							.previewShowcaseWrapper(droppable-showcase-preview)
 								#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
 								input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
