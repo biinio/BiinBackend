@@ -1,4 +1,9 @@
 node_modules/**
+public/stylesheets/main.css
+public/stylesheets/sidebar.css
+public/stylesheets/controls.css
 public/workingFiles/*.jpg
 *.swp
 *.env
+
+
