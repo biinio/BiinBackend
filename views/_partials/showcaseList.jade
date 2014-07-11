@@ -37,7 +37,7 @@
 							.previewShowcaseElements.row.max-height
 								.col-md1.hide.dropColumn
 									.imgElementPreview
-								.col-md1.moduleWrapperShowcaseElement.contentHideButtons(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
+								.col-md1.moduleWrapperShowcaseElement.center.contentHideButtons(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
 									img.imgElementPreview(ng-src="{{obj.imageUrl}}")
 									div.btnShowcasePreview.icon-round-control.btn-on-hover(ng-click="removeElementAt(showcases[selectedShowcase].objects.indexOf(obj))")
 											.icon.icon-bin-2 

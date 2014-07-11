@@ -78,7 +78,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
 
   //Edit an organization
   $scope.edit = function(index){
-
+    $scope.clearSelectedSite();
     $scope.selectedOrganization = index;
     $scope.currentModelId = $scope.organizations[index].identifier;
     //Remove the cropper
@@ -97,6 +97,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
       if("replaceModel" in data){
         $scope.organizations[$scope.selectedOrganization] = data.replaceModel;
         $scope.organizationPrototype =  $.extend(true, {}, $scope.organizationPrototypeBkp);
+        $scope.sitePrototype = $.extend(true,{},$scope.sitePrototypeBkp);
       }
       if(data.state=="success")
         $scope.succesSaveShow=true;
@@ -117,6 +118,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
    /* Sites Functionality
    /*-----------------------------------------------------*/
 
+  //Push a new site to the list of the selected site
   $scope.createSite= function(){
     var newObj = $scope.sitePrototype;
     var objIndex =$scope.organizations[$scope.selectedOrganization].sites.indexOf(newObj);
@@ -127,13 +129,42 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
       $scope.sitePrototype =$.extend(true, {}, $scope.sitePrototypeBkp);
       $scope.sitePrototype.isNew = true;
       $scope.organizations[$scope.selectedOrganization].sites.push($scope.sitePrototype);
+      $scope.editSite($scope.organizations[$scope.selectedOrganization].sites.indexOf($scope.sitePrototype)); 
     }
   }
 
-  $scope.removeSite= function(){
+  //Return the missing media of a site
+  $scope.mediaMissing=function(){
+    var cantOfItems = 3- $scope.organizations[$scope.selectedOrganization].sites[$scope.selectedSite].media.length;
+    var arrayItems = [];
 
+    //Array items
+    for(var i=0; i< cantOfItems;i++)
+      arrayItems.push(i);
+
+    return arrayItems;
   }
 
+  //Indicates if the selected site is new
+  $scope.isSelectedSiteNew=function(){
+    return 'isNew' in $scope.organizations[$scope.selectedOrganization].sites[$scope.selectedSite];
+  }
+
+  $scope.removeSiteAt= function(index){
+    if($scope.selectedSite == index)
+      $scope.selectedSite = null;
+    $scope.organizations[$scope.selectedOrganization].sites.splice(index,1);
+  }
+
+  $scope.editSite= function(index){
+    $scope.selectedSite = index;
+    $scope.currentModelSiteId = $scope.organizations[$scope.selectedOrganization].sites[index].identifier;
+  }
+
+  $scope.clearSelectedSite = function(){
+    $scope.selectedSite =null;
+    $scope.currentModelSiteId = null;
+  }
   }]);
 
   //Change of image directive
