@@ -10,6 +10,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var biins = require('../routes/biins')(db);
     var errors = require('../routes/errors')(db);
     var elements = require('../routes/elements')();
+    var categories = require('../routes/categories')();
+    var gallery = require('../routes/gallery')();
 
     //Application routes
     app.get('/partials/:filename', routes.partials);
@@ -22,6 +24,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
         successRedirect:'/dashboard'
     }));
 
+    //Categories Routes
+    app.get('/api/categories',categories.list);
+
     //Regions organization
     app.get('/organizations',organizations.index);
     app.get('/api/organizations',organizations.list);
@@ -31,16 +36,19 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
 
     //Showcase routes
-    app.get('/showcases',showcases.index);
+    app.get('/organizations/:identifier/showcases',showcases.index);
     app.post('/showcases/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/showcases/:identifier',showcases.get);
     app.put('/api/showcases/:showcase',showcases.set);
-    app.delete('/api/showcases/:showcase',showcases.delete);
-    app.get('/api/showcases',showcases.list);
+    app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.delete);
+    app.get('/api/organizations/:identifier/showcases',showcases.list);
 
     //Sites routes
-    app.get('/api/sites',sites.list);
+    app.get('/api/organizations/:identifier/sites',sites.get);
+    app.get('/organizations/:identifier/sites',sites.index);
+    app.put('/api/showcases/:orgIdentifier/sites/:siteIdentifier',sites.set);
+    app.delete('/api/showcases/:orgIdentifier/sites/:siteIdentifier',sites.delete);
 
     //Biins
     app.get('/api/biins',biins.list);
@@ -62,6 +70,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/regions/:identifier',regions.editPost);
     app.get('/api/regions',regions.listJson);
     app.get('/api/regions/:region/biins',biins.listJson);
+
+    //Gallery Routes
+    app.get('/gallery', gallery.index);
+    app.get('/api/gallery/list',gallery.list);
+    app.post('/api/gallery/upload', multipartMiddleware,gallery.upload);
 
     //Utilities Routes
     app.get('/errors',errors.index);

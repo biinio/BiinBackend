@@ -1,3 +1,8 @@
+//Global variables
+var selectedOrganization=function(){
+    return $("#organizationNav").attr("data-organization");
+};
+
 ;(function($) {
     var delay = 0;
     $.fn.translate3d = function(translations, speed, easing, complete) {
@@ -53,31 +58,10 @@ jQuery(function ($) {
       $(this).tab('show');
     });
 
+    //Load Controls
     controls();
 
 });
-
-//Cropper Controls
-createShowcaseCropper=function(id){
-      Croppic.imgInitW=320;
-      Croppic.imgInitH=320;
-      return croppeShowcasesHeader = new Croppic(id,{
-            uploadUrl:'showcases/imageUpload',
-            outputUrlId:'showcaseImage',
-            cropData:{
-                "section":"showcase"
-            },
-            cropUrl:'/showcases/imageCrop',
-            modal:false,
-            loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
-            onBeforeImgUpload: function(){ console.log('onBeforeImgUpload') },
-            onAfterImgUpload: function(){ console.log('onAfterImgUpload') },
-            onImgDrag: function(){ console.log('onImgDrag') },
-            onImgZoom: function(){ console.log('onImgZoom') },
-            onBeforeImgCrop: function(){ console.log('onBeforeImgCrop') },
-            onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
-        });   
-}
 
 //Cropper Controls
 createElementCropper=function(id){
@@ -122,3 +106,32 @@ createOrganizationsCropper=function(id){
             onAfterImgCrop:function(){ console.log('onAfterImgCrop') }
         });
 }
+
+//Set the Organization Menu
+setOrganizationMenu = function(organizationId, organizationName){
+    if(organizationId){
+      $("#organizationNav").removeClass("hide");
+      $("#organizationNav").attr("data-organization",organizationId);
+      $("#organizationNav .name").text(organizationName);
+
+      $('a[data-org-link]').each(function(i){
+        var $el= $(this);
+        var pattern =$el.attr("data-org-link");
+        pattern= pattern.replace('{0}',organizationId);
+        $el.attr("href",pattern);
+      })
+
+    }
+  }
+
+//Angular Custom Directives
+/*
+angular.module('biin.alertManager', []).directive('alertManager', function() {
+  return {
+    restrict: 'E',
+    link: function($scope, $elem, $attr) {
+        //Todo finish  the directive
+    }
+  };
+  */
+

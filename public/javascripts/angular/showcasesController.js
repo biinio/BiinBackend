@@ -1,29 +1,29 @@
-var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort']);
+var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.galleryService']);
 
-var showCaseCropper = null
 //App configuration
-biinAppShowCases.config(['$routeProvider',
-	function($routeProvider){
+biinAppShowCases.config(['$routeProvider','$locationProvider',
+	function($routeProvider,$locationProvider){
 	$routeProvider.
-		when('/list',{
+		when('/organizations/:organizationId/showcases',{
 			templateUrl:'partials/showcaseList',
 			controller:'showcasesController'
-		}).
-    otherwise({
-        redirectTo: '/list'
-      });
+		});
+    
+    // use the HTML5 History API
+    $locationProvider.html5Mode(true);
 }]);
 
 //App define controllers
-biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSrv','biinSrv', function($scope,$http, elementSrv,biinSrv) {
+biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routeParams','elementSrv','biinSrv', function($scope,$http,$routeParams, elementSrv,biinSrv) {
   $scope.activeTab='details';
   $scope.selectedShowcase = null;
   $scope.currentModelId = null;
   $scope.dragElementIndex=-1;
   $scope.dragBiinIndex =-1;
-  
+  $scope.organizationId =$routeParams.organizationId;
+    
   //Get the List of Showcases
-  $http.get('api/showcases').success(function(data){
+  $http.get('api/organizations/'+$scope.organizationId+'/showcases').success(function(data){
   	$scope.showcases = data.data;
     $scope.showcasePrototype = data.prototypeObj;
     $scope.showcasePrototypeBkp =  $.extend(true, {}, data.prototypeObj);
@@ -54,20 +54,12 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
         $scope.showcases.push($scope.showcasePrototype);     
         $scope.edit($scope.showcases.indexOf($scope.showcasePrototype)); 
     }
-     
   }
 
   //Edit an showcase
   $scope.edit = function(index){
     $scope.selectedShowcase = index;
     $scope.currentModelId = $scope.showcases[index].identifier;
-    //Remove the cropper
-    removeCropper();
-
-    //Instanciate cropper
-   showCaseCropper= createShowcaseCropper("wrapperShowcase");
-   var imgUrl = $scope.showcases[index].mainImageUrl;
-   showCaseCropper.preInitImage(imgUrl);
   }
 
   //Remove showcase at specific position
@@ -75,9 +67,6 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     if($scope.selectedShowcase==index){
       $scope.selectedShowcase =null;
       $scope.currentModelId =null;
-
-      //Remove the cropper
-      removeCropper();
     }
     if('isNew' in $scope.showcases[index] ){
       //remove the showcase
@@ -86,7 +75,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     {
       var showcaseId = $scope.showcases[index].identifier;      
       $scope.showcases.splice(index,1);
-      $http.delete('api/showcases/'+showcaseId).success(function(data){
+      $http.delete('api/organizations/'+$scope.organizationId+'/showcases/'+showcaseId).success(function(data){
           if(data.state=="success"){
             //Todo: implement a pull of messages
           }
@@ -185,6 +174,22 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
     $scope.dragBiinIndex=scopeIndex;
   }
 
+  $scope.getFirstElementByPosition =function(element){
+    var foundPosition=0;
+    if(element.objects.length===1)
+      return element.objects[0];
+    else{
+      var foundFirst =false;
+      for(var i=0; i< element.objects.length && foundFirst===false;i++){
+        if(eval(element.objects[i].position)===1){
+          foundFirst =true;
+          foundPosition=i;
+        }
+      }
+    }
+    return element.objects[foundPosition];
+  }
+
   //Update the position of the rest of the elements to add one when is added a new element
    updateShowcaseObjectsPosition= function(position){
     for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].objects.length;i++){
@@ -201,16 +206,6 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','elementSr
       if(objPosition>=position)
         $scope.showcases[$scope.selectedShowcase].objects[i].position= ""+objPosition-1;
     }
-   }
-
-   //Others
-
-   //Remove the current cropper
-   removeCropper= function(){
-      if(showCaseCropper !=null){
-        showCaseCropper.destroy();
-        showCaseCropper = null;
-      }
    }
 
 }]);
@@ -236,7 +231,7 @@ biinAppShowCases.factory('elementSrv', ['$http', function (async) {
 biinAppShowCases.factory("biinSrv",['$http',function(async){
     return {
       getList: function(){
-        var promise = async({method:'GET',url:'/api/biins'})
+        var promise = async({method:'GET',url:'/api/organizations/'+$scope.organizationId+'/biins'})
         .success(function (data,status,headers,config){
           return data;
         }).error(function(data,status,headers,config){
@@ -247,19 +242,6 @@ biinAppShowCases.factory("biinSrv",['$http',function(async){
       }
     }  
 }]);
-
-//Define the Directives
-biinAppShowCases.directive('imageCropper',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element){       
-       showCaseCropper= createShowcaseCropper(element[0].attributes["id"].value);
-       var index =scope.selectedShowcase;
-       var imgUrl = scope.showcases[index].mainImageUrl;
-       showCaseCropper.preInitImage(imgUrl);
-    }
-  }
-});
 
 //Change of image directive
 biinAppShowCases.directive('inputChange',function(){
@@ -306,7 +288,7 @@ biinAppShowCases.directive('draggableBiin',function(){
 });  
 
 //Dropable zones in showcase
-biinAppShowCases.directive('droppable',function(){
+biinAppShowCases.directive('drop',function(){
   return{
     restrict:'A',
     link:function(scope,element,attrs){
@@ -380,39 +362,6 @@ biinAppShowCases.directive('droppableBiin',function(){
   }
 });  
 
-//Image uploades pending indicator
-biinAppShowCases.directive('pendingIndicator', function(){
-    return {
-        restrict: 'A',
-        link: function(scope, element) {
-            // setup the container for ImagesLoaded ... note instead of using
-            // this directive on an individual image, you may consider using
-            // it on the element that contains many images...
-            scope.imagesLoaded = imagesLoaded(element);
-            // start your progress/loading animation here
-            // (or whenever you attempt to load the images)
-            scope.imagesLoaded.on('always', function() {
-              //console.log('always event: Triggered after all images have been either loaded or confirmed broken.');
-              // end the progress/loading animation here for all images or do
-              // it individually in the progress event handler below
-            });
-            scope.imagesLoaded.on('done', function() {
-              console.log('done event: Triggered after all images have successfully loaded without any broken images.');
-
-            });
-            scope.imagesLoaded.on('fail', function() {
-              console.log('fail event: Triggered after all images have been loaded with at least one broken image.');
-            });
-            scope.imagesLoaded.on('progress', function(instance, image) {
-              console.log('proress event: Triggered after each image has been loaded.', instance, image);
-              // end the progress/loading animation here or do it for all images in the always
-              // event handler above
-            });
-
-        }
-    };
-});
-
 /****
     Custom Filters
 ****/
@@ -427,7 +376,7 @@ biinAppShowCases.filter("difference",function(){
   }
 });
 
-//Filter for get  the objects with undefined value
+//Filter for get the objects with undefined value
 biinAppShowCases.filter("undefinedValue",function(){
   return function undefinedValue(haysTack, prop){
     var result= _.filter(haysTack, function(hay) {

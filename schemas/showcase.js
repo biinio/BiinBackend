@@ -2,20 +2,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var showcaseObj={
 	identifier:{ type: String, index: true, default:"-1"},
-	customerIdentifier:{type:String, default:""},
+	accountIdentifier:{type:String, default:"000"},
 	organizationIdentifier:{type:String, default:""},
+	siteIdentifier:{type:String,default:""},
 	showcaseType:{type:String, default:""},
-	title1:{type:String, default:""},
-	title2:{type:String, default:""},
-	title3:{type:String, default:""},
-	title1Color:{type:String, default:""},
-	title2Color:{type:String, default:""},
-	title3Color:{type:String, default:""},
-	title1Size:{type:String, default:""},
-	title2Size:{type:String, default:""},
-	title3Size:{type:String, default:""},
 	showcaseDescription:{type:String, default:""},
-	mainImageUrl:{type:String, default:""},
 	pushNotification:{type:String, default:""},
 	objects:[
 		{

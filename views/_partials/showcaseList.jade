@@ -1,5 +1,5 @@
 .panel-default.max-height(data-hm-showcase="")
-	.panel-heading.control-group.form-inline
+	//.panel-heading.control-group.form-inline
 		label Showcase
 		.search-control
 			input.form-control.search-box(ng-model="query" placeholder="Search" autofocus)
@@ -12,7 +12,7 @@
 						.btn-rounded.center.icon.icon-add-1
 				a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(showcases.indexOf(item))")					
 					.moduleWrapper.contentHideButtons(ng-class="{active: showcases.indexOf(item) == selectedShowcase}")				
-						img.img-responsive(ng-src="{{item.mainImageUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+						img.img-responsive(ng-src="{{getFirstElementByPosition(item).imageUrl}}" ng-if="item.objects.length > 0" style="max-width: 250px;height: auto;" pending-indicator)
 						.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeShowcaseAt(showcases.indexOf(item))")
 							.icon.icon-bin-2 	
 		.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
@@ -27,13 +27,8 @@
 				.row.workArea.max-height.showcaseWorkArea
 					.col-md-6.col-sm-6.colPreview.max-height.max-elementWidth-OverFlow
 						button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="saveDetail()") SAVE
-						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '95%', railVisible:true, wrapperClass:'slimScrollDivContrast'}" slimscroll-obj="showCasePreviewScroll")
-							.previewShowcaseWrapper(droppable-showcase-preview)
-								#wrapperShowcase.copperEditor(data-image-src="{{showcases[selectedShowcase].mainImageUrl}}" image-cropper)
-								input#showcaseImage.hidden(ng-model="showcases[selectedShowcase].mainImageUrl" input-change="")							
-								label.previewLabel.title1(style="color:{{showcases[selectedShowcase].title1Color}}; font-size:{{showcases[selectedShowcase].title1Size}}px") {{showcases[selectedShowcase].title1}}
-								label.previewLabel.title2(style="color:{{showcases[selectedShowcase].title2Color}}; font-size:{{showcases[selectedShowcase].title2Size}}px") {{showcases[selectedShowcase].title2}}
-								label.previewLabel.title3(style="color:{{showcases[selectedShowcase].title3Color}}; font-size:{{showcases[selectedShowcase].title3Size}}px") {{showcases[selectedShowcase].title3}}
+						.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '95%', railVisible:true, wrapperClass:'slimScrollDivContrast'}" slimscroll-obj="showCasePreviewScroll" drop)
+							.previewShowcaseWrapper
 							.previewShowcaseElements.row.max-height
 								.col-md1.hide.dropColumn
 									.imgElementPreview
@@ -55,51 +50,6 @@
 									input.form-control( ng-model="showcases[selectedShowcase].customerIdentifier")																						
 									input.form-control( ng-model="showcases[selectedShowcase].organizationIdentifier")
 									input.form-control( ng-model="showcases[selectedShowcase].type")										
-								.row
-									label Title 1:							
-								.row
-									span.form-group.form-control.form-picker														     				
-										input(ng-model="showcases[selectedShowcase].title1")										
-										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].title1Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")				
-										span.separator
-										select.selectpicker(ng-model="showcases[selectedShowcase].title1Size")
-											option(value="5") XS
-											option(value="15") S
-											option(value="20") M
-											option(value="25") L
-											option(value="35") XL
-										span.caret-reversed
-										span.caret
-								.row
-									label Title 2:		
-								.row									
-									span.form-group.form-control.form-picker
-										input( ng-model="showcases[selectedShowcase].title2")
-										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].title2Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")									
-										span.separator
-										select.selectpicker(ng-model="showcases[selectedShowcase].title2Size")
-											option(value="5px") XS
-											option(value="15") S
-											option(value="20") M
-											option(value="25") L
-											option(value="35") XL
-										span.caret-reversed
-										span.caret											
-								.row
-									label Title 3:
-								.row
-									span.form-group.form-control.form-picker
-										input( ng-model="showcases[selectedShowcase].title3")
-										spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].title3Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")																		
-										span.separator
-										select.selectpicker(ng-model="showcases[selectedShowcase].title3Size")
-											option(value="5") XS
-											option(value="15") S
-											option(value="20") M
-											option(value="25") L
-											option(value="35") XL
-										span.caret-reversed
-										span.caret
 								.row
 									label Description:				
 								.row

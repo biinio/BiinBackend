@@ -10,16 +10,19 @@ html
     link(rel="stylesheet" href="/spectrum/spectrum.css")
     link(rel="stylesheet" href="/bootstrap-select/bootstrap-select.css")
     <!-- Google Fonts --> 
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,700italic,800,800italic' rel='stylesheet' type='text/css')
-    link(href='http://fonts.googleapis.com/css?family=Lato:400,900italic,900,700italic,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css')
+    <!--link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,700italic,800,800italic' rel='stylesheet' type='text/css')--> 
+    <!--link(href='http://fonts.googleapis.com/css?family=Lato:400,900italic,900,700italic,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css')--> 
     <!-- CMS custom CSS -->
     link(rel="stylesheet" href="/stylesheets/main.css")
     <!-- Font font-streamline. -->        
     link(rel="stylesheet" href="/stylesheets/font-streamline.css")
     script(src="/angular/angular.js")    
     script(src="/angular-route/angular-route.js")      
-    script(src="/javascripts/angular/organizationsController.js")
+    script(src="/javascripts/angular/app.js")
+    block head_scripts
     script(src="/javascripts/angular/naturalSortVersion.js") 
+    base(href="/")
+    //block head
   body
     include layout_menu
     .container-fluid.main-container
@@ -27,17 +30,46 @@ html
         .col-sm-2.col-md-2.sidebar
           ul.nav.nav-sidebar.menu
             li.form-inline
-              a(href="/Home") HOME
+              a(href="/home") HOME
                 i.fa.fa-angle-right.angle-icon-sidebar
             li
-              a(href="/Regions") REGIONS
+              a(href="/regions") REGIONS
                 i.fa.fa-angle-right.angle-icon-sidebar              
             li
-              a(href="/Organizations") ORGANIZATIONS/SITES
-                i.fa.fa-angle-right.angle-icon-sidebar          
+                a(href="/organizations") ORGANIZATIONS
+                    i.fa.fa-angle-right.angle-icon-sidebar
+                if organization == null
+                    ul#organizationNav.nav.nav-sidebar.hide(data-organization="")
+                        li
+                           p.name="Selected Organization"
+                        li
+                          a(href="" data-org-link="/organizations/{0}/sites") SITES
+                            i.fa.fa-angle-right.angle-icon-sidebar                      
+                        li
+                          a(href="" data-org-link="/organizations/{0}/showcases") SHOWCASES
+                            i.fa.fa-angle-right.angle-icon-sidebar              
+                        li
+                          a(href="" data-org-link="/organizations/{0}/elements") OBJECTS    
+                            i.fa.fa-angle-right.angle-icon-sidebar
+                else
+                    ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
+                        li
+                           p.name= organization.name         
+                        li
+                          a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites") SITES
+                            i.fa.fa-angle-right.angle-icon-sidebar                      
+                        li
+                          a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases") SHOWCASES
+                            i.fa.fa-angle-right.angle-icon-sidebar              
+                        li
+                          a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements") OBJECTS    
+                            i.fa.fa-angle-right.angle-icon-sidebar
             li
-              a(href="/Errors") ERRORS              
-                i.fa.fa-angle-right.angle-icon-sidebar            
+              a(href="/gallery") GALLERY
+                i.fa.fa-angle-right.angle-icon-sidebar                                       
+            li
+              a(href="/errors") ERRORS              
+                        i.fa.fa-angle-right.angle-icon-sidebar            
         .col-sm-10.col-sm-offset-2.col-md-10.col-md-offset-2.main
           block content
     script(src="/jquery/dist/jquery.min.js")
@@ -45,6 +77,7 @@ html
     script(src="/imagesloaded/imagesloaded.pkgd.js")
     script(src="/lodash/dist/lodash.js")
     script(src="/jquery-knob/js/jquery.knob.js")
+    script(src="/javascripts/h5utils.js")        
     script(src="/javascripts/ui.js")
     script(src="/javascripts/croppic.js")
     script(src="/spectrum/spectrum.js")

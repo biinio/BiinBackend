@@ -1,5 +1,7 @@
 extends ../layout_dashboard
+block head_scripts
+	script(src="/javascripts/angular/sitesController.js")
 block content	
-	#sectionContent.max-height(ng-app="biinAppSites" ng-controller="sitesController")
+	#sectionContent.max-height(ng-app="biinAppSites" ng-controller="siteController")
 			#wrapperHeader.row
-			#wrapperContent.row.max-height(ng-view)
+			#wrapperContent.row.max-height(data-organizationId=""+organization.identifier data-organizationName=""+organization.name ng-view )

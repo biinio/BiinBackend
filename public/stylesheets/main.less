@@ -14,6 +14,10 @@ h1 {
 	font-size: 15px;
 }
 
+a.module:hover{ 
+	text-decoration:none; 
+}
+
 .form-control {
 	height: 33px;
 	width: 95%;
@@ -45,8 +49,19 @@ h1 {
 }
 
 /*------------------------------------------*/
-/*	Panels and Nav-var Custom Style
+/*	Panels and Navbar Custom Style
 /*------------------------------------------*/
+
+.navbar{
+	margin-bottom: 0px;
+}
+.panel-heading{
+	height: 4%;
+}
+
+.body-list{
+	height: 96%;
+}
 
 .panel-default {
 	border-style: none;
@@ -56,8 +71,7 @@ h1 {
 	background-color:initial;
 	border-color: initial;
 	border:none;
-	margin-top: -15px;
-	min-height: 50px;
+	margin-top: 0px;
 }
 
 .panel-heading label {
@@ -77,6 +91,7 @@ h1 {
 	margin-top: 5px;
 	margin-left: auto;
 	margin-right: auto;
+	position: relative;
 
 	//Wrapper Image
 	img {
@@ -91,6 +106,18 @@ h1 {
 		padding-top: 7px;
 		padding-bottom: 7px;
 	}
+
+	//Module Title
+	.moduleTitle{
+		position: absolute;
+		top: 0px;
+	}
+
+}
+
+.moduleWrapper-inverse{
+	.moduleWrapper;
+	background-color: @forthColor;
 }
 
 .moduleWrapperShowcaseElement {
@@ -126,7 +153,7 @@ h1 {
 
 
 .body-list {
-	margin-left: -25px;
+	margin-left: -0px;
 }
 
 .col-list {
@@ -145,8 +172,16 @@ h1 {
 	padding-left: @standardPadding!important;
 }
 
+.quarter-heigth{
+	height: 25% !important;
+}
+
 .middle-heigth {
 	height: 50% !important;
+}
+
+.middle-cuarter-heigth {
+	height: 40% !important;
 }
 
 .max-height {
@@ -211,9 +246,29 @@ h1 {
 	border-color: none;
 }
 
-.colPreview .btn-save{
-	margin-top: @standardPadding;
-	margin-bottom: @standardPadding;
+.colPreview{
+
+	.btn-save{
+		margin-top: @standardPadding;
+		//margin-bottom: @standardPadding;
+	}
+
+	.preview-title-division{
+		height: 15%;
+		min-height: 20px;
+		background-color: @firstColor;
+		color: @secondColor;
+		position: relative;
+		h5{			
+			position: absolute;
+			bottom:0px;
+			left: 20px;
+		}
+	}
+
+	.preview-row-division{
+		margin-top: -10px
+	}
 }
 
 .contentHideButtons .btn-on-hover {
@@ -241,7 +296,6 @@ h1 {
 	top:20px;
 	left: @elementWidth - 40px;
 }
-
 
 .moduleWrapper .btnShowcasePreview.btnDelete {
 	position: absolute;
@@ -345,6 +399,11 @@ h1 {
 
 .nav-tabs>li>a:hover {
 	border-color: @firstLigthColor @firstLigthColor @firstLigthColor;
+}
+
+//Shild tabs
+li>.nav{
+	padding-left: 40px;
 }
 
 .searchElements {

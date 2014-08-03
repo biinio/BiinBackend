@@ -2,28 +2,34 @@ var biinAppOrganization= angular.module('biinAppOrganizations',['ngRoute','ui.sl
 
 var organizationsCropper=null
 //App configuration
-biinAppOrganization.config(['$routeProvider',
-	function($routeProvider){
+biinAppOrganization.config(['$routeProvider' ,'$locationProvider',
+	function($routeProvider,$locationProvider){
 	$routeProvider.
-		when('/list',{
+		when('/organizations/:organizationId',{
 			templateUrl:'partials/organizationList',
 			controller:'organizationsController'
 		}).
+    when('/organizations',{
+      templateUrl:'partials/organizationList',
+      controller:'organizationsController'
+    }).    
     otherwise({
-        redirectTo: '/list'
+        redirectTo: '/organizations'
       });
+
+    // use the HTML5 History API
+    $locationProvider.html5Mode(true);
 }]);
 
-biinAppOrganization.controller("organizationsController",['$scope','$http',function($scope,$http){
+biinAppOrganization.controller("organizationsController",['$scope','$http','$location',function($scope,$http,$location){
   $scope.selectedOrganization = null;
-  $scope.selectedSite = null;
+
   //Get the List of Objects
   $http.get('api/organizations').success(function(data){
   	$scope.organizations = data.data;
     $scope.currentModelId = null;
 
     $scope.organizationPrototype = data.prototypeObj;
-    $scope.sitePrototype = data.sitePrototypeObj;
 
     //Site Prototypes Backup
     $scope.organizationPrototypeBkp =  $.extend(true, {}, data.prototypeObj);    
@@ -53,6 +59,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
 
   //Remove showcase at specific position
   $scope.removeOrganizationAt = function(index){
+    clearSelectedOrganization();
     if($scope.selectedOrganization==index){
       $scope.selectedOrganization =null;
       $scope.currentModelId =null;
@@ -78,7 +85,6 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
 
   //Edit an organization
   $scope.edit = function(index){
-    $scope.clearSelectedSite();
     $scope.selectedOrganization = index;
     $scope.currentModelId = $scope.organizations[index].identifier;
     //Remove the cropper
@@ -88,7 +94,12 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
     organizationsCropper= createOrganizationsCropper("wrapperOrganization");
     var imgUrl = $scope.organizations[index].imgUrl;
     organizationsCropper.preInitImage(imgUrl);
-  }  
+
+    if('isNew' in $scope.organizations[index])
+      clearSelectedOrganization();
+    else
+      setOrganization();
+  } 
 
   //Save the organization model
   $scope.save= function(){
@@ -96,11 +107,14 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
       $http.put('api/organizations/'+$scope.currentModelId,{model:organizationModel}).success(function(data,status){
       if("replaceModel" in data){
         $scope.organizations[$scope.selectedOrganization] = data.replaceModel;
+        $scope.currentModelId=$scope.organizations[$scope.selectedOrganization].identifier;
         $scope.organizationPrototype =  $.extend(true, {}, $scope.organizationPrototypeBkp);
         $scope.sitePrototype = $.extend(true,{},$scope.sitePrototypeBkp);
       }
       if(data.state=="success")
         $scope.succesSaveShow=true;
+
+      setOrganization();
     });     
   }
 
@@ -118,53 +132,20 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
    /* Sites Functionality
    /*-----------------------------------------------------*/
 
-  //Push a new site to the list of the selected site
-  $scope.createSite= function(){
-    var newObj = $scope.sitePrototype;
-    var objIndex =$scope.organizations[$scope.selectedOrganization].sites.indexOf(newObj);
-    if(objIndex>-1)
-      $scope.selectedSite=objIndex
-    else
-    {
-      $scope.sitePrototype =$.extend(true, {}, $scope.sitePrototypeBkp);
-      $scope.sitePrototype.isNew = true;
-      $scope.organizations[$scope.selectedOrganization].sites.push($scope.sitePrototype);
-      $scope.editSite($scope.organizations[$scope.selectedOrganization].sites.indexOf($scope.sitePrototype)); 
+  //Clear selected organization
+  clearSelectedOrganization= function(){
+    var $organizationEl =$("#organizationNav");
+    $organizationEl.addClass("hide");
+    $organizationEl.attr("data-organization",'');
+  }
+
+  //Set the organization selected
+  setOrganization = function(){
+    if($scope.organizations[$scope.selectedOrganization]){
+      setOrganizationMenu($scope.currentModelId, $scope.organizations[$scope.selectedOrganization].name)
     }
   }
 
-  //Return the missing media of a site
-  $scope.mediaMissing=function(){
-    var cantOfItems = 3- $scope.organizations[$scope.selectedOrganization].sites[$scope.selectedSite].media.length;
-    var arrayItems = [];
-
-    //Array items
-    for(var i=0; i< cantOfItems;i++)
-      arrayItems.push(i);
-
-    return arrayItems;
-  }
-
-  //Indicates if the selected site is new
-  $scope.isSelectedSiteNew=function(){
-    return 'isNew' in $scope.organizations[$scope.selectedOrganization].sites[$scope.selectedSite];
-  }
-
-  $scope.removeSiteAt= function(index){
-    if($scope.selectedSite == index)
-      $scope.selectedSite = null;
-    $scope.organizations[$scope.selectedOrganization].sites.splice(index,1);
-  }
-
-  $scope.editSite= function(index){
-    $scope.selectedSite = index;
-    $scope.currentModelSiteId = $scope.organizations[$scope.selectedOrganization].sites[index].identifier;
-  }
-
-  $scope.clearSelectedSite = function(){
-    $scope.selectedSite =null;
-    $scope.currentModelSiteId = null;
-  }
   }]);
 
   //Change of image directive
@@ -195,3 +176,5 @@ biinAppOrganization.controller("organizationsController",['$scope','$http',funct
       }
     }
   });
+
+

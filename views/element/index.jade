@@ -1,4 +1,6 @@
-extends ../layout_accountObjects
+extends ../layout_dashboard
+block head_scripts
+    script(src="/javascripts/angular/elementsController.js")  	
 block content	
 	#sectionContent.max-height(ng-app="biinAppElements" ng-controller="elementsController")
 			#wrapperHeader.row

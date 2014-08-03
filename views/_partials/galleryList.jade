@@ -1,0 +1,15 @@
+#dropFileSection.max-height.max-width(drop-files)
+	p Drag and Drop the Images
+	h2 New Images
+	.row.middle-heigth
+		a.col-md-1.module(ng-repeat="gallItem in  newObjects")
+			p {{gallItem.originalName}}
+			img.img-responsive(ng-src="{{gallItem.serverUrl}}" pending-indicator)
+	h2 Old Images
+	.row.middle-heigth
+		a.col-md-1.module(ng-repeat="item in allGallery")
+			.moduleWrapper.contentHideButtons
+				p {{item.originalName}}
+				img.img-responsive(ng-src="{{item.serverUrl}}" pending-indicator)
+				.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover
+					.icon.icon-bin-2					

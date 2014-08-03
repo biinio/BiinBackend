@@ -13,7 +13,6 @@ function intersection(a, b, areEqualFunction) {
     return Result;
 }
 
-
 //Compare two objects list and returns the intersection
 //between the two list's
 function intersectionObjects() {
@@ -49,7 +48,6 @@ function difference(a, b, areEqualFunction) {
 
     return Result;
 }
-
 
 //Compare two objects list and returns the difference
 //between the two list's

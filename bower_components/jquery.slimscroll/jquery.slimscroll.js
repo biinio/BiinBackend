@@ -116,7 +116,6 @@
                 me.parent().css('height', height);
                 me.css('height', height);
               }
-
               if ('scrollTo' in options)
               {
                 // jump to a static point

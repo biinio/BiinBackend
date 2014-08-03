@@ -3,6 +3,7 @@ module.exports = function(){
 	var element = require('../schemas/element'), showcase = require('../schemas/showcase');
 	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')();
     var extend = require('util')._extend;
+
 	//Get the index view of the elements
 	functions.index = function(req,res){
 		res.render('element/index', { title: 'Elements List' ,user:req.user});
@@ -10,10 +11,11 @@ module.exports = function(){
 
 	//GET the list of elements
 	functions.list = function(req,res){
-		element.find({},function (err, data) {
+		element.find({accountIdentifier:req.user.accountIdentifier},function (err, data) {
 			   res.json({data:data, prototypeObj : new element()});
 		});		
 	}
+
 	//PUT an update of the showcase
 	functions.set=function(req,res){
 		var model =req.body.model;
@@ -23,12 +25,11 @@ module.exports = function(){
 		if(model){
 			if('isNew' in model){
 			 delete model.isNew;
-             model.objectIdentifier=utils.getGUID();
-
-             //Todo set the Customer and Id
-             //Todo set the Organization Id
-
+       
              var newModel  = new element(model);
+
+             newModel.objectIdentifier=utils.getGUID();
+             newModel.accountIdentifier = req.user.accountIdentifier;
 
              //Perform an create
              newModel.save(function(err){
@@ -55,7 +56,6 @@ module.exports = function(){
 		//Perform an update
 		var elementIdentifier=req.param("element");
 		removeElementsInShowcases(elementIdentifier,function(){
-			console.log("remove element id:"+ elementIdentifier);
 			//Remove the element
 			element.remove({objectIdentifier:elementIdentifier},function(err){
 						if(err)
@@ -177,7 +177,6 @@ module.exports = function(){
     			}
     	})
     }
-
 
 	return functions;
 }

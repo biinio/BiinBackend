@@ -14,11 +14,11 @@ module.exports =function(db){
 	//GET the list of organizations
 	functions.list = function(req,res){		
 		organization.find({"accountIdentifier":req.user.accountIdentifier},function (err, data) {
-			   res.json({data:data, prototypeObj : new organization(), sitePrototypeObj: new site()});
+			   res.json({data:data, prototypeObj : new organization()});
 		});		
 	}
 
-	//PUT an update of the showcase
+	//PUT an update of the organization
 	functions.set=function(req,res){	 
 		var model =req.body.model;
 		//Perform an update
@@ -27,49 +27,49 @@ module.exports =function(db){
 		delete model._id;
 
 		if(model)
-		{
-			setSitesIdentifiers(model,organizationIdentifier,req.user.accountIdentifier,function(data){
-				//If is pushing a new model
-				if('isNew' in data){
+		{			
+			//If is pushing a new model
+			if('isNew' in model){
 
-					delete data.isNew;
-	                
-	                var newModel = new organization(data);
-					//Set the account and de user identifier
-	                newModel.identifier=utils.getGUID();
-					newModel.accountIdentifier= req.user.accountIdentifier;
+				delete model.isNew;
+                
+                var newModel = new organization(model);
+				//Set the account and de user identifier
+                newModel.identifier=utils.getGUID();
+				newModel.accountIdentifier= req.user.accountIdentifier;
 
-					//Perform an create
-					newModel.save(function(err){
-						if(err)
-							throw err;
-						else{
-							//Return the state and the object
-							res.json({state:"success",replaceModel:data});
-						}
-					});
-				}else{
-					organization.update(
-		                     { identifier:organizationIdentifier},
-		                     { $set :data },
-		                     { upsert : true },
-		                     function(err){
-		                     	if(err){
-		                     		throw err;
-		                     		res.json(null);
-		                     	}
-								else{
-		                            //Return the state
-									res.json({state:'success',replaceModel:data});							
-								}
-		                     }
-		                   );
-				}				
-			});
+				//Perform an create
+				newModel.save(function(err){
+					if(err)
+						throw err;
+					else{
+						//Return the state and the object
+						res.json({state:"success",replaceModel:newModel});
+					}
+				});
+				
+			}else{
+				organization.update(
+	                     { identifier:organizationIdentifier},
+	                     { $set :model },
+	                     { upsert : true },
+	                     function(err){
+	                     	if(err){
+	                     		throw err;
+	                     		res.json(null);
+	                     	}
+							else{
+	                            //Return the state
+								res.json({state:'success',replaceModel:model});							
+							}
+	                     }
+	                   );
+			}				
+			
 		}
 	}
 
-		//DELETE an specific showcase
+	//DELETE an specific Organization
 	functions.delete= function(req,res){
 		//Perform an update
 		var organizationIdentifier=req.param("identifier");
@@ -79,24 +79,6 @@ module.exports =function(db){
 			else
 				res.json({state:"success"});
 		});
-	}
-
-	/****
-	 Other methods
-	***/
-	function setSitesIdentifiers(organization, organizationIdentifier, accountIdentifier, callback){
-		for(var i=0; i< organization.sites.length;i++){
-			organization.sites[i].organizationIdentifier = organizationIdentifier;
-			organization.sites[i].accountIdentifier = accountIdentifier;
-
-			if('isNew' in organization.sites[i]){
-				organization.sites[i].identifier = utils.getGUID();
-				delete organization.sites[i].isNew;
-			}
-		}
-
-		//Callback and return the modified organization
-		callback(organization);
 	}
 
 

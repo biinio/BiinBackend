@@ -1,4 +1,6 @@
 extends ../layout_dashboard
+block head_scripts
+	script(src="/javascripts/angular/organizationsController.js")
 block content	
 	#sectionContent.max-height(ng-app="biinAppOrganizations" ng-controller="organizationsController")
 			#wrapperHeader.row

@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var elementSchema = new Schema({
-    objectIdentifier:{type:String, default:"-1"},
+    objectIdentifier:{type:String, default:"-1", index:true},
+    organizationIdentifier:{type:String,default:""},
+    accountIdentifier:{type:String,default:""},
     position:{type:String, default:""},
 	objectType:{type:String, default:""},
 	likes:{type:String, default:""},

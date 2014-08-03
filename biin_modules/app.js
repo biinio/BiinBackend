@@ -32,7 +32,7 @@ module.exports = function (db) {
         app.use(lessMiddleware(path.join(process.env.PWD , 'public')),{
             force:false,
             debug:false,
-            once:true,
+            once:true,//Set to compile once when the application start
             compress:true
         });
 
@@ -94,6 +94,13 @@ module.exports = function (db) {
             });
         });
     }
+
+    app.use(function(req, res, next){
+      // the status option, or res.statusCode = 404
+      // are equivalent, however with the option we
+      // get the "status" local available as well
+      res.render('404', { status: 404, url: req.url });
+    });
 
     return app;
 };

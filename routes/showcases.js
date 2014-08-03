@@ -14,20 +14,33 @@ module.exports = function () {
 
 	//GET the index view of a showcases
 	functions.index = function(req,res){
-		res.render('showcase/index', { title: 'Organizations list' ,user:req.user});
+		var organization = req.param("identifier");
+
+		var callback= function(organization,req, res){
+			res.render('showcase/index', { title: 'Organizations list' ,user:req.user, user:req.user, organization:organization, isSiteManteinance:true});
+		}
+
+		//If the organization header is not in cache try to get it
+		//if(!req.session.selectedOrganization || req.session.selectedOrganization.identifier!= organizationId){			
+			 getOganization(req, res, callback);
 	}
 
 	//GET the list of showcases
 	functions.list = function(req,res){
-		showcase.find({},function (err, data) {
-			   res.json({data:data, prototypeObj : new showcase()});
+		var organizationIdentifier = req.param("identifier");
+		var showcaseProto = new showcase();
+		showcaseProto.organizationIdentifier = organizationIdentifier;
+		showcase.find({accountIdentifier:req.user.accountIdentifier, organizationIdentifier:organizationIdentifier},function (err, data) {
+			   res.json({data:data, prototypeObj : showcaseProto});
 		});		
 	}
 
 	//GET a showcase By Id
 	functions.get=function(req,res){
+		var organizationIdentifier = req.param("organizationId");
 		var showcaseIdentifier = req.param("identifier");
-   		showcase.findOne({"identifier":showcaseIdentifier},'',function(err,data){
+
+   		showcase.findOne({"organizationIdentifier":organizationIdentifier,"identifier":showcaseIdentifier},'',function(err,data){
    			if(data){
    				res.json({data:{showcase:data}});
    			}   				
@@ -37,13 +50,15 @@ module.exports = function () {
 	}
 
 	//PUT an update of the showcase
-	functions.set=function(req,res){	   	   
+	functions.set=function(req,res){
 		var model =req.body.model;
 		//Perform an update
 		var showcaseIdentifier=req.param("showcase");
 		var model = req.body.model;			
 		delete model._id;
 
+		//Set the account identifier for the model
+		model.accountIdentifier=req.user.accountIdentifier;
 		if(model)
 		{
 			//If is pushing a new model
@@ -51,12 +66,6 @@ module.exports = function () {
 				delete model.isNew;
 
                 model.identifier=utils.getGUID();
-
-				//Todo Get the Customer Id
-				//Todo Get the Organization ID
-				model.customerIdentifier=0;
-				model.organizationIdentifier=0;
-                
                 var newModel = new showcase(model);
 				//Perform an create
 				newModel.save(function(err){
@@ -69,7 +78,11 @@ module.exports = function () {
 				});
 			}else{
 				showcase.update(
-	                     { identifier:showcaseIdentifier},
+	                     {
+	                       identifier:showcaseIdentifier,
+	                     	organizationIdentifier:model.organizationIdentifier, 
+	                     	accountIdentifier:req.user.accountIdentifier
+	                     },
 	                     { $set :model },
 	                     { upsert : true },
 	                     function(err){
@@ -90,9 +103,11 @@ module.exports = function () {
 
 	//DELETE an specific showcase
 	functions.delete= function(req,res){
-		//Perform an update
+
+		//Perform a delete
+		var organizationIdentifier = req.param('identifier');
 		var showcaseIdentifier=req.param("showcase");
-		showcase.remove({identifier:showcaseIdentifier},function(err){
+		showcase.remove({identifier:showcaseIdentifier,accountIdentifier: req.user.accountIdentifier, organizationIdentifier:organizationIdentifier},function(err){
 			if(err)
 				throw err;
 			else
@@ -143,6 +158,15 @@ module.exports = function () {
 	/****
 	 Other methods
 	***/
+
+	getOganization = function(req, res, callback){
+		var identifier=req.param("identifier");
+
+		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
+			req.session.selectedOrganization = data;
+			callback(data,req,res);
+		});
+	}
 
 	//Update Biins Last Update in Regions
     function updateBiinsLastUpdate(showcaseId){
