@@ -22,7 +22,21 @@ var elementSchema = new Schema({
 	biinSold:{type:String, default:""},
 	timeFrame:{type:String, default:""},
 	imageUrl:{type:String, default:""},
-	categories:[]
+	categories:[
+		{
+			identifier:{type:String, index:true, default:"-1"},
+			name:{type:String, default:""},
+			displayName:{type:String, default:""},
+			imgUrl:{type:String, default:""}
+		}
+	],
+	media:[
+		{
+			title1:{type:String, default:""},
+			title1:{type:String, default:""},
+			imgUrl:{type:String,default:""}
+		}
+	]
 
 });
 

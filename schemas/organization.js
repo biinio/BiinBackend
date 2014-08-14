@@ -9,13 +9,17 @@ var orgObj ={
 	title1:{type:String, default:""},
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
-	imgUrl:{type:String,default:""},
+	imgUrl:{type:String , default:""},
+	majorCounter:{type: Number, default:0},
 	sites:[{
 		identifier:{type:String, default:"-1", index:true},
 		accountIdentifier:{type:String, default:"000"},
 		organizationIdentifier:{type:String,default:""},
+		majorCounter:{type:Number,default:0},
 		name: {type:String, default:""},
 		description: {type:String, default:""},
+		major:{type: Number, default:0},
+		minorCounter:{type: Number, default:0},
 		categories:[
 			{
 				identifier:{type:String, index:true, default:"-1"},
@@ -39,7 +43,8 @@ var orgObj ={
 				minor:{type:String, Default:""},
 				proximityUUID:{type:String, Default:""},
 				location:{type:String, Default:""},
-				registerDate:{type:String, Default:""}
+				registerDate:{type:String, Default:""},
+				showcaseAsigned:{type:String, Default:""}
 			}
 		]
 	}]

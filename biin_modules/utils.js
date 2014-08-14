@@ -32,7 +32,7 @@ module.exports = function(){
     }
     
     //Uploads File to FTP
-    functions.FTPUpload= function(localPath,remotePath,callback){   
+    functions.FTPUpload= function(localPath,remotePath,callback){
         //FTP Instance
         ftp = new JSFtp({ host: process.env.FTP_HOST,
                 port: process.env.FTP_PORT,
@@ -47,6 +47,17 @@ module.exports = function(){
         });     
 
         ftp.put(localPath,remotePath,callback);
+    }
+
+    //Misselanious Properties
+    functions.get ={};
+
+    functions.get.majorIncrement =function(){
+      return 10;
+    }
+
+    functions.get.minorIncrement =function(){
+      return 10;
     }
 
     return functions;	

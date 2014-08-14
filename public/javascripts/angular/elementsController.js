@@ -1,26 +1,21 @@
-var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort']);
+var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services']);
 
-var elementCropper=null;
-//App configuration
-biinAppObjects.config(['$routeProvider',
-	function($routeProvider){
-	$routeProvider.
-		when('/list',{
-			templateUrl:'partials/elementList',
-			controller:'elementsController'
-		}).
-    otherwise({
-        redirectTo: '/list'
-      });
-}]);
 
-biinAppObjects.controller("elementsController",['$scope', '$http',function($scope,$http){
-  //Utils vars
+biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv',function($scope,$http,categorySrv,gallerySrv){
+  
+  //Constants
+  $scope.maxMedia=1;
+
+  //Draggable Properties
+  $scope.dragCategoryIndex =-1;
+  $scope.dragGalleryIndex=-1;  
   $scope.selectedElement=null;
   $scope.currentModelId = null;
+  $scope.organizationId=selectedOrganization();
+  $scope.activeTab ='details';
 
   //Get the List of Objects
-  $http.get('api/elements').success(function(data){
+  $http.get('api/organizations/'+$scope.organizationId+'/elements').success(function(data){
   	$scope.elements = data.data;    
     $scope.elementPrototype = data.prototypeObj;
     $scope.elementPrototypeBkp = $.extend(true, {}, data.prototypeObj);
@@ -42,20 +37,12 @@ biinAppObjects.controller("elementsController",['$scope', '$http',function($scop
         $scope.elements.push($scope.elementPrototype);     
         $scope.edit($scope.elements.indexOf($scope.elementPrototype)); 
     }
-     
   }
 
   //Edit an element
   $scope.edit = function(index){
     $scope.selectedElement = index;
     $scope.currentModelId = $scope.elements[index].objectIdentifier;
-    //Remove the cropper
-    removeCropper();
-
-    //Instanciate cropper
-    elementCropper= createElementCropper("wrapperShowcase");
-    var imgUrl = $scope.elements[index].imageUrl;
-    elementCropper.preInitImage(imgUrl);
   }
 
   //Remove element at specific position
@@ -63,9 +50,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http',function($scop
     if($scope.selectedElement==index){
       $scope.selectedElement =null;
       $scope.currentModelId =null;
-
-      //Remove the cropper
-      removeCropper();
     }
     if('isNew' in $scope.elements[index] ){
       //remove the showcase
@@ -74,7 +58,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http',function($scop
     {
       var elementId = $scope.elements[index].objectIdentifier;      
       $scope.elements.splice(index,1);
-      $http.delete('api/elements/'+elementId).success(function(data){
+      $http.delete('api/organizations/'+$scoper.organizationId+'/elements/'+elementId).success(function(data){
           if(data.state=="success"){
             //Todo: implement a pull of messages
           }
@@ -85,7 +69,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http',function($scop
 
   //Save detail model object
   $scope.saveDetail= function(){  
-    $http.put('api/elements/'+$scope.currentModelId,{model:$scope.elements[$scope.selectedElement]}).success(function(data,status){
+    $http.put('api/organizations/'+$scope.organizationId+'/elements/'+$scope.currentModelId,{model:$scope.elements[$scope.selectedElement]}).success(function(data,status){
       if("replaceModel" in data){
         $scope.elements[$scope.selectedElement] = data.replaceModel;
         $scope.elementPrototype =  $.extend(true, {}, $scope.elementPrototypeBkp);
@@ -95,33 +79,101 @@ biinAppObjects.controller("elementsController",['$scope', '$http',function($scop
     });          
   } 
 
-   //Others
+  //Change tab to a specific section
+  $scope.changeTabTo= function(tabToChange){
+    $scope.activeTab = tabToChange;
+  }
 
-   //Remove the current cropper
-   removeCropper= function(){
-      if(elementCropper !=null){
-        elementCropper.destroy();
-        elementCropper = null;
-      }
-   }
-}]);
+  //Get the List of Categories
+  categorySrv.getList().then(function(promise){
+    $scope.categories = promise.data.data;    
+  });
 
-//Define the Directives
-biinAppObjects.directive('imageCropper',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element){       
-       elementCropper= createElementCropper(element[0].attributes["id"].value);
-       var index =scope.selectedElement;
-       if(scope.elements[index].imageUrl)
-          var imgUrl = scope.elements[index].imageUrl;
-        else
-          //set not found image
-          imgUrl="http://biinapp.com/biinApp/biinCMSImages/eeb9b58dc185-45aa-b2e1-1bfcc081e775.jpeg"
-       elementCropper.preInitImage(imgUrl);
+  //Return the categories of the selected element
+  $scope.ownCategories=function(){
+    var categories=[];
+    if($scope.elements[$scope.selectedElement] && $scope.elements[$scope.selectedElement].categories)
+      categories = $scope.elements[$scope.selectedElement].categories;
+    return categories;
+  }
+
+  //Set the category index when start draggin
+  $scope.setDragCategory=function(scopeIndex){
+    $scope.dragCategoryIndex= scopeIndex;
+  }
+
+  //Set the gallery index when start draggin
+  $scope.setDragGallery=function(scopeIndex){
+    $scope.dragGalleryIndex= scopeIndex;
+  }
+
+ //Insert category in the site
+  $scope.insertCategory = function(index){
+
+    var elementToPush =$scope.categories[$scope.dragCategoryIndex];
+
+    delete elementToPush._id;
+    if(!$scope.elements[$scope.selectedElement].categories)
+      $scope.elements[$scope.selectedElement].categories=[];
+
+    //$scope.sites[$scope.selectedSite].categories.push(elementToPush);
+    $scope.elements[$scope.selectedElement].categories.splice(0, 0, elementToPush);
+
+    //Apply the changes    },
+
+    $scope.$digest();
+    $scope.$apply();    
+  }
+
+  //Remove categorie a specific position
+  $scope.removeCategoryAt=function(scopeIndex){
+    $scope.elements[$scope.selectedElement].categories.splice(scopeIndex,1);
+  }
+
+  //Insert a gallery item to site
+  $scope.insertGalleryItem = function(index){
+    if($scope.elements[$scope.selectedElement].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index]){
+      var newObj = {};
+      newObj.identifier = $scope.galleries[index].identifier;
+      newObj.imgUrl = $scope.galleries[index].serverUrl;
+      $scope.elements[$scope.selectedElement].media.push(newObj);  
+
+      //Apply the changes
+      $scope.$digest();
+      $scope.$apply();    
+    }
+  } 
+
+  //Remove the media object at specific index
+  $scope.removeMediaAt=function(index){
+    if($scope.elements[$scope.selectedElement].media.length>=index)
+      $scope.elements[$scope.selectedElement].media.splice(index,1)
+  }
+
+
+
+  //Get the list of the gallery
+  gallerySrv.getList().then(function(promise){
+    $scope.galleries= promise.data;
+  });
+
+  //On gallery change method                
+  $scope.onGalleryChange= function(obj,autoInsert){
+    //Do a callback logic by caller
+    $scope.galleries = $scope.galleries.concat(obj);;
+    $scope.$digest();
+
+    if(autoInsert)
+    {
+      //Insert the images to the preview
+      var cantToInsert=$scope.maxMedia- $scope.elements[$scope.selectedElement].media.length;
+      for(var i=0; i< cantToInsert; i++){
+        $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
+      }      
     }
   }
-});
+
+}]);
 
 //Change of image directive
 biinAppObjects.directive('inputChange',function(){
@@ -135,6 +187,38 @@ biinAppObjects.directive('inputChange',function(){
           scope.$digest();
           scope.$apply();
        });
+    }
+  }
+});
+
+//Define the directives of categories
+biinAppObjects.directive('drop',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element, attrs){       
+      $el = $(element);
+
+      $el.droppable({
+        drop:function(event,ui){
+
+          switch(ui.draggable[0].attributes["drag"].value){
+            //scope insert of the category
+            case "categories":
+              //Todo put the logic for add the category
+              scope.insertCategory(scope.dragCategoryIndex);            
+              break;
+            case "galleries":
+              //Todo put the logic for add the gallery
+              scope.insertGalleryItem(scope.dragGalleryIndex);            
+              break;
+          }
+        },
+        over:function(event,ui){
+          $el.next(".dropColumn").addClass('hide');
+        }
+      })
+      
+      
     }
   }
 });

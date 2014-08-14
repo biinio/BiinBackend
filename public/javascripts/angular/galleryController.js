@@ -1,20 +1,5 @@
 var biinAppGallery = angular.module('biinAppGallery',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.galleryService']);
 
-//App  Gallery Configuration
-biinAppGallery.config(['$routeProvider','$locationProvider',
-	function($routeProvider,$locationProvider){
-	$routeProvider.
-		when('/gallery',{
-			templateUrl:'partials/galleryList',
-			controller:'galleryController'
-		}).
-    otherwise({
-        redirectTo: '/gallery'
-      });
-    // use the HTML5 History API
-    $locationProvider.html5Mode(true);    
-}]);
-
 biinAppGallery.controller("galleryController",['$scope', '$http',function($scope,$http){
   $scope.newObjects=[];
   $scope.allGallery=null;

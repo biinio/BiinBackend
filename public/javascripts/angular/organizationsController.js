@@ -1,25 +1,6 @@
 var biinAppOrganization= angular.module('biinAppOrganizations',['ngRoute','ui.slimscroll','naturalSort']);
 
-var organizationsCropper=null
-//App configuration
-biinAppOrganization.config(['$routeProvider' ,'$locationProvider',
-	function($routeProvider,$locationProvider){
-	$routeProvider.
-		when('/organizations/:organizationId',{
-			templateUrl:'partials/organizationList',
-			controller:'organizationsController'
-		}).
-    when('/organizations',{
-      templateUrl:'partials/organizationList',
-      controller:'organizationsController'
-    }).    
-    otherwise({
-        redirectTo: '/organizations'
-      });
-
-    // use the HTML5 History API
-    $locationProvider.html5Mode(true);
-}]);
+var organizationsCropper=null;
 
 biinAppOrganization.controller("organizationsController",['$scope','$http','$location',function($scope,$http,$location){
   $scope.selectedOrganization = null;

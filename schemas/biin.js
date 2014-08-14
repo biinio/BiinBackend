@@ -7,5 +7,6 @@ module.exports = moongose.model('biins',{
 			minor:{type:String, Default:""},
 			proximityUUID:{type:String, Default:""},
 			location:{type:String, Default:""},
-			registerDate:{type:String, Default:""}
+			registerDate:{type:String, Default:""},
+			showcaseAsigned:{type:String, Default:""}
 });

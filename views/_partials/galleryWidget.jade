@@ -1,0 +1,5 @@
+#gallery(slimscroll="" slimscroll-option="{height:'auto'}")
+	.row
+		a.col-md1.module(ng-repeat="galleItem in galleries" drag="galleries" element-index="galleries.indexOf(galleItem)" drop-files="autoInsertOff")
+			.moduleWrapper-inverse
+				img(ng-src="{{galleItem.serverUrl}}" pending-indicator)

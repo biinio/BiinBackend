@@ -1,17 +1,4 @@
-var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.galleryService']);
-
-//App configuration
-biinAppShowCases.config(['$routeProvider','$locationProvider',
-	function($routeProvider,$locationProvider){
-	$routeProvider.
-		when('/organizations/:organizationId/showcases',{
-			templateUrl:'partials/showcaseList',
-			controller:'showcasesController'
-		});
-    
-    // use the HTML5 History API
-    $locationProvider.html5Mode(true);
-}]);
+var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services']);
 
 //App define controllers
 biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routeParams','elementSrv','biinSrv', function($scope,$http,$routeParams, elementSrv,biinSrv) {
@@ -20,7 +7,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
   $scope.currentModelId = null;
   $scope.dragElementIndex=-1;
   $scope.dragBiinIndex =-1;
-  $scope.organizationId =$routeParams.organizationId;
+  $scope.organizationId =selectedOrganization();
     
   //Get the List of Showcases
   $http.get('api/organizations/'+$scope.organizationId+'/showcases').success(function(data){
@@ -34,13 +21,13 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
   });
 
   //Get the List of Elements
-  elementSrv.getList().then(function(promise){
+  elementSrv.getList($scope.organizationId).then(function(promise){
     $scope.elements = promise.data.data;    
   });
 
   //Get the List of Biins
-  biinSrv.getList().then(function(promise){
-    $scope.biins = promise.data.data;
+  biinSrv.getList($scope.organizationId).then(function(promise){
+    $scope.biinSite = promise.data.data;
   });  
 
   //Push a new showcase in the list
@@ -49,10 +36,15 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     if($scope.showcases.indexOf(newObject)>-1){      
       $scope.selectedShowcase=$scope.showcases.indexOf(newObject); 
     }else{
-        $scope.showcasePrototype =  $.extend(true, {}, $scope.showcasePrototypeBkp);
-        $scope.showcasePrototype.isNew=true;
-        $scope.showcases.push($scope.showcasePrototype);     
-        $scope.edit($scope.showcases.indexOf($scope.showcasePrototype)); 
+
+        //Generate an identifier for the showcase and set it to the prototype object
+        $http.get('api/organizations/'+$scope.organizationId+'/showcases/id').success(function(data){
+          $scope.showcasePrototype =  $.extend(true, {}, $scope.showcasePrototypeBkp);
+          $scope.showcasePrototype.identifier =data.data;
+          $scope.showcasePrototype.isNew=true;
+          $scope.showcases.push($scope.showcasePrototype);     
+          $scope.edit($scope.showcases.indexOf($scope.showcasePrototype)); 
+        });
     }
   }
 
@@ -85,14 +77,26 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
   }
 
   //Save detail model object
-  $scope.saveDetail= function(){  
+  $scope.saveDetail= function(){ 
+
     $http.put('api/showcases/'+$scope.currentModelId,{model:$scope.showcases[$scope.selectedShowcase]}).success(function(data,status){
       if("replaceModel" in data){
         $scope.showcases[$scope.selectedShowcase] = data.replaceModel;
         $scope.showcasePrototype =  $.extend(true, {}, $scope.showcasePrototypeBkp);
       }
-      if(data.state=="success")
+      if(data.state=="success"){
+      //Save the changes in the biins
+        biinSrv.saveList($scope.organizationId, $scope.biinSite).then(function(promise){
+          if(promise.data.state=='success'){
+            //Todo put the update was success
+            console.log("Update of the list of biins");
+          }  
+          else
+            //Todo handle the errors
+            console.log("there was an error");
+        });
         $scope.succesSaveShow=true;
+      }
     });          
   } 
 
@@ -169,11 +173,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     $scope.dragElementIndex=scopeIndex;
   }
 
-  //Set current dragget biin index in the scope
-  $scope.setDragBiin=function(scopeIndex){
-    $scope.dragBiinIndex=scopeIndex;
-  }
-
+  //Get the first element by position
   $scope.getFirstElementByPosition =function(element){
     var foundPosition=0;
     if(element.objects.length===1)
@@ -208,13 +208,20 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }
    }
 
+    //Biins Logic
+    $scope.setBiinToShowcase= function(indexSite,indexBiin){
+      if(!$scope.biinSite[indexSite].biins[indexBiin].showcaseAsigned)
+        $scope.biinSite[indexSite].biins[indexBiin].showcaseAsigned = $scope.currentModelId;
+      else
+        $scope.biinSite[indexSite].biins[indexBiin].showcaseAsigned=undefined
+    }
 }]);
 
 // Define the Elements Service
 biinAppShowCases.factory('elementSrv', ['$http', function (async) {
     return {
-      getList: function () {
-        var promise = async({method:'GET', url:'/api/elements'})
+      getList: function (organizationId) {
+        var promise = async({method:'GET', url:'/api/organizations/'+organizationId+'/elements'})
             .success(function (data, status, headers, config) {
               return data;
             })
@@ -230,9 +237,18 @@ biinAppShowCases.factory('elementSrv', ['$http', function (async) {
 // Define the service for Biins
 biinAppShowCases.factory("biinSrv",['$http',function(async){
     return {
-      getList: function(){
-        var promise = async({method:'GET',url:'/api/organizations/'+$scope.organizationId+'/biins'})
+      getList: function(organizationId){
+        var promise = async({method:'GET',url:'/api/organizations/'+organizationId+'/biins'})
         .success(function (data,status,headers,config){
+          return data;
+        }).error(function(data,status,headers,config){
+          return {"status":false};
+        });
+
+        return promise;
+      },
+      saveList:function(organizationId,biinSite){
+        var promise= async({method:'POST',url:'/api/organizations/'+organizationId+'/sites/biins', data:biinSite}).success(function(data,status,headers,config){
           return data;
         }).error(function(data,status,headers,config){
           return {"status":false};
@@ -267,20 +283,6 @@ biinAppShowCases.directive('draggableShowcaseElement',function(){
       $(element).draggable({appendTo: '.colOptions',containment: '.showcaseWorkArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5,
         start:function(){          
           scope.setDragElement(scope.$eval(attrs.elementIndex));        
-        }
-      });
-    }
-  }
-});  
-
-//Dragable elements 
-biinAppShowCases.directive('draggableBiin',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element,attrs){ 
-      $(element).draggable({appendTo: '.colOptions',containment: '#biins', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5,
-        start:function(){          
-          scope.setDragBiin(scope.$eval(attrs.elementIndex));        
         }
       });
     }
@@ -340,41 +342,9 @@ biinAppShowCases.directive('droppableShowcasePreview',function(){
   }
 });  
 
-//Dropable zones  of biins
-biinAppShowCases.directive('droppableBiin',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element,attrs){
-      $(element).droppable({
-      drop: function( event, ui ) {
-        scope.setDropableBiinInShowcase();
-        $(element).next(".dropColumn").addClass('hide');              
-      },
-      over:function( event, ui ){
-
-        $(element).next(".dropColumn").removeClass('hide');
-      },
-      out:function( event, ui ){
-        $(element).next(".dropColumn").addClass('hide');
-      }
-    });
-    }
-  }
-});  
-
 /****
     Custom Filters
 ****/
-
-//Filter for get the intersection of two list of objects
-biinAppShowCases.filter("difference",function(){
-  return function intersection(haysTack, needle){
-    //call function in utilities
-    return differenceObjects(haysTack,needle,function(item1,item2){
-      return item1.objectIdentifier===item2.objectIdentifier;
-    });
-  }
-});
 
 //Filter for get the objects with undefined value
 biinAppShowCases.filter("undefinedValue",function(){

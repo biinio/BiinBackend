@@ -65,7 +65,8 @@ module.exports = function () {
 			if('isNew' in model){
 				delete model.isNew;
 
-                model.identifier=utils.getGUID();
+				if(model.identifier=='')
+                	model.identifier=utils.getGUID();
                 var newModel = new showcase(model);
 				//Perform an create
 				newModel.save(function(err){
@@ -129,6 +130,11 @@ module.exports = function () {
 				});	
 	}
 
+	//Get generate an Id for a showcase
+	functions.getShowcaseId= function(req,res){
+		res.json({data:utils.getGUID()});
+	}
+
 	//POST an image for a showcase
 	functions.imagePost=function(req,res,next){	
 		imageManager.upload(req.headers.origin,req.files.img.path,req.files.img.name,function(err,data){
@@ -153,7 +159,6 @@ module.exports = function () {
 		  	console.log(err);
 		}
 	}
-
 
 	/****
 	 Other methods

@@ -4,461 +4,577 @@
 		"selected_items":
 		[
 			[
-				"imag",
-				"imagePath"
+				"selec",
+				"selectedSite"
 			],
 			[
-				"image",
-				"imageName"
+				"orga",
+				"organizationId"
 			],
 			[
-				"new",
-				"newName"
+				"organ",
+				"organizations"
 			],
 			[
-				"pat",
-				"pathImage"
+				"biin",
+				"biinPrototype"
 			],
 			[
-				"mode",
-				"moduleOwner"
+				"bii",
+				"biin_modules"
 			],
 			[
-				"mod",
-				"moduleOwner"
+				"org",
+				"organizationId"
 			],
 			[
-				"get",
-				"getGUID"
+				"selecte",
+				"selectedSite"
 			],
 			[
-				"file",
-				"filename"
+				"ma",
+				"mayorCounter"
 			],
 			[
-				"posi",
-				"positionY"
+				"drop",
+				"dropFiles"
 			],
 			[
-				"crop",
-				"cropW"
+				"medi",
+				"mediaItm"
 			],
 			[
-				"resi",
-				"resizeH"
+				"ng-p",
+				"ng-repeat"
 			],
 			[
-				"posit",
-				"positionX"
+				"pro",
+				"property"
 			],
 			[
-				"Si",
-				"sizeDiffH"
+				"select",
+				"selectedSite"
 			],
 			[
-				"si",
-				"sizeDiffW"
+				"show",
+				"showcaseAsigned"
 			],
 			[
-				"res",
-				"resizeW"
+				"sav",
+				"saveList"
 			],
 			[
-				"re",
-				"resizeW"
-			],
-			[
-				"rese",
-				"resizeW"
-			],
-			[
-				"move",
-				"moveScrollTo"
-			],
-			[
-				"showca",
-				"showCasePreviewScroll"
-			],
-			[
-				"slim",
-				"slimscrollObj"
-			],
-			[
-				"po",
-				"position"
-			],
-			[
-				"pos",
-				"positionToGive"
-			],
-			[
-				"sco",
-				"scope"
-			],
-			[
-				"elem",
-				"elementToPush"
-			],
-			[
-				"scope",
-				"scopeIndex"
-			],
-			[
-				"index",
-				"indexElementToDrop"
-			],
-			[
-				"dra",
-				"dragAfterIndex"
-			],
-			[
-				"drag",
-				"dragElement"
-			],
-			[
-				"s",
-				"scope"
-			],
-			[
-				"hamm",
-				"hammer"
-			],
-			[
-				"time",
-				"setTimeout"
-			],
-			[
-				"sho",
-				"show"
-			],
-			[
-				"mo",
-				"moveDiv"
-			],
-			[
-				"in",
-				"innerHTML"
-			],
-			[
-				"tra",
-				"translate3d"
-			],
-			[
-				"pad",
-				"padding-bottom"
-			],
-			[
-				"marg",
-				"margin-left"
-			],
-			[
-				"border-r",
-				"border-right-width"
-			],
-			[
-				"border-left",
-				"border-left-width"
-			],
-			[
-				"form",
-				"form-picker"
-			],
-			[
-				"backgr",
-				"background-color"
-			],
-			[
-				"border",
-				"border-color"
-			],
-			[
-				"mar",
-				"margin-right"
-			],
-			[
-				"el",
-				"el"
-			],
-			[
-				"ele",
-				"element"
-			],
-			[
-				"query",
-				"queryElements"
+				"modu",
+				"moduleWrapper"
 			],
 			[
 				"max",
 				"max-height"
 			],
 			[
-				"min",
-				"min-width"
+				"organi",
+				"organizationId"
 			],
 			[
-				"elemen",
-				"element"
+				"orgn",
+				"organizations"
 			],
 			[
-				"fun",
-				"functions"
+				"Orga",
+				"organizationIdentifier"
 			],
 			[
-				"mut",
-				"multipartMiddleware"
+				"organio",
+				"organizationIdentifier"
 			],
 			[
-				"padd",
-				"padding-bottom"
+				"index",
+				"indexOf"
 			],
 			[
-				"panel",
-				"panel-heading"
+				"inse",
+				"insertGalleryItem"
 			],
 			[
-				"fon",
-				"font-size"
+				"g",
+				"galleryModule"
 			],
 			[
-				"margi",
-				"margin-right"
+				"galler",
+				"galleries"
 			],
 			[
-				"margin",
-				"margin-right"
+				"gall",
+				"gallery"
 			],
 			[
-				"BORDER-CO",
-				"border-color"
+				"new",
+				"newObj"
 			],
 			[
-				"sta",
-				"stayLogged"
+				"media",
+				"mediaItem"
 			],
 			[
-				"text",
-				"text-align"
+				"gallery",
+				"dragGalleryIndex"
 			],
 			[
-				"modal",
-				"modalControls"
+				"sc",
+				"scope"
 			],
 			[
-				"prent",
-				"parent"
+				"drag",
+				"dragGalleryIndex"
 			],
 			[
-				"eleme",
-				"elementToUpdate"
+				"galle",
+				"galleItem"
 			],
 			[
-				"element",
-				"elementId"
+				"all",
+				"allGallery"
 			],
 			[
-				"show",
-				"showcaseInstance"
-			],
-			[
-				"col-md",
-				"col-md-8"
-			],
-			[
-				"col-md-",
-				"col-md-4"
-			],
-			[
-				"suc",
-				"succesSave"
-			],
-			[
-				"ng",
-				"ng-click"
-			],
-			[
-				"img",
-				"img-responsive"
-			],
-			[
-				"rou",
-				"routeParams"
-			],
-			[
-				"region",
-				"regionToCreate"
-			],
-			[
-				"dat",
-				"dataShowCase"
-			],
-			[
-				"find",
-				"findOne"
-			],
-			[
-				"categ",
-				"categories"
-			],
-			[
-				"fu",
-				"function"
-			],
-			[
-				"d",
-				"displayName"
+				"th",
+				"throw"
 			],
 			[
 				"user",
-				"username"
+				"userAccount"
+			],
+			[
+				"files",
+				"filesUploaded"
+			],
+			[
+				"file",
+				"filesUploaded"
+			],
+			[
+				"uo",
+				"uploadImage"
+			],
+			[
+				"attr",
+				"attrId"
 			],
 			[
 				"magi",
 				"margin-bottom"
 			],
 			[
-				"magin",
+				"pane",
+				"panel-body"
+			],
+			[
+				"panel",
+				"panel-heading"
+			],
+			[
+				"mar",
 				"margin-top"
 			],
 			[
-				"ma",
-				"margin-top"
+				"tab",
+				"tabName"
 			],
 			[
-				"font",
-				"font-style"
+				"ol",
+				"oldValue"
 			],
 			[
-				"tex",
-				"text-align"
+				"sele",
+				"selectedBiin"
 			],
 			[
-				"padi",
-				"padding"
+				"biinP",
+				"biinPrototypeBkp"
 			],
 			[
-				"ti",
-				"title"
+				"scope",
+				"scope"
 			],
 			[
-				"fli",
-				"FlightSchema"
+				"site",
+				"sitePrototype"
 			],
 			[
-				"for",
-				"for	for (…) {…}"
-			],
-			[
-				"fl",
-				"flights"
-			],
-			[
-				"des",
-				"destinationsServed"
-			],
-			[
-				"Dest",
-				"destinationsServed"
-			],
-			[
-				"num",
-				"numFlights"
-			],
-			[
-				"mag",
-				"margin-right"
-			],
-			[
-				"pa",
-				"padding-right"
-			],
-			[
-				"wh",
-				"width"
-			],
-			[
-				"paddin",
+				"pad",
 				"padding-top"
 			],
 			[
-				"email",
-				"patternEmail"
+				"qu",
+				"quarter-heigth"
 			],
 			[
-				"rg",
-				"rgba()"
+				"col",
+				"colPreview"
 			],
 			[
-				"lin",
-				"line-height"
+				"dra",
+				"draggable"
 			],
 			[
-				"act",
-				"active"
+				"m",
+				"max-height"
 			],
 			[
-				"acti",
-				"activeSlide"
+				"scp",
+				"scopeIndex"
 			],
 			[
-				"nex",
-				"nextSibling"
+				"elment",
+				"elementToPush"
 			],
 			[
-				"pd",
-				"padding-top"
+				"insert",
+				"insertCategory"
 			],
 			[
-				"margin-",
-				"margin-top"
-			],
-			[
-				"bot",
-				"border-bottom-width"
-			],
-			[
-				"BORDER",
-				"border-right"
-			],
-			[
-				"border-",
-				"border-bottom"
-			],
-			[
-				"mari",
-				"margin"
-			],
-			[
-				"PA",
-				"padding-left"
-			],
-			[
-				"font-",
-				"font-weight"
-			],
-			[
-				"p",
-				"padding-left"
-			],
-			[
-				"style",
-				"font-style"
-			],
-			[
-				"back",
-				"background-color"
+				"cate",
+				"categories"
 			],
 			[
 				"bac",
 				"background-color"
 			],
 			[
-				"arg",
-				"argv"
+				"mod",
+				"moduleWrapper"
+			],
+			[
+				"h",
+				"href"
+			],
+			[
+				"Organz",
+				"organizationName"
+			],
+			[
+				"data",
+				"data-organizationName"
+			],
+			[
+				"pr",
+				"param"
+			],
+			[
+				"get",
+				"getOganization"
+			],
+			[
+				"proto",
+				"prototypeObj"
+			],
+			[
+				"func",
+				"function"
+			],
+			[
+				"organizationNa",
+				"organizationName"
+			],
+			[
+				"paddi",
+				"padding-left"
+			],
+			[
+				"wor",
+				"workAreaHeader"
+			],
+			[
+				"foun",
+				"foundPosition"
+			],
+			[
+				"ele",
+				"element"
+			],
+			[
+				"organiza",
+				"organizationIdentifier"
+			],
+			[
+				"curr",
+				"currentModelSiteId"
+			],
+			[
+				"eleme",
+				"elementWidth"
+			],
+			[
+				"border-left",
+				"border-left-color"
+			],
+			[
+				"borde-",
+				"border-left"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"padin",
+				"padding-left"
+			],
+			[
+				"border",
+				"border-style"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"sel",
+				"selectedSite"
+			],
+			[
+				"elemen",
+				"elementHeight"
+			],
+			[
+				"paddin",
+				"padding-bottom"
+			],
+			[
+				"first",
+				"firstColor"
+			],
+			[
+				"margi",
+				"margin-bottom"
+			],
+			[
+				"slec",
+				"selectedSite"
+			],
+			[
+				"selected",
+				"selectedSite"
+			],
+			[
+				"selc",
+				"selectedOrganization"
+			],
+			[
+				"max-wi",
+				"max-width"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"sitePro",
+				"sitePrototypeObj"
+			],
+			[
+				"or",
+				"organizations"
+			],
+			[
+				"inde",
+				"indexOf"
+			],
+			[
+				"siteP",
+				"sitePrototypeObj"
+			],
+			[
+				"res",
+				"resultedPath"
+			],
+			[
+				"style",
+				"stylesheets"
+			],
+			[
+				"create",
+				"createOrganizationsCropper"
+			],
+			[
+				"organization",
+				"organizationsCropper"
+			],
+			[
+				"acco",
+				"accountIdentifier"
+			],
+			[
+				"obje",
+				"objects"
+			],
+			[
+				"remove",
+				"removedElement"
+			],
+			[
+				"elme",
+				"elementId"
+			],
+			[
+				"elmen",
+				"elementIdentifier"
+			],
+			[
+				"ca",
+				"callback"
+			],
+			[
+				"object",
+				"objectIdentifier"
+			],
+			[
+				"obj",
+				"objects"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			],
+			[
+				"biins",
+				"biins"
+			],
+			[
+				"dropable",
+				"droppable-showcase-preview"
+			],
+			[
+				"he",
+				"headers"
+			],
+			[
+				"showcas",
+				"showcaseIdentifier"
+			],
+			[
+				"scop",
+				"scope"
+			],
+			[
+				"Shocase",
+				"showcaseSchema"
+			],
+			[
+				"showca",
+				"showcaseInstance"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"next",
+				"nextObj"
+			],
+			[
+				"update",
+				"updateShowcaseObjectsPosition"
+			],
+			[
+				"prev",
+				"prevObj"
+			],
+			[
+				"boto",
+				"bottom"
+			],
+			[
+				"eval",
+				"evalPosition"
+			],
+			[
+				"leng",
+				"lengthOfBiins"
+			],
+			[
+				"sh",
+				"showcaseIdentifier"
+			],
+			[
+				"showcaseI",
+				"showcaseId"
+			],
+			[
+				"last",
+				"lastUpdate"
+			],
+			[
+				"find",
+				"find"
+			],
+			[
+				"updat",
+				"updateDate"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"contents": "\nvar holder = document.getElementById('holder'),\n    tests = {\n      filereader: typeof FileReader != 'undefined',\n      dnd: 'draggable' in document.createElement('span'),\n      formdata: !!window.FormData,\n      progress: \"upload\" in new XMLHttpRequest\n    }, \n    support = {\n      filereader: document.getElementById('filereader'),\n      formdata: document.getElementById('formdata'),\n      progress: document.getElementById('progress')\n    },\n    acceptedTypes = {\n      'image/png': true,\n      'image/jpeg': true,\n      'image/gif': true\n    progress = document.getElementById('uploadprogress'),\n    fileupload = document.getElementById('upload');\n\n\"filereader formdata progress\".split(' ').forEach(function (api) {\n  if (tests[api] === false) {\n    support[api].className = 'fail';\n  } else {\n    // FFS. I could have done el.hidden = true, but IE doesn't support\n    // hidden, so I tried to create a polyfill that would extend the\n    // Element.prototype, but then IE10 doesn't even give me access\n    // to the Element object. Brilliant.\n    support[api].className = 'hidden';\n  }\n});\n\nfunction previewfile(file) {\n  if (tests.filereader === true && acceptedTypes[file.type] === true) {\n    var reader = new FileReader();\n    reader.onload = function (event) {\n      var image = new Image();\n      image.src = event.target.result;\n      image.width = 250; // a fake resize\n      holder.appendChild(image);\n    };\n\n    reader.readAsDataURL(file);\n  }  else {\n    holder.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');\n    console.log(file);\n  }\n}\n\nfunction readfiles(files) {\n    debugger;\n    var formData = tests.formdata ? new FormData() : null;\n    for (var i = 0; i < files.length; i++) {\n      if (tests.formdata) formData.append('file', files[i]);\n      previewfile(files[i]);\n    }\n\n    // now post a new XHR request\n    if (tests.formdata) {\n      var xhr = new XMLHttpRequest();\n      xhr.open('POST', '/devnull.php');\n      xhr.onload = function() {\n        progress.value = progress.innerHTML = 100;\n      };\n\n      if (tests.progress) {\n        xhr.upload.onprogress = function (event) {\n          if (event.lengthComputable) {\n            var complete = (event.loaded / event.total * 100 | 0);\n            progress.value = progress.innerHTML = complete;\n          }\n        }\n      }\n\n      xhr.send(formData);\n    }\n}\n\nif (tests.dnd) { \n  holder.ondragover = function () { this.className = 'hover'; return false; };\n  holder.ondragend = function () { this.className = ''; return false; };\n  holder.ondrop = function (e) {\n    this.className = '';\n    e.preventDefault();\n    readfiles(e.dataTransfer.files);\n  }\n} else {\n  fileupload.className = 'hidden';\n  fileupload.querySelector('input').onchange = function () {\n    readfiles(this.files);\n  };\n}\n\n",
+			"settings":
+			{
+				"buffer_size": 2823,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "routes/sites.js",
+			"settings":
+			{
+				"buffer_size": 4033,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/javascripts/angular/sitesController.js",
+			"settings":
+			{
+				"buffer_size": 7997,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "biin_modules/utils.js",
+			"settings":
+			{
+				"buffer_size": 1805,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "views/site/index.jade",
+			"settings":
+			{
+				"buffer_size": 6252,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "biin_modules/routes.js",
+			"settings":
+			{
+				"buffer_size": 4256,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "routes/organizations.js",
+			"settings":
+			{
+				"buffer_size": 3638,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -467,7 +583,51 @@
 		"selected_items":
 		[
 			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
 				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"git lo",
+				"Git: Log All"
+			],
+			[
+				"git",
+				"Git: Diff All"
+			],
+			[
+				"git pull",
+				"Git: Pull Current Branch"
+			],
+			[
+				"git pu",
+				"Git: Pull"
+			],
+			[
+				"git push",
+				"Git: Push Current Branch"
+			],
+			[
+				"git comi",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git stt",
+				"Git: Status"
+			],
+			[
+				"git comm",
+				"Git: Commit"
+			],
+			[
+				"Package Control: insta",
 				"Package Control: Install Package"
 			],
 			[
@@ -475,11 +635,11 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 389.0
+		"width": 467.0
 	},
 	"console":
 	{
-		"height": 351.0
+		"height": 100.0
 	},
 	"distraction_free":
 	{
@@ -492,53 +652,119 @@
 	},
 	"file_history":
 	[
-		"/Users/lbonilla/Developments/Biin/views/_partials/showcaseList.jade",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/cmsMain.css",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/showcasesController.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/imageManager.js",
-		"/Users/lbonilla/Developments/Biin/app.js",
+		"/Users/lbonilla/Developments/Biin/schemas/organization.js",
+		"/Users/lbonilla/Developments/Biin/routes/organizations.js",
+		"/Users/lbonilla/Developments/Biin/routes/sites.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/routes.js",
+		"/Users/lbonilla/Developments/Biin/schemas/site.js",
+		"/Users/lbonilla/Developments/Biin/views/site/index.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/sitesController.js",
+		"/Users/lbonilla/Developments/Biin/views/organization/index.jade",
 		"/Users/lbonilla/Developments/Biin/biin_modules/utils.js",
+		"/Users/lbonilla/Developments/Biin/views/layout_dashboard.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/elementsController.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
+		"/Users/lbonilla/Developments/Biin/views/_partials/galleryWidget.jade",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.less",
+		"/Users/lbonilla/Developments/Biin/views/element/index.jade",
+		"/Users/lbonilla/Developments/Biin/views/showcase/index.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/galleryController.js",
+		"/Users/lbonilla/Developments/Biin/views/_partials/galleryList.jade",
+		"/Users/lbonilla/Developments/Biin/views/gallery/index.jade",
+		"/Users/lbonilla/Developments/Biin/views/_partials/categoriesWidget.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/showcasesController.js",
+		"/Users/lbonilla/Developments/Biin/views/_partials/categoriesWidgetWidget.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/organizationsController.js",
+		"/Users/lbonilla/Developments/Biin/schemas/element.js",
+		"/Users/lbonilla/Developments/Biin/routes/elements.js",
+		"/Users/lbonilla/Developments/Biin/schemas/showcase.js",
+		"/Users/lbonilla/Developments/Biin/routes/biins.js",
 		"/Users/lbonilla/Developments/Biin/routes/showcases.js",
+		"/Users/lbonilla/Developments/Biin/views/_partials/showcaseList.jade",
+		"/Users/lbonilla/Developments/Biin/schemas/biin.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/app.js",
+		"/Users/lbonilla/Developments/Biin/routes/gallery.js",
+		"/Users/lbonilla/Developments/Biin/views/_partials/organizationList.jade",
+		"/Users/lbonilla/Developments/Biin/views/_partials/siteList.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/ui.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/utilities.js",
+		"/Users/lbonilla/Developments/Biin/schemas/gallery.js",
+		"/Users/lbonilla/Developments/Biin/bower_components/angular-slimscroll/angular-slimscroll.js",
+		"/Users/lbonilla/Developments/Biin/views/layout_accountObjects.jade",
+		"/Users/lbonilla/Developments/Biin/biin_modules/imageManager.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/h5utils.js",
+		"/Users/lbonilla/Developments/Biin/views/_partials/gallery.jade",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/variables.less",
+		"/Users/lbonilla/Developments/Biin/schemas/category.js",
+		"/Users/lbonilla/Developments/Biin_Stuff/scripts/categories.json",
+		"/Users/lbonilla/Developments/Biin/.env",
+		"/Users/lbonilla/Developments/Biin/routes/categories.js",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/sidebar.less",
+		"/Users/lbonilla/Developments/Biin/bower_components/jquery.slimscroll/jquery.slimscroll.js",
+		"/Users/lbonilla/Developments/Biin/views/_partials/elementList.jade",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/style.css",
+		"/Users/lbonilla/Developments/Biin/bower_components/slimScroll/jquery.slimscroll.js",
+		"/Users/lbonilla/Developments/Biin/.gitignore",
+		"/Users/lbonilla/Developments/Biin/public/workingFiles/file.txt",
+		"/Users/lbonilla/Developments/Biin/bower_components/bootstrap/less/scaffolding.less",
+		"/Users/lbonilla/Developments/Biin/.git/MERGE_MSG",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/controls.less",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/cmsMain.css",
+		"/Users/lbonilla/Developments/Biin/views/layout.jade",
+		"/Users/lbonilla/Developments/Biin/less/lessTest.less",
+		"/Users/lbonilla/Developments/Biin/public/less/lessTest.less",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/lessTestmain.less",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/main.css",
+		"/Users/lbonilla/Developments/Biin/views/error.jade",
+		"/Users/lbonilla/Developments/Biin/package.json",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/main.less",
+		"/Users/lbonilla/Library/Application Support/Sublime Text 2/Packages/LESS/README.md",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.css",
+		"/Users/lbonilla/Developments/Biin/biin.sublime-project",
+		"/Users/lbonilla/Developments/Biin/views/sites/index.jade",
+		"/Users/lbonilla/Developments/Biin/biin_modules/auth.js",
+		"/Users/lbonilla/Developments/Biin/bin/www",
 		"/Users/lbonilla/Developments/Biin/routes/index.js",
+		"/Users/lbonilla/Developments/Biin/views/layout_organizations.jade",
+		"/Users/lbonilla/Developments/Biin/views/utils/layout_organizations.jade",
+		"/Users/lbonilla/Developments/Biin/routes/users.js",
+		"/Users/lbonilla/Developments/Biin/auth.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/naturalSortVersion.js",
+		"/Users/lbonilla/Developments/Biin/routes/regions.js",
+		"/Users/lbonilla/Developments/Biin/schemas/user.js",
+		"/Users/lbonilla/Developments/Biin/views/index.jade",
+		"/Users/lbonilla/Developments/Biin/views/index.html",
+		"/Users/lbonilla/Developments/Biin/views/homeDashboard.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/controls.js",
+		"/Users/lbonilla/Developments/Biin/views/objects/index.jade",
+		"/Users/lbonilla/Developments/Biin_Stuff/scripts/showcase1.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/scripts/showcase2.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/scripts/showcase3.json",
+		"/Users/lbonilla/Developments/Biin/schemas/region.js",
+		"/Users/lbonilla/Developments/Biin_Stuff/scripts/biins.json",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/objects.js",
+		"/Users/lbonilla/Developments/Biin/app.js",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/bootstrap.min.js",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/croppic.css",
-		"/Users/lbonilla/Developments/Biin/.env",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/ui.js",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/croppic.js",
 		"/Users/lbonilla/Developments/Biin/public/workingFiles/photo44200775914727372.jpeg",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/utilities.js",
 		"/Users/lbonilla/Developments/Biin/db.js",
 		"/Users/lbonilla/Developments/Biin/.git/config",
 		"/Users/lbonilla/Documents/brr/biin/showcases.metadata.json",
 		"/Users/lbonilla/Documents/brr/biin/showcases.bson",
 		"/Users/lbonilla/Documents/brr/biin/elements.metadata.json",
 		"/Users/lbonilla/Documents/brr/biin/showcase.metadata.json",
-		"/Users/lbonilla/Developments/Biin/views/layout_dashboard.jade",
-		"/Users/lbonilla/Developments/Biin/bower_components/angular-slimscroll/angular-slimscroll.js",
 		"/Users/lbonilla/Downloads/OverZealous-angularjs-naturalsort-e08f13d7777e/src/naturalSortVersion.js",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/style.css",
-		"/Users/lbonilla/Developments/Biin/schemas/showcase.js",
 		"/Users/lbonilla/Developments/Biin/bower_components/jquery-ui/ui/jquery.ui.widget.js",
 		"/Users/lbonilla/Developments/Biin/bower_components/jquery-ui/ui/jquery-ui.custom.js",
-		"/Users/lbonilla/Developments/Biin/schemas/element.js",
 		"/Users/lbonilla/Developments/Biin/bower_components/jquery-hammerjs/README.md",
-		"/Users/lbonilla/Developments/Biin/views/showcase/index.jade",
 		"/Users/lbonilla/Developments/Biin/views/_partials/showcaseEdit.jade",
 		"/Users/lbonilla/Developments/Biin/schemas/error.js",
-		"/Users/lbonilla/Developments/Biin/views/index.html",
-		"/Users/lbonilla/Developments/Biin/schemas/organization.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/routes.js",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/landingMain.css",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/sidebar.css",
 		"/Users/lbonilla/Developments/Biin/bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.css",
-		"/Users/lbonilla/Developments/Biin/routes/elements.js",
-		"/Users/lbonilla/Developments/Biin/views/homeDashboard.jade",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/custom.js",
-		"/Users/lbonilla/Developments/Biin/views/layout.jade",
-		"/Users/lbonilla/Developments/Biin/views/index.jade",
 		"/Users/lbonilla/Developments/Biin/views/_partials/showcaseImageEditor.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/controls.js",
 		"/Users/lbonilla/Developments/Biin/views/_partials/_showcaseImageEditor",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/s3upload.js",
 		"/Users/lbonilla/Developments/Biin/views/.gitignore",
@@ -548,78 +774,12 @@
 		"/Users/lbonilla/Developments/Biin/views/error/Index.jade",
 		"/Users/lbonilla/Developments/Biin/views/Errors",
 		"/Users/lbonilla/Developments/Biin/views/errors/Index.jade",
-		"/Users/lbonilla/Developments/Biin/routes/users.js",
-		"/Users/lbonilla/Developments/Biin/schemas/user.js",
 		"/Users/lbonilla/Developments/Biin/views/showcase/edit.jade",
-		"/Users/lbonilla/Developments/Biin/routes/biins.js",
 		"/Users/lbonilla/Developments/Biin/views/region/edit.jade",
-		"/Users/lbonilla/Developments/Biin/routes/regions.js",
-		"/Users/lbonilla/Developments/Biin/schemas/region.js",
 		"/Users/lbonilla/Developments/Biin/views/region/index.jade",
-		"/Users/lbonilla/Developments/Biin/routes/organizations.js",
 		"/Users/lbonilla/Developments/Biin/views/region/create.jade",
 		"/Users/lbonilla/Developments/Biin/views/_partials/showcase/list.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
-		"/Users/lbonilla/Developments/Biin/views_partials/showcase/list.jade",
-		"/Users/lbonilla/Developments/Biin/views_partials/showcaseList.jade",
-		"/Users/lbonilla/Developments/Biin/views_partials/showcaseList",
-		"/Users/lbonilla/Developments/Biin/views_partials/showcase/list",
-		"/Users/lbonilla/Developments/Biin/auth.js",
-		"/Users/lbonilla/Developments/Biin/schemas/biin.js",
-		"/Users/lbonilla/Developments/Biin/views_partials/OrganizationList",
-		"/Users/lbonilla/Developments/Biin/views/organization/index.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/controllers",
-		"/Users/lbonilla/Developments/Biin/views/test.jade",
-		"/Users/lbonilla/Developments/Biin/package.json",
-		"/Users/lbonilla/Developments/Biin/node_modules/angular/bin/build.js",
-		"/Users/lbonilla/Developments/Biin/viewsPartials/OrganizationEdit",
-		"/Users/lbonilla/Developments/Biin/views/user/create.jade",
-		"/Users/lbonilla/Developments/Biin/views/user/Create.jade",
-		"/Users/lbonilla/Developments/Biin/views/user.jade",
-		"/Users/lbonilla/Developments/Biin/schemas/users.js",
-		"/Users/lbonilla/Developments/Biin/routes/user.js",
-		"/Users/lbonilla/Developments/Biin/views/organizations.jade",
-		"/Users/lbonilla/Desktop/index.js",
-		"/Users/lbonilla/Developments/Biin/routes/showcase.js",
-		"/Users/lbonilla/Developments/Biin/routes/showcase",
-		"/Users/lbonilla/Developments/Biin/routes/Organizations.js",
-		"/Users/lbonilla/Developments/Biin/views/dashboard.jade",
-		"/Users/lbonilla/Developments/Biin/views/login.jade",
-		"/Users/lbonilla/DevelopmentsNodeJS/lindaTutorial/Ex_Files_NodeJS_EssT/Exercise Files/chap07/05/final/app.js",
-		"/Users/lbonilla/Developments/Biin/bin/www",
-		"/Users/lbonilla/Developments/Biin/views/users.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/mailchimp.js",
-		"/Users/lbonilla/Ludusy Drive/Ludusy/Biin Site Source/index.html",
-		"/Users/lbonilla/Developments/Biin/.git/COMMIT_EDITMSG",
-		"/Users/lbonilla/Ludusy Drive/Ludusy/Biin Site Source/css/main.css",
-		"/Users/lbonilla/Ludusy Drive/Ludusy/Ludusy Site Source/index.html",
-		"/Users/lbonilla/Ludusy Drive/Ludusy/Ludusy Site Source/css/columnSystemResponsive.css",
-		"/Users/lbonilla/Ludusy Drive/Ludusy/Ludusy Site Source/css/columnSystem.css",
-		"/Users/lbonilla/Ludusy Drive/Ludusy/Ludusy Site Source/css/main.css",
-		"/Users/lbonilla/Ludusy Drive/Ludusy/Ludusy Site Source/css/mainResponsive.css",
-		"/Users/lbonilla/Desktop/start/routes/index.js",
-		"/Users/lbonilla/Desktop/start/db.js",
-		"/Users/lbonilla/Desktop/start/app.js",
-		"/Users/lbonilla/Desktop/repl.js",
-		"/Users/lbonilla/Desktop/start/server.js",
-		"/Users/lbonilla/Desktop/start/package.json",
-		"/Users/lbonilla/Desktop/start/views/arrivals.jade",
-		"/Users/lbonilla/Desktop/start/views/layout.jade",
-		"/Users/lbonilla/Desktop/start/test/db.js",
-		"/Users/lbonilla/Desktop/start/test/FlightSpec.js",
-		"/Users/lbonilla/Desktop/start/test/helpers/app.js",
-		"/Users/lbonilla/Desktop/airline/app.js",
-		"/Users/lbonilla/Desktop/airline/views/layout.jade",
-		"/Users/lbonilla/Desktop/airline/routes/index.js",
-		"/Users/lbonilla/Desktop/airline/bin/www",
-		"/Users/lbonilla/Desktop/airline/package.json",
-		"/Users/lbonilla/DevelopmentsNodeJS/tutorialApp/server.js",
-		"/Users/lbonilla/Desktop/fligth/flight/index.js",
-		"/Users/lbonilla/airline/app.js",
-		"/Users/lbonilla/Desktop/fligth/app.js",
-		"/Users/lbonilla/Desktop/start/airline/package.json",
-		"/Users/lbonilla/Desktop/03/server.js",
-		"/Users/lbonilla/Ludusy Drive/Ludusy/Ludusy Site Source/sendmail.php"
+		"/Users/lbonilla/Developments/Biin/views_partials/showcase/list.jade"
 	],
 	"find":
 	{
@@ -627,9 +787,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			"/Users/lbonilla/Developments/Biin/public/images",
 			"/Users/lbonilla/Developments/Biin/public/javascripts",
 			"/Users/lbonilla/Developments/Biin",
 			"/Users/lbonilla/Developments/Biin/"
@@ -640,6 +801,91 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"$scoper",
+			"major",
+			"mayor",
+			"minor",
+			"()\n",
+			"onGalleryChange",
+			"att",
+			"attrs",
+			"insertGalleryItem",
+			"gallerySrv",
+			"gallery",
+			"removeCategoryAt",
+			"drop",
+			"drag",
+			"differe",
+			"categories",
+			"changeTabTo",
+			"console",
+			"cropper",
+			"cropp",
+			"/organizations/:identifier/elements",
+			"extend",
+			"elementSrv",
+			"ng-class",
+			"biinUnasocciated",
+			"getByShowcase",
+			"biinsr",
+			"shocase",
+			"img",
+			"pending-indicator",
+			"imagesLoaded",
+			"upload",
+			"uploadFile",
+			"util",
+			"Here",
+			"insertElementAfter",
+			"setDragElement",
+			"inverse",
+			"moduleWrapper",
+			"'",
+			"\"",
+			"biinAppOrganization",
+			"max-height",
+			"nav-var",
+			"cropper",
+			"createShowcaseCropper",
+			"image",
+			"radius",
+			"col",
+			"slimscroll",
+			".col-list",
+			"bt-save",
+			"btn",
+			"slimscroll",
+			"remove",
+			"media",
+			"console.log",
+			"    \n",
+			"280",
+			"showcaseWorkArea",
+			"\n",
+			"00adef",
+			"069FCE",
+			"biinSrv",
+			"max",
+			"max-heigth",
+			"max-height",
+			"cropperEditor",
+			"$set",
+			"indentifier",
+			"currentModelId",
+			"mainImageUrl",
+			".panel-heading ",
+			".panel-default>.panel-heading ",
+			"setDragBiin",
+			"max-height",
+			"indexOf",
+			"updateShowcaseObjectsPosition",
+			"btn",
+			"index",
+			"delete",
+			"console.log",
+			"glyphicons",
+			"glyphicons-halflings-regular",
+			"btn",
 			"DRAGGABLE",
 			"process",
 			"initialScaleImg",
@@ -682,62 +928,7 @@
 			".nav .open>a, .nav .open>a:hover,",
 			"margin-right: auto;\n	width: 250px;\n	}",
 			"font-family",
-			"bodyDecoder",
-			"img",
-			"FormData",
-			"img",
-			"showcaseImages",
-			"longitude",
-			"                   );",
-			"regionToCreate",
-			"createPost",
-			"ng-app",
-			"2014-05-07T20:31:04.640-0600 ",
-			"biinAppShowCases",
-			"page",
-			");\n",
-			"fake-form",
-			"email",
-			"required",
-			"require",
-			"Subscribe to our mailing list",
-			"www",
-			"button",
-			";\n",
-			"bottonSection",
-			"Facebook",
-			"navNext",
-			"cbp-fwnext",
-			".close",
-			"\n								",
-			">\n",
-			"AllowOverride",
-			"aboutSection",
-			"\">",
-			"fwcurrent",
-			"cbp-fwnext",
-			"oneColumnText",
-			".textInput",
-			".firstOfTwoColumns ",
-			"menu",
-			"cbp-fwprev",
-			"a img",
-			"	   	<",
-			"	\n",
-			";\ntextInput\n",
-			";\n",
-			"15px",
-			">\n",
-			"logo",
-			"div",
-			"100",
-			">\n",
-			">		",
-			">\n",
-			"/>\n",
-			"\">\n",
-			"html",
-			">\n"
+			"bodyDecoder"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -745,6 +936,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"\"",
+			"'",
+			"biinAppSite"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -755,8 +949,202 @@
 	"groups":
 	[
 		{
+			"selected": 6,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 2823,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2641,
+								2641
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "routes/sites.js",
+					"settings":
+					{
+						"buffer_size": 4033,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1506,
+								1506
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1393.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/javascripts/angular/sitesController.js",
+					"settings":
+					{
+						"buffer_size": 7997,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4188,
+								4188
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 42.0,
+						"translation.y": 1544.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "biin_modules/utils.js",
+					"settings":
+					{
+						"buffer_size": 1805,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1703,
+								1703
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 350.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "views/site/index.jade",
+					"settings":
+					{
+						"buffer_size": 6252,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5391,
+								5391
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 73.0,
+						"translation.y": 1127.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "biin_modules/routes.js",
+					"settings":
+					{
+						"buffer_size": 4256,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2495,
+								2505
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 25.0,
+						"translation.y": 391.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "routes/organizations.js",
+					"settings":
+					{
+						"buffer_size": 3638,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3515,
+								3515
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 483.0,
+						"translation.y": 1090.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		},
 		{
@@ -793,7 +1181,7 @@
 		"cols":
 		[
 			0.0,
-			0.50468126756,
+			0.90008981833,
 			1.0
 		],
 		"rows":
@@ -803,6 +1191,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.git":
+	{
+		"height": 162.0
+	},
 	"replace":
 	{
 		"height": 64.0
@@ -828,6 +1220,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 424.0,
+	"side_bar_width": 319.0,
 	"status_bar_visible": true
 }

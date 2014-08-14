@@ -1,7 +1,127 @@
 extends ../layout_dashboard
 block head_scripts
-    script(src="/javascripts/angular/elementsController.js")  	
+	script(src="/javascripts/angular/elementsController.js")  	
 block content	
 	#sectionContent.max-height(ng-app="biinAppElements" ng-controller="elementsController")
 			#wrapperHeader.row
-			#wrapperContent.row.max-height(ng-view)
+			#wrapperContent.row.max-height
+					.body-list.max-height
+						.col-lg-4.col-md-3.col-sm-3.col-list.max-height
+							.row(slimscroll="" slimscroll-option="{height: 'auto'}" )
+								a.col-md-1.module(ng-click="create()")				
+									.moduleWrapper.remove-module
+										.btn-rounded.center.icon.icon-add-1
+								a.col-md-1.module(ng-repeat="item in elements | filter: query" ng-click="edit(elements.indexOf(item))")					
+									.moduleWrapper.contentHideButtons(ng-class="{active: elements.indexOf(item) == selectedElement}")				
+										img.img-responsive(ng-src="{{item.media[0].imgUrl}}" ng-if="item.media.length>0" style="max-width: 250px;height: auto;" pending-indicator)
+										div.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeElementAt(elements.indexOf(item))")
+											.icon.icon-bin-2
+						.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
+							.animate-switch.max-height
+								ul.workAreaHeader.nav.nav-tabs
+									li(ng-class="{active:activeTab == 'details'}")
+										a(ng-click="changeTabTo('details')") Details
+									li(ng-class="{active:activeTab == 'categories'}")
+										a(ng-click="changeTabTo('categories')") Categories
+									li(ng-class="{active:activeTab == 'gallery'}")
+										a(ng-click="changeTabTo('gallery')") Gallery													
+								.row.workArea.max-height(ng-switch='activeTab')
+									.col-md-6.col-sm-6.colPreview.max-height(drop drop-files)
+										button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="saveDetail()") SAVE
+										.row.middle-heigth
+											div(droppable-showcase-preview slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="elementPreviewScroll")
+												//#wrapperShowcase.copperEditor(data-image-src="{{elements[selectedElement].imageUrl}}")
+												a.col-md-1.module(ng-repeat="mediaItm in elements[selectedElement].media")
+													.moduleWrapper.moduleWrapperElement.contentHideButtons													
+														img(ng-src="{{mediaItm.imgUrl}}")
+														.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(elements[selectedElement].media.indexOf(mediaItm))")
+															.icon.icon-bin-2															
+												input#elementImage.hidden(ng-model="elements[selectedElement].imgUrl" input-change="")							
+												label.previewLabel.title1(style="color:{{elements[selectedElement].title1Color}}; font-size:{{elements[selectedElement].title1Size}}px") {{elements[selectedElement].title1}}
+												label.previewLabel.title2(style="color:{{elements[selectedElement].title2Color}}; font-size:{{elements[selectedElement].title2Size}}px") {{elements[selectedElement].title2}}
+												label.previewLabel.title3(style="color:{{elements[selectedElement].title3Color}}; font-size:{{elments[selectedElement].title3Size}}px") {{elements[selectedElement].title3}}
+													p {{biin.name}}																							
+										//Put the categories for the site
+										.row.middle-quarter-heigth.colCategories.preview-row-division
+											.max-width.preview-title-division
+												h5 Categories								
+											.div(slimscroll="" slimscroll-option="{height:'90%'}")
+												a.col-md-1.module(ng-click="changeTabTo('categories')")
+													.moduleWrapper.remove-module
+														.btn-rounded.center.icon.icon-add-1
+												a.col-md-1.module(ng-repeat="cat in elements[selectedElement].categories" ng-click="changeTabTo('categories')")
+													.moduleWrapper.moduleWrapper-inverse.contentHideButtons
+														p {{cat.displayName}}
+														.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeCategoryAt(elements[selectedElement].categories.indexOf(cat))")
+															.icon.icon-bin-2		
+									//Details			
+									.col-md-6.col-sm-6.colPreview.max-height(ng-switch-when='details')
+										.tab-content.max-height(slimscroll="" slimscroll-option="{height: '90%'}")
+											#details
+												.hidden
+													input.form-control( ng-model="elments[selectedElement].identifier")				
+													input.form-control( ng-model="elements[selectedElement].customerIdentifier")																						
+													input.form-control( ng-model="elements[selectedElement].organizationIdentifier")
+													input.form-control( ng-model="elements[selectedElement].objectType")
+													input.form-control( ng-model="elements[selectedElement].actionType")																													
+												.row
+													label Title 1:							
+												.row
+													span.form-group.form-control.form-picker														     				
+														input(ng-model="elements[selectedElement].title1")										
+														spectrum-colorpicker.picker(ng-model="elements[selectedElement].title1Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")				
+														span.separator
+														select.selectpicker(ng-model="elements[selectedElement].title1Size")
+															option(value="5") XS
+															option(value="15") S
+															option(value="20") M
+															option(value="25") L
+															option(value="35") XL
+														span.caret-reversed
+														span.caret
+												.row
+													label Title 2:		
+												.row									
+													span.form-group.form-control.form-picker
+														input( ng-model="elements[selectedElement].title2")
+														spectrum-colorpicker.picker(ng-model="elements[selectedElement].title2Color" options="{showInput: true, showAlpha: true, preferredFormat: 'rgb'}")									
+														span.separator
+														select.selectpicker(ng-model="elements[selectedElement].title2Size")
+															option(value="5px") XS
+															option(value="15") S
+															option(value="20") M
+															option(value="25") L
+															option(value="35") XL
+														span.caret-reversed
+														span.caret											
+												.row
+													label Description:				
+												.row
+													textarea.form-group.form-control( ng-model="elements[selectedElement].objectDescription")									
+												.row
+													label Original price
+												.row
+													input.form-group.form-control( ng-model="elements[selectedElement].originalPrice")										
+												.row
+													label Biin price
+												.row
+													input.form-group.form-control( ng-model="elements[selectedElement].biinPrice")									
+												.row
+													label Discount
+												.row
+													input.form-group.form-control(ng-model="elements[selectedElement].discount")																		
+												.row
+													label Savings
+												.row
+													input.form-group.form-control( ng-model="elements[selectedElement].savings")																											
+												.row
+													label Biin Sold
+												.row
+													input.form-group.form-control( ng-model="elements[selectedElement].biinSold")									
+												.row									
+													button.form-group.btn.btn-default.form-control(ng-click="saveDetail()") SAVE																		
+									.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='categories')
+										include ../_partials/categoriesWidget													
+									//Gallery Tab
+									.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery')
+										include ../_partials/galleryWidget													

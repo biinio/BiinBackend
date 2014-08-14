@@ -1,8 +1,8 @@
-// Define the service of categories
-var galleryModule= angular.module('biin.galleryService',[]);
+// Define the service of galleries
+var biinServicesModule= angular.module('biin.services',[]);
 
 //Image Services
-galleryModule.factory('gallerySrv', ['$http', function (async) {
+biinServicesModule.factory('gallerySrv', ['$http', function (async) {
     return {
       getList: function () {
         var promise = async({method:'GET', url:'api/gallery/list'})
@@ -20,7 +20,7 @@ galleryModule.factory('gallerySrv', ['$http', function (async) {
 ]); 
 
 //Image uploades pending indicator
-galleryModule.directive('pendingIndicator', function(){
+biinServicesModule.directive('pendingIndicator', function(){
     return {
         restrict: 'A',
         link: function(scope, element) {
@@ -67,13 +67,13 @@ galleryModule.directive('pendingIndicator', function(){
 });
 
 //Drop Files Directive
-galleryModule.directive("dropFiles", function(){
+biinServicesModule.directive("dropFiles", function(){
   return{
         restrict:'A',
-        link:function(scope,element){       
+        link:function(scope,element,attrs){       
           var drop = element;
+          var autoInsert = attrs["drop-Files"] =='';
 
-          var dragIcon = document.createElement('img');
           //dragIcon.src="/images/headerBg.jpg";
           //Tells the browser that we *can* drop on this target
           addEvent(drop, 'dragover', cancel);
@@ -108,7 +108,7 @@ galleryModule.directive("dropFiles", function(){
 
                 //Do a callback logic by caller
                 if(scope.onGalleryChange)
-                  scope.onGalleryChange(obj);
+                  scope.onGalleryChange(obj,autoInsert);
 
                 console.log('all done: ' + xhr.status);
               } else {
@@ -136,4 +136,59 @@ galleryModule.directive("dropFiles", function(){
       }
     }
   });
+
+//Define the directives of drag
+biinServicesModule.directive('drag',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element, attrs){       
+      $el = $(element);
+    
+      $el.draggable({appendTo: '.colCategories',containment: '.workArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5, 
+        start:function(){          
+            switch(attrs.drag)
+            {
+              case "categories":
+                scope.setDragCategory(scope.$eval(attrs.elementIndex));        
+              break;
+              case "galleries":
+                scope.setDragGallery(scope.$eval(attrs.elementIndex));        
+              break;             
+
+            }
+          }
+        });
+    }
+  }
+});
+
+//Define the service of categories 
+biinServicesModule.factory('categorySrv', ['$http', function (async) {
+    return {
+      getList: function () {
+        var promise = async({method:'GET', url:'/api/categories'})
+            .success(function (data, status, headers, config) {
+              return data;
+            })
+            .error(function (data, status, headers, config) {
+              return {"status": false};
+            });
+          
+          return promise;
+      }
+    }
+    }]);
+
+
+//Custom Filters
+
+//Filter for get the intersection of two list of objects
+biinServicesModule.filter("difference",function(){
+  return function intersection(haysTack, needle,property){
+    //call function in utilities
+    return differenceObjects(haysTack,needle,function(item1,item2){
+      return item1[property]===item2[property];
+    });
+  }
+});
 

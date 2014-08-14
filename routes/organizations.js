@@ -7,6 +7,7 @@ module.exports =function(db){
 	var organization = require('../schemas/organization'), site = require('../schemas/site');
 	var functions ={};
 
+	//GET the Main view of an Organization
 	functions.index = function(req,res){
 		res.render('organization/index', { title: 'Organizations list' ,user:req.user});
 	}	
@@ -81,6 +82,46 @@ module.exports =function(db){
 		});
 	}
 
+	//Minor and major Functions
+
+	//GET the major of the organization
+	functions.getMajor =  function(req,res){
+		var organizationIdentifier = req.param('identifier');
+		organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},'majorCounter',function(err, data){
+			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier}, {$inc:{majorCounter:utils.get.majorIncrement()}},function(err){
+				if(err)
+					throw err;
+				else
+					res.json({data: data.majorCounter});
+
+			});
+		});
+	}
+
+	//GET the minor of the organization context
+	functions.getMinor =  function(req,res){
+		var organizationIdentifier = req.param('identifier');
+		var siteIdentifier = req.param('siteIdentifier');
+		organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},'sites.$.minorCounter',function(err, data){
+			//If the site is not new
+			if(data){
+				organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier}, {$inc:{'sites.$.minorCounter':utils.get.minorIncrement()}},function(err, count){
+					if(err)
+						throw err;
+					else{
+
+						var minor = 0;
+						if(data.sites[0].minorCounter)
+							minor =data.sites[0].minorCounter;
+
+						res.json({data:minor});
+					}
+				});				
+			}else
+				//Return the increment variable
+				res.json({data:utils.get.minorIncrement()});
+		});
+	}
 
 	return functions;
 }

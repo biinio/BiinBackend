@@ -27,16 +27,19 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Categories Routes
     app.get('/api/categories',categories.list);
 
-    //Regions organization
+    //Organization Routes
     app.get('/organizations',organizations.index);
     app.get('/api/organizations',organizations.list);
     app.put('/api/organizations/:identifier',organizations.set);
     app.delete('/api/organizations/:identifier',organizations.delete);
     app.post('/organizations/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
+    app.get('/api/organizations/:identifier/major', organizations.getMajor);
+    app.get('/api/organizations/:identifier/:siteIdentifier/minor', organizations.getMinor);
 
     //Showcase routes
     app.get('/organizations/:identifier/showcases',showcases.index);
+    app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId)
     app.post('/showcases/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/showcases/:identifier',showcases.get);
@@ -44,23 +47,27 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.delete);
     app.get('/api/organizations/:identifier/showcases',showcases.list);
 
+    //Sites of a Organizations
+    app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
+
     //Sites routes
+    app.get('/organizations/:identifier/sites',sites.index);    app.get('/organizations/:identifier/sites',sites.index);
     app.get('/api/organizations/:identifier/sites',sites.get);
-    app.get('/organizations/:identifier/sites',sites.index);
     app.put('/api/showcases/:orgIdentifier/sites/:siteIdentifier',sites.set);
     app.delete('/api/showcases/:orgIdentifier/sites/:siteIdentifier',sites.delete);
 
     //Biins
     app.get('/api/biins',biins.list);
-    app.get('/api/biins/:biin/showcase',showcases.getByBiin);
+    app.post('/api/organizations/:identifier/sites/biins',biins.updateSiteBiins);
+    //app.get('/api/biins/:biin/showcase',showcases.getByBiin);    
     
     //Elements
-    app.get('/elements',elements.index);
+    app.get('/organizations/:identifier/elements', elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
-    app.get('/api/elements',elements.list)
-    app.put('/api/elements/:element',elements.set);
-    app.delete('/api/elements/:element',elements.delete);
+    app.get('/api/organizations/:identifier/elements',elements.list)
+    app.put('/api/organizations/:identifier/elements/:element',elements.set);
+    app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
 
     //Regions routes
     app.get('/regions',regions.index)

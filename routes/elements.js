@@ -1,17 +1,19 @@
 module.exports = function(){
 	var functions ={};
-	var element = require('../schemas/element'), showcase = require('../schemas/showcase');
+	var element = require('../schemas/element'), showcase = require('../schemas/showcase'), organization= require('../schemas/organization');
 	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')();
-    var extend = require('util')._extend;
-
 	//Get the index view of the elements
 	functions.index = function(req,res){
-		res.render('element/index', { title: 'Elements List' ,user:req.user});
+		var callback= function(organization,req, res){
+			res.render('element/index', { title: 'Elements List' ,user:req.user, organization:organization, isSiteManteinance:true});
+		}
+		getOganization(req, res, callback);	
 	}
 
 	//GET the list of elements
 	functions.list = function(req,res){
-		element.find({accountIdentifier:req.user.accountIdentifier},function (err, data) {
+		var organizationIdentifier = req.param('identifier');
+		element.find({accountIdentifier:req.user.accountIdentifier, organizationIdentifier:organizationIdentifier},function (err, data) {
 			   res.json({data:data, prototypeObj : new element()});
 		});		
 	}
@@ -20,6 +22,7 @@ module.exports = function(){
 	functions.set=function(req,res){
 		var model =req.body.model;
 		//Perform an update
+		var organizationIdentifier= req.param('identifier');
 		var elementIdentifier=req.param("element");	
 		delete model._id;   	   
 		if(model){
@@ -30,7 +33,8 @@ module.exports = function(){
 
              newModel.objectIdentifier=utils.getGUID();
              newModel.accountIdentifier = req.user.accountIdentifier;
-
+             newModel.organizationIdentifier = organizationIdentifier;
+             
              //Perform an create
              newModel.save(function(err){
              	if(err)
@@ -42,7 +46,7 @@ module.exports = function(){
 			else{
 				//Update the model
 				updateElementsInShowcases(model,elementIdentifier,function(){
-					element.update({"objectIdentifier":elementIdentifier},{$set:model},function(err,data){
+					element.update({accountIdentifier:req.user.accountIdentifier, organizationIdentifier:organizationIdentifier,"objectIdentifier":elementIdentifier},{$set:model},function(err,data){
 								if(err)
 									throw err; 
 					 });
@@ -54,10 +58,11 @@ module.exports = function(){
 	//DELETE an specific showcase
 	functions.delete= function(req,res){
 		//Perform an update
+		var organizationIdentifier = req.param('identifier');
 		var elementIdentifier=req.param("element");
 		removeElementsInShowcases(elementIdentifier,function(){
 			//Remove the element
-			element.remove({objectIdentifier:elementIdentifier},function(err){
+			element.remove({accountIdentifier:req.user.accountIdentifier,organizationIdentifier:organizationIdentifier,objectIdentifier:elementIdentifier},function(err){
 						if(err)
 							throw err;
 						else
@@ -178,5 +183,15 @@ module.exports = function(){
     	})
     }
 
+
+    //Other methods
+	getOganization = function(req, res, callback){
+		var identifier=req.param("identifier");
+
+		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
+			req.session.selectedOrganization = data;
+			callback(data,req,res);
+		});
+	}
 	return functions;
 }

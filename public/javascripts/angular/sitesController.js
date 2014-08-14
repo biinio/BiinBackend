@@ -1,64 +1,50 @@
-var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.galleryService']);
+var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services']);
 
 var tabBiin="biins", tabDetails="details";
 var organizationsCropper=null
-//App configuration
-biinAppSite.config(['$routeProvider' ,'$locationProvider',
-	function($routeProvider,$locationProvider){
-	$routeProvider.
-		when('/organizations/:organizationId/sites',{
-			templateUrl:'partials/siteList',
-			controller:'siteController'
-		});
-    
-    // use the HTML5 History API
-    $locationProvider.html5Mode(true);
-}]);
 
 biinAppSite.controller("siteController",['$scope','$http','$location','$routeParams','categorySrv','gallerySrv',function($scope,$http,$location,$routeParams,categorySrv,gallerySrv){
 
   //Constants
-  $scope.maxMedia=3;
+  $scope.maxMedia=4;
 
   //Init the the sites
   $scope.activeTab=tabDetails;
   $scope.selectedSite = null;
   $scope.selectedBiin = null;
   $scope.currentModelId = null;
-  $scope.organizationId =$routeParams.organizationId;
+  $scope.organizationId = selectedOrganization();
 
   //Draggable Properties
   $scope.dragCategoryIndex =-1;
   $scope.dragGalleryIndex=-1;
 
   //Get the List of Showcases
-  if($routeParams.organizationId){
-    $http.get('/api/organizations/'+ $scope.organizationId+'/sites').success(function(data){
-      if(data.data)
-        $scope.sites = data.data.sites;
-      else
-        $scope.sites=[];
-      $scope.sitePrototype = data.prototypeObj;
-      $scope.sitePrototypeBkp =  $.extend(true, {}, data.prototypeObj);
-      $scope.biinPrototype = data.prototypeObjBiin;
-      $scope.biinPrototypeBkp =  $.extend(true, {}, data.prototypeObjBiin);
+  $http.get('/api/organizations/'+ $scope.organizationId+'/sites').success(function(data){
+    if(data.data)
+      $scope.sites = data.data.sites;
+    else
+      $scope.sites=[];
+    $scope.sitePrototype = data.prototypeObj;
+    $scope.sitePrototypeBkp =  $.extend(true, {}, data.prototypeObj);
+    $scope.biinPrototype = data.prototypeObjBiin;
+    $scope.biinPrototypeBkp =  $.extend(true, {}, data.prototypeObjBiin);
 
-      if($scope.selectedSite == null && $scope.sites && $scope.sites.length>0){
-        //Select the first element
-        $scope.edit(0);  
-      } 
-    });
-
-   $scope.$watch('activeTab', function(newValue, oldValue) {
-      console.log("Change of activeTab old: "+ oldValue+" -  to new: " +newValue);
-       $scope.counter = $scope.counter + 1;
-     });
-  }
+    if($scope.selectedSite == null && $scope.sites && $scope.sites.length>0){
+      //Select the first element
+      $scope.edit(0);  
+    } 
+  });
 
   //Get the List of Categories
   categorySrv.getList().then(function(promise){
     $scope.categories = promise.data.data;    
   });
+
+  //Return the categories of the sites
+  $scope.ownCategories=function(){
+    return $scope.sites[$scope.selectedSite].categories;
+  }
 
   //Get the list of the gallery
   gallerySrv.getList().then(function(promise){
@@ -77,10 +63,16 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     if($scope.sites.indexOf(newObject)>-1)
       $scope.selectedSite=$scope.sites.indexOf(newObject);
     else{
-        $scope.sitePrototype =  $.extend(true, {}, $scope.sitePrototypeBkp);
+        //Get the Mayor from server
+        $http.get('api/organizations/'+$scope.organizationId+"/major").success(function(data,status){
+          $scope.sitePrototype =  $.extend(true, {}, $scope.sitePrototypeBkp);
         $scope.sitePrototype.isNew=true;
+        $scope.sitePrototype.major = data.data;
         $scope.sites.push($scope.sitePrototype);     
+
         $scope.edit($scope.sites.indexOf($scope.sitePrototype)); 
+        });
+
     }
   }
 
@@ -128,18 +120,24 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
   //Create a  new Biin
   $scope.createBiin=function(){
-
-    var newObject = $scope.biinPrototype;
-
-    if($scope.sites[$scope.selectedSite].biins.indexOf(newObject)>-1){
-        $scope.selectedBiin = $scope.sites[$scope.selectedSite].biins.indexOf(newObject);
-    }       
-     else{
+     $http.get("api/organizations/"+$scope.organizationId+"/"+$scope.sites[$scope.selectedSite].identifier+"/minor").success(function(data){
         $scope.biinPrototype=$.extend(true, {}, $scope.biinPrototypeBkp);
         $scope.biinPrototype.isNew=true;
+        
+        if('isNew' in $scope.sites[$scope.selectedSite]){
+          $scope.biinPrototype.major = $scope.sites[$scope.selectedSite].major;
+          $scope.biinPrototype.minor= $scope.sites[$scope.selectedSite].minorCounter;
+          $scope.sites[$scope.selectedSite].minorCounter += data.data;
+        }else
+        {
+          $scope.biinPrototype.major = $scope.sites[$scope.selectedSite].major;
+          $scope.biinPrototype.minor= data.data;
+        }
+        
         $scope.sites[$scope.selectedSite].biins.splice(0,0,$scope.biinPrototype);      
         $scope.editBiin(0);
-     }
+
+     });
   }
 
   //Edit a Biin
@@ -154,6 +152,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.selectedBiin=null;
     $scope.activeTab = tabDetails;
   }
+
   //Categories
 
   //Remove categorie a specific position
@@ -213,43 +212,28 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   ****/
 
   //On gallery change method                
-  $scope.onGalleryChange= function(obj){
+  $scope.onGalleryChange= function(obj,autoInsert){
+    
     //Do a callback logic by caller
-    $scope.galleries = $scope.galleries.concat(obj);;
+    $scope.galleries = $scope.galleries.concat(obj);
     $scope.$digest();
 
     //Insert the images to the preview
-    var cantToInsert=$scope.maxMedia- $scope.sites[$scope.selectedSite].media.length;
-    for(var i=0; i< cantToInsert; i++){
-      $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
+    if(autoInsert){
+      var cantToInsert=$scope.maxMedia- $scope.sites[$scope.selectedSite].media.length;
+      for(var i=0; i< cantToInsert; i++){
+        $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
+      }
     }
-
   }
 
   }]);
-
-// Define the service of categories
-biinAppSite.factory('categorySrv', ['$http', function (async) {
-    return {
-      getList: function () {
-        var promise = async({method:'GET', url:'/api/categories'})
-            .success(function (data, status, headers, config) {
-              return data;
-            })
-            .error(function (data, status, headers, config) {
-              return {"status": false};
-            });
-          
-          return promise;
-      }
-    }
-    }]);
 
 //Define the directives of categories
 biinAppSite.directive('drop',function(){
   return{
     restrict:'A',
-    link:function(scope,element, attrs){       
+    link:function(scope,element){       
       $el = $(element);
 
       $el.droppable({
@@ -274,45 +258,6 @@ biinAppSite.directive('drop',function(){
       
       
     }
-  }
-});
-
-//Define the directives of categories
-biinAppSite.directive('drag',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element, attrs){       
-      $el = $(element);
-    
-      $el.draggable({appendTo: '.colCategories',containment: '.workArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5, 
-        start:function(){          
-            switch(attrs.drag)
-            {
-              case "categories":
-                scope.setDragCategory(scope.$eval(attrs.elementIndex));        
-              break;
-              case "galleries":
-                scope.setDragGallery(scope.$eval(attrs.elementIndex));        
-              break;             
-
-            }
-          }
-        });
-    }
-  }
-});
-
-/****
-    Custom Filters
-****/
-
-//Filter for get the intersection of two list of objects
-biinAppSite.filter("difference",function(){
-  return function intersection(haysTack, needle){
-    //call function in utilities
-    return differenceObjects(haysTack,needle,function(item1,item2){
-      return item1.identifier===item2.identifier;
-    });
   }
 });
 
