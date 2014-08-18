@@ -418,7 +418,18 @@
 
 		//Submit of the login button
 		$("body").on("click touch","#buttonLogin",function(e){
-			$("form.loginForm").submit();
+			loginLogic();
 		});
 
+		//Passwod Enter Key Event
+		$("body").on("keypress","#passwordInput",function(e){
+			if(e.keyCode===13){//The key press enter
+				loginLogic();
+			}
+		});
+
+		//Logic for do the login
+		function loginLogic(){
+			$("form.loginForm").submit();
+		}
 	});
