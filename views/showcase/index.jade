@@ -26,7 +26,7 @@ block content
 										a(ng-click="activeTab='biins'") Biins						
 									li(ng-class="{active:activeTab == 'objects'}")
 										a(ng-click="activeTab='objects'") Elements					
-								.row.workArea.max-height.showcaseWorkArea
+								.row.workArea.max-height.showcaseWorkArea.colAppend
 									.col-md-6.col-sm-6.colPreview.max-height.max-elementWidth-OverFlow
 										button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="saveDetail()") SAVE
 										.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '95%', railVisible:true, wrapperClass:'slimScrollDivContrast'}" slimscroll-obj="showCasePreviewScroll" drop)
@@ -58,7 +58,7 @@ block content
 													textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")
 											#biins.max-height(ng-switch-when='biins')
 												.max-height.col-list
-													.row.elementList(slimscroll slimscroll-option="{height: 'auto', railVisible:true}" droppable-biin)
+													.row.elementList(slimscroll slimscroll-option="{height: 'auto', railVisible:true}")
 														.row(ng-repeat="site in biinSite" ng-if="site.biins.length>0")
 															p {{site.name}}
 															a.col-md2(ng-repeat="biinEl in site.biins")
@@ -74,5 +74,5 @@ block content
 															input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
 														a.col-md1(ng-repeat="element in elements|difference:showcases[selectedShowcase].objects:'objectIdentifier'|filter:queryElements")
 															.moduleWrapperElement
-																	img.imgElementPreview(ng-src="{{element.media[0].imgUrl}}" pending-indicator element-index="{{elements.indexOf(element)}}" draggable-showcase-element)
+																	img.imgElementPreview(ng-src="{{element.media[0].imgUrl}}" pending-indicator element-index="{{elements.indexOf(element)}}" drag="showcaseElement")
 							.animate-switch(ng-if="selectedShowcase==null")				

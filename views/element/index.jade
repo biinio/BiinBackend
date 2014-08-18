@@ -24,9 +24,9 @@ block content
 									li(ng-class="{active:activeTab == 'categories'}")
 										a(ng-click="changeTabTo('categories')") Categories
 									li(ng-class="{active:activeTab == 'gallery'}")
-										a(ng-click="changeTabTo('gallery')") Gallery													
+										a(ng-click="changeTabTo('gallery')") Gallery
 								.row.workArea.max-height(ng-switch='activeTab')
-									.col-md-6.col-sm-6.colPreview.max-height(drop drop-files)
+									.col-md-6.col-sm-6.colPreview.max-height.colAppend(drop drop-files)
 										button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="saveDetail()") SAVE
 										.row.middle-heigth
 											div(droppable-showcase-preview slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="elementPreviewScroll")
