@@ -1,5 +1,7 @@
 #gallery(slimscroll="" slimscroll-option="{height:'auto'}")
 	.row
-		a.col-md1.module(ng-repeat="galleItem in galleries" drag="galleries" element-index="galleries.indexOf(galleItem)" drop-files="autoInsertOff")
+		.col-md1.moduleWrapperElement.searchElements
+			input.form-control.max-width(ng-model="queryGallery" placeholder="Search" autofocus)
+		a.col-md1.module(ng-repeat="galleItem in galleries| filter: queryGallery" drag="galleries" element-index="galleries.indexOf(galleItem)" drop-files="autoInsertOff")
 			.moduleWrapper-inverse
 				img(ng-src="{{galleItem.serverUrl}}" pending-indicator)

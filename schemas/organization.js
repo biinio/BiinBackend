@@ -9,7 +9,13 @@ var orgObj ={
 	title1:{type:String, default:""},
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
-	imgUrl:{type:String , default:""},
+	media:[
+		{
+			title1:{type:String, default:""},
+			title1:{type:String, default:""},
+			imgUrl:{type:String,default:""}
+		}
+	],
 	majorCounter:{type: Number, default:0},
 	sites:[{
 		identifier:{type:String, default:"-1", index:true},
@@ -17,6 +23,9 @@ var orgObj ={
 		organizationIdentifier:{type:String,default:""},
 		majorCounter:{type:Number,default:0},
 		name: {type:String, default:""},
+		title1:{type:String, default:""},
+		title2:{type:String, default:""},	
+		title3:{type:String, default:""},			
 		description: {type:String, default:""},
 		major:{type: Number, default:0},
 		minorCounter:{type: Number, default:0},

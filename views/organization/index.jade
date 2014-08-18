@@ -18,21 +18,27 @@ block content
 										.btn-rounded.center.icon.icon-add-1							
 								a.col-md-1.module(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
 									.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
-										img.img-responsive(ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+										img.img-responsive(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 										.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
 											.icon.icon-bin-2
-					.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null && selectedSite==null")
+					.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null")
 						.animate-switch.max-height
 							ul.workAreaHeader.nav.nav-tabs
-								li.activeTab
-									a Details
-							.row.workArea.showcaseWorkArea.max-height
-								.col-md-6.col-sm-6.colPreview.max-height
-									.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
-										.previewShowcaseWrapper
-											#wrapperOrganization.copperEditor(data-image-src="{{organizations[selectedOrganization].imgUrl}}" image-cropper)
-											input#organizationImage.hidden(ng-model="organizations[selectedOrganization].imgUrl" input-change="")							
-								.col-md-6.col-sm-6.colPreview.max-height
+								li(ng-class="{active:activeTab == 'details'}")
+									a(ng-click="changeTabTo('details')") Details
+								li(ng-class="{active:activeTab == 'gallery'}")
+									a(ng-click="changeTabTo('gallery')") Gallery									
+							.row.workArea.max-height(ng-switch="activeTab" drop-files)
+								.col-md-6.col-sm-6.colPreview.max-height.colAppend(drop)
+									.row.max-height
+										button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="save()") SAVE
+										.div(slimscroll="" slimscroll-option="{height:'90%'}")
+											a.col-md-1.module(ng-repeat="item in organizations[selectedOrganization].media")
+												.moduleWrapper.moduleWrapper-inverse.contentHideButtons
+													img.img-responsive(ng-src="{{item.imgUrl}}" pending-indicator)
+													.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(organizations[selectedOrganization].media.indexOf(item))")
+														.icon.icon-bin-2
+								.col-md-6.col-sm-6.colPreview.max-height(ng-switch-when='details')
 									.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
 										.row
 											label Name:
@@ -52,29 +58,6 @@ block content
 											p {{organizations[selectedOrganization].identifier}}												
 										.row
 											button.form-group.btn.btn-default.form-control(ng-click="save()") SAVE																	
-					.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null && selectedSite!=null")
-						.animate-switch.max-height
-							.row
-								ul.workAreaHeader.nav.nav-tabs
-									li(ng-class="{active:activeTabBiins == 'details'}")
-										a(ng-click="activeTabBiins='details'") Details
-									li(ng-class="{active:activeTabBiins == 'biins'}")
-										a(ng-click="activeTabBiins='biins'") Biins					
-							.row.workArea.max-height.showcaseWorkArea
-								.col-md-6.col-sm-6.colPreview.max-height
-									button.form-group.btn.btn-default.form-control(ng-click="save()") SAVE
-									.mainWrapperShowcase
-										.mediaImage(ng-repeat="siteMedia in organizations[selectedOrganization].sites[selectedSite].media")
-											img(ng-src="siteMedia.imgUrl" pending-indicator)
-										.dropImageMedia.center(ng-repeat="it in mediaMissing()")
-											p drop media here {{it}}
-								.col-md-6.col-sm-6.colPreview.max-height
-									.mainWrapperShowcase
-										.row
-											label Name:
-										.row
-											input.form-control( ng-model="organizations[selectedOrganization].sites[selectedSite].name")
-										.row
-											label Description:
-										.row
-											input.form-control( ng-model="organizations[selectedOrganization].sites[selectedSite].description")									
+								//Gallery Tab
+								.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery')
+									include ../_partials/galleryWidget							

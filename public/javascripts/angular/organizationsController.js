@@ -1,9 +1,9 @@
-var biinAppOrganization= angular.module('biinAppOrganizations',['ngRoute','ui.slimscroll','naturalSort']);
+var biinAppOrganization= angular.module('biinAppOrganizations',['ngRoute','ui.slimscroll','naturalSort','biin.services']);
 
-var organizationsCropper=null;
-
-biinAppOrganization.controller("organizationsController",['$scope','$http','$location',function($scope,$http,$location){
+biinAppOrganization.controller("organizationsController",['$scope','$http','$location','gallerySrv',function($scope,$http,$location,gallerySrv){
+  $scope.maxMedia =4;
   $scope.selectedOrganization = null;
+  $scope.activeTab ='details';
 
   //Get the List of Objects
   $http.get('api/organizations').success(function(data){
@@ -45,8 +45,6 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
       $scope.selectedOrganization =null;
       $scope.currentModelId =null;
 
-      //Remove the cropper
-      removeCropper();
     }
     if('isNew' in $scope.organizations[index] ){
       //remov of the Organization
@@ -64,24 +62,23 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
     }
   }
 
+  //Change tab to a specific section
+  $scope.changeTabTo= function(tabToChange){
+    $scope.activeTab = tabToChange;
+  }
+
   //Edit an organization
   $scope.edit = function(index){
     $scope.selectedOrganization = index;
     $scope.currentModelId = $scope.organizations[index].identifier;
-    //Remove the cropper
-    removeCropper();
 
-    //Instanciate cropper
-    organizationsCropper= createOrganizationsCropper("wrapperOrganization");
-    var imgUrl = $scope.organizations[index].imgUrl;
-    organizationsCropper.preInitImage(imgUrl);
 
     if('isNew' in $scope.organizations[index])
       clearSelectedOrganization();
     else
       setOrganization();
   } 
-
+  
   //Save the organization model
   $scope.save= function(){
       var organizationModel = $scope.organizations[$scope.selectedOrganization];
@@ -99,15 +96,54 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
     });     
   }
 
-   //Others
+  //Set the gallery index when start draggin
+  $scope.setDragGallery=function(scopeIndex){
+    $scope.dragGalleryIndex= scopeIndex;
+  }
 
-   //Remove the current cropper
-   removeCropper= function(){
-      if(organizationsCropper !=null){
-        organizationsCropper.destroy();
-        organizationsCropper = null;
-      }
-   }
+  //Insert a gallery item to the organization
+  $scope.insertGalleryItem = function(index){
+
+    if($scope.organizations[$scope.selectedOrganization].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index]){
+
+      var newObj = {};
+      newObj.identifier = $scope.galleries[index].identifier;
+      newObj.imgUrl = $scope.galleries[index].serverUrl;
+      $scope.organizations[$scope.selectedOrganization].media.push(newObj);  
+
+      //Apply the changes
+      $scope.$digest();
+      $scope.$apply();    
+    }
+
+  } 
+
+  //Remove the media object at specific index
+  $scope.removeMediaAt=function(index){
+    if($scope.organizations[$scope.selectedOrganization].media.length>=index)
+      $scope.organizations[$scope.selectedOrganization].media.splice(index,1)
+  }
+
+  //Get the list of the gallery
+  gallerySrv.getList().then(function(promise){
+    $scope.galleries= promise.data;
+  });
+
+  //On gallery change method                
+  $scope.onGalleryChange= function(obj,autoInsert){
+    //Do a callback logic by caller
+    $scope.galleries = $scope.galleries.concat(obj);;
+    $scope.$digest();
+
+    if(autoInsert)
+    {
+      //Insert the images to the preview
+      var cantToInsert=$scope.maxMedia- $scope.galleries[$scope.selectedOrganization].media.length;
+      for(var i=0; i< cantToInsert; i++){
+        $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
+      }      
+    }
+  }
 
    /*-----------------------------------------------------
    /* Sites Functionality
@@ -128,34 +164,5 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
   }
 
   }]);
-
-  //Change of image directive
-  biinAppOrganization.directive('inputChange',function(){
-    return{
-      restrict:'A',
-      link:function(scope,element){       
-        $el = $(element);
-         $el.on('change',function(e){
-            var index =scope.selectedOrganization;
-            scope.organizations[index].imgUrl= $el.val();
-            scope.$digest();
-            scope.$apply();
-         });
-      }
-    }
-  });
-
-  //Define the Directives
-  biinAppOrganization.directive('imageCropper',function(){
-    return{
-      restrict:'A',
-      link:function(scope,element){       
-         organizationsCropper= createOrganizationsCropper(element[0].attributes["id"].value);
-         var index =scope.selectedOrganization;
-         var imgUrl = scope.organizations[index].imgUrl;
-         organizationsCropper.preInitImage(imgUrl);
-      }
-    }
-  });
 
 

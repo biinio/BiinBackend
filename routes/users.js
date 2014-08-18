@@ -36,6 +36,12 @@ module.exports = function(db){
 		res.render('user/create',req.user);	
 	}
 
+	//Logout the user
+	functions.logout = function(req,res){
+		req.session.destroy();
+		req.logout();
+		res.redirect('/');
+	}
 	return functions;
 }
 

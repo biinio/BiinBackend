@@ -1,4 +1,4 @@
-var biinAppGallery = angular.module('biinAppGallery',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.galleryService']);
+var biinAppGallery = angular.module('biinAppGallery',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services']);
 
 biinAppGallery.controller("galleryController",['$scope', '$http',function($scope,$http){
   $scope.newObjects=[];

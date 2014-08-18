@@ -4,7 +4,7 @@ var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectru
 biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv',function($scope,$http,categorySrv,gallerySrv){
   
   //Constants
-  $scope.maxMedia=1;
+  $scope.maxMedia=3;
 
   //Draggable Properties
   $scope.dragCategoryIndex =-1;
@@ -130,6 +130,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.elements[$scope.selectedElement].categories.splice(scopeIndex,1);
   }
 
+  //Gallery Media Images
+
   //Insert a gallery item to site
   $scope.insertGalleryItem = function(index){
     if($scope.elements[$scope.selectedElement].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index]){
@@ -149,8 +151,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     if($scope.elements[$scope.selectedElement].media.length>=index)
       $scope.elements[$scope.selectedElement].media.splice(index,1)
   }
-
-
 
   //Get the list of the gallery
   gallerySrv.getList().then(function(promise){
@@ -187,38 +187,6 @@ biinAppObjects.directive('inputChange',function(){
           scope.$digest();
           scope.$apply();
        });
-    }
-  }
-});
-
-//Define the directives of categories
-biinAppObjects.directive('drop',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element, attrs){       
-      $el = $(element);
-
-      $el.droppable({
-        drop:function(event,ui){
-
-          switch(ui.draggable[0].attributes["drag"].value){
-            //scope insert of the category
-            case "categories":
-              //Todo put the logic for add the category
-              scope.insertCategory(scope.dragCategoryIndex);            
-              break;
-            case "galleries":
-              //Todo put the logic for add the gallery
-              scope.insertGalleryItem(scope.dragGalleryIndex);            
-              break;
-          }
-        },
-        over:function(event,ui){
-          $el.next(".dropColumn").addClass('hide');
-        }
-      })
-      
-      
     }
   }
 });

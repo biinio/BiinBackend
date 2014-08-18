@@ -59,12 +59,9 @@ module.exports = function () {
 		delete model._id;
 		
 		//Remove the id of the new biins
-
-		console.log("for of biins: "+model.biins.length);
 		for(var b =0; b< model.biins.length; b++){
 			if('isNew' in model.biins[b]){
-				delete model.biins[b]._id;
-				console.log("remove the _id of: " + util.inspect(model.biins[b],{depth:true}));
+				delete model.biins[b]._id;	
 			}
 		}
 
@@ -120,7 +117,7 @@ module.exports = function () {
 	                   );
 			}				
 		}
-	}
+	}	
 
 	//DELETE an specific site
 	functions.delete= function(req,res){
@@ -138,12 +135,10 @@ module.exports = function () {
 	//Other methods
 	getOganization = function(req, res, callback){
 		var identifier=req.param("identifier");
-		console.log("executing the callback");
 
 		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true, pointers:true},function (err, data) {
 
 			if(err){
-				console.log("There was an error");
 				throw err;
 			}
 

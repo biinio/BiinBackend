@@ -229,35 +229,3 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
   }]);
 
-//Define the directives of categories
-biinAppSite.directive('drop',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element){       
-      $el = $(element);
-
-      $el.droppable({
-        drop:function(event,ui){
-
-          switch(ui.draggable[0].attributes["drag"].value){
-            //scope insert of the category
-            case "categories":
-              //Todo put the logic for add the category
-              scope.insertCategory(scope.dragCategoryIndex);            
-              break;
-            case "galleries":
-              //Todo put the logic for add the gallery
-              scope.insertGalleryItem(scope.dragGalleryIndex);            
-              break;
-          }
-        },
-        over:function(event,ui){
-          $el.next(".dropColumn").addClass('hide');
-        }
-      })
-      
-      
-    }
-  }
-});
-

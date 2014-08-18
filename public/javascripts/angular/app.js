@@ -144,7 +144,7 @@ biinServicesModule.directive('drag',function(){
     link:function(scope,element, attrs){       
       $el = $(element);
     
-      $el.draggable({appendTo: '.colCategories',containment: '.workArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5, 
+      $el.draggable({appendTo: '.colAppend',containment: '.workArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5, 
         start:function(){          
             switch(attrs.drag)
             {
@@ -153,11 +153,56 @@ biinServicesModule.directive('drag',function(){
               break;
               case "galleries":
                 scope.setDragGallery(scope.$eval(attrs.elementIndex));        
-              break;             
+                break;
+              case "showcaseElement":
+                scope.setDragElement(scope.$eval(attrs.elementIndex));
+                break;             
 
             }
           }
         });
+    }
+  }
+});
+
+//Define the drop system
+biinServicesModule.directive('drop',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){       
+      $el = $(element);
+
+      $el.droppable({
+
+        //Drop function
+        drop:function(event,ui){
+
+          switch(ui.draggable[0].attributes["drag"].value){
+            //scope insert of the category
+            case "categories":
+              //Todo put the logic for add the category
+              scope.insertCategory(scope.dragCategoryIndex);            
+              break;
+            case "galleries":
+              //Todo put the logic for add the gallery
+              scope.insertGalleryItem(scope.dragGalleryIndex);            
+              break;
+            case "showcaseElement":
+              var dragPosition = scope.$eval(attrs.elementPosition);
+              scope.insertElementAfter(scope.dragElementIndex,dragPosition);
+              $(element).next(".dropColumn").addClass('hide');                          
+              break;
+          }
+        },
+        over:function(event,ui){
+          $el.next(".dropColumn").addClass('hide');
+        },
+        out:function(event,ui){
+          //Set the logic for the out when the mouse over is lost
+        }
+      })
+      
+      
     }
   }
 });
@@ -176,10 +221,9 @@ biinServicesModule.factory('categorySrv', ['$http', function (async) {
           
           return promise;
       }
+
     }
     }]);
-
-
 //Custom Filters
 
 //Filter for get the intersection of two list of objects
@@ -191,4 +235,3 @@ biinServicesModule.filter("difference",function(){
     });
   }
 });
-

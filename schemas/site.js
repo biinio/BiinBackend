@@ -7,6 +7,9 @@ var siteObj ={
 	organizationIdentifier:{type:String,default:""},
 	majorCounter:{type:Number,default:0},
 	name: {type:String, default:""},
+	title1:{type:String, default:""},
+	title2:{type:String, default:""},	
+	title3:{type:String, default:""},	
 	description: {type:String, default:""},
 	major:{type: Number, default:0},
 	minorCounter:{type: Number, default:0},
@@ -21,7 +24,7 @@ var siteObj ={
 	media:[
 		{
 			title1:{type:String, default:""},
-			title1:{type:String, default:""},
+			title2:{type:String, default:""},
 			imgUrl:{type:String,default:""}
 		}
 	],

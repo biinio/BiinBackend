@@ -275,20 +275,6 @@ biinAppShowCases.directive('inputChange',function(){
   }
 });
 
-//Dragable elements 
-biinAppShowCases.directive('draggableShowcaseElement',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element,attrs){ 
-      $(element).draggable({appendTo: '.colOptions',containment: '.showcaseWorkArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5,
-        start:function(){          
-          scope.setDragElement(scope.$eval(attrs.elementIndex));        
-        }
-      });
-    }
-  }
-});  
-
 //Dropable zones in showcase
 biinAppShowCases.directive('drop',function(){
   return{
@@ -317,27 +303,6 @@ biinAppShowCases.directive('drop',function(){
         $(element).next(".dropColumn").addClass('hide');
       }
     });
-    }
-  }
-});  
-
-//Dropable zones in showcase
-biinAppShowCases.directive('droppableShowcasePreview',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element,attrs){
-        $(element).droppable({
-        drop: function( event, ui ) {
-          scope.insertElementAfter(scope.dragElementIndex,0);
-          $(".dropColumn:first",".previewShowcaseElements").addClass('hide');  
-        },
-        over:function( event, ui ){
-          $(".dropColumn:first",".previewShowcaseElements").removeClass('hide');
-        },
-        out:function( event, ui ){
-          $(".dropColumn:first",".previewShowcaseElements").addClass('hide');
-        }
-      });
     }
   }
 });  

@@ -34,8 +34,8 @@ block content
 										li(ng-class="{active:activeTab == 'gallery'}")
 											a(ng-click="changeTabTo('gallery')") Gallery													
 								//Details Tab
-								.row.workArea.max-height(ng-switch='activeTab')
-									.col-md-6.col-sm-6.colPreview.max-height(drop drop-files)
+								.row.workArea.max-height.colAppend(ng-switch='activeTab' drop-files)
+									.col-md-6.col-sm-6.colPreview.max-height(drop)
 										//The media objects goes here
 										.row.middle-heigth
 											button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="save()") SAVE
@@ -76,7 +76,19 @@ block content
 											.row
 												label Name:
 											.row
-												input.form-control( ng-model="sites[selectedSite].name")
+												input.form-control( ng-model="sites[selectedSite].name")											
+											.row
+												label Title 1:
+											.row
+												input.form-control( ng-model="sites[selectedSite].title1")												
+											.row
+												label Title 2:
+											.row
+												input.form-control( ng-model="sites[selectedSite].title2")												
+											.row
+												label Title 3:
+											.row
+												input.form-control( ng-model="sites[selectedSite].title3")																								
 											.row
 												label Description:
 											.row
