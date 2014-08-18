@@ -259,6 +259,7 @@ biinAppShowCases.factory("biinSrv",['$http',function(async){
     }  
 }]);
 
+//This a change in development
 //Change of image directive
 biinAppShowCases.directive('inputChange',function(){
   return{
