@@ -1,4 +1,4 @@
-module.exports = function (db) {
+module.exports = function () {
     var express = require('express');
     var MongoStore = require('connect-mongo')(express);
     var passport = require('./auth');
@@ -55,7 +55,7 @@ module.exports = function (db) {
     }
 
     //Force SSL Configuration
-    app.use(forceSsl);
+    //app.use(forceSsl);
 
     // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
