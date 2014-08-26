@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //var fs= require('fs'), https = require('https');
-var debug = require('debug')('BinnCMS'),
+var debug = require('debug')('BinnCMS');
 	//db=require('../biin_modules/db');
 	//app = require('../biin_modules/app')(db);
 
