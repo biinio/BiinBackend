@@ -23,8 +23,8 @@ var siteObj ={
 	],
 	media:[
 		{
+			identifier:{type:String, default:""},
 			title1:{type:String, default:""},
-			title2:{type:String, default:""},
 			imgUrl:{type:String,default:""}
 		}
 	],

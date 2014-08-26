@@ -2,7 +2,9 @@ module.exports = function (db) {
     var express = require('express');
     var MongoStore = require('connect-mongo')(express);
     var passport = require('./auth');
+    var fs = require('fs');
     var http = require('http');
+    var https = require('https');
     var path = require('path');
     var app = express();
     var favicon = require('static-favicon');
@@ -20,6 +22,16 @@ module.exports = function (db) {
     // At the top of your web.js
     process.env.PWD = process.cwd()
 
+    //SSL Force Confifuration
+    var forceSsl = function (req, res, next) {
+        console.log("The header is: "+req.secure);
+        if (!req.secure) {
+            return res.redirect(['https://', req.get('Host'), req.url].join(''));
+        } else {
+            next();
+        }
+    };
+
 
     // Less configuration
     if(isDevelopment)
@@ -29,6 +41,8 @@ module.exports = function (db) {
             compress:false
         });
     else
+    {
+        //Less middleware use in production
         app.use(lessMiddleware(path.join(process.env.PWD , 'public')),{
             force:false,
             debug:false,
@@ -36,6 +50,12 @@ module.exports = function (db) {
             compress:true
         });
 
+        //SSL configuration
+
+    }
+
+    //Force SSL Configuration
+    app.use(forceSsl);
 
     // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname

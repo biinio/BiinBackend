@@ -275,38 +275,6 @@ biinAppShowCases.directive('inputChange',function(){
   }
 });
 
-//Dropable zones in showcase
-biinAppShowCases.directive('drop',function(){
-  return{
-    restrict:'A',
-    link:function(scope,element,attrs){
-      $(element).droppable({
-      drop: function( event, ui ) {
-        var dragPosition = scope.$eval(attrs.elementPosition);
-        scope.insertElementAfter(scope.dragElementIndex,dragPosition);
-        $(element).next(".dropColumn").addClass('hide');              
-      },
-      over:function( event, ui ){
-
-        $(element).next(".dropColumn").removeClass('hide');
-
-      /*var moveScrollTo =$(element).offset().top-20;
-      console.log(moveScrollTo);
-      $(element).closest("[slimscroll]").slimscroll({ scrollTo: moveScrollTo+"px" });
-        var moveScrollTo =$(element).offset().top+200;
-        console.log(moveScrollTo);
-        //Scroll to the element
-        $(element).closest("[slimscroll]").slimscroll({ scrollTo: moveScrollTo+"px" });
-      */
-      },
-      out:function( event, ui ){
-        $(element).next(".dropColumn").addClass('hide');
-      }
-    });
-    }
-  }
-});  
-
 /****
     Custom Filters
 ****/

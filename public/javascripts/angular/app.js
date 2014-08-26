@@ -189,6 +189,8 @@ biinServicesModule.directive('drop',function(){
               break;
             case "showcaseElement":
               var dragPosition = scope.$eval(attrs.elementPosition);
+              if(!dragPosition)
+                dragPosition=0;
               scope.insertElementAfter(scope.dragElementIndex,dragPosition);
               $(element).next(".dropColumn").addClass('hide');                          
               break;

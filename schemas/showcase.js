@@ -38,7 +38,7 @@ var showcaseObj={
 				],
 			media:[
 				{
-					title1:{type:String, default:""},
+					identifier:{type:String, default:""},
 					title1:{type:String, default:""},
 					imgUrl:{type:String,default:""}
 				}
