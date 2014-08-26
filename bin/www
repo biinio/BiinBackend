@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //var fs= require('fs'), https = require('https');
 var debug = require('debug')('BinnCMS'),
-	db=require('../biin_modules/db'),
+	db=require('../biin_modules/db');
 	//app = require('../biin_modules/app')(db);
 
 //app.set('port', process.env.PORT || 3000);
@@ -18,4 +18,4 @@ var server = https.createServer(credentials,app).listen(app.get('port'),function
 /*var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });*/
-//console.log("all is ready");
+console.log("all is ready");
