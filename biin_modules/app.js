@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function (db) {
     var express = require('express');
     var MongoStore = require('connect-mongo')(express);
     var passport = require('./auth');
