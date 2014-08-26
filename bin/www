@@ -7,15 +7,14 @@ var debug = require('debug')('BinnCMS'),
 app.set('port', process.env.PORT || 3000);
 
 //Https credentials
-var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+/*var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
 var certificate = fs.readFileSync('sslcert/combined.crt', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 
 var server = https.createServer(credentials,app).listen(app.get('port'),function(){
 	debug('Express server listening on port ' + server.address().port);	
-});
+});*/
 
-/*
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
-});*/
+});
