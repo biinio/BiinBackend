@@ -26,7 +26,8 @@
     "connect-multiparty": "^1.0.3",
     "moment": "^2.7.0",
     "less": "^1.7.3",
-    "less-middleware": "^1.0.3"
+    "less-middleware": "^1.0.3",
+    "underscore": "^1.6.0"
   },
   "engines": {
     "node": "0.10.26",
