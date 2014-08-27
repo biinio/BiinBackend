@@ -6,7 +6,7 @@ var debug = require('debug')('BinnCMS'),
 
 var httpPort = process.env.PORT || 3000;
 
-var httpsPort =  process.env.NODE_ENV=== 'development' ? 8443: 443;
+var httpsPort = 8443;
 app.set('port',httpPort);
 
 //Https credentials
