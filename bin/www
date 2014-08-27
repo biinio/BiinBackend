@@ -43,6 +43,10 @@ var options = {
   cert: certificate
 };
 
-https.createServer(options, app).listen(process.env.PORT, function () {
-  console.log("Express server listening on port " + app.get('port'));
-});
+// Create a service (the app object is just a callback).
+var app = express();
+
+// Create an HTTP service.
+http.createServer(app).listen(80);
+// Create an HTTPS service identical to the HTTP service.
+https.createServer(options, app).listen(443);
