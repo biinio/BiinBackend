@@ -19,14 +19,16 @@ module.exports = function (db) {
     var methodOverride = require('method-override')
 
     //Define local vars
+    console.log("The validation of is development");
     var isDevelopment = app.get('env') === 'development';
+
+    console.log("The enviroment is: " + app.get('env'));
 
     // At the top of your web.js
     process.env.PWD = process.cwd()
 
     //SSL Force Confifuration
     var forceSsl = function (req, res, next) {
-        console.log("The header is: "+req.secure);
         if (!req.secure) {
             return res.redirect(['https://', req.get('Host'), req.url].join(''));
         } else {
@@ -37,7 +39,7 @@ module.exports = function (db) {
 
     // Less configuration
     if(isDevelopment){
-        console.log("========***********************Is development enviroment")
+        console.log("========***********************Is development enviroment");
         app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:true,
             debug:true,
@@ -46,7 +48,7 @@ module.exports = function (db) {
     }
     else
     {
-        console.log("========***********************Is production enviroment")
+        console.log("========***********************Is production enviroment");
         //Less middleware use in production
         app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:false,
