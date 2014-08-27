@@ -36,14 +36,17 @@ module.exports = function (db) {
 
 
     // Less configuration
-    if(isDevelopment)
+    if(isDevelopment){
+        console.log("========***********************Is development enviroment")
         app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:true,
             debug:true,
             compress:false
         }));
+    }
     else
     {
+        console.log("========***********************Is production enviroment")
         //Less middleware use in production
         app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:false,
@@ -52,10 +55,10 @@ module.exports = function (db) {
             compress:true
         }));
 
-        //SSL configuration
-        app.enable('trust proxy');
-        app.use(forceSsl);
     }
+    //SSL configuration
+    app.enable('trust proxy');
+    app.use(forceSsl);
 
     // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
