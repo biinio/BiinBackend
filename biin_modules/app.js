@@ -19,7 +19,6 @@ module.exports = function (db) {
     var methodOverride = require('method-override')
 
     //Define local vars
-    console.log("The validation of is development");
     var isDevelopment = process.env.NODE_ENV === 'development';
 
     // At the top of your web.js
@@ -37,7 +36,6 @@ module.exports = function (db) {
 
     // Less configuration
     if(isDevelopment){
-        console.log("========***********************Is development enviroment");
         app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:true,
             debug:true,
@@ -46,7 +44,6 @@ module.exports = function (db) {
     }
     else
     {
-        console.log("========***********************Is production enviroment");
         //Less middleware use in production
         app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:false,
@@ -55,10 +52,10 @@ module.exports = function (db) {
             compress:true
         }));
 
+        //SSL configuration
+        app.enable('trust proxy');
+        app.use(forceSsl);
     }
-    //SSL configuration
-    app.enable('trust proxy');
-    app.use(forceSsl);
 
     // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
