@@ -20,9 +20,7 @@ module.exports = function (db) {
 
     //Define local vars
     console.log("The validation of is development");
-    var isDevelopment = app.get('env') === 'development';
-
-    console.log("The enviroment is: " + app.get('env'));
+    var isDevelopment = process.env.NODE_ENV === 'development';
 
     // At the top of your web.js
     process.env.PWD = process.cwd()
