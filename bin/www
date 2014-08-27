@@ -26,10 +26,14 @@ var https = require('https');
 var fs = require('fs');
 var express = require("express");
 
+var debug = require('debug')('BinnCMS');
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
-app.use(express.logger());
+var httpPort = process.env.PORT || 3000;
+var httpsPort =  app.get('env')=== 'development' ? 8443: 443;
+app.set('port',httpPort);
+
+//app.use(express.logger());
 
 app.get('/', function(request, response) {
   response.send('Hello World 2!');
@@ -43,10 +47,37 @@ var options = {
   cert: certificate
 };
 
-// Create a service (the app object is just a callback).
-var app = express();
+console.log("The app context is: "+ app.get('env'));
 
-// Create an HTTP service.
-http.createServer(app).listen(80);
-// Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(443);
+/*app.listen = function(){
+	  var server = http.createServer(this);
+	  return server.listen.apply(server, options);
+	};	
+*/	
+
+/*var server = app.listen(app.get('port'), function() {
+	console.log("Listen in the port: " + server.address().port);
+  	debug('Express server listening on port ' + server.address().port);
+  	var server = https.createServer(this,options);
+  	return server.listen.apply(server, arguments);
+});*/
+
+/*app.listen = function(){
+  var server = https.createServer(options,this);
+  return server.listen.apply(server, arguments);
+};*/
+
+
+var httpServer = http.createServer(app).listen(httpPort,function(){
+	console.log("Listing server");
+});
+
+var httpsServer=https.createServer(options, app).listen(httpsPort,function(){
+	console.log("Listing https server");
+});
+
+/*var server = app.listen(app.get('port'), function() {
+	console.log("Listen in the port: " + server.address().port);
+  	debug('Express server listening on port ' + server.address().port);
+});
+*/
