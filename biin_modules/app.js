@@ -1,6 +1,7 @@
 module.exports = function (db) {
     var express = require('express');
-    var MongoStore = require('connect-mongo')(express);
+    var session = require('express-session')
+    var MongoStore = require('connect-mongo')(session);
     var passport = require('./auth');
     var fs = require('fs');
     var http = require('http');
@@ -15,6 +16,7 @@ module.exports = function (db) {
     var multipart = require('connect-multiparty');
     var multipartMiddleware = multipart();
     var lessMiddleware = require('less-middleware');
+    var methodOverride = require('method-override')
 
     //Define local vars
     var isDevelopment = app.get('env') === 'development';
@@ -35,28 +37,25 @@ module.exports = function (db) {
 
     // Less configuration
     if(isDevelopment)
-        app.use(lessMiddleware(path.join(process.env.PWD , 'public')),{
+        app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:true,
             debug:true,
             compress:false
-        });
+        }));
     else
     {
         //Less middleware use in production
-        app.use(lessMiddleware(path.join(process.env.PWD , 'public')),{
+        app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:false,
             debug:false,
             once:true,//Set to compile once when the application start
             compress:true
-        });
+        }));
 
         //SSL configuration
-
+        app.enable('trust proxy');
+        app.use(forceSsl);
     }
-
-    //Force SSL Configuration
-    app.enable('trust proxy');
-    //app.use(forceSsl);
 
     // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
@@ -69,7 +68,7 @@ module.exports = function (db) {
     app.use(logger('dev'));
     app.use(bodyParser.urlencoded());
     app.use(cookieParser());
-    app.use(express.session({
+    app.use(session({
         secret: 'ludusy secret',
         store: new MongoStore({
             mongoose_connection: db
@@ -80,15 +79,12 @@ module.exports = function (db) {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(bodyParser.json());
-    app.use(express.methodOverride());
+    app.use(methodOverride('X-HTTP-Method-Override'));
 
     app.use(function (req, res, next) {
         res.set('X-Powered-By', 'Ludusy');
         next();
     });
-
-    //Application Routes
-    app.use(app.router);
     
     //Routes
     var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
