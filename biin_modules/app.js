@@ -55,6 +55,7 @@ module.exports = function (db) {
     }
 
     //Force SSL Configuration
+    app.enable('trust proxy');
     //app.use(forceSsl);
 
     // View engine setup
