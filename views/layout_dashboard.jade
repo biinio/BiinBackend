@@ -51,6 +51,9 @@ html
                         li
                           a(href="" data-org-link="/organizations/{0}/elements") OBJECTS    
                             i.fa.fa-angle-right.angle-icon-sidebar
+                        li
+                          a(href="" data-org-link="/organizations/{0}/gallery") GALLERY
+                            i.fa.fa-angle-right.angle-icon-sidebar                                                                       
                 else
                     ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
                         li
@@ -64,9 +67,9 @@ html
                         li
                           a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements") OBJECTS    
                             i.fa.fa-angle-right.angle-icon-sidebar
-            li
-              a(href="/gallery") GALLERY
-                i.fa.fa-angle-right.angle-icon-sidebar                                       
+                        li
+                          a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") GALLERY
+                            i.fa.fa-angle-right.angle-icon-sidebar                                       
             li
               a(href="/errors") ERRORS              
                         i.fa.fa-angle-right.angle-icon-sidebar            

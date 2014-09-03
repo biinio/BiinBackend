@@ -125,8 +125,8 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
   }
 
   //Get the list of the gallery
-  gallerySrv.getList().then(function(promise){
-    $scope.galleries= promise.data;
+  gallerySrv.getList($scope.currentModelId).then(function(promise){
+    $scope.galleries= promise.data.data;
   });
 
   //On gallery change method                

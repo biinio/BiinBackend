@@ -4,10 +4,10 @@ var biinServicesModule= angular.module('biin.services',[]);
 //Image Services
 biinServicesModule.factory('gallerySrv', ['$http', function (async) {
     return {
-      getList: function () {
-        var promise = async({method:'GET', url:'api/gallery/list'})
+      getList: function (organization) {
+        var promise = async({method:'GET', url:'api/organizations/'+organization+'/gallery'})
             .success(function (data, status, headers, config) {
-              return data;
+              return data.data;
             })
             .error(function (data, status, headers, config) {
               return {"status": false};
@@ -101,7 +101,8 @@ biinServicesModule.directive("dropFiles", function(){
 
             // now post a new XHR request
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'api/gallery/upload');
+
+            xhr.open('POST', 'api/organizations/'+scope.organizationId+'/gallery');
             xhr.onload = function (data) {
               if (xhr.status === 200) {
                 var obj= $.parseJSON(xhr.response);

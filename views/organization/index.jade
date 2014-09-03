@@ -55,9 +55,7 @@ block content
 										.row(ng-if="!organizations[selectedOrganization].isNew")
 											label UUIID
 										.row(ng-if="!organizations[selectedOrganization].isNew")
-											p {{organizations[selectedOrganization].identifier}}												
-										.row
-											button.form-group.btn.btn-default.form-control(ng-click="save()") SAVE																	
+											p {{organizations[selectedOrganization].identifier}}																	
 								//Gallery Tab
 								.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery')
 									include ../_partials/galleryWidget							

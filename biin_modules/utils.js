@@ -34,7 +34,18 @@ module.exports = function(){
     //Uploads File to FTP
     functions.FTPUpload= function(localPath,remotePath,callback){
         //FTP Instance
-        ftp = new JSFtp({ host: process.env.FTP_HOST,
+        ftp = functions.getFTPConn();
+
+        ftp.put(localPath,remotePath,callback);
+    }
+    
+   //Misselanious Properties
+    functions.get ={};
+
+    //Misselanious Properties
+    functions.get.FTPConn = function(){
+      //FTP Instance
+      var  ftp = new JSFtp({ host: process.env.FTP_HOST,
                 port: process.env.FTP_PORT,
                 user:process.env.FTP_USER,
                 pass:process.env.FTP_PASS,
@@ -46,11 +57,8 @@ module.exports = function(){
            console.log(JSON.stringify(data, null, 2));
         });     
 
-        ftp.put(localPath,remotePath,callback);
+        return ftp;
     }
-
-    //Misselanious Properties
-    functions.get ={};
 
     functions.get.majorIncrement =function(){
       return 10;

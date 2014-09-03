@@ -56,7 +56,16 @@ var orgObj ={
 				showcaseAsigned:{type:String, Default:""}
 			}
 		]
-	}]
+	}],
+	gallery:[{
+				identifier:{type:String, index:true, default:"-1"},
+				accountIdentifier:{type:String,default:""},
+				originalName:{type:String, default:""},
+				localUrl:{type:String, default:""},
+				serverUrl:{type:String, default:""},
+				dateUploaded:{type:String, default:""},
+				url:{type:String,default:""}
+			}]
 }
 
 var orgSchema = new Schema(orgObj);

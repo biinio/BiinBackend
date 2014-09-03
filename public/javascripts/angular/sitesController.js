@@ -1,7 +1,6 @@
 var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services']);
 
 var tabBiin="biins", tabDetails="details";
-var organizationsCropper=null
 
 biinAppSite.controller("siteController",['$scope','$http','$location','$routeParams','categorySrv','gallerySrv',function($scope,$http,$location,$routeParams,categorySrv,gallerySrv){
 
@@ -47,8 +46,8 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   }
 
   //Get the list of the gallery
-  gallerySrv.getList().then(function(promise){
-    $scope.galleries= promise.data;
+  gallerySrv.getList($scope.organizationId).then(function(promise){
+    $scope.galleries= promise.data.data;
   });
 
   //Chante the tab selected

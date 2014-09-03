@@ -47,7 +47,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.delete);
     app.get('/api/organizations/:identifier/showcases',showcases.list);
 
-    //Sites of a Organizations
+    //Biins routes
     app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
 
     //Sites routes
@@ -79,9 +79,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/regions/:region/biins',biins.listJson);
 
     //Gallery Routes
-    app.get('/gallery', gallery.index);
-    app.get('/api/gallery/list',gallery.list);
-    app.post('/api/gallery/upload', multipartMiddleware,gallery.upload);
+    app.get('/organizations/:identifier/gallery', gallery.index);
+    app.get('/api/organizations/:identifier/gallery',gallery.list);
+    app.post('/api/organizations/:identifier/gallery', multipartMiddleware,gallery.upload);
 
     //Utilities Routes
     app.get('/errors',errors.index);

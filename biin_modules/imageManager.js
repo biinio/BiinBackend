@@ -118,5 +118,9 @@ module.exports = function(){
        utils.FTPUpload(localPath,remotePath,callback);
     }
 
+    functions.copyPackToFTP = function(gallery, callback){
+    	utils.FTPUpload(gallery,callback)
+    }
+
 	return functions;
 }

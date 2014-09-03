@@ -96,7 +96,6 @@ module.exports = function () {
 
 				var set = {};
 
-
 				for (var field in model) {
 				  set['sites.$.' + field] = model[field];
 				}

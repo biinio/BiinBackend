@@ -11,12 +11,12 @@ block content
 					.row.middle-heigth
 						a.col-md-1.module(ng-repeat="gallItem in  newObjects")
 							p {{gallItem.originalName}}
-							img.img-responsive(ng-src="{{gallItem.serverUrl}}" pending-indicator)
+							img.img-responsive(ng-src="{{gallItem.url}}" pending-indicator)
 					h2 Old Images
 					.row.middle-heigth
 						a.col-md-1.module(ng-repeat="item in allGallery")
 							.moduleWrapper.contentHideButtons
 								p {{item.originalName}}
-								img.img-responsive(ng-src="{{item.serverUrl}}" pending-indicator)
+								img.img-responsive(ng-src="{{item.url}}" pending-indicator)
 								.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover
 									.icon.icon-bin-2									
