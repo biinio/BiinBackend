@@ -137,7 +137,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     if($scope.elements[$scope.selectedElement].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index]){
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
-      newObj.imgUrl = $scope.galleries[index].serverUrl;
+      newObj.imgUrl = $scope.galleries[index].url;
       $scope.elements[$scope.selectedElement].media.push(newObj);  
 
       //Apply the changes

@@ -1,7 +1,7 @@
 module.exports =function(db){
 
 	//Custom Utils
-	var utils = require('../biin_modules/utils')();
+	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path');
 
 	//Schemas
 	var organization = require('../schemas/organization'), site = require('../schemas/site');
@@ -35,17 +35,19 @@ module.exports =function(db){
 				delete model.isNew;
                 
                 var newModel = new organization(model);
-				//Set the account and de user identifier
-                newModel.identifier=utils.getGUID();
-				newModel.accountIdentifier= req.user.accountIdentifier;
+                organizationIdentifier = utils.getGUID();
 
+				//Set the account and de user identifier
+                newModel.identifier=organizationIdentifier
+				newModel.accountIdentifier= req.user.accountIdentifier;
+				
 				//Perform an create
 				newModel.save(function(err){
 					if(err)
 						throw err;
 					else{
-						//Return the state and the object
-						res.json({state:"success",replaceModel:newModel});
+							//Return the state and the object
+							res.json({state:"success",replaceModel:newModel});
 					}
 				});
 				

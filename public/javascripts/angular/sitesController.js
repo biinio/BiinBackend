@@ -191,7 +191,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     if($scope.sites[$scope.selectedSite].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index]){
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
-      newObj.imgUrl = $scope.galleries[index].serverUrl;
+      newObj.imgUrl = $scope.galleries[index].url;
       $scope.sites[$scope.selectedSite].media.push(newObj);  
 
       //Apply the changes

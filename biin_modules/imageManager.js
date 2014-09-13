@@ -4,8 +4,8 @@
 module.exports = function(){
 	var path = require("path"),fs = require("fs"), uuid=require("node-uuid");
 	var gm = require("gm"),imageMagick = gm.subClass({ imageMagick: true });
-    var utils = require("./utils")();
-	
+    var utils = require("./utils")(), util=require("util");
+    var awsManager = require("./awsManager")();
 	var functions={},
 		_quality = 100,
 	    _workingImagePath='./public/workingFiles/',
@@ -77,39 +77,16 @@ module.exports = function(){
 		});
 	} 
 
-	//Uploads an image
-	functions.uploadFile = function(originUrl,imagePath, imageName,callback){
-		fs.readFile(imagePath, function (err, data) {
-			/// If there's an error
-			if(!imageName){
-				var err = {
-					status:"error"
-				}
-				callback(err);
+	//Uploads an imag
+	functions.uploadFile = function(imagePath,directory, imageName){		
+		
+		var mainBuquet =  process.env.S3_BUCKET;	
+	   	var systemImageName =path.join(directory,utils.getImageName(imageName,_workingImagePath));    
+		var newPath = path.join(process.env.IMAGES_REPOSITORY,systemImageName);	
 
-			} else {
-
-              var systemImageName = utils.getImageName(imageName,_workingImagePath);              
-			  var newPath = process.env.IMAGES_REPOSITORY+systemImageName;
-			  var localPath = path.join(_workingImagePath,systemImageName);
-               
-			  /// write file to uploads/fullsize folder
-			  fs.writeFile(localPath, data, function (err) {
-			  	if(err){
-			  		callback(err)
-			  	}
-			  	else{
-			        console.log(newPath);
-				  	var success ={
-				  		status:"success",
-				  		url:newPath,
-				  		localPath:localPath
-				  	}
-				  	callback(null,success);
-			  	}
-			  });
-			}
-		});
+		var buffer =fs.readFileSync(imagePath);
+		awsManager.uploadObjectToBuquet(mainBuquet, systemImageName, buffer);
+		return newPath;
 	}
      
     //Copy a image to a FTP server

@@ -31,6 +31,7 @@ biinServicesModule.directive('pendingIndicator', function(){
             // this directive on an individual image, you may consider using
             // it on the element that contains many images...
             scope.imagesLoaded = imagesLoaded(element);
+            
             // start your progress/loading animation here
             // (or whenever you attempt to load the images)
             scope.imagesLoaded.on('always', function() {

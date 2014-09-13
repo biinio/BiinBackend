@@ -20,11 +20,11 @@ module.exports = function(db){
 	functions.create = function(req,res){
 		// create a user a new user
 		var admin = new user({
-		    name: 'lbonilla@biinapp.com',
+		    name: 'epadilla@biinapp.com',
 		    password: 'abc1236',
-		    displayName:'Luis Bonilla Hernández',
-		    accountIdentifier:'10001',
-		    emails:['lbonilla@biinapp.com','luisbonillah@gmail.com','ti.lbonilla@hotmail.com']
+		    displayName:'Esteban Padilla',
+		    accountIdentifier:'1002',
+		    emails:['epadilla@biinapp.com']
 		});
 
 		// save user to database

@@ -6,7 +6,7 @@ module.exports =function(){
 	var utils = require('../biin_modules/utils')();	
 
 	//Schemas
-	var gallery = require('../schemas/gallery'), organization = require('../schemas/organization');
+	var gallery = require('../schemas/gallery'), organization = require('../schemas/organization'), imageManager=require('../biin_modules/imageManager')();
 	var functions ={},
 		_quality = 100,
 	    _workingImagePath='./public/workingFiles/',
@@ -17,7 +17,6 @@ module.exports =function(){
 		var organizationId = req.param("identifier");
 
 		var callback= function(organization,req, res){
-			console.log("The organization is " + util.inspect(organization,{depth:null}));
 			res.render('gallery/index', { title: 'Gallery list' ,user:req.user, user:req.user, organization:organization, isSiteManteinance:true});
 		}
 
@@ -37,8 +36,7 @@ module.exports =function(){
 			  var gallery = null;
 			  	if(data && 'gallery' in data)
 			  		gallery = data.gallery;
-
-			   console.log("The find gallery is: "+util.inspect(gallery,{depth:null}));
+			  	
 			   res.json({data:gallery, prototypeObj : galleryProto});
 		});			
 	}	
@@ -48,87 +46,64 @@ module.exports =function(){
 		var organizationId = req.param("identifier");
 		var userAccount = req.user.accountIdentifier;
 		var filesUploaded =[];
-		//FTP IMAGES SERVER UPLOAD
-		var ftpConn = utils.get.FTPConn();
 
+		var imagesDirectory = path.join(userAccount,organizationId);
 		res.set("Content-Type","application/json");
 
-		var uploadFile = function(file, serverCopy){
+		var uploadFile = function(file){
 			//Read the file
 	 		var name = file.originalFilename;	 		
 	 		var data = fs.readFileSync(file.path);
+	 		var systemImageName = userAccount+organizationId+ utils.getImageName(name,_workingImagePath); 
 
-	 		//Asign the new temporal paths
-	 		var systemImageName = utils.getImageName(name,_workingImagePath); 
-	 		var ftpPath =process.env.FTP_BIIN_IMAGES_URL+systemImageName;
-	 		var newPath = process.env.IMAGES_REPOSITORY+systemImageName;
-	 		var localPath = path.join(_workingImagePath,systemImageName);
+	 		var imgURL= imageManager.uploadFile(file.path,imagesDirectory,systemImageName);
+	  		var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
+	  		originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss')};
 
-	 		// write file to uploads/fullsize folder
-			var err=  fs.writeFileSync(localPath, data);
-
-			if(err){
-		  		throw err;
-		  	}
-		  	else{
-
-		  		var url = "https://"+process.env.FTP_HOST+process.env.FTP_BIIN_IMAGES_URL+systemImageName;
-		  		var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
-		  		originalName:name, localUrl:localPath,  serverUrl: ftpPath, dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),url:url};
-
-		  		console.log("Going to put the image: "+ util.inspect(galObj,{depth:null}));
-		  		if(serverCopy)
-		  			serverCopy(galObj);		  		
-		  		filesUploaded.push(galObj);
-		  	}
+	  		return galObj;	 		
 		}
-		var serverCopy=function(galItem){
-			try{
-				ftpConn.keepAlive();	
-			}catch(ex)
-			{//Try Get Again the Ftp Connection
-				ftpConn =utils.get.FTPConn();
-			}
-			console.log("Server Ftp Upload: "+  galItem.originalName);
-			console.log("The Path: "+ galItem.localUrl);
-			console.log("The Server Path: "+ galItem.serverUrl);
-       		ftpConn.put(galItem.localUrl,galItem.serverUrl,function(err){
-       			if(err)
-       				throw err;
-       		});
+
+		//Update the organization
+		var organizationUpdate = function(){
+			organization.update({"accountIdentifier":userAccount,"identifier":organizationId},
+			 {$push:{gallery:{$each:filesUploaded}}},
+			 { upsert : false},
+	         function(err, cantAffected){
+	         	if(err){
+	         		throw err;
+	         		res.json(null);
+	         	}
+				else{
+	                //Return the state
+					if (err)
+		 				throw err;
+			 		else
+			 			res.json(filesUploaded);
+				}
+	         });	
 		}
 
 		//Upload of the files
-		if(util.isArray(req.files.file))
+		if(util.isArray(req.files.file)){
 		 	for(var i=0; i< req.files.file.length; i++){
-		 		uploadFile(req.files.file[i],serverCopy)
-		 	}
-		else
-			uploadFile(req.files.file,serverCopy)	 		
+		 		var galToUpload =uploadFile(req.files.file[i]);
+		 		filesUploaded.push(galToUpload);
+		 	}		 
+		 	//Lets update the buquet
+		 	setTimeout(organizationUpdate,60*60);		
+		}
 
-
-		organization.update({"accountIdentifier":userAccount,"identifier":organizationId},
-		 {$push:{gallery:{$each:filesUploaded}}},
-		 { upsert : false},
-         function(err, cantAffected){
-         	console.log("The cant affected where:" + cantAffected);
-         	if(err){
-         		throw err;
-         		res.json(null);
-         	}
-			else{
-                //Return the state
-				if (err)
-	 				throw err;
-		 		else
-		 			res.json(filesUploaded);
-			}
-         });
+		else{
+			var galToUpload =uploadFile(req.files.file,serverCopy);
+			filesUploaded.push(galToUpload);
+			//Lets update the buquet
+			setTimeout(organizationUpdate,60*60);
+		}
 	}
+
 	/****
 	 Other methods
 	***/
-
 	getOganization = function(req, res, callback){
 		var identifier=req.param("identifier");
 

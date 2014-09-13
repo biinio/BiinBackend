@@ -9,7 +9,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
   $http.get('api/organizations').success(function(data){
   	$scope.organizations = data.data;
     $scope.currentModelId = null;
-
+    $scope.organizationId= null;
     $scope.organizationPrototype = data.prototypeObj;
 
     //Site Prototypes Backup
@@ -71,7 +71,12 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
   $scope.edit = function(index){
     $scope.selectedOrganization = index;
     $scope.currentModelId = $scope.organizations[index].identifier;
+    $scope.organizationId= $scope.organizations[index].identifier;
 
+    //Get the list of the gallery
+    gallerySrv.getList($scope.currentModelId).then(function(promise){
+      $scope.galleries= promise.data.data;
+    });
 
     if('isNew' in $scope.organizations[index])
       clearSelectedOrganization();
@@ -86,6 +91,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
       if("replaceModel" in data){
         $scope.organizations[$scope.selectedOrganization] = data.replaceModel;
         $scope.currentModelId=$scope.organizations[$scope.selectedOrganization].identifier;
+        $scope.organizationId= $scope.organizations[$scope.selectedOrganization].identifier;
         $scope.organizationPrototype =  $.extend(true, {}, $scope.organizationPrototypeBkp);
         $scope.sitePrototype = $.extend(true,{},$scope.sitePrototypeBkp);
       }
@@ -93,7 +99,9 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
         $scope.succesSaveShow=true;
 
       setOrganization();
-    });     
+    }); 
+
+
   }
 
   //Set the gallery index when start draggin
@@ -108,7 +116,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
 
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
-      newObj.imgUrl = $scope.galleries[index].serverUrl;
+      newObj.imgUrl = $scope.galleries[index].url;
       $scope.organizations[$scope.selectedOrganization].media.push(newObj);  
 
       //Apply the changes
@@ -123,11 +131,6 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
     if($scope.organizations[$scope.selectedOrganization].media.length>=index)
       $scope.organizations[$scope.selectedOrganization].media.splice(index,1)
   }
-
-  //Get the list of the gallery
-  gallerySrv.getList($scope.currentModelId).then(function(promise){
-    $scope.galleries= promise.data.data;
-  });
 
   //On gallery change method                
   $scope.onGalleryChange= function(obj,autoInsert){

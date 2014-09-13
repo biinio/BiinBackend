@@ -1,5 +1,11 @@
 
-var path = require("path"), uuid=require('node-uuid'),fs = require('fs'), JSFtp = require("jsftp");;
+var path = require("path"), uuid=require('node-uuid'),
+  fs = require('fs'),
+  util = require('util'),
+  //FTP Package
+  ftp = require("ftp");
+  var ftpConn = new ftp();
+
 module.exports = function(){
 	var functions={};
     
@@ -30,35 +36,9 @@ module.exports = function(){
        });*/
       return newName;
     }
-    
-    //Uploads File to FTP
-    functions.FTPUpload= function(localPath,remotePath,callback){
-        //FTP Instance
-        ftp = functions.getFTPConn();
 
-        ftp.put(localPath,remotePath,callback);
-    }
-    
    //Misselanious Properties
     functions.get ={};
-
-    //Misselanious Properties
-    functions.get.FTPConn = function(){
-      //FTP Instance
-      var  ftp = new JSFtp({ host: process.env.FTP_HOST,
-                port: process.env.FTP_PORT,
-                user:process.env.FTP_USER,
-                pass:process.env.FTP_PASS,
-                debugMode: true
-        });
-
-        ftp.on('jsftp_debug', function(eventType, data) {
-           console.log('DEBUG: ', eventType);
-           console.log(JSON.stringify(data, null, 2));
-        });     
-
-        return ftp;
-    }
 
     functions.get.majorIncrement =function(){
       return 10;

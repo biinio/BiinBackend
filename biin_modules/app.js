@@ -119,5 +119,8 @@ module.exports = function (db) {
       res.render('404', { status: 404, url: req.url });
     });
 
+    process.on('uncaughtException', function (err) {
+        console.log(err);
+    });
     return app;
 };
