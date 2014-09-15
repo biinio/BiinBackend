@@ -15,3 +15,6 @@ public/stylesheets/main.css
 public/workingFiles/**
 
 public/workingFiles/!file!.txt
+biin.sublime-project.save
+
+*.sublime-project
