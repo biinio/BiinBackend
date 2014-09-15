@@ -71,7 +71,7 @@ module.exports = function () {
 			if('isNew' in model){
 				delete model.isNew;
 
-				//Set the account and de user identifier
+				//Set the account and the user identifier
                 model.identifier=utils.getGUID();
 				model.accountIdentifier= req.user.accountIdentifier;
 				organization.update(

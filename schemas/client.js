@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 	SALT_WORK_FACTOR=10;
 
 var Schema = mongoose.Schema;
-var userSchema = new Schema({
+var clientSchema = new Schema({
 	name: {type:String, required:true,index:{unique:true}},
 	password:{type:String, required:true},
 	displayName:String,
@@ -14,7 +14,7 @@ var userSchema = new Schema({
 })
 
 //Generation of Salt Password
-userSchema.pre('save', function(next) {
+clientSchema.pre('save', function(next) {
 	var self = this;
 	// only hash the password if it has been modified (or is new)
 	if (!self.isModified('password')) return next();
@@ -34,11 +34,11 @@ userSchema.pre('save', function(next) {
 	});
 });
 
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
+clientSchema.methods.comparePassword = function(candidatePassword, cb) {
 	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
 	    if (err) return cb(err);
 	    cb(null, isMatch);
 	});
 };
 
-module.exports = mongoose.model('users',userSchema);
+module.exports = mongoose.model('clients',clientSchema);

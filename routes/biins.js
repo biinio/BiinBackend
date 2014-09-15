@@ -76,7 +76,6 @@ module.exports = function () {
 						}
 					}
 				}	
-				console.log("the number of changes where: " + countOfChanges);
 				//Save the modifications
 				if(countOfChanges>0)
 					doc.save();

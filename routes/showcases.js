@@ -17,7 +17,7 @@ module.exports = function () {
 		var organization = req.param("identifier");
 
 		var callback= function(organization,req, res){
-			res.render('showcase/index', { title: 'Organizations list' ,user:req.user, user:req.user, organization:organization, isSiteManteinance:true});
+			res.render('showcase/index', { title: 'Organizations list' ,user:req.user, organization:organization, isSiteManteinance:true});
 		}
 
 		//If the organization header is not in cache try to get it

@@ -1,32 +1,32 @@
 
 //Passport Login
-
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
-	userSchema = require('../schemas/user');
+	clientSchema = require('../schemas/client');
+var util = require('util');
 
 
-passport.use(new LocalStrategy(
-	function(username, password, done) {
+passport.use('clientLocal',new LocalStrategy(
+		function(clientName, password, done) {
 
-		//var user = userSchema.find();
-		userSchema.findOne({ name: username},function (err, user) {
+			//var user = userSchema.find();
+			clientSchema.findOne({ name: clientName},function (err, client) {
 
-		if(user!=null && user!=undefined){
-			//Test the Password 
-			user.comparePassword(password, function(err, isMatch) {
-			    if (err) throw err;		   
-			    if (isMatch)
-					return done(null, user);
-				else
-					return done(null, false);					
-			});			
-		}else{
-			return done(null, false);			
-		}
-		
-	});	
-})
+			if(client!=null && client!=undefined){
+				//Test the Password 
+				client.comparePassword(password, function(err, isMatch) {
+				    if (err) throw err;		   
+				    if (isMatch)
+						return done(null, client);
+					else
+						return done(null, false);					
+				});			
+			}else{
+				return done(null, false);			
+			}
+			
+		});	
+	})
 );
 
 passport.serializeUser(function(user, done) {
@@ -34,7 +34,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-	done(null, new userSchema(user));
+	done(null, new clientSchema(user));
 });
 
 module.exports = passport;

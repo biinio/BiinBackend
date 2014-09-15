@@ -35,7 +35,8 @@
     "bcrypt": "^0.8.0",
     "jsftp-mkdirp": "^1.0.0",
     "ftp": "^0.3.7",
-    "aws-sdk": "^2.0.15"
+    "aws-sdk": "^2.0.15",
+    "oauth2orize": "^1.0.1"
   },
   "engines": {
     "node": "0.10.26",

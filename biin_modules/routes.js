@@ -2,7 +2,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
  
     //Others routes
     var routes = require('../routes')();
-    var users = require('../routes/users')(db);
+    var clients = require('../routes/clients')(db);
     var organizations = require('../routes/organizations')(db);
     var showcases = require('../routes/showcases')(db);
     var sites = require('../routes/sites')();
@@ -19,7 +19,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/dashboard', routes.dashboard);    
     app.get('/login',routes.login);
     app.get('/home',routes.home);
-    app.post('/login',passport.authenticate('local',{
+    app.post('/login',passport.authenticate('clientLocal',{
         failureRedirect:'/login',
         successRedirect:'/dashboard'
     }));
@@ -87,9 +87,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/errors',errors.index);
     app.post('/api/errors/add',errors.create);
 
-    //Users routes
-    app.get('/user',users.create);
-    app.get('/logout',users.logout);
+    //Client routes
+    app.get('/client',clients.create);
+    app.get('/logout',clients.logout);
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {

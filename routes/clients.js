@@ -3,23 +3,23 @@ module.exports = function(db){
     var moment = require('moment');
 
     //Schemas
-	var user = require('../schemas/user');
+	var client = require('../schemas/client');
 	var functions ={}
 
-	//Get User List
+	//Get Client List
 	functions.index = function(req,res){
-		res.render('user/index',req.user);		
+		res.render('client/index',req.user);		
 	}
 
-	//Get User Creates
+	//Get Client Creates
 	functions.createView = function(req,res){
-		res.render('user/create',req.user);
+		res.render('client/create',req.client);
 	}
 
-	//Post Creation of a User
+	//Post Creation of a Client
 	functions.create = function(req,res){
-		// create a user a new user
-		var admin = new user({
+		// create a Client
+		var admin = new client({
 		    name: 'epadilla@biinapp.com',
 		    password: 'abc1236',
 		    displayName:'Esteban Padilla',
@@ -27,16 +27,16 @@ module.exports = function(db){
 		    emails:['epadilla@biinapp.com']
 		});
 
-		// save user to database
+		// save a client to the database
 		admin.save(function(err) {
 			console.log(err);
 			console.log('saved');
 		});
 
-		res.render('user/create',req.user);	
+		res.render('client/create',req.client);	
 	}
 
-	//Logout the user
+	//Logout the client
 	functions.logout = function(req,res){
 		req.session.destroy();
 		req.logout();

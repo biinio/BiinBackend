@@ -74,7 +74,7 @@ module.exports = function (db) {
             mongoose_connection: db
         })
     }));
-
+    
     //Logger
     app.use(passport.initialize());
     app.use(passport.session());
