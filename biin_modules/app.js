@@ -17,7 +17,7 @@ module.exports = function (db) {
     , multipartMiddleware = multipart()
     , lessMiddleware = require('less-middleware')
     , methodOverride = require('method-override')
-    //, expressValidator = require('express-validator');
+    , expressValidator = require('express-validator');
  
    //Define local vars
     var isDevelopment = process.env.NODE_ENV === 'development';
@@ -33,7 +33,6 @@ module.exports = function (db) {
             next();
         }
     };
-
 
     // Less configuration
     if(isDevelopment){
@@ -62,7 +61,6 @@ module.exports = function (db) {
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
     app.set('view engine', 'jade');
 
-
     app.use(express.static(path.join(process.env.PWD , 'public')));
     app.use(express.static(path.join(process.env.PWD,'bower_components')));
     app.use(favicon());
@@ -79,8 +77,8 @@ module.exports = function (db) {
     //Logger
     app.use(passport.initialize());
     app.use(passport.session());
+    app.use(expressValidator());//Express Validator 
     app.use(bodyParser.json());
-    //app.use(expressValidator);//Express Validator
     app.use(methodOverride('X-HTTP-Method-Override'));
 
     app.use(function (req, res, next) {

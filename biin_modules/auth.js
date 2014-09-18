@@ -108,6 +108,4 @@ passport.use("mobileAccessToken", new BearerStrategy(
     }
 ))
 
-
-
 module.exports = passport;

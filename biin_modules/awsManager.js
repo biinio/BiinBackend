@@ -43,10 +43,5 @@ module.exports = function(){
 			return 	data;
 		});
 	}
-
-	functions.uploadFileToBuket = function(){
-
-	}
-
 	return functions;
 }

@@ -13,22 +13,20 @@ var server = oauth2orize.createServer();
 
 //Resource owner password
 server.exchange(oauth2orize.exchange.password(function (client, biinName, password, scope, done) {
+    console.log('exchange');
     mobileUser.findOne({biinName:biinName}, function (err, mobUser) {
-        if (err) return done(err)
-        if (!mobUser) return done(null, false)
+        if (err) return done(err);
+        if (!mobUser) return done(null, false);
         bcrypt.compare(password, mobUser.password, function (err, res) {
-            if (!res) return done(null, false)
+            if (!res) return done(null, false);
             
-            var token = utils.getUIDByLen(256)
-            var refreshToken = utils.getUIDByLen(256)
+            var token = utils.getUIDByLen(256);
+            var refreshToken = utils.getUIDByLen(256);
 
-            console.log("The new token is: " + token);
-            var tokenHash = crypto.createHash('sha1').update(token).digest('hex')
-            var refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex')
-            
-            console.log("The hash token is: " + tokenHash);
+            var tokenHash = crypto.createHash('sha1').update(token).digest('hex');
+            var refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex');
 
-            var expirationDate = new Date(new Date().getTime() + (3600 * 1000))
+            var expirationDate = new Date(new Date().getTime() + (3600 * 1000));
             var newTokenModel = new oauthMobileAccessTokens({token: tokenHash, expirationDate: expirationDate, clientId: client.clientId, biinName: biinName, scope: scope});
             newTokenModel.save(function (err) {
                 if (err) return done(err)
@@ -44,19 +42,17 @@ server.exchange(oauth2orize.exchange.password(function (client, biinName, passwo
 
 //Refresh Token
 server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken, scope, done) {
-    console.log("Refresh token");
-    var refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex')
+    var refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex');
 
     oauthMobileRefreshTokens.findOne({refreshToken: refreshTokenHash}, function (err, token) {
-        if (err) return done(err)
-        if (!token) return done(null, false)
-        console.log("The client: " + utils.inspect(client,{depth:null}));
-        if (client.clientId !== token.clientId) return done(null, false)
+        if (err) return done(err);
+        if (!token) return done(null, false);
+        if (client.clientId !== token.clientId) return done(null, false);
         
-        var newAccessToken = utils.getUIDByLen(256)
-        var accessTokenHash = crypto.createHash('sha1').update(newAccessToken).digest('hex')
+        var newAccessToken = utils.getUIDByLen(256);
+        var accessTokenHash = crypto.createHash('sha1').update(newAccessToken).digest('hex');
         
-        var expirationDate = new Date(new Date().getTime() + (3600 * 1000))
+        var expirationDate = new Date(new Date().getTime() + (3600 * 1000));
     
         oauthMobileAccessTokens.update({userId: token.userId}, {$set: {token: accessTokenHash, scope: scope, expirationDate: expirationDate}}, function (err) {
             if (err) return done(err)
