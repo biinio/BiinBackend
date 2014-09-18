@@ -11,7 +11,8 @@ module.exports =function(){
 		_quality = 100,
 	    _workingImagePath='./public/workingFiles/',
 	    _uploadImageDirectory = "/workingFiles/";
-
+	
+	var oauthMobileAPIGrants = require('../routes/oauthMobileAPIGrants')();	
 	//GET the index of Gallery
 	functions.index = function(req,res){
 		var organizationId = req.param("identifier");

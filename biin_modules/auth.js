@@ -3,8 +3,17 @@
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	clientSchema = require('../schemas/client');
-var util = require('util');
 
+var BasicStrategy = require('passport-http').BasicStrategy
+, ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy
+, BearerStrategy = require('passport-http-bearer').Strategy
+, crypto = require('crypto')
+
+var oauthMobileAccesTokens = require('../schemas/oauthMobileAccesTokens'),
+	oauthMobileAPIGrants = require('../schemas/oauthMobileAPIGrants'),
+    mobileUser = require('../schemas/mobileUser');
+    
+var util = require('util');
 
 passport.use('clientLocal',new LocalStrategy(
 		function(clientName, password, done) {
@@ -36,5 +45,69 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
 	done(null, new clientSchema(user));
 });
+
+/*
+* Mobile Configurations
+*/
+/**
+ * These strategies are used to authenticate registered OAuth clients.
+ * The authentication data may be delivered using the basic authentication scheme (recommended)
+ * or the client strategy, which means that the authentication data is in the body of the request.
+ */
+passport.use("mobileClientBasic", new BasicStrategy(
+    function (clientId, clientSecret, done) {
+       oauthMobileAPIGrants.findOne({clientIdentifier: clientId}, function (err, client) {
+            if (err) return done(err)
+            if (!client) return done(null, false)
+            if (!client.trustedClient) return done(null, false)
+
+            if (client.clientSecret == clientSecret) return done(null, client)
+            else return done(null, false)
+        });
+    }
+));
+
+passport.use("mobileClientPassword", new ClientPasswordStrategy(
+    function (clientId, clientSecret, done) {
+        oauthMobileAPIGrants.findOne({clientIdentifier: clientId}, function (err, client) {
+            if (err) return done(err)
+            if (!client) return done(null, false)
+            if (!client.trustedClient) return done(null, false)
+
+            if (client.clientSecret == clientSecret) return done(null, client)
+            else return done(null, false)
+        });
+    }
+));
+
+/**
+ * This strategy is used to authenticate users based on an access token (aka a
+ * bearer token).
+ */
+passport.use("mobileAccessToken", new BearerStrategy(
+    function (accessToken, done) {
+        console.log('The Access token is: ' + accessToken);
+        var accessTokenHash = crypto.createHash('sha1').update(accessToken).digest('hex')
+        console.log("The encrypted token is: " + accessTokenHash);
+        oauthMobileAccesTokens.findOne({token: accessTokenHash}, function (err, token) {
+            console.log("The Found token is: "+util.inspect(token,{depth:null}));
+            if (err) return done(err)
+            if (!token) return done(null, false)
+            if (new Date() > token.expirationDate) {
+               oauthMobileAccesTokens.remove({token: accessTokenHash}, function (err) { done(err) })
+            } else {
+                mobileUser.findOne({biinName: token.biinName}, function (err, user) {
+                    if (err) return done(err)
+                    if (!user) return done(null, false)
+                    // no use of scopes for no
+                    var info = { scope: '*' }
+                    done(null, user, info);
+                })
+            }
+        })
+    }
+))
+
+
 
 module.exports = passport;

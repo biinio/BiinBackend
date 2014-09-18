@@ -1,24 +1,25 @@
 module.exports = function (db) {
-    var express = require('express');
-    var session = require('express-session')
-    var MongoStore = require('connect-mongo')(session);
-    var passport = require('./auth');
-    var fs = require('fs');
-    var http = require('http');
-    var https = require('https');
-    var path = require('path');
-    var app = express();
-    var favicon = require('static-favicon');
-    var logger = require('morgan');
-    var cookieParser = require('cookie-parser');
-    var bodyParser = require('body-parser');
-    var crypto = require('crypto');
-    var multipart = require('connect-multiparty');
-    var multipartMiddleware = multipart();
-    var lessMiddleware = require('less-middleware');
-    var methodOverride = require('method-override')
-
-    //Define local vars
+    var express = require('express')
+    , session = require('express-session')
+    , MongoStore = require('connect-mongo')(session)
+    , passport = require('./auth')
+    , fs = require('fs')
+    , http = require('http')
+    , https = require('https')
+    , path = require('path')
+    , app = express()
+    , favicon = require('static-favicon')
+    , logger = require('morgan')
+    , cookieParser = require('cookie-parser')
+    , bodyParser = require('body-parser')
+    , crypto = require('crypto')
+    , multipart = require('connect-multiparty')
+    , multipartMiddleware = multipart()
+    , lessMiddleware = require('less-middleware')
+    , methodOverride = require('method-override')
+    //, expressValidator = require('express-validator');
+ 
+   //Define local vars
     var isDevelopment = process.env.NODE_ENV === 'development';
 
     // At the top of your web.js
@@ -79,6 +80,7 @@ module.exports = function (db) {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(bodyParser.json());
+    //app.use(expressValidator);//Express Validator
     app.use(methodOverride('X-HTTP-Method-Override'));
 
     app.use(function (req, res, next) {
@@ -88,7 +90,7 @@ module.exports = function (db) {
     
     //Routes
     var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
-
+    
     /// error handlerslogger
     // development error handler
     // will print stacktrace

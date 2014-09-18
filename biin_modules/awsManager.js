@@ -1,7 +1,7 @@
 /*
-
-	Exports the AWS Module
-
+*
+*	Exports the AWS Module
+*
 */
 module.exports = function(){
 
