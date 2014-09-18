@@ -86,11 +86,8 @@ passport.use("mobileClientPassword", new ClientPasswordStrategy(
  */
 passport.use("mobileAccessToken", new BearerStrategy(
     function (accessToken, done) {
-        console.log('The Access token is: ' + accessToken);
         var accessTokenHash = crypto.createHash('sha1').update(accessToken).digest('hex')
-        console.log("The encrypted token is: " + accessTokenHash);
         oauthMobileAccesTokens.findOne({token: accessTokenHash}, function (err, token) {
-            console.log("The Found token is: "+util.inspect(token,{depth:null}));
             if (err) return done(err)
             if (!token) return done(null, false)
             if (new Date() > token.expirationDate) {

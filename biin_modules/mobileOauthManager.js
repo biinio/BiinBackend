@@ -13,7 +13,6 @@ var server = oauth2orize.createServer();
 
 //Resource owner password
 server.exchange(oauth2orize.exchange.password(function (client, biinName, password, scope, done) {
-    console.log('exchange');
     mobileUser.findOne({biinName:biinName}, function (err, mobUser) {
         if (err) return done(err);
         if (!mobUser) return done(null, false);
