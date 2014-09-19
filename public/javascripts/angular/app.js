@@ -228,6 +228,18 @@ biinServicesModule.factory('categorySrv', ['$http', function (async) {
 
     }
     }]);
+
+//Define the drop system
+biinServicesModule.directive('notification',function(){
+  return{
+    restrict:'E',
+    templateUrl:'partials/notificationWidget',
+    link:function(scope, element, attrs){
+       
+    }
+  }
+});
+
 //Custom Filters
 
 //Filter for get the intersection of two list of objects
