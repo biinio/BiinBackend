@@ -9,6 +9,7 @@ var orgObj ={
 	title1:{type:String, default:""},
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
+	extraInfo:{type:String, default:""},
 	media:[
 		{
 			title1:{type:String, default:""},

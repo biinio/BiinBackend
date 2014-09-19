@@ -11,11 +11,9 @@ block content
 						.row.max-height(ng-class="{'max-height':selectedOrganization==null}")
 							// ---------- Organizations  List ----------
 							div(slimscroll="" slimscroll-option="{height: 'auto'}" )
-								.col-md-1.max-width
-									input.form-control.search-box.center(ng-model="query" placeholder="Search" autofocus)
-								a.col-md-1.module(ng-click="create()")				
-									.moduleWrapper.remove-module
-										.btn-rounded.center.icon.icon-add-1							
+								a.col-md-1.max-width(ng-click="create()")
+									button.btn.btn-default.btn-save.max-width
+										p ADD NEW ORGANIZATION
 								a.col-md-1.module(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
 									.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
 										img.img-responsive(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
@@ -27,11 +25,10 @@ block content
 								li(ng-class="{active:activeTab == 'details'}")
 									a(ng-click="changeTabTo('details')") Details
 								li(ng-class="{active:activeTab == 'gallery'}")
-									a(ng-click="changeTabTo('gallery')") Gallery									
+									a(ng-click="changeTabTo('gallery')" ng-if='!organizations[selectedOrganization].isNew') Gallery									
 							.row.workArea.max-height(ng-switch="activeTab" drop-files)
 								.col-md-6.col-sm-6.colPreview.max-height.colAppend(drop)
 									.row.max-height
-										button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="save()") SAVE
 										.div(slimscroll="" slimscroll-option="{height:'90%'}")
 											a.col-md-1.module(ng-repeat="item in organizations[selectedOrganization].media")
 												.moduleWrapper.moduleWrapper-inverse.contentHideButtons
@@ -41,21 +38,23 @@ block content
 								.col-md-6.col-sm-6.colPreview.max-height(ng-switch-when='details')
 									.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
 										.row
-											label Name:
+											h1 Organization Information
 										.row
-											input.form-control( ng-model="organizations[selectedOrganization].name")
+											p Add all your organization information here. Information that will be shown on the mobile app is mark with **
 										.row
-											label Brand:
+											input.form-control( ng-model="organizations[selectedOrganization].name" placeholder='Name **')
 										.row
-											input.form-control( ng-model="organizations[selectedOrganization].brand")
+											input.form-control( ng-model="organizations[selectedOrganization].brand"  placeholder='Brand name **')
 										.row
-											label Description:
+											input.form-control( ng-model="organizations[selectedOrganization].description"  placeholder='Description **')
 										.row
-											input.form-control( ng-model="organizations[selectedOrganization].description")
+											input.form-control( ng-model="organizations[selectedOrganization].extraInfo"  placeholder='Extra Information **')												
 										.row(ng-if="!organizations[selectedOrganization].isNew")
-											label UUIID
-										.row(ng-if="!organizations[selectedOrganization].isNew")
-											p {{organizations[selectedOrganization].identifier}}																	
+											label Organization Id: {{organizations[selectedOrganization].identifier}}																	
+										.row
+											button.btn.btn-default.btn-save(ng-click="save()") SAVE
+											button.btn.btn-default.btn-save(ng-click="removeOrganizationAt(organizations.indexOf(organizations[selectedOrganization]))")
+												span.icon-bin-2
 								//Gallery Tab
-								.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery')
+								.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery' ng-if='!organizations[selectedOrganization].isNew')
 									include ../_partials/galleryWidget							

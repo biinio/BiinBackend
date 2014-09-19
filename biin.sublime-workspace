@@ -4,32 +4,196 @@
 		"selected_items":
 		[
 			[
+				"acce",
+				"accessTokenHash"
+			],
+			[
+				"s",
+				"send"
+			],
+			[
+				"new",
+				"newModel"
+			],
+			[
+				"client",
+				"clientIdentifier"
+			],
+			[
+				"clien",
+				"clientIdentifier"
+			],
+			[
+				"Cli",
+				"clientId"
+			],
+			[
+				"clientI",
+				"clientId"
+			],
+			[
+				"org",
+				"organizationUpdate"
+			],
+			[
+				"orga",
+				"organizationUpdate"
+			],
+			[
+				"or",
+				"organizationId"
+			],
+			[
+				"buqu",
+				"buquetFolder"
+			],
+			[
+				"bu",
+				"buquetFolder"
+			],
+			[
+				"imgU",
+				"imgURL"
+			],
+			[
+				"funct",
+				"functions"
+			],
+			[
+				"create",
+				"createBucket"
+			],
+			[
+				"buquet",
+				"buquetFolder"
+			],
+			[
+				"buq",
+				"buquetName"
+			],
+			[
+				"orgn",
+				"organizationIdentifier"
+			],
+			[
+				"FTPC",
+				"FTPConn"
+			],
+			[
+				"fTPCONN",
+				"FTPConn"
+			],
+			[
+				"function",
+				"functions"
+			],
+			[
+				"ftp",
+				"ftpConn"
+			],
+			[
+				"au",
+				"authenticated"
+			],
+			[
+				"FTP_P",
+				"FTP_PASS"
+			],
+			[
+				"media",
+				"mediaRepository"
+			],
+			[
+				"functi",
+				"function"
+			],
+			[
+				"fun",
+				"functions"
+			],
+			[
+				"gal",
+				"galObj"
+			],
+			[
+				"serv",
+				"serverUrl"
+			],
+			[
+				"get",
+				"getFTPConn"
+			],
+			[
+				"server",
+				"serverCopy"
+			],
+			[
+				"gall",
+				"gallery"
+			],
+			[
+				"cant",
+				"cantAffected"
+			],
+			[
+				"htt",
+				"httpPort"
+			],
+			[
+				"conne",
+				"connectionString"
+			],
+			[
+				"conn",
+				"connectionString"
+			],
+			[
+				"dra",
+				"dragPosition"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"acti",
+				"activeTab"
+			],
+			[
+				"selecte",
+				"selectedOrganization"
+			],
+			[
+				"BIIN",
+				"biinToUpdate"
+			],
+			[
+				"showca",
+				"showcaseToAsign"
+			],
+			[
+				"bii",
+				"biinIndex"
+			],
+			[
+				"site",
+				"siteToWorkDocument"
+			],
+			[
+				"biin",
+				"biins"
+			],
+			[
+				"showCa",
+				"showcaseToAsign"
+			],
+			[
 				"selec",
 				"selectedSite"
 			],
 			[
-				"orga",
-				"organizationId"
-			],
-			[
 				"organ",
 				"organizations"
-			],
-			[
-				"biin",
-				"biinPrototype"
-			],
-			[
-				"bii",
-				"biin_modules"
-			],
-			[
-				"org",
-				"organizationId"
-			],
-			[
-				"selecte",
-				"selectedSite"
 			],
 			[
 				"ma",
@@ -68,16 +232,8 @@
 				"moduleWrapper"
 			],
 			[
-				"max",
-				"max-height"
-			],
-			[
 				"organi",
 				"organizationId"
-			],
-			[
-				"orgn",
-				"organizations"
 			],
 			[
 				"Orga",
@@ -102,18 +258,6 @@
 			[
 				"galler",
 				"galleries"
-			],
-			[
-				"gall",
-				"gallery"
-			],
-			[
-				"new",
-				"newObj"
-			],
-			[
-				"media",
-				"mediaItem"
 			],
 			[
 				"gallery",
@@ -196,10 +340,6 @@
 				"scope"
 			],
 			[
-				"site",
-				"sitePrototype"
-			],
-			[
 				"pad",
 				"padding-top"
 			],
@@ -210,10 +350,6 @@
 			[
 				"col",
 				"colPreview"
-			],
-			[
-				"dra",
-				"draggable"
 			],
 			[
 				"m",
@@ -258,10 +394,6 @@
 			[
 				"pr",
 				"param"
-			],
-			[
-				"get",
-				"getOganization"
 			],
 			[
 				"proto",
@@ -376,149 +508,25 @@
 				"sitePrototypeObj"
 			],
 			[
-				"or",
-				"organizations"
-			],
-			[
 				"inde",
 				"indexOf"
 			],
 			[
 				"siteP",
 				"sitePrototypeObj"
-			],
-			[
-				"res",
-				"resultedPath"
-			],
-			[
-				"style",
-				"stylesheets"
-			],
-			[
-				"create",
-				"createOrganizationsCropper"
-			],
-			[
-				"organization",
-				"organizationsCropper"
-			],
-			[
-				"acco",
-				"accountIdentifier"
-			],
-			[
-				"obje",
-				"objects"
-			],
-			[
-				"remove",
-				"removedElement"
-			],
-			[
-				"elme",
-				"elementId"
-			],
-			[
-				"elmen",
-				"elementIdentifier"
-			],
-			[
-				"ca",
-				"callback"
-			],
-			[
-				"object",
-				"objectIdentifier"
-			],
-			[
-				"obj",
-				"objects"
-			],
-			[
-				"marg",
-				"margin-bottom"
-			],
-			[
-				"biins",
-				"biins"
-			],
-			[
-				"dropable",
-				"droppable-showcase-preview"
-			],
-			[
-				"he",
-				"headers"
-			],
-			[
-				"showcas",
-				"showcaseIdentifier"
-			],
-			[
-				"scop",
-				"scope"
-			],
-			[
-				"Shocase",
-				"showcaseSchema"
-			],
-			[
-				"showca",
-				"showcaseInstance"
-			],
-			[
-				"pos",
-				"position"
-			],
-			[
-				"next",
-				"nextObj"
-			],
-			[
-				"update",
-				"updateShowcaseObjectsPosition"
-			],
-			[
-				"prev",
-				"prevObj"
-			],
-			[
-				"boto",
-				"bottom"
-			],
-			[
-				"eval",
-				"evalPosition"
-			],
-			[
-				"leng",
-				"lengthOfBiins"
-			],
-			[
-				"sh",
-				"showcaseIdentifier"
-			],
-			[
-				"showcaseI",
-				"showcaseId"
-			],
-			[
-				"last",
-				"lastUpdate"
-			],
-			[
-				"find",
-				"find"
-			],
-			[
-				"updat",
-				"updateDate"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "views/_partials/notificationWidget.jade",
+			"settings":
+			{
+				"buffer_size": 361,
+				"line_ending": "Unix"
+			}
+		},
 		{
 			"contents": "\nvar holder = document.getElementById('holder'),\n    tests = {\n      filereader: typeof FileReader != 'undefined',\n      dnd: 'draggable' in document.createElement('span'),\n      formdata: !!window.FormData,\n      progress: \"upload\" in new XMLHttpRequest\n    }, \n    support = {\n      filereader: document.getElementById('filereader'),\n      formdata: document.getElementById('formdata'),\n      progress: document.getElementById('progress')\n    },\n    acceptedTypes = {\n      'image/png': true,\n      'image/jpeg': true,\n      'image/gif': true\n    progress = document.getElementById('uploadprogress'),\n    fileupload = document.getElementById('upload');\n\n\"filereader formdata progress\".split(' ').forEach(function (api) {\n  if (tests[api] === false) {\n    support[api].className = 'fail';\n  } else {\n    // FFS. I could have done el.hidden = true, but IE doesn't support\n    // hidden, so I tried to create a polyfill that would extend the\n    // Element.prototype, but then IE10 doesn't even give me access\n    // to the Element object. Brilliant.\n    support[api].className = 'hidden';\n  }\n});\n\nfunction previewfile(file) {\n  if (tests.filereader === true && acceptedTypes[file.type] === true) {\n    var reader = new FileReader();\n    reader.onload = function (event) {\n      var image = new Image();\n      image.src = event.target.result;\n      image.width = 250; // a fake resize\n      holder.appendChild(image);\n    };\n\n    reader.readAsDataURL(file);\n  }  else {\n    holder.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');\n    console.log(file);\n  }\n}\n\nfunction readfiles(files) {\n    debugger;\n    var formData = tests.formdata ? new FormData() : null;\n    for (var i = 0; i < files.length; i++) {\n      if (tests.formdata) formData.append('file', files[i]);\n      previewfile(files[i]);\n    }\n\n    // now post a new XHR request\n    if (tests.formdata) {\n      var xhr = new XMLHttpRequest();\n      xhr.open('POST', '/devnull.php');\n      xhr.onload = function() {\n        progress.value = progress.innerHTML = 100;\n      };\n\n      if (tests.progress) {\n        xhr.upload.onprogress = function (event) {\n          if (event.lengthComputable) {\n            var complete = (event.loaded / event.total * 100 | 0);\n            progress.value = progress.innerHTML = complete;\n          }\n        }\n      }\n\n      xhr.send(formData);\n    }\n}\n\nif (tests.dnd) { \n  holder.ondragover = function () { this.className = 'hover'; return false; };\n  holder.ondragend = function () { this.className = ''; return false; };\n  holder.ondrop = function (e) {\n    this.className = '';\n    e.preventDefault();\n    readfiles(e.dataTransfer.files);\n  }\n} else {\n  fileupload.className = 'hidden';\n  fileupload.querySelector('input').onchange = function () {\n    readfiles(this.files);\n  };\n}\n\n",
 			"settings":
@@ -528,50 +536,35 @@
 			}
 		},
 		{
-			"file": "routes/sites.js",
+			"file": ".env",
 			"settings":
 			{
-				"buffer_size": 4033,
+				"buffer_size": 275,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/javascripts/angular/sitesController.js",
+			"file": "/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 09-18-2014.txt",
 			"settings":
 			{
-				"buffer_size": 7997,
+				"buffer_size": 838,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "biin_modules/utils.js",
+			"contents": "1)- Installar developer tools\n\n2)- Install brew: \n	 ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\"\n3)- Install Mongo: \n	 brew install mongodb\n4)- Go to Heroku and  invite a participant, follow the instructions for get clone the project\n5)- Crear el directorio de la bd mkdir -p /data/db\n6)- Set folder permisions chmod 777 /data/db\n5)- Installar Sublime",
 			"settings":
 			{
-				"buffer_size": 1805,
-				"line_ending": "Unix"
+				"buffer_size": 396,
+				"line_ending": "Unix",
+				"name": "1)- Installar developer tools"
 			}
 		},
 		{
-			"file": "views/site/index.jade",
+			"file": "public/javascripts/angular/app.js",
 			"settings":
 			{
-				"buffer_size": 6252,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "biin_modules/routes.js",
-			"settings":
-			{
-				"buffer_size": 4256,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "routes/organizations.js",
-			"settings":
-			{
-				"buffer_size": 3638,
+				"buffer_size": 8418,
 				"line_ending": "Unix"
 			}
 		}
@@ -652,62 +645,97 @@
 	},
 	"file_history":
 	[
-		"/Users/lbonilla/Developments/Biin/schemas/organization.js",
-		"/Users/lbonilla/Developments/Biin/routes/organizations.js",
-		"/Users/lbonilla/Developments/Biin/routes/sites.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/routes.js",
-		"/Users/lbonilla/Developments/Biin/schemas/site.js",
-		"/Users/lbonilla/Developments/Biin/views/site/index.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/sitesController.js",
-		"/Users/lbonilla/Developments/Biin/views/organization/index.jade",
-		"/Users/lbonilla/Developments/Biin/biin_modules/utils.js",
-		"/Users/lbonilla/Developments/Biin/views/layout_dashboard.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/elementsController.js",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
-		"/Users/lbonilla/Developments/Biin/views/_partials/galleryWidget.jade",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.less",
-		"/Users/lbonilla/Developments/Biin/views/element/index.jade",
+		"/Users/lbonilla/Developments/Biin/biin.sublime-workspace",
+		"/Users/lbonilla/Developments/Biin/routes/clients.js",
+		"/Users/lbonilla/Developments/Biin_Stuff/AutorizationFlowExample",
+		"/Users/lbonilla/Developments/Biin/views/_partials/notificationTemplate.jade",
+		"/Users/lbonilla/Developments/Biin/biin_modules/app.js",
+		"/Users/lbonilla/Developments/Biin/bin/www",
+		"/Users/lbonilla/Developments/Biin/biin_modules/mobileOauthManager.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/auth.js",
 		"/Users/lbonilla/Developments/Biin/views/showcase/index.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/galleryController.js",
-		"/Users/lbonilla/Developments/Biin/views/_partials/galleryList.jade",
-		"/Users/lbonilla/Developments/Biin/views/gallery/index.jade",
-		"/Users/lbonilla/Developments/Biin/views/_partials/categoriesWidget.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/showcasesController.js",
-		"/Users/lbonilla/Developments/Biin/views/_partials/categoriesWidgetWidget.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/organizationsController.js",
-		"/Users/lbonilla/Developments/Biin/schemas/element.js",
-		"/Users/lbonilla/Developments/Biin/routes/elements.js",
-		"/Users/lbonilla/Developments/Biin/schemas/showcase.js",
-		"/Users/lbonilla/Developments/Biin/routes/biins.js",
+		"/Users/lbonilla/Developments/Biin/.gitignore",
+		"/Users/lbonilla/Developments/Biin/Procfile",
+		"/Users/lbonilla/Developments/Biin/schemas/mobileUser.js",
+		"/Users/lbonilla/Developments/Biin/routes/mobileUser.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/awsManager.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/routes.js",
+		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileAccesTokens.js",
+		"/Users/lbonilla/Developments/Biin/routes/oauthMobileAPIGrants.js",
+		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileRefreshTokens.js",
+		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileAPIGrants.js",
+		"/Users/lbonilla/Developments/Biin/schemas/organization.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/mobileUser.js",
+		"/Users/lbonilla/Developments/Biin/routes/index.js",
+		"/Users/lbonilla/Developments/Biin/routes/organizations.js",
 		"/Users/lbonilla/Developments/Biin/routes/showcases.js",
+		"/Users/lbonilla/Developments/Biin/routes/sites.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/routesMobile.js",
+		"/Users/lbonilla/Developments/Biin/routes/gallery.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/oauthManager.js",
+		"/Users/lbonilla/Developments/Biin/.env",
+		"/Users/lbonilla/Developments/Biin/schemas/gallery.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/utils.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/authManager.js",
+		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileClientsGrants.js",
+		"/Users/lbonilla/Developments/Biin/schemas/site.js",
+		"/Users/lbonilla/Developments/Biin/schemas/user.js",
+		"/Users/lbonilla/Developments/Biin/routes/regions.js",
+		"/Users/lbonilla/Developments/Biin/routes/elements.js",
+		"/Users/lbonilla/Developments/Biin/routes/errors.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/imageManager.js",
+		"/Users/lbonilla/Developments/Biin/.git/MERGE_MSG",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
+		"/Users/lbonilla/Developments/Biin/views/gallery/index.jade",
+		"/Users/lbonilla/Developments/Biin/routes/categories.js",
+		"/Users/lbonilla/Developments/Biin/routes/biins.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/elementsController.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/sitesController.js",
+		"/Users/lbonilla/Developments/Biin/routes/users.js",
+		"/Users/lbonilla/Developments/Biin/views/_partials/galleryWidget.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/galleryController.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/showcasesController.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/organizationsController.js",
+		"/Users/lbonilla/Developments/Biin/node_modules/jsftp/lib/jsftp.js",
+		"/Users/lbonilla/Developments/Biin/sslcert/combined.crt",
+		"/Users/lbonilla/Developments/Biin/views/layout_dashboard.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/ui.js",
+		"/Users/lbonilla/Developments/Biin/views/organization/index.jade",
+		"/Users/lbonilla/Developments/Biin/biin_modules/db.js",
+		"/Users/lbonilla/Developments/Biin/package.json",
+		"/Users/lbonilla/Developments/Biin/sslcert/biin.csr",
+		"/Users/lbonilla/Developments/Biin/sslcert/server.key",
+		"/Users/lbonilla/Developments/Biin/.git/COMMIT_EDITMSG",
+		"/Users/lbonilla/Developments/Biin/views/element/index.jade",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.less",
+		"/Users/lbonilla/Developments/Biin/schemas/showcase.js",
+		"/Users/lbonilla/Developments/Biin/schemas/element.js",
+		"/Users/lbonilla/Developments/Biin/views/site/index.jade",
+		"/Users/lbonilla/Developments/Biin/views/layout_menu.jade",
+		"/Users/lbonilla/Developments/Biin/schemas/error.js",
+		"/Users/lbonilla/Developments/Biin/public/workingFiles/174ecf0f7b35-402f-973a-71d58632bd8b.jpg",
+		"/Users/lbonilla/Developments/Biin/views/_partials/galleryList.jade",
+		"/Users/lbonilla/Developments/Biin/views/_partials/categoriesWidget.jade",
+		"/Users/lbonilla/Developments/Biin/views/_partials/categoriesWidgetWidget.jade",
 		"/Users/lbonilla/Developments/Biin/views/_partials/showcaseList.jade",
 		"/Users/lbonilla/Developments/Biin/schemas/biin.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/app.js",
-		"/Users/lbonilla/Developments/Biin/routes/gallery.js",
 		"/Users/lbonilla/Developments/Biin/views/_partials/organizationList.jade",
 		"/Users/lbonilla/Developments/Biin/views/_partials/siteList.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/ui.js",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/utilities.js",
-		"/Users/lbonilla/Developments/Biin/schemas/gallery.js",
 		"/Users/lbonilla/Developments/Biin/bower_components/angular-slimscroll/angular-slimscroll.js",
 		"/Users/lbonilla/Developments/Biin/views/layout_accountObjects.jade",
-		"/Users/lbonilla/Developments/Biin/biin_modules/imageManager.js",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/h5utils.js",
 		"/Users/lbonilla/Developments/Biin/views/_partials/gallery.jade",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/variables.less",
 		"/Users/lbonilla/Developments/Biin/schemas/category.js",
 		"/Users/lbonilla/Developments/Biin_Stuff/scripts/categories.json",
-		"/Users/lbonilla/Developments/Biin/.env",
-		"/Users/lbonilla/Developments/Biin/routes/categories.js",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/sidebar.less",
 		"/Users/lbonilla/Developments/Biin/bower_components/jquery.slimscroll/jquery.slimscroll.js",
 		"/Users/lbonilla/Developments/Biin/views/_partials/elementList.jade",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/style.css",
 		"/Users/lbonilla/Developments/Biin/bower_components/slimScroll/jquery.slimscroll.js",
-		"/Users/lbonilla/Developments/Biin/.gitignore",
 		"/Users/lbonilla/Developments/Biin/public/workingFiles/file.txt",
 		"/Users/lbonilla/Developments/Biin/bower_components/bootstrap/less/scaffolding.less",
-		"/Users/lbonilla/Developments/Biin/.git/MERGE_MSG",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/controls.less",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/cmsMain.css",
 		"/Users/lbonilla/Developments/Biin/views/layout.jade",
@@ -716,22 +744,15 @@
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/lessTestmain.less",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/main.css",
 		"/Users/lbonilla/Developments/Biin/views/error.jade",
-		"/Users/lbonilla/Developments/Biin/package.json",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/main.less",
 		"/Users/lbonilla/Library/Application Support/Sublime Text 2/Packages/LESS/README.md",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.css",
 		"/Users/lbonilla/Developments/Biin/biin.sublime-project",
 		"/Users/lbonilla/Developments/Biin/views/sites/index.jade",
-		"/Users/lbonilla/Developments/Biin/biin_modules/auth.js",
-		"/Users/lbonilla/Developments/Biin/bin/www",
-		"/Users/lbonilla/Developments/Biin/routes/index.js",
 		"/Users/lbonilla/Developments/Biin/views/layout_organizations.jade",
 		"/Users/lbonilla/Developments/Biin/views/utils/layout_organizations.jade",
-		"/Users/lbonilla/Developments/Biin/routes/users.js",
 		"/Users/lbonilla/Developments/Biin/auth.js",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/naturalSortVersion.js",
-		"/Users/lbonilla/Developments/Biin/routes/regions.js",
-		"/Users/lbonilla/Developments/Biin/schemas/user.js",
 		"/Users/lbonilla/Developments/Biin/views/index.jade",
 		"/Users/lbonilla/Developments/Biin/views/index.html",
 		"/Users/lbonilla/Developments/Biin/views/homeDashboard.jade",
@@ -751,45 +772,18 @@
 		"/Users/lbonilla/Developments/Biin/db.js",
 		"/Users/lbonilla/Developments/Biin/.git/config",
 		"/Users/lbonilla/Documents/brr/biin/showcases.metadata.json",
-		"/Users/lbonilla/Documents/brr/biin/showcases.bson",
-		"/Users/lbonilla/Documents/brr/biin/elements.metadata.json",
-		"/Users/lbonilla/Documents/brr/biin/showcase.metadata.json",
-		"/Users/lbonilla/Downloads/OverZealous-angularjs-naturalsort-e08f13d7777e/src/naturalSortVersion.js",
-		"/Users/lbonilla/Developments/Biin/bower_components/jquery-ui/ui/jquery.ui.widget.js",
-		"/Users/lbonilla/Developments/Biin/bower_components/jquery-ui/ui/jquery-ui.custom.js",
-		"/Users/lbonilla/Developments/Biin/bower_components/jquery-hammerjs/README.md",
-		"/Users/lbonilla/Developments/Biin/views/_partials/showcaseEdit.jade",
-		"/Users/lbonilla/Developments/Biin/schemas/error.js",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/landingMain.css",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/sidebar.css",
-		"/Users/lbonilla/Developments/Biin/bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/custom.js",
-		"/Users/lbonilla/Developments/Biin/views/_partials/showcaseImageEditor.jade",
-		"/Users/lbonilla/Developments/Biin/views/_partials/_showcaseImageEditor",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/s3upload.js",
-		"/Users/lbonilla/Developments/Biin/views/.gitignore",
-		"/Users/lbonilla/Developments/Biin/views/utils/error.jade",
-		"/Users/lbonilla/Developments/Biin/routes/errors.js",
-		"/Users/lbonilla/Developments/Biin/views/error/index.jade",
-		"/Users/lbonilla/Developments/Biin/views/error/Index.jade",
-		"/Users/lbonilla/Developments/Biin/views/Errors",
-		"/Users/lbonilla/Developments/Biin/views/errors/Index.jade",
-		"/Users/lbonilla/Developments/Biin/views/showcase/edit.jade",
-		"/Users/lbonilla/Developments/Biin/views/region/edit.jade",
-		"/Users/lbonilla/Developments/Biin/views/region/index.jade",
-		"/Users/lbonilla/Developments/Biin/views/region/create.jade",
-		"/Users/lbonilla/Developments/Biin/views/_partials/showcase/list.jade",
-		"/Users/lbonilla/Developments/Biin/views_partials/showcase/list.jade"
+		"/Users/lbonilla/Documents/brr/biin/showcases.bson"
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 57.0
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
+			"/Users/lbonilla/Developments/Biin",
 			"/Users/lbonilla/Developments/Biin/public/images",
 			"/Users/lbonilla/Developments/Biin/public/javascripts",
 			"/Users/lbonilla/Developments/Biin",
@@ -798,9 +792,59 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"console.log",
+			"process.env",
+			"DB_CONNECTION",
+			"biinName",
+			"expressValidator",
+			"routes",
+			"})\n",
+			"passport",
+			"ClientPasswordStrategy",
+			"local",
+			"client",
+			"console.lgo",
+			"console.log",
+			"uploadObjectToBuquet",
+			"concat",
+			"galle",
+			"concat",
+			"showcase",
+			"insertGalleryItem",
+			"serverCop",
+			"aut",
+			"copyToFtp",
+			"gallery",
+			"galler",
+			"gallery",
+			"galler",
+			"in",
+			"organizationsCropper",
+			"organization",
+			"push",
+			"update",
+			"galler",
+			"express",
+			"express-session",
+			"http",
+			".imgElementPreview",
+			"draggableShowcaseElement",
+			"draggable-showcase-element",
+			"drag",
+			"drop",
+			"imageCropper",
+			"cropper",
+			"colAppend",
+			".colCategories",
+			"setGallery",
+			"guid",
+			"console",
+			"save",
+			"biinSrv",
+			"console",
 			"$scoper",
 			"major",
 			"mayor",
@@ -878,64 +922,15 @@
 			"setDragBiin",
 			"max-height",
 			"indexOf",
-			"updateShowcaseObjectsPosition",
-			"btn",
-			"index",
-			"delete",
-			"console.log",
-			"glyphicons",
-			"glyphicons-halflings-regular",
-			"btn",
-			"DRAGGABLE",
-			"process",
-			"initialScaleImg",
-			"imgInitW",
-			"that.img",
-			".copperEditor",
-			"createShowcaseCropper",
-			"_uploadImageDirectory",
-			"dropable",
-			"opacity",
-			"px",
-			"})",
-			"overflow: hidden;",
-			".cropperEditor",
-			".cropperEditr",
-			"wrapperShowcase",
-			"sectionContent",
-			"max-height",
-			".main",
-			",],",
-			",], ",
-			"\"3\",], ",
-			"\"3\",            ], ",
-			"\"titleSize1",
-			"\"titleSize1\"titleSize1\"",
-			"\"titleSize1",
-			"titleColor3",
-			"copperEditor",
-			";\n",
-			"moduleWrapper",
-			".navbar-nav > li > a {",
-			".nav-sidebar > li > a {",
-			"@media (min-width: 768px)\n.sidebar {",
-			"a:focus",
-			".nav>li>a:hover, .nav>li>a:focus",
-			"@media (min-width: 768px)\n.sidebar {",
-			"checkbox",
-			"//Bootstrap Checkbox",
-			"$('.checkbox').checkbox();",
-			".nav .open>a, .nav .open>a:hover,",
-			"margin-right: auto;\n	width: 250px;\n	}",
-			"font-family",
-			"bodyDecoder"
+			"updateShowcaseObjectsPosition"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
+			"user",
 			"\"",
 			"'",
 			"biinAppSite"
@@ -949,11 +944,37 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "views/_partials/notificationWidget.jade",
+					"settings":
+					{
+						"buffer_size": 361,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								361,
+								361
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
 					"settings":
 					{
 						"buffer_size": 2823,
@@ -963,8 +984,8 @@
 						"selection":
 						[
 							[
-								2641,
-								2641
+								2682,
+								2682
 							]
 						],
 						"settings":
@@ -981,166 +1002,27 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "routes/sites.js",
-					"settings":
-					{
-						"buffer_size": 4033,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1506,
-								1506
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1393.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
 					"buffer": 2,
-					"file": "public/javascripts/angular/sitesController.js",
+					"file": ".env",
 					"settings":
 					{
-						"buffer_size": 7997,
+						"buffer_size": 275,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4188,
-								4188
+								275,
+								275
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 42.0,
-						"translation.y": 1544.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "biin_modules/utils.js",
-					"settings":
-					{
-						"buffer_size": 1805,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1703,
-								1703
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 350.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "views/site/index.jade",
-					"settings":
-					{
-						"buffer_size": 6252,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5391,
-								5391
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 73.0,
-						"translation.y": 1127.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "biin_modules/routes.js",
-					"settings":
-					{
-						"buffer_size": 4256,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2495,
-								2505
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 25.0,
-						"translation.y": 391.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "routes/organizations.js",
-					"settings":
-					{
-						"buffer_size": 3638,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3515,
-								3515
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 483.0,
-						"translation.y": 1090.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1148,8 +1030,89 @@
 			]
 		},
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 3,
+					"file": "/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 09-18-2014.txt",
+					"settings":
+					{
+						"buffer_size": 838,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								706,
+								706
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"settings":
+					{
+						"buffer_size": 396,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								161,
+								161
+							]
+						],
+						"settings":
+						{
+							"auto_name": "1)- Installar developer tools",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "public/javascripts/angular/app.js",
+					"settings":
+					{
+						"buffer_size": 8418,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7915,
+								7903
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1181,7 +1144,7 @@
 		"cols":
 		[
 			0.0,
-			0.90008981833,
+			0.51909573269,
 			1.0
 		],
 		"rows":
@@ -1220,6 +1183,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 319.0,
+	"side_bar_width": 265.0,
 	"status_bar_visible": true
 }

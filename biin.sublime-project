@@ -2,7 +2,7 @@
 	"folders":
 	[
 		{
-			"path": "/Users/ludusy01/Desktop/BiinCMS",
+			"path": "~/Developments/Biin",
 			"file_exclude_patterns": ["*.sublime-project","*.sublime-workspace"]
 
 		}
