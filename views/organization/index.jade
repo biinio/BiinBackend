@@ -13,7 +13,7 @@ block content
 							div(slimscroll="" slimscroll-option="{height: 'auto'}" )
 								a.col-md-1.max-width(ng-click="create()")
 									button.btn.btn-default.btn-save.max-width
-										span ADD NEW
+										span ADD NEW ORGANIZATION
 								a.col-md-1.module(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
 									.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
 										img.img-responsive(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
