@@ -41,7 +41,7 @@ html
                 if organization == null
                     ul#organizationNav.nav.nav-sidebar.hide(data-organization="")
                         li
-                           p.name="Selected Organization"
+                           span.name="Selected Organization"
                         li
                           a(href="" data-org-link="/organizations/{0}/sites") SITES
                             i.fa.fa-angle-right.angle-icon-sidebar                      
@@ -57,7 +57,7 @@ html
                 else
                     ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
                         li
-                           p.name= organization.name         
+                           span.name= organization.name         
                         li
                           a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites") SITES
                             i.fa.fa-angle-right.angle-icon-sidebar                      

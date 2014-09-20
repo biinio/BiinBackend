@@ -240,6 +240,20 @@ biinServicesModule.directive('notification',function(){
   }
 });
 
+//Define the drop system
+biinServicesModule.directive('guide',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+      $('.guide-header .close-guide',element).on('click touch',function(){
+        //Todo add the missing animation
+        $(element).toggle();
+      })
+    }
+  }
+});
+
+
 //Custom Filters
 
 //Filter for get the intersection of two list of objects

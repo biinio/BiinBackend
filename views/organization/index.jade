@@ -13,12 +13,22 @@ block content
 							div(slimscroll="" slimscroll-option="{height: 'auto'}" )
 								a.col-md-1.max-width(ng-click="create()")
 									button.btn.btn-default.btn-save.max-width
-										p ADD NEW ORGANIZATION
+										span ADD NEW
 								a.col-md-1.module(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
 									.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
 										img.img-responsive(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 										.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
 											.icon.icon-bin-2
+						.boton-Controls
+							#organizationListGuide.user-guide-wrapper(guide)
+								.guide-header
+									span Adding organizations
+									.close-guide
+										.icon.icon-delete-1-1
+								.guide-body
+									p Click on the plus button to add a new organization to your account. You can also click on the organization button to edit.
+									p Remember to save your changes
+							input.form-control.search-box.max-width.center(ng-model="query" placeholder="Search" autofocus)
 					.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null")
 						.animate-switch.max-height
 							ul.workAreaHeader.nav.nav-tabs
@@ -27,7 +37,8 @@ block content
 								li(ng-class="{active:activeTab == 'gallery'}")
 									a(ng-click="changeTabTo('gallery')" ng-if='!organizations[selectedOrganization].isNew') Gallery									
 							.row.workArea.max-height(ng-switch="activeTab" drop-files)
-								.col-md-6.col-sm-6.colPreview.max-height.colAppend(drop)
+								//Workign Area
+								.col-md-6.col-sm-6.colPreview.max-height.colAppend(ng-if="!organizations[selectedOrganization].isNew" drop )
 									.row.max-height
 										.div(slimscroll="" slimscroll-option="{height:'90%'}")
 											a.col-md-1.module(ng-repeat="item in organizations[selectedOrganization].media")
@@ -56,5 +67,5 @@ block content
 											button.btn.btn-default.btn-save(ng-click="removeOrganizationAt(organizations.indexOf(organizations[selectedOrganization]))")
 												span.icon-bin-2
 								//Gallery Tab
-								.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery' ng-if='!organizations[selectedOrganization].isNew')
-									include ../_partials/galleryWidget							
+								.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery')
+									include ../_partials/galleryWidget

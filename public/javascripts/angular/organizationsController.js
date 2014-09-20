@@ -1,9 +1,10 @@
 var biinAppOrganization= angular.module('biinAppOrganizations',['ngRoute','ui.slimscroll','naturalSort','biin.services']);
 
 biinAppOrganization.controller("organizationsController",['$scope','$http','$location','gallerySrv',function($scope,$http,$location,gallerySrv){
+  var defaultTab = 'details';
   $scope.maxMedia =4;
   $scope.selectedOrganization = null;
-  $scope.activeTab ='details';
+  $scope.activeTab =defaultTab;
 
   //Get the List of Objects
   $http.get('api/organizations').success(function(data){
@@ -72,7 +73,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
     $scope.selectedOrganization = index;
     $scope.currentModelId = $scope.organizations[index].identifier;
     $scope.organizationId= $scope.organizations[index].identifier;
-
+    $scope.changeTabTo(defaultTab);
     //Get the list of the gallery
     gallerySrv.getList($scope.currentModelId).then(function(promise){
       $scope.galleries= promise.data.data;
