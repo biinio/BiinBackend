@@ -1,99 +1,99 @@
 doctype html
 html
-  head
-    title= title
-    <!-- Bootstrap -->
-    link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/main.css')
-    link(rel='stylesheet', href='/stylesheets/sidebar.css')
-    link(rel='stylesheet', href='/stylesheets/croppic.css')
-    link(rel="stylesheet" href="/spectrum/spectrum.css")
-    link(rel="stylesheet" href="/bootstrap-select/bootstrap-select.css")
-    <!-- Google Fonts --> 
-    <!--link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,700italic,800,800italic' rel='stylesheet' type='text/css')--> 
-    <!--link(href='http://fonts.googleapis.com/css?family=Lato:400,900italic,900,700italic,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css')--> 
-    <!-- CMS custom CSS -->
-    link(rel="stylesheet" href="/stylesheets/main.css")
-    <!-- Font font-streamline. -->        
-    link(rel="stylesheet" href="/stylesheets/font-streamline.css")
-    script(src="/angular/angular.js")    
-    script(src="/angular-route/angular-route.js")      
-    script(src="/javascripts/angular/app.js")
-    block head_scripts
-    script(src="/javascripts/angular/naturalSortVersion.js") 
-    base(href="/")
-    //block head
-  body
-    include layout_menu
-    .container-fluid.main-container
-      .row.main-container-row
-        .col-sm-2.col-md-2.sidebar
-          ul.nav.nav-sidebar.menu
-            li.form-inline
-              a(href="/home") HOME
-                i.fa.fa-angle-right.angle-icon-sidebar
-            li
-              a(href="/regions") REGIONS
-                i.fa.fa-angle-right.angle-icon-sidebar              
-            li
-                a(href="/organizations") ORGANIZATIONS
-                    i.fa.fa-angle-right.angle-icon-sidebar
-                if organization == null
-                    ul#organizationNav.nav.nav-sidebar.hide(data-organization="")
-                        li
-                           span.name="Selected Organization"
-                        li
-                          a(href="" data-org-link="/organizations/{0}/sites") SITES
-                            i.fa.fa-angle-right.angle-icon-sidebar                      
-                        li
-                          a(href="" data-org-link="/organizations/{0}/showcases") SHOWCASES
-                            i.fa.fa-angle-right.angle-icon-sidebar              
-                        li
-                          a(href="" data-org-link="/organizations/{0}/elements") OBJECTS    
-                            i.fa.fa-angle-right.angle-icon-sidebar
-                        li
-                          a(href="" data-org-link="/organizations/{0}/gallery") GALLERY
-                            i.fa.fa-angle-right.angle-icon-sidebar                                                                       
-                else
-                    ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
-                        li
-                           span.name= organization.name         
-                        li
-                          a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites") SITES
-                            i.fa.fa-angle-right.angle-icon-sidebar                      
-                        li
-                          a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases") SHOWCASES
-                            i.fa.fa-angle-right.angle-icon-sidebar              
-                        li
-                          a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements") OBJECTS    
-                            i.fa.fa-angle-right.angle-icon-sidebar
-                        li
-                          a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") GALLERY
-                            i.fa.fa-angle-right.angle-icon-sidebar                                       
-            li
-              a(href="/errors") ERRORS              
-                        i.fa.fa-angle-right.angle-icon-sidebar            
-        .col-sm-10.col-sm-offset-2.col-md-10.col-md-offset-2.main
-          block content
-    script(src="/jquery/dist/jquery.min.js")
-    script(src="/bootstrap/dist/js/bootstrap.min.js")   
-    script(src="/imagesloaded/imagesloaded.pkgd.js")
-    script(src="/lodash/dist/lodash.js")
-    script(src="/jquery-knob/js/jquery.knob.js")
-    script(src="/javascripts/h5utils.js")        
-    script(src="/javascripts/ui.js")
-    script(src="/javascripts/croppic.js")
-    script(src="/spectrum/spectrum.js")
-    script(src="/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js")      
-    script(src="/bootstrap-select/bootstrap-select.js")
-    script(src="/angular-bootstrap-select/build/angular-bootstrap-select.js") 
-    script(src="/jquery.slimscroll/jquery.slimscroll.js")     
-    script(src="/angular-slimscroll/angular-slimscroll.js")
-    script(src="/jquery-ui/ui/jquery.ui.core.js")
-    script(src="/jquery-ui/ui/jquery.ui.widget.js")
-    script(src="/jquery-ui/ui/jquery.ui.mouse.js")
-    script(src="/jquery-ui/ui/jquery.ui.draggable.js")
-    script(src="/jquery-ui/ui/jquery.ui.droppable.js")
-    script(src="/jquery-ui-touch-punch/jquery.ui.touch-punch.js")
-    script(src="/underscore/underscore.js")            
-    script(src="/javascripts/utilities.js")
+	head
+		title= title
+		<!-- Bootstrap -->
+		link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/main.css')
+		link(rel='stylesheet', href='/stylesheets/sidebar.css')
+		link(rel='stylesheet', href='/stylesheets/croppic.css')
+		link(rel="stylesheet" href="/spectrum/spectrum.css")
+		link(rel="stylesheet" href="/bootstrap-select/bootstrap-select.css")
+		<!-- Google Fonts --> 
+		<!--link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,700italic,800,800italic' rel='stylesheet' type='text/css')--> 
+		<!--link(href='http://fonts.googleapis.com/css?family=Lato:400,900italic,900,700italic,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css')--> 
+		<!-- CMS custom CSS -->
+		link(rel="stylesheet" href="/stylesheets/main.css")
+		<!-- Font font-streamline. -->
+		link(rel="stylesheet" href="/stylesheets/font-streamline.css")
+		script(src="/angular/angular.js")
+		script(src="/angular-route/angular-route.js")
+		script(src="/javascripts/angular/app.js")
+		block head_scripts
+		script(src="/javascripts/angular/naturalSortVersion.js")
+		base(href="/")
+		//block head
+	body
+		include layout_menu
+		.container-fluid.main-container
+			.row.main-container-row
+				.col-sm-2.col-md-2.sidebar
+					ul.nav.nav-sidebar.menu
+						li.form-inline
+							a(href="/home") HOME
+								i.fa.fa-angle-right.angle-icon-sidebar
+						li
+							a(href="/regions") REGIONS
+							i.fa.fa-angle-right.angle-icon-sidebar
+						li
+							a(href="/organizations") ORGANIZATIONS
+								i.fa.fa-angle-right.angle-icon-sidebar
+							if organization == null
+								ul#organizationNav.nav.nav-sidebar.hide(data-organization="")
+									li
+										span.name="Selected Organization"
+									li
+										a(href="" data-org-link="/organizations/{0}/sites") SITES
+											i.fa.fa-angle-right.angle-icon-sidebar
+									li
+										a(href="" data-org-link="/organizations/{0}/showcases") SHOWCASES
+											i.fa.fa-angle-right.angle-icon-sidebar
+									li
+										a(href="" data-org-link="/organizations/{0}/elements") OBJECTS
+											i.fa.fa-angle-right.angle-icon-sidebar
+									li
+										a(href="" data-org-link="/organizations/{0}/gallery") GALLERY
+											i.fa.fa-angle-right.angle-icon-sidebar
+							else
+								ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
+									li
+										span.name= organization.name
+									li
+										a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites") SITES
+											i.fa.fa-angle-right.angle-icon-sidebar
+									li
+										a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases") SHOWCASES
+											i.fa.fa-angle-right.angle-icon-sidebar
+									li
+										a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements") OBJECTS
+											i.fa.fa-angle-right.angle-icon-sidebar
+									li
+										a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") GALLERY
+											i.fa.fa-angle-right.angle-icon-sidebar
+						li
+							a(href="/errors") ERRORS
+							i.fa.fa-angle-right.angle-icon-sidebar
+				.col-sm-10.col-sm-offset-2.col-md-10.col-md-offset-2.main
+					block content
+	script(src="/jquery/dist/jquery.min.js")
+	script(src="/bootstrap/dist/js/bootstrap.min.js")
+	script(src="/imagesloaded/imagesloaded.pkgd.js")
+	script(src="/lodash/dist/lodash.js")
+	script(src="/jquery-knob/js/jquery.knob.js")
+	script(src="/javascripts/h5utils.js")
+	script(src="/javascripts/ui.js")
+	script(src="/javascripts/croppic.js")
+	script(src="/spectrum/spectrum.js")
+	script(src="/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js")
+	script(src="/bootstrap-select/bootstrap-select.js")
+	script(src="/angular-bootstrap-select/build/angular-bootstrap-select.js")
+	script(src="/jquery.slimscroll/jquery.slimscroll.js")
+	script(src="/angular-slimscroll/angular-slimscroll.js")
+	script(src="/jquery-ui/ui/jquery.ui.core.js")
+	script(src="/jquery-ui/ui/jquery.ui.widget.js")
+	script(src="/jquery-ui/ui/jquery.ui.mouse.js")
+	script(src="/jquery-ui/ui/jquery.ui.draggable.js")
+	script(src="/jquery-ui/ui/jquery.ui.droppable.js")
+	script(src="/jquery-ui-touch-punch/jquery.ui.touch-punch.js")
+	script(src="/underscore/underscore.js")
+	script(src="/javascripts/utilities.js")
