@@ -22,4 +22,4 @@ biin.sublime-project.save
 
 .idea/
 
-.idea/*
+.idea/**
