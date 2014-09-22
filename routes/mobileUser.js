@@ -16,7 +16,8 @@ module.exports = function(){
 		req.checkBody('birthDate', 'No valid birthDate is given').notEmpty().len(3, 40);
 		req.checkBody('gender', 'No valid gender is given').notEmpty().len(3, 40);
 
-		res.setHeader('Content-Type', 'application/json')
+		res.setHeader('Content-Type', 'application/json');
+		
 		var errors = req.validationErrors();
 		if (errors) {
         	res.send(errors, 400)

@@ -27,6 +27,8 @@ module.exports =function(db){
 		var model = req.body.model;			
 		delete model._id;
 
+		//Validate the model
+		
 		if(model)
 		{			
 			//If is pushing a new model

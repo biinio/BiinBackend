@@ -17,8 +17,8 @@ module.exports = function (db) {
     , multipartMiddleware = multipart()
     , lessMiddleware = require('less-middleware')
     , methodOverride = require('method-override')
-    , expressValidator = require('express-validator');
- 
+    , expressValidator = require('express-validator'),
+    livereload = require('express-livereload');
    //Define local vars
     var isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -100,6 +100,9 @@ module.exports = function (db) {
                 error: err
             });
         });
+        
+        //Only for development
+        livereload(app, config={})
     }else{
         // production error handler
         // no stacktraces leaked to user
@@ -111,6 +114,8 @@ module.exports = function (db) {
             });
         });
     }
+
+    
 
     app.use(function(req, res, next){
       // the status option, or res.statusCode = 404

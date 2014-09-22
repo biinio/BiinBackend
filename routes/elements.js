@@ -183,7 +183,6 @@ module.exports = function(){
     	})
     }
 
-
     //Other methods
 	getOganization = function(req, res, callback){
 		var identifier=req.param("identifier");

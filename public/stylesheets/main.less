@@ -170,6 +170,19 @@ p{
 	}
 }
 
+.moduleImage{
+	height: @elementWidth;
+	width: @elementWidth;		
+	.moduleImageWrapper{
+		height: @elementWidth;
+		width: @elementWidth;
+		img{
+			width: 100%!important;
+			height: 100%!important;
+		}
+	}
+}
+
 //User guide main style
 .user-guide-wrapper{
 	.guide-header{
@@ -446,7 +459,7 @@ p{
 	position: relative;
 	bottom: 0px;
 	text-align: center;
-	background-color: @seventhColor;
+
 	padding-left: 10px;
 }
 
@@ -459,6 +472,10 @@ p{
 	height: 30px;
 	position: relative;
 	bottom: -9px;
+}
+
+.nav-tabs>li.first>a{
+	background-color: @seventhColor;
 }
 
 .nav>li>a:hover, .nav>li>a:focus {
@@ -516,6 +533,7 @@ li>.nav{
 .colPreview {
 	padding-left: 0px; 
 	padding-right: 0px; 
+	width: @colPreviewWidth!important;
 }
 
 .dropImageMedia{
