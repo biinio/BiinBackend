@@ -3,8 +3,8 @@ module.exports = function () {
 
 	//Get the index page
 	functions.index = function(req, res){
-	  //res.render('index', { title: 'Express' });
-	  res.sendfile('views/index.html');
+	  res.render('index', { title: 'Biin' });
+	  //res.sendfile('views/index.html');
 	};
 
 	//Get the Login

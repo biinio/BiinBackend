@@ -239,6 +239,7 @@ ul {
   -o-transition: all 100ms ease-in-out;
   -ms-transition: all 100ms ease-in-out;
   transition: all 100ms ease-in-out;
+  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
 /*------------------------------------------*/
 /*	 Navbar Scroll   
@@ -332,12 +333,14 @@ ul {
   font-weight: 900;
   line-height: 95%;
   margin-bottom: 20px;
+  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
 .intro-content h3 {
   font-size: 200%;
   font-weight: 400;
   text-transform: uppercase;
   margin-top: 0;
+  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
 /*------------------------------------------*/
 /*	 Intro Page Pagination   
@@ -385,6 +388,7 @@ ul {
   position: absolute;
   bottom: 5%;
   z-index: 99;
+  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
 .scroll-down span {
   background: transparent;
@@ -747,6 +751,7 @@ ul {
    ========================================================================== */
 .testimonials {
   margin: 50px 8%;
+  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
 .slides {
   margin: 10px 0 50px;
@@ -1155,7 +1160,7 @@ nav a#pull {
 }
 .forgotPass {
   font-size: 12px;
-  color: red;
+  /*color: red;*/
   margin-top: -17px;
 }
 .stayLogged {
