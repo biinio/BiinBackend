@@ -9,6 +9,42 @@ var path = require("path"), uuid=require('node-uuid'),
 module.exports = function(){
 	var functions={};
     
+  //Validations Utils
+  //modelValidations: Validations for the model
+  //modelObject: Object request to validate
+  //parent: If the model to validate has a parent
+  functions.validate = function(modelValidations,modelObject,parent){
+    var errors ={};
+    var errors = null;
+    if(modelValidations){
+      if(parent)
+        parent+=".";
+
+      //Required Validations
+      if(modelValidations.required){
+        for(var req_i=0; req_i< modelValidations.required.length;req_i++){
+          modelObject.checkBody(parent+modelValidations.required[req_i],'The {field} is required').notEmpty();
+        }
+      }
+      //Length Validations
+      if(modelValidations.len){
+        for(var len_i=0; len_i<modelValidations.len.length;len_i++){
+          modelObject.assert(parent+modelValidations.len[len_i].field,modelValidations.len[len_i].min+' to '+ modelValidations.len[len_i].max +" characters required").len(modelValidations.len[len_i].min,modelValidations.len[len_i].max);
+        }
+      }
+
+      //Email Validation
+      if(modelValidations.email){
+        for(var email_i=0; email_i<modelValidations.email.length;email_i++){
+          modelObject.assert(parent+modelValidations.email[email_i],'valid email required').isEmail();
+        }
+      }
+
+     errors=  modelObject.validationErrors();
+    }
+    return errors;
+  }
+
   //Get a random UIID
   functions.getGUID = function(){
    return uuid.v4();
@@ -81,6 +117,8 @@ module.exports = function(){
   function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+
   return functions;	
 }
 

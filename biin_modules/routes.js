@@ -3,7 +3,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Others routes
     var routes = require('../routes')();
     var clients = require('../routes/clients')(db);
-    var organizations = require('../routes/organizations')(db);
+    var organizations = require('../routes/organizations')();
     var showcases = require('../routes/showcases')(db);
     var sites = require('../routes/sites')();
     var regions = require('../routes/regions')(db);

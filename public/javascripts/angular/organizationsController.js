@@ -89,20 +89,23 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
   $scope.save= function(){
       var organizationModel = $scope.organizations[$scope.selectedOrganization];
       $http.put('api/organizations/'+$scope.currentModelId,{model:organizationModel}).success(function(data,status){
-      if("replaceModel" in data){
-        $scope.organizations[$scope.selectedOrganization] = data.replaceModel;
-        $scope.currentModelId=$scope.organizations[$scope.selectedOrganization].identifier;
-        $scope.organizationId= $scope.organizations[$scope.selectedOrganization].identifier;
-        $scope.organizationPrototype =  $.extend(true, {}, $scope.organizationPrototypeBkp);
-        $scope.sitePrototype = $.extend(true,{},$scope.sitePrototypeBkp);
+      
+      if(status==400){
+        displayValidationErrors(data);
+      }else{
+        if("replaceModel" in data){
+          $scope.organizations[$scope.selectedOrganization] = data.replaceModel;
+          $scope.currentModelId=$scope.organizations[$scope.selectedOrganization].identifier;
+          $scope.organizationId= $scope.organizations[$scope.selectedOrganization].identifier;
+          $scope.organizationPrototype =  $.extend(true, {}, $scope.organizationPrototypeBkp);
+          $scope.sitePrototype = $.extend(true,{},$scope.sitePrototypeBkp);
+        }
+        if(data.state=="success")
+          $scope.succesSaveShow=true;
+
+        setOrganization();
       }
-      if(data.state=="success")
-        $scope.succesSaveShow=true;
-
-      setOrganization();
-    }); 
-
-
+    });
   }
 
   //Set the gallery index when start draggin

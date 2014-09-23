@@ -48,24 +48,25 @@ block content
 														.icon.icon-bin-2
 								.col-md-5.col-sm-5.max-height(ng-switch-when='details')
 									.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
-										.row
-											h1 Organization Information
-										.row
-											p Add all your organization information here. Information that will be shown on the mobile app is mark with **
-										.row
-											input.form-control( ng-model="organizations[selectedOrganization].name" placeholder='Name **')
-										.row
-											input.form-control( ng-model="organizations[selectedOrganization].brand"  placeholder='Brand name **')
-										.row
-											input.form-control( ng-model="organizations[selectedOrganization].description"  placeholder='Description **')
-										.row
-											input.form-control( ng-model="organizations[selectedOrganization].extraInfo"  placeholder='Extra Information **')												
-										.row(ng-if="!organizations[selectedOrganization].isNew")
-											label Organization Id: {{organizations[selectedOrganization].identifier}}																	
-										.row
-											button.btn.btn-default.btn-save(ng-click="save()") SAVE
-											button.btn.btn-default.btn-save(ng-click="removeOrganizationAt(organizations.indexOf(organizations[selectedOrganization]))")
-												span.icon-bin-2
+										form(novalidate)
+											.row
+												h1 Organization Information
+											.row
+												p Add all your organization information here. Information that will be shown on the mobile app is mark with **
+											.row
+												input.form-control( ng-model="organizations[selectedOrganization].name" placeholder='Name **' required)
+											.row
+												input.form-control( ng-model="organizations[selectedOrganization].brand"  placeholder='Brand name **' required)
+											.row
+												input.form-control( ng-model="organizations[selectedOrganization].description"  placeholder='Description **' required)
+											.row
+												input.form-control( ng-model="organizations[selectedOrganization].extraInfo"  placeholder='Extra Information')												
+											.row(ng-if="!organizations[selectedOrganization].isNew")
+												label Organization Id: {{organizations[selectedOrganization].identifier}}																	
+											.row
+												button.btn.btn-default.btn-save(ng-click="save()") SAVE
+												button.btn.btn-default.btn-save(ng-click="removeOrganizationAt(organizations.indexOf(organizations[selectedOrganization]))")
+													span.icon-bin-2
 								//Gallery Tab
 								.col-md-5.col-sm-5.max-height.col-splitter(ng-switch-when='gallery')
 									include ../_partials/galleryWidget

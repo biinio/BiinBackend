@@ -1,12 +1,21 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var utils = require('../biin_modules/utils')();
 
-var orgObj ={
+//Define the validations for an organization
+var validations={
+	required :['accountIdentifier','name','brand','description'],
+	len :[
+			{field:'name',min:3,max:100},
+			{field:'brand',min:3,max:100},
+			{field:'description',min:3,max:202}
+		]
+};
+
+var orgSchema = new Schema({
 	identifier:{type:String, default:"-1", index:true},
 	accountIdentifier:{type:String, default:"000"},
 	name: {type:String, default:""},
-	title1:{type:String, default:""},
-	title1:{type:String, default:""},
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
 	extraInfo:{type:String, default:""},
@@ -67,8 +76,11 @@ var orgObj ={
 				dateUploaded:{type:String, default:""},
 				url:{type:String,default:""}
 			}]
-}
+});
 
-var orgSchema = new Schema(orgObj);
+
+orgSchema.methods.validations = function() {
+	return validations;
+};
 
 module.exports = mongoose.model('organizations', orgSchema);

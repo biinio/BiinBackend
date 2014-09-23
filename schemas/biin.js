@@ -10,3 +10,4 @@ module.exports = moongose.model('biins',{
 			registerDate:{type:String, Default:""},
 			showcaseAsigned:{type:String, Default:""}
 });
+

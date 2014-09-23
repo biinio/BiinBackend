@@ -19,11 +19,12 @@ module.exports = function (db) {
     , methodOverride = require('method-override')
     , expressValidator = require('express-validator'),
     livereload = require('express-livereload');
-   //Define local vars
-    var isDevelopment = process.env.NODE_ENV === 'development';
 
+    var isDevelopment = process.env.NODE_ENV === 'development';
+    schemasValidations = {};
+    
     // At the top of your web.js
-    process.env.PWD = process.cwd()
+    process.env.PWD = process.cwd();
 
     //SSL Force Confifuration
     var forceSsl = function (req, res, next) {

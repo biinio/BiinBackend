@@ -3,22 +3,16 @@ module.exports = function(){
 	var mobileUser = require('../schemas/mobileUser'), 
 		util = require('util'),
 		moment = require('moment'),
-		bcrypt = require('bcrypt');
+		bcrypt = require('bcrypt'),
+		utils =require("../biin_modules/utils")();
+
 	var functions ={};
 
 	//PUT a new Mobile User
 	functions.set = function(req,res){
 
-		req.checkBody('firstName', 'No valid first name is given').notEmpty().len(3, 40);
-		req.checkBody('lastName', 'No valid last name is given').notEmpty().len(3, 40);
-		req.checkBody('biinName', 'No valid biin name is given').notEmpty().len(3, 40);
-		req.checkBody('password', 'No valid password is given').notEmpty().len(3, 40);
-		req.checkBody('birthDate', 'No valid birthDate is given').notEmpty().len(3, 40);
-		req.checkBody('gender', 'No valid gender is given').notEmpty().len(3, 40);
-
 		res.setHeader('Content-Type', 'application/json');
-		
-		var errors = req.validationErrors();
+		var errors = utils.validate(new mobileUser().validations(),req,'');
 		if (errors) {
         	res.send(errors, 400)
     	} else {

@@ -124,6 +124,15 @@ setOrganizationMenu = function(organizationId, organizationName){
     }
   }
 
+//Display the validations Errors
+displayValidationErrors=function(errors){
+    for(var i =0; i<errors.length;i++){
+        errors[i].msg;  //The message description ** Could be a resource
+        errors[i].param; //The parameter
+        errors[i].value;
+
+    }
+}
 //Angular Custom Directives
 /*
 angular.module('biin.alertManager', []).directive('alertManager', function() {

@@ -1,4 +1,4 @@
-module.exports =function(db){
+module.exports =function (){
 
 	//Custom Utils
 	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path');
@@ -27,50 +27,58 @@ module.exports =function(db){
 		var model = req.body.model;			
 		delete model._id;
 
+		//Validate the Model
+		var errors =utils.validate(new organization().validations(),req,'model');
+
 		//Validate the model
-		
-		if(model)
-		{			
-			//If is pushing a new model
-			if('isNew' in model){
+		res.setHeader('Content-Type', 'application/json');		
 
-				delete model.isNew;
-                
-                var newModel = new organization(model);
-                organizationIdentifier = utils.getGUID();
+		if(errors){
+			res.send(errors,400);
+		}else
+		{
+			if(model)
+			{			
+				//If is pushing a new model
+				if('isNew' in model){
 
-				//Set the account and de user identifier
-                newModel.identifier=organizationIdentifier
-				newModel.accountIdentifier= req.user.accountIdentifier;
-				
-				//Perform an create
-				newModel.save(function(err){
-					if(err)
-						throw err;
-					else{
-							//Return the state and the object
-							res.json({state:"success",replaceModel:newModel});
-					}
-				});
-				
-			}else{
-				organization.update(
-	                     { identifier:organizationIdentifier},
-	                     { $set :model },
-	                     { upsert : true },
-	                     function(err){
-	                     	if(err){
-	                     		throw err;
-	                     		res.json(null);
-	                     	}
-							else{
-	                            //Return the state
-								res.json({state:'success',replaceModel:model});							
-							}
-	                     }
-	                   );
-			}				
-			
+					delete model.isNew;
+	                
+	                var newModel = new organization(model);
+	                organizationIdentifier = utils.getGUID();
+
+					//Set the account and de user identifier
+	                newModel.identifier=organizationIdentifier
+					newModel.accountIdentifier= req.user.accountIdentifier;
+					
+					//Perform an create
+					newModel.save(function(err){
+						if(err)
+							throw err;
+						else{
+								//Return the state and the object
+								res.json({state:"success",replaceModel:newModel});
+						}
+					});
+					
+				}else{
+					organization.update(
+		                     { identifier:organizationIdentifier},
+		                     { $set :model },
+		                     { upsert : true },
+		                     function(err){
+		                     	if(err){
+		                     		throw err;
+		                     		res.json(null);
+		                     	}
+								else{
+		                            //Return the state
+									res.json({state:'success',replaceModel:model});							
+								}
+		                     }
+		                   );
+				}							
+			}
 		}
 	}
 
