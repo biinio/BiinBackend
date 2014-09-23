@@ -73,7 +73,7 @@ biinServicesModule.directive("dropFiles", function(){
         restrict:'A',
         link:function(scope,element,attrs){       
           var drop = element;
-          var autoInsert = attrs["drop-Files"] =='';
+          var autoInsert = typeof(attrs["drop-Files"])==='undefined' || attrs["drop-Files"] =='';
 
           //dragIcon.src="/images/headerBg.jpg";
           //Tells the browser that we *can* drop on this target

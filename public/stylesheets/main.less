@@ -32,6 +32,27 @@ p{
 	height: 25px;
 }
 
+//Inputs to validate
+form[novalidate]{
+	input{
+		border-left-width: 8px;
+		border-color: #3498db;
+		border-style:solid;
+	}
+}
+
+input[require].ng-pristine{
+	border-color: #e74c3c;
+}
+
+input.ng-invalid.ng-dirty{
+	border-color:#e74c3c;
+}
+
+input.ng-valid.ng-dirty{
+	border-color: #2ecc71;
+}
+
 .search-control input{
 	display: table-cell;
 }
@@ -181,6 +202,13 @@ p{
 			height: 100%!important;
 		}
 	}
+}
+
+//Drop images style
+.drop-images{
+	border-style: dashed;
+	border-color: black;
+	text-align: center;
 }
 
 //User guide main style

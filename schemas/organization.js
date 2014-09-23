@@ -4,12 +4,7 @@ var utils = require('../biin_modules/utils')();
 
 //Define the validations for an organization
 var validations={
-	required :['accountIdentifier','name','brand','description'],
-	len :[
-			{field:'name',min:3,max:100},
-			{field:'brand',min:3,max:100},
-			{field:'description',min:3,max:202}
-		]
+	required :['accountIdentifier','name','brand','description']
 };
 
 var orgSchema = new Schema({

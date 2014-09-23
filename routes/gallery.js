@@ -95,7 +95,7 @@ module.exports =function(){
 		}
 
 		else{
-			var galToUpload =uploadFile(req.files.file,serverCopy);
+			var galToUpload =uploadFile(req.files.file);
 			filesUploaded.push(galToUpload);
 			//Lets update the buquet
 			setTimeout(organizationUpdate,60*60);

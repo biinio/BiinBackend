@@ -2,7 +2,7 @@ extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/organizationsController.js")
 block content	
-	#sectionContent.max-height(ng-app="biinAppOrganizations" ng-controller="organizationsController")
+	#sectionContent.max-height(ng-app="biinAppOrganizations" ng-controller="organizationsController" drop-files="")
 		#wrapperHeader.row
 		#wrapperContent.row.max-height
 			.max-height
@@ -10,7 +10,7 @@ block content
 					.col-lg-4.col-md-3.col-sm-3.col-list.max-height
 						.row.max-height(ng-class="{'max-height':selectedOrganization==null}")
 							// ---------- Organizations  List ----------
-							div(slimscroll="" slimscroll-option="{height: 'auto'}" )
+							div(slimscroll="" slimscroll-option="{height: 'auto'}")
 								a.col-md-1.max-width(ng-click="create()")
 									button.btn.btn-default.btn-save.max-width
 										span ADD NEW ORGANIZATION
@@ -19,6 +19,7 @@ block content
 										img.img-responsive(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 										.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
 											.icon.icon-bin-2
+
 						.boton-Controls
 							#organizationListGuide.user-guide-wrapper(guide)
 								.guide-header
@@ -34,39 +35,39 @@ block content
 							ul.workAreaHeader.nav.nav-tabs
 								li(ng-class="{active:activeTab == 'details'}" class='first')
 									a(ng-click="changeTabTo('details')") Details
-								li(ng-class="{active:activeTab == 'gallery'}" class='second')
-									a(ng-click="changeTabTo('gallery')" ng-if='!organizations[selectedOrganization].isNew') Gallery									
-							.row.workArea.max-height(ng-switch="activeTab" drop-files)
+							.row.workArea.max-height(ng-switch="activeTab")
 								//Workign Area
-								.col-md-7.col-sm-7.colPreview.max-height.colAppend(ng-if="!organizations[selectedOrganization].isNew" drop )
+								.col-md-7.col-sm-7.colPreview.max-height.colAppend(ng-if='!organizations[selectedOrganization].isNew')
 									.row.max-height
-										.div(slimscroll="" slimscroll-option="{height:'90%'}")
-											a.col-md-1.moduleImage(ng-repeat="item in organizations[selectedOrganization].media")
+										div(slimscroll="" slimscroll-option="{height:'auto'}")
+											a.col-md-1.moduleImage(ng-repeat="item in organizations[selectedOrganization].media" ng-if="organizations[selectedOrganization].media.length>0")
 												.moduleImageWrapper.contentHideButtons
 													img(ng-src="{{item.imgUrl}}" pending-indicator)
 													.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(organizations[selectedOrganization].media.indexOf(item))")
 														.icon.icon-bin-2
+											a.col-md-1.moduleImage.drop-images(ng-if="organizations[selectedOrganization].media.length<=0")
+												p Drop Images Here or Click to Upload...
 								.col-md-5.col-sm-5.max-height(ng-switch-when='details')
 									.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
-										form(novalidate)
+										form(name="frmOrganizations " novalidate)
 											.row
 												h1 Organization Information
 											.row
 												p Add all your organization information here. Information that will be shown on the mobile app is mark with **
 											.row
-												input.form-control( ng-model="organizations[selectedOrganization].name" placeholder='Name **' required)
+												input.form-control(type="text" name="name" ng-model="organizations[selectedOrganization].name" placeholder='Name **' required)
+												span(class="error" ng-show="frmOrganizations.name.$error.required") The name field is required
 											.row
-												input.form-control( ng-model="organizations[selectedOrganization].brand"  placeholder='Brand name **' required)
+												input.form-control(type="text" name="brand" ng-model="organizations[selectedOrganization].brand"  placeholder='Brand name **' required)
+												span(class="error" ng-show="frmOrganizations.brand.$error.required") The brand field is required													
 											.row
-												input.form-control( ng-model="organizations[selectedOrganization].description"  placeholder='Description **' required)
+												input.form-control(type="text" name="description" ng-model="organizations[selectedOrganization].description"  placeholder='Description **' required)
+												span(class="error" ng-show="frmOrganizations.description.$error.required") The description field is required																										
 											.row
-												input.form-control( ng-model="organizations[selectedOrganization].extraInfo"  placeholder='Extra Information')												
+												input.form-control(type="text" ng-model="organizations[selectedOrganization].extraInfo"  placeholder='Extra Information')												
 											.row(ng-if="!organizations[selectedOrganization].isNew")
 												label Organization Id: {{organizations[selectedOrganization].identifier}}																	
 											.row
-												button.btn.btn-default.btn-save(ng-click="save()") SAVE
+												button.btn.btn-default.btn-save(ng-click="save()" ng-disabled="frmOrganizations.$invalid") SAVE
 												button.btn.btn-default.btn-save(ng-click="removeOrganizationAt(organizations.indexOf(organizations[selectedOrganization]))")
 													span.icon-bin-2
-								//Gallery Tab
-								.col-md-5.col-sm-5.max-height.col-splitter(ng-switch-when='gallery')
-									include ../_partials/galleryWidget

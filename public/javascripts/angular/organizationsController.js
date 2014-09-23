@@ -15,7 +15,6 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
 
     //Site Prototypes Backup
     $scope.organizationPrototypeBkp =  $.extend(true, {}, data.prototypeObj);    
-    $scope.sitePrototypeBkp = $.extend(true, {}, data.sitePrototypeObj);    
 
     //Select the first showcase
     if(data.data.length>0)
@@ -98,7 +97,6 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
           $scope.currentModelId=$scope.organizations[$scope.selectedOrganization].identifier;
           $scope.organizationId= $scope.organizations[$scope.selectedOrganization].identifier;
           $scope.organizationPrototype =  $.extend(true, {}, $scope.organizationPrototypeBkp);
-          $scope.sitePrototype = $.extend(true,{},$scope.sitePrototypeBkp);
         }
         if(data.state=="success")
           $scope.succesSaveShow=true;
@@ -139,13 +137,20 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
   //On gallery change method                
   $scope.onGalleryChange= function(obj,autoInsert){
     //Do a callback logic by caller
+    if(!$scope.galleries)
+      $scope.galleries =[];
     $scope.galleries = $scope.galleries.concat(obj);;
     $scope.$digest();
 
     if(autoInsert)
     {
       //Insert the images to the preview
-      var cantToInsert=$scope.maxMedia- $scope.galleries[$scope.selectedOrganization].media.length;
+      var mediaCount =0;
+      if(typeof($scope.organizations[$scope.selectedOrganization].media)!=='undefined')
+        mediaCount=$scope.organizations[$scope.selectedOrganization].media.length;
+      var cantToInsert=$scope.maxMedia- mediaCount;
+      if(obj.length<cantToInsert)
+        cantToInsert = obj.length;
       for(var i=0; i< cantToInsert; i++){
         $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
       }      
