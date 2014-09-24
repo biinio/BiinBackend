@@ -23,113 +23,40 @@ block content
 											.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))")
 												.icon.icon-bin-2
 						.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedSite!=null")
-							.animate-switch.max-height
-								
-								//Tab Options
-								.row
-									ul.workAreaHeader.nav.nav-tabs
-										li(ng-class="{active:activeTab == 'details'}")
-											a(ng-click="changeTabTo('details')") Details
-										li(ng-class="{active:activeTab == 'categories'}")
-											a(ng-click="changeTabTo('categories')") Categories
-										li(ng-class="{active:activeTab == 'gallery'}")
-											a(ng-click="changeTabTo('gallery')") Gallery													
-								//Details Tab
-								.row.workArea.max-height.colAppend(ng-switch='activeTab' drop-files)
-									.col-md-6.col-sm-6.colPreview.max-height(drop)
-										//The media objects goes here
-										.row.middle-heigth
-											button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="save()") SAVE
-											.div(slimscroll="" slimscroll-option="{height:'90%'}")
-												a.col-md-1.module(ng-repeat="item in sites[selectedSite].media")
-													.moduleWrapper.moduleWrapper-inverse.contentHideButtons
-														img.img-responsive(ng-src="{{item.imgUrl}}" pending-indicator)
-														.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(sites[selectedSite].media.indexOf(item))")
-															.icon.icon-bin-2										
-										//Put the biins for the site			
-										.row.quarter-heigth.colBiins.preview-row-division
-											.max-width.preview-title-division
-												h5 Biins													
-											.div(slimscroll="" slimscroll-option="{height:'90%'}")								
-												a.col-md-1.module(ng-click="changeTabTo('biins'); createBiin()")				
-													.moduleWrapper.remove-module
-														.btn-rounded.center.icon.icon-add-1									
-												a.col-md-1.module(ng-repeat="biin in sites[selectedSite].biins" ng-click="changeTabTo('biins');editBiin(sites[selectedSite].biins.indexOf(biin))")
-													.moduleWrapper.moduleWrapper-inverse.contentHideButtons(ng-class="{active: sites[selectedSite].biins.indexOf(biin) == selectedBiin}")
-														p {{biin.name}}
-														p {{biin._id}}																							
-										//Put the categories for the site
-										.row.quarter-heigth.colCategories.preview-row-division
-											.max-width.preview-title-division
-												h5 Categories								
-											.div(slimscroll="" slimscroll-option="{height:'90%'}")								
-												a.col-md-1.module(ng-click="changeTabTo('categories')")
-													.moduleWrapper.remove-module
-														.btn-rounded.center.icon.icon-add-1									
-												a.col-md-1.module(ng-repeat="cat in sites[selectedSite].categories" ng-click="changeTabTo('categories')")
-													.moduleWrapper.moduleWrapper-inverse.contentHideButtons
-														p {{cat.displayName}}
-														.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeCategoryAt(sites[selectedSite].categories.indexOf(cat))")
-															.icon.icon-bin-2
-									//Details Tab
-									.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='details')
-										#details
-											.row
-												label Name:
-											.row
-												input.form-control( ng-model="sites[selectedSite].name")											
-											.row
-												label Title 1:
-											.row
-												input.form-control( ng-model="sites[selectedSite].title1")												
-											.row
-												label Title 2:
-											.row
-												input.form-control( ng-model="sites[selectedSite].title2")												
-											.row
-												label Title 3:
-											.row
-												input.form-control( ng-model="sites[selectedSite].title3")																								
-											.row
-												label Description:
-											.row
-												input.form-control( ng-model="sites[selectedSite].description")
-											.row 
-												label UUID
-											.row 
-												p {{organizationId}}
-											.row
-												label Major:
-											.row
-												p {{sites[selectedSite].major}}
-									//Categories Tab
-									.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='categories')
-										include ../_partials/categoriesWidget
-									//Biins Tab
-									.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='biins')
-											#biins
-												.row
-													label UUID:
-												.row
-													p {{sites[selectedSite].biins[selectedBiin].proximityUUID}}																		
-												.row
-													label Major:
-												.row
-													p {{sites[selectedSite].biins[selectedBiin].major}}																		
-												.row
-													label Minor:
-												.row
-													p {{sites[selectedSite].biins[selectedBiin].minor}}																											
-												.row
-													label Name:
-												.row
-													input.form-control(ng-model="sites[selectedSite].biins[selectedBiin].name")
-												.row
-													label location:
-												.row
-													input.form-control(ng-model="sites[selectedSite].biins[selectedBiin].location")
-												.row
-													button.btn.btn-default(ng-click="saveNewBiin()") Done
-									//Gallery Tab
-									.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery')
-										include ../_partials/galleryWidget
+							.animate-switch.max-height.wizard-wrapper
+								.wizard-body.wizard(ng-switch="wizardPosition")
+									#wizardOption1.wizard(ng-switch-when="1" )										
+										include wizardDetails
+									#wizardOption2.wizard(ng-switch-when="2" style="background-color:black;")
+										span Wizar 2										
+									#wizardOption3.wizard(ng-switch-when="3" )
+										span Wizar 3
+									#wizardOption4.wizard(ng-switch-when="4" )
+										span Wizar 4				
+									#wizardOption5.wizard(ng-switch-when="5" )
+										span Wizar 5
+								.wizard-options
+									row
+										.col-md-1
+											span space
+										.col-md-1
+											#option1(ng-click="wizardPosition =1")
+												span Option1
+										.col-md-1												
+											#option2(ng-click="wizardPosition =2")
+												span Option2
+										.col-md-1												
+											#option3(ng-click="wizardPosition =3")
+												span Option3
+										.col-md-1												
+											#option4(ng-click="wizardPosition =4")
+												span Option4
+										.col-md-1												
+											#option5(ng-click="wizardPosition =5")
+												span Option5
+										.col-md-3
+											span space by 3
+										.col-md-1
+											span check
+										.col-md-1
+											span space

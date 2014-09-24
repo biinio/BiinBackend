@@ -1,4 +1,4 @@
-var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services']);
+var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate']);
 
 var tabBiin="biins", tabDetails="details";
 
@@ -13,6 +13,8 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.selectedBiin = null;
   $scope.currentModelId = null;
   $scope.organizationId = selectedOrganization();
+  $scope.wizardPosition =1;
+  $scope.newTagField="";
 
   //Draggable Properties
   $scope.dragCategoryIndex =-1;
@@ -115,6 +117,30 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     });          
   } 
 
+  //Details
+
+  //Add tag information
+  $scope.addSiteTag=function(value){
+
+    if(!$scope.sites[$scope.selectedSite].searchTags)
+      $scope.sites[$scope.selectedSite].searchTags=[];
+    
+    if(value!=""){    
+      //If the values is not in the array
+      if($.inArray(value, $scope.sites[$scope.selectedSite].searchTags))
+      {
+        $scope.sites[$scope.selectedSite].searchTags.push(value);
+        $scope.newTagField=""; 
+      }
+
+    }
+  }
+
+  $scope.removeSiteTag=function(index){
+    if($scope.sites[$scope.selectedSite].searchTags.length>index){
+      $scope.sites[$scope.selectedSite].searchTags.splice(index,1);
+    }
+  }
   //Biins
 
   //Create a  new Biin
@@ -151,6 +177,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.selectedBiin=null;
     $scope.activeTab = tabDetails;
   }
+
 
   //Categories
 

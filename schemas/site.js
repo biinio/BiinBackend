@@ -8,11 +8,14 @@ var siteObj ={
 	majorCounter:{type:Number,default:0},
 	name: {type:String, default:""},
 	title1:{type:String, default:""},
+	colorTitle1:{type:String,default:""},
 	title2:{type:String, default:""},	
+	colorTitle2:{type:String,default:""},
 	title3:{type:String, default:""},	
 	description: {type:String, default:""},
 	major:{type: Number, default:0},
 	minorCounter:{type: Number, default:0},
+	searchTags:[],
 	categories:[
 		{
 			identifier:{type:String, index:true, default:"-1"},

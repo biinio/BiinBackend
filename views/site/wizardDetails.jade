@@ -1,0 +1,34 @@
+.section
+	h1 Site Information
+	p Add site information to your organization here. Information that will be shown on the mobile app is mark with **
+.section
+	h2 Select your colors
+	row.color-control
+		.col-md-9
+			input.form-control.title-value(ng-model="sites[selectedSite].tittle1" name="title1" type="text" placeholder="Site Tittle **" required )
+		.col-md-3
+			input.form-control.color-picker(ng-model="sites[selectedSite].colorTitle1" name="tittle2" type="text" placeholder="Main Color" required)
+	.row.color-control
+		.col-md-9
+			input.form-control.title-value(ng-model="sites[selectedSite].tittle2" name="title1" type="text" placeholder="Site Tittle **" required )
+		.col-md-3
+			input.form-control.color-picker(ng-model="sites[selectedSite].colorTitle2" name="tittle2" type="text" placeholder="Border Color" required)
+.section
+	h2 About your bussines
+	p Our customer want to know more about you!! Scroll throw and answer the following questions.
+.section
+	h2 Search Criteria
+	p This information could be useful to others for found your information
+	row
+		.search-criteria-control
+			.search-body
+				div(slimscroll="" slimscroll-option="{height:'auto'}")
+					.col-md-1.tag(ng-repeat="tag in sites[selectedSite].searchTags")
+						.btn-close(ng-click="removeSiteTag($index)")
+							span X
+						p {{tag}}
+			.search-add
+				.col-md-9
+					input.form-control(ng-model="newTagField")
+				.col-md-3
+					button.btn.btn-default(ng-click="addSiteTag(newTagField);newTagField=''") Add
