@@ -1,3 +1,9 @@
+/* ------------------------------------------------------
+			Main CSS Style for Biin App CMS
+   ------------------------------------------------------*/
+/*------------------------------------------*/
+/*	Variables
+/*------------------------------------------*/
 /*
  * Base structure
  */
@@ -51,20 +57,26 @@ body {
 }
 .nav-sidebar .nav-item a div {
   font-size: 30px;
+  color: #999999;
+  text-shadow: 5px 2px 5px #231f20;
+}
+.nav-sidebar .nav-item a div:hover {
+  font-size: 30px;
+  color: #069fce;
+  text-shadow: 5px 2px 5px #231f20;
 }
 .nav-sidebar > li > a {
   padding-right: 20px;
   padding-left: 20px;
   color: #fff;
 }
-.nav-sidebar > .active > a {
-  color: #fff;
-  background-color: #000;
+.nav-sidebar > .active > a > div {
+  color: #069fce;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #999;
+  background-color: #333333;
 }
 /*
  * Main content

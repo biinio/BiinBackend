@@ -1,4 +1,7 @@
-@firstColor:  #333333;
+/* ------------------------------------------------------
+			Main CSS Style for Biin App CMS
+   ------------------------------------------------------*/
+@import "variables";
 
 /*
  * Base structure
@@ -36,7 +39,7 @@ body {
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: @firstColor;
+    background-color: @colorSidebar;
     border-right: none;
   }
 }
@@ -55,8 +58,17 @@ body {
       font-size:10px;
       padding: 3px;
 
+
       div {
         font-size:30px;
+        color:@colorBackground;
+        text-shadow: 5px 2px 5px @colorBlack;
+      }
+
+      div:hover {
+        font-size:30px;
+        color:@colorFocusHover;
+        text-shadow: 5px 2px 5px @colorBlack;
       }
     }
   }
@@ -67,16 +79,14 @@ body {
   padding-left: 20px;
   color: #fff;
 }
-.nav-sidebar > .active > a {
-  color: #fff;
-  background-color: #000;
+.nav-sidebar > .active > a > div{
+  color: @colorFocusHover;
 }
 
 .nav>li>a:hover, .nav>li>a:focus {
   text-decoration: none;
-  background-color: #999;
+  background-color: @colorSidebar;
 }
-
 
 /*
  * Main content
