@@ -8,32 +8,43 @@ var validations={
 };
 
 var orgSchema = new Schema({
-	identifier:{type:String, default:"-1", index:true},
-	accountIdentifier:{type:String, default:"000"},
-	name: {type:String, default:""},
-	brand: {type:String, default:""},
-	description: {type:String, default:""},
-	extraInfo:{type:String, default:""},
-	media:[
-		{
-			title1:{type:String, default:""},
-			title1:{type:String, default:""},
-			imgUrl:{type:String,default:""}
-		}
-	],
-	majorCounter:{type: Number, default:0},
-	sites:[{
+		identifier:{type:String, default:"-1", index:true},
+		accountIdentifier:{type:String, default:"000"},
+		name: {type:String, default:""},
+		brand: {type:String, default:""},
+		description: {type:String, default:""},
+		extraInfo:{type:String, default:""},
+		media:[
+			{
+				title1:{type:String, default:""},
+				title1:{type:String, default:""},
+				imgUrl:{type:String,default:""}
+			}
+		],
+		majorCounter:{type: Number, default:0},
+		sites:[{
 		identifier:{type:String, default:"-1", index:true},
 		accountIdentifier:{type:String, default:"000"},
 		organizationIdentifier:{type:String,default:""},
 		majorCounter:{type:Number,default:0},
 		name: {type:String, default:""},
 		title1:{type:String, default:""},
+		colorTitle1:{type:String,default:""},
 		title2:{type:String, default:""},	
-		title3:{type:String, default:""},			
+		colorTitle2:{type:String,default:""},
+		title3:{type:String, default:""},	
 		description: {type:String, default:""},
 		major:{type: Number, default:0},
 		minorCounter:{type: Number, default:0},
+		country:{type:String, default:""},
+		state:{type:String, default:""},
+		city:{type:String, default:""},
+		zipCode:{type:String, default:""},
+		streetAddres:{type:String, default:""},
+		phoneNumber:{type:String, default:""},
+		lat:{type:String,default:0},
+		lng:{type:String,default:0},
+		searchTags:[],
 		categories:[
 			{
 				identifier:{type:String, index:true, default:"-1"},

@@ -21,10 +21,8 @@ var siteObj ={
 	zipCode:{type:String, default:""},
 	streetAddres:{type:String, default:""},
 	phoneNumber:{type:String, default:""},
-	location:{
-		lat:{type:String,default:0},
-		long:{type:String,default:0}
-	},
+	lat:{type:String,default:0},
+	lng:{type:String,default:0},
 	searchTags:[],
 	categories:[
 		{

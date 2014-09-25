@@ -136,10 +136,21 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     }
   }
 
+  //Remove of Site Tag
   $scope.removeSiteTag=function(index){
     if($scope.sites[$scope.selectedSite].searchTags.length>index){
       $scope.sites[$scope.selectedSite].searchTags.splice(index,1);
     }
+  }
+
+  //Location Methods
+  $scope.changeLocation=function(lat,lng){
+    $scope.sites[$scope.selectedSite].lat=lat;
+    $scope.sites[$scope.selectedSite].lng=lng;
+
+    //Apply the changes
+    $scope.$digest();
+    $scope.$apply();    
   }
   //Biins
 

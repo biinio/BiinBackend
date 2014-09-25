@@ -258,7 +258,8 @@ biinServicesModule.directive('map',function(){
   return{
     restrict:'A',
     link:function(scope, element, attrs){
-      var myPosition =new google.maps.LatLng( position.coords.latitude ,  position.coords.longitude);
+    var map;
+    var marker;
       //Get the Geolocation
       function getLocation() {
           if (navigator.geolocation) {
@@ -268,26 +269,39 @@ biinServicesModule.directive('map',function(){
           }
       }
       //Show the position in the map
-      function showPosition(position) {
-         var mapOptions = {
-          center: myPosition,
-          zoom: eval(attrs['zoom'])
-        };
+      function showPosition(position) {      
+         var myPosition =new google.maps.LatLng( position.coords.latitude ,  position.coords.longitude);        
+           var mapOptions = {
+            center: myPosition,
+            zoom: eval(attrs['zoom'])
+          };
 
-       var map = new google.maps.Map(element[0],
-            mapOptions);          
+            map = new google.maps.Map(element[0],
+                    mapOptions);
+
+            marker = new google.maps.Marker({
+              map:map,
+              draggable:true,
+              animation: google.maps.Animation.DROP,
+              position: myPosition
+            });
+
+            //Change Location Event Refresh the model
+            google.maps.event.addListener(marker, 'position_changed', function(){
+              var newPosition = marker.getPosition();
+              scope.changeLocation(newPosition.lat(),newPosition.lng());
+            });
         }      
 
-        marker = new google.maps.Marker({
-          map:map,
-          draggable:true,
-          animation: google.maps.Animation.DROP,
-          position: myPosition
-        });
-
-        google.maps.event.addListener(marker, 'click', toggleBounce);
+      var local_lat = eval(attrs['lat']);
+      var local_lng = eval(attrs['lng']);
       //Call get location
-      getLocation();
+      if(local_lat==0&& local_lng==0)
+        getLocation();
+      else{
+        var coords ={latitude:local_lat,longitude: local_lng};
+         showPosition({coords:coords});
+      }        
     }
   }
 });
