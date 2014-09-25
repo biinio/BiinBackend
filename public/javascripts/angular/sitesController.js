@@ -1,4 +1,4 @@
-var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate']);
+var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate','jQueryScrollbar']);
 
 var tabBiin="biins", tabDetails="details";
 
@@ -263,6 +263,19 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       }
     }
   }
+  //Scroll Bars Options
+  $scope.scrollbarOptionsOwnedGallery = {
+        "type": "simpble",
+        "onScroll":function(y, x){
+            if(y.scroll == y.maxScroll){
+                alert('Scrolled to bottom');
+            }
+        }
+    }; 
+
+  $scope.scrollbarOptionsStandard = {
+        "type": "simpble"
+    }; 
 
   }]);
 

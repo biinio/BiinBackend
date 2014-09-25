@@ -1,0 +1,16 @@
+.verticalScroll(jquery-scrollbar="scrollbarOptionsStandard")
+	.section
+		h1 Gallery
+		p Add some images to your site so users on the mobile app see yours stores looks like
+	.section
+		.row
+			.ownedGalleryWrapper(jquery-scrollbar="scrollbarOptionsOwnedGallery" )
+	.section
+		h2 Map Location
+		p Select your location
+		.mapWrapper
+			.map(zoom='13' lat="{{sites[selectedSite].lat}}" lng="{{sites[selectedSite].lng}}" map)
+		span lat
+		input(type="text" ng-model="sites[selectedSite].lat")
+		span long
+		input(type="text" ng-model="sites[selectedSite].lng")
