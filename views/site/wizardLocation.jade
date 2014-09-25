@@ -19,7 +19,7 @@ div(slimscroll="" slimscroll-option="{height: 'auto'}" )
 		h2 Map Location
 		p Select your location
 		.mapWrapper
-			.map(zoom='13' lat="{{sites[selectedSite].lat}}" lng="{{sites[selectedSite].lat}}" map)
+			.map(zoom='13' lat="{{sites[selectedSite].lat}}" lng="{{sites[selectedSite].lng}}" map)
 		span lat
 		input(type="text" ng-model="sites[selectedSite].lat")
 		span long
