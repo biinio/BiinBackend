@@ -1,10 +1,14 @@
+@firstColor:  #333333;
+
 /*
  * Base structure
  */
+
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 72px;
 }
+
 /*
  * Global add-ons
  */
@@ -12,9 +16,11 @@ body {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
+
 /*
  * Sidebar
  */
+
 /* Hide for mobile, show later */
 .sidebar {
   display: none;
@@ -29,29 +35,33 @@ body {
     display: block;
     padding: 20px;
     overflow-x: hidden;
-    overflow-y: auto;
-    /* Scrollable contents if viewport is shorter than content. */
-    background-color: #333333;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: @firstColor;
     border-right: none;
   }
 }
+
 /* Sidebar navigation */
+
 .nav-sidebar {
-  margin-right: -21px;
-  /* 20px padding + 1px border */
+  margin-right: -21px; /* 20px padding + 1px border */
   margin-bottom: 20px;
   margin-left: -20px;
+
+  .nav-item{
+    text-align: center;
+
+    a{
+      font-size:10px;
+      padding: 3px;
+
+      div {
+        font-size:30px;
+      }
+    }
+  }
 }
-.nav-sidebar .nav-item {
-  text-align: center;
-}
-.nav-sidebar .nav-item a {
-  font-size: 10px;
-  padding: 3px;
-}
-.nav-sidebar .nav-item a div {
-  font-size: 30px;
-}
+
 .nav-sidebar > li > a {
   padding-right: 20px;
   padding-left: 20px;
@@ -61,17 +71,21 @@ body {
   color: #fff;
   background-color: #000;
 }
-.nav > li > a:hover,
-.nav > li > a:focus {
+
+.nav>li>a:hover, .nav>li>a:focus {
   text-decoration: none;
   background-color: #999;
 }
+
+
 /*
  * Main content
  */
+
 .main {
   padding: 0px;
 }
+
 @media (min-width: 768px) {
   .main {
     padding-right: 40px;
@@ -81,9 +95,12 @@ body {
 .main .page-header {
   margin-top: 0;
 }
+
+
 /*
  * Placeholder dashboard ideas
  */
+
 .placeholders {
   margin-bottom: 30px;
   text-align: center;
@@ -98,6 +115,7 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
 /**
 Side bar icon
 **/
@@ -116,6 +134,7 @@ Side bar icon
   -ms-transition: all 100ms ease-in-out;
   transition: all 100ms ease-in-out;
 }
+
 ul.menu li a .angle-icon-sidebar {
   position: absolute;
   right: 8px;
@@ -127,35 +146,41 @@ ul.menu li a .angle-icon-sidebar {
   -moz-transition: All 0.3s ease;
   -o-transition: All 0.3s ease;
 }
-.navbar {
-  min-height: 20px;
-  height: 40px;
-}
-.dropdown-menu.with-triangle {
-  top: 90%;
-}
-.dropdown-menu.square {
-  padding: 0;
-  border-radius: 0px;
-}
-.navSearchSection {
-  width: 550px;
-}
-.form-control {
-  height: 27px;
-}
-.nav-user {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  position: absolute;
-  top: 5px;
-  right: 50px;
-}
-@media (min-width: 768px) {
-  .navbar > .container .navbar-brand,
-  .navbar > .container-fluid .navbar-brand {
-    margin-left: 14px;
-    color: #FFF;
+
+  .navbar {
+    min-height: 20px;
+    height: 40px;
   }
-}
+
+  .dropdown-menu.with-triangle {
+    top: 90%;
+  }
+
+  .dropdown-menu.square {
+    padding: 0;
+    border-radius: 0px;
+  }
+
+  .navSearchSection{
+    width: 550px;
+  }
+
+  .form-control{
+    height: 27px;
+  }
+
+  .nav-user{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    top: 5px;
+    right: 50px;
+  }
+  
+  @media (min-width: 768px){
+    .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+      margin-left: 14px;
+      color: #FFF;
+    }
+  }
