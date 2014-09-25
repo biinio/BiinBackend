@@ -259,7 +259,7 @@ biinServicesModule.directive('map',function(){
     restrict:'A',
     link:function(scope, element, attrs){
       var myPosition =new google.maps.LatLng( position.coords.latitude ,  position.coords.longitude);
-       // google.maps.event.addDomListener(window, 'load', initialize);     
+      //Get the Geolocation
       function getLocation() {
           if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(showPosition);
@@ -267,6 +267,7 @@ biinServicesModule.directive('map',function(){
               element[0].innerHTML = "Geolocation is not supported by this browser.";
           }
       }
+      //Show the position in the map
       function showPosition(position) {
          var mapOptions = {
           center: myPosition,
@@ -276,7 +277,7 @@ biinServicesModule.directive('map',function(){
        var map = new google.maps.Map(element[0],
             mapOptions);          
         }      
-        
+
         marker = new google.maps.Marker({
           map:map,
           draggable:true,
@@ -286,7 +287,7 @@ biinServicesModule.directive('map',function(){
 
         google.maps.event.addListener(marker, 'click', toggleBounce);
       //Call get location
-      getLocation()ñ
+      getLocation();
     }
   }
 });
