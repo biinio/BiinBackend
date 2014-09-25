@@ -6,8 +6,6 @@ node_modules/**
 
 *.env
 
-public/stylesheets/sidebar.css
-
 public/stylesheets/controls.css
 
 public/stylesheets/main.css
