@@ -466,7 +466,7 @@ input.ng-valid.ng-dirty{
 .wizard-wrapper{
 	.wizard-body{
 		position: relative;
-		height: 90%;
+		height: 85%;
 		.section{
 			h1
 			{
@@ -483,15 +483,11 @@ input.ng-valid.ng-dirty{
 			}
 
 			//Color Control Style
-			.color-control .col-md-9, .search-criteria-control .col-md-9{
+			.color-control input, .search-criteria-control input{
 				padding-right: 0px!important;
 				padding-left: 0px!important;
 			}
-			.color-control .col-md-3, .search-criteria-control .col-md-3{
-				padding-left: 5px!important;
-				padding-right: 0px!important;				
-			}
-			.color-control .title-value, .color-control .color-picker{
+			.color-control .title-value{
 				width: 100%;
 			}
 
@@ -555,11 +551,23 @@ input.ng-valid.ng-dirty{
 					}
 				}
 			}
+			//Map Section
+			.mapWrapper{
+				width: 100%;
+				background-color: red;
+				
+				.map{
+					height: 157px;
+					width: 313px;
+				}				
+			}
+
 		}
+		overflow: hidden;
 	}
 	.wizard-options{
-		height: 10%;
-		min-height: 160px;
+		height: 15%;
+		min-height: 30px;
 		background-color: black;
 	}
 

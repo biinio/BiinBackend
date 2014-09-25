@@ -1,6 +1,7 @@
 extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/sitesController.js")
+	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7b1kpDJjJ_cBG3_XPHf8lshevJOR-Dd8")
 block content	
 	#sectionContent.max-height(ng-app="biinAppSites" ng-controller="siteController")
 			#wrapperHeader.row
@@ -27,8 +28,8 @@ block content
 								.wizard-body.wizard(ng-switch="wizardPosition")
 									#wizardOption1.wizard(ng-switch-when="1" )										
 										include wizardDetails
-									#wizardOption2.wizard(ng-switch-when="2" style="background-color:black;")
-										span Wizar 2										
+									#wizardOption2.wizard(ng-switch-when="2")
+										include wizardLocation
 									#wizardOption3.wizard(ng-switch-when="3" )
 										span Wizar 3
 									#wizardOption4.wizard(ng-switch-when="4" )
@@ -41,10 +42,10 @@ block content
 											span space
 										.col-md-1
 											#option1(ng-click="wizardPosition =1")
-												span Option1
+												span Details
 										.col-md-1												
 											#option2(ng-click="wizardPosition =2")
-												span Option2
+												span Location
 										.col-md-1												
 											#option3(ng-click="wizardPosition =3")
 												span Option3

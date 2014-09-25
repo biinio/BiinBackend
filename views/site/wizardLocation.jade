@@ -1,0 +1,22 @@
+div(slimscroll="" slimscroll-option="{height: 'auto'}" )
+	.section
+		h1 Location Information
+		p Add site information to your organization here. Information that will be shown on the mobile app is mark with **
+	.section
+		.row
+			input.form-control.title-value(ng-model="sites[selectedSite].country" name="country" type="text" placeholder="Country **" required )
+		.row
+			input.form-control.title-value(ng-model="sites[selectedSite].state" name="state" type="text" placeholder="State **" required )
+		.row
+			input.form-control.title-value(ng-model="sites[selectedSite].city" name="city" type="text" placeholder="City **" required )
+		.row
+			input.form-control.title-value(ng-model="sites[selectedSite].zipCode" name="zipCode" type="text" placeholder="Zip Code **" required )
+		.row
+			input.form-control.title-value(ng-model="sites[selectedSite].streetAddres" name="streetAddres" type="text" placeholder="Street Address **" required )
+		.row
+			input.form-control.title-value(ng-model="sites[selectedSite].phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" required )
+	.section
+		h2 Map Location
+		p Select your location
+		.row.mapWrapper
+			.map(zoom='13' map)

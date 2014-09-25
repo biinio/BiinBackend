@@ -15,6 +15,16 @@ var siteObj ={
 	description: {type:String, default:""},
 	major:{type: Number, default:0},
 	minorCounter:{type: Number, default:0},
+	country:{type:String, default:""},
+	state:{type:String, default:""},
+	city:{type:String, default:""},
+	zipCode:{type:String, default:""},
+	streetAddres:{type:String, default:""},
+	phoneNumber:{type:String, default:""},
+	location{
+		lat:{type:String,default:0},
+		long:{type:String,default:0}
+	},
 	searchTags:[],
 	categories:[
 		{

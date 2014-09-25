@@ -240,7 +240,7 @@ biinServicesModule.directive('notification',function(){
   }
 });
 
-//Define the drop system
+//Define the guide window behaviour
 biinServicesModule.directive('guide',function(){
   return{
     restrict:'A',
@@ -253,6 +253,34 @@ biinServicesModule.directive('guide',function(){
   }
 });
 
+//Define the map window behaviour
+biinServicesModule.directive('map',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+       // google.maps.event.addDomListener(window, 'load', initialize);     
+      function getLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+              element[0].innerHTML = "Geolocation is not supported by this browser.";
+          }
+      }
+      function showPosition(position) {
+         var mapOptions = {
+          center: new google.maps.LatLng( position.coords.latitude ,  position.coords.longitude),
+          zoom: eval(attrs['zoom'])
+        };
+
+       var map = new google.maps.Map(element[0],
+            mapOptions);          
+        }      
+
+      //Call get location
+      getLocation()
+    }
+  }
+});
 
 //Custom Filters
 
