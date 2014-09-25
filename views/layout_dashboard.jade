@@ -29,61 +29,61 @@ html
 			.row.main-container-row
 				.col-sm-1.col-md-1.sidebar
 					ul.nav.nav-sidebar.menu
-						li.form-inline
-							a(href="/home", style='text-align: center;') 
-								.icon.icon-house-2(style='font-size:30px;')
+						li.nav-item
+							a(href="/home") 
+								.icon.icon-house-2
 								| HOME
-						li
-							a(href="/organizations", style='text-align: center;') 
-								.icon.icon-id-4(style='font-size:30px;') 
+						li.nav-item
+							a(href="/organizations") 
+								.icon.icon-id-4
 								| ORGANIZATION
 
 						if organization == null
 							ul#organizationNav.nav.nav-sidebar.hide(data-organization='')
-								li
-									a(style='text-align: center;').name="Selected Organization"
-								li
-									a(href="" data-org-link="/organizations/{0}/sites" style='text-align: center;') 
-										.icon.icon-garage(style='font-size:30px;')
+								li.nav-item
+									a.name="Selected Organization"
+								li.nav-item
+									a(href="" data-org-link="/organizations/{0}/sites") 
+										.icon.icon-garage
 										| SITES
-								li
-									a(href="" data-org-link="/organizations/{0}/showcases" style='text-align: center;') 
-										.icon.icon-book-1(style='font-size:30px;')
+								li.nav-item
+									a(href="" data-org-link="/organizations/{0}/showcases") 
+										.icon.icon-book-1
 										| SHOWCASES
-								li
-									a(href="" data-org-link="/organizations/{0}/elements" style='text-align: center;') 
-										.icon.icon-bookmark-4-1(style='font-size:30px;')
+								li.nav-item
+									a(href="" data-org-link="/organizations/{0}/elements") 
+										.icon.icon-bookmark-4-1
 										| ELEMENTS
 								//li
-									a(href="" data-org-link="/organizations/{0}/gallery" style='text-align: center;') 
+									a(href="" data-org-link="/organizations/{0}/gallery") 
 										.icon.icon-coins-2(style='font-size:30px;')
 										| GALLERY
 						else
 							ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
-								li
-									a(style='text-align: center;').name= organization.name	
-								li
-									a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites" style='text-align: center;') 
-										.icon.icon-garage(style='font-size:30px;')
+								li.nav-item
+									a.name= organization.name	
+								li.nav-item
+									a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites" ) 
+										.icon.icon-garage
 										| SITES
-								li
-									a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" style='text-align: center;') 
-										.icon.icon-bookmark-4-1(style='font-size:30px;')
+								li.nav-item
+									a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" ) 
+										.icon.icon-bookmark-4-1
 										| ELEMENTS
-								li
-									a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases" style='text-align: center;') 
-										.icon.icon-book-1(style='font-size:30px;')
+								li.nav-item
+									a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases" ) 
+										.icon.icon-book-1
 										| SHOWCASES
 								//li
-									a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery" style='text-align: center;') 
-										.icon.icon-coins-2(style='font-size:30px;')
+									a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") 
+										.icon.icon-coins-2
 										| GALLERY
-						li
-								a(href="#" style='text-align: center;') 
-									.icon.icon-rss-1(style='font-size:30px;')
+						li.nav-item
+								a(href="#") 
+									.icon.icon-rss-1
 									| NEWS
-						li
-							a(href="/errors" style='text-align: center;') ERRORS
+						li.nav-item
+							a(href="/errors") ERRORS
 							i.fa.fa-angle-right.angle-icon-sidebar
 				.col-sm-11.col-sm-offset-1.col-md-11.col-md-offset-1.main
 					block content

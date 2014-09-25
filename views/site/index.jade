@@ -4,25 +4,31 @@ block head_scripts
 	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7b1kpDJjJ_cBG3_XPHf8lshevJOR-Dd8")
 block content	
 	#sectionContent.max-height(ng-app="biinAppSites" ng-controller="siteController")
-			#wrapperHeader.row
 			#wrapperContent.row.max-height(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
 				.row.max-height
-					.col-lg-4.col-md-3.col-sm-3.col-list.max-height
+					.col-lg-3.col-md-2.col-sm-2.col-list.max-height.nopadding
 						.row.max-height(ng-class="{'max-height':selectedSite==null}")
 							//Sites  List
 							div(slimscroll="" slimscroll-option="{height: 'auto'}" )
-								.col-md-1.max-width
+								.col-md-12(style='padding-top:15px;')
+									button.btn.btn-default.btn-block(ng-click='create()') ADD NEW SITE
+								//.col-md-6
+
+								//.col-md-1.max-width
 									input.form-control.search-box.center(ng-model="query" placeholder="Search" autofocus)
-								a.col-md-1.module(ng-click="create()")				
+								
+								//a.col-md-1.module(ng-click="create()")				
 									.moduleWrapper.remove-module
-										.btn-rounded.center.icon.icon-add-1							
-								a.col-md-1.module(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
+										.btn-rounded.center.icon.icon-add-1		
+
+								.col-md-6.module(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
 									.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
 										img.img-responsive(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 										p.moduleTitle {{item.name}}
 										.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))")
 											.icon.icon-bin-2
-					.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedSite!=null")
+
+					.col-lg-9.col-md-10.col-sm-10.colOptions.max-height(ng-if="selectedSite!=null")
 						.animate-switch.max-height.wizard-wrapper
 							.wizard-body.wizard(ng-switch="wizardPosition")
 								#wizardOption1.wizard(ng-switch-when="1" )										
