@@ -22,7 +22,7 @@ block content
 									.moduleWrapper.remove-module
 										.btn-rounded.center.icon.icon-add-1		
 
-								.col-md-6.module(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
+								.col-md-6(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
 									.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
 										img.img-responsive(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
 										p.moduleTitle {{item.name}}
