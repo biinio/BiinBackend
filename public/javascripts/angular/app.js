@@ -258,6 +258,7 @@ biinServicesModule.directive('map',function(){
   return{
     restrict:'A',
     link:function(scope, element, attrs){
+      var myPosition =new google.maps.LatLng( position.coords.latitude ,  position.coords.longitude);
        // google.maps.event.addDomListener(window, 'load', initialize);     
       function getLocation() {
           if (navigator.geolocation) {
@@ -268,16 +269,24 @@ biinServicesModule.directive('map',function(){
       }
       function showPosition(position) {
          var mapOptions = {
-          center: new google.maps.LatLng( position.coords.latitude ,  position.coords.longitude),
+          center: myPosition,
           zoom: eval(attrs['zoom'])
         };
 
        var map = new google.maps.Map(element[0],
             mapOptions);          
         }      
+        
+        marker = new google.maps.Marker({
+          map:map,
+          draggable:true,
+          animation: google.maps.Animation.DROP,
+          position: myPosition
+        });
 
+        google.maps.event.addListener(marker, 'click', toggleBounce);
       //Call get location
-      getLocation()
+      getLocation()ñ
     }
   }
 });
