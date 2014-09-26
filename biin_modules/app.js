@@ -17,8 +17,7 @@ module.exports = function (db) {
     , multipartMiddleware = multipart()
     , lessMiddleware = require('less-middleware')
     , methodOverride = require('method-override')
-    , expressValidator = require('express-validator'),
-    livereload = require('express-livereload');
+    , expressValidator = require('express-validator');
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     schemasValidations = {};
@@ -101,9 +100,9 @@ module.exports = function (db) {
                 error: err
             });
         });
-        
-        //Only for development
-        livereload(app, config={})
+
+        //Only for development Live Reload Plugin
+        require('express-livereload')(app, config={});
     }else{
         // production error handler
         // no stacktraces leaked to user
