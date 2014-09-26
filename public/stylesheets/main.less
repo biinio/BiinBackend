@@ -210,6 +210,13 @@ input.ng-valid.ng-dirty{
 	text-align: center;
 }
 
+.gallery{
+	img{
+		max-width: 125px;
+		min-width: 125px;
+	}
+}
+
 //User guide main style
 .user-guide-wrapper{
 	.guide-header{
@@ -552,6 +559,7 @@ input.ng-valid.ng-dirty{
 			}
 			//Map Section
 			.mapWrapper{
+				background-color: @colorWhite;
 				width: 100%;
 				.map{
 					height: 157px;
@@ -559,24 +567,27 @@ input.ng-valid.ng-dirty{
 				}				
 			}
 			.ownedGalleryWrapper{
-				height: 196px;
-				max-height:  196px;
+				height: 174px;
+				max-height:  174px;
 				width: 1000%;
 				max-width: 100%;				
 				overflow-x: scroll;		
 				overflow-y: hidden!important;
 				white-space: nowrap;
+				background-color: @colorWhite;
 				.img-block{
-					background-color: red;
-					width: 500px; height: 100%;
+					width: 174px;
+					height: 174px;
 					display: inline-block;
-					display:inline-block;
 				    dsplay:inline;/* For IE7
 				    *zoom:1;/* For IE7*/
 				    white-space:normal;
 				}
+				margin-bottom: 10px;
 			}
-
+			.galleryWrapper{
+				height: 180px;
+			}
 
 		}
 		overflow: hidden;
@@ -586,8 +597,32 @@ input.ng-valid.ng-dirty{
 		min-height: 30px;
 		background-color: black;
 	}
-
 }
+
+.galleryImage{
+	heigth:175px;
+	width: 175px;
+}
+
+#gallery{
+	background-color: @colorWhite;
+	.galleryControls{
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+		display: inline-block;
+		float: left;
+
+		button{
+			width: 15%;
+		}
+
+		input{
+			width: 80%;
+		}
+	}
+}
+
 //Wizard animations Section
 .wizard{
 	height: 100%;

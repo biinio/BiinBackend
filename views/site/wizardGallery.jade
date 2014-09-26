@@ -1,17 +1,16 @@
-.verticalScroll(jquery-scrollbar="scrollbarOptionsStandard")
+.verticalScroll.colAppend(jquery-scrollbar="scrollbarOptionsStandard")
 	.section
 		h1 Gallery
 		p Add some images to your site so users on the mobile app see yours stores looks like
-	.section
+	.section(drop)
 		.row
 			.ownedGalleryWrapper.scrollbar-inner(scrollbar="scrollbarOptionsOwnedGallery" )
-				.img-block
-						h2 Map Location
-						p Select your location																							
-				.img-block
-						h2 Map Location 2
-						p Select your location
+				.img-block(ng-repeat="item in sites[selectedSite].media")
+					.moduleWrapper.moduleWrapper-inverse.contentHideButtons
+						img.img-responsive(ng-src="{{item.imgUrl}}" pending-indicator)
+						.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(sites[selectedSite].media.indexOf(item))")
+							.icon.icon-bin-2
 	.section
-		h2 Gallery
-		p Select your location
-		.mapWrapper
+		.row
+			.galleryWrapper
+				include ../_partials/galleryWidget

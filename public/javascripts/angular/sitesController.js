@@ -5,7 +5,7 @@ var tabBiin="biins", tabDetails="details";
 biinAppSite.controller("siteController",['$scope','$http','$location','$routeParams','categorySrv','gallerySrv',function($scope,$http,$location,$routeParams,categorySrv,gallerySrv){
 
   //Constants
-  $scope.maxMedia=4;
+  $scope.maxMedia=0;
 
   //Init the the sites
   $scope.activeTab=tabDetails;
@@ -225,7 +225,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
   //Insert a gallery item to site
   $scope.insertGalleryItem = function(index){
-    if($scope.sites[$scope.selectedSite].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index]){
+    if(($scope.sites[$scope.selectedSite].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia==0){
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
       newObj.imgUrl = $scope.galleries[index].url;
@@ -256,7 +256,10 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
     //Insert the images to the preview
     if(autoInsert){
-      var cantToInsert=$scope.maxMedia- $scope.sites[$scope.selectedSite].media.length;
+      var cantToInsert= obj.length;
+      if(maxMedia>0)
+        cantToInsert=$scope.maxMedia- $scope.sites[$scope.selectedSite].media.length;
+      
       for(var i=0; i< cantToInsert; i++){
         $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
       }

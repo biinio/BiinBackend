@@ -114,9 +114,7 @@ module.exports = function (db) {
             });
         });
     }
-
     
-
     app.use(function(req, res, next){
       // the status option, or res.statusCode = 404
       // are equivalent, however with the option we
