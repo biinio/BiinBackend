@@ -119,13 +119,10 @@ input.ng-valid.ng-dirty{
 
 .moduleWrapper {
 	height: 125px;
-	width: 125px;
-	background-color: @secondColor;
-	border-radius: 7px;
-	margin-top: 5px;
-	margin-left: auto;
-	margin-right: auto;
-	position: relative;
+    max-width: 140px;
+	background-color: @colorWhite;
+    margin: 5px;
+    cursor: pointer;
 
 	//Wrapper Image
 	img {
@@ -146,7 +143,10 @@ input.ng-valid.ng-dirty{
 		position: absolute;
 		top: 0px;
 	}
+}
 
+.moduleWrapper:hover{
+    background-color: @colorFocusHover;
 }
 
 .moduleWrapper.disabled{
