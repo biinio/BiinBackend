@@ -306,6 +306,23 @@ biinServicesModule.directive('map',function(){
   }
 });
 
+
+//Scroll bar initialization
+biinServicesModule.directive('scrollbar', function(){
+    return {
+        "link": function(scope, element){
+            //scope.options
+            $(element[0]).scrollbar().on('$destroy', function(){
+                $(element[0]).scrollbar('destroy');
+            });
+        },
+        "restring": "AC",
+        "scope": {
+            "options": "=scrollbar"
+        }
+    };
+  });
+
 //Custom Filters
 
 //Filter for get the intersection of two list of objects

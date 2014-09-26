@@ -559,9 +559,22 @@ input.ng-valid.ng-dirty{
 				}				
 			}
 			.ownedGalleryWrapper{
-				max-height: 50%;
-				max-width: 10%;
-				overflow-y: hidden;		
+				height: 196px;
+				max-height:  196px;
+				width: 1000%;
+				max-width: 100%;				
+				overflow-x: scroll;		
+				overflow-y: hidden!important;
+				white-space: nowrap;
+				.img-block{
+					background-color: red;
+					width: 500px; height: 100%;
+					display: inline-block;
+					display:inline-block;
+				    dsplay:inline;/* For IE7
+				    *zoom:1;/* For IE7*/
+				    white-space:normal;
+				}
 			}
 
 

@@ -1,4 +1,4 @@
-var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate','jQueryScrollbar']);
+var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate']);
 
 var tabBiin="biins", tabDetails="details";
 
@@ -189,7 +189,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.activeTab = tabDetails;
   }
 
-
   //Categories
 
   //Remove categorie a specific position
@@ -265,16 +264,16 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   }
   //Scroll Bars Options
   $scope.scrollbarOptionsOwnedGallery = {
-        "type": "simpble",
+        "type": "simple",
         "onScroll":function(y, x){
-            if(y.scroll == y.maxScroll){
+            if(x.scroll == x.maxScroll){
                 alert('Scrolled to bottom');
             }
         }
     }; 
 
   $scope.scrollbarOptionsStandard = {
-        "type": "simpble"
+        "type": "simple"
     }; 
 
   }]);
