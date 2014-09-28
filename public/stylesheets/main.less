@@ -118,6 +118,7 @@ input.ng-valid.ng-dirty{
 }	
 
 .moduleWrapper {
+	position: absolute;
 	height: 125px;
     max-width: 140px;
 	background-color: @colorGray;
@@ -582,6 +583,10 @@ input.ng-valid.ng-dirty{
 				    dsplay:inline;/* For IE7
 				    *zoom:1;/* For IE7*/
 				    white-space:normal;
+				    .moduleWrapper{
+				    	width: 100%;
+				    	heigth:100%;
+				    }
 				}
 				margin-bottom: 10px;
 			}

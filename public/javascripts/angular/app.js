@@ -97,35 +97,11 @@ biinServicesModule.directive("dropFiles", function(){
             var files = event.dataTransfer.files;
             var formData = new FormData();
             for (var i = 0; i < files.length; i++) {
-              formData.append('file', files[i]);
+              formData.append('file', files[i], autoInsert);
             }
 
-            // now post a new XHR request
-            var xhr = new XMLHttpRequest();
-
-            xhr.open('POST', 'api/organizations/'+scope.organizationId+'/gallery');
-            xhr.onload = function (data) {
-              if (xhr.status === 200) {
-                var obj= $.parseJSON(xhr.response);
-
-                //Do a callback logic by caller
-                if(scope.onGalleryChange)
-                  scope.onGalleryChange(obj,autoInsert);
-
-                console.log('all done: ' + xhr.status);
-              } else {
-                console.log('Something went terribly wrong...');
-              }
-            };
-
-            xhr.upload.onprogress = function (event) {
-              if (event.lengthComputable) {
-                var complete = (event.loaded / event.total * 100 | 0);
-                //progress.value = progress.innerHTML = complete;
-              }
-            };
-
-            xhr.send(formData);
+            //Upload The media information
+            uploadMedia(scope,formData);
             return false;
           });
 
@@ -138,6 +114,33 @@ biinServicesModule.directive("dropFiles", function(){
       }
     }
   });
+
+//Single upload files directive
+biinServicesModule.directive('uploadFiles',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+      var $inputFileElement=$(attrs['uploadFiles']);
+      var autoInsert=false;//Set to false default auto insert
+        //Change event when an image is selected
+        $inputFileElement.on('change',function(){
+          console.log("Change beginning the upload");
+
+            var files = $inputFileElement[0].files;
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+              formData.append('file', files[i], autoInsert);
+            }
+            //Upload The media information
+            uploadMedia(scope,formData);
+        })
+        //Click event of the style button
+        $(element[0]).on('click touch',function(e){          
+          $inputFileElement.trigger('click');
+        });
+    }
+  }
+})
 
 //Define the directives of drag
 biinServicesModule.directive('drag',function(){
@@ -334,3 +337,35 @@ biinServicesModule.filter("difference",function(){
     });
   }
 });
+
+//Custom Methods
+var uploadMedia = function(scope,formData, autoInsert){
+    scope.loadingImagesChange(true);
+    // now post a new XHR request
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'api/organizations/'+scope.organizationId+'/gallery');
+    xhr.onload = function (data) {
+      if (xhr.status === 200) {
+        var obj= $.parseJSON(xhr.response);
+
+        //Do a callback logic by caller
+        if(scope.onGalleryChange)
+          scope.onGalleryChange(obj,autoInsert);
+
+        console.log('all done: ' + xhr.status);
+        scope.loadingImagesChange(false);
+      } else {
+        console.log('Something went terribly wrong...');
+      }
+    };
+
+    xhr.upload.onprogress = function (event) {
+      if (event.lengthComputable) {
+        var complete = (event.loaded / event.total * 100 | 0);
+        //progress.value = progress.innerHTML = complete;
+      }
+    };
+
+    xhr.send(formData);
+}

@@ -16,6 +16,9 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.wizardPosition =1;
   $scope.newTagField="";
 
+  //Loading images service propertie
+  $scope.loadingImages =false;
+
   //Draggable Properties
   $scope.dragCategoryIndex =-1;
   $scope.dragGalleryIndex=-1;
@@ -259,11 +262,16 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       var cantToInsert= obj.length;
       if(maxMedia>0)
         cantToInsert=$scope.maxMedia- $scope.sites[$scope.selectedSite].media.length;
-      
+
       for(var i=0; i< cantToInsert; i++){
         $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
       }
     }
+  }
+
+  $scope.loadingImagesChange=function(state){
+    $scope.loadingImages = state;
+    $scope.$digest();
   }
   //Scroll Bars Options
   $scope.scrollbarOptionsOwnedGallery = {
@@ -278,6 +286,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.scrollbarOptionsStandard = {
         "type": "simple"
     }; 
+
 
   }]);
 
