@@ -9,7 +9,7 @@
  */
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 72px;
+  padding-top: 125px;
 }
 /*
  * Global add-ons
@@ -27,8 +27,9 @@ body {
 }
 @media (min-width: 768px) {
   .sidebar {
+    top: 125px;
     position: fixed;
-    top: 65px;
+    width: 140px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -39,6 +40,28 @@ body {
     /* Scrollable contents if viewport is shorter than content. */
     background-color: #333333;
     border-right: none;
+  }
+  .sidebar-margin {
+    margin-left: 140px;
+  }
+  .left-section-content {
+    width: 23%;
+    float: left;
+    position: fixed;
+    bottom: 0;
+    top: 125px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #999999;
+  }
+  .right-section-content {
+    width: 74%;
+    float: left;
+    bottom: 0;
+    top: 125px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-left: 26%;
   }
 }
 /* Sidebar navigation */
@@ -52,16 +75,16 @@ body {
   text-align: center;
 }
 .nav-sidebar .nav-item a {
-  font-size: 10px;
+  font-size: 12px;
   padding: 3px;
 }
 .nav-sidebar .nav-item a div {
-  font-size: 30px;
+  font-size: 60px;
   color: #999999;
   text-shadow: 5px 2px 5px #231f20;
 }
 .nav-sidebar .nav-item a div:hover {
-  font-size: 30px;
+  font-size: 60px;
   color: #069fce;
   text-shadow: 5px 2px 5px #231f20;
 }

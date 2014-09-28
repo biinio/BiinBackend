@@ -3,15 +3,28 @@ block head_scripts
 	script(src="/javascripts/angular/sitesController.js")
 	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7b1kpDJjJ_cBG3_XPHf8lshevJOR-Dd8")
 block content	
-	#sectionContent.max-height(ng-app="biinAppSites" ng-controller="siteController")
-			#wrapperContent.row.max-height(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
-				.row.max-height
-					.col-lg-3.col-md-2.col-sm-2.col-list.max-height.nopadding
-						.row.max-height(ng-class="{'max-height':selectedSite==null}")
+	#sectionContent(ng-app="biinAppSites" ng-controller="siteController")
+			#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
+				.left-section-content
+					.container-fluid
+						.row
+							.col-md-12(style='padding:8px;')
+								button.btn.btn-default.btn-block(ng-click='create()') ADD NEW SITE
+
+					.container-fluid(style='padding:5px;')
+						.row
+							.col-xs-4.col-sm-12.col-md-12.col-lg-6.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
+								.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
+									.moduleTitle Test item {{item.name}}
+									img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+									img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+									.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))")
+										.icon.icon-bin-2
+
+						//.row.max-height(ng-class="{'max-height':selectedSite==null}")
 							//Sites  List
 							div(slimscroll="" slimscroll-option="{height: 'auto'}" )
-								.col-md-12(style='padding:8px;')
-									button.btn.btn-default.btn-block(ng-click='create()') ADD NEW SITE
+								
 								//.col-md-6
 
 								//.col-md-1.max-width
@@ -21,18 +34,10 @@ block content
 									.moduleWrapper.remove-module
 										.btn-rounded.center.icon.icon-add-1		
 
-								.container-fluid(style='padding:5px;')
-									.row
-										.col-md-6.col-sm-6.col-xs-4.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
-											.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
-												.moduleTitle {{item.name}}
-												img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-												img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-												.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))")
-													.icon.icon-bin-2
-
-					.col-lg-9.col-md-10.col-sm-10.colOptions.max-height(ng-if="selectedSite!=null")
-						.animate-switch.max-height.wizard-wrapper
+						
+				.right-section-content
+					div(ng-if="selectedSite!=null")
+						.animate-switch.wizard-wrapper
 							.wizard-body.wizard(ng-switch="wizardPosition")
 								#wizardOption1.wizard(ng-switch-when="1" )										
 									include wizardDetails
@@ -44,6 +49,7 @@ block content
 									span Wizar 4				
 								#wizardOption5.wizard(ng-switch-when="5" )
 									span Wizar 5
+									
 							.wizard-options
 								row
 									.col-md-1

@@ -9,7 +9,7 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 72px;
+  padding-top: @bodyPaddingTop;
 }
 
 /*
@@ -30,8 +30,9 @@ body {
 }
 @media (min-width: 768px) {
   .sidebar {
+    top: @bodyPaddingTop;
     position: fixed;
-    top: 65px;
+    width: @sidebarWidth;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -41,6 +42,31 @@ body {
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: @colorSidebar;
     border-right: none;
+  }
+
+  .sidebar-margin {
+    margin-left: @sidebarWidth;
+  }
+
+  .left-section-content {
+    width: @leftContWidth;
+    float: left;
+    position: fixed;
+    bottom: 0;
+    top: @bodyPaddingTop;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: @colorBackground;
+  }
+
+  .right-section-content {
+    width: @rightContWidth;
+    float: left;
+    bottom: 0;
+    top: @bodyPaddingTop;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-left: @rightContMargingLeft;
   }
 }
 
@@ -55,19 +81,19 @@ body {
     text-align: center;
 
     a{
-      font-size:10px;
+      font-size: @sidebarFontSize;
       padding: 3px;
 
 
       div {
-        font-size:30px;
-        color:@colorBackground;
+        font-size: @sidebarIconSize;
+        color: @colorBackground;
         text-shadow: 5px 2px 5px @colorBlack;
       }
 
       div:hover {
-        font-size:30px;
-        color:@colorFocusHover;
+        font-size: @sidebarIconSize;
+        color: @colorFocusHover;
         text-shadow: 5px 2px 5px @colorBlack;
       }
     }

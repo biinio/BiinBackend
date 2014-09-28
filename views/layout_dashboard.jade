@@ -24,68 +24,67 @@ html
 		//block head
 	body
 		include layout_menu
-		.container-fluid.main-container
-			.row.main-container-row
-				.col-sm-1.col-md-1.sidebar
-					ul.nav.nav-sidebar.menu
-						li.nav-item
-							a(href="/home") 
-								.icon.icon-house-2
-								| HOME
-						li.nav-item
-							a(href="/organizations") 
-								.icon.icon-id-4
-								| ORGANIZATION
+		.main-container
+			.sidebar
+				ul.nav.nav-sidebar.menu
+					li.nav-item
+						a(href="/home") 
+							.icon.icon-house-2
+							| HOME
+					li.nav-item
+						a(href="/organizations") 
+							.icon.icon-id-4
+							| ORGANIZATION
 
-						if organization == null
-							ul#organizationNav.nav.nav-sidebar.hide(data-organization='')
-								li.nav-item
-									a.name="Selected Organization"
-								li.nav-item
-									a(href="" data-org-link="/organizations/{0}/sites") 
-										.icon.icon-shop
-										| SITES
-								li.nav-item
-									a(href="" data-org-link="/organizations/{0}/showcases") 
-										.icon.icon-book-1
-										| SHOWCASES
-								li.nav-item
-									a(href="" data-org-link="/organizations/{0}/elements") 
-										.icon.icon-bookmark-4-1
-										| ELEMENTS
-								//li
-									a(href="" data-org-link="/organizations/{0}/gallery") 
-										.icon.icon-coins-2(style='font-size:30px;')
-										| GALLERY
-						else
-							ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
-								li.nav-item
-									a.name= organization.name	
-								li.nav-item
-									a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites" ) 
-										.icon.icon-shop
-										| SITES
-								li.nav-item
-									a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" ) 
-										.icon.icon-bookmark-4-1
-										| ELEMENTS
-								li.nav-item
-									a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases" ) 
-										.icon.icon-book-1
-										| SHOWCASES
-								//li
-									a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") 
-										.icon.icon-coins-2
-										| GALLERY
-						li.nav-item
-								a(href="#") 
-									.icon.icon-rss-1
-									| NEWS
-						//li.nav-item
-							a(href="/errors") ERRORS
-							i.fa.fa-angle-right.angle-icon-sidebar
-				.col-sm-11.col-sm-offset-1.col-md-11.col-md-offset-1.main
-					block content
+					if organization == null
+						ul#organizationNav.nav.nav-sidebar.hide(data-organization='')
+							li.nav-item
+								a.name="Selected Organization"
+							li.nav-item
+								a(href="" data-org-link="/organizations/{0}/sites") 
+									.icon.icon-shop
+									| SITES
+							li.nav-item
+								a(href="" data-org-link="/organizations/{0}/showcases") 
+									.icon.icon-book-1
+									| SHOWCASES
+							li.nav-item
+								a(href="" data-org-link="/organizations/{0}/elements") 
+									.icon.icon-bookmark-4-1
+									| ELEMENTS
+							//li
+								a(href="" data-org-link="/organizations/{0}/gallery") 
+									.icon.icon-coins-2(style='font-size:30px;')
+									| GALLERY
+					else
+						ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
+							li.nav-item
+								a.name= organization.name	
+							li.nav-item
+								a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites" ) 
+									.icon.icon-shop
+									| SITES
+							li.nav-item
+								a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" ) 
+									.icon.icon-bookmark-4-1
+									| ELEMENTS
+							li.nav-item
+								a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases" ) 
+									.icon.icon-book-1
+									| SHOWCASES
+							//li
+								a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") 
+									.icon.icon-coins-2
+									| GALLERY
+					li.nav-item
+							a(href="#") 
+								.icon.icon-rss-1
+								| NEWS
+					//li.nav-item
+						a(href="/errors") ERRORS
+						i.fa.fa-angle-right.angle-icon-sidebar
+			.main.sidebar-margin
+				block content
 	script(src="/jquery/dist/jquery.min.js")							
 	script(src="/bootstrap/dist/js/bootstrap.min.js")
 	script(src="/imagesloaded/imagesloaded.pkgd.js")
