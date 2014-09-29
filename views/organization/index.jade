@@ -2,32 +2,24 @@ extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/organizationsController.js")
 block content	
-	#sectionContent.max-height(ng-app="biinAppOrganizations" ng-controller="organizationsController" drop-files="")
-		#wrapperContent.row.max-height
-			.row.max-height
-				.col-lg-3.col-md-2.col-sm-2.col-list.max-height.nopadding
-					.row.max-height(ng-class="{'max-height':selectedSite==null}")
-						//Sites  List
-						div(slimscroll="" slimscroll-option="{height: 'auto'}" )
-							.col-md-12(style='padding:8px;')
-								button.btn.btn-default.btn-block(ng-click='create()') ADD NEW ORGANIZATION
+	#sectionContent(ng-app="biinAppOrganizations" ng-controller="organizationsController" drop-files="")
+		#wrapperContent
+			.left-section-content
+				.container-fluid
+					.row
+						.col-md-12(style='padding:8px;')
+							button.btn.btn-default.btn-block(ng-click='create()') ADD NEW ORGANIZATION
 
-							.container-fluid(style='padding:5px;')
-								.row
-									.col-md-6.col-sm-6.col-xs-4.nopadding(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
-										.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
-											.moduleTitle {{item.name}}
-											img(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-											//img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-											//img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-											.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
-												.icon.icon-bin-2
-
-							//.col-md-6.nopadding(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
-								.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
-									img.img-responsive(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-									.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
-										.icon.icon-bin-2
+				.container-fluid(style='padding:5px;')
+					.row
+						.col-xs-4.col-sm-12.col-md-12.col-lg-6.nopadding(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
+							.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
+								.moduleTitle {{item.name}}
+								img(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+								//img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+								//img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+								.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
+									.icon.icon-bin-2
 					.boton-Controls
 						#organizationListGuide.user-guide-wrapper(guide)
 							.guide-header
@@ -38,7 +30,8 @@ block content
 								p Click on the plus button to add a new organization to your account. You can also click on the organization button to edit.
 								p Remember to save your changes
 						input.form-control.search-box.max-width.center(ng-model="query" placeholder="Search" autofocus)
-				.col-lg-9.col-md-10.col-sm-10.colOptions.max-heightworkArea(ng-if="selectedOrganization!=null")
+			.right-section-content
+				div(ng-if="selectedOrganization!=null")
 					.animate-switch.max-height
 						ul.workAreaHeader.nav.nav-tabs
 							li(ng-class="{active:activeTab == 'details'}" class='first')

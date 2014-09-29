@@ -118,28 +118,33 @@ input.ng-valid.ng-dirty{
 }	
 
 .moduleWrapper {
-	position: absolute;
-	height: 125px;
-    max-width: 140px;
-	background-color: @colorGray;
-    margin: 5px;
-    padding: 5px;
-    cursor: pointer;
+    height: @leftContBoxSize;
+    width: @leftContBoxSize;
+    background-color: @colorWhite;
+    margin-top: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    margin-left: auto;
 
 	//Wrapper Image
 	img {
-		height: 100%;
-        width: 100%;
+      width: @leftContBoxSizeImg;
+      height: @leftContBoxSizeImg;
+      margin: 10px;
 	}
 
 	//Module Title
 	.moduleTitle{
       position: absolute;
       top: 10px;
+      margin-left: 10px;
       background-color: black;
-      width: 100%;
+      width: @leftContBoxSizeImg;
       color: white;
       opacity: 0.5;
+      line-height: 30px;
+      font-size: 15px;
+      padding-left: 6px;
 	}
 }
 
@@ -193,7 +198,8 @@ input.ng-valid.ng-dirty{
 
 .moduleImage{
 	height: @elementWidth;
-	width: @elementWidth;		
+	width: @elementWidth;
+    position: fixed;
 	.moduleImageWrapper{
 		height: @elementWidth;
 		width: @elementWidth;
@@ -209,6 +215,7 @@ input.ng-valid.ng-dirty{
 	border-style: dashed;
 	border-color: black;
 	text-align: center;
+    position: fixed;
 }
 
 .gallery{
@@ -727,6 +734,16 @@ li>.nav{
 
 .workArea{
 	padding-top: 42.222px;
+}
+
+.topHeader1{
+    background-color:@colorFocus;
+    height:@header1Height;
+}
+
+.topHeader2{
+    background-color:@colorBlack;
+    height:@header2Height;
 }
 
 /*------------------------------------------*/
