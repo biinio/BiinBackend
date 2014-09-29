@@ -398,10 +398,18 @@ input.ng-valid.ng-dirty{
 	display: block;
 }
 
-.btnShowcasePreview {
-	position: absolute;
-	top: 20px;
-	left: 10px;
+.moduleWrapper .btnShowcasePreview {
+    position: absolute;
+    bottom: 25px;
+    margin-left: 50px;
+    background-color: @colorYellow;
+}
+
+.moduleWrapper .btnDelete {
+    position: absolute;
+    bottom: 25px;
+    margin-left: 16px;
+    background-color: @colorRed;
 }
 
 .btnShowcasePreview.down {
@@ -416,17 +424,10 @@ input.ng-valid.ng-dirty{
 	left: @elementWidth - 40px;
 }
 
-.moduleWrapper .btnShowcasePreview.btnDelete {
-	position: absolute;
-	top: 20px;
-	left: 95px;	
-}
-
 .icon-round-control {
 	height: 30px;
 	width: 30px;
 	border-radius: @controlsRadiusRounded;
-	background-color: @firstColor;
 	opacity: 0.7;
 	border: none;
 	text-align: center;
