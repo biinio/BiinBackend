@@ -261,26 +261,29 @@ biinServicesModule.directive('map',function(){
   return{
     restrict:'A',
     link:function(scope, element, attrs){
-    var map;
+    var map=new google.maps.Map(element[0]);
     var marker;
       //Get the Geolocation
       function getLocation() {
           if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(showPosition);
+              navigator.geolocation.getCurrentPosition(showPosition,errorCallback,{timeout:10000});
           } else {
               element[0].innerHTML = "Geolocation is not supported by this browser.";
           }
       }
       //Show the position in the map
-      function showPosition(position) {      
+      function showPosition(position,otherZoom) {      
+        var zoom = eval(attrs['zoom']);
+        if(typeof(otherZoom)!=='undefined'){
+          zoom=otherZoom;
+        }
          var myPosition =new google.maps.LatLng( position.coords.latitude ,  position.coords.longitude);        
            var mapOptions = {
             center: myPosition,
-            zoom: eval(attrs['zoom'])
+            zoom: zoom
           };
 
-            map = new google.maps.Map(element[0],
-                    mapOptions);
+            map.setOptions(mapOptions);
 
             marker = new google.maps.Marker({
               map:map,
@@ -296,6 +299,11 @@ biinServicesModule.directive('map',function(){
             });
         }      
 
+      function errorCallback(err){
+        var coords ={latitude:local_lat,longitude: local_lng};
+        showPosition({coords:coords},1);
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+      }
       var local_lat = eval(attrs['lat']);
       var local_lng = eval(attrs['lng']);
       //Call get location
