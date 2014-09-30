@@ -10,6 +10,7 @@ block content
 						.row
 							.col-md-12(style='padding:8px;')
 								button.btn.btn-default.btn-block(ng-click='create()') ADD NEW SITE
+
 					.container-fluid(style='padding:5px;')
 						.row
 							.col-xs-4.col-sm-12.col-md-12.col-lg-6.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
@@ -34,8 +35,6 @@ block content
 									include wizardLocation
 								#wizardOption4.wizard(ng-switch-when="4" )
 									include wizardGallery
-								#wizardOption4.wizard(ng-switch-when="4" )
-									include wizardBiins				
 								#wizardOption5.wizard(ng-switch-when="5" )
 									span 5. BIINS			
 								#wizardOption6.wizard(ng-switch-when="6" )

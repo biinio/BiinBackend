@@ -611,11 +611,120 @@ input.ng-valid.ng-dirty{
 		}
 		overflow: hidden;
 	}
-	.wizard-options{
-		height: 15%;
-		min-height: 30px;
-		background-color: black;
-	}
+}
+
+/* Aplicate media style only for device with 768px or UP */
+@media (min-width: 768px) {
+  .left-section-content {
+    width: @leftContWidth;
+    float: left;
+    position: fixed;
+    bottom: 0;
+    top: @bodyPaddingTop;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: @colorBackground;
+  }
+
+  .right-section-content {
+    width: @rightContWidth;
+    float: left;
+    bottom: 0;
+    top: @bodyPaddingTop;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-left: @rightContMargingLeft;
+  }
+
+  .wizard-body{
+    margin-bottom: 100px;
+  }
+
+  .wizard-options{
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    height: 100px;
+    min-height: 30px;
+    background-color: @colorGrayLight;
+
+    .wizard-options-item{
+
+
+      .circle{
+        width: 65px;
+        height: 65px;
+        background-color: @colorWhite;
+        color: @colorGrayLight2;
+        margin-top: 16px;
+        border-radius: 50%;
+        border: none;
+        text-align: center;
+        font-size: 25px;
+        padding: 18px;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+      }
+
+      .circle:hover{
+        background-color: @colorFocus;
+        color: @colorWhite;
+      }
+
+      .textCirle{
+        text-align: center;
+        font-size: 11px;
+        color: @colorWhite;
+      }
+    }
+  }
+}
+
+/* Aplicate media style only for device with 768px or UP */
+@media (min-width: 1550px) {
+  .wizard-body{
+    margin-bottom: 160px;
+  }
+
+  .wizard-options {
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    height: 160px;
+    min-height: 30px;
+    background-color: @colorGrayLight;
+
+    .wizard-options-item {
+
+      .circle {
+        width: 100px;
+        height: 100px;
+        background-color: @colorWhite;
+        color: @colorGrayLight2;
+        margin-top: 30px;
+        border-radius: 50%;
+        border: none;
+        text-align: center;
+        font-size: 40px;
+        padding: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+      }
+
+      .circle:hover {
+        background-color: @colorFocus;
+        color: @colorWhite;
+      }
+
+      .textCirle {
+        text-align: center;
+        font-size: 14px;
+        color: @colorWhite;
+      }
+    }
+  }
 }
 
 .galleryImage{

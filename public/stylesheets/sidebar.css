@@ -25,6 +25,7 @@ body {
 .sidebar {
   display: none;
 }
+/* Aplicate media style only for device with 768px or UP */
 @media (min-width: 768px) {
   .sidebar {
     top: 125px;
@@ -43,25 +44,6 @@ body {
   }
   .sidebar-margin {
     margin-left: 140px;
-  }
-  .left-section-content {
-    width: 23%;
-    float: left;
-    position: fixed;
-    bottom: 0;
-    top: 125px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: #999999;
-  }
-  .right-section-content {
-    width: 74%;
-    float: left;
-    bottom: 0;
-    top: 125px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin-left: 26%;
   }
 }
 /* Sidebar navigation */
