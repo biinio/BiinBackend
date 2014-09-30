@@ -10,7 +10,6 @@ block content
 						.row
 							.col-md-12(style='padding:8px;')
 								button.btn.btn-default.btn-block(ng-click='create()') ADD NEW SITE
-
 					.container-fluid(style='padding:5px;')
 						.row
 							.col-xs-4.col-sm-12.col-md-12.col-lg-6.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
@@ -22,22 +21,6 @@ block content
 										.icon.icon-bin-2
 									.btnShowcasePreview.icon-round-control.btn-on-hover
 										.icon.icon-arrange-1
-									
-
-
-						//.row.max-height(ng-class="{'max-height':selectedSite==null}")
-							//Sites  List
-							div(slimscroll="" slimscroll-option="{height: 'auto'}" )
-								
-								//.col-md-6
-
-								//.col-md-1.max-width
-									input.form-control.search-box.center(ng-model="query" placeholder="Search" autofocus)
-								
-								//a.col-md-1.module(ng-click="create()")				
-									.moduleWrapper.remove-module
-										.btn-rounded.center.icon.icon-add-1		
-
 						
 				.right-section-content
 					div(ng-if="selectedSite!=null")
@@ -50,7 +33,7 @@ block content
 								#wizardOption3.wizard(ng-switch-when="3" )
 									include wizardGallery
 								#wizardOption4.wizard(ng-switch-when="4" )
-									span Wizar 4				
+									include wizardBiins				
 								#wizardOption5.wizard(ng-switch-when="5" )
 									span Wizar 5
 									
@@ -69,7 +52,7 @@ block content
 											span Gallery
 									.col-md-1												
 										#option4(ng-click="wizardPosition =4")
-											span Option4
+											span Biins
 									.col-md-1												
 										#option5(ng-click="wizardPosition =5")
 											span Option5

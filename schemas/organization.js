@@ -45,6 +45,12 @@ var orgSchema = new Schema({
 		lat:{type:String,default:0},
 		lng:{type:String,default:0},
 		searchTags:[],
+		//Count off biins purchased
+		purchasedBiinsHist:[{
+					date:{type:String,default:""},
+					quantity:{type:Number,default:0},
+					site:{type:String,default:""}					
+				}],
 		categories:[
 			{
 				identifier:{type:String, index:true, default:"-1"},

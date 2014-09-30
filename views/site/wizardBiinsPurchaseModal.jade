@@ -1,0 +1,16 @@
+<!-- Modal -->
+#purchaseBeaconModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="purchaseBeaconModalLabel" aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type="button" data-dismiss="modal" aria-hidden="true") &times;
+				h4.modal-title Purchase a Biin
+			.modal-body
+				p If you continue there is going to be a charge in your credit card.
+				p If you are agree please click on Continue button if else press Cancel
+				h1 How many Biins do you whant purchase
+				form#purchaseBeaconForm
+					input(type="number" name="biinsQty" ng-model="biinsQty" required)
+			.modal-footer
+				button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+				button.btn.btn-primary(type="button" ng-click="purchaseBiin(biinsQty)") Continue

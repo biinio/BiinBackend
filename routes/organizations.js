@@ -96,20 +96,6 @@ module.exports =function (){
 
 	//Minor and major Functions
 
-	//GET the major of the organization
-	functions.getMajor =  function(req,res){
-		var organizationIdentifier = req.param('identifier');
-		organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},'majorCounter',function(err, data){
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier}, {$inc:{majorCounter:utils.get.majorIncrement()}},function(err){
-				if(err)
-					throw err;
-				else
-					res.json({data: data.majorCounter});
-
-			});
-		});
-	}
-
 	//GET the minor of the organization context
 	functions.getMinor =  function(req,res){
 		var organizationIdentifier = req.param('identifier');

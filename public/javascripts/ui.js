@@ -133,6 +133,10 @@ displayValidationErrors=function(errors){
 
     }
 }
+
+displayErrorMessage=function(error,section,status){
+        console.log(error)
+}
 //Angular Custom Directives
 /*
 angular.module('biin.alertManager', []).directive('alertManager', function() {

@@ -23,6 +23,9 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.dragCategoryIndex =-1;
   $scope.dragGalleryIndex=-1;
 
+  //Biins to Purchase Site
+  $scope.biinsQty=0;
+
   //Get the List of Showcases
   $http.get('/api/organizations/'+ $scope.organizationId+'/sites').success(function(data){
     if(data.data)
@@ -68,13 +71,16 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       $scope.selectedSite=$scope.sites.indexOf(newObject);
     else{
         //Get the Mayor from server
-        $http.get('api/organizations/'+$scope.organizationId+"/major").success(function(data,status){
-          $scope.sitePrototype =  $.extend(true, {}, $scope.sitePrototypeBkp);
-        $scope.sitePrototype.isNew=true;
-        $scope.sitePrototype.major = data.data;
-        $scope.sites.push($scope.sitePrototype);     
+        $http.post('api/organizations/'+$scope.organizationId+"/sites").success(function(site,status){
+          if(status==201){
+            $scope.sites.push(site);     
+            $scope.biinsQty=0;
+            $scope.edit($scope.sites.indexOf(site)); 
+          }else
+          {
+            displayErrorMessage(site,"Sites Creation",status)
+          }
 
-        $scope.edit($scope.sites.indexOf($scope.sitePrototype)); 
         });
 
     }
@@ -84,6 +90,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.edit = function(index){
     $scope.selectedSite = index;
     $scope.currentModelId = $scope.sites[index].identifier;
+    $scope.biinsQty=0;
   }
 
   //Remove site at specific position
@@ -156,8 +163,24 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.$apply();    
   }
   //Biins
-
   //Create a  new Biin
+
+  //Purchase Biin Function
+  $scope.purchaseBiin=function(qty){
+    //Put the purchase order
+    $http.post("api/organizations/"+$scope.organizationId+"/sites/"+$scope.sites[$scope.selectedSite].identifier+"/biins",{biinsQty:qty}).success(function(data,status){
+      if(status==201){
+        //Push the
+        $scope.sites[$scope.selectedSite].biins.push(data);
+        $('#purchaseBeaconModal').modal('hide');
+        $scope.biinsQty=0;
+      }else
+         displayErrorMessage(data,"Purchase Biin",status)
+
+    });
+
+  }
+
   $scope.createBiin=function(){
      $http.get("api/organizations/"+$scope.organizationId+"/"+$scope.sites[$scope.selectedSite].identifier+"/minor").success(function(data){
         $scope.biinPrototype=$.extend(true, {}, $scope.biinPrototypeBkp);
@@ -178,6 +201,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
      });
   }
+
 
   //Edit a Biin
   $scope.editBiin= function(index){

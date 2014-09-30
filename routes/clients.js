@@ -1,6 +1,4 @@
 module.exports = function(db){
-	//Packages
-    var moment = require('moment');
 
     //Schemas
 	var client = require('../schemas/client');

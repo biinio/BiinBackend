@@ -3,8 +3,8 @@ var path = require("path"), uuid=require('node-uuid'),
   fs = require('fs'),
   util = require('util'),
   //FTP Package
-  ftp = require("ftp");
-  var ftpConn = new ftp();
+  ftp = require("ftp")
+  moment = require('moment');
 
 module.exports = function(){
 	var functions={};
@@ -50,6 +50,10 @@ module.exports = function(){
    return uuid.v4();
   }
 
+  functions.getDateNow=function(){
+    return moment().format('YYYY-MM-DD h:mm:ss');
+  }
+
   /*
    * Return a unique identifier with the given `len`.
    *
@@ -77,6 +81,8 @@ module.exports = function(){
      var ext = path.extname(filename||'').split('.');
      return ext[ext.length - 1];
   }
+
+  functions
   
   //Return a new name for an image
   functions.getImageName=function(filename,toPath){

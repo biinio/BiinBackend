@@ -2,7 +2,6 @@ module.exports = function(){
 	//Schemas
 	var mobileUser = require('../schemas/mobileUser'), 
 		util = require('util'),
-		moment = require('moment'),
 		bcrypt = require('bcrypt'),
 		utils =require("../biin_modules/utils")();
 
@@ -23,7 +22,7 @@ module.exports = function(){
 			 ,password = req.body['password']
 			 ,birthDate = req.body['birthDate']
 			 ,gender = req.body['gender']
-			 ,joinDate = moment().format('YYYY-MM-DD h:mm:ss')
+			 ,joinDate = util.getDateNow()
 			 ,accountState = 'active';
 			 
 			mobileUser.findOne({biinName:biinName},function(err,mobileUserAccount){
