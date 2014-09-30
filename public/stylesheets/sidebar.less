@@ -28,6 +28,7 @@ body {
 .sidebar {
   display: none;
 }
+/* Aplicate media style only for device with 768px or UP */
 @media (min-width: 768px) {
   .sidebar {
     top: @bodyPaddingTop;
@@ -47,29 +48,7 @@ body {
   .sidebar-margin {
     margin-left: @sidebarWidth;
   }
-
-  .left-section-content {
-    width: @leftContWidth;
-    float: left;
-    position: fixed;
-    bottom: 0;
-    top: @bodyPaddingTop;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: @colorBackground;
-  }
-
-  .right-section-content {
-    width: @rightContWidth;
-    float: left;
-    bottom: 0;
-    top: @bodyPaddingTop;
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin-left: @rightContMargingLeft;
-  }
 }
-
 /* Sidebar navigation */
 
 .nav-sidebar {
