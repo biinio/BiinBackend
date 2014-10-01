@@ -147,23 +147,25 @@ module.exports = function () {
 		res.setHeader('Content-Type', 'application/json');
 
 		if(qty && organizationIdentifier && siteIdentifier){
-			//To Do the process of the deduccion in the Credit Card
-			var historyRecord ={date:utils.getDateNow(),quantity:qty,site:siteIdentifier} ;			
 			var newMinorValue = utils.get.minorIncrement() *qty;
-			organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},{'sites.minorCounter':true,'sites.major':true},function(err, siteInfo){
+			organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},{_id:false,'sites.$':true},function(err, siteInfo){
 				if(err)
 					res.send(err,500)					
 				else
 				{
 					var minor = 0;
 					var major=0;
-					if(data.sites[0]){
-						minor =data.sites[0].minorCounter;
-						major= data.sites[0].major;
+					if(siteInfo.sites[0]){
+						minor =siteInfo.sites[0].minorCounter;
+						major= siteInfo.sites[0].major;
 					}
 
+					//To Do the process of the deduccion in the Credit Card
+					var historyRecord ={} ;			
+					historyRecord.date=utils.getDateNow(); historyRecord.quantity=qty; historyRecord.site=siteIdentifier;
+
 					//Add an history record
-					organization.update({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{$push:{purchasedBiinsHist:historyRecord}},function(err,data){
+					organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,data){
 						if(err){
 							res.send(err,500)
 						}else{
@@ -180,7 +182,7 @@ module.exports = function () {
  							}
 
  							//Organization Update
-							organization.update({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier,"sites.identifier":siteIdentifier},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
+							organization.update({"accountIdentifier":req.user.accountIdentifier,"identifier":organizationIdentifier,"sites.identifier":siteIdentifier},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
 								if(err)
 									res.send(err,500)
 								else{
@@ -211,31 +213,7 @@ module.exports = function () {
 			});
 		});
 	}
-
-	//GET the minor of the organization context
-	getMinor =  function(organizationIdentifier,siteIdentifier){
-		var organizationIdentifier = req.param('identifier');
-		var siteIdentifier = req.param('siteIdentifier');
-		organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},'sites.$.minorCounter',function(err, data){
-			//If the site is not new
-			if(data){
-				organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier}, {$inc:{'sites.$.minorCounter':utils.get.minorIncrement()}},function(err, count){
-					if(err)
-						throw err;
-					else{
-
-						var minor = 0;
-						if(data.sites[0].minorCounter)
-							minor =data.sites[0].minorCounter;
-
-						res.json({data:minor});
-					}
-				});				
-			}else
-				//Return the increment variable
-				res.json({data:utils.get.minorIncrement()});
-		});
-	}	
+	
 	//Other methods
 	getOganization = function(req, res, callback){
 		var identifier=req.param("identifier");

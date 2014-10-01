@@ -14,70 +14,69 @@ var orgSchema = new Schema({
 		brand: {type:String, default:""},
 		description: {type:String, default:""},
 		extraInfo:{type:String, default:""},
-		media:[
-			{
-				title1:{type:String, default:""},
-				title1:{type:String, default:""},
-				imgUrl:{type:String,default:""}
-			}
-		],
-		majorCounter:{type: Number, default:0},
-		sites:[{
-		identifier:{type:String, default:"-1", index:true},
-		accountIdentifier:{type:String, default:"000"},
-		organizationIdentifier:{type:String,default:""},
-		majorCounter:{type:Number,default:0},
-		name: {type:String, default:""},
-		title1:{type:String, default:""},
-		colorTitle1:{type:String,default:""},
-		title2:{type:String, default:""},	
-		colorTitle2:{type:String,default:""},
-		title3:{type:String, default:""},	
-		description: {type:String, default:""},
-		major:{type: Number, default:0},
-		minorCounter:{type: Number, default:0},
-		country:{type:String, default:""},
-		state:{type:String, default:""},
-		city:{type:String, default:""},
-		zipCode:{type:String, default:""},
-		streetAddres:{type:String, default:""},
-		phoneNumber:{type:String, default:""},
-		lat:{type:String,default:0},
-		lng:{type:String,default:0},
-		searchTags:[],
+		majorCounter:{type: Number, default:0},		
 		//Count off biins purchased
 		purchasedBiinsHist:[{
 					date:{type:String,default:""},
 					quantity:{type:Number,default:0},
 					site:{type:String,default:""}					
 				}],
-		categories:[
-			{
-				identifier:{type:String, index:true, default:"-1"},
-				name:{type:String, default:""},
-				displayName:{type:String, default:""},
-				imgUrl:{type:String, default:""}
-			}
-		],
 		media:[
 			{
-				identifier:{type:String, default:""},
+				title1:{type:String, default:""},
 				title1:{type:String, default:""},
 				imgUrl:{type:String,default:""}
 			}
-		],
-		biins:[
-			{
-				identifier:{type:String, index:true, Default:""},
-				name:{type:String, Default:""},
-				major:{type:String, Default:""},
-				minor:{type:String, Default:""},
-				proximityUUID:{type:String, Default:""},
-				location:{type:String, Default:""},
-				registerDate:{type:String, Default:""},
-				showcaseAsigned:{type:String, Default:""}
-			}
-		]
+		],		
+		sites:[{
+			identifier:{type:String, default:"-1", index:true},
+			accountIdentifier:{type:String, default:"000"},
+			organizationIdentifier:{type:String,default:""},
+			name: {type:String, default:""},
+			title1:{type:String, default:""},
+			colorTitle1:{type:String,default:""},
+			title2:{type:String, default:""},	
+			colorTitle2:{type:String,default:""},
+			title3:{type:String, default:""},	
+			description: {type:String, default:""},
+			major:{type: Number, default:0},
+			minorCounter:{type: Number, default:0},
+			country:{type:String, default:""},
+			state:{type:String, default:""},
+			city:{type:String, default:""},
+			zipCode:{type:String, default:""},
+			streetAddres:{type:String, default:""},
+			phoneNumber:{type:String, default:""},
+			lat:{type:String,default:0},
+			lng:{type:String,default:0},
+			searchTags:[],
+			categories:[
+				{
+					identifier:{type:String, index:true, default:"-1"},
+					name:{type:String, default:""},
+					displayName:{type:String, default:""},
+					imgUrl:{type:String, default:""}
+				}
+			],
+			media:[
+				{
+					identifier:{type:String, default:""},
+					title1:{type:String, default:""},
+					imgUrl:{type:String,default:""}
+				}
+			],
+			biins:[
+				{
+					identifier:{type:String, index:true, Default:""},
+					name:{type:String, Default:""},
+					major:{type:String, Default:""},
+					minor:{type:String, Default:""},
+					proximityUUID:{type:String, Default:""},
+					location:{type:String, Default:""},
+					registerDate:{type:String, Default:""},
+					showcaseAsigned:{type:String, Default:""}
+				}
+			]
 	}],
 	gallery:[{
 				identifier:{type:String, index:true, default:"-1"},

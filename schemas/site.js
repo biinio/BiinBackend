@@ -5,7 +5,6 @@ var siteObj ={
 	identifier:{type:String, default:"-1", index:true},
 	accountIdentifier:{type:String, default:"000"},
 	organizationIdentifier:{type:String,default:""},
-	majorCounter:{type:Number,default:0},
 	name: {type:String, default:""},
 	title1:{type:String, default:""},
 	colorTitle1:{type:String,default:""},

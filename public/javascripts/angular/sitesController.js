@@ -171,7 +171,8 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $http.post("api/organizations/"+$scope.organizationId+"/sites/"+$scope.sites[$scope.selectedSite].identifier+"/biins",{biinsQty:qty}).success(function(data,status){
       if(status==201){
         //Push the
-        $scope.sites[$scope.selectedSite].biins.push(data);
+        for(var i=0; i<data.length;i++)
+          $scope.sites[$scope.selectedSite].biins.push(data[i]);
         $('#purchaseBeaconModal').modal('hide');
         $scope.biinsQty=0;
       }else

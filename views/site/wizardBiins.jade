@@ -7,9 +7,14 @@ div
 				.img-block(data-toggle="modal" href="#purchaseBeaconModal")
 					.moduleWrapper
 						p PURCHASE A NEW BIIN
-				.img-block(ng-repeat="item in sites[selectedSite].media")
-					.moduleWrapper.contentHideButtons
-						img.img-responsive(ng-src="{{item.imgUrl}}" pending-indicator)
-						.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(sites[selectedSite].media.indexOf(item))")
-							.icon.icon-bin-2
+				.img-block( ng-repeat="item in sites[selectedSite].biins" ng-click="editBiin(sites[selectedSite].biins.indexOf(item))")
+					.moduleWrapper(ng-class="{active: sites[selectedSite].biins.indexOf(item) == selectedBiin}")
+						p Biin# {{item.minor}}
+	.section(ng-if="selectedBiin!=null && sites[selectedSite].biins.length>0")
+		row
+			input.form-control(type="text" model="sites[selectedSite].biins[selectedBiin].name" placeholder="Name")
+			input.form-control(type="text" model="sites[selectedSite].biins[selectedBiin].location" placeholder="location")				
+			p Organization id: {{organizationId}}
+			p Site id: {{sites[selectedSite].major}}
+			p Biin id: {{sites[selectedSite].biins[selectedBiin].minor}}
 include wizardBiinsPurchaseModal
