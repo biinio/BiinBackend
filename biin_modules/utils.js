@@ -51,7 +51,7 @@ module.exports = function(){
   }
 
   functions.getDateNow=function(){
-    return moment().format('YYYY-MM-DD h:mm:ss');
+    return moment().format('yyyy-MM-dd HH:mm:ss');
   }
 
   /*
@@ -81,8 +81,6 @@ module.exports = function(){
      var ext = path.extname(filename||'').split('.');
      return ext[ext.length - 1];
   }
-
-  functions
   
   //Return a new name for an image
   functions.getImageName=function(filename,toPath){

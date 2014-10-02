@@ -1,4 +1,4 @@
-var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate']);
+var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate','angularSpectrumColorpicker']);
 
 var tabBiin="biins", tabDetails="details";
 
@@ -179,31 +179,25 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
          displayErrorMessage(data,"Purchase Biin",status)
 
     });
+  }
+  //Category return if contains a specific categoru
+  $scope.containsCategory=function(category){
+    //if(contains($scope.sites[$scope.selectedSite].categories,'identifier',category.identifier))
+    if($scope.sites[$scope.selectedSite].categories.indexOf(category)>=0)
+      return 'active'
+    else
+      return "";
+  }
+  //Change the state of the category relation with the Site
+  $scope.switchCategoryState =function(category){
+    var index =$scope.sites[$scope.selectedSite].categories.indexOf(category);  
+    if(index>=0)
+      $scope.sites[$scope.selectedSite].categories.splice(index,1)
+    else
+      $scope.sites[$scope.selectedSite].categories.push(category);
+    $scope.$digest();
 
   }
-
-  $scope.createBiin=function(){
-     $http.get("api/organizations/"+$scope.organizationId+"/"+$scope.sites[$scope.selectedSite].identifier+"/minor").success(function(data){
-        $scope.biinPrototype=$.extend(true, {}, $scope.biinPrototypeBkp);
-        $scope.biinPrototype.isNew=true;
-        
-        if('isNew' in $scope.sites[$scope.selectedSite]){
-          $scope.biinPrototype.major = $scope.sites[$scope.selectedSite].major;
-          $scope.biinPrototype.minor= $scope.sites[$scope.selectedSite].minorCounter;
-          $scope.sites[$scope.selectedSite].minorCounter += data.data;
-        }else
-        {
-          $scope.biinPrototype.major = $scope.sites[$scope.selectedSite].major;
-          $scope.biinPrototype.minor= data.data;
-        }
-        
-        $scope.sites[$scope.selectedSite].biins.splice(0,0,$scope.biinPrototype);      
-        $scope.editBiin(0);
-
-     });
-  }
-
-
   //Edit a Biin
   $scope.editBiin= function(index){
     $scope.selectedBiin = index;

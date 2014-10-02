@@ -34,6 +34,14 @@ function intersectionObjects() {
     return Results;
 }
 
+//Contains function helper
+function contains(list, property, value){
+    if(_.where(list,{property:value}).length)
+        return true;
+    else
+        return false
+}
+
 //Difference function helper
 function difference(a, b, areEqualFunction) {
     var Result = [];

@@ -28,16 +28,16 @@ block content
 							.wizard-body.wizard(ng-switch="wizardPosition")
 								#wizardOption1.wizard(ng-switch-when="1" )										
 									include wizardDetails
-								#wizardOption2.wizard(ng-switch-when="2")
-									span 2. COLOURS
-								#wizardOption3.wizard(ng-switch-when="3")
+								#wizardOption4.wizard(ng-switch-when="2" )
+									include wizardGallery									
+								#wizardOption2.wizard(ng-switch-when="3")
+									include wizardColors
+								#wizardOption3.wizard(ng-switch-when="4")
 									include wizardLocation
-								#wizardOption4.wizard(ng-switch-when="4" )
-									include wizardGallery
 								#wizardOption5.wizard(ng-switch-when="5" )
 									include wizardBiins				
 								#wizardOption6.wizard(ng-switch-when="6" )
-									span 5. CATEGORIES
+									include wizardCategories
 							.wizard-options
 								.container-fluid
 									row
@@ -50,21 +50,21 @@ block content
 										.col-md-1.col-sm-1.nopadding												
 											.wizard-options-item(ng-click="wizardPosition =2")
 												.circle
-													.icon.icon-palette
+													.icon.icon-photo-1
 												.textCirle 
-													| 2. COLOURS
+													| 2. IMAGES													
 										.col-md-1.col-sm-1.nopadding												
 											.wizard-options-item(ng-click="wizardPosition =3")
 												.circle
-													.icon.icon-marker-2
+													.icon.icon-palette
 												.textCirle 
-													| 3. LOCATION
+													| 3. COLOURS
 										.col-md-1.col-sm-1.nopadding												
 											.wizard-options-item(ng-click="wizardPosition =4")
 												.circle
-													.icon.icon-photo-1
+													.icon.icon-marker-2
 												.textCirle 
-													| 4. IMAGES
+													| 4. LOCATION
 										.col-md-1.col-sm-1.nopadding												
 											.wizard-options-item(ng-click="wizardPosition =5")
 												.circle
