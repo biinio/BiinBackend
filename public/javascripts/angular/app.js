@@ -261,7 +261,13 @@ biinServicesModule.directive('map',function(){
   return{
     restrict:'A',
     link:function(scope, element, attrs){
-    var map=new google.maps.Map(element[0]);
+    var zoom = eval(attrs['zoom']);
+    var defPosition =new google.maps.LatLng(0 ,0);        
+    var defOptions = {
+      center: defPosition,
+      zoom: zoom
+    };
+    var map=new google.maps.Map(element[0],defOptions);
     var marker;
       //Get the Geolocation
       function getLocation() {
@@ -272,8 +278,7 @@ biinServicesModule.directive('map',function(){
           }
       }
       //Show the position in the map
-      function showPosition(position,otherZoom) {      
-        var zoom = eval(attrs['zoom']);
+      function showPosition(position,otherZoom) {              
         if(typeof(otherZoom)!=='undefined'){
           zoom=otherZoom;
         }
@@ -304,8 +309,15 @@ biinServicesModule.directive('map',function(){
         showPosition({coords:coords},1);
         console.warn('ERROR(' + err.code + '): ' + err.message);
       }
-      var local_lat = eval(attrs['lat']);
-      var local_lng = eval(attrs['lng']);
+      var local_lat =0;
+
+      var local_lng=0;
+
+      if(attrs['lat'] && attrs['lng']){
+        local_lat = eval(attrs['lat']);
+        local_lng = eval(attrs['lng']);        
+      }
+
       //Call get location
       if(local_lat==0&& local_lng==0)
         getLocation();

@@ -57,7 +57,7 @@ module.exports = function () {
 		res.setHeader('Content-Type', 'application/json');
 
 		//If is pushing a new model
-		if(typeof(req.param("siteIdentifier")===null)){
+		if(typeof(req.param("siteIdentifier"))==="undefined"){
 			
 			//Set the account and the user identifier
 			var model = new site();

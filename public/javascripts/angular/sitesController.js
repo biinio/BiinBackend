@@ -32,10 +32,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       $scope.sites = data.data.sites;
     else
       $scope.sites=[];
-    $scope.sitePrototype = data.prototypeObj;
-    $scope.sitePrototypeBkp =  $.extend(true, {}, data.prototypeObj);
-    $scope.biinPrototype = data.prototypeObjBiin;
-    $scope.biinPrototypeBkp =  $.extend(true, {}, data.prototypeObjBiin);
 
     if($scope.selectedSite == null && $scope.sites && $scope.sites.length>0){
       //Select the first element
@@ -65,25 +61,17 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
   //Create a new Site
   $scope.create = function(){
-    var newObject=$scope.sitePrototype;
-
-    if($scope.sites.indexOf(newObject)>-1)
-      $scope.selectedSite=$scope.sites.indexOf(newObject);
-    else{
-        //Get the Mayor from server
-        $http.post('api/organizations/'+$scope.organizationId+"/sites").success(function(site,status){
-          if(status==201){
-            $scope.sites.push(site);     
-            $scope.biinsQty=0;
-            $scope.edit($scope.sites.indexOf(site)); 
-          }else
-          {
-            displayErrorMessage(site,"Sites Creation",status)
-          }
-
-        });
-
-    }
+      //Get the Mayor from server
+      $http.post('api/organizations/'+$scope.organizationId+"/sites").success(function(site,status){
+        if(status==201){
+          $scope.sites.push(site);     
+          $scope.biinsQty=0;
+          $scope.edit($scope.sites.indexOf(site)); 
+        }else
+        {
+          displayErrorMessage(site,"Sites Creation",status)
+        }
+      });    
   }
 
   //Edit an site
@@ -120,7 +108,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $http.put('api/showcases/'+$scope.organizationId+'/sites/'+$scope.currentModelId,{model:$scope.sites[$scope.selectedSite]}).success(function(data,status){
       if("replaceModel" in data){
         $scope.sites[$scope.selectedSite] = data.replaceModel;
-        $scope.sitePrototype =  $.extend(true, {}, $scope.sitePrototypeBkp);
       }
       if(data.state=="success")
         $scope.succesSaveShow=true;
@@ -195,7 +182,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       $scope.sites[$scope.selectedSite].categories.splice(index,1)
     else
       $scope.sites[$scope.selectedSite].categories.push(category);
-    $scope.$digest();
 
   }
   //Edit a Biin
@@ -268,6 +254,12 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   /**** 
     Methods
   ****/
+  //validation methods
+  $scope.$watch('form.$valid', function(newVal, oldVal) {
+    console.log('Validaion')
+   $scope.$emit('validityChange', {'form':newVal});
+  });
+
 
   //On gallery change method                
   $scope.onGalleryChange= function(obj,autoInsert){
@@ -305,7 +297,5 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.scrollbarOptionsStandard = {
         "type": "simple"
     }; 
-
-
   }]);
 
