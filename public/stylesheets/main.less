@@ -115,100 +115,8 @@ input.ng-valid.ng-dirty{
 .panel-body {
 	padding: 0px;
 	margin-left: -25px;
-}	
-
-.moduleWrapper {
-    height: @leftContBoxSize;
-    width: @leftContBoxSize;
-    background-color: @colorWhite;
-    margin-top: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
-    margin-left: auto;
-
-	//Wrapper Image
-	img {
-      width: @leftContBoxSizeImg;
-      height: @leftContBoxSizeImg;
-      margin: 10px;
-	}
-
-	//Module Title
-	.moduleTitle{
-      position: absolute;
-      top: 10px;
-      margin-left: 10px;
-      background-color: black;
-      width: @leftContBoxSizeImg;
-      color: white;
-      opacity: 0.5;
-      line-height: 30px;
-      font-size: 15px;
-      padding-left: 6px;
-	}
 }
 
-.moduleWrapper:hover{
-    background-color: @colorFocusHover;
-}
-
-.moduleWrapper.disabled{
-	background-color: red;
-}
-
-.moduleWrapper.activeShowcase{
-	background-color: green;
-}
-
-.moduleWrapper-inverse{
-	.moduleWrapper;
-	background-color: @forthColor;
-}
-
-.moduleWrapperShowcaseElement {
-	position: relative;
-	margin-left: 0px;
-	max-width: @elementWidth;
-}
-
-.module {
-	margin-right: 7px;
-	min-height: 125px;
-	min-width: 125px;
-}
-
-//Remove Element of Grids
-.moduleWrapper.remove-module {
-	background-color:  @firstColor;
-	padding-top: 47.4px;
-
-	//Button Module
-	.btn-rounded {
-		background-color: @secondColor;
-		padding: initial;
-		text-align: center;
-		line-height: 36px;
-
-		//Rounded button icon of remove
-		.icon {
-			color: @firstColor;
-		}
-	}
-}
-
-.moduleImage{
-	height: @elementWidth;
-	width: @elementWidth;
-    position: fixed;
-	.moduleImageWrapper{
-		height: @elementWidth;
-		width: @elementWidth;
-		img{
-			width: 100%!important;
-			height: 100%!important;
-		}
-	}
-}
 
 //Drop images style
 .drop-images{
@@ -228,7 +136,7 @@ input.ng-valid.ng-dirty{
 //User guide main style
 .user-guide-wrapper{
 	.guide-header{
-		
+
 		padding-left: 5px;
 		padding-top: 5px;
 		position: relative;
@@ -238,7 +146,7 @@ input.ng-valid.ng-dirty{
 		border-top-right-radius: @controlsRadius;
 		color: @secondColor;
 
-		.close-guide{			
+		.close-guide{
 			position: absolute;
 			top: 2px;
 			right: 5px;
@@ -278,7 +186,7 @@ input.ng-valid.ng-dirty{
 	background-color: @forthColor;
 }
 
-.colOptions {	
+.colOptions {
 	padding-right: 0px;
 	padding-left: 0px;
 }
@@ -315,7 +223,7 @@ input.ng-valid.ng-dirty{
 }
 
 .max-elementWidth-OverFlow{
-	max-width: @elementWidth+25px;	
+	max-width: @elementWidth+25px;
 }
 
 .center {
@@ -378,7 +286,7 @@ input.ng-valid.ng-dirty{
 		background-color: @firstColor;
 		color: @secondColor;
 		position: relative;
-		h5{			
+		h5{
 			position: absolute;
 			bottom:0px;
 			left: 20px;
@@ -445,8 +353,8 @@ input.ng-valid.ng-dirty{
 	top: initial;
 	bottom: 20px;
 	left: initial;
-	right: 10px;   
-}   
+	right: 10px;
+}
 
 .btnShowcasePreview.up {
 	top:20px;
@@ -470,12 +378,12 @@ input.ng-valid.ng-dirty{
 		margin-left: auto;
 		margin-right: auto;
 		cursor: pointer;
-	}	
+	}
 }
 
 /*------------------------------------------*/
 /*	Modules
-/*------------------------------------------*/	
+/*------------------------------------------*/
 
 .moduleWrapper.active {
 	background-color: @firstColor;
@@ -520,7 +428,7 @@ input.ng-valid.ng-dirty{
 			{
 				font-size: 20px;
 				color:@firstColor;
-			}	
+			}
 			p{
 				font-size:12px;
 				color: @thirthColor;
@@ -552,7 +460,7 @@ input.ng-valid.ng-dirty{
 						margin-top: 5px;
 						margin-left:5px;
 						width: 96px;
-						height: 25px;						
+						height: 25px;
 						background-color: @ninthColor;
 
 						p{
@@ -576,7 +484,7 @@ input.ng-valid.ng-dirty{
 							text-align: center;
 							cursor:pointer;
 						}
-					} 
+					}
 				}
 				.search-add{
 					padding-left: 5px;
@@ -589,7 +497,7 @@ input.ng-valid.ng-dirty{
 						width: 100%;
 					}
 
-					.btn{						
+					.btn{
 						height: 33px;
 						width: 100%;
 					}
@@ -602,15 +510,15 @@ input.ng-valid.ng-dirty{
 				.map{
 					height: 157px;
 					width: 313px;
-				}				
+				}
 			}
 			//Gallery owned images section
 			.ownedGalleryWrapper{
 				height: 174px;
 				max-height:  174px;
 				width: 1000%;
-				max-width: 100%;				
-				overflow-x: scroll;		
+				max-width: 100%;
+				overflow-x: scroll;
 				overflow-y: hidden!important;
 				white-space: nowrap;
 				background-color: @colorWhite;
@@ -627,7 +535,7 @@ input.ng-valid.ng-dirty{
 				    }
 				}
 				margin-bottom: 10px;
-			}			
+			}
 			.galleryWrapper{
 				height: 180px;
 			}
@@ -642,119 +550,368 @@ input.ng-valid.ng-dirty{
 	}
 }
 
-/* Aplicate media style only for device with 768px or UP */
+/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 @media (min-width: 768px) {
-  .left-section-content {
-    width: @leftContWidth;
-    float: left;
-    position: fixed;
-    bottom: 0;
-    top: @bodyPaddingTop;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: @colorBackground;
-  }
-
-  .right-section-content {
-    width: @rightContWidth;
-    float: left;
-    bottom: 0;
-    top: @bodyPaddingTop;
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin-left: @rightContMargingLeft;
-  }
-
-  .wizard-body{
-    margin-bottom: 100px;
-  }
-
-  .wizard-options{
-    width: 100%;
-    position: fixed;
-    bottom: 0px;
-    height: 100px;
-    min-height: 30px;
-    background-color: @colorGrayLight;
-
-    .wizard-options-item{
-
-
-      .circle{
-        width: 65px;
-        height: 65px;
-        background-color: @colorWhite;
-        color: @colorGrayLight2;
-        margin-top: 16px;
-        border-radius: 50%;
-        border: none;
-        text-align: center;
-        font-size: 25px;
-        padding: 18px;
-        margin-left: auto;
-        margin-right: auto;
-        cursor: pointer;
-      }
-
-      .circle:hover{
-        background-color: @colorFocus;
-        color: @colorWhite;
-      }
-
-      .textCirle{
-        text-align: center;
-        font-size: 11px;
-        color: @colorWhite;
-      }
+    .biinLogo{
+        width: 40px;
+        margin-left: 10px;
     }
-  }
+
+	.topHeader1{
+		background-color:@colorFocus;
+		height:@screenMdHeader1Height;
+	}
+
+	.topHeader2{
+		background-color:@colorBlack;
+		height:@screenMdHeader2Height;
+	}
+
+	.left-section-content {
+		width: @screenMdLeftContWidth;
+		float: left;
+		position: fixed;
+		bottom: 0;
+		top: @screenMdBodyPaddingTop;
+		overflow-x: hidden;
+		overflow-y: auto;
+		background-color: @colorBackground;
+	}
+
+	.right-section-content {
+		width: @rightContWidth;
+		float: left;
+		bottom: 0;
+		top: @screenMdBodyPaddingTop;
+		overflow-x: hidden;
+		overflow-y: auto;
+		margin-left: @rightContMargingLeft;
+	}
+
+	.moduleWrapper {
+		width: @screenMdLeftContBoxWidth;
+		background-color: @colorWhite;
+		margin-top: auto;
+		margin-right: auto;
+		margin-bottom: @screenMdLeftContBoxImgMargin;
+		margin-left: auto;
+
+		//Wrapper Image
+		img {
+			width: @screenMdLeftContBoxImgWidth;
+			height: @screenMdLeftContBoxImgHeight;
+			margin: @screenMdLeftContBoxImgMargin;
+		}
+
+		//Module Title
+		.moduleTitle{
+			position: absolute;
+			top: @screenMdLeftContBoxImgMargin;
+			margin-left: @screenMdLeftContBoxImgMargin;
+			background-color: black;
+			width: @screenMdLeftContBoxTitleWidth;
+			color: white;
+			opacity: 0.5;
+			line-height: @screenMdLeftContBoxTitleLineHeight;
+			font-size: @screenMdLeftContBoxTitleFontSize;
+			padding-left: 6px;
+		}
+	}
+
+	.moduleWrapper:hover{
+		background-color: @colorFocusHover;
+	}
+
+	.moduleWrapper.disabled{
+		background-color: red;
+	}
+
+	.moduleWrapper.activeShowcase{
+		background-color: green;
+	}
+
+	.moduleWrapper-inverse{
+	.moduleWrapper;
+		background-color: @forthColor;
+	}
+
+	.moduleWrapperShowcaseElement {
+		position: relative;
+		margin-left: 0px;
+		max-width: @elementWidth;
+	}
+
+	.module {
+		margin-right: 7px;
+		min-height: 125px;
+		min-width: 125px;
+	}
+
+	//Remove Element of Grids
+	.moduleWrapper.remove-module {
+		background-color:  @firstColor;
+		padding-top: 47.4px;
+
+		//Button Module
+		.btn-rounded {
+			background-color: @secondColor;
+			padding: initial;
+			text-align: center;
+			line-height: 36px;
+
+			//Rounded button icon of remove
+			.icon {
+				color: @firstColor;
+			}
+		}
+	}
+
+	.moduleImage{
+		height: @elementWidth;
+		width: @elementWidth;
+		position: fixed;
+
+		.moduleImageWrapper{
+			height: @elementWidth;
+			width: @elementWidth;
+			
+			img{
+				width: 100%!important;
+				height: 100%!important;
+			}
+		}
+	}
+
+	.wizard-body{
+		margin-bottom: 100px;
+	}
+
+	.wizard-options{
+		width: 100%;
+		position: fixed;
+		bottom: 0px;
+		height: 100px;
+		min-height: 30px;
+		background-color: @colorGrayLight;
+
+		.wizard-options-item{
+
+			.circle{
+				width: 65px;
+				height: 65px;
+				background-color: @colorWhite;
+				color: @colorGrayLight2;
+				margin-top: 16px;
+				border-radius: 50%;
+				border: none;
+				text-align: center;
+				font-size: 25px;
+				padding: 18px;
+				margin-left: auto;
+				margin-right: auto;
+				cursor: pointer;
+			}
+
+			.circle:hover{
+				background-color: @colorFocus;
+				color: @colorWhite;
+			}
+
+			.textCirle{
+				text-align: center;
+				font-size: 11px;
+				color: @colorWhite;
+			}
+		}
+	}
 }
 
-/* Aplicate media style only for device with 768px or UP */
+/*-* End Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+
+/*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
 @media (min-width: 1550px) {
-  .wizard-body{
-    margin-bottom: 160px;
-  }
-
-  .wizard-options {
-    width: 100%;
-    position: fixed;
-    bottom: 0px;
-    height: 160px;
-    min-height: 30px;
-    background-color: @colorGrayLight;
-
-    .wizard-options-item {
-
-      .circle {
-        width: 100px;
-        height: 100px;
-        background-color: @colorWhite;
-        color: @colorGrayLight2;
-        margin-top: 30px;
-        border-radius: 50%;
-        border: none;
-        text-align: center;
-        font-size: 40px;
-        padding: 25px;
-        margin-left: auto;
-        margin-right: auto;
-        cursor: pointer;
-      }
-
-      .circle:hover {
-        background-color: @colorFocus;
-        color: @colorWhite;
-      }
-
-      .textCirle {
-        text-align: center;
-        font-size: 14px;
-        color: @colorWhite;
-      }
+    .biinLogo{
+        width: 80px;
+        margin-left: 10px;
     }
-  }
+
+	.topHeader1{
+		background-color:@colorFocus;
+		height:@screenLgHeader1Height;
+	}
+
+	.topHeader2{
+		background-color:@colorBlack;
+		height:@screenLgHeader2Height;
+	}
+
+	.left-section-content {
+		width: @screenLgLeftContWidth;
+		float: left;
+		position: fixed;
+		bottom: 0;
+		top: @screenLgBodyPaddingTop;
+		overflow-x: hidden;
+		overflow-y: auto;
+		background-color: @colorBackground;
+	}
+
+	.right-section-content {
+		width: @rightContWidth;
+		float: left;
+		bottom: 0;
+		top: @screenLgBodyPaddingTop;
+		overflow-x: hidden;
+		overflow-y: auto;
+		margin-left: @rightContMargingLeft;
+	}
+
+	.moduleWrapper {
+		height: @screenLgLeftContBoxSize;
+		width: @screenLgLeftContBoxSize;
+		background-color: @colorWhite;
+		margin-top: auto;
+		margin-right: auto;
+		margin-bottom: 10px;
+		margin-left: auto;
+
+		//Wrapper Image
+		img {
+			width: @screenLgLeftContBoxSizeImg;
+			height: @screenLgLeftContBoxSizeImg;
+			margin: @screenLgLeftContBoxImgMargin;
+		}
+
+		//Module Title
+		.moduleTitle{
+			position: absolute;
+			top: @screenLgLeftContBoxImgMargin;
+			margin-left: @screenLgLeftContBoxImgMargin;
+			background-color: black;
+			width: @screenLgLeftContBoxSizeImg;
+			color: white;
+			opacity: 0.5;
+			line-height: 30px;
+			font-size: 15px;
+			padding-left: 6px;
+		}
+	}
+
+	.moduleWrapper:hover{
+		background-color: @colorFocusHover;
+	}
+
+	.moduleWrapper.disabled{
+		background-color: red;
+	}
+
+	.moduleWrapper.activeShowcase{
+		background-color: green;
+	}
+
+	.moduleWrapper-inverse{
+	.moduleWrapper;
+		background-color: @forthColor;
+	}
+
+	.moduleWrapperShowcaseElement {
+		position: relative;
+		margin-left: 0px;
+		max-width: @elementWidth;
+	}
+
+	.module {
+		margin-right: 7px;
+		min-height: 125px;
+		min-width: 125px;
+	}
+
+	//Remove Element of Grids
+	.moduleWrapper.remove-module {
+		background-color:  @firstColor;
+		padding-top: 47.4px;
+
+		//Button Module
+		.btn-rounded {
+			background-color: @secondColor;
+			padding: initial;
+			text-align: center;
+			line-height: 36px;
+
+			//Rounded button icon of remove
+			.icon {
+				color: @firstColor;
+			}
+		}
+	}
+
+	.moduleImage{
+		height: @elementWidth;
+		width: @elementWidth;
+		position: fixed;
+
+		.moduleImageWrapper{
+			height: @elementWidth;
+			width: @elementWidth;
+			
+			img{
+				width: 100%!important;
+				height: 100%!important;
+			}
+		}
+	}
+
+	.wizard-body{
+		margin-bottom: 160px;
+	}
+
+	.wizard-options {
+		width: 100%;
+		position: fixed;
+		bottom: 0px;
+		height: 160px;
+		min-height: 30px;
+		background-color: @colorGrayLight;
+
+		.wizard-options-item {
+
+			.circle {
+				width: 100px;
+				height: 100px;
+				background-color: @colorWhite;
+				color: @colorGrayLight2;
+				margin-top: 30px;
+				border-radius: 50%;
+				border: none;
+				text-align: center;
+				font-size: 40px;
+				padding: 25px;
+				margin-left: auto;
+				margin-right: auto;
+				cursor: pointer;
+			}
+
+			.circle:hover {
+				background-color: @colorFocus;
+				color: @colorWhite;
+			}
+
+			.textCirle {
+				text-align: center;
+				font-size: 14px;
+				color: @colorWhite;
+			}
+		}
+	}
 }
+/*-* End Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+
+/*-* Start General style *-*/
+.btn-biin{
+    border: 0px;
+    border-radius: 0px;
+}
+/*-* End General Style *-*/
 
 .galleryImage{
 	heigth:175px;
@@ -786,23 +943,23 @@ input.ng-valid.ng-dirty{
 	padding-left: 5px;
 	padding-right: 5px;
 }
-.wizard.ng-enter, 
+.wizard.ng-enter,
 .wizard.ng-leave
-{ 
+{
 	-webkit-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
     -moz-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
     -ms-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
     -o-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
     transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-} 
- 
+}
+
 .wizard.ng-enter {
     left:0;
 }
 .wizard.ng-enter, .wizard.ng-enter.ng-enter-active {
     left:0;
 }
- 
+
 .wizard.ng-leave {
     left: 0;
 }
@@ -879,16 +1036,6 @@ li>.nav{
 
 .workArea{
 	padding-top: 42.222px;
-}
-
-.topHeader1{
-    background-color:@colorFocus;
-    height:@header1Height;
-}
-
-.topHeader2{
-    background-color:@colorBlack;
-    height:@header2Height;
 }
 
 /*------------------------------------------*/

@@ -7,10 +7,6 @@
 /*
  * Base structure
  */
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 125px;
-}
 /*
  * Global add-ons
  */
@@ -25,8 +21,61 @@ body {
 .sidebar {
   display: none;
 }
-/* Aplicate media style only for device with 768px or UP */
+/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 @media (min-width: 768px) {
+  /* Move down content because we have a fixed navbar that is 50px tall */
+  body {
+    padding-top: 73px;
+  }
+  .sidebar {
+    top: 73px;
+    position: fixed;
+    width: 115px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+    background-color: #333333;
+    border-right: none;
+  }
+  .sidebar-margin {
+    margin-left: 115px;
+  }
+  .nav-sidebar {
+    margin-right: -21px;
+    /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+  }
+  .nav-sidebar .nav-item {
+    text-align: center;
+  }
+  .nav-sidebar .nav-item a {
+    font-size: 10px;
+    padding: 3px;
+  }
+  .nav-sidebar .nav-item a div {
+    font-size: 49px;
+    color: #999999;
+    text-shadow: 5px 2px 5px #231f20;
+  }
+  .nav-sidebar .nav-item a div:hover {
+    font-size: 49px;
+    color: #069fce;
+    text-shadow: 5px 2px 5px #231f20;
+  }
+}
+/*-* End Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+/*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+@media (min-width: 1550px) {
+  /* Move down content because we have a fixed navbar that is 50px tall */
+  body {
+    padding-top: 125px;
+  }
   .sidebar {
     top: 125px;
     position: fixed;
@@ -45,31 +94,31 @@ body {
   .sidebar-margin {
     margin-left: 140px;
   }
+  .nav-sidebar {
+    margin-right: -21px;
+    /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+  }
+  .nav-sidebar .nav-item {
+    text-align: center;
+  }
+  .nav-sidebar .nav-item a {
+    font-size: 12px;
+    padding: 3px;
+  }
+  .nav-sidebar .nav-item a div {
+    font-size: 60px;
+    color: #999999;
+    text-shadow: 5px 2px 5px #231f20;
+  }
+  .nav-sidebar .nav-item a div:hover {
+    font-size: 60px;
+    color: #069fce;
+    text-shadow: 5px 2px 5px #231f20;
+  }
 }
-/* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px;
-  /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-.nav-sidebar .nav-item {
-  text-align: center;
-}
-.nav-sidebar .nav-item a {
-  font-size: 12px;
-  padding: 3px;
-}
-.nav-sidebar .nav-item a div {
-  font-size: 60px;
-  color: #999999;
-  text-shadow: 5px 2px 5px #231f20;
-}
-.nav-sidebar .nav-item a div:hover {
-  font-size: 60px;
-  color: #069fce;
-  text-shadow: 5px 2px 5px #231f20;
-}
+/*-* End Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
 .nav-sidebar > li > a {
   padding-right: 20px;
   padding-left: 20px;

@@ -7,11 +7,6 @@
  * Base structure
  */
 
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: @bodyPaddingTop;
-}
-
 /*
  * Global add-ons
  */
@@ -28,12 +23,19 @@ body {
 .sidebar {
   display: none;
 }
-/* Aplicate media style only for device with 768px or UP */
+
+/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 @media (min-width: 768px) {
+
+  /* Move down content because we have a fixed navbar that is 50px tall */
+  body {
+    padding-top: @screenMdBodyPaddingTop;
+  }
+
   .sidebar {
-    top: @bodyPaddingTop;
+    top: @screenMdBodyPaddingTop;
     position: fixed;
-    width: @sidebarWidth;
+    width: @screenMdSidebarWidth;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -46,38 +48,97 @@ body {
   }
 
   .sidebar-margin {
-    margin-left: @sidebarWidth;
+    margin-left: @screenMdSidebarWidth;
   }
-}
-/* Sidebar navigation */
 
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
+  .nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
 
-  .nav-item{
-    text-align: center;
+    .nav-item{
+      text-align: center;
 
-    a{
-      font-size: @sidebarFontSize;
-      padding: 3px;
+      a{
+        font-size: @screenMdSidebarFontSize;
+        padding: 3px;
 
 
-      div {
-        font-size: @sidebarIconSize;
-        color: @colorBackground;
-        text-shadow: 5px 2px 5px @colorBlack;
+        div {
+          font-size: @screenMdSidebarIconSize;
+          color: @colorBackground;
+          text-shadow: 5px 2px 5px @colorBlack;
+        }
+
+        div:hover {
+          font-size: @screenMdSidebarIconSize;
+          color: @colorFocusHover;
+          text-shadow: 5px 2px 5px @colorBlack;
+        }
       }
+    }
+  }
 
-      div:hover {
-        font-size: @sidebarIconSize;
-        color: @colorFocusHover;
-        text-shadow: 5px 2px 5px @colorBlack;
+}
+/*-* End Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+
+/*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+@media (min-width: 1550px) {
+
+  /* Move down content because we have a fixed navbar that is 50px tall */
+  body {
+    padding-top: @screenLgBodyPaddingTop;
+  }
+
+  .sidebar {
+    top: @screenLgBodyPaddingTop;
+    position: fixed;
+    width: @screenLgSidebarWidth;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: @colorSidebar;
+    border-right: none;
+  }
+
+  .sidebar-margin {
+    margin-left: @screenLgSidebarWidth;
+  }
+
+  .nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+
+    .nav-item{
+      text-align: center;
+
+      a{
+        font-size: @screenLgSidebarFontSize;
+        padding: 3px;
+
+
+        div {
+          font-size: @screenLgSidebarIconSize;
+          color: @colorBackground;
+          text-shadow: 5px 2px 5px @colorBlack;
+        }
+
+        div:hover {
+          font-size: @screenLgSidebarIconSize;
+          color: @colorFocusHover;
+          text-shadow: 5px 2px 5px @colorBlack;
+        }
       }
     }
   }
 }
+/*-* End Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+
 
 .nav-sidebar > li > a {
   padding-right: 20px;
