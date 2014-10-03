@@ -9,10 +9,10 @@ block content
 					.container-fluid
 						.row
 							.col-md-12(style='padding:8px;')
-								button.btn.btn-default.btn-block(ng-click='create()') ADD NEW SITE
+								button.btn.btn-default.btn-block.btn-biin(ng-click='create()') ADD NEW SITE
 					.container-fluid(style='padding:5px;')
 						.row
-							.col-xs-4.col-sm-12.col-md-12.col-lg-6.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
+							.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
 								.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
 									.moduleTitle Test item {{item.name}}
 									img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
