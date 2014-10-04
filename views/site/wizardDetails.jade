@@ -5,9 +5,9 @@ form.novalidate
 	.section
 		h2 Site title
 		.row.color-control
-				input.form-control.title-value(ng-model="sites[selectedSite].tittle1" name="title1" type="text" placeholder="Tittle **" required )
+			input.form-control.title-value(ng-model="sites[selectedSite].title1" name="title1" type="text" placeholder="Tittle **"  ng-blur="validate()"  required )
 		.row.color-control
-				input.form-control.title-value(ng-model="sites[selectedSite].tittle2" name="title1" type="text" placeholder="Subtittle **" required )
+			input.form-control.title-value(ng-model="sites[selectedSite].title2" name="title1" type="text" placeholder="Subtittle **" ng-blur="validate()"  required )
 	.section
 		h2 About your bussines
 		p Our customer want to know more about you!! Scroll throw and answer the following questions.
@@ -26,5 +26,4 @@ form.novalidate
 					.col-md-9
 						input.form-control(ng-model="newTagField")
 					.col-md-3
-						button.btn.btn-default(ng-click="addSiteTag(newTagField);newTagField=''") Add
-		button.btn.btn-default(ng-click="save()") Save
+						button.btn.btn-default(ng-click="addSiteTag(newTagField);newTagField=''" ng-enter="addSiteTag(newTagField);newTagField=''") Add

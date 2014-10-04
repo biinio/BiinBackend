@@ -25,8 +25,8 @@ block content
 				.right-section-content
 					div(ng-if="selectedSite!=null")
 						.animate-switch.wizard-wrapper
-							.wizard-body.wizard(ng-switch="wizardPosition")
-								#wizardOption1.wizard(ng-switch-when="1" )										
+							.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
+								#wizardOption1.wizard(ng-switch-when="1" )
 									include wizardDetails
 								#wizardOption4.wizard(ng-switch-when="2" )
 									include wizardGallery									
@@ -42,44 +42,44 @@ block content
 								.container-fluid
 									row
 										.col-md-1.col-sm-1.nopadding
-											.wizard-options-item(ng-click="wizardPosition =1" )
-												.circle
+											.wizard-options-item(ng-click="changeWizardTab(1)" )
+												.circle(ng-class="{'active':wizardPosition ==1}")
 													.icon.icon-list-1-1
 												.textCirle 
 													| 1. DETAILS
 										.col-md-1.col-sm-1.nopadding												
-											.wizard-options-item(ng-click="wizardPosition =2")
-												.circle
+											.wizard-options-item(ng-click="changeWizardTab(2)")
+												.circle(ng-class="{'active':wizardPosition ==2,'disabled':!wizard1IsValid}")
 													.icon.icon-photo-1
 												.textCirle 
 													| 2. IMAGES													
 										.col-md-1.col-sm-1.nopadding												
-											.wizard-options-item(ng-click="wizardPosition =3")
-												.circle
+											.wizard-options-item(ng-click="changeWizardTab(3)")
+												.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid}")
 													.icon.icon-palette
 												.textCirle 
 													| 3. COLOURS
 										.col-md-1.col-sm-1.nopadding												
-											.wizard-options-item(ng-click="wizardPosition =4")
-												.circle
+											.wizard-options-item(ng-click="changeWizardTab(4)")
+												.circle(ng-class="{'active':wizardPosition ==4,'disabled':(!wizard3IsValid && !wizard2IsValid)}")
 													.icon.icon-marker-2
 												.textCirle 
 													| 4. LOCATION
 										.col-md-1.col-sm-1.nopadding												
-											.wizard-options-item(ng-click="wizardPosition =5")
-												.circle
+											.wizard-options-item(ng-click="changeWizardTab(5)")
+												.circle(ng-class="{'active':wizardPosition ==5,'disabled':!wizard4IsValid}")
 													.icon.icon-hotspot-2
 												.textCirle 
 													| 5. BIINS
 										.col-md-1.col-sm-1.nopadding												
-											.wizard-options-item(ng-click="wizardPosition =6")
-												.circle
+											.wizard-options-item(ng-click="changeWizardTab(6)")
+												.circle(ng-class="{'active':wizardPosition ==6,'disabled':!wizard5IsValid}")
 													.icon.icon-tag-1
 												.textCirle 
 													| 6. CATEGORIES
 										.col-md-1.col-sm-1.nopadding												
-											.wizard-options-item(ng-click="wizardPosition =7")
-												.circle
+											.wizard-options-item
+												.circle(ng-class="{'complete':isValid}")
 													.icon.icon-arrange-1 
 												.textCirle 
 													| FINISH

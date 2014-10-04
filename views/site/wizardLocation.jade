@@ -4,23 +4,23 @@ div
 		p Add site information to your organization here. Information that will be shown on the mobile app is mark with **
 	.section
 		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].country" name="country" type="text" placeholder="Country **" required )
+			input.form-control.title-value(ng-model="sites[selectedSite].country" name="country" type="text" placeholder="Country **" ng-blur="validate()" required )
 		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].state" name="state" type="text" placeholder="State **" required )
+			input.form-control.title-value(ng-model="sites[selectedSite].state" name="state" type="text" placeholder="State **" ng-blur="validate()" required )
 		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].city" name="city" type="text" placeholder="City **" required )
+			input.form-control.title-value(ng-model="sites[selectedSite].city" name="city" type="text" placeholder="City **" ng-blur="validate()" required )
 		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].zipCode" name="zipCode" type="text" placeholder="Zip Code **" required )
+			input.form-control.title-value(ng-model="sites[selectedSite].zipCode" name="zipCode" type="text" placeholder="Zip Code **" ng-blur="validate()" required )
 		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].streetAddres" name="streetAddres" type="text" placeholder="Street Address **" required )
+			input.form-control.title-value(ng-model="sites[selectedSite].streetAddres" name="streetAddres" type="text" placeholder="Street Address **"  ng-blur="validate()" required )
 		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" required )
+			input.form-control.title-value(ng-model="sites[selectedSite].phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" ng-blur="validate()" required )
 	.section
 		h2 Map Location
 		p Select your location
 		.mapWrapper
 			.map(zoom='13' lat="{{sites[selectedSite].lat}}" lng="{{sites[selectedSite].lng}}" map)
 		span lat
-		input(type="text" ng-model="sites[selectedSite].lat")
+		input(type="text" ng-model="sites[selectedSite].lat" required)
 		span long
-		input(type="text" ng-model="sites[selectedSite].lng")			
+		input(type="text" ng-model="sites[selectedSite].lng" required)			

@@ -712,6 +712,24 @@ input.ng-valid.ng-dirty{
 				cursor: pointer;
 			}
 
+			.circle.complete{
+				background-color: @colorGreen;		
+			}
+
+			.circle.disabled{
+				background-color:@colorGrayLight2 ;
+			}
+
+			.circle.active{
+				background-color: @colorFocus;		
+				color: @colorWhite;
+			} 
+
+			.circle.invalid{
+				background-color: @colorFocus;		
+				color: @colorWhite;
+			} 
+
 			.circle:hover{
 				background-color: @colorFocus;
 				color: @colorWhite;
@@ -724,6 +742,7 @@ input.ng-valid.ng-dirty{
 			}
 		}
 	}
+
 }
 
 /*-* End Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/

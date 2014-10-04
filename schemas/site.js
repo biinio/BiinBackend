@@ -1,16 +1,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var validations={
+	required :['title1','title2','mainColor','textColor','country','state','city','zipCode','streetAddres','phoneNumber','lat','lng','categories','media']
+};
+
+
 var siteObj ={
 	identifier:{type:String, default:"-1", index:true},
 	accountIdentifier:{type:String, default:"000"},
 	organizationIdentifier:{type:String,default:""},
-	name: {type:String, default:""},
-	title1:{type:String, default:""},
-	colorTitle1:{type:String,default:""},
+	title1:{type:String, default:""},	
 	title2:{type:String, default:""},	
-	colorTitle2:{type:String,default:""},
-	title3:{type:String, default:""},	
+	mainColor:{type:String,default:""},
+	textColor:{type:String,default:""},
 	description: {type:String, default:""},
 	major:{type: Number, default:0},
 	minorCounter:{type: Number, default:0},
@@ -52,5 +55,9 @@ var siteObj ={
 	]
 }
 var siteSchema = new Schema(siteObj);
+
+siteSchema.methods.validations = function() {
+	return validations;
+};
 
 module.exports = mongoose.model('sites', siteSchema);

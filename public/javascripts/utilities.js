@@ -36,10 +36,7 @@ function intersectionObjects() {
 
 //Contains function helper
 function contains(list, property, value){
-    if(_.where(list,{property:value}).length)
-        return true;
-    else
-        return false
+    return _.findWhere(list,{property:value})!='undefined';
 }
 
 //Difference function helper
