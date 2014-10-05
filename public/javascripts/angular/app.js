@@ -1,6 +1,9 @@
 // Define the service of galleries
 var biinServicesModule= angular.module('biin.services',[]);
 
+//Propertie
+biinServicesModule.value('scrollbarOptionsStandard', {"type": "simple"});
+
 //Image Services
 biinServicesModule.factory('gallerySrv', ['$http', function (async) {
     return {

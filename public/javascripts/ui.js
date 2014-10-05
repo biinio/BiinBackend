@@ -29,6 +29,8 @@ var selectedOrganization=function(){
             }, opt.duration + (delay || 0));
         });
     };
+
+
 })(jQuery);
 
 //Jquery Controls
@@ -57,6 +59,14 @@ jQuery(function ($) {
       e.preventDefault();
       $(this).tab('show');
     });
+
+    //Side bar code for menu
+    /*var $sidebar =$(".sidebar");
+    if($sidebar.length>0){
+        $sidebar.scrollbar({"type": "simple"}).on('$destroy', function(){
+            $sidebar.scrollbar('destroy');
+        });        
+    }*/
 
     //Load Controls
     controls();

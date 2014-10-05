@@ -4,7 +4,7 @@
 		p Add some images to your site so users on the mobile app see yours stores looks like
 	.section(drop)
 		.row
-			.ownedGalleryWrapper.scrollbar-inner(scrollbar="scrollbarOptionsOwnedGallery" )
+			.ownedGalleryWrapper.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 				.img-block(ng-repeat="item in sites[selectedSite].media")
 					.moduleWrapper.contentHideButtons
 						img.img-responsive(ng-src="{{item.imgUrl}}" pending-indicator)

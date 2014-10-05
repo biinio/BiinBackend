@@ -94,7 +94,7 @@ module.exports = function (db) {
     // will print stacktrace
     if (isDevelopment) {
         app.use(function(err, req, res, next) {
-            console.log("Hellow error of development: " + err.message +" stack: "+error.stack);
+            console.log("Hellow error of development: " + err.message +" stack: "+err.stack);
             res.render('error', {
                 message: err.message,
                 error: err

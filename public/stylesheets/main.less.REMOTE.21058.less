@@ -799,24 +799,6 @@ input.ng-valid.ng-dirty{
 			cursor: pointer;
 		}
 
-		.circle.complete{
-			background-color: @colorGreen;		
-		}
-
-		.circle.disabled{
-			background-color:@colorGrayLight2 ;
-		}
-
-		.circle.active{
-			background-color: @colorFocus;		
-			color: @colorWhite;
-		} 
-
-		.circle.invalid{
-			background-color: @colorFocus;		
-			color: @colorWhite;
-		} 
-
 		.circle:hover{
 			background-color: @colorFocus;
 			color: @colorWhite;
@@ -824,11 +806,9 @@ input.ng-valid.ng-dirty{
 
 		.textCirle{
 			text-align: center;
-			font-size: 11px;
 			color: @colorWhite;
 		}
-	}
-}
+    }
 
 
     /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
@@ -853,22 +833,24 @@ input.ng-valid.ng-dirty{
 
     /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
     @media (min-width: 1550px) {
-        height: 160px;    
-	    .wizard-options-item {
+        height: 160px;
+        
+        .wizard-options-item {
 
-	        .circle {
-	            width: 100px;
-	            height: 100px;
-	            margin-top: 30px;
-	            font-size: 40px;
-	            padding: 25px;
-	        }
+            .circle {
+                width: 100px;
+                height: 100px;
+                margin-top: 30px;
+                font-size: 40px;
+                padding: 25px;
+            }
 
-	        .textCirle {
-	            font-size: 14px;
-	        }
-	    }
-   }
+            .textCirle {
+                font-size: 14px;
+            }
+        }
+    }
+}
 
 .galleryImage{
 	heigth:175px;

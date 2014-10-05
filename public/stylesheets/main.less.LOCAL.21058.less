@@ -550,115 +550,51 @@ input.ng-valid.ng-dirty{
 	}
 }
 
-.btn-biin{
-    border: 0px;
-    border-radius: 0px;
-}
-
-.biinLogo{
-	margin-left: 10px;
-
-	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-	@media (min-width: 768px) {	
-		width: 40px;
-	}
-
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        width: 80px;
+/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+@media (min-width: 768px) {
+    .biinLogo{
+        width: 40px;
+        margin-left: 10px;
     }
-}
 
-.topHeader1{
-	background-color:@colorFocus;
-
-	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-	@media (min-width: 768px) {
+	.topHeader1{
+		background-color:@colorFocus;
 		height:@screenMdHeader1Height;
 	}
 
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        height:@screenLgHeader1Height;
-    }
-}
-
-.topHeader2{
-	background-color:@colorBlack;
-
-	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-	@media (min-width: 768px) {	
+	.topHeader2{
+		background-color:@colorBlack;
 		height:@screenMdHeader2Height;
 	}
 
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        height:@screenLgHeader2Height;
-    }
-}
-
-.left-section-content {
-	float: left;
-	position: fixed;
-	bottom: 0;
-	overflow-x: hidden;
-	overflow-y: auto;
-
-	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-	@media (min-width: 768px) {	
+	.left-section-content {
 		width: @screenMdLeftContWidth;
+		float: left;
+		position: fixed;
+		bottom: 0;
 		top: @screenMdBodyPaddingTop;
+		overflow-x: hidden;
+		overflow-y: auto;
 		background-color: @colorBackground;
 	}
 
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        width: @screenLgLeftContWidth;
-        top: @screenLgBodyPaddingTop;
-        background-color: @colorBackground;
-    }
-}
-
-.right-section-content {
-	float: left;
-	bottom: 0;
-	overflow-x: hidden;
-	overflow-y: auto;
-
-	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-	@media (min-width: 768px) {	
+	.right-section-content {
 		width: @rightContWidth;
+		float: left;
+		bottom: 0;
 		top: @screenMdBodyPaddingTop;
+		overflow-x: hidden;
+		overflow-y: auto;
 		margin-left: @rightContMargingLeft;
 	}
 
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        width: @rightContWidth;
-        top: @screenLgBodyPaddingTop;
-        margin-left: @rightContMargingLeft;
-    }
-}
-
-.moduleWrapper {
-	margin-top: auto;
-	margin-right: auto;
-	margin-left: auto;
-
-	//Module Title
-	.moduleTitle{
-		position: absolute;
-		background-color: black;
-		color: white;
-		opacity: 0.5;
-		padding-left: 6px;
-	}
-
-	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-	@media (min-width: 768px) {	
+	.moduleWrapper {
 		width: @screenMdLeftContBoxWidth;
 		background-color: @colorWhite;
+		margin-top: auto;
+		margin-right: auto;
 		margin-bottom: @screenMdLeftContBoxImgMargin;
+		margin-left: auto;
 
 		//Wrapper Image
 		img {
@@ -669,206 +605,332 @@ input.ng-valid.ng-dirty{
 
 		//Module Title
 		.moduleTitle{
+			position: absolute;
 			top: @screenMdLeftContBoxImgMargin;
 			margin-left: @screenMdLeftContBoxImgMargin;
+			background-color: black;
 			width: @screenMdLeftContBoxTitleWidth;
+			color: white;
+			opacity: 0.5;
 			line-height: @screenMdLeftContBoxTitleLineHeight;
 			font-size: @screenMdLeftContBoxTitleFontSize;
+			padding-left: 6px;
 		}
 	}
 
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        height: @screenLgLeftContBoxSize;
-        width: @screenLgLeftContBoxSize;
-        background-color: @colorWhite;
-        margin-bottom: 10px;
+	.moduleWrapper:hover{
+		background-color: @colorFocusHover;
+	}
 
-        //Wrapper Image
-        img {
-			width: @screenLgLeftContBoxSizeImg;
-			height: @screenLgLeftContBoxSizeImg;
-			margin: @screenLgLeftContBoxImgMargin;
-        }
+	.moduleWrapper.disabled{
+		background-color: red;
+	}
 
-        //Module Title
-        .moduleTitle{
-			line-height: 30px;
-			font-size: 15px;
+	.moduleWrapper.activeShowcase{
+		background-color: green;
+	}
 
-			top: @screenLgLeftContBoxImgMargin;
-			margin-left: @screenLgLeftContBoxImgMargin;
-			width: @screenLgLeftContBoxSizeImg;
-      	}
-    }
-}
+	.moduleWrapper-inverse{
+	.moduleWrapper;
+		background-color: @forthColor;
+	}
 
-.moduleWrapper:hover{
-	background-color: @colorFocusHover;
-}
+	.moduleWrapperShowcaseElement {
+		position: relative;
+		margin-left: 0px;
+		max-width: @elementWidth;
+	}
 
-.moduleWrapper.disabled{
-	background-color: red;
-}
+	.module {
+		margin-right: 7px;
+		min-height: 125px;
+		min-width: 125px;
+	}
 
-.moduleWrapper.activeShowcase{
-	background-color: green;
-}
+	//Remove Element of Grids
+	.moduleWrapper.remove-module {
+		background-color:  @firstColor;
+		padding-top: 47.4px;
 
-.moduleWrapper-inverse{
-.moduleWrapper;
-	background-color: @forthColor;
-}
+		//Button Module
+		.btn-rounded {
+			background-color: @secondColor;
+			padding: initial;
+			text-align: center;
+			line-height: 36px;
 
-.moduleWrapperShowcaseElement {
-	position: relative;
-	margin-left: 0px;
-	max-width: @elementWidth;
-}
-
-.module {
-	margin-right: 7px;
-	min-height: 125px;
-	min-width: 125px;
-}
-
-//Remove Element of Grids
-.moduleWrapper.remove-module {
-	background-color:  @firstColor;
-	padding-top: 47.4px;
-
-	//Button Module
-	.btn-rounded {
-		background-color: @secondColor;
-		padding: initial;
-		text-align: center;
-		line-height: 36px;
-
-		//Rounded button icon of remove
-		.icon {
-			color: @firstColor;
+			//Rounded button icon of remove
+			.icon {
+				color: @firstColor;
+			}
 		}
 	}
-}
 
-.moduleImage{
-	height: @elementWidth;
-	width: @elementWidth;
-	position: fixed;
-
-	.moduleImageWrapper{
+	.moduleImage{
 		height: @elementWidth;
 		width: @elementWidth;
-		
-		img{
-			width: 100%!important;
-			height: 100%!important;
+		position: fixed;
+
+		.moduleImageWrapper{
+			height: @elementWidth;
+			width: @elementWidth;
+			
+			img{
+				width: 100%!important;
+				height: 100%!important;
+			}
 		}
 	}
-}
 
-.wizard-body{
-    /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-    @media (min-width: 768px) {
-        margin-bottom: 100px;
-    }
-
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        margin-bottom: 160px;
-    }
-}
-
-.wizard-options{
-	width: 100%;
-	position: fixed;
-	bottom: 0px;
-	min-height: 30px;
-	background-color: @colorGrayLight;
-
-	.wizard-options-item{
-
-		.circle{
-			background-color: @colorWhite;
-			color: @colorGrayLight2;
-			border-radius: 50%;
-			border: none;
-			text-align: center;
-			margin-left: auto;
-			margin-right: auto;
-			cursor: pointer;
-		}
-
-		.circle.complete{
-			background-color: @colorGreen;		
-		}
-
-		.circle.disabled{
-			background-color:@colorGrayLight2 ;
-		}
-
-		.circle.active{
-			background-color: @colorFocus;		
-			color: @colorWhite;
-		} 
-
-		.circle.invalid{
-			background-color: @colorFocus;		
-			color: @colorWhite;
-		} 
-
-		.circle:hover{
-			background-color: @colorFocus;
-			color: @colorWhite;
-		}
-
-		.textCirle{
-			text-align: center;
-			font-size: 11px;
-			color: @colorWhite;
-		}
+	.wizard-body{
+		margin-bottom: 100px;
 	}
-}
 
+	.wizard-options{
+		width: 100%;
+		position: fixed;
+		bottom: 0px;
+		height: 100px;
+		min-height: 30px;
+		background-color: @colorGrayLight;
 
-    /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-    @media (min-width: 768px) {
-        height: 100px;
-
-        .wizard-options-item{
+		.wizard-options-item{
 
 			.circle{
 				width: 65px;
 				height: 65px;
+				background-color: @colorWhite;
+				color: @colorGrayLight2;
 				margin-top: 16px;
+				border-radius: 50%;
+				border: none;
+				text-align: center;
 				font-size: 25px;
 				padding: 18px;
+				margin-left: auto;
+				margin-right: auto;
+				cursor: pointer;
+			}
+
+			.circle.complete{
+				background-color: @colorGreen;		
+			}
+
+			.circle.disabled{
+				background-color:@colorGrayLight2 ;
+			}
+
+			.circle.active{
+				background-color: @colorFocus;		
+				color: @colorWhite;
+			} 
+
+			.circle.invalid{
+				background-color: @colorFocus;		
+				color: @colorWhite;
+			} 
+
+			.circle:hover{
+				background-color: @colorFocus;
+				color: @colorWhite;
 			}
 
 			.textCirle{
+				text-align: center;
 				font-size: 11px;
+				color: @colorWhite;
 			}
-        }
+		}
+	}
+
+}
+
+/*-* End Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+
+/*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+@media (min-width: 1550px) {
+    .biinLogo{
+        width: 80px;
+        margin-left: 10px;
     }
 
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        height: 160px;    
-	    .wizard-options-item {
+	.topHeader1{
+		background-color:@colorFocus;
+		height:@screenLgHeader1Height;
+	}
 
-	        .circle {
-	            width: 100px;
-	            height: 100px;
-	            margin-top: 30px;
-	            font-size: 40px;
-	            padding: 25px;
-	        }
+	.topHeader2{
+		background-color:@colorBlack;
+		height:@screenLgHeader2Height;
+	}
 
-	        .textCirle {
-	            font-size: 14px;
-	        }
-	    }
-   }
+	.left-section-content {
+		width: @screenLgLeftContWidth;
+		float: left;
+		position: fixed;
+		bottom: 0;
+		top: @screenLgBodyPaddingTop;
+		overflow-x: hidden;
+		overflow-y: auto;
+		background-color: @colorBackground;
+	}
+
+	.right-section-content {
+		width: @rightContWidth;
+		float: left;
+		bottom: 0;
+		top: @screenLgBodyPaddingTop;
+		overflow-x: hidden;
+		overflow-y: auto;
+		margin-left: @rightContMargingLeft;
+	}
+
+	.moduleWrapper {
+		height: @screenLgLeftContBoxSize;
+		width: @screenLgLeftContBoxSize;
+		background-color: @colorWhite;
+		margin-top: auto;
+		margin-right: auto;
+		margin-bottom: 10px;
+		margin-left: auto;
+
+		//Wrapper Image
+		img {
+			width: @screenLgLeftContBoxSizeImg;
+			height: @screenLgLeftContBoxSizeImg;
+			margin: @screenLgLeftContBoxImgMargin;
+		}
+
+		//Module Title
+		.moduleTitle{
+			position: absolute;
+			top: @screenLgLeftContBoxImgMargin;
+			margin-left: @screenLgLeftContBoxImgMargin;
+			background-color: black;
+			width: @screenLgLeftContBoxSizeImg;
+			color: white;
+			opacity: 0.5;
+			line-height: 30px;
+			font-size: 15px;
+			padding-left: 6px;
+		}
+	}
+
+	.moduleWrapper:hover{
+		background-color: @colorFocusHover;
+	}
+
+	.moduleWrapper.disabled{
+		background-color: red;
+	}
+
+	.moduleWrapper.activeShowcase{
+		background-color: green;
+	}
+
+	.moduleWrapper-inverse{
+	.moduleWrapper;
+		background-color: @forthColor;
+	}
+
+	.moduleWrapperShowcaseElement {
+		position: relative;
+		margin-left: 0px;
+		max-width: @elementWidth;
+	}
+
+	.module {
+		margin-right: 7px;
+		min-height: 125px;
+		min-width: 125px;
+	}
+
+	//Remove Element of Grids
+	.moduleWrapper.remove-module {
+		background-color:  @firstColor;
+		padding-top: 47.4px;
+
+		//Button Module
+		.btn-rounded {
+			background-color: @secondColor;
+			padding: initial;
+			text-align: center;
+			line-height: 36px;
+
+			//Rounded button icon of remove
+			.icon {
+				color: @firstColor;
+			}
+		}
+	}
+
+	.moduleImage{
+		height: @elementWidth;
+		width: @elementWidth;
+		position: fixed;
+
+		.moduleImageWrapper{
+			height: @elementWidth;
+			width: @elementWidth;
+			
+			img{
+				width: 100%!important;
+				height: 100%!important;
+			}
+		}
+	}
+
+	.wizard-body{
+		margin-bottom: 160px;
+	}
+
+	.wizard-options {
+		width: 100%;
+		position: fixed;
+		bottom: 0px;
+		height: 160px;
+		min-height: 30px;
+		background-color: @colorGrayLight;
+
+		.wizard-options-item {
+
+			.circle {
+				width: 100px;
+				height: 100px;
+				background-color: @colorWhite;
+				color: @colorGrayLight2;
+				margin-top: 30px;
+				border-radius: 50%;
+				border: none;
+				text-align: center;
+				font-size: 40px;
+				padding: 25px;
+				margin-left: auto;
+				margin-right: auto;
+				cursor: pointer;
+			}
+
+			.circle:hover {
+				background-color: @colorFocus;
+				color: @colorWhite;
+			}
+
+			.textCirle {
+				text-align: center;
+				font-size: 14px;
+				color: @colorWhite;
+			}
+		}
+	}
+}
+/*-* End Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+
+/*-* Start General style *-*/
+.btn-biin{
+    border: 0px;
+    border-radius: 0px;
+}
+/*-* End General Style *-*/
 
 .galleryImage{
 	heigth:175px;

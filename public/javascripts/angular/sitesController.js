@@ -415,8 +415,9 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.loadingImages = state;
     $scope.$digest();
   }
+
   //Scroll Bars Options
-  $scope.scrollbarOptionsOwnedGallery = {
+  /*$scope.scrollbarOptionsOwnedGallery = {
         "type": "simple",
         "onScroll":function(y, x){
             if(x.scroll == x.maxScroll){
@@ -427,6 +428,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
   $scope.scrollbarOptionsStandard = {
         "type": "simple"
-    }; 
+    }; */
   }]);
 
