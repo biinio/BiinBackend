@@ -553,6 +553,9 @@ input.ng-valid.ng-dirty{
 .btn-biin{
     border: 0px;
     border-radius: 0px;
+    height: 50px;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .biinLogo{
@@ -663,7 +666,8 @@ input.ng-valid.ng-dirty{
 		//Wrapper Image
 		img {
 			width: @screenMdLeftContBoxImgWidth;
-			height: @screenMdLeftContBoxImgHeight;
+			min-height: @screenMdLeftContBoxImgHeight;
+            max-height: @screenMdLeftContBoxImgHeight;
 			margin: @screenMdLeftContBoxImgMargin;
 		}
 
@@ -687,7 +691,8 @@ input.ng-valid.ng-dirty{
         //Wrapper Image
         img {
 			width: @screenLgLeftContBoxSizeImg;
-			height: @screenLgLeftContBoxSizeImg;
+			min-height: @screenLgLeftContBoxSizeImg;
+            max-height: @screenLgLeftContBoxSizeImg;
 			margin: @screenLgLeftContBoxImgMargin;
         }
 
@@ -828,10 +833,8 @@ input.ng-valid.ng-dirty{
 			color: @colorWhite;
 		}
 	}
-}
 
-
-    /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
     @media (min-width: 768px) {
         height: 100px;
 
@@ -869,6 +872,7 @@ input.ng-valid.ng-dirty{
 	        }
 	    }
    }
+}
 
 .galleryImage{
 	heigth:175px;
