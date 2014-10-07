@@ -456,6 +456,7 @@ ul {
 #banner_1 {
   padding-top: 80px;
   border-bottom: 1px solid #ddd;
+  background-image: url('/landingPage/img/thumbs/6.png');
 }
 .banner_1_content h3 {
   color: #00ADEF;
