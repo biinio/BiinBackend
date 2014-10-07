@@ -233,13 +233,12 @@ ul {
   font-weight: 900;
   text-transform: uppercase;
   display: block;
-  padding: 0 5px;
+  padding: 0 10px;
   -webkit-transition: all 100ms ease-in-out;
   -moz-transition: all 100ms ease-in-out;
   -o-transition: all 100ms ease-in-out;
   -ms-transition: all 100ms ease-in-out;
   transition: all 100ms ease-in-out;
-  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
 
 .navbar-nav > li{
@@ -338,14 +337,11 @@ ul {
   font-weight: 900;
   line-height: 95%;
   margin-bottom: 20px;
-  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
 .intro-content h3 {
   font-size: 200%;
   font-weight: 400;
-  text-transform: uppercase;
   margin-top: 0;
-  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
 /*------------------------------------------*/
 /*	 Intro Page Pagination   
