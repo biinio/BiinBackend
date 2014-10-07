@@ -22,3 +22,7 @@ biin.sublime-project.save
 
 .idea/**
 *.css
+
+biin.sublime-project
+
+.env
