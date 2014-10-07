@@ -102,7 +102,7 @@ module.exports = function () {
 				var set = {};
 
 				for (var field in model) {
-					if(field!="biins")	//Add a filter for prevent inser other biins without purchase
+					//if(field!="biins")	//Add a filter for prevent inser other biins without purchase
 				  		set['sites.$.' + field] = model[field];
 				}
 				organization.update(
