@@ -471,8 +471,8 @@ ul {
   background-color: #00ADEF;
   position: relative;
   display: block;
-  width: 70px;
-  height: 70px;
+  width: 85px;
+  height: 85px;
   position: absolute;
   left: 0px;
   top: 10px;
@@ -493,7 +493,8 @@ ul {
 /*	  Feature Box Content
 /*------------------------------------------*/
 .feature-box-content {
-  padding-left: 70px;
+  padding-top: 10px;
+  padding-left: 85px;
 }
 .feature-box-content h4 {
   font-family: 'Lato', sans-serif;
