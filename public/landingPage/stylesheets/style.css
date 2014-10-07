@@ -458,13 +458,18 @@ ul {
   padding-top: 80px;
   border-bottom: 1px solid #ddd;
   background-image: url('/landingPage/img/thumbs/6.png');
+  height: 1000px;
+}
+.banner_1_content h2 {
+  color: #fff;
 }
 .banner_1_content h3 {
   color: #00ADEF;
   margin-bottom: 20px;
 }
+
 .banner_1_content p {
-  color: #444;
+  color: #FFF;
   font-size: 18px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
