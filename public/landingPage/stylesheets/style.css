@@ -464,7 +464,7 @@ ul {
 }
 #banner_1 .container{
   position: relative;
-  margin-top: 200px;
+  margin-top: 200px; 
 
 }
 .banner_1_content h2 {
@@ -482,14 +482,34 @@ ul {
   font-weight: 300;
   margin-bottom: 30px;
 }
-.banner_1_content p strong {
+.banner_1_content .important p strong {
   line-height: 24px;
   color: #fff;
-  background-color: #000;
   font-size: 23px;
 }
-p.important:before, p.important:after{
-  content: '"';
+.important p{
+  margin-top: 6px!important;
+  margin-bottom: 6px!important;
+  padding-left:10px;
+  padding-top:10px;
+  padding-bottom:10px;
+  background-color: #000!important;
+}
+
+.important .important-1{
+  width: 215px;
+}
+
+.important .important-2{
+  width: 245px;
+}
+
+.important .important-3{
+  width: 210px;
+}
+
+.important .important-4{
+  width: 355px;
 }
 /*------------------------------------------*/
 /*	  Banner_1 Image
