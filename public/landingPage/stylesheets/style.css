@@ -208,8 +208,8 @@ ul {
 
 .navbar-brand img{
   height: 70px !important;
-  top: -7px;
-  position: absolute;
+  position: relative;
+  margin-top: -6px;
 }
 
 .navbar-brand:hover {
