@@ -458,7 +458,14 @@ ul {
   padding-top: 80px;
   border-bottom: 1px solid #ddd;
   background-image: url('/landingPage/img/thumbs/6.png');
+  background-repeat: no-repeat;
+  background-position: right top;
   height: 1000px;
+}
+#banner_1 .container{
+  position: relative;
+  margin-top: 200px;
+
 }
 .banner_1_content h2 {
   color: #fff;
@@ -475,8 +482,11 @@ ul {
   font-weight: 300;
   margin-bottom: 30px;
 }
-.banner_1_content p strong {
+.banner_1_content blockquote strong {
   line-height: 24px;
+}
+p.important:before, p.important:after{
+  content: '"';
 }
 /*------------------------------------------*/
 /*	  Banner_1 Image
