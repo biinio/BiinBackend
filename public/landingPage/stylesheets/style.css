@@ -206,10 +206,19 @@ ul {
   padding: 0px 15px;
 }
 
+.navbar.navbar-fixed-top.scroll-fixed-navbar .navbar-brand > img{
+  position: relative;
+  margin-top: -7px!important;
+}
+
+.navbar.navbar-fixed-top .navbar-brand > img{
+  position: relative;
+  margin-top:-10px;
+}
+
 .navbar-brand img{
   height: 70px !important;
-  position: relative;
-  margin-top: -7px;
+  
 }
 
 .navbar-brand:hover {
