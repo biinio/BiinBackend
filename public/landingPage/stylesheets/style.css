@@ -360,8 +360,12 @@ ul {
   margin-top: 0;
 }
 
-.intro-content-3{
+.intro-content-1 h3{
   color: rgb(255,0,53);
+}
+
+.intro-content-2 h3{
+  color: rgb(255,101,5);
 }
 /*------------------------------------------*/
 /*	 Intro Page Pagination   
