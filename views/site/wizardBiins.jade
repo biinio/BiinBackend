@@ -10,10 +10,11 @@ div
 				.img-block( ng-repeat="item in sites[selectedSite].biins" ng-click="editBiin(sites[selectedSite].biins.indexOf(item))")
 					.moduleWrapper(ng-class="{active: sites[selectedSite].biins.indexOf(item) == selectedBiin}")
 						p Biin# {{item.minor}}
+						p(ng-if="item.name.length>0" {{item.name}}
 	.section(ng-if="selectedBiin!=null && sites[selectedSite].biins.length>0")
 		row
-			input.form-control(type="text" model="sites[selectedSite].biins[selectedBiin].name" placeholder="Name")
-			input.form-control(type="text" model="sites[selectedSite].biins[selectedBiin].location" placeholder="location")				
+			input.form-control(type="text" ng-model="sites[selectedSite].biins[selectedBiin].name" placeholder="Name")
+			input.form-control(type="text" ng-model="sites[selectedSite].biins[selectedBiin].location" placeholder="location")				
 			p Organization id: {{organizationId}}
 			p Site id: {{sites[selectedSite].major}}
 			p Biin id: {{sites[selectedSite].biins[selectedBiin].minor}}

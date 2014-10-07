@@ -241,6 +241,11 @@ ul {
   transition: all 100ms ease-in-out;
   text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
+
+.navbar-nav > li{
+  margin-top: 5px;
+}
+
 /*------------------------------------------*/
 /*	 Navbar Scroll   
 /*------------------------------------------*/
@@ -468,18 +473,26 @@ ul {
 /*------------------------------------------*/
 .feature-box-icon {
   background-color: #00ADEF;
+  position: relative;
   display: block;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   position: absolute;
   left: 0px;
   top: 10px;
-  border-radius: 30px;
   color: #FFF;
   line-height: 60px;
   text-align: center;
   font-size: 30px;
 }
+.feature-box-icon i{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /*------------------------------------------*/
 /*	  Feature Box Content
 /*------------------------------------------*/
