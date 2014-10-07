@@ -284,7 +284,7 @@ ul {
 }
 .scroll-fixed-navbar .navbar-nav > li > a:hover,
 .scroll-fixed-navbar .navbar-nav > li > a.selected-nav {
-  color: #333;
+  color: #00ADEF;
 }
 /*------------------------------------------*/
 /*	 Responsive Menu    
@@ -368,6 +368,10 @@ ul {
 
 .intro-content-2 h1{
   color: rgb(255,101,53);
+}
+
+.intro-content-3 h1{
+  color: #00ADEF;
 }
 /*------------------------------------------*/
 /*	 Intro Page Pagination   
