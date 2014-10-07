@@ -270,14 +270,25 @@ ul {
 /*	 Navbar Scroll   
 /*------------------------------------------*/
 .scroll-fixed-navbar {
-  padding: 0px;
-  background-color: #000;
-  opacity: .6;
+  padding: 0px;  
   min-height: 100px;
+}
+
+.scroll-fixed-navbar .transparency{
+  position: absolute;
+  top:0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+   opacity:0.5;  
+  filter:alpha(opacity=50);  
+  -moz-opacity:0.5;  
 }
 .scroll-fixed-navbar .navbar-nav > li > a,
 .scroll-fixed-navbar .navbar-brand .black-color {
   color: #fff;
+  z-index: 10000;
 }
 /*------------------------------------------*/
 /*	 Menu Hover
