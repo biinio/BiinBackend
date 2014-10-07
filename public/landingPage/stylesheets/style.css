@@ -205,6 +205,13 @@ ul {
 .navbar-brand {
   padding: 0px 15px;
 }
+
+.navbar-brand img{
+  height: 70px !important;
+  top: -7px;
+  position: absolute;
+}
+
 .navbar-brand:hover {
   color: #fff;
 }
@@ -471,8 +478,8 @@ ul {
   background-color: #00ADEF;
   position: relative;
   display: block;
-  width: 85px;
-  height: 85px;
+  width: 90px;
+  height: 90px;
   position: absolute;
   left: 0px;
   top: 10px;
@@ -481,6 +488,7 @@ ul {
   text-align: center;
   font-size: 30px;
 }
+
 .feature-box-icon i{
   position: relative;
   margin-left: auto;
@@ -489,12 +497,13 @@ ul {
   transform: translateY(-50%);
 }
 
+
 /*------------------------------------------*/
 /*	  Feature Box Content
 /*------------------------------------------*/
 .feature-box-content {
   padding-top: 10px;
-  padding-left: 85px;
+  padding-left: 95px;
 }
 .feature-box-content h4 {
   font-family: 'Lato', sans-serif;
