@@ -208,16 +208,16 @@ ul {
 
 .navbar.navbar-fixed-top.scroll-fixed-navbar .navbar-brand > img{
   position: relative;
-  margin-top: -7px!important;
+  margin-top: 5px!important;
 }
 
 .navbar.navbar-fixed-top .navbar-brand > img{
   position: relative;
-  margin-top:-20px;
+  margin-top:-15px;
 }
 
 .navbar-brand img{
-  height: 70px !important;
+  height: 100px !important;
   
 }
 
@@ -258,7 +258,7 @@ ul {
 }
 
 .navbar-nav > li{
-  margin-top: 5px;
+  margin-top: 35px;
 }
 
 /*------------------------------------------*/
@@ -267,6 +267,8 @@ ul {
 .scroll-fixed-navbar {
   padding: 0px;
   background-color: #000;
+  opacity: .6;
+  min-height: 100px;
 }
 .scroll-fixed-navbar .navbar-nav > li > a,
 .scroll-fixed-navbar .navbar-brand .black-color {
