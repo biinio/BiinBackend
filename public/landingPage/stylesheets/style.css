@@ -482,8 +482,11 @@ ul {
   font-weight: 300;
   margin-bottom: 30px;
 }
-.banner_1_content blockquote strong {
+.banner_1_content p strong {
   line-height: 24px;
+  color: #fff;
+  background-color: black;
+  font-size: 23px;
 }
 p.important:before, p.important:after{
   content: '"';
