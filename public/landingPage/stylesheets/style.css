@@ -266,7 +266,7 @@ ul {
 /*------------------------------------------*/
 .scroll-fixed-navbar {
   padding: 0px;
-  background-color: #00ADEF;
+  background-color: #000;
 }
 .scroll-fixed-navbar .navbar-nav > li > a,
 .scroll-fixed-navbar .navbar-brand .black-color {
@@ -360,7 +360,7 @@ ul {
   margin-top: 0;
 }
 
-.intro-content-1 h3{
+.intro-content-1 h1{
   color: rgb(255,0,53);
 }
 
