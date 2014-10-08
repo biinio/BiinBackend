@@ -486,7 +486,7 @@ ul {
 
 .banner_1_content p {
   color: #FFF;
-  font-size: 18px;
+  font-size: 20px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
   margin-bottom: 30px;
@@ -610,7 +610,7 @@ ul {
   font-size: 18px;
 }
 .list-item h5 {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
 }
 /* ==========================================================================
@@ -629,7 +629,7 @@ ul {
 }
 #newsletter_title p {
   line-height: 24px;
-  font-size: 18px;
+  font-size: 20px;
   font-family: 'Lato', sans-serif;
   font-weight: 400;
   padding: 0 8%;
@@ -961,7 +961,7 @@ ul {
 /*	  Pricing Table Body
 /*------------------------------------------*/
 .pricing-table ul.features {
-  font-size: 18px;
+  font-size: 20px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
   padding: 5px 20px;

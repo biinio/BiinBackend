@@ -175,7 +175,7 @@ $(document).ready(function () {
     "use strict";
 
     $("#slides").superslides({
-        play: 50000,
+        play: 9000,
         animation: "fade",
         pagination: true
     });
