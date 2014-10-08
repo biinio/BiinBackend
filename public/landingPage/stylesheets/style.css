@@ -552,15 +552,15 @@ ul {
   background-color: #71D7FF;
   position: relative;
   display: block;
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   position: absolute;
   left: 0px;
   top: 10px;
   color: #FFF;
   line-height: 60px;
   text-align: center;
-  font-size: 30px;
+  font-size: 50px;
 }
 
 .feature-box-icon i{
