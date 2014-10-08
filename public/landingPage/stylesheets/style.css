@@ -186,6 +186,7 @@ ul {
 }
 .titlebar h3 {
   line-height: 30px;
+  color: #00ADEF;
 }
 .titlebar h3 span {
   color: #00ADEF;
@@ -378,19 +379,7 @@ ul {
   margin-top: 0;
 }
 
-.intro-content-1 h1{
-  color: rgb(255,0,53);
-}
-
-.intro-content-2 h1{
-  color: rgb(185, 255, 53);
-}
-
-.intro-content-3 h1{
-  color: rgb(255,101,53);
-}
-
-.intro-content-4 h1{
+.intro-content h1{
   color: #00ADEF;
 }
 /*------------------------------------------*/
