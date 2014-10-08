@@ -579,6 +579,11 @@ ul {
   padding-top: 10px;
   padding-left: 95px;
 }
+
+.feature-box-content p{
+   font-size: 17px;
+   font-weight: 300;
+  }
 .feature-box-content h4 {
   font-family: 'Lato', sans-serif;
   font-weight: 400;

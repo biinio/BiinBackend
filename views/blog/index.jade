@@ -1,0 +1,7 @@
+extends ../layout
+block content	
+h1= title
+if blogs!=null && blogs.length>0
+	include listing
+else
+	p There is not blogs

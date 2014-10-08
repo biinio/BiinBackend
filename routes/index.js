@@ -57,7 +57,6 @@ module.exports = function () {
 	functions.partials = function(req, res){
 	  var filename = req.params.filename;
 	  if(!filename) return;  // might want to change this
-	  console.log("_partials/" + filename);
 	  res.render("_partials/" + filename );
 	}
 	

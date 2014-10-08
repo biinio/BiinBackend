@@ -12,6 +12,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var elements = require('../routes/elements')();
     var categories = require('../routes/categories')();
     var gallery = require('../routes/gallery')();
+    var blog = require('../routes/blog')();    
     var mobileUser = require('../routes/mobileUser')();
     var oauthMobileAPIGrants = require('../routes/oauthMobileAPIGrants')(); 
     var mobileOauthManager= require('./mobileOauthManager');
@@ -106,6 +107,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/mobile/client/token', mobileOauthManager.token);
     app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);
     
+    app.get('/blog/', blog.list);
+    app.get('/public/blog/:year/:month/:day/:title', blog.entry);
+    //Blog routes
+
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {
         var err = new Error('Not Found');

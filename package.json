@@ -40,7 +40,9 @@
     "express-validator": "^2.5.0",
     "passport-http": "^0.2.2",
     "passport-oauth2-client-password": "^0.1.2",
-    "passport-http-bearer": "^1.0.1"
+    "passport-http-bearer": "^1.0.1",
+    "walk": "^2.3.4",
+    "node-markdown": "^0.1.1"
   },
   "engines": {
     "node": "0.10.26",
