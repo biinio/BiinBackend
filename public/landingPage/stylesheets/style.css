@@ -111,8 +111,8 @@ ul {
 /*	 Theme Button
 /*------------------------------------------*/
 .btn-theme {
-  background-color: #00ADEF;
-  border: 1px solid #00ADEF;
+  background-color: #71D7FF;
+  border: 1px solid #71D7FF;
   color: #FFFFFF;
   font-size: 16px;
   font-family: 'Lato', sans-serif;
@@ -129,7 +129,7 @@ ul {
 }
 .btn-theme:hover {
   background-color: #069FCE;
-  border-color: #00ADEF;
+  border-color: #71D7FF;
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);
 }
 /*------------------------------------------*/
@@ -187,10 +187,11 @@ ul {
 }
 .titlebar h3 {
   line-height: 30px;
-  color: #00ADEF;
+  color: #71D7FF;
+  font-weight: 300;
 }
 .titlebar h3 span {
-  color: #00ADEF;
+  color: #71D7FF;
 }
 .titlebar p {
   color: #444;
@@ -253,10 +254,11 @@ ul {
   color: #fff;
   font-family: 'Lato', sans-serif;
   line-height: 40px;
-  font-weight: 900;
+  font-weight: 400;
+  font-size: 17px;
   text-transform: uppercase;
   display: block;
-  padding: 0 10px;
+  padding: 0 15px;
   -webkit-transition: all 100ms ease-in-out;
   -moz-transition: all 100ms ease-in-out;
   -o-transition: all 100ms ease-in-out;
@@ -302,7 +304,7 @@ ul {
 }
 .scroll-fixed-navbar .navbar-nav > li > a:hover,
 .scroll-fixed-navbar .navbar-nav > li > a.selected-nav {
-  color: #00ADEF;
+  color: #71D7FF;
 }
 /*------------------------------------------*/
 /*	 Responsive Menu    
@@ -451,8 +453,8 @@ ul {
   transition: all 250ms ease-in-out;
 }
 .scroll-down span:hover {
-  background: #00ADEF;
-  border-color: #00ADEF;
+  background: #71D7FF;
+  border-color: #71D7FF;
   box-shadow: 0px 0px 0px 10px rgba(240, 240, 240, 0.3);
 }
 .scroll-down span [class*="fa-"] {
@@ -480,7 +482,7 @@ ul {
   color: #fff;
 }
 .banner_1_content h3 {
-  color: #00ADEF;
+  color: #71D7FF;
   margin-bottom: 20px;
 }
 
@@ -547,7 +549,7 @@ ul {
 /*	  Feature Box Icon
 /*------------------------------------------*/
 .feature-box-icon {
-  background-color: #00ADEF;
+  background-color: #71D7FF;
   position: relative;
   display: block;
   width: 90px;
@@ -588,7 +590,7 @@ ul {
   padding-top: 100px;
 }
 .banner_2_content h3 {
-  color: #00ADEF;
+  color: #71D7FF;
   margin-bottom: 20px;
 }
 .banner_2_content p {
@@ -605,7 +607,7 @@ ul {
   margin-bottom: 20px;
 }
 .list-item i {
-  color: #00ADEF;
+  color: #71D7FF;
   margin-right: 8px;
   font-size: 18px;
 }
@@ -663,8 +665,8 @@ ul {
   position: absolute;
   top: 0px;
   right: 0px;
-  background-color: #00ADEF;
-  border: 1px solid #00ADEF;
+  background-color: #71D7FF;
+  border: 1px solid #71D7FF;
   color: #fff;
   font-size: 18px;
   font-family: 'Lato', sans-serif;
@@ -754,7 +756,7 @@ ul {
   background-image: url(../img/icons/zoom-ico.png);
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-color: #00ADEF;
+  background-color: #71D7FF;
   position: absolute;
   top: -50%;
   left: 50%;
@@ -815,7 +817,7 @@ ul {
   padding-top: 80px;
 }
 .banner_3_content h3 {
-  color: #00ADEF;
+  color: #71D7FF;
   margin-bottom: 20px;
 }
 .banner_3_content p {
@@ -871,7 +873,7 @@ ul {
   padding-top: 10px;
 }
 .testimonials p.author span {
-  color: #00ADEF;
+  color: #71D7FF;
   font-weight: 900;
 }
 /*------------------------------------------*/
@@ -999,11 +1001,11 @@ ul {
 /*	  Featured Table
 /*------------------------------------------*/
 .pricing-table.featured .plan-title {
-  background-color: #00ADEF;
+  background-color: #71D7FF;
   color: #f7f7f7;
 }
 .pricing-table.featured .plan-price {
-  background-color: #00ADEF;
+  background-color: #71D7FF;
   color: #f7f7f7;
   border-top: 1px solid #C3C3C3;
 }
@@ -1258,7 +1260,7 @@ nav a#pull {
   padding-top: 10px;
 }
 .stayLogged label {
-  color: #00ADEF!important;
+  color: #71D7FF!important;
 }
 .inline {
   display: inline!important;
