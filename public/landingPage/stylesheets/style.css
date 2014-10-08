@@ -181,8 +181,9 @@ ul {
   margin-bottom: 50px;
 }
 .titlebar h2 {
-  font-weight: 900;
-  margin-bottom: 10px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  font-size: 45px;
 }
 .titlebar h3 {
   line-height: 30px;
@@ -369,18 +370,18 @@ ul {
 }
 .intro-content h1 {
   font-size: 500%;
-  font-weight: 900;
-  line-height: 95%;
+  font-weight: 300;
+  line-height: 100%;
   margin-bottom: 20px;
 }
 .intro-content h3 {
-  font-size: 200%;
-  font-weight: 300;
+  font-size: 244%;
+  font-weight: 200;
   margin-top: 0;
 }
 
 .intro-content h1{
-  color: #00ADEF;
+  color: #71D7FF;
 }
 /*------------------------------------------*/
 /*	 Intro Page Pagination   
