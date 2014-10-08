@@ -581,7 +581,7 @@ ul {
 }
 .feature-box-content h4 {
   font-family: 'Lato', sans-serif;
-  font-weight: 700;
+  font-weight: 400;
 }
 /* ==========================================================================
    06. BANNER_2
@@ -613,7 +613,7 @@ ul {
 }
 .list-item h5 {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
 }
 /* ==========================================================================
    07. NEWSLETTER  
