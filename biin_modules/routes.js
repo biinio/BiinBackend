@@ -18,6 +18,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var mobileOauthManager= require('./mobileOauthManager');
 
     //Application routes
+    app.get('/sendEmail', routes.sendEmail)
     app.get('/partials/:filename', routes.partials);
     app.get('/', routes.index);
     app.get('/dashboard', routes.dashboard);    

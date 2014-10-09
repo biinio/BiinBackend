@@ -60,5 +60,44 @@ module.exports = function () {
 	  res.render("_partials/" + filename );
 	}
 	
+	//Send emails
+	functions.sendEmail = function(req,res){
+		var transporter = require('nodemailer').createTransport({
+	        service: 'gmail',
+	        auth: {
+	            user: process.env.EMAIL_ACCOUNT,
+	            pass: process.env.EMAIL_PASSWORD
+	        }
+	    });
+
+        // setup e-mail data with unicode symbols
+        var mailOptions = {
+        	// sender address
+            from: "Biinapp Message <" + process.env.EMAIL_ACCOUNT + ">", 
+
+            // list of receivers
+            to: req.query.to, 
+
+            // Subject line
+            subject: req.query.subject, 
+
+            // plaintext body
+            text: req.query.text, 
+
+            // html body
+            html: req.query.htmlBody
+        };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+                res.end(error.response);
+            }else{
+                console.log('Message sent: ' + info.response);
+                res.end(info.response.toString());
+            }
+        });
+    }
 	return functions;
 };

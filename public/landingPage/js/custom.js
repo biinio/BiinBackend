@@ -424,4 +424,74 @@ $(document).ready(function() {
     function loginLogic(){
         $("form.loginForm").submit();
     }
+
+    //Send Subscription
+    $('.subscribe-submit').click(function(e){
+        var subsEmail = $('.subscribe-input').val();
+
+        var htmlBody = "<h3>Nuevo email subscrito en la pagina biinapp.com</h3>" +
+                       "<b>Email</b>: <pre>" + subsEmail + "</pre>";
+
+        $.ajax({
+            type: "GET",
+            data: {
+                to       : "carce@biinapp.com, epadilla@biinapp.com, lbonilla@biinapp.com, cdominguez@biinapp.com",
+                //to     : "krlosnando@gmail.com, krlosnando@hotmail.com",
+                subject  : "Nuevo email subscrito en biinapp.com",
+                htmlBody : htmlBody
+            },
+            url: "sendEmail/",
+            beforeSend: function(){
+                $('.newsletterFirstText').text("Enviando tu solicitud...");
+                $('.newsletterSecondText').text("Procesando...");
+            },
+            success: function(){
+                $('.newsletterFirstText').text("Tu correo ha sido agregado exitosamente! muchas gracias!");
+                $('.newsletterSecondText').text("Ahora recibira noticias importantes de Biin en su correo electrónico.");
+            },
+            error: function(){
+                $('.newsletterFirstText').text("Lo sentimos mucho");
+                $('.newsletterSecondText').text("Ocurrio un error inesperado al tratar de agregar tu email.");
+            }
+        });
+
+        e.preventDefault();
+    });
+
+    //Contact Biin
+    $('.btn-contact').click(function(e){
+        var nombre   = $('#name').val();
+        var email    = $('#email').val();
+        var titulo   = $('#subject').val();
+        var comments = $('#comments').val();
+
+        var htmlBody = "<h3>Alguien desea contactarse con Biinapp</h3>" +
+                       "<b>Nombre</b>: <pre>" + nombre + "</pre>" + 
+                       "<b>Email</b>: <pre>" + email + "</pre>" + 
+                       "<b>Titulo</b>: <pre>" + titulo + "</pre>" + 
+                       "<b>Mensaje</b>: <pre>" + comments + "</pre>";
+
+        $.ajax({
+            type: "GET",
+            data: {
+                to       : "carce@biinapp.com, epadilla@biinapp.com, lbonilla@biinapp.com, cdominguez@biinapp.com",
+                //to     : "krlosnando@gmail.com, krlosnando@hotmail.com",
+                subject  : "Nuevo email para contactarse con Binapp",
+                htmlBody : htmlBody
+            },
+            url: "sendEmail/",
+            beforeSend: function(){
+                $('.btn-contact').val("Enviando mensaje...");
+            },
+            success: function(){
+                $('.btn-contact').val("Mensaje enviado!");
+            },
+            error: function(){
+                $('.btn-contact').val("Error al enviar el mensaje");
+            }
+        });
+
+        e.preventDefault();
+    });
 });
+
