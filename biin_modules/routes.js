@@ -107,7 +107,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/mobile/client/token', mobileOauthManager.token);
     app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);
     
-    app.get('/blog/', blog.list);
+    app.get('/blog/', blog.index);
+    app.get('/api/blog', blog.list);
     app.get('/public/blog/:year/:month/:day/:title', blog.entry);
     //Blog routes
 

@@ -1,654 +1,490 @@
-doctype html
-html(lang='en')
-	head
-		//Basic 
-		meta(charset='utf-8')
-		title BiinApp discover engage enjoy
-		meta(name='author', content='BiinApp')
-		meta(name='keywords', content='ibeacons, micro-location, context, awareness, mobile app, BLE')
-		meta(name='description', content='En Biin estamos creando la primera plataforma para información y beneficios aprovechando la microlocalización por medio de iBeacons. Con una aplicacion móvil, universal y de uso grauito, visitantes de comercios, lugares de entretenimiento o instituciones, tendrán acceso a la información relevante para el contexto.')
-		
-		//Mobile Specific Metas 
-		meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
-		
-		//Libs CSS 
-		link(href='/landingPage/stylesheets/bootstrap.css', rel='stylesheet')
-		link(href='/landingPage/stylesheets/font-awesome.min.css', rel='stylesheet')
-		link(href='/landingPage/stylesheets/flexslider.css', rel='stylesheet')
-		link(href='/landingPage/stylesheets/magnific-popup.css', rel='stylesheet')
-		
-		//Template CSS 
-		link(href='/landingPage/stylesheets/style.css', rel='stylesheet')
+extends layout_landing_page
+block content
+		//INTRO=============================================
+		section#intro
+			//Intro Page Slides
+			#slides
+				ul.slides-container
+					//Intro Page Slider Image 1
+					li
+						.intro-content.intro-content-1
+							h1 Experiencias para sus visitantes con contexto del mundo real
+							h3 Informaci&oacute;n relevante dentro y fuera de su local. 
+							h3 Sea parte de la revoluci&oacute;n del contexto con Biin.
+						img(src='/landingPage/img/thumbs/intro_slide_1.jpg', alt='')
+					//Intro Page Slider Image 2
+					li
+						.intro-content.text-center.intro-content-2
+							h1 Crea tus campa&ntilde;as de una forma f&aacute;cil y r&aacute;pida
+							h3 F&aacute;cil creaci&oacute;n de contenido y beneficio.
+							h3 Monitoreo efectivo de los resultados de su campa&ntilde;a.
+							h3 Administra y promueve la relaci&oacute;n con tus clientes.								
+						img(src='/landingPage/img/thumbs/intro_slide_2.jpg', alt='')
+					//Intro Page Slider Image 3
+					li
+						.intro-content.text-center.intro-content-3
+							h1 Llega a tus clientes con una aplicaci&oacute;n m&oacute;vil de Biin y estrecha lazos.
+							h3 Aumenta la experiencia de tus visitantes brindando mas informaci&oacute;n.
+							h3 Brinda beneficios exclusivos en el momento indicado.				
+							h3 Mejora la experiencia de tus clientes con Biin.
+						img(src='/landingPage/img/thumbs/intro_slide_3.jpg', alt='')								
+					//Intro Page Slider Image 4						
+					li
+						.intro-content.text-center.intro-content-4
+							h1 La plataforma completa para micro-localizaci&oacute;n con iBeacons
+							h3 Con los iBeacons de Biin, convierte cada espacio en una experiencia &uacute;nica.
+							h3 F&aacute;cil creaci&oacute;n de contenido y beneficios.
+							h3 Monitoreo efectivo de los resultados de su campa&ntilde;a.
+						img(src='/landingPage/img/thumbs/intro_slide_4.jpg', alt='')
 
-		//Responsive CSS 
-		link(href='/landingPage/stylesheets/responsive.css', rel='stylesheet')
-		
-		//Favicons 
-		link(rel='shortcut icon', href='/images/favicon.ico')
-		link(rel='apple-touch-icon', sizes='114x114', href='/landingPage/img/icons/apple-touch-icon-114x114.png')
-		link(rel='apple-touch-icon', sizes='72x72', href='/landingPage/img/icons/apple-touch-icon-72x72.png')
-		link(rel='apple-touch-icon', href='/landingPage/img/icons/apple-touch-icon.png')
-		
-		//Google Fonts
-		link(href='/landingPage/stylesheets/google-fonts-lato.css', rel='stylesheet', type='text/css')
-		link(href='/landingPage/stylesheets/google-fonts-open-sans.css', rel='stylesheet', type='text/css')
-	body
-		
-		//PRELOADER =============================================
-		#preloader
-			#status
-
-		//HEADER=============================================
-		header#header
-			.navbar.navbar-fixed-top
-				.container
-					.transparency					
-					.navbar-header
-						//Responsive Menu
-						button#nav-toggle.navbar-toggle(type='button', data-toggle='collapse', data-target='#navigation-menu')
-							span.sr-only Toggle navigation
-							span.icon-bar
-							span.icon-bar
-							span.icon-bar
-						//Logo Image
-						a.navbar-brand(href='#top-page-banner')
-							img(src='/images/biinLogoSlogan.png', alt='logo', role='banner')					
-					//Navigation Menu
-					nav#navigation-menu.collapse.navbar-collapse(role='navigation')
-						ul.nav.navbar-nav.navbar-right
-							li
-								a#GoToHome.selected-nav(href='#intro') Inicio
-							li
-								a#GoToFeatures(href='#features') Caracter&iacute;sticas								
-							li
-								a#GoToScreens(href='#screens') Quien usa Biin?
-							li
-								a#GoToNewsletter(href='#newsletter') Bolet&iacute;n
-							li
-								a#GoToPricing(href='#pricing') Precios
-							li
-								a#GoToContact(href='#contact') Contactanos
-							li(style='cursor: pointer;').dropdown
-								a.dropdown-toggle(data-toggle='dropdown')
-									| Inicio Sessi&oacute;n
-									b.caret
-								ul.dropdown-menu.loginDropDown
-									li
-										h4 Biin Dashboard login.
-										form.loginForm(action='/login', method='POST')
-											input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
-											input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password')
-											a.forgotPass.pull-right(href='') Forgot password?
-											div(data-toggle='buttons-checkbox')
-												.checkbox.stayLogged
-													label
-														input(type='checkbox')
-														| Stay Logged In
-												span.adviceLoggedIn.pull-left Keep me logged in until I log out
-												a#buttonLogin.btn.btn-theme.fulllWidth Login
-												a#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up
-					//End nav-collapse
-				//End container
-			//End navbar
-		//END form-inline
-
-		//CONTENT WRAPPER============================================= 
-		#content-wrapper
-			//INTRO=============================================
-			section#intro
-				//Intro Page Slides
-				#slides
-					ul.slides-container
-						//Intro Page Slider Image 1
-						li
-							.intro-content.intro-content-1
-								h1 Experiencias para sus visitantes con contexto del mundo real
-								h3 Informaci&oacute;n relevante dentro y fuera de su local. 
-								h3 Sea parte de la revoluci&oacute;n del contexto con Biin.
-							img(src='/landingPage/img/thumbs/intro_slide_1.jpg', alt='')
-						//Intro Page Slider Image 2
-						li
-							.intro-content.text-center.intro-content-2
-								h1 Crea tus campa&ntilde;as de una forma f&aacute;cil y r&aacute;pida
-								h3 F&aacute;cil creaci&oacute;n de contenido y beneficio.
-								h3 Monitoreo efectivo de los resultados de su campa&ntilde;a.
-								h3 Administra y promueve la relaci&oacute;n con tus clientes.								
-							img(src='/landingPage/img/thumbs/intro_slide_2.jpg', alt='')
-						//Intro Page Slider Image 3
-						li
-							.intro-content.text-center.intro-content-3
-								h1 Llega a tus clientes con una aplicaci&oacute;n m&oacute;vil de Biin y estrecha lazos.
-								h3 Aumenta la experiencia de tus visitantes brindando mas informaci&oacute;n.
-								h3 Brinda beneficios exclusivos en el momento indicado.				
-								h3 Mejora la experiencia de tus clientes con Biin.
-							img(src='/landingPage/img/thumbs/intro_slide_3.jpg', alt='')								
-						//Intro Page Slider Image 4						
-						li
-							.intro-content.text-center.intro-content-4
-								h1 La plataforma completa para micro-localizaci&oacute;n con iBeacons
-								h3 Con los iBeacons de Biin, convierte cada espacio en una experiencia &uacute;nica.
-								h3 F&aacute;cil creaci&oacute;n de contenido y beneficios.
-								h3 Monitoreo efectivo de los resultados de su campa&ntilde;a.
-							img(src='/landingPage/img/thumbs/intro_slide_4.jpg', alt='')
-
-				//End Intro Page Slides
-				//Scroll Down Button
-				span.scroll-down
-					a#GoToMainContent(href='#banner_1')
-						span
-							i.fa.fa-angle-down.fa-3x
-					| Ver m&aacute;s
-			//END INTRO
-			//FEATURES============================================= 
-			section#features
-				.container
-					//Section Tittle
-					.row
-						.col-sm-12.titlebar
-							h2 Caracter&iacute;sticas de Biin
-							h3 Aplicaci&oacute;n Biin Para iOS, Gestor de Contenido, Programa de Lealtad, CRM y iBeacons de Biin.
-							p
-								|A diferencia de los oferentes actuales de iBeacons, Biin es una plataforma completa, dise&ntilde;ada para
-								|mejorar las experiencias de las personas por medio de la micro-localizaci&oacute;n  e internet de las cosas
-								|rompiendo la brecha entre empresas o instituciones y sus clientes por medio de las siguientes tecnolog&iacute;as.
-					
-					//Features Holder
-					.row
-						.col-md-12
-							ul
-								//Feature Icon 1
-								li#feature-1
-									.col-sm-6.col-md-6.feature-box.clearfix
-										.feature-box-icon
-											i.fa.fa-flask
-										.feature-box-content
-											h4 iBeacons de Biin
+			//End Intro Page Slides
+			//Scroll Down Button
+			span.scroll-down
+				a#GoToMainContent(href='#banner_1')
+					span
+						i.fa.fa-angle-down.fa-3x
+				| Ver m&aacute;s
+		//END INTRO
+		//FEATURES============================================= 
+		section#features
+			.container
+				//Section Tittle
+				.row
+					.col-sm-12.titlebar
+						h2 Caracter&iacute;sticas de Biin
+						h3 Aplicaci&oacute;n Biin Para iOS, Gestor de Contenido, Programa de Lealtad, CRM y iBeacons de Biin.
+						p
+							|A diferencia de los oferentes actuales de iBeacons, Biin es una plataforma completa, dise&ntilde;ada para
+							|mejorar las experiencias de las personas por medio de la micro-localizaci&oacute;n  e internet de las cosas
+							|rompiendo la brecha entre empresas o instituciones y sus clientes por medio de las siguientes tecnolog&iacute;as.
+				
+				//Features Holder
+				.row
+					.col-md-12
+						ul
+							//Feature Icon 1
+							li#feature-1
+								.col-sm-6.col-md-6.feature-box.clearfix
+									.feature-box-icon
+										i.fa.fa-flask
+									.feature-box-content
+										h4 iBeacons de Biin
+										p
+											| Es un peque&ntilde;o sensor colocado en un espacio f&iacute;sico que transmite una se&ntilde;al inal&aacute;mbrica a un
+											| Smartphone con la aplicaci&oacute;n de Biin.
+							//Feature Icon 3
+							li#feature-2
+								.col-sm-6.col-md-6.feature-box.clearfix
+									.feature-box-icon
+										i.fa.fa-desktop
+									.feature-box-content
+										h4 Beneficios para sus visitantes
+										p Ofertas, cupones, regalos con contexto, mas f&aacute;cil y sin costos onerosos.
+					.col-md-12
+						ul
+							//Feature Icon 3
+							li#feature-3
+								.col-sm-6.col-md-6.feature-box.clearfix
+									.feature-box-icon
+										i.fa.fa-heart
+									.feature-box-content
+										h4 CMS
+										p Administra del contenido te tus vitrinas digital de una forma f&aacute;cil y r&aacute;pida.								
+							//Feature Icon 4
+							li#feature-4
+								.col-sm-6.col-md-6.feature-box.clearfix
+									.feature-box-icon
+										i.fa.fa-cog
+									.feature-box-content
+										h4 Vitrina y directorio digital
+										p Con acceso desde cualquier lugar, la vitrina perfecta para mostrar su propuesta de valor.
+					.col-md-12
+						ul										
+							//Feature Icon 5
+							li#feature-5
+								.col-sm-6.col-md-6.feature-box.clearfix
+									.feature-box-icon
+										i.fa.fa-globe
+									.feature-box-content
+										h4 Informaci&oacute;n con contexto
+										p
+											| Con contenido y notificaciones sobre objetos y lugares f&iacute;sicamente cercanos con
+											| precisi&oacute;n de cent&iacute;metros.																	
+							//Feature Icon 6
+							li#feature-6
+								.col-sm-6.col-md-6.feature-box.clearfix
+									.feature-box-icon
+										i.fa.fa-clock-o
+									.feature-box-content
+										h4 CRM
+										p Administra la relaci&oacute;n con tus clientes en tiempo real.
+					//End col-md-12
+				//End Features Holder
+			//End container
+		//END FEATURES		
+		//BANNER_1============================================= 
+		#banner_1
+			.container
+				.row
+					//Banner Description
+					.col-md-6.titlebar.banner_1_content
+						h2 Aplicaci&oacute;n m&oacute;vil consciente del contexto
+						h3
+							| Informaci&oacute;n relevante sobre el lugar y momento justo har&aacute;n la diferencia entre una visita y una
+							| experiencia.
+						p
+							| En Biin estamos creando la primera plataforma para informaci&oacute;n y beneficios que aprovecha la 
+							| micro-localizaci&oacute;n con smart beacons. Mediante una aplicaci&oacute;n m&oacute;vil, universal y de uso gratuito, 
+							| visitantes de comercios, lugares de entretenimiento o instituciones, tendr&aacute;n acceso a la informaci&oacute;n 
+							| relevante de acuerdo al contexto.
+							| Biin permite navegar por el contenido en cualquier lugar y recibir alertas sobre las cosas que te 
+							| interesan cuando estas cerca. 
+						.important
+							p.important-1
+								strong
+									| Mejor informaci&oacute;n, 
+							p.important-2
+								strong
+									| beneficios y diversi&oacute;n
+							p.important-3 
+								strong
+									|para sus visitantes 
+							p.important-4 
+								strong
+									|generando una relaci&oacute;n de valor.
+					//Banner Image
+					//#banner_1_image.col-md-6.text-center
+						img.img-responsive(src='/landingPage/img/thumbs/6.png', alt='banner_1_image')
+				
+				//End row
+			//End container
+		//END BANNER_1
+		//BANNER_2============================================= 
+		#banner_2
+			.container
+				.row
+					//Banner Image
+					//#banner_2_image.col-md-6
+						img.img-responsive(src='/landingPage/img/thumbs/2.png', alt='banner_2_image')
+					//Banner Description
+					.col-md-12.titlebar.banner_2_content
+						h2 ¿Que son los iBeacons de Biin?
+						h3 La puerta de entrada a la micro-localizaci&oacute;n
+						p
+							| Son peque&ntilde;os dispositivos que se colocan en espacios f&iacute;sicos y que transmiten una se&ntilde;al bluetooth de
+							| baja energ&iacute;a (BLE) a un Smartphone cercano, permitiendo crear aplicaciones conscientes de su
+							| contexto. BiinApp entiende la proximidad de los Beacons y as&iacute; obtener el contenido relevante
+							| para el lugar y momento especifico, permitiendo crear interacciones mas cercanas al mundo real.
+						//Banner List
+						#banner-list
+							//List Item #1
+							.list-item
+								h5
+									i.fa.fa-check
+									| F&aacute;cil administraci&oacute;n e instalaci&oacute;n
+							//List Item #2
+							.list-item
+								h5
+									i.fa.fa-check
+									| La se&ntilde;al tiene un alcance de hasta 70 metros
+							//List Item #3
+							.list-item
+								h5
+									i.fa.fa-check
+									| Libres de mantenimiento por hasta 3 a&ntilde;os.
+							//List Item #4
+							.list-item
+								h5
+									i.fa.fa-check
+									| Bajo costo
+						//End Banner List
+					//End Banner Description
+				//End row
+			//End container
+		//END BANNER_2
+		//SCREENS============================================= 
+		section#screens
+			.container
+				//Section Tittle
+				.row
+					.col-sm-12.titlebar
+						h2 Quien usa Biin?
+						p
+							| Desde centros comerciales, restaurantes, instituciones publicas o privadas
+							| ferias y exposiciones, centros deportivos, o cualquier lugar que desee transmitir un mensaje mas
+							| relevante a sus visitantes.
+				//Screens row
+				#screenshots-holder1.row
+					//Screenshot Image #1
+					#screenshot_1.col-xs-6.col-sm-6.col-md-3
+						.hover-details
+							img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery1.jpeg', alt='screenshot_image')
+							//Image Zoom
+							.img-cover
+								a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery1.jpg', title='Screenshot Image #1')
+								h3 Compras
+					//Screenshot Image #2
+					#screenshot_2.col-xs-6.col-sm-6.col-md-3
+						.hover-details
+							img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery2.jpeg', alt='screenshot_image')
+							//Image Zoom
+							.img-cover
+								a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery2.jpg', title='Screenshot Image #2')
+								h3 Restaurantes
+					//Screenshot Image #3
+					#screenshot_3.col-xs-6.col-sm-6.col-md-3
+						.hover-details
+							img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery3.jpeg', alt='screenshot_image')
+							//Image Zoom
+							.img-cover
+								a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery3.jpg', title='Screenshot Image #3')
+								h3 Instituciones
+					//Screenshot Image #4
+					#screenshot_4.col-xs-6.col-sm-6.col-md-3
+						.hover-details
+							img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery4.jpeg', alt='screenshot_image')
+							//Image Zoom
+							.img-cover
+								a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery4.jpg', title='Screenshot Image #4')
+								h3 Museos
+				//End screenshots-holder1
+				//Screens row
+				#screenshots-holder2.row
+					//Screenshot Image #5
+					#screenshot_5.col-xs-6.col-sm-6.col-md-3
+						.hover-details
+							img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery5.jpeg', alt='screenshot_image')
+							//Image Zoom
+							.img-cover
+								a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery5.jpg', title='Screenshot Image #5')
+								h3 Ferias y exposiciones
+					//Screenshot Image #6
+					#screenshot_6.col-xs-6.col-sm-6.col-md-3
+						.hover-details
+							img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery6.jpeg', alt='screenshot_image')
+							//Image Zoom
+							.img-cover
+								a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery6.jpg', title='Screenshot Image #6')
+								h3 Eventos deportivos
+					//Screenshot Image #7
+					#screenshot_7.col-xs-6.col-sm-6.col-md-3
+						.hover-details
+							img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery7.jpeg', alt='screenshot_image')
+							//Image Zoom
+							.img-cover
+								a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery7.jpg', title='Screenshot Image #7')
+								h3 Hoteles o complejos turisticos
+					//Screenshot Image #8
+					#screenshot_8.col-xs-6.col-sm-6.col-md-3
+						.hover-details
+							img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery8.jpeg', alt='screenshot_image')
+							//Image Zoom
+							.img-cover
+								a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery8.jpg', title='Screenshot Image #8')
+								h3 Automotriz
+				//End screenshots-holder2
+			//End container
+		//END SCREENS				
+		//NEWSLETTER============================================= 
+		#newsletter.parallax
+			#subscribe.container
+				.row
+					//Newsletter Title
+					#newsletter_title.col-md-6.text-center
+						h1 Inscribase a nuestro bolet&iacute;n
+						p
+							| Si quieres recibir el bolet&iacute;n con noticias importantes de Biin ingrese su correo electr&oacute;nico.
+					//Newsletter Form
+					#newsletter_form.col-md-6.text-center
+						.clearfix
+							form#subscribe-form.subscribe-form(action='newsletter.php', method='post')
+								input.subscribe-input(type='email', name='email', placeholder='Tu correo electrónico...')
+								button.subscribe-submit(type='submit') Subscribir
+				//End row
+			//End container
+		//END NEWSLETTER
+		//TESTIMONIALS ROTATOR============================================= 
+		//#testimonials-rotator.parallax
+			.container.text-center
+				.row
+					.col-md-12
+						//Rotator Content
+						.flexslider
+							ul.slides
+								//Testimonial #1
+								li
+									.testimonials
+										//Testimonial Author Avatar
+										.tst-author
+											img(src='/landingPage/img/thumbs/tst_author_2.jpg', alt='')
+											p.author
+												strong Alan Sharp
+												span Internet Surfer
+										//Testimonial Message
+										.client-msg
 											p
-												| Es un peque&ntilde;o sensor colocado en un espacio f&iacute;sico que transmite una se&ntilde;al inal&aacute;mbrica a un
-												| Smartphone con la aplicaci&oacute;n de Biin.
-								//Feature Icon 3
-								li#feature-2
-									.col-sm-6.col-md-6.feature-box.clearfix
-										.feature-box-icon
-											i.fa.fa-desktop
-										.feature-box-content
-											h4 Beneficios para sus visitantes
-											p Ofertas, cupones, regalos con contexto, mas f&aacute;cil y sin costos onerosos.
-						.col-md-12
-							ul
-								//Feature Icon 3
-								li#feature-3
-									.col-sm-6.col-md-6.feature-box.clearfix
-										.feature-box-icon
-											i.fa.fa-heart
-										.feature-box-content
-											h4 CMS
-											p Administra del contenido te tus vitrinas digital de una forma f&aacute;cil y r&aacute;pida.								
-								//Feature Icon 4
-								li#feature-4
-									.col-sm-6.col-md-6.feature-box.clearfix
-										.feature-box-icon
-											i.fa.fa-cog
-										.feature-box-content
-											h4 Vitrina y directorio digital
-											p Con acceso desde cualquier lugar, la vitrina perfecta para mostrar su propuesta de valor.
-						.col-md-12
-							ul										
-								//Feature Icon 5
-								li#feature-5
-									.col-sm-6.col-md-6.feature-box.clearfix
-										.feature-box-icon
-											i.fa.fa-globe
-										.feature-box-content
-											h4 Informaci&oacute;n con contexto
+												| « Etiam condimentum sapien sem condimentum accumsan. Proin in adipiscing
+												| elit. Suspendisse dignissim sollicitudin
+												| ornare at sagittis elementum vulputate congue »
+								//Testimonial #2
+								li
+									.testimonials
+										//Testimonial Author Avatar
+										.tst-author
+											img(src='/landingPage/img/thumbs/tst_author_1.jpg', alt='')
+											p.author
+												strong Hannah Brown
+												span Manager
+										//Testimonial Message
+										.client-msg
 											p
-												| Con contenido y notificaciones sobre objetos y lugares f&iacute;sicamente cercanos con
-												| precisi&oacute;n de cent&iacute;metros.																	
-								//Feature Icon 6
-								li#feature-6
-									.col-sm-6.col-md-6.feature-box.clearfix
-										.feature-box-icon
-											i.fa.fa-clock-o
-										.feature-box-content
-											h4 CRM
-											p Administra la relaci&oacute;n con tus clientes en tiempo real.
-						//End col-md-12
-					//End Features Holder
-				//End container
-			//END FEATURES		
-			//BANNER_1============================================= 
-			#banner_1
-				.container
-					.row
-						//Banner Description
-						.col-md-6.titlebar.banner_1_content
-							h2 Aplicaci&oacute;n m&oacute;vil consciente del contexto
-							h3
-								| Informaci&oacute;n relevante sobre el lugar y momento justo har&aacute;n la diferencia entre una visita y una
-								| experiencia.
-							p
-								| En Biin estamos creando la primera plataforma para informaci&oacute;n y beneficios que aprovecha la 
-								| micro-localizaci&oacute;n con smart beacons. Mediante una aplicaci&oacute;n m&oacute;vil, universal y de uso gratuito, 
-								| visitantes de comercios, lugares de entretenimiento o instituciones, tendr&aacute;n acceso a la informaci&oacute;n 
-								| relevante de acuerdo al contexto.
-								| Biin permite navegar por el contenido en cualquier lugar y recibir alertas sobre las cosas que te 
-								| interesan cuando estas cerca. 
-							.important
-								p.important-1
-									strong
-										| Mejor informaci&oacute;n, 
-								p.important-2
-									strong
-										| beneficios y diversi&oacute;n
-								p.important-3 
-									strong
-										|para sus visitantes 
-								p.important-4 
-									strong
-										|generando una relaci&oacute;n de valor.
-						//Banner Image
-						//#banner_1_image.col-md-6.text-center
-							img.img-responsive(src='/landingPage/img/thumbs/6.png', alt='banner_1_image')
+												| « Suspendisse cursus risus laoreet turpis auctor, pharetra massa varius.
+												| Suspendisse dignissim sollicitudin aliquam.
+												| Nullam vehicula pharetra ultrices sapien gravida »
+								//Testimonial #3
+								li
+									.testimonials
+										//Testimonial Author Avatar
+										.tst-author
+											img(src='/landingPage/img/thumbs/tst_author_3.jpg', alt='')
+											p.author
+												strong Karen Olson
+												span Housewife
+										//Testimonial Message
+										.client-msg
+											p
+												| « In eget urna nisl bibendum dapibus. Phasellus nec euismod mauris. Morbi
+												| vitae rutrum turpis.
+												| Phasellus molestie posuere ligula ligula aliquet imperdiet vitae »
+								//Testimonial #4
+								li
+									.testimonials
+										//Testimonial Author Avatar
+										.tst-author
+											img(src='/landingPage/img/thumbs/tst_author_4.jpg', alt='')
+											p.author
+												strong Jonathan Doe
+												span Programmer
+										//Testimonial Message
+										.client-msg
+											p
+												| « Vivamus a purus lacus tempor volutpat. Etiam odio purus, placerat
+												| interdum vestibulum rutrum aliquet vulputate.
+												| Proin euismod pulvinar aliquam »
+						//End Rotator Content
+					//End col-sm-12
+				//End row
+			//End container
+		//END TESTIMONIALS ROTATOR
+		//PRICING============================================= 
+		section#pricing
+			.container
+				//Section Tittle
+				.row
+					.col-sm-12.titlebar
+						h2 Precios
+						h3 Biin estarán disponible próximamente y ya puedes ser parte del grupo de empresas líderes en Costa Rica que ya están aprovechando las ventajas de esta plataforma.
+						p
+							| En Biin queremos poner a disposición paquetes que se adapten sus necesidades.
+							| Si tiene una necesidad diferente no dude en contactar a nuestro equipo de ventas.
+				//Pricing Section Content
+				#pricing-table-holder.row
+					//PRICE PLAN STANDARD
+					#price_1.col-xs-12.col-sm-4.col-md-4
+						.pricing-table.text-center
+							//Table Header & Plan Price
+							.price-header
+								h4.plan-title Biin Lite
+								.plan-price
+									h2 $30
+									span Mensuales
+							//Plan Features
+							ul.features
+								li Vitrina digital
+								li Informaci&oacute;n con contexto
+								li hasta 2 locaciones
+								li Hasta 6 Biin beacons
+							//Table Button
+							.price-footer
+								a.btn.btn-black(href='#') Disponible pronto
+					//END PRICE PLAN STANDARD
+					//PRICE PLAN ADVANCED
+					#price_2.col-xs-12.col-sm-4.col-md-4
+						.pricing-table.featured.text-center
+							
+							//Table Header & Plan Price
+							.price-header
+								h4.plan-title Standard
+								.plan-price
+									h2 $149
+									span Mensuales
+							
+							//Plan Features
+							ul.features
+								li Lite +
+								li Programa comercial
+								li Hasta 15 locaciones
+								li Hasta 150 Biin Beacons
+								li Contenido ilimitado
+							
+							//Table Button
+							.price-footer
+								a.btn.btn-theme(href='#') Disponible pronto
 					
-					//End row
-				//End container
-			//END BANNER_1
-			//BANNER_2============================================= 
-			#banner_2
-				.container
-					.row
-						//Banner Image
-						//#banner_2_image.col-md-6
-							img.img-responsive(src='/landingPage/img/thumbs/2.png', alt='banner_2_image')
-						//Banner Description
-						.col-md-12.titlebar.banner_2_content
-							h2 ¿Que son los iBeacons de Biin?
-							h3 La puerta de entrada a la micro-localizaci&oacute;n
-							p
-								| Son peque&ntilde;os dispositivos que se colocan en espacios f&iacute;sicos y que transmiten una se&ntilde;al bluetooth de
-								| baja energ&iacute;a (BLE) a un Smartphone cercano, permitiendo crear aplicaciones conscientes de su
-								| contexto. BiinApp entiende la proximidad de los Beacons y as&iacute; obtener el contenido relevante
-								| para el lugar y momento especifico, permitiendo crear interacciones mas cercanas al mundo real.
-							//Banner List
-							#banner-list
-								//List Item #1
-								.list-item
-									h5
-										i.fa.fa-check
-										| F&aacute;cil administraci&oacute;n e instalaci&oacute;n
-								//List Item #2
-								.list-item
-									h5
-										i.fa.fa-check
-										| La se&ntilde;al tiene un alcance de hasta 70 metros
-								//List Item #3
-								.list-item
-									h5
-										i.fa.fa-check
-										| Libres de mantenimiento por hasta 3 a&ntilde;os.
-								//List Item #4
-								.list-item
-									h5
-										i.fa.fa-check
-										| Bajo costo
-							//End Banner List
-						//End Banner Description
-					//End row
-				//End container
-			//END BANNER_2
-			//SCREENS============================================= 
-			section#screens
-				.container
-					//Section Tittle
-					.row
-						.col-sm-12.titlebar
-							h2 Quien usa Biin?
-							p
-								| Desde centros comerciales, restaurantes, instituciones publicas o privadas
-								| ferias y exposiciones, centros deportivos, o cualquier lugar que desee transmitir un mensaje mas
-								| relevante a sus visitantes.
-					//Screens row
-					#screenshots-holder1.row
-						//Screenshot Image #1
-						#screenshot_1.col-xs-6.col-sm-6.col-md-3
-							.hover-details
-								img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery1.jpeg', alt='screenshot_image')
-								//Image Zoom
-								.img-cover
-									a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery1.jpg', title='Screenshot Image #1')
-									h3 Compras
-						//Screenshot Image #2
-						#screenshot_2.col-xs-6.col-sm-6.col-md-3
-							.hover-details
-								img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery2.jpeg', alt='screenshot_image')
-								//Image Zoom
-								.img-cover
-									a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery2.jpg', title='Screenshot Image #2')
-									h3 Restaurantes
-						//Screenshot Image #3
-						#screenshot_3.col-xs-6.col-sm-6.col-md-3
-							.hover-details
-								img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery3.jpeg', alt='screenshot_image')
-								//Image Zoom
-								.img-cover
-									a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery3.jpg', title='Screenshot Image #3')
-									h3 Instituciones
-						//Screenshot Image #4
-						#screenshot_4.col-xs-6.col-sm-6.col-md-3
-							.hover-details
-								img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery4.jpeg', alt='screenshot_image')
-								//Image Zoom
-								.img-cover
-									a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery4.jpg', title='Screenshot Image #4')
-									h3 Museos
-					//End screenshots-holder1
-					//Screens row
-					#screenshots-holder2.row
-						//Screenshot Image #5
-						#screenshot_5.col-xs-6.col-sm-6.col-md-3
-							.hover-details
-								img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery5.jpeg', alt='screenshot_image')
-								//Image Zoom
-								.img-cover
-									a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery5.jpg', title='Screenshot Image #5')
-									h3 Ferias y exposiciones
-						//Screenshot Image #6
-						#screenshot_6.col-xs-6.col-sm-6.col-md-3
-							.hover-details
-								img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery6.jpeg', alt='screenshot_image')
-								//Image Zoom
-								.img-cover
-									a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery6.jpg', title='Screenshot Image #6')
-									h3 Eventos deportivos
-						//Screenshot Image #7
-						#screenshot_7.col-xs-6.col-sm-6.col-md-3
-							.hover-details
-								img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery7.jpeg', alt='screenshot_image')
-								//Image Zoom
-								.img-cover
-									a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery7.jpg', title='Screenshot Image #7')
-									h3 Hoteles o complejos turisticos
-						//Screenshot Image #8
-						#screenshot_8.col-xs-6.col-sm-6.col-md-3
-							.hover-details
-								img.img-responsive.img-thumbnail(src='/landingPage/img/thumbs/gallery8.jpeg', alt='screenshot_image')
-								//Image Zoom
-								.img-cover
-									a.image_zoom(href='/landingPage/img/thumbs/gallery_2x/gallery8.jpg', title='Screenshot Image #8')
-									h3 Automotriz
-					//End screenshots-holder2
-				//End container
-			//END SCREENS				
-			//NEWSLETTER============================================= 
-			#newsletter.parallax
-				#subscribe.container
-					.row
-						//Newsletter Title
-						#newsletter_title.col-md-6.text-center
-							h1 Inscribase a nuestro bolet&iacute;n
-							p
-								| Si quieres recibir el bolet&iacute;n con noticias importantes de Biin ingrese su correo electr&oacute;nico.
-						//Newsletter Form
-						#newsletter_form.col-md-6.text-center
-							.clearfix
-								form#subscribe-form.subscribe-form(action='newsletter.php', method='post')
-									input.subscribe-input(type='email', name='email', placeholder='Tu correo electrónico...')
-									button.subscribe-submit(type='submit') Subscribir
-					//End row
-				//End container
-			//END NEWSLETTER
-			//TESTIMONIALS ROTATOR============================================= 
-			//#testimonials-rotator.parallax
-				.container.text-center
-					.row
-						.col-md-12
-							//Rotator Content
-							.flexslider
-								ul.slides
-									//Testimonial #1
-									li
-										.testimonials
-											//Testimonial Author Avatar
-											.tst-author
-												img(src='/landingPage/img/thumbs/tst_author_2.jpg', alt='')
-												p.author
-													strong Alan Sharp
-													span Internet Surfer
-											//Testimonial Message
-											.client-msg
-												p
-													| « Etiam condimentum sapien sem condimentum accumsan. Proin in adipiscing
-													| elit. Suspendisse dignissim sollicitudin
-													| ornare at sagittis elementum vulputate congue »
-									//Testimonial #2
-									li
-										.testimonials
-											//Testimonial Author Avatar
-											.tst-author
-												img(src='/landingPage/img/thumbs/tst_author_1.jpg', alt='')
-												p.author
-													strong Hannah Brown
-													span Manager
-											//Testimonial Message
-											.client-msg
-												p
-													| « Suspendisse cursus risus laoreet turpis auctor, pharetra massa varius.
-													| Suspendisse dignissim sollicitudin aliquam.
-													| Nullam vehicula pharetra ultrices sapien gravida »
-									//Testimonial #3
-									li
-										.testimonials
-											//Testimonial Author Avatar
-											.tst-author
-												img(src='/landingPage/img/thumbs/tst_author_3.jpg', alt='')
-												p.author
-													strong Karen Olson
-													span Housewife
-											//Testimonial Message
-											.client-msg
-												p
-													| « In eget urna nisl bibendum dapibus. Phasellus nec euismod mauris. Morbi
-													| vitae rutrum turpis.
-													| Phasellus molestie posuere ligula ligula aliquet imperdiet vitae »
-									//Testimonial #4
-									li
-										.testimonials
-											//Testimonial Author Avatar
-											.tst-author
-												img(src='/landingPage/img/thumbs/tst_author_4.jpg', alt='')
-												p.author
-													strong Jonathan Doe
-													span Programmer
-											//Testimonial Message
-											.client-msg
-												p
-													| « Vivamus a purus lacus tempor volutpat. Etiam odio purus, placerat
-													| interdum vestibulum rutrum aliquet vulputate.
-													| Proin euismod pulvinar aliquam »
-							//End Rotator Content
-						//End col-sm-12
-					//End row
-				//End container
-			//END TESTIMONIALS ROTATOR
-			//PRICING============================================= 
-			section#pricing
-				.container
-					//Section Tittle
-					.row
-						.col-sm-12.titlebar
-							h2 Precios
-							h3 Biin estarán disponible próximamente y ya puedes ser parte del grupo de empresas líderes en Costa Rica que ya están aprovechando las ventajas de esta plataforma.
-							p
-								| En Biin queremos poner a disposición paquetes que se adapten sus necesidades.
-								| Si tiene una necesidad diferente no dude en contactar a nuestro equipo de ventas.
-					//Pricing Section Content
-					#pricing-table-holder.row
-						//PRICE PLAN STANDARD
-						#price_1.col-xs-12.col-sm-4.col-md-4
-							.pricing-table.text-center
-								//Table Header & Plan Price
-								.price-header
-									h4.plan-title Biin Lite
-									.plan-price
-										h2 $30
-										span Mensuales
-								//Plan Features
-								ul.features
-									li Vitrina digital
-									li Informaci&oacute;n con contexto
-									li hasta 2 locaciones
-									li Hasta 6 Biin beacons
-								//Table Button
-								.price-footer
-									a.btn.btn-black(href='#') Disponible pronto
-						//END PRICE PLAN STANDARD
-						//PRICE PLAN ADVANCED
-						#price_2.col-xs-12.col-sm-4.col-md-4
-							.pricing-table.featured.text-center
-								
-								//Table Header & Plan Price
-								.price-header
-									h4.plan-title Standard
-									.plan-price
-										h2 $149
-										span Mensuales
-								
-								//Plan Features
-								ul.features
-									li Lite +
-									li Programa comercial
-									li Hasta 15 locaciones
-									li Hasta 150 Biin Beacons
-									li Contenido ilimitado
-								
-								//Table Button
-								.price-footer
-									a.btn.btn-theme(href='#') Disponible pronto
-						
-						//END PRICE PLAN ADVANCED
-						//PRICE PLAN ULTIMATE
-						#price_3.col-xs-12.col-sm-4.col-md-4
-							.pricing-table.text-center
-								
-								//Table Header & Plan Price
-								.price-header
-									h4.plan-title Premium
-									.plan-price
-										h2 $399
-										span Mensuales
-								
-								//Plan Features
-								ul.features
-									li Standard +
-									li Programa multimedia
-									li Hasta 50 locaciones
-									li Hasta 500 Biin Beacons
-									li Contenido ilimitado
-								
-								//Table Button
-								.price-footer
-									a.btn.btn-black(href='#') Disponible pronto
-						//END PRICE PLAN ULTIMATE
-					//End Pricing Section Content
-				//End container
-			//END PRICING
-			//CONTACTS============================================= 
-			section#contact
-				.container
-					//Section Tittle
-					.row
-						.col-sm-12.titlebar
-							h2 Contacta a Biin!
-							h3 Nos encantar&iacute;a conversar sobre como Biin puede ayudar a su empresa o instituci&oacute;n.
-							p
-								| Llena el formulario y te estaremos contactando lo antes posible o si prefieres hablar con alguien puedes llamar a Cesar Arce al n&uacute;mero 8701-1518.
-						//Contact form
-						.col-sm-12
-							form#contact-form.row(action='contact.php', name='contactform', method='post')
-								#input_name.col-md-6
-									input#name.form-control(type='text', name='first_name', placeholder='Nombre')
-								#input_email.col-md-6
-									input#email.form-control(type='text', name='email', placeholder='Email')
-								#input_subject.col-md-12
-									input#subject.form-control(type='text', name='subject', placeholder='Titulo')
-								#input_message.col-md-12
-									textarea#comments.form-control(name='message', rows='6', placeholder='Tu mensaje ...')
-								//Submit Button
-								#form_btn.col-md-12
-									.text-center
-										input#submit.btn.btn-theme.btn-lg(type='submit', value='Enviar mensaje')
-						//END Contact form
-					//End row
-				//End container
-			//END CONTACTS
-			//FOOTER============================================= 
-			footer#footer
-				.container
-					//Footer Social Icons
-					.row
-						#footer_icons.col-md-12.text-center
-							ul.footer-socials.clearfix
-								li
-									a.foo_social.ico-facebook(href='#')
-										i.fa.fa-facebook
-								li
-									a.foo_social.ico-twitter(href='#')
-										i.fa.fa-twitter
-								li
-									a.foo_social.ico-google-plus(href='#')
-										i.fa.fa-google-plus
-								li
-									a.foo_social.ico-linkedin(href='#')
-										i.fa.fa-linkedin
-								li
-									a.foo_social.ico-dribbble(href='#')
-										i.fa.fa-dribbble
-								//
-									<li><a class="foo_social ico-instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-									<li><a class="foo_social ico-pinterest" href="#"><i class="fa fa-pinterest"></i></a></li>
-									<li><a class="foo_social ico-dropbox" href="#"><i class="fa fa-dropbox"></i></a></li>
-									<li><a class="foo_social ico-skype" href="#"><i class="fa fa-skype"></i></a></li>
-									<li><a class="foo_social ico-youtube" href="#"><i class="fa fa-youtube"></i></a></li>
-									<li><a class="foo_social ico-tumblr" href="#"><i class="fa fa-tumblr"></i></a></li>
-									<li><a class="foo_social ico-vimeo" href="#"><i class="fa fa-vimeo-square"></i></a></li>
-									<li><a class="foo_social ico-flickr" href="#"><i class="fa fa-flickr"></i></a></li>
-									<li><a class="foo_social ico-github" href="#"><i class="fa fa-github-alt"></i></a></li>
-									<li><a class="foo_social ico-renren" href="#"><i class="fa fa-renren"></i></a></li>
-									<li><a class="foo_social ico-vk" href="#"><i class="fa fa-vk"></i></a></li>
-									<li><a class="foo_social ico-xing" href="#"><i class="fa fa-xing"></i></a></li>
-									<li><a class="foo_social ico-weibo" href="#"><i class="fa fa-weibo"></i></a></li>
-									<li><a class="foo_social ico-rss" href="#"><i class="fa fa-rss"></i></a></li>
-					//End Footer Social Icons
-					//Footer Copy
-					.row
-						#footer_copy.col-sm-12.text-center
-							p © Biin Appication. All Right Reserved
-					//End Footer Copy
-				//End container
-			//END FOOTER
-		//END CONTENT WRAPPER 
-		//EXTERNAL SCRIPTS=============================================
-		script(src='/landingPage/js/jquery-2.1.0.min.js', type='text/javascript')
-		script(src='/landingPage/js/bootstrap.min.js', type='text/javascript')
-		script(src='/landingPage/js/modernizr.custom.js', type='text/javascript')
-		script(src='/landingPage/js/retina.js', type='text/javascript')
-		script(src='/landingPage/js/jquery.stellar.min.js')
-		script(src='/landingPage/js/jquery.superslides.js', type='text/javascript')
-		script(src='/landingPage/js/jquery.parallax-1.1.3.js', type='text/javascript')
-		script(src='/landingPage/js/jquery.magnific-popup.min.js', type='text/javascript')
-		script(defer='defer', src='/landingPage/js/jquery.flexslider.js', type='text/javascript')
-		script(defer='defer', src='/landingPage/js/jquery.validate.min.js', type='text/javascript')
-		script(src='/landingPage/js/custom.js', type='text/javascript')
-		
-		//Google Analytics: Change UA-XXXXX-X to be your site's ID. Go to http://www.google.com/analytics/ for more information. 
-		//
-			<script>
-				var _gaq = _gaq || [];
-				_gaq.push(['_setAccount', 'UA-XXXXX-X']);
-				_gaq.push(['_trackPageview']);
-				(function() {
-					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-				})();
-			</script>
+					//END PRICE PLAN ADVANCED
+					//PRICE PLAN ULTIMATE
+					#price_3.col-xs-12.col-sm-4.col-md-4
+						.pricing-table.text-center
+							
+							//Table Header & Plan Price
+							.price-header
+								h4.plan-title Premium
+								.plan-price
+									h2 $399
+									span Mensuales
+							
+							//Plan Features
+							ul.features
+								li Standard +
+								li Programa multimedia
+								li Hasta 50 locaciones
+								li Hasta 500 Biin Beacons
+								li Contenido ilimitado
+							
+							//Table Button
+							.price-footer
+								a.btn.btn-black(href='#') Disponible pronto
+					//END PRICE PLAN ULTIMATE
+				//End Pricing Section Content
+			//End container
+		//END PRICING
+		//CONTACTS============================================= 
+		section#contact
+			.container
+				//Section Tittle
+				.row
+					.col-sm-12.titlebar
+						h2 Contacta a Biin!
+						h3 Nos encantar&iacute;a conversar sobre como Biin puede ayudar a su empresa o instituci&oacute;n.
+						p
+							| Llena el formulario y te estaremos contactando lo antes posible o si prefieres hablar con alguien puedes llamar a Cesar Arce al n&uacute;mero 8701-1518.
+					//Contact form
+					.col-sm-12
+						form#contact-form.row(action='contact.php', name='contactform', method='post')
+							#input_name.col-md-6
+								input#name.form-control(type='text', name='first_name', placeholder='Nombre')
+							#input_email.col-md-6
+								input#email.form-control(type='text', name='email', placeholder='Email')
+							#input_subject.col-md-12
+								input#subject.form-control(type='text', name='subject', placeholder='Titulo')
+							#input_message.col-md-12
+								textarea#comments.form-control(name='message', rows='6', placeholder='Tu mensaje ...')
+							//Submit Button
+							#form_btn.col-md-12
+								.text-center
+									input#submit.btn.btn-theme.btn-lg(type='submit', value='Enviar mensaje')
+					//END Contact form
+				//End row
+			//End container
+		//END CONTACTS
+	//END CONTENT WRAPPER 

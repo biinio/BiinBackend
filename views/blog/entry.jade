@@ -1,9 +1,17 @@
 div.entry !{content}
 
 div.nav
-  ul
-    li
-      a(href='/') back
-
+	ul
+		li
+			a(href='/') back
 div.comments
-  p Feel free to add your comment system here.
+	.row
+		#disqus_thread
+		|	<script type="text/javascript">		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+		|		var disqus_shortname = 'biin'; // required: replace example with your forum shortname			
+		|		(function() {/* * * DON'T EDIT BELOW THIS LINE * * */
+		|			var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		|			dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		|			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		|		})();
+		|	</script>

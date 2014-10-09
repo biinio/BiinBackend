@@ -352,6 +352,49 @@ ul {
   display: table;
   clear: both;
 }
+#blog{
+  position: relative;
+  padding-top: 200px;
+  background-color: #000;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#blog h1{
+
+}
+
+#blog p{
+  font-size: 18px;
+  color: #000;
+}
+
+
+#blog .entry{
+  height: 300px;
+  padding:3px 3px 3px 3px; 
+}
+#blog .entry .wrapper{
+  padding: 7px 7px 7px 7px;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  }
+
+
+.wrapper  .title{
+  text-align: left;
+}
+
+.wrapper  .date{
+  text-align: right;
+}
+
+.wrapper  .preview{
+}
+
 /*------------------------------------------*/
 /*	 Intro Page Content   
 /*------------------------------------------*/
