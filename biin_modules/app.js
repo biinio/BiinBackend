@@ -17,7 +17,41 @@ module.exports = function (db) {
     , multipartMiddleware = multipart()
     , lessMiddleware = require('less-middleware')
     , methodOverride = require('method-override')
-    , expressValidator = require('express-validator');
+    , expressValidator = require('express-validator')
+    , nodemailer = require('nodemailer');
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: "krlosnando@gmail.com",
+            pass: "carlosFer0007971"
+        }
+    });
+
+
+    var rand,mailOptions,host,link;
+
+    app.get('/send',function(req,res){
+        // setup e-mail data with unicode symbols
+        var mailOptions = {
+            from: 'Fred Foo ✔ <foo@blurdybloop.com>', // sender address
+            to: 'krlosnando@gmail.com, krlosnando@hotmail.com', // list of receivers
+            subject: 'Hello ✔', // Subject line
+            text: 'Hello world ✔', // plaintext body
+            html: '<b>Hello world ✔</b>' // html body
+        };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+                res.end(error.response);
+            }else{
+                console.log('Message sent: ' + info.response);
+                res.end(info.response.toString());
+            }
+        });
+    });
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     schemasValidations = {};
