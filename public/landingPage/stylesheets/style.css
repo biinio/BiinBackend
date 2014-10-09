@@ -118,9 +118,9 @@ ul {
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   padding: 10px 20px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
   -webkit-transition: all 200ms ease-in-out;
   -moz-transition: all 200ms ease-in-out;
   -o-transition: all 200ms ease-in-out;
@@ -143,9 +143,9 @@ ul {
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   padding: 10px 20px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
   -webkit-transition: all 200ms ease-in-out;
   -moz-transition: all 200ms ease-in-out;
   -o-transition: all 200ms ease-in-out;
@@ -594,6 +594,10 @@ ul {
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
 }
+
+#features .titlebar p{
+  margin-top: 40px;
+}
 /*------------------------------------------*/
 /*	  Feature Box
 /*------------------------------------------*/
@@ -606,7 +610,6 @@ ul {
 /*	  Feature Box Icon
 /*------------------------------------------*/
 .feature-box-icon {
-  background-color: #71D7FF;
   position: relative;
   display: block;
   width: 120px;
@@ -620,13 +623,13 @@ ul {
   font-size: 50px;
 }
 
-.feature-box-icon i{
+.feature-box-icon img{
   position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-top: -10px;
+  width: 100px;
+  height: 100px;
 }
+
 
 
 /*------------------------------------------*/
@@ -968,9 +971,9 @@ ul {
 }
 .pricing-table {
   border: 1px solid #c3c3c3;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
 }
 /*------------------------------------------*/
 /*	  Pricing Table Header
@@ -1082,10 +1085,14 @@ ul {
   padding-top: 80px;
   padding-bottom: 80px;
   border-top: 1px solid #ddd;
-  background-image: url(../img/thumbs/contact_bkg.jpg);
+  background-color: #71D7FF;
   background-repeat: repeat;
   background-position: center center;
   overflow: hidden;
+}
+#contact .titlebar h3{
+    color:#fff;
+
 }
 /*------------------------------------------*/
 /*	  Contact Form Input
