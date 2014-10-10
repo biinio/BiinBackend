@@ -456,6 +456,9 @@ $(document).ready(function() {
                     $('.subscribe-submit').removeAttr("disabled");
                     $('.newsletterFirstText').text("Tu correo ha sido agregado exitosamente! muchas gracias!");
                     $('.newsletterSecondText').text("Ahora recibira noticias importantes de Biin en su correo electrónico.");
+
+                    //Clean form
+                    $('#subscribe-form').find("input[type=email]").val("");
                 },
                 error: function(){
                     $('.subscribe-submit').removeAttr("disabled");
