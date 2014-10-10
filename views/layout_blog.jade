@@ -44,7 +44,7 @@ html(lang='es')
 
 		//HEADER=============================================
 		header#header
-			.navbar.navbar-fixed-top
+			.navbar.navbar-fixed-top.scroll-fixed-navbar
 				.container
 					.transparency					
 					.navbar-header
@@ -73,7 +73,7 @@ html(lang='es')
 							li
 								a.selected-nav(href='/blog') Blog
 							li
-								a.selected-nav(href='/#contact') Contact&aacute;nos
+								a(href='/#contact') Contact&aacute;nos
 							li(style='cursor: pointer;').dropdown
 								a.dropdown-toggle(data-toggle='dropdown')
 									| Inicio Sessi&oacute;n
@@ -100,11 +100,6 @@ html(lang='es')
 
 		//CONTENT WRAPPER============================================= 
 		#content-wrapper
-			.section#blogHeader
-				.container
-					.row
-						.col-md-12
-							h1 The Biin Official Blog
 			block content
 			//FOOTER============================================= 
 			footer#footer

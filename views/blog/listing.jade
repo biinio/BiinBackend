@@ -1,11 +1,11 @@
 .row
 	.col-md-12
-			a.col-md-12.entry(ng-repeat="blog in blogs" ng-href="{{blog.url}}")
+			.col-md-12.entry(ng-repeat="blog in blogs")
 				.wrapper
 					.col-md-12
-						.row.title
-							h1 {{blog.name}}
 						.row.date
 							span{{blog.date}}
 						.row.preview
-							p(dynamic="blog.preview") 
+							p(dynamic="blog.preview")
+					a.readmore(ng-href="{{blog.url}}") 
+						p Continue reading...	

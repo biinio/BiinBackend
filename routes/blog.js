@@ -23,7 +23,7 @@ module.exports = function(){
   function getPreview(blogs,qty,callback){
     for(var i=0;i<qty && i< blogs.length;i++){
       var html =md(''+ fs.readFileSync(blogs[i].localUrl+'.markdown'));
-      blogs[i].preview= html.substring(0,10000);
+      blogs[i].preview= html.substring(0,400);
     }
     callback(blogs);
   }

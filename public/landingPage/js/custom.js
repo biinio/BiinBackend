@@ -24,7 +24,7 @@ $(window).load(function () {
 /*----------------------------------------------------*/
 /*	Scroll Navbar
  /*----------------------------------------------------*/
-$(window).scroll(function () {
+/*$(window).scroll(function () {
 
     "use strict";
 
@@ -36,7 +36,7 @@ $(window).scroll(function () {
         $(".navbar").removeClass("scroll-fixed-navbar");
     }
 
-});
+});*/
 
 
 /*----------------------------------------------------*/
