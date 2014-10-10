@@ -180,6 +180,12 @@ $(document).ready(function () {
         pagination: true
     });
 
+    //j
+    $('#slides-forwhoIsBiin').superslides({
+        play: 9000,
+        animation: "fade",
+        pagination: true
+    });
 });
 
 

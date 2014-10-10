@@ -361,6 +361,50 @@ ul {
   display: table;
   clear: both;
 }
+.slides-forwhoIsBiin-wrapper{
+  background-color: #00adef;
+}
+
+#slides-forwhoIsBiin .slides-navigation .prev{
+  position: absolute;
+  bottom: 50%;
+  left: 5%;
+  background-color: #fff;
+  height: 50px;
+  width:50px;
+  border-radius: 50%;
+}
+
+.slides-navigation .prev::before{
+  color: #00adef;
+  font-size: 40px;
+  content: "<";
+  position: absolute;
+  left: 14px;
+  top: -4px;
+}
+
+#slides-forwhoIsBiin .slides-navigation .next{
+  position: absolute;
+  bottom: 50%;
+  right: 5%;
+  background-color: #fff;
+  height: 50px;
+  width:50px;
+  border-radius: 50%;
+}
+
+.slides-navigation .next::before{
+  color: #00adef;
+  font-size: 40px;
+  content: ">";
+  position: absolute;
+  left: 14px;
+  top: -4px;
+ }
+.slides-navigation .next:hover{
+  background-color: #fff;
+}
 
 #blog{
   position: relative;
