@@ -754,7 +754,7 @@ ul {
 /*	  Newsletter Form Error Message 
 /*------------------------------------------*/
 .error {
-  color: #fff;
+  color: #F50000;
   font-size: 16px;
   font-family: 'Lato', sans-serif;
   font-weight: 400;
@@ -1139,7 +1139,7 @@ ul {
 /*	  Contact Form Error Message 
 /*------------------------------------------*/
 .error {
-  color: #af3809;
+  color: #F50000;
 }
 /* ==========================================================================
    13. FOOTER
@@ -1372,3 +1372,10 @@ nav a#pull {
 /* ==========================================================================
    15. CONTACT FORM RESPONSE PAGE   
    ========================================================================== */
+.sent-message{
+    color: #288026;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    text-align: center;
+}

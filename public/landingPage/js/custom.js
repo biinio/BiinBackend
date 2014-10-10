@@ -251,8 +251,9 @@ $(document).ready(function () {
         },
         messages: {
             email: {
-                required: "We need your email address to contact you",
-                email: "Your email address must be in the format of name@domain.com"
+                //required: "We need your email address to contact you",
+                required: "Nosostros necesitamoso una dirección de correo electrónica para contactarte.",
+                email: "Tu dirección de correo tiene que estar en el siguiente formato nombre@dominio.com"
             },
         }
     });
@@ -270,28 +271,37 @@ $(document).ready(function () {
 
     $("#contact-form").validate({
         rules: {
+            first_name: {
+                required: true
+            },
             email: {
                 required: true,
-                email: true,
+                email: true
             },
             subject: {
                 required: true,
                 minlength: 4,
-                maxlength: 24,
+                maxlength: 24
             },
             message: {
                 required: true,
-                minlength: 2,
+                minlength: 2
             }
         },
         messages: {
+            first_name: {
+                required: "Tienes que ingresar al menos 5 letras."
+            },
             email: {
-                required: "We need your email address to contact you",
-                email: "Your email address must be in the format of name@domain.com"
+                required: "Nosostros necesitamoso una dirección de correo electrónica para contactarte.",
+                email: "Tu dirección de correo tiene que estar en el siguiente formato nombre@dominio.com"
+            },
+            subject: {
+                required: "Tienes que ingresar al menos 5 letras."
             },
             message: {
-                required: "Please enter no more than (2) characters"
-            },
+                required: "Tienes que ingresar al menos 5 letras."
+            }
         }
     });
 
@@ -427,71 +437,74 @@ $(document).ready(function() {
 
     //Send Subscription
     $('.subscribe-submit').click(function(e){
-        var subsEmail = $('.subscribe-input').val();
+        if($('#subscribe-form').valid()){
+            var subsEmail = $('.subscribe-input').val();
 
-        var htmlBody = "<h3>Nuevo email subscrito en la pagina biinapp.com</h3>" +
-                       "<b>Email</b>: <pre>" + subsEmail + "</pre>";
+            $.ajax({
+                type: "GET",
+                data: {
+                    typeEmail  : "NewsLetter",
+                    subsEmail : subsEmail
+                },
+                url: "sendEmail/",
+                beforeSend: function(){
+                    $('.subscribe-submit').attr("disabled", "true");
+                    $('.newsletterFirstText').text("Enviando tu solicitud...");
+                    $('.newsletterSecondText').text("Procesando...");
+                },
+                success: function(){
+                    $('.subscribe-submit').removeAttr("disabled");
+                    $('.newsletterFirstText').text("Tu correo ha sido agregado exitosamente! muchas gracias!");
+                    $('.newsletterSecondText').text("Ahora recibira noticias importantes de Biin en su correo electrónico.");
+                },
+                error: function(){
+                    $('.subscribe-submit').removeAttr("disabled");
+                    $('.newsletterFirstText').text("Lo sentimos mucho");
+                    $('.newsletterSecondText').text("Ocurrio un error inesperado al tratar de agregar tu email.");
+                }
+            });
 
-        $.ajax({
-            type: "GET",
-            data: {
-                to       : "carce@biinapp.com, epadilla@biinapp.com, lbonilla@biinapp.com, cdominguez@biinapp.com",
-                //to     : "krlosnando@gmail.com, krlosnando@hotmail.com",
-                subject  : "Nuevo email subscrito en biinapp.com",
-                htmlBody : htmlBody
-            },
-            url: "sendEmail/",
-            beforeSend: function(){
-                $('.newsletterFirstText').text("Enviando tu solicitud...");
-                $('.newsletterSecondText').text("Procesando...");
-            },
-            success: function(){
-                $('.newsletterFirstText').text("Tu correo ha sido agregado exitosamente! muchas gracias!");
-                $('.newsletterSecondText').text("Ahora recibira noticias importantes de Biin en su correo electrónico.");
-            },
-            error: function(){
-                $('.newsletterFirstText').text("Lo sentimos mucho");
-                $('.newsletterSecondText').text("Ocurrio un error inesperado al tratar de agregar tu email.");
-            }
-        });
-
-        e.preventDefault();
+            e.preventDefault();
+        }
     });
 
-    //Contact Biin
     $('.btn-contact').click(function(e){
-        var nombre   = $('#name').val();
-        var email    = $('#email').val();
-        var titulo   = $('#subject').val();
-        var comments = $('#comments').val();
+        if($('#contact-form').valid()){
+            var name   = $('#name').val();
+            var email    = $('#email').val();
+            var title   = $('#subject').val();
+            var comments = $('#comments').val();
 
-        var htmlBody = "<h3>Alguien desea contactarse con Biinapp</h3>" +
-                       "<b>Nombre</b>: <pre>" + nombre + "</pre>" + 
-                       "<b>Email</b>: <pre>" + email + "</pre>" + 
-                       "<b>Titulo</b>: <pre>" + titulo + "</pre>" + 
-                       "<b>Mensaje</b>: <pre>" + comments + "</pre>";
+            $.ajax({
+                type: "GET",
+                data: {
+                    typeEmail : "Contact",
+                    name      : name,
+                    email     : email,
+                    title     : title,
+                    comments  : comments
+                },
+                url: "sendEmail/",
+                beforeSend: function(){
+                    $('.btn-contact').attr("disabled", "true");
+                    $('.btn-contact').val("Enviando mensaje...");
+                },
+                success: function(){
+                    $('.btn-contact').removeAttr("disabled");
+                    $('.btn-contact').val("Mensaje enviado!");
+                    $('.sent-message').text("Hemos recibido su mensaje pronto nos contactaremos con usted.");
 
-        $.ajax({
-            type: "GET",
-            data: {
-                to       : "carce@biinapp.com, epadilla@biinapp.com, lbonilla@biinapp.com, cdominguez@biinapp.com",
-                //to     : "krlosnando@gmail.com, krlosnando@hotmail.com",
-                subject  : "Nuevo email para contactarse con Binapp",
-                htmlBody : htmlBody
-            },
-            url: "sendEmail/",
-            beforeSend: function(){
-                $('.btn-contact').val("Enviando mensaje...");
-            },
-            success: function(){
-                $('.btn-contact').val("Mensaje enviado!");
-            },
-            error: function(){
-                $('.btn-contact').val("Error al enviar el mensaje");
-            }
-        });
+                    //Clean form
+                    $('#contact-form').find("input[type=text], textarea").val("");
+                },
+                error: function(){
+                    $('.btn-contact').removeAttr("disabled");
+                    $('.btn-contact').val("Error al enviar el mensaje");
+                }
+            });
 
-        e.preventDefault();
+            e.preventDefault();
+        }
     });
 });
 
