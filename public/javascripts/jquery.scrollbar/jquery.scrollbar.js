@@ -466,9 +466,9 @@
                     "visible": w.height()
                 });
 
-                console.log("calculate init sizes", "offset", parseInt(c.css("top"), 10) || 0, "size:c.prop", c.prop("scrollHeight"), "w.height:visible", w.height());
-                console.log("c", c);
-                console.log("w", w);
+                //console.log("calculate init sizes", "offset", parseInt(c.css("top"), 10) || 0, "size:c.prop", c.prop("scrollHeight"), "w.height:visible", w.height());
+                //console.log("c", c);
+                //console.log("w", w);
             });
 
 
@@ -545,11 +545,11 @@
                 scrollx.kx = ((scrollSize - scrollx.scrollbarSize) / (AreaSize - AreaVisible)) || 1;
                 scrollx.maxScrollOffset = AreaSize - AreaVisible;
 
-                if(d == "y"){
+                /*if(d == "y"){
                     console.log(d);
                     console.log("AreaSize", AreaSize, "AreaVisible", AreaVisible, "scrollx.scrollbarSize", scrollx.scrollbarSize, "scrollx.kx", scrollx.kx, "scrollx.maxScrollOffset", scrollx.maxScrollOffset);
                     console.log(scrollx.scrollbar[0]);
-                }
+                }*/
             });
 
             c.scrollLeft(initScroll.scrollLeft).scrollTop(initScroll.scrollTop).trigger("scroll");
