@@ -17,16 +17,7 @@ module.exports = function (db) {
     , multipartMiddleware = multipart()
     , lessMiddleware = require('less-middleware')
     , methodOverride = require('method-override')
-    , expressValidator = require('express-validator')
-    , nodemailer = require('nodemailer');
-
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_ACCOUNT,
-            pass: process.env.EMAIL_PASSWORD
-        }
-    });
+    , expressValidator = require('express-validator');
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     schemasValidations = {};

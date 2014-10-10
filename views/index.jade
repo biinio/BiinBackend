@@ -290,7 +290,7 @@ block content
 						.clearfix
 							form#subscribe-form.subscribe-form(action='newsletter.php', method='post')
 								input.subscribe-input(type='email', name='email', placeholder='Tu correo electrónico...')
-								button.subscribe-submit(type='submit') Suscribir
+								input.subscribe-submit.btn.btn-black.btn-lg(type='submit', value='Suscribir', style='width: 35%;')
 				//End row
 			//End container
 		//END NEWSLETTER
@@ -461,15 +461,16 @@ block content
 							| Llena el formulario y te estaremos contactando lo antes posible o si prefieres hablar con alguien puedes llamar a Cesar Arce al n&uacute;mero 8701-1518 &oacute; Esteban Padilla al 8706-6660.
 					//Contact form
 					.col-sm-12
-						form#contact-form.row(action='contact.php', name='contactform', method='post')
+						form#contact-form.row(action='#', name='contactform', method='post')
 							#input_name.col-md-6
-								input#name.form-control(type='text', name='first_name', placeholder='Nombre')
+								input#name.form-control(type='text', name='first_name', placeholder='Nombre', required)
 							#input_email.col-md-6
-								input#email.form-control(type='text', name='email', placeholder='Email')
+								input#email.form-control(type='text', name='email', placeholder='Email', required)
 							#input_subject.col-md-12
-								input#subject.form-control(type='text', name='subject', placeholder='Titulo')
+								input#subject.form-control(type='text', name='subject', placeholder='Titulo', required)
 							#input_message.col-md-12
-								textarea#comments.form-control(name='message', rows='6', placeholder='Tu mensaje ...')
+								textarea#comments.form-control(name='message', rows='6', placeholder='Tu mensaje ...', required)
+								.sent-message
 							//Submit Button
 							#form_btn.col-md-12
 								.text-center

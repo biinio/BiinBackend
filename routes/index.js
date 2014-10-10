@@ -70,22 +70,42 @@ module.exports = function () {
 	        }
 	    });
 
+        var subject = "";
+        var htmlBody = "";
+
+        switch(req.query.typeEmail){
+            case "NewsLetter":
+                subject = "Nuevo email subscrito en Biin!";
+                htmlBody = "<h3>" + subject + "</h3>" +
+                    "<b>Email</b>: <pre style='font-size: 14px'>" + req.query.subsEmail + "</pre>";
+                break;
+
+            case "Contact":
+                subject = "Nuevo email para contactarse con Biin!";
+                htmlBody = "<h3>" + subject + "</h3>" +
+                    "<b>Nombre</b>: <pre style='font-size: 14px'>" + req.query.name + "</pre>" +
+                    "<b>Email</b>: <pre style='font-size: 14px'>" + req.query.email + "</pre>" +
+                    "<b>Titulo</b>: <pre style='font-size: 14px'>" + req.query.title + "</pre>" +
+                    "<b>Mensaje</b>: <pre style='font-size: 14px'>" + req.query.comments + "</pre>";
+                break;
+        }
+
         // setup e-mail data with unicode symbols
         var mailOptions = {
         	// sender address
-            from: "Biinapp Message <" + process.env.EMAIL_ACCOUNT + ">", 
+            from: "Biin Message <" + process.env.EMAIL_ACCOUNT + ">",
 
             // list of receivers
-            to: req.query.to, 
+            to: process.env.EMAIL_TO,
 
             // Subject line
-            subject: req.query.subject, 
+            subject: subject,
 
             // plaintext body
-            text: req.query.text, 
+            text: "",
 
             // html body
-            html: req.query.htmlBody
+            html: htmlBody
         };
 
         // send mail with defined transport object
