@@ -361,49 +361,88 @@ ul {
   display: table;
   clear: both;
 }
+
+.forwhoIsBiin-wrapper .titlebar{
+  background-color: #fff;
+  height: 20%!important;
+  padding-top: 35px;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 25px;
+}
+#slides-forwhoIsBiin{
+  min-height: 750px;
+}
 .slides-forwhoIsBiin-wrapper{
-  background-color: #00adef;
+  background-color: #00adef
 }
 
 #slides-forwhoIsBiin .slides-navigation .prev{
   position: absolute;
-  bottom: 50%;
-  left: 5%;
+  top: 60%;
+  left: 10%;
   background-color: #fff;
   height: 50px;
   width:50px;
   border-radius: 50%;
 }
 
-.slides-navigation .prev::before{
+.slides-navigation .prev i, .slides-navigation .next i{
   color: #00adef;
   font-size: 40px;
-  content: "<";
-  position: absolute;
-  left: 14px;
-  top: -4px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  float: none;
+  display: block;
 }
 
 #slides-forwhoIsBiin .slides-navigation .next{
   position: absolute;
-  bottom: 50%;
-  right: 5%;
+  top: 60%;
+  right: 10%;
   background-color: #fff;
   height: 50px;
   width:50px;
   border-radius: 50%;
 }
+#slides-forwhoIsBiin .slides-pagination{
+  bottom: 8%!important;
+}
+ .next, .prev{
+  cursor: pointer;
+  cursor: pointer;
+  z-index: 9999;
+}
 
-.slides-navigation .next::before{
-  color: #00adef;
-  font-size: 40px;
-  content: ">";
-  position: absolute;
-  left: 14px;
-  top: -4px;
- }
+.next:hover, .prev:hover{
+  background-color:#069FCE!important;
+  }
+
+.forhow-content{
+  text-align: center;
+
+}
+.forhow-content img{
+  height: 150px!important;
+  width: auto!important;
+  position: relative!important;
+  vertical-align: initial!important;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  margin-top: 25%;
+  left: initial!important;
+  top: 40%!important;
+}
+
+.forhow-content .info{
+  position: relative;
+  padding-top:5%!important;
+}
+
 .slides-navigation .next:hover{
-  background-color: #fff;
+  background-color: #000;
 }
 
 #blog{
