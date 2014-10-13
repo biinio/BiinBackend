@@ -399,31 +399,41 @@ ul {
 }
 .flex-prev, .flex-next{
   font-size: 36px!important !important;
-  line-height: 45px !important;
   display: inline-block !important;
   font-family: FontAwesome !important;
   font-style: normal !important;
   font-weight: normal !important;
   -webkit-font-smoothing: antialiased !important;
-  box-sizing: border-box !important;
-  padding-top:15px;
+  box-sizing: border-box !important;  
   color: #00adef!important;
   font-size: 50px !important;
   line-height: 40px !important;
 }
-.flex-prev:before {
-  padding-left: 4px;
+.flex-prev:before {  
   position: relative;
   content: "\f053";
   text-align: center;
+  margin-left: -15px;
 }
 .flex-next:before {
-  padding-left: 4px;
   content:"\f054";
   text-align: center;
+  margin-left: -15px;
 }
+
+.flex-prev,.flex-next{
+  padding-top:10px;
+  color: #fff !important;
+  font-size: 36px!important;
+  line-height: 40px;
+}
+
+
+
 .flex-prev:hover, .flex-next:hover{
-  background-color: #000;
+  background: #71D7FF;
+  border-color: #71D7FF;
+  box-shadow: 0px 0px 0px 10px rgba(240, 240, 240, 0.3);
 }
 
 .forwhoIsBiin-slider .flex-direction-nav .flex-next{
@@ -431,22 +441,42 @@ ul {
     border-radius: 50%;
 }
 
+.flex-direction-nav{
+  width: 100%;
+  color: #fff;
+  font-weight: 400!important;
+  text-align: center!important;
+  text-transform: uppercase!important;
+  z-index: 99!important;
+  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1)!important;
+}
+
 .flex-direction-nav a {
-   width: 65px; 
-   height: 65px; 
    margin: -20px 0 0; 
    display: block; 
-   background:none; 
-   background-color: #FFF;
-   position: absolute; 
-   color: #00adef;
    top: 50%;
-   z-index: 10; 
-   cursor: pointer; 
    text-indent:inherit; 
    opacity: 1;
-   font-size: 30px;
+   background: transparent;
+   width: 60px;
+   height: 60px;
+   text-align: center;
+   cursor: pointer;
+   display: block;
+   margin: 0 auto 10px;
+   border: 2px solid #fff;
+    
+   box-shadow: 0px 0px 0px 0 rgba(10, 10, 10, 0.15);
+   -webkit-border-radius: 50%;
+   -moz-border-radius: 50%;
+   border-radius: 50%;
+   -webkit-transition: all 250ms ease-in-out;
+   -moz-transition: all 250ms ease-in-out;
+   -o-transition: all 250ms ease-in-out;
+   -ms-transition: all 250ms ease-in-out;
+   transition: all 250ms ease-in-out;
 }
+
 #FORWHOISBIIN .flex-control-paging{
   bottom:5%!important;
 
@@ -676,6 +706,7 @@ ul {
   display: block;
   margin: 0 auto 10px;
   border: 2px solid #fff;
+  
   box-shadow: 0px 0px 0px 0 rgba(10, 10, 10, 0.15);
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -685,11 +716,12 @@ ul {
   -o-transition: all 250ms ease-in-out;
   -ms-transition: all 250ms ease-in-out;
   transition: all 250ms ease-in-out;
+  
 }
 .scroll-down span:hover {
   background: #71D7FF;
   border-color: #71D7FF;
-  box-shadow: 0px 0px 0px 10px rgba(240, 240, 240, 0.3);
+  /*box-shadow: 0px 0px 0px 10px rgba(240, 240, 240, 0.3);*/
 }
 .scroll-down span [class*="fa-"] {
   color: #fff;
