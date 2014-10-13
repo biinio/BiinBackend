@@ -17,14 +17,22 @@ module.exports = function(db){
 	//Post Creation of a Client
 	functions.create = function(req,res){
 		// create a Client
-		var admin = new client({
+		/*var admin = new client({
 		    name: 'epadilla@biinapp.com',
 		    password: 'abc1236',
 		    displayName:'Esteban Padilla',
 		    accountIdentifier:'1002',
 		    emails:['epadilla@biinapp.com']
 		});
+	*/
 
+		var admin = new client({
+		    name: 'cdominguez@biinapp.com',
+		    password: 'abc1236',
+		    displayName:'Carlos Dominguez',
+		    accountIdentifier:'1004',
+		    emails:['cdominguez@biinapp.com']
+		});	
 		// save a client to the database
 		admin.save(function(err) {
 			console.log(err);

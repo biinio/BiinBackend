@@ -180,12 +180,12 @@ $(document).ready(function () {
         pagination: true
     });
 
-    //j
+    /*
     $('#slides-forwhoIsBiin').superslides({
         play: 9000,
         animation: "fade",
         pagination: true
-    });
+    });*/
 });
 
 
@@ -237,6 +237,18 @@ $(document).ready(function () {
         }
     });
 
+    $('.forwhoIsBiin-slider').flexslider({
+        animation: "slide",
+        controlNav: true,
+        directionNav: true,
+        slideshowSpeed: 4000,
+        animationSpeed: 800,
+        prevText:"<",
+        nextText:">",
+        start: function (slider) {
+            $('body').removeClass('loading');
+        }
+    });
 });
 
 
