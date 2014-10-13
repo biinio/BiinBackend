@@ -243,8 +243,8 @@ $(document).ready(function () {
         directionNav: true,
         slideshowSpeed: 4000,
         animationSpeed: 800,
-        prevText:"<",
-        nextText:">",
+        prevText:"",
+        nextText:"",
         start: function (slider) {
             $('body').removeClass('loading');
         }
