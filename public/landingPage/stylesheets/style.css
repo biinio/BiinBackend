@@ -721,7 +721,7 @@ ul {
 .scroll-down span:hover {
   background: #71D7FF;
   border-color: #71D7FF;
-  /*box-shadow: 0px 0px 0px 10px rgba(240, 240, 240, 0.3);*/
+  box-shadow: 0px 0px 0px 10px rgba(240, 240, 240, 0.3);
 }
 .scroll-down span [class*="fa-"] {
   color: #fff;
