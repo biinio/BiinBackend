@@ -83,7 +83,7 @@ $(document).ready(function () {
     $.fn.scrollTo = function (options) {
 
         var settings = {
-            offset: -60,       //an integer allowing you to offset the position by a certain number of pixels. Can be negative or positive
+            offset: -100,       //an integer allowing you to offset the position by a certain number of pixels. Can be negative or positive
             speed: 'slow',   //speed at which the scroll animates
             override: null,  //if you want to override the default way this plugin works, pass in the ID of the element you want to scroll through here
             easing: null //easing equation for the animation. Supports easing plugin as well (http://gsgd.co.uk/sandbox/jquery/easing/)
@@ -119,7 +119,7 @@ $(document).ready(function () {
         });
     };
 
-    $('#GoToMainContent, #GoToHome, #GoToFeatures, #GoToNewsletter, #GoToScreens, #GoToPricing, #GoToContact').scrollTo({ speed: 1400 });
+    $('#GoToMainContent, #GoToHome, #GoToFeatures, #GoToNewsletter, #GoToScreens, #GoToPricing,#GoToPricing2, #GoToContact').scrollTo({ speed: 1400 });
 
 });
 

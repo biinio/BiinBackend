@@ -176,11 +176,18 @@ ul {
 }
 .btn.btn-comprar{
   margin-top:25px;
+  color:#fff;
   background-color: initial;
-  width: 110px;
-  height: 50px;
+  width: 205px;
+  height: 60px;
   border: solid;
   border-color: #fff;
+  border-radius: 0px;
+  font-family: 'Lato', sans-serif;
+  line-height: 40px;
+  font-weight: 400;
+  font-size: 17px;
+  text-transform: uppercase;
 }
 /*------------------------------------------*/
 /*	 Section Titlebar
@@ -399,22 +406,24 @@ ul {
   font-weight: normal !important;
   -webkit-font-smoothing: antialiased !important;
   box-sizing: border-box !important;
-  padding-top: 2px;
+  padding-top:15px;
   color: #00adef!important;
-  font-size: 24px !important;
+  font-size: 50px !important;
   line-height: 40px !important;
 }
 .flex-prev:before {
+  padding-left: 4px;
   position: relative;
   content: "\f053";
   text-align: center;
 }
 .flex-next:before {
+  padding-left: 4px;
   content:"\f054";
   text-align: center;
 }
 .flex-prev:hover, .flex-next:hover{
-  background-color: #069FCE;
+  background-color: #000;
 }
 
 .forwhoIsBiin-slider .flex-direction-nav .flex-next{
@@ -423,8 +432,8 @@ ul {
 }
 
 .flex-direction-nav a {
-   width: 40px; 
-   height: 40px; 
+   width: 65px; 
+   height: 65px; 
    margin: -20px 0 0; 
    display: block; 
    background:none; 
@@ -486,13 +495,9 @@ ul {
 
  .next, .prev{
   cursor: pointer;
-  cursor: pointer;
   z-index: 9999;
 }
 
-.next:hover, .prev:hover{
-  background-color:#069FCE!important;
-  }
 
 .forhow-content{
   text-align: center;
