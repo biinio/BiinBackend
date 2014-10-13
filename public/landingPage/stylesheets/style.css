@@ -448,7 +448,7 @@ ul {
   text-align: center!important;
   text-transform: uppercase!important;
   z-index: 99!important;
-  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1)!important;
+  /*text-shadow: 5px 2px 5px rgba(146, 146, 146, 1)!important;*/
 }
 
 .flex-direction-nav a {
