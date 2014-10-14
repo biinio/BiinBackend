@@ -111,8 +111,8 @@ ul {
 /*	 Theme Button
 /*------------------------------------------*/
 .btn-theme {
-  background-color: #069FCE;
-  border: 1px solid #069FCE;
+  background-color: #71D7FF;
+  border: 1px solid #71D7FF;
   color: #FFFFFF;
   font-size: 16px;
   font-family: 'Lato', sans-serif;
@@ -389,7 +389,7 @@ ul {
 }
 
 .forwhoIsBiin-slider{
-  background-color: #00adef;
+  background-color: #71D7FF;
   height: 450px;
   position: relative;
   padding-top: 50px;
@@ -1259,7 +1259,7 @@ ul {
 }
 
 #beaconsPackages #price_1 .price-header{
-  background-color: #069FCE;
+  background-color: #71D7FF;
 }
 #beaconsPackages #price_1 .price-header h4{
   color: #fff;
@@ -1286,9 +1286,9 @@ ul {
   text-transform: uppercase;
   padding: 30px 15px;
   margin: 0;
-  -webkit-border-radius: 4px 4px 0 0;
+  /*-webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
-  border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;*/
   -webkit-transition: all 250ms ease-in-out;
   -moz-transition: all 250ms ease-in-out;
   -o-transition: all 250ms ease-in-out;
@@ -1542,7 +1542,7 @@ ul {
   background-image: url(../img/icons/back-to-top.png);
   background-repeat: no-repeat;
   background-position: 50% 48%;
-  background-color: #00adef;
+  background-color: #71D7FF;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
