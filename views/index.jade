@@ -140,9 +140,9 @@ block content
 						h2 Caracter&iacute;sticas de Biin
 						h3 
 							|Biin es un conjuton de herramientas dise&ntilde;adas para mejorar la relaci&oacute;n con sus clientes, entre ellas est&aacute;n la aplicaci&oacute;n Biin para iOS,
-							| el CMS (Gestor de Contenido). Programa de lealtad, CRM (Administraci&oacute;n de Relaci&oacute;n con Clientes) y iBeacons de Biin.
+							| el CMS (Gestor de Contenido). Programa de lealtad, CRM (Administraci&oacute;n de Relaci&oacute;n con Clientes) y Beacons de Biin.
 						p
-							|A diferencia de los oferentes actuales de iBeacons, Biin es una plataforma completa, dise&ntilde;ada para
+							|A diferencia de los oferentes actuales de Beacons, Biin es una plataforma completa, dise&ntilde;ada para
 							|mejorar las experiencias de las personas por medio de la micro-localizaci&oacute;n  e internet de las cosas
 							|rompiendo la brecha entre empresas o instituciones y sus clientes por medio de las siguientes tecnolog&iacute;as.
 				
@@ -191,7 +191,7 @@ block content
 									.feature-box-icon
 										img(src="landingPage/img/thumbs/ibeaconCircle.png")
 									.feature-box-content
-										h4 iBeacons de Biin
+										h4 Beacons de Biin
 										p
 											| Nuestros IBeacons tienen el mejor dise&ntilde;o del mercado adem&aacute;s del soporte y el respaldo de Biin.
 					//End col-md-12
@@ -244,7 +244,7 @@ block content
 						img.img-responsive(src='/landingPage/img/thumbs/2.png', alt='banner_2_image')
 					//Banner Description
 					.col-md-12.titlebar.banner_2_content
-						h2 ¿Que son los iBeacons de Biin?
+						h2 ¿Que son los Beacons de Biin?
 						h3 La puerta de entrada a la micro-localizaci&oacute;n
 						p
 							| Son peque&ntilde;os dispositivos que se colocan en espacios f&iacute;sicos y que transmiten una se&ntilde;al bluetooth de
@@ -278,24 +278,6 @@ block content
 				//End row
 			//End container
 		//END BANNER_2				
-		//NEWSLETTER============================================= 
-		#newsletter.parallax
-			#subscribe.container
-				.row
-					//Newsletter Title
-					#newsletter_title.col-md-6.text-center
-						h1.newsletterFirstText Inscribase a nuestro bolet&iacute;n
-						p.newsletterSecondText
-							| Si quieres recibir el bolet&iacute;n con noticias importantes de Biin ingrese su correo electr&oacute;nico.
-					//Newsletter Form
-					#newsletter_form.col-md-6.text-center
-						.clearfix
-							form#subscribe-form.subscribe-form(action='newsletter.php', method='post')
-								input.subscribe-input(type='email', name='email', placeholder='Tu correo electrónico...')
-								input.subscribe-submit.btn.btn-black.btn-lg(type='submit', value='Suscribir', style='width: 35%;')
-				//End row
-			//End container
-		//END NEWSLETTER
 		//TESTIMONIALS ROTATOR============================================= 
 		//#testimonials-rotator.parallax
 			.container.text-center
@@ -383,6 +365,88 @@ block content
 				//Pricing Section Content
 				#pricing-table-holder.row
 					//PRICE PLAN STANDARD
+					#price_1.col-xs-12.col-sm-4.col-md-4
+						.pricing-table.text-center
+							//Table Header & Plan Price
+							.price-header
+								h4.plan-title Biin Lite
+								.plan-price
+									h2 $30
+									span Mensuales
+
+
+
+							//Plan Features
+							ul.features
+								li Vitrina digital
+								li Informaci&oacute;n con contexto
+								li hasta 2 locaciones
+								li Hasta 6 Biin beacons
+							//Table Button
+							.price-footer
+								a.btn.btn-black(href='#') Disponible pronto
+					//END PRICE PLAN STANDARD
+					//PRICE PLAN ADVANCED
+					#price_2.col-xs-12.col-sm-4.col-md-4
+						.pricing-table.featured.text-center
+							
+							//Table Header & Plan Price
+							.price-header
+								h4.plan-title Standard
+								.plan-price
+									h2 $149
+									span Mensuales
+							
+							//Plan Features
+							ul.features
+								li Lite +
+								li Programa comercial
+								li Hasta 15 locaciones
+								li Hasta 150 Biin Beacons
+								li Contenido ilimitado
+							
+							//Table Button
+							.price-footer
+								a.btn.btn-theme(href='#') Disponible pronto
+					
+					//END PRICE PLAN ADVANCED
+					//PRICE PLAN ULTIMATE
+					#price_3.col-xs-12.col-sm-4.col-md-4
+						.pricing-table.text-center
+							
+							//Table Header & Plan Price
+							.price-header
+								h4.plan-title Premium
+								.plan-price
+									h2 $399
+									span Mensuales
+							
+							//Plan Features
+							ul.features
+								li Standard +
+								li Programa multimedia
+								li Hasta 50 locaciones
+								li Hasta 500 Biin Beacons
+								li Contenido ilimitado
+							
+							//Table Button
+							.price-footer
+								a.btn.btn-black(href='#') Disponible pronto
+					//END PRICE PLAN ULTIMATE
+				//End Pricing Section Content		
+		//PRICING============================================= 
+		section#beaconsPackages
+			.container
+				//Section Tittle
+				.row
+					.col-sm-12.titlebar
+						h2 Biin Beacons Packages
+						h3 Aprovecha nuestros paquetes de Biin Beacons
+						p
+							| Comodos precios de acuerdo al tam&nntilde;o de su negocio.
+				//Pricing Section Content
+				#pricing-table-holder.row
+					//PRICE PLAN STANDARD
 					#price_1.col-xs-12.col-sm-6.col-md-4
 						.pricing-table.text-center
 							//Table Header & Plan Price
@@ -397,7 +461,7 @@ block content
 							//Plan Features
 							ul.features
 								li Ideal para su tienda, oficina profesional o restaurante
-								li 3 Biin iBeacons
+								li 3 Biin Beacons
 								li Compre el paquete basico por solo &#36;117
 							//Table Button
 							.price-footer
@@ -416,7 +480,7 @@ block content
 							//Plan Features
 							ul.features
 								li Para su cadena de locales, edificio empresarial o instituci&oacute;n.
-								li 10 biin iBeacons
+								li 10 Biin Beacons
 								li Compre el paquete empresarial  por solo &#36;350
 							//Table Button
 							.price-footer
@@ -426,9 +490,26 @@ block content
 				.row.pricingIndividual
 					.col-sm-12
 						p Tambien puedes comprar Biin iBeacon idividualmente por &#36;45.
-						h4 Necesita una soluci&oacute;n m&aacute;s grande? contactenes.
 			//End container
 		//END PRICING
+		//NEWSLETTER============================================= 
+		#newsletter.parallax
+			#subscribe.container
+				.row
+					//Newsletter Title
+					#newsletter_title.col-md-6.text-center
+						h1.newsletterFirstText Inscribase a nuestro bolet&iacute;n
+						p.newsletterSecondText
+							| Si quieres recibir el bolet&iacute;n con noticias importantes de Biin ingrese su correo electr&oacute;nico.
+					//Newsletter Form
+					#newsletter_form.col-md-6.text-center
+						.clearfix
+							form#subscribe-form.subscribe-form(action='newsletter.php', method='post')
+								input.subscribe-input(type='email', name='email', placeholder='Tu correo electrónico...')
+								input.subscribe-submit.btn.btn-black.btn-lg(type='submit', value='Suscribir', style='width: 35%;')
+				//End row
+			//End container
+		//END NEWSLETTER
 		//CONTACTS============================================= 
 		section#contact
 			.container

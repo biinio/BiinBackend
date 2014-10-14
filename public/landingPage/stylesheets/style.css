@@ -285,6 +285,10 @@ ul {
   margin-top: 17px;
 }
 
+.nav.navbar-helper{
+  height: 35px;
+}
+
 /*------------------------------------------*/
 /*	 Navbar Scroll   
 /*------------------------------------------*/
@@ -1198,9 +1202,13 @@ ul {
 /* ==========================================================================
    11. PRICING 
    ========================================================================== */
-#pricing {
+#pricing,#beaconsPackages {
   padding-top: 80px;
   padding-bottom: 50px;
+}
+
+
+#beaconsPackages{
   background-image: url(../img/thumbs/buyiBeaconBiin.jpg);
   background-repeat: no-repeat;
   background-position: right top;
@@ -1221,16 +1229,40 @@ ul {
   background-color: #fff;
 }
 
+.pricing-table .plan-price {
+  background-color: #C3C3C3;
+  margin: 0;
+  line-height: normal;
+  padding: 20px;
+  border-top: 1px solid #e7e7e7;
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  -ms-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+
+.pricing-table .plan-price span {
+  color: #999;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 .plan-icons i{
   font-size: 40px;
   padding-left: 10px;
   color: #fff;
 }
 
-#price_1 .price-header{
+#beaconsPackages #price_1 .price-header{
   background-color: #069FCE;
 }
-#price_2 .plan-icons i{
+#beaconsPackages #price_1 .price-header h4{
+  color: #fff;
+
+}
+
+#beaconsPackages #price_2 .plan-icons i{
   color:#000!important;
 }
 
@@ -1242,6 +1274,7 @@ ul {
   border-bottom: 1px solid #c7c7c7;
   position: relative;
 }
+
 .pricing-table .plan-title {
   color: #333;
   font-size: 20px;
@@ -1313,7 +1346,7 @@ ul {
 .pricing-table.featured .plan-price span {
   color: #f7f7f7;
 }
-#pricing .titlebar h2,#pricing .titlebar p{
+#beaconsPackages .titlebar h2,#beaconsPackages .titlebar p{
   color:#fff;
 }
 .pricingIndividual p, .pricingIndividual h4{
