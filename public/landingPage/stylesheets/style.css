@@ -698,8 +698,10 @@ ul {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  height: 600px;
+  width:854px;
+  height:480px;
 }
+
 #videoHistory iframe{
     margin-left: auto;
     margin-right: auto; 
