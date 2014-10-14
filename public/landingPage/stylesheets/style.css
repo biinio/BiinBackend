@@ -111,8 +111,8 @@ ul {
 /*	 Theme Button
 /*------------------------------------------*/
 .btn-theme {
-  background-color: #71D7FF;
-  border: 1px solid #71D7FF;
+  background-color: #069FCE;
+  border: 1px solid #069FCE;
   color: #FFFFFF;
   font-size: 16px;
   font-family: 'Lato', sans-serif;
@@ -1201,13 +1201,16 @@ ul {
 #pricing {
   padding-top: 80px;
   padding-bottom: 50px;
+  background-image: url(../img/thumbs/buyiBeaconBiin.jpg);
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: cover;
 }
 #pricing-table-holder {
   padding: 0 30px;
 }
 #price_1,
-#price_2,
-#price_3 {
+#price_2 {
   margin-bottom: 50px;
 }
 .pricing-table {
@@ -1215,10 +1218,26 @@ ul {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
+  background-color: #fff;
 }
+
+.plan-icons i{
+  font-size: 40px;
+  padding-left: 10px;
+  color: #fff;
+}
+
+#price_1 .price-header{
+  background-color: #069FCE;
+}
+#price_2 .plan-icons i{
+  color:#000!important;
+}
+
 /*------------------------------------------*/
 /*	  Pricing Table Header
 /*------------------------------------------*/
+
 .pricing-table .price-header {
   border-bottom: 1px solid #c7c7c7;
   position: relative;
@@ -1239,32 +1258,7 @@ ul {
   -ms-transition: all 250ms ease-in-out;
   transition: all 250ms ease-in-out;
 }
-/*------------------------------------------*/
-/*	  Pricing Table Price Plan
-/*------------------------------------------*/
-.pricing-table .plan-price {
-  background-color: #C3C3C3;
-  margin: 0;
-  line-height: normal;
-  padding: 20px;
-  border-top: 1px solid #e7e7e7;
-  -webkit-transition: all 250ms ease-in-out;
-  -moz-transition: all 250ms ease-in-out;
-  -o-transition: all 250ms ease-in-out;
-  -ms-transition: all 250ms ease-in-out;
-  transition: all 250ms ease-in-out;
-}
-.pricing-table .plan-price h2 {
-  color: #444;
-  font-size: 44px;
-  font-weight: 400;
-  margin-bottom: 0;
-}
-.pricing-table .plan-price span {
-  color: #999;
-  font-weight: 700;
-  text-transform: uppercase;
-}
+
 /*------------------------------------------*/
 /*	  Pricing Table Body
 /*------------------------------------------*/
@@ -1319,6 +1313,16 @@ ul {
 .pricing-table.featured .plan-price span {
   color: #f7f7f7;
 }
+#pricing .titlebar h2,#pricing .titlebar p{
+  color:#fff;
+}
+.pricingIndividual p, .pricingIndividual h4{
+  color: #fff!important;
+}
+.pricingIndividual p{
+  opacity: 0.6;
+}
+
 /* ==========================================================================
    12. CONTACTS 
    ========================================================================== */
