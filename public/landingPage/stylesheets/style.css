@@ -694,14 +694,26 @@ ul {
   position: relative;
   margin-left: auto;
   margin-right: auto;
+  height: 600px;
 }
-#videoHistory video{
+#videoHistory iframe{
     margin-left: auto;
     margin-right: auto; 
     position: relative;
     display: block;
 }
 
+#videoHistory .video{
+  background-color: #fff;
+}
+
+.player .video-wrapper{
+  background-color: #fff!important;
+}
+
+.video-wrapper video{
+  height: auto!important;
+}
 /*------------------------------------------*/
 /*	 Intro Page Scroll Down Button
 /*------------------------------------------*/
