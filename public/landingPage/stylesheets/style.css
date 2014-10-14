@@ -693,6 +693,7 @@ ul {
 /*------------------------------------------*/
 #videoHistory{
   padding-top: 150px;  
+  padding-bottom: 150px;  
 }
 #videoHistory .row{
   position: relative;
