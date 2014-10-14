@@ -693,7 +693,7 @@ ul {
 /*------------------------------------------*/
 #videoHistory{
   padding-top: 150px;  
-  padding-bottom: 150px;  
+  padding-bottom: 100px;  
 }
 #videoHistory .row{
   position: relative;
@@ -701,6 +701,7 @@ ul {
   margin-right: auto;
   width:854px;
   height:480px;
+
 }
 
 #videoHistory iframe{
@@ -731,7 +732,7 @@ ul {
   text-align: center;
   text-transform: uppercase;
   position: absolute;
-  bottom: 5%;
+  bottom: 2%;
   z-index: 99;
   text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
