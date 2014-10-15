@@ -1,0 +1,24 @@
+var biinLandingPage = angular.module('landingPage',['pascalprecht.translate']);
+
+//Translation Provider
+ biinLandingPage.config(function($translateProvider) {
+    // Our translations will go in here
+     $translateProvider.useStaticFilesLoader({
+      prefix: '/landingPage/locals/',
+      suffix: '.json'
+    });
+
+     //var language = window.navigator.userLanguage || window.navigator.language
+    $translateProvider.preferredLanguage('en');
+});
+
+biinLandingPage.controller("indexController",['$translate','$scope', '$http',function($translate,$scope,$http){
+
+  //Switch landing page preferences
+  $scope.changeLanguage = function (langKey) {
+    $translate.use(langKey);
+  };
+
+
+}]);
+

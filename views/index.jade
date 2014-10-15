@@ -1,5 +1,8 @@
 extends layout_landing_page
+block head_scripts
+	script(src="/landingPage/js/angular/landing.js")
 block content
+	#contentWrapper(ng-app="landingPage" ng-controller="indexController")
 		//INTRO=============================================
 		section#intro
 			//Intro Page Slides
@@ -40,7 +43,7 @@ block content
 			//End Intro Page Slides
 			//Scroll Down Button
 			span.scroll-down
-				a#GoToMainContent(href='#banner_1')
+				a#GoToMainContent(href='#videoHistory')
 					span
 						i.fa.fa-angle-down.fa-3x
 				| Ver m&aacute;s
@@ -49,10 +52,8 @@ block content
 		section#videoHistory
 			.container
 				.row
-					//the video goes here
-					//video(width="75%"  autoplay="autoplay" loop)
-							source(src="landingPage/img/thumbs/biinHistory.mp4")
-					iframe(src="//player.vimeo.com/video/108910124?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;autoplay=0&amp;loop=1" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+					//the video goes here				
+					iframe(src="//player.vimeo.com/video/109066736?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;autoplay=0&amp;loop=1" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
 		//END VIDEO		
 		//FOR WHO IS BIIN=============================================
 		section#FORWHOISBIIN
@@ -220,17 +221,15 @@ block content
 							|las cosas que te interesan cuando estas cerca.
 						.important
 							p.important-1
-								strong
 									| Mejor informaci&oacute;n, 
 							p.important-2
-								strong
 									| beneficios y diversi&oacute;n
 							p.important-3 
-								strong
 									|para sus visitantes 
 							p.important-4 
-								strong
 									|generando una relaci&oacute;n de valor.
+					.col-md-6.banner_1_image
+						img(src="/landingPage/img/thumbs/biinMovil.png")
 					//Banner Image
 					//#banner_1_image.col-md-6.text-center
 						img.img-responsive(src='/landingPage/img/thumbs/6.png', alt='banner_1_image')
@@ -243,7 +242,7 @@ block content
 			.container
 				.row
 					//Banner Description
-					.col-md-6.titlebar.banner_1_content
+					.col-md-6.titlebar.crm_banner_content
 						h2 Gestor de Contenido
 						h3
 							| Dise&ntilde;e y genere una experiencia digital relevante para sus clientes y visitantes
@@ -253,12 +252,14 @@ block content
 							| en la aplicaci&oacute;n m&oacute;vil de Biin, por ejemplo, productos, servicios y promociones o cualquier
 							| informaci&oacute;n relevante para sus clientes y visitantes.
 						p
-							|Podr&aacute; asignar el contenido a uno de los biin Beacons y colocarlo en el lugar indicado para
+							|Podr&aacute; asignar el contenido a uno de los Biin Beacons y colocarlo en el lugar indicado para
 							|crear la experiencia con contexto en la aplicaci&oacute;n Biin.
 						p
 							|Sus visitantes podr&aacute;n acceder el contenido de manera sencilla en el app m&oacute;vil cuando est&eacute;n
 							|cerca de los Biin Beacons, o encontrarlo mediante una b&uacute;squeda desde cualquier lugar.	
 						.important
+					.col-md-6.crm_banner_image
+						img(src="/landingPage/img/thumbs/biinCMS.png")
 					//Banner Image
 					//#banner_1_image.col-md-6.text-center
 						img.img-responsive(src='/landingPage/img/thumbs/6.png', alt='banner_1_image')
@@ -274,7 +275,7 @@ block content
 					//#banner_2_image.col-md-6
 						img.img-responsive(src='/landingPage/img/thumbs/2.png', alt='banner_2_image')
 					//Banner Description
-					.col-md-12.titlebar.banner_2_content
+					.col-md-6.titlebar.banner_2_content
 						h2 ¿Que son los Beacons de Biin?
 						h3 La puerta de entrada a la micro-localizaci&oacute;n
 						p
@@ -283,105 +284,26 @@ block content
 							| contexto. BiinApp entiende la proximidad de los Beacons y as&iacute; obtiene el contenido relevante
 							| para el lugar y momento especifico, permitiendo crear interacciones m&aacute;s cercanas al mundo real.
 						//Banner List
-						#banner-list
+						#banner-list.important
 							//List Item #1
-							.list-item
-								h5
-									i.fa.fa-check
-									| F&aacute;cil administraci&oacute;n e instalaci&oacute;n
-							//List Item #2
-							.list-item
-								h5
-									i.fa.fa-check
-									| La se&ntilde;al tiene un alcance de hasta 70 metros
+							p.important-1
+								| F&aacute;cil administraci&oacute;n e instalaci&oacute;n
+							//List Item #2							
+							p.important-2
+								| La se&ntilde;al tiene un alcance de hasta 70 metros
 							//List Item #3
-							.list-item
-								h5
-									i.fa.fa-check
-									| Libres de mantenimiento por hasta 3 a&ntilde;os.
+							p.important-3
+								| Libres de mantenimiento por hasta 3 a&ntilde;os.
 							//List Item #4
-							.list-item
-								h5
-									i.fa.fa-check
+							p.important-4
 									| Bajo costo
+					.col-md-6.banner_2_image
+						img(src="/landingPage/img/thumbs/biinBeacon.png")
 						//End Banner List
 					//End Banner Description
 				//End row
 			//End container
-		//END BANNER_2				
-		//TESTIMONIALS ROTATOR============================================= 
-		//#testimonials-rotator.parallax
-			.container.text-center
-				.row
-					.col-md-12
-						//Rotator Content
-						.flexslider
-							ul.slides
-								//Testimonial #1
-								li
-									.testimonials
-										//Testimonial Author Avatar
-										.tst-author
-											img(src='/landingPage/img/thumbs/tst_author_2.jpg', alt='')
-											p.author
-												strong Alan Sharp
-												span Internet Surfer
-										//Testimonial Message
-										.client-msg
-											p
-												| « Etiam condimentum sapien sem condimentum accumsan. Proin in adipiscing
-												| elit. Suspendisse dignissim sollicitudin
-												| ornare at sagittis elementum vulputate congue »
-								//Testimonial #2
-								li
-									.testimonials
-										//Testimonial Author Avatar
-										.tst-author
-											img(src='/landingPage/img/thumbs/tst_author_1.jpg', alt='')
-											p.author
-												strong Hannah Brown
-												span Manager
-										//Testimonial Message
-										.client-msg
-											p
-												| « Suspendisse cursus risus laoreet turpis auctor, pharetra massa varius.
-												| Suspendisse dignissim sollicitudin aliquam.
-												| Nullam vehicula pharetra ultrices sapien gravida »
-								//Testimonial #3
-								li
-									.testimonials
-										//Testimonial Author Avatar
-										.tst-author
-											img(src='/landingPage/img/thumbs/tst_author_3.jpg', alt='')
-											p.author
-												strong Karen Olson
-												span Housewife
-										//Testimonial Message
-										.client-msg
-											p
-												| « In eget urna nisl bibendum dapibus. Phasellus nec euismod mauris. Morbi
-												| vitae rutrum turpis.
-												| Phasellus molestie posuere ligula ligula aliquet imperdiet vitae »
-								//Testimonial #4
-								li
-									.testimonials
-										//Testimonial Author Avatar
-										.tst-author
-											img(src='/landingPage/img/thumbs/tst_author_4.jpg', alt='')
-											p.author
-												strong Jonathan Doe
-												span Programmer
-										//Testimonial Message
-										.client-msg
-											p
-												| « Vivamus a purus lacus tempor volutpat. Etiam odio purus, placerat
-												| interdum vestibulum rutrum aliquet vulputate.
-												| Proin euismod pulvinar aliquam »
-						//End Rotator Content
-					//End col-sm-12
-				//End row
-			//End container
-		//END TESTIMONIALS ROTATOR
+		//END BANNER_2
 		//PRICING============================================= 
 		section#pricing
 			.container
@@ -564,5 +486,9 @@ block content
 								input.subscribe-submit.btn.btn-black.btn-lg(type='submit', value='Suscribir', style='width: 35%;')
 				//End row
 			//End container
-		//END NEWSLETTER		
+		//END NEWSLETTER	
+		section#test
+			.container
+				.row
+					h1(translate="TEST")
 	//END CONTENT WRAPPER 
