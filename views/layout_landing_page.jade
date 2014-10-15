@@ -49,16 +49,9 @@ html(lang='es')
 		header#header
 			.nav.navbar-helper
 				ul.nav.navbar-nav.navbar-right
-					li.btn-group.dropup
-						a.dropdown-toggle(data-toggle='dropdown')
-							| Languages
-							b.caret
-						ul.dropdown-menu.langsDropDown
-							li Espanish (es)
-							li English (en)
 					li(style='cursor: pointer;').dropdown
 						a.dropdown-toggle(data-toggle='dropdown')
-							| Inicio Sessi&oacute;n
+							| Inicio sessi&oacute;n
 							b.caret
 						ul.dropdown-menu.loginDropDown
 							li
@@ -75,6 +68,14 @@ html(lang='es')
 										span.adviceLoggedIn.pull-left Keep me logged in until I log out
 										a#buttonLogin.btn.btn-theme.fulllWidth Login
 										a#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up						
+					li.btn-group
+						a.dropdown-toggle(data-toggle='dropdown')
+							img(src="/landingPage/img/thumbs/spanishIcon.png")
+							b.caret
+						ul.dropdown-menu.langsDropDown							
+							li
+								img(src="/landingPage/img/thumbs/englishIcon.png")								
+								span English (en)
 			.navbar.navbar-fixed-top.scroll-fixed-navbar
 				.container
 					.transparency					

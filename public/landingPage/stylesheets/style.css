@@ -291,7 +291,7 @@ ul {
   position: fixed;
   width: 100%;
   height: 30px;
-  background-color: #71D7FF;
+  background-color: #000;
   color: #333;
   z-index: 10010;
 }
@@ -318,7 +318,7 @@ ul {
   height: 100%;
   width: 100%;
   background-color: #333;
-   opacity:0.5;  
+   opacity:0.75;  
   filter:alpha(opacity=50);  
   -moz-opacity:0.5;  
 }
@@ -360,6 +360,23 @@ ul {
 #navigation-menu{
   padding-top: 15px;
 }
+.navbar-helper .nav.navbar-nav > li > a{
+  text-transform:none;
+  margin-top: -8px;
+}
+
+.navbar-helper  img{
+  padding-left: 5px;
+}
+
+.navbar-helper  span{
+  color: #333!important;
+  padding-left: 10px;
+}
+.navbar-helper{
+  padding-right: 40px;
+}
+
 
 /* ==========================================================================
    03. INTRO   
