@@ -847,6 +847,24 @@ ul {
 .important .important-4{
   width: 365px;
 }
+
+/* ==========================================================================
+   CRM banner
+   ========================================================================== */
+#crm_banner {
+  padding-top: 80px;
+  border-bottom: 1px solid #ddd;
+  background-image: url('/landingPage/img/thumbs/intro_slide_2.jpg');
+  background-repeat: no-repeat;
+  background-position: right top;
+  height: 1000px;
+}
+
+#crm_banner .titlebar{
+  position: relative;
+  float: right;
+  margin-top: 185px; 
+}
 /*------------------------------------------*/
 /*	  Banner_1 Image
 /*------------------------------------------*/
