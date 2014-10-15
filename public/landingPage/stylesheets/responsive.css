@@ -176,6 +176,7 @@
     line-height: 64px;
     padding: 0 25px;
   }
+  .
   .navbar-nav > li > a,
   .navbar-brand .black-color {
     color: #fff;
@@ -193,6 +194,21 @@
     color: #333;
     background-color: transparent;
   }
+  .nav.navbar-helper{
+    bottom: 0px;
+  }
+  .navbar-helper .navbar-right{
+    position: relative;
+    float: left;
+  }
+  .navbar-helper .navbar-right li{
+    position: relative;
+    display: inline-block;
+    margin-top:10px;
+    margin-left: 10px;
+    float: left;
+  }
+
   .titlebar,
   .banner_1_content,
   #features .col-sm-6,

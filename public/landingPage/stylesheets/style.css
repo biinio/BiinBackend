@@ -221,12 +221,12 @@ ul {
 /*	 Logo Image    
 /*------------------------------------------*/
 .navbar-brand {
-  padding: 0px 15px;
+  padding: 0px 15px;  
 }
 
 .navbar.navbar-fixed-top.scroll-fixed-navbar .navbar-brand > img{
   position: relative;
-  margin-top: 5px!important;
+  margin-top: 25px!important;
 }
 
 .navbar.navbar-fixed-top.scroll-fixed-navbar li{
@@ -261,6 +261,8 @@ ul {
   transition: all 300ms ease-in-out;
 }
 
+
+
 .navbar-fixed-top {
   border-bottom: none;
 }
@@ -286,7 +288,19 @@ ul {
 }
 
 .nav.navbar-helper{
-  height: 35px;
+  position: fixed;
+  width: 100%;
+  height: 40px;
+  background-color: #000;
+  color: #00;
+  z-index: 10010;
+}
+.navbar-helper .navbar-right{
+  margin-top: -15px;
+}
+
+.langsDropDown{
+  color: #000!important;
 }
 
 /*------------------------------------------*/
@@ -338,9 +352,15 @@ ul {
   color: #fff;
   border: 2px solid #fff;
 }
+
 .navbar-toggle .icon-bar {
   background-color: #fff;
 }
+
+#navigation-menu{
+  padding-top: 15px;
+}
+
 /* ==========================================================================
    03. INTRO   
    ========================================================================== */

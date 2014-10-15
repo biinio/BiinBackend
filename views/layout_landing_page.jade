@@ -45,6 +45,34 @@ html(lang='es')
 
 		//HEADER=============================================
 		header#header
+			.nav.navbar-helper
+				ul.nav.navbar-nav.navbar-right
+					li.btn-group.dropup
+						a.dropdown-toggle(data-toggle='dropdown')
+							| Languages
+							b.caret
+						ul.dropdown-menu.langsDropDown
+							li Espanish (es)
+							li English (en)
+					li(style='cursor: pointer;').dropdown
+						a.dropdown-toggle(data-toggle='dropdown')
+							| Inicio Sessi&oacute;n
+							b.caret
+						ul.dropdown-menu.loginDropDown
+							li
+								h4 Biin Dashboard login.
+								form.loginForm(action='/login', method='POST')
+									input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
+									input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password')
+									a.forgotPass.pull-right(href='') Forgot password?
+									div(data-toggle='buttons-checkbox')
+										.checkbox.stayLogged
+											label
+												input(type='checkbox')
+												| Stay Logged In
+										span.adviceLoggedIn.pull-left Keep me logged in until I log out
+										a#buttonLogin.btn.btn-theme.fulllWidth Login
+										a#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up						
 			.navbar.navbar-fixed-top.scroll-fixed-navbar
 				.container
 					.transparency					
@@ -64,34 +92,23 @@ html(lang='es')
 							li
 								a#GoToHome.selected-nav(href='#intro') Inicio
 							li
-								a#GoToScreens(href='#FORWHOISBIIN') Qui&eacute;n usa Biin?								
-							li
+								a#GoConoceBiin.selected-nav(href='#videoHistory') Conoce Biin
+							//li
+								a#GoToScreens(href='#FORWHOISBIIN') Para quien es Biin?								
+							//li
 								a#GoToFeatures(href='#features') Caracter&iacute;sticas								
+							li
+								a#GoToFeatures(href='#banner_1') App Movil
+							li
+								a#GoToFeatures(href='#crm_banner') CMS
+							li
+								a#GoToFeatures(href='#crm_banner') Beacons								
+							li
+								a#GoToPricing(href='#pricing') Precios								
 							li
 								a#GoToNewsletter(href='#newsletter') Bolet&iacute;n
 							li
-								a#GoToPricing(href='#pricing') Precios
-							li
 								a#GoToContact(href='#contact') Contact&aacute;nos
-							li(style='cursor: pointer;').dropdown
-								a.dropdown-toggle(data-toggle='dropdown')
-									| Inicio Sessi&oacute;n
-									b.caret
-								ul.dropdown-menu.loginDropDown
-									li
-										h4 Biin Dashboard login.
-										form.loginForm(action='/login', method='POST')
-											input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
-											input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password')
-											a.forgotPass.pull-right(href='') Forgot password?
-											div(data-toggle='buttons-checkbox')
-												.checkbox.stayLogged
-													label
-														input(type='checkbox')
-														| Stay Logged In
-												span.adviceLoggedIn.pull-left Keep me logged in until I log out
-												a#buttonLogin.btn.btn-theme.fulllWidth Login
-												a#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up
 					//End nav-collapse
 				//End container
 			//End navbar
