@@ -174,6 +174,7 @@ ul {
   color: #f8f8f8;
   text-decoration: none;
 }
+
 .btn.btn-comprar{
   /*margin-top:25px;*/
   color:#fff;
@@ -191,8 +192,14 @@ ul {
   /*Position*/
   position: absolute;
   left: 40%;
-  bottom: -19%;
+  
 }
+
+.wrapperButtonInfo{
+  position: absolute;
+  bottom: 10%;
+}
+
 /*------------------------------------------*/
 /*	 Section Titlebar
 /*------------------------------------------*/
