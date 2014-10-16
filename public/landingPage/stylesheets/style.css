@@ -301,6 +301,21 @@ ul {
 
 .langsDropDown{
   color: #fff!important;
+  min-width: 55px;
+  position: relative;
+  background-color: #000;
+}
+
+.langsDropDown img{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  cursor: pointer;
+}
+.navbar-helper .open > a, .nav .open > a:hover, .nav .open > a:focus{
+  background-color: #000;
+  border-color: #000;
 }
 
 /*------------------------------------------*/
@@ -308,7 +323,7 @@ ul {
 /*------------------------------------------*/
 .scroll-fixed-navbar {
   padding: 0px;  
-  min-height: 100px;
+  min-height: 109px;
 }
 
 .scroll-fixed-navbar .transparency{
@@ -362,11 +377,8 @@ ul {
 }
 .navbar-helper .nav.navbar-nav > li > a{
   text-transform:none;
-  margin-top: -8px;
-}
-
-.navbar-helper  img{
-  padding-left: 5px;
+  margin-top: -9px;
+  cursor: pointer;
 }
 
 .navbar-helper  span{
@@ -863,19 +875,19 @@ ul {
 }
 
 .important .important-1{
-  width: 225px;
+  width: 185px;
 }
 
 .important .important-2{
-  width: 255px;
+  width: 200px;
 }
 
 .important .important-3{
-  width: 220px;
+  width: 175px;
 }
 
 .important .important-4{
-  width: 365px;
+  width: 295px;
 }
 
 /* ==========================================================================
@@ -976,7 +988,7 @@ ul {
 }
 
 .feature-box-content p{
-   font-size: 17px;
+   font-size: 20px;
    font-weight: 300;
   }
 .feature-box-content h4 {

@@ -119,7 +119,7 @@ $(document).ready(function () {
         });
     };
 
-    $('#GoToMainContent, #GoToHome, #GoConoceBiin, #GoToAppMovil, #GoToCMS, #GoToFeatures, #GoToPricing, #GoToNewsletter, #GoToPricing, #GoToContact').scrollTo({ speed: 1400 });
+    $('#GoToMainContent, #GoToHome, #GoConoceBiin, #GoToAppMovil, #GoToCMS, #GoToFeatures, #GoToPricing, #GoToPricing2, #GoToNewsletter, #GoToPricing, #GoToContact').scrollTo({ speed: 1400 });
 
 });
 
