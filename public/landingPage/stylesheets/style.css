@@ -67,17 +67,25 @@ Tags: responsive, html5 template, one page, landing, mobile app, company, creati
 #testimonials-rotator {
   background-image: url(../img/parallax_bg/testimonials_bkg.jpg);
 }
+
+p {
+  margin: 0 0 40px !important;
+}
 /*------------------------------------------*/
 /*	 Headers
 /*------------------------------------------*/
 h1,
 h2,
-h3,
+h3 {
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
 h4,
 h5,
 h6 {
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 /*------------------------------------------*/
 /*	 Link Setting
@@ -103,14 +111,15 @@ a:focus {
 blockquote {
   font-family: 'Lato', sans-serif;
   font-weight: 300;
-  font-size: 17px;
+  font-size: 22px !important;
   width: 500px;
-  margin: 0.25em 0;
-  padding: 0.25em 7px;
+  margin: 0.25em -39px;
+  padding: 0.25em 12px;
   line-height: 1.45;
   position: relative;
-  color: #fff;  
+  color: #FFFFFF!important;  
   text-shadow:none;
+  border-left: 4px solid #FFFFFF!important;
 }
 
 
@@ -126,13 +135,13 @@ ul {
 /*	 Theme Button
 /*------------------------------------------*/
 .btn-theme {
-  background-color: #71D7FF;
-  border: 1px solid #71D7FF;
+  background-color: #444;
+  /*border: 1px solid #71D7FF;*/
   color: #FFFFFF;
   font-size: 16px;
   font-family: 'Lato', sans-serif;
   font-weight: 700;
-  padding: 10px 20px;
+  padding: 14px 40px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
@@ -143,21 +152,21 @@ ul {
   transition: all 200ms ease-in-out;
 }
 .btn-theme:hover {
-  background-color: #069FCE;
-  border-color: #71D7FF;
-  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: #888888;
+  /*border-color: #71D7FF;
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);*/
 }
 /*------------------------------------------*/
 /*	 Black Button
 /*------------------------------------------*/
 .btn-black {
   background-color: #444;
-  border: 1px solid #444;
+  /*border: 1px solid #444;*/
   color: #fff;
   font-size: 16px;
   font-family: 'Lato', sans-serif;
   font-weight: 700;
-  padding: 10px 20px;
+  padding: 12px 40px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
@@ -168,9 +177,9 @@ ul {
   transition: all 200ms ease-in-out;
 }
 .btn-black:hover {
-  background-color: #222;
-  border-color: #222;
-  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: #888888;
+  /*border-color: #222;*/
+  /*box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);*/
 }
 /*------------------------------------------*/
 /*	 Button Large
@@ -884,7 +893,7 @@ ul {
 }
 .banner_1_content h3 {
   color: #fff;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .banner_1_content p {
@@ -1117,7 +1126,9 @@ ul {
 /*	  Newsletter Title
 /*------------------------------------------*/
 #newsletter_title h1 {
-  font-weight: 900;
+  font-size: 45px;
+  font-weight: 300;
+  margin-bottom: 10px;
 }
 #newsletter_title p {
   line-height: 24px;
@@ -1319,6 +1330,8 @@ ul {
 }
 .stores a {
   margin-right: 5px;
+  width: 75%;
+
 }
 .stores a:last-child {
   margin-right: 0;
@@ -1403,7 +1416,7 @@ ul {
   margin-bottom: 50px;
 }
 .pricing-table {
-  background-color: #fff;
+  background-color: #fafafa;
 }
 
 .pricing-table .plan-price {
@@ -1440,7 +1453,7 @@ ul {
 }
 
 #beaconsPackages #price_2 .plan-icons i{
-  color:#333!important;
+  color:#FFFFFF!important;
 }
 
 /*------------------------------------------*/
@@ -1453,8 +1466,8 @@ ul {
 }
 
 .pricing-table .plan-title {
-  color: #333;
-  font-size: 20px;
+  color: #000;
+  font-size: 23px;
   font-weight: 300;
   text-transform: uppercase;
   padding: 30px 15px;
