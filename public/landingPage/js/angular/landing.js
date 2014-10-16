@@ -1,5 +1,4 @@
 var biinLandingPage = angular.module('landingPage',['pascalprecht.translate']);
-
 //Translation Provider
  biinLandingPage.config(function($translateProvider) {
     // Our translations will go in here
@@ -9,14 +8,16 @@ var biinLandingPage = angular.module('landingPage',['pascalprecht.translate']);
     });
 
      //var language = window.navigator.userLanguage || window.navigator.language
-    $translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('ES');
 });
 
 biinLandingPage.controller("indexController",['$translate','$scope', '$http',function($translate,$scope,$http){
+  $scope.lang="ES";
 
   //Switch landing page preferences
   $scope.changeLanguage = function (langKey) {
     $translate.use(langKey);
+    $scope.lang=langKey;
   };
 
 

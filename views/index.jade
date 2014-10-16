@@ -2,7 +2,7 @@ extends layout_landing_page
 block head_scripts
 	script(src="/landingPage/js/angular/landing.js")
 block content
-	#contentWrapper(ng-app="landingPage" ng-controller="indexController")
+	#contentWrapper
 		//INTRO=============================================
 		section#intro
 			//Intro Page Slides
@@ -11,34 +11,35 @@ block content
 					//Intro Page Slider Image 1
 					li
 						a#GoConoceBiin.intro-content.intro-content-1(href='#videoHistory')
-								h1 Experiencias para sus visitantes con contexto
-								h3 Informaci&oacute;n relevante dentro y fuera de su local en el momento justo. 
+								h1(translate="SLIDER.1.TITLE")
+								h3(translate="SLIDER.1.TEXT")
 							img(src='/landingPage/img/thumbs/intro_slide_1.jpg', alt='')
 					//Intro Page Slider Image 2
 					li
 						a#GoToAppMovil.intro-content.text-center.intro-content-3(href='#banner_1')
-								h1 Aplicaci&oacute;n m&oacute;vil Biin
-								h3 Estreche los lazos con sus clientes con Biin.
-								h3 Aumente la experiencia de sus visitantes brindando m&aacute;s informaci&oacute;n.
-								h3 Brinde beneficios exclusivos en el momento indicado.
+								h1(translate="SLIDER.2.TITLE")
+								h3(translate="SLIDER.2.1.TEXT")
+								h3(translate="SLIDER.2.2.TEXT")
+								h3(translate="SLIDER.2.3.TEXT")
 							img(src='/landingPage/img/thumbs/intro_slide_3.jpg', alt='')
 					//Intro Page Slider Image 3								
 					li
 						a#GoToCMS.intro-content.text-center.intro-content-2(href='#crm_banner')
-								h1 Gestor de Contenido Biin
-								h3 Sus campa&ntilde;as f&aacute;cil y r&aacute;pido.
-								h3 Administre y promueva la relaci&oacute;n con sus clientes.
-								h3 Monitoreo efectivo de los resultados de su campa&ntilde;as.
+								h1(translate="SLIDER.3.TITLE")
+								h3(translate="SLIDER.3.1.TEXT")
+								h3(translate="SLIDER.3.2.TEXT")
+								h3(translate="SLIDER.3.3.TEXT")
+								a#GoToPricing2.btn.btn-comprar(href="#pricing" translate="SLIDER.4.BUTTON.BUY")
 							img(src='/landingPage/img/thumbs/intro_slide_2.jpg', alt='')							
 					//Intro Page Slider Image 4
 					li
 						.intro-content.text-center.intro-content-4
-								h1 Beacons Biin
-								h3 Desde que salen de su caja son una experiencia &uacute;nica.
-								h3 Inteligentes en su espacio f&iacute;sico.
-								h3 Con bater&iacute;a de larga duraci&oacute;n.
-								h3 Soporte completo Biin.
-								a#GoToPricing2.btn.btn-comprar(href="#pricing") M&aacute;s informaci&oacute;n
+								h1(translate="SLIDER.4.TITLE")
+								h3(translate="SLIDER.4.1.TEXT")
+								h3(translate="SLIDER.4.2.TEXT")
+								h3(translate="SLIDER.4.3.TEXT")
+								h3(translate="SLIDER.4.4.TEXT")
+								a#GoToPricing2.btn.btn-comprar(href="#pricing" translate="SLIDER.4.BUTTON.BUY")
 							a
 								img(src='/landingPage/img/thumbs/intro_slide_4.jpg', alt='')
 			//End Intro Page Slides
@@ -47,7 +48,7 @@ block content
 				a#GoToMainContent(href='#videoHistory')
 					span
 						i.fa.fa-angle-down.fa-3x
-				| Ver m&aacute;s
+				p(translate="SHOWMEMORE")
 		//END INTRO
 		//VIDEO============================================= 											
 		section#videoHistory
@@ -63,7 +64,7 @@ block content
 				#slides-forwhoIsBiin
 					.forwhoIsBiin-wrapper 
 						.col-sm-12.titlebar
-										h2 Para quien es Biin?
+										h2(translate="FORWHOISBIIN.ParaQuienEsBiin")
 										h3 
 											|Si quieres atraer m&aacute;s clientes, deleitarlos con m&aacute;s y mejores beneficios e informaci&oacute;n.
 										p
@@ -488,8 +489,4 @@ block content
 				//End row
 			//End container
 		//END NEWSLETTER	
-		section#test
-			.container
-				.row
-					h1(translate="TEST")
 	//END CONTENT WRAPPER 

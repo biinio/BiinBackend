@@ -39,7 +39,7 @@ html(lang='es')
 		script(src="/angular-translate/angular-translate.min.js")
 		script(src="/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js")
 		block head_scripts			
-	body
+	body(ng-app="landingPage" ng-controller="indexController")
 		
 		//PRELOADER =============================================
 		#preloader
@@ -51,8 +51,7 @@ html(lang='es')
 				ul.nav.navbar-nav.navbar-right
 					li(style='cursor: pointer;').dropdown
 						a.dropdown-toggle(data-toggle='dropdown')
-							| Iniciar sessi&oacute;n
-							b.caret
+							p(translate="LOGIN")
 						ul.dropdown-menu.loginDropDown
 							li
 								h4 Biin Dashboard login.
@@ -70,10 +69,13 @@ html(lang='es')
 										a#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up						
 					li.btn-group
 						a.dropdown-toggle(data-toggle='dropdown')
-							img(src="/landingPage/img/thumbs/spanishIcon.png")
+							img(src="/landingPage/img/thumbs/spanishIcon.png" ng-if="lang==='ES'")
+							img(src="/landingPage/img/thumbs/englishIcon.png" ng-if="lang==='EN'")
 						ul.dropdown-menu.langsDropDown							
 							li
-								img(src="/landingPage/img/thumbs/englishIcon.png")
+								img(src="/landingPage/img/thumbs/englishIcon.png" ng-click="changeLanguage('EN')" ng-if="lang!=='EN'")
+							li
+								img(src="/landingPage/img/thumbs/spanishIcon.png" ng-click="changeLanguage('ES')" ng-if="lang!=='ES'")
 			.navbar.navbar-fixed-top.scroll-fixed-navbar
 				.container
 					.transparency					
@@ -91,25 +93,21 @@ html(lang='es')
 					nav#navigation-menu.collapse.navbar-collapse(role='navigation')
 						ul.nav.navbar-nav.navbar-right
 							li
-								a#GoToHome.selected-nav(href='#intro') Inicio
+								a#GoToHome.selected-nav(href='#intro' translate="MENU.HOME")
 							li
-								a#GoConoceBiin(href='#videoHistory') Conoce Biin
-							//li
-								a#GoToScreens(href='#FORWHOISBIIN') Para quien es Biin?								
-							//li
-								a#GoToFeatures(href='#features') Caracter&iacute;sticas								
+								a#GoConoceBiin(href='#videoHistory' translate="MENU.MEETBIIN")
 							li
-								a#GoToAppMovil(href='#banner_1') App Movil
+								a#GoToAppMovil(href='#banner_1' translate="MENU.MOBILEAPP")
 							li
-								a#GoToCMS(href='#crm_banner') CMS
+								a#GoToCMS(href='#crm_banner' translate="MENU.CMS")
 							li
-								a#GoToFeatures(href='#banner_2') Beacons								
+								a#GoToFeatures(href='#banner_2' translate="MENU.BEACONS")
 							li
-								a#GoToPricing(href='#pricing') Precios								
+								a#GoToPricing(href='#pricing' translate="MENU.PRICES")
 							li
-								a#GoToContact(href='#contact') Contact&aacute;nos								
+								a#GoToContact(href='#contact' translate="MENU.CONTACT")
 							li
-								a#GoToNewsletter(href='#newsletter') Bolet&iacute;n
+								a#GoToNewsletter(href='#newsletter' translate="MENU.NEWS")
 
 					//End nav-collapse
 				//End container
