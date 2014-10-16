@@ -498,8 +498,6 @@ ul {
   line-height: 40px;
 }
 
-
-
 .flex-prev:hover, .flex-next:hover{
   background: #71D7FF;
   border-color: #71D7FF;
@@ -1366,6 +1364,7 @@ ul {
   background-position: right top;
   background-size: cover;
 }
+
 #pricing-table-holder {
   padding: 0 30px;
 }
@@ -1483,11 +1482,34 @@ ul {
   transition: all 250ms ease-in-out;
 }
 /*------------------------------------------*/
+/*    Background colors
+/*------------------------------------------*/
+
+ .gold
+ {
+  background: #fceabb!important; /* Old browsers */
+  background: -moz-linear-gradient(top, #fceabb 0%, #fccd4d 50%, #f8b500 53%, #fbdf93 100%)!important; /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fceabb), color-stop(50%,#fccd4d), color-stop(53%,#f8b500), color-stop(100%,#fbdf93))!important; /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #fceabb 0%,#fccd4d 50%,#f8b500 53%,#fbdf93 100%)!important; /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #fceabb 0%,#fccd4d 50%,#f8b500 53%,#fbdf93 100%)!important; /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #fceabb 0%,#fccd4d 50%,#f8b500 53%,#fbdf93 100%)!important; /* IE10+ */
+  background: linear-gradient(to bottom, #fceabb 0%,#fccd4d 50%,#f8b500 53%,#fbdf93 100%)!important; /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=0 )!important; /* IE6-9 */
+ }
+
+.silver{
+
+}
+
+.dimond{
+}
+
+/*------------------------------------------*/
 /*	  Featured Table
 /*------------------------------------------*/
 .pricing-table.featured .plan-title {
-  background-color: #71D7FF;
-  color: #f7f7f7;
+  /*background-color: #71D7FF;*/
+  color: #333;
 }
 .pricing-table.featured .plan-price {
   background-color: #71D7FF;
