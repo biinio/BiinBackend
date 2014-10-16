@@ -519,55 +519,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "views/_partials/notificationWidget.jade",
-			"settings":
-			{
-				"buffer_size": 361,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "\nvar holder = document.getElementById('holder'),\n    tests = {\n      filereader: typeof FileReader != 'undefined',\n      dnd: 'draggable' in document.createElement('span'),\n      formdata: !!window.FormData,\n      progress: \"upload\" in new XMLHttpRequest\n    }, \n    support = {\n      filereader: document.getElementById('filereader'),\n      formdata: document.getElementById('formdata'),\n      progress: document.getElementById('progress')\n    },\n    acceptedTypes = {\n      'image/png': true,\n      'image/jpeg': true,\n      'image/gif': true\n    progress = document.getElementById('uploadprogress'),\n    fileupload = document.getElementById('upload');\n\n\"filereader formdata progress\".split(' ').forEach(function (api) {\n  if (tests[api] === false) {\n    support[api].className = 'fail';\n  } else {\n    // FFS. I could have done el.hidden = true, but IE doesn't support\n    // hidden, so I tried to create a polyfill that would extend the\n    // Element.prototype, but then IE10 doesn't even give me access\n    // to the Element object. Brilliant.\n    support[api].className = 'hidden';\n  }\n});\n\nfunction previewfile(file) {\n  if (tests.filereader === true && acceptedTypes[file.type] === true) {\n    var reader = new FileReader();\n    reader.onload = function (event) {\n      var image = new Image();\n      image.src = event.target.result;\n      image.width = 250; // a fake resize\n      holder.appendChild(image);\n    };\n\n    reader.readAsDataURL(file);\n  }  else {\n    holder.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');\n    console.log(file);\n  }\n}\n\nfunction readfiles(files) {\n    debugger;\n    var formData = tests.formdata ? new FormData() : null;\n    for (var i = 0; i < files.length; i++) {\n      if (tests.formdata) formData.append('file', files[i]);\n      previewfile(files[i]);\n    }\n\n    // now post a new XHR request\n    if (tests.formdata) {\n      var xhr = new XMLHttpRequest();\n      xhr.open('POST', '/devnull.php');\n      xhr.onload = function() {\n        progress.value = progress.innerHTML = 100;\n      };\n\n      if (tests.progress) {\n        xhr.upload.onprogress = function (event) {\n          if (event.lengthComputable) {\n            var complete = (event.loaded / event.total * 100 | 0);\n            progress.value = progress.innerHTML = complete;\n          }\n        }\n      }\n\n      xhr.send(formData);\n    }\n}\n\nif (tests.dnd) { \n  holder.ondragover = function () { this.className = 'hover'; return false; };\n  holder.ondragend = function () { this.className = ''; return false; };\n  holder.ondrop = function (e) {\n    this.className = '';\n    e.preventDefault();\n    readfiles(e.dataTransfer.files);\n  }\n} else {\n  fileupload.className = 'hidden';\n  fileupload.querySelector('input').onchange = function () {\n    readfiles(this.files);\n  };\n}\n\n",
-			"settings":
-			{
-				"buffer_size": 2823,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": ".env",
-			"settings":
-			{
-				"buffer_size": 275,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 09-18-2014.txt",
-			"settings":
-			{
-				"buffer_size": 838,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "1)- Installar developer tools\n\n2)- Install brew: \n	 ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\"\n3)- Install Mongo: \n	 brew install mongodb\n4)- Go to Heroku and  invite a participant, follow the instructions for get clone the project\n5)- Crear el directorio de la bd mkdir -p /data/db\n6)- Set folder permisions chmod 777 /data/db\n5)- Installar Sublime",
-			"settings":
-			{
-				"buffer_size": 396,
-				"line_ending": "Unix",
-				"name": "1)- Installar developer tools"
-			}
-		},
-		{
-			"file": "public/javascripts/angular/app.js",
-			"settings":
-			{
-				"buffer_size": 8418,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -632,7 +583,10 @@
 	},
 	"console":
 	{
-		"height": 100.0
+		"height": 100.0,
+		"history":
+		[
+		]
 	},
 	"distraction_free":
 	{
@@ -645,6 +599,10 @@
 	},
 	"file_history":
 	[
+		"/Users/lbonilla/Developments/Biin/views/_partials/notificationWidget.jade",
+		"/Users/lbonilla/Developments/Biin/.env",
+		"/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 09-18-2014.txt",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
 		"/Users/lbonilla/Developments/Biin/biin.sublime-workspace",
 		"/Users/lbonilla/Developments/Biin/routes/clients.js",
 		"/Users/lbonilla/Developments/Biin_Stuff/AutorizationFlowExample",
@@ -673,7 +631,6 @@
 		"/Users/lbonilla/Developments/Biin/biin_modules/routesMobile.js",
 		"/Users/lbonilla/Developments/Biin/routes/gallery.js",
 		"/Users/lbonilla/Developments/Biin/biin_modules/oauthManager.js",
-		"/Users/lbonilla/Developments/Biin/.env",
 		"/Users/lbonilla/Developments/Biin/schemas/gallery.js",
 		"/Users/lbonilla/Developments/Biin/biin_modules/utils.js",
 		"/Users/lbonilla/Developments/Biin/biin_modules/authManager.js",
@@ -685,7 +642,6 @@
 		"/Users/lbonilla/Developments/Biin/routes/errors.js",
 		"/Users/lbonilla/Developments/Biin/biin_modules/imageManager.js",
 		"/Users/lbonilla/Developments/Biin/.git/MERGE_MSG",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
 		"/Users/lbonilla/Developments/Biin/views/gallery/index.jade",
 		"/Users/lbonilla/Developments/Biin/routes/categories.js",
 		"/Users/lbonilla/Developments/Biin/routes/biins.js",
@@ -770,13 +726,11 @@
 		"/Users/lbonilla/Developments/Biin/public/javascripts/croppic.js",
 		"/Users/lbonilla/Developments/Biin/public/workingFiles/photo44200775914727372.jpeg",
 		"/Users/lbonilla/Developments/Biin/db.js",
-		"/Users/lbonilla/Developments/Biin/.git/config",
-		"/Users/lbonilla/Documents/brr/biin/showcases.metadata.json",
-		"/Users/lbonilla/Documents/brr/biin/showcases.bson"
+		"/Users/lbonilla/Developments/Biin/.git/config"
 	],
 	"find":
 	{
-		"height": 57.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -944,181 +898,19 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "views/_partials/notificationWidget.jade",
-					"settings":
-					{
-						"buffer_size": 361,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								361,
-								361
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"settings":
-					{
-						"buffer_size": 2823,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2682,
-								2682
-							]
-						],
-						"settings":
-						{
-							"auto_name": "",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": ".env",
-					"settings":
-					{
-						"buffer_size": 275,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								275,
-								275
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		},
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 3,
-					"file": "/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 09-18-2014.txt",
-					"settings":
-					{
-						"buffer_size": 838,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								706,
-								706
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"settings":
-					{
-						"buffer_size": 396,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								161,
-								161
-							]
-						],
-						"settings":
-						{
-							"auto_name": "1)- Installar developer tools",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "public/javascripts/angular/app.js",
-					"settings":
-					{
-						"buffer_size": 8418,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7915,
-								7903
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 23.0
 	},
 	"input":
 	{
@@ -1154,13 +946,18 @@
 		]
 	},
 	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
 	"output.git":
 	{
 		"height": 162.0
 	},
+	"project": "biin.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1179,10 +976,25 @@
 		],
 		"width": 0.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 265.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

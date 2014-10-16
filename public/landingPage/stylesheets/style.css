@@ -1862,3 +1862,24 @@ nav a#pull {
     font-weight: 300;
     text-align: center;
 }
+
+/* ==========================================================================
+   16. CONTACT FORM RESPONSE PAGE   
+   ========================================================================== */
+#preorder .container {
+  padding-top: 150px;
+} 
+
+#preorder .imgPreOrder img{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100%;
+  height:  auto;
+  vertical-align:middle;
+}
+
+.btnEnviar{
+  margin-top: 20px;
+}

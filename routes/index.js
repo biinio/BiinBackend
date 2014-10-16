@@ -59,6 +59,14 @@ module.exports = function () {
 	  if(!filename) return;  // might want to change this
 	  res.render("_partials/" + filename );
 	}
+
+	functions.preregister =function(req,res){
+		res.render("index_pre_register");
+	}
+
+	functions.preorder =function(req,res){
+		res.render("index_pre_order");
+	}
 	
 	//Send emails
 	functions.sendEmail = function(req,res){
