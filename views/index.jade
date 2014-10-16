@@ -21,7 +21,7 @@ block content
 							h3(translate="SLIDER.2.1.TEXT")
 							h3(translate="SLIDER.2.2.TEXT")
 							h3(translate="SLIDER.2.3.TEXT")
-							a#GoToPricing2.btn.btn-comprar(href="#banner_1" translate="SLIDER.2.BUTTON.DOWNLOAD")
+						a#GoToPricing2.btn.btn-comprar(href="#banner_1" translate="SLIDER.2.BUTTON.DOWNLOAD")
 						img(src='/landingPage/img/thumbs/intro_slide_3.jpg', alt='')
 					//Intro Page Slider Image 3								
 					li
@@ -30,7 +30,7 @@ block content
 							h3(translate="SLIDER.3.1.TEXT")
 							h3(translate="SLIDER.3.2.TEXT")
 							h3(translate="SLIDER.3.3.TEXT")
-							a#GoToPricing2.btn.btn-comprar(href="#crm_banner" translate="SLIDER.3.BUTTON.SIGNUP")
+						a#GoToPricing2.btn.btn-comprar(href="#crm_banner" translate="SLIDER.3.BUTTON.SIGNUP")
 						img(src='/landingPage/img/thumbs/intro_slide_2.jpg', alt='')							
 					//Intro Page Slider Image 4
 					li
@@ -40,7 +40,7 @@ block content
 							h3(translate="SLIDER.4.2.TEXT")
 							h3(translate="SLIDER.4.3.TEXT")
 							h3(translate="SLIDER.4.4.TEXT")
-							a#GoToPricing2.btn.btn-comprar(href="#banner_2" translate="SLIDER.4.BUTTON.BUY")
+						a#GoToPricing2.btn.btn-comprar(href="#banner_2" translate="SLIDER.4.BUTTON.BUY")
 						img(src='/landingPage/img/thumbs/intro_slide_4.jpg', alt='')
 			//End Intro Page Slides
 			//Scroll Down Button
@@ -305,8 +305,8 @@ block content
 						.pricing-table.text-center
 							//Table Header & Plan Price
 							.price-header
-								h4.plan-title.silver Biin Lite
-								.plan-price
+								h4.plan-title Biin Silver
+								.plan-price.silver
 									h2 $30
 									span Mensuales
 							//Plan Features
@@ -325,7 +325,7 @@ block content
 							
 							//Table Header & Plan Price
 							.price-header
-								h4.plan-title Standard
+								h4.plan-title Gold
 								.plan-price.gold
 									h2 $149
 									span Mensuales
@@ -347,8 +347,8 @@ block content
 							
 							//Table Header & Plan Price
 							.price-header
-								h4.plan-title.diamont Premium
-								.plan-price
+								h4.plan-title Premium
+								.plan-price.diamont
 									h2 $399
 									span Mensuales
 							//Plan Features
@@ -376,12 +376,29 @@ block content
 							| Tambien puedes comprar Biin iBeacon idividualmente por &#36;45.
 				//Pricing Section Content
 				#pricing-table-holder.row
+					//PRICE PLAN UNUM
+					#price_1.col-xs-12.col-sm-6.col-md-4
+						.pricing-table.text-center
+							//Table Header & Plan Price
+							.price-header.unum
+								h4.plan-title Paquete UNUM
+								.plan-icons
+									i.icon.icon-profile-gentleman-2								
+							//Plan Features
+							ul.features
+								li Ideal para su tienda, oficina profesional o restaurante
+								li 3 Biin Beacons
+								li Compre el paquete basico por solo &#36;117
+							//Table Button
+							.price-footer
+								a.btn.btn-theme(href='#') Disponible pronto
+					//END PRICE PLAN UNUM					
 					//PRICE PLAN STANDARD
 					#price_1.col-xs-12.col-sm-6.col-md-4
 						.pricing-table.text-center
 							//Table Header & Plan Price
-							.price-header
-								h4.plan-title Paquete Basico
+							.price-header.tribus
+								h4.plan-title Paquete TRIBUS
 								.plan-icons
 									i.icon.icon-building-1
 									i.icon.icon-profile-lady-1
@@ -401,8 +418,8 @@ block content
 					#price_2.col-xs-12.col-sm-6.col-md-4
 						.pricing-table.text-center							
 							//Table Header & Plan Price
-							.price-header
-								h4.plan-title Paquete empresarial
+							.price-header.decem
+								h4.plan-title Paquete DECEM
 								.plan-icons
 									i.icon.icon-hospital-2
 									i.icon.icon-building-3

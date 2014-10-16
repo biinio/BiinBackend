@@ -175,7 +175,7 @@ ul {
   text-decoration: none;
 }
 .btn.btn-comprar{
-  margin-top:25px;
+  /*margin-top:25px;*/
   color:#fff;
   background-color: initial;
   width: 205px;
@@ -188,6 +188,10 @@ ul {
   font-weight: 400;
   font-size: 17px;
   text-transform: uppercase;
+  /*Position*/
+  position: absolute;
+  left: 40%;
+  bottom: -19%;
 }
 /*------------------------------------------*/
 /*	 Section Titlebar
@@ -1501,9 +1505,20 @@ ul {
 
 }
 
-.dimond{
+.diamond{
 }
 
+.unum{
+
+}
+
+.tribus{
+
+}
+
+.decem{
+
+}
 /*------------------------------------------*/
 /*	  Featured Table
 /*------------------------------------------*/
