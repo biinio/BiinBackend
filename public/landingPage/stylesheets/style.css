@@ -99,6 +99,21 @@ a:focus {
   outline: none;
   text-decoration: none;
 }
+
+blockquote {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 17px;
+  width: 500px;
+  margin: 0.25em 0;
+  padding: 0.25em 7px;
+  line-height: 1.45;
+  position: relative;
+  color: #fff;  
+  text-shadow:none;
+}
+
+
 /*------------------------------------------*/
 /*	 Lists
 /*------------------------------------------*/
@@ -163,6 +178,7 @@ ul {
 .btn-lg {
   padding: 12px 24px;
   font-size: 18px;
+  width: 175px;
 }
 /*------------------------------------------*/
 /*	 Button Hover/Focus
@@ -190,22 +206,25 @@ ul {
   font-size: 17px;
   text-transform: uppercase;
   /*Position*/
-  position: absolute;
-  left: 40%;
-  
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;;
+}
+.btn.btn-comprar:hover{
+  background-color: #fff;
+  color: black!important;
 }
 
 .wrapperButtonInfo{
   position: absolute;
-  bottom: 10%;
+  bottom: 20%;
+  width: 100%;
 }
 
 /*------------------------------------------*/
 /*	 Section Titlebar
 /*------------------------------------------*/
-.titlebar {
-  margin-bottom: 50px;
-}
 .titlebar h2 {
   font-weight: 300;
   margin-bottom: 5px;
@@ -915,10 +934,10 @@ ul {
 /* ==========================================================================
    CRM banner
    ========================================================================== */
-#crm_banner {
-  padding-top: 100px;
-  padding-bottom: 100px; 
-}
+#crm_banner .container{
+   padding-top: 100px;
+    padding-bottom: 100px;  
+  }
 
 #crm_banner .titlebar{
   
@@ -1384,10 +1403,6 @@ ul {
   margin-bottom: 50px;
 }
 .pricing-table {
-  border: 1px solid #c3c3c3;
-  -webkit-border-radius: 0px;
-  -moz-border-radius: 0px;
-  border-radius: 0px;
   background-color: #fff;
 }
 
@@ -1496,35 +1511,29 @@ ul {
 /*    Background colors
 /*------------------------------------------*/
 
- .gold
- {
-  background: #fceabb!important; /* Old browsers */
-  background: -moz-linear-gradient(top, #fceabb 0%, #fccd4d 50%, #f8b500 53%, #fbdf93 100%)!important; /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fceabb), color-stop(50%,#fccd4d), color-stop(53%,#f8b500), color-stop(100%,#fbdf93))!important; /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #fceabb 0%,#fccd4d 50%,#f8b500 53%,#fbdf93 100%)!important; /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #fceabb 0%,#fccd4d 50%,#f8b500 53%,#fbdf93 100%)!important; /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #fceabb 0%,#fccd4d 50%,#f8b500 53%,#fbdf93 100%)!important; /* IE10+ */
-  background: linear-gradient(to bottom, #fceabb 0%,#fccd4d 50%,#f8b500 53%,#fbdf93 100%)!important; /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=0 )!important; /* IE6-9 */
+ .gold {
+
+  background: #3399FF!important;
  }
 
-.silver{
-
+.silver {
+  background: #B8E62E!important;
 }
 
 .diamond{
+  background: #FF3300!important;
 }
 
 .unum{
-
+  background: #B8E62E!important;
 }
 
 .tribus{
-
+  background: #3399FF!important;
 }
 
 .decem{
-
+  background: #FF3300!important;
 }
 /*------------------------------------------*/
 /*	  Featured Table

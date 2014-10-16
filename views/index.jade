@@ -31,7 +31,8 @@ block content
 							h3(translate="SLIDER.3.1.TEXT")
 							h3(translate="SLIDER.3.2.TEXT")
 							h3(translate="SLIDER.3.3.TEXT")
-						a#GoToPricing2.btn.btn-comprar(href="#crm_banner" translate="SLIDER.3.BUTTON.SIGNUP")
+						.wrapperButtonInfo		
+							a#GoToPricing2.btn.btn-comprar(href="#crm_banner" translate="SLIDER.3.BUTTON.SIGNUP")
 						img(src='/landingPage/img/thumbs/intro_slide_2.jpg', alt='')							
 					//Intro Page Slider Image 4
 					li
@@ -41,7 +42,8 @@ block content
 							h3(translate="SLIDER.4.2.TEXT")
 							h3(translate="SLIDER.4.3.TEXT")
 							h3(translate="SLIDER.4.4.TEXT")
-						a#GoToPricing2.btn.btn-comprar(href="#banner_2" translate="SLIDER.4.BUTTON.BUY")
+						.wrapperButtonInfo		
+							a#GoToPricing2.btn.btn-comprar(href="#banner_2" translate="SLIDER.4.BUTTON.BUY")
 						img(src='/landingPage/img/thumbs/intro_slide_4.jpg', alt='')
 			//End Intro Page Slides
 			//Scroll Down Button
@@ -188,33 +190,22 @@ block content
 			//End container
 		//END FEATURES		
 		//BANNER_1============================================= 
-		#banner_1
+		section#banner_1
 			.container
 				.row
 					//Banner Description
 					.col-md-6.titlebar.banner_1_content
 						h2(translate="BIINMOBILEAPP.TITLE") 
 						h3(translate="BIINMOBILEAPP.TEXT1") 
-						p(translate="BIINMOBILEAPP.TEXT2") 
-						
+						p(translate="BIINMOBILEAPP.TEXT2") 						
 						.testimonials
-							p(translate="BIINMOBILEAPP.QUOTE") 
-
+							blockquote(translate="BIINMOBILEAPP.QUOTE") 						
+						.col-md-12.text-center
+							.stores
+								a(href="#")
+									img(src="/landingPage/img/icons/appstore.png", alt="")
 					.col-md-6.banner_1_image
 						img(src="/landingPage/img/thumbs/biinMovil.png")
-					.col-md-12.text-center
-						.stores
-							a(href="#")
-								img(src="/landingPage/img/icons/appstore.png", alt="")
-							//a(href="#")
-								img(src="/landingPage/img/icons/google.png", alt="")
-							//a(href="#")
-								img(src="/landingPage/img/icons/windows.png", alt="")
-
-					//Banner Image
-					//#banner_1_image.col-md-6.text-center
-						img.img-responsive(src='/landingPage/img/thumbs/6.png', alt='banner_1_image')
-				
 				//End row
 			//End container
 		//END BANNER_1
@@ -229,16 +220,10 @@ block content
 						p(translate="MANAGECONTENTFORBIIN.TEXT1")
 						p(translate="MANAGECONTENTFORBIIN.TEXT2")
 						p(translate="MANAGECONTENTFORBIIN.TEXT3")
-						.important
+						.col-md-12.text-center
+								a#btnRegistrarme.btn-contact.btn.btn-black.btn-lg(href="#" translate="MANAGECONTENTFORBIIN.BUTTON.SIGNUP")				
 					.col-md-6.crm_banner_image
 						img(src="/landingPage/img/thumbs/biinCMS.png")
-					.col-md-12
-						.text-center
-							a#btnRegistrarme.btn-contact.btn.btn-black.btn-lg(href="#", style="margin-bottom: 60px;" translate="MANAGECONTENTFORBIIN.BUTTON.SIGNUP")
-					//Banner Image
-					//#banner_1_image.col-md-6.text-center
-						img.img-responsive(src='/landingPage/img/thumbs/6.png', alt='banner_1_image')
-				
 				//End row
 			//End container
 		//END CMS		
@@ -277,12 +262,10 @@ block content
 								h5
 									i.fa.fa-check
 									| {{ "BIINBEACONS.LIST.ITEM4" | translate }}
-
+						.col-md-12.text-center
+								a#GoToPricing2.btn-contact.btn.btn-black.btn-lg(href="#pricing" translate="BIINBEACONS.BUTTON.BUY")
 					.col-md-6.banner_2_image
 						img(src="/landingPage/img/thumbs/biinBeacon.png")
-					.col-md-12
-						.text-center
-							a#GoToPricing2.btn-contact.btn.btn-black.btn-lg(href="#pricing", style="margin-top: 60px;", translate="BIINBEACONS.BUTTON.BUY")
 						//End Banner List
 					//End Banner Description
 				//End row
@@ -435,9 +418,6 @@ block content
 								a.btn.btn-theme(href='#') Disponible pronto					
 					//END PRICE PLAN ADVANCED
 				//End Pricing Section Content
-				//.row.pricingIndividual
-					.col-sm-12
-						p Tambien puedes comprar Biin iBeacon idividualmente por &#36;45.
 			//End container
 		//END BEAN PACKAGES
 		//CONTACTS============================================= 
@@ -484,7 +464,7 @@ block content
 						.clearfix
 							form#subscribe-form.subscribe-form(action='newsletter.php', method='post')
 								input.subscribe-input(type='email', name='email', placeholder='Tu correo electrónico...')
-								input.subscribe-submit.btn.btn-black.btn-lg(type='submit', value='Suscribir', style='width: 35%;')
+								input.subscribe-submit.btn.btn-black.btn-lg(type='submit' value='Suscribir')
 				//End row
 			//End container
 		//END NEWSLETTER	
