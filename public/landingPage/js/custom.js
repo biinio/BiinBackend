@@ -591,8 +591,11 @@ $(document).ready(function () {
             qty:{
                 required: true,
                 minlength: 2                
-            }         ,
+            },
             plan:{
+                required:true
+            },
+            package:{
                 required:true
             }
         },
@@ -644,6 +647,7 @@ $(document).ready(function () {
             var zipCodes = $('#zipCodes').val();
             var streetAddres = $('#streetAddres').val();
             var plan =$('#plan').val();
+
             var qty = $('#qty').val();
             var msg=" name: " +name;
             msg+=" || company: " +company;
@@ -653,9 +657,10 @@ $(document).ready(function () {
             msg+=" || state: " +state;
             msg+=" || city: " +city;
             msg+=" || zipCodes: " +zipCodes;
-            msg+=" || streetAddres: " +streetAddres;
+            msg+=" || streetAddres: " +plan;
             msg+=" || plan: " +plan;
             msg+=" || qty: " +qty;
+            //"<b>Nombre</b>: <pre style='font-size: 14px'>" + req.query.name + "</pre>" +
             $.ajax({
                 type: "GET",
                 data: {
