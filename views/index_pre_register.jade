@@ -21,17 +21,23 @@ block content
 							input#phone.form-control(type='text', name='phone', placeholder='Phone number', required)
 							input#country.form-control(type='text', name='country', placeholder='Country **', required)
 							input#state.form-control(type='text', name='state', placeholder='State', required)
-							input#city.form-control(type='text', name='City', placeholder='City', required)
-							input#zipCodes.form-control(type='text', name='ZipCodes', placeholder='Zip Code', required)
+							input#city.form-control(type='text', name='city', placeholder='City', required)
+							input#zipCodes.form-control(type='text', name='zipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
 							input#plan.hidden(type="tex" name="plan" value=packageSlected)
+							select#package(title="Select your Biin Beacon Package" name="package")
+								option UNUM
+								option TRIBUS
+								option DECEM
+							input#qty(type="number" placeholder="Number of packages you are interested on?" name="qty")
 							label= "Usted está preordenando el plan " + packageSlected							
 							.row
 								span
-									input(type="checkbox" name="termsAdCond")
+									input.validateCheck(type="checkbox" name="termsAdCond")
 									| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
 						.row.text-center
-							input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar")
+							input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)
+							label.sent-message
 					.col-md-6
 						.row.imgPreOrder
 							img(src="/landingPage/img/thumbs/biinCMS.png")

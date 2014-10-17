@@ -13,7 +13,6 @@ block content
 								|empresa. Perm&iacute;tenos saber a quien estaremos contactando cuando los Biin Beacons
 								| est&eacute;n disponibles.								
 						form#pre-order-form.row(action="#" name="pre-registform", method="post")
-							label= "Estas pre-registrando el paquete " + packageSlected
 							input#name.form-control(type='text' name='full_name' placeholder='Full Name' required)
 							input#company.form-control(type='text', name='company', placeholder='Company (mandatory if shipping to a business addres)', required)
 							input#email.form-control(type='text', name='email', placeholder='Email', required)
@@ -25,12 +24,12 @@ block content
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
 							input#qty.form-control(type='number', name='qty', placeholder='How many are you interested', required)
 							input#plan.hidden(type="tex" name="plan" value=packageSlected)
-							input(type="checkbox" name="termsAdCond")
+							input.validateCheck(type="checkbox" name="termsAdCond")
 							span
 								| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
 						.row.text-center
-							input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar")
-							label.sent-message								
+							input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)
+							label.sent-message
 					.col-md-6
 						.row.imgPreOrder
 							img(src="/landingPage/img/thumbs/biinBeacon.png")

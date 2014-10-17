@@ -572,7 +572,10 @@ $(document).ready(function () {
             qty:{
                 required: true,
                 minlength: 2                
-            }                       
+            }         ,
+            plan:{
+                required:true
+            }
         },
         messages: {
             name: {
@@ -600,8 +603,11 @@ $(document).ready(function () {
             zipCodes: {
                 required: "Ingresa tu zip-code."
             },
-            streetAddres:{
-              required: "Ingresa una direcci&oacute;n."  
+            plan:{
+              required: "selecciona un plan."  
+            },
+            qty:{
+              required: "Ingresa una cantidad."  
             }
         }
     });
@@ -618,6 +624,7 @@ $(document).ready(function () {
             var city = $('#city').val();
             var zipCodes = $('#zipCodes').val();
             var streetAddres = $('#streetAddres').val();
+            var plan =$('#plan').val();
             var qty = $('#qty').val();
             var msg=" name: " +name;
             msg+=" || company: " +company;
@@ -628,7 +635,8 @@ $(document).ready(function () {
             msg+=" || city: " +city;
             msg+=" || zipCodes: " +zipCodes;
             msg+=" || streetAddres: " +streetAddres;
-
+            msg+=" || plan: " +plan;
+            msg+=" || qty: " +qty;
             $.ajax({
                 type: "GET",
                 data: {
@@ -647,6 +655,7 @@ $(document).ready(function () {
                     $('#btn-preRegist').removeAttr("disabled");
                     $('#btn-preRegist').val("Mensaje enviado!");
                     $('.sent-message').text("Hemos recibido su mensaje pronto nos contactaremos con usted.");
+                    $("#pre-registform").find("input[type=text], textarea").val("");                    
                 },
                 error: function(){
                     $('#btn-preRegist').removeAttr("disabled");
@@ -791,5 +800,11 @@ $(document).ready(function () {
             });
         }
     });
-
+    
+    $(".validateCheck").on('click',function(){
+        if(!this.checked){
+            $('.btnEnviar').attr('disabled','disabled');
+        }else
+          $('.btnEnviar').removeAttr('disabled');
+    })
 });
