@@ -113,8 +113,8 @@ blockquote {
   font-weight: 300;
   font-size: 22px !important;
   width: 500px;
-  margin: 0.25em -39px;
-  padding: 0.25em 12px;
+  margin: 60px 0px 80px -40px;
+  /*padding: 0.25em 12px;*/
   line-height: 1.45;
   position: relative;
   color: #FFFFFF!important;  
@@ -495,7 +495,7 @@ ul {
     left: 10%;
     border-radius: 50%;
     display: none;
-    background-color: black;
+    background-color: white;
    /* background: url(../img/icons/back-to-left.png) no-repeat 0 0!important;
    */
 }
@@ -749,12 +749,13 @@ ul {
   font-size: 500%;
   font-weight: 300;
   line-height: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 .intro-content h3 {
   font-size: 244%;
   font-weight: 200;
   margin-top: 0;
+  margin-bottom: 10px !important;
 }
 
 .intro-content h1{
@@ -1077,22 +1078,23 @@ ul {
 
 #banner-list p{
   color: #fff;
+
 }
 
 #banner-list .important-1{
   width: 300px!important;
-  
 }
+
 #banner-list .important-2{
   width: 395px!important;
 }
 #banner-list .important-3{
-    width: 380px!important;
-  }
+  width: 380px!important;
+}
 
 #banner-list .important-4{
-    width: 110px!important;
-  }
+  width: 110px!important;
+}
 
 /*------------------------------------------*/
 /*	  Banner List Content
@@ -1433,7 +1435,7 @@ ul {
 }
 
 .pricing-table .plan-price span {
-  color: #999;
+  color: #FFFFFF;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -1448,7 +1450,7 @@ ul {
   background-color: #71D7FF;
 }
 #beaconsPackages #price_1 .price-header h4{
-  color: #fff;
+  color: #000;
 
 }
 
@@ -1529,16 +1531,35 @@ ul {
   background: #3399FF!important;
  }
 
+ .gold  h2{
+  margin-bottom: 10px !important;
+  color: white;
+}
+
 .silver {
   background: #B8E62E!important;
+}
+
+.silver  h2{
+  margin-bottom: 10px !important;
+  color: white;
 }
 
 .diamond{
   background: #FF3300!important;
 }
 
+.diamond  h2{
+  margin-bottom: 10px !important;
+  color: white;
+}
+
 .unum{
   background: #B8E62E!important;
+}
+
+.unum  h2{
+  margin-bottom: 10px !important;
 }
 
 .tribus{
@@ -1562,7 +1583,7 @@ ul {
 }
 .pricing-table.featured .plan-price h2,
 .pricing-table.featured .plan-price span {
-  color: #f7f7f7;
+  color: #FFFFFF;
 }
 #beaconsPackages .titlebar h2,#beaconsPackages .titlebar p{
   color:#fff;
