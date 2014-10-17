@@ -1956,6 +1956,46 @@ nav a#pull {
   color: #71D7FF;
 }
 
+#preRegister .form-control {
+  height: 50px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 0px;
+  padding: 6px 20px;
+}
+
+#preRegister span {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+
+}
+#preRegister span input {
+  margin-left: 15px;
+  margin-right: 10px;
+
+}
+
+
+#preRegister p {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+#preRegister label {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
 #preorder{
   background-color: #71D7FF;
 }
+
+
