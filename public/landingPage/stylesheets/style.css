@@ -1321,6 +1321,17 @@ ul {
 .btn-beacons{
   margin-top: 80px;
 }
+.btn-store-slide{
+  display:block !important; 
+  z-index:1000 !important; 
+  margin-left: auto !important; 
+  margin-right: auto !important; 
+  width: 205px !important; 
+  height: 60px !important; 
+  position: relative !important;
+  top: inherit !important;
+  left: inherit !important;
+}
 /* ==========================================================================
    09. BANNER_3
    ========================================================================== */
