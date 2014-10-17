@@ -603,9 +603,6 @@ $(document).ready(function () {
             },
             streetAddres:{
               required: "Ingresa una direcci&oacute;n."  
-            },
-            qty:{
-              required: "Ingresa una cantidad."  
             }
         }
     });
@@ -632,7 +629,6 @@ $(document).ready(function () {
             msg+=" || city: " +city;
             msg+=" || zipCodes: " +zipCodes;
             msg+=" || streetAddres: " +streetAddres;
-            msg+=" || qty: " +qty;
 
             $.ajax({
                 type: "GET",
