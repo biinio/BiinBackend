@@ -589,13 +589,12 @@ $(document).ready(function () {
                 minlength: 2
             } ,
             qty:{
-                required: true,
-                minlength: 2                
+                required: true
             },
             plan:{
                 required:true
             },
-            package:{
+            pack:{
                 required:true
             }
         },
@@ -614,7 +613,7 @@ $(document).ready(function () {
                 required: "Ingresa un n&uacute;mero de tel&eacute;fono."
             },
             country: {
-                required: "Ingresa un p&iacute;s."
+                required: "Ingresa un pa&iacute;s."
             },
             state: {
                 required: "Ingresa un estado."
@@ -658,7 +657,7 @@ $(document).ready(function () {
             msg+=" <br/> state: " +state;
             msg+=" <br/> city: " +city;
             msg+=" <br/> zipCodes: " +zipCodes;
-            msg+=" <br/> streetAddres: " +plan;
+            msg+=" <br/> streetAddres: " +streetAddres;
             msg+=" <br/> plan: " +plan;
             msg+=" <br/> package: " +pack;
             msg+=" <br/> qty: " +qty;
