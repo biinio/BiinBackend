@@ -69,7 +69,7 @@ Tags: responsive, html5 template, one page, landing, mobile app, company, creati
 }
 
 p {
-  margin: 0 0 40px !important;
+  margin: 0 0 30px !important;
 }
 /*------------------------------------------*/
 /*	 Headers
@@ -78,7 +78,7 @@ h1,
 h2,
 h3 {
   margin-top: 0;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 h4,
@@ -140,7 +140,7 @@ ul {
   color: #FFFFFF;
   font-size: 16px;
   font-family: 'Lato', sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   padding: 14px 40px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -165,7 +165,7 @@ ul {
   color: #fff;
   font-size: 16px;
   font-family: 'Lato', sans-serif;
-  font-weight: 700;
+  font-weight: 400;
   padding: 12px 40px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
@@ -512,7 +512,7 @@ ul {
   font-weight: normal !important;
   -webkit-font-smoothing: antialiased !important;
   box-sizing: border-box !important;  
-  color: #00adef!important;
+  color:black!important;
   font-size: 50px !important;
   line-height: 40px !important;
 }
@@ -526,13 +526,13 @@ ul {
 .flex-next:before {
   content:"\f054";
   text-align: center;
-  margin-left: -15px;
-  font-size: 26px;
+  margin-left: -7px;
+  font-size: 24px;
 }
 
 .flex-prev,.flex-next{
   padding-top:10px;
-  color: #fff !important;
+  color: black !important;
   font-size: 36px!important;
   line-height: 40px;
 }
@@ -546,7 +546,7 @@ ul {
 .forwhoIsBiin-slider .flex-direction-nav .flex-next{
     right: 10%;
     border-radius: 50%;
-    background-color: black;
+    background-color: white;
 }
 .forwhoIsBiin-slider .flex-direction-nav .flex-next:hover{
     background-color: #069FCE;
@@ -999,7 +999,7 @@ ul {
 /*	  Feature Box
 /*------------------------------------------*/
 .feature-box {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   padding-left: 5px;
   padding-right: 5px;
   height: 130px;
@@ -1108,7 +1108,7 @@ ul {
   margin-bottom: 20px;
 }
 .list-item i {
-  color: #fff;
+  color: black;
   margin-right: 8px;
   font-size: 18px;
 }
@@ -1131,6 +1131,7 @@ ul {
   font-size: 45px;
   font-weight: 300;
   margin-bottom: 10px;
+  color: #71D7FF;
 }
 #newsletter_title p {
   line-height: 24px;
@@ -1149,8 +1150,8 @@ ul {
   width: 90%;
 }
 .subscribe-form input {
-  border: 1px solid #ddd;
-  border-right: none;
+  /*border: 1px solid #ddd;
+  border-right: none;*/
   width: 100%;
 }
 .subscribe-input {
@@ -1160,20 +1161,21 @@ ul {
   font-size: 16px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
-  padding-left: 10px;
+  padding-left: 20px;
+  border: none;
 }
 .subscribe-submit {
-  width: 30%;
+  width: 35% !important;
   height: 54px;
   position: absolute;
   top: 0px;
   right: 0px;
   background-color: #71D7FF;
-  border: 1px solid #71D7FF;
+  /*border: 1px solid #71D7FF;*/
   color: #fff;
   font-size: 18px;
   font-family: 'Lato', sans-serif;
-  font-weight: 900;
+  font-weight: 500;
   text-decoration: none;
   text-align: center;
   display: block;
@@ -1617,9 +1619,11 @@ ul {
 #contact-form .form-control {
   height: 50px;
   font-size: 16px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  border: none;
+  /*border: 1px solid #ccc;*/
   border-radius: 0px;
+  padding: 6px 20px;
 }
 .contact-form input[type="text"],
 .contact-form input[type="email"],
@@ -1642,6 +1646,16 @@ ul {
 /*------------------------------------------*/
 /*	  Contact Form Input Focus
 /*------------------------------------------*/
+.col-md-6 {
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+}
+
+.col-md-12 {
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+}
+
 .form-control:focus {
   outline: 0px none;
   box-shadow: none;
@@ -1831,6 +1845,7 @@ nav a#pull {
 }
 .loginDropDown .form-control {
   margin-bottom: 20px;
+
 }
 .loginDropDown input.form-control {
   height: 50px;
