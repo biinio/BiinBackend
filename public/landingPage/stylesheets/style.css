@@ -1340,8 +1340,11 @@ ul {
 }
 .stores a {
   margin-right: 5px;
-  width: 75%;
+}
 
+.stores img {
+  width: auto;
+  height: 70px !important;
 }
 .stores a:last-child {
   margin-right: 0;
