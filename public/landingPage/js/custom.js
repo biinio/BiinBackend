@@ -533,7 +533,9 @@ $(document).ready(function() {
 /*----------------------------------------------------*/
 $(document).ready(function () {
     //Picker instance
-    $('.selectpicker').selectpicker();
+    if($('.selectpicker').length>0)
+        $('.selectpicker').selectpicker();
+    
     //Number function
     $('.spinner .btn:first-of-type').on('click', function(e) {
         e.preventDefault();

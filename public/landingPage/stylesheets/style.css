@@ -2094,3 +2094,22 @@ input[type="number"] {
   left: 4px;
 }
 
+/* ==========================================================================
+   Controls style
+   ========================================================================== */
+.bootstrap-select{
+  width: 100% !important;
+  border-radius:0!important;
+}
+
+.bootstrap-select > .btn{
+ border-radius:0!important;
+ border:1px solid #ddd!important; 
+}
+
+.bootstrap-select span{
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  font-family: 'Lato', sans-serif!important;
+}
