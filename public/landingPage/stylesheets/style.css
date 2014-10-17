@@ -1971,6 +1971,10 @@ nav a#pull {
 #registerSucced{
   background-color: #71D7FF;
 }
+#registerSucced.blue{
+ background-color: #FFF!important; 
+}
+
 #registerSucced .container{
   padding-top: 20%;
   padding-bottom: 100px;

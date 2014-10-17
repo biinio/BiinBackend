@@ -624,6 +624,9 @@ $(document).ready(function () {
             zipCodes: {
                 required: "Ingresa tu zip-code."
             },
+           pack:{
+              required: "selecciona un packete de Beacons."  
+            },            
             plan:{
               required: "selecciona un plan."  
             },
@@ -675,7 +678,7 @@ $(document).ready(function () {
                 url: "/sendEmail/",
                 beforeSend: function(){
                     $('#btn-preRegist').attr("disabled", "true");
-                    $('#btn-preRegist').val("Enviando mensaje...");
+                    $('#btn-preRegist').val("Procesando...");
                 },
                 success: function(){
                     $('#btn-preRegist').removeAttr("disabled");
@@ -709,11 +712,12 @@ $(document).ready(function () {
                 required: true
             },
             company: {
-                required: true  
+                required: true
             },
             email: {
                 required: true,
-                email: true
+                minlength: 4,
+                maxlength: 24
             },
             country: {
                 required: true,
@@ -736,9 +740,14 @@ $(document).ready(function () {
                 minlength: 2
             } ,
             qty:{
-                required: true,
-                minlength: 2                
-            }                       
+                required: true
+            },
+            plan:{
+                required:true
+            },
+            pack:{
+                required:true
+            }
         },
         messages: {
             name: {
@@ -763,11 +772,14 @@ $(document).ready(function () {
             city: {
                 required: "Ingresa una ciudad."
             },
-            zipCode: {
+            zipCodes: {
                 required: "Ingresa tu zip-code."
             },
-            streetAddres:{
-              required: "Ingresa una direcci&oacute;n."  
+           pack:{
+              required: "selecciona un packete de Beacons."  
+            },            
+            plan:{
+              required: "selecciona un plan."  
             },
             qty:{
               required: "Ingresa una cantidad."  
@@ -787,19 +799,22 @@ $(document).ready(function () {
             var city = $('#city').val();
             var zipCodes = $('#zipCodes').val();
             var streetAddres = $('#streetAddres').val();
-            var plan = $('#plan').val();
+            var plan =$('#plan').val();
             var qty = $('#qty').val();
+            var pack = $('#pack').val();
+
             var msg=" name: " +name;
-            msg+=" || plan "+plan;
-            msg+=" || company: " +company;
-            msg+=" || email: " +email;
-            msg+=" || phone: " +phone;
-            msg+=" || country: " +country;
-            msg+=" || state: " +state;
-            msg+=" || city: " +city;
-            msg+=" || zipCodes: " +zipCodes;
-            msg+=" || streetAddres: " +streetAddres;
-            msg+=" || qty: " +qty;
+            msg+="<br/> company: " +company;
+            msg+=" <br/> email: " +email;
+            msg+=" <br/> phone: " +phone;
+            msg+=" <br/> country: " +country;
+            msg+=" <br/> state: " +state;
+            msg+=" <br/> city: " +city;
+            msg+=" <br/> zipCodes: " +zipCodes;
+            msg+=" <br/> streetAddres: " +streetAddres;
+            msg+=" <br/> plan: " +plan;
+            msg+=" <br/> package: " +pack;
+            msg+=" <br/> qty: " +qty;
 
             $.ajax({
                 type: "GET",
@@ -813,13 +828,15 @@ $(document).ready(function () {
                 url: "/sendEmail/",
                 beforeSend: function(){
                     $('#btn-preOrder').attr("disabled", "true");
-                    $('#btn-preOrder').val("Enviando mensaje...");
+                    $('#btn-preOrder').val("Procesando...");
                 },
                 success: function(){
                     $('#btn-preOrder').removeAttr("disabled");
                     $('#btn-preOrder').val("Mensaje enviado!");
                     $('.sent-message').text("Hemos recibido su mensaje pronto nos contactaremos con usted.");
                     $("#pre-order-form").find("input[type=text], textarea").val("");
+                    $("#preorder").hide();
+                    $("#registerSucced").show();                    
                 },
                 error: function(){
                     $('#btn-preOrder').removeAttr("disabled");

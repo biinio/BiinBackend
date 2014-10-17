@@ -23,8 +23,18 @@ block content
 							input#city.form-control(type='text', name='City', placeholder='City', required)
 							input#zipCodes.form-control(type='text', name='ZipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
-							input#qty.form-control(type='number', name='qty', placeholder='How many are you interested', required)
-							input#plan.hidden(type="tex" name="plan" value=packageSlected)
+							.input-group.spinner
+								input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested')
+								.input-group-btn-vertical
+									button.btn.btn-default
+										i.fa.fa-caret-up
+									button.btn.btn-default
+										i.fa.fa-caret-down								
+							input#pack.hidden(type="tex" name="plan" value=packageSlected)
+							select#plan.selectpicker(title='Seleccione una subscripcion' name="pack" multiple data-max-options="1")
+								option LITE
+								option STANDART
+								option PREMIUN												
 							input.validateCheck(type="checkbox" name="termsAdCond")
 							span
 								| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
@@ -34,15 +44,18 @@ block content
 					.col-md-6
 						.row.imgPreOrder
 							img(src="/landingPage/img/thumbs/biinBeacon.png")
-
-		section#registerSucced(style="display: none;")
+		section#registerSucced.blue(style="display: none;")
 			.container
 				.row
 					.col-md-6
-						h1 Thanks for you pre-order
-						p We are going to contact you to soon.
+						.thankYuoTitle
+							h1 Thanks for you registration
+						.thankYouParagraph
+							p We are goint to contact you to soon
 						.row
-							a.btn.btn-black(href="/") Continue enjoying our page
+							.thankYouButton
+								a.btn.btn-black(href="/") Continue enjoying our page
 					.col-md-6
 						.row
-							img(src="/images/biinLogoSlogan.png")
+							.happyBiinie
+								img(src="/images/happyBiinieBlue.png")
