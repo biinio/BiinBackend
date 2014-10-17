@@ -1965,9 +1965,10 @@ nav a#pull {
 
 #preRegister h1{
   color: #71D7FF;
+  font-weight: 300;
 }
 
-#preRegister .form-control {
+#preRegister .form-control, #preorder .form-control {
   height: 50px;
   font-size: 16px;
   margin-bottom: 10px;
@@ -1976,7 +1977,7 @@ nav a#pull {
   padding: 6px 20px;
 }
 
-#preRegister span {
+#preRegister span, #preorder span {
   color: #444;
   font-size: 20px;
   font-family: 'Lato', sans-serif;
@@ -1985,19 +1986,19 @@ nav a#pull {
   margin-top: 2px;
 }
 
-#preRegister span input {
+#preRegister span input, #preorder span input {
   margin-left: 15px;
   margin-right: 10px;
 }
 
-#preRegister p {
+#preRegister p, #preorder p {
   color: #444;
   font-size: 20px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
 }
 
-#preRegister label {
+#preRegister label, #preorder label {
   color: #444;
   font-size: 20px;
   font-family: 'Lato', sans-serif;
@@ -2047,4 +2048,8 @@ nav a#pull {
   background-color: #71D7FF;
 }
 
+#preorder h1{
+  color:white;
+  font-weight: 300;
+}
 
