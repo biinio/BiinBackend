@@ -1326,8 +1326,8 @@ ul {
   z-index:1000 !important; 
   margin-left: auto !important; 
   margin-right: auto !important; 
-  width: 205px !important; 
-  height: 60px !important; 
+  width: 275px !important; 
+  height: 75px !important; 
   position: relative !important;
   top: inherit !important;
   left: inherit !important;
@@ -2051,5 +2051,10 @@ nav a#pull {
 #preorder h1{
   color:white;
   font-weight: 300;
+}
+
+input[type="number"] {
+   width:100%;
+   
 }
 
