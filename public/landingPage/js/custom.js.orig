@@ -800,6 +800,7 @@ $(document).ready(function () {
             });
         }
     });
+<<<<<<< HEAD
     
     $(".validateCheck").on('click',function(){
         if(!this.checked){
@@ -808,3 +809,7 @@ $(document).ready(function () {
           $('.btnEnviar').removeAttr('disabled');
     })
 });
+=======
+
+});
+>>>>>>> 08304af42e7536bcbf0ab2e7c4a22b245f9f7f90

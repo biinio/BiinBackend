@@ -1321,6 +1321,17 @@ ul {
 .btn-beacons{
   margin-top: 80px;
 }
+.btn-store-slide{
+  display:block !important; 
+  z-index:1000 !important; 
+  margin-left: auto !important; 
+  margin-right: auto !important; 
+  width: 205px !important; 
+  height: 60px !important; 
+  position: relative !important;
+  top: inherit !important;
+  left: inherit !important;
+}
 /* ==========================================================================
    09. BANNER_3
    ========================================================================== */
@@ -1937,6 +1948,7 @@ nav a#pull {
   width: 100%;
   height:  auto;
   vertical-align:middle;
+  margin-top: 20%;
 }
 
 #preRegister .btnEnviar,#preorder .btnEnviar{
@@ -1945,7 +1957,6 @@ nav a#pull {
 
 #preRegister input, #preorder input{
   margin-bottom: 0px;
-
 }
 
 #preorder h1{
@@ -1954,9 +1965,10 @@ nav a#pull {
 
 #preRegister h1{
   color: #71D7FF;
+  font-weight: 300;
 }
 
-#preRegister .form-control {
+#preRegister .form-control, #preorder .form-control {
   height: 50px;
   font-size: 16px;
   margin-bottom: 10px;
@@ -1965,28 +1977,28 @@ nav a#pull {
   padding: 6px 20px;
 }
 
-#preRegister span {
+#preRegister span, #preorder span {
   color: #444;
   font-size: 20px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
-
+  margin-left: 10px;
+  margin-top: 2px;
 }
-#preRegister span input {
+
+#preRegister span input, #preorder span input {
   margin-left: 15px;
   margin-right: 10px;
-
 }
 
-
-#preRegister p {
+#preRegister p, #preorder p {
   color: #444;
   font-size: 20px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
 }
 
-#preRegister label {
+#preRegister label, #preorder label {
   color: #444;
   font-size: 20px;
   font-family: 'Lato', sans-serif;
@@ -1994,8 +2006,50 @@ nav a#pull {
   margin-bottom: 20px;
 }
 
+.checkboxFour {
+  width: 30px;
+  height: 30px;
+  background: #333;
+  margin-left: 15px;
+  border-radius: 100%;
+  position: relative;
+}
+
+.checkboxFour label {
+  width: 22px;
+  height: 22px;
+  border-radius: 100px;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  transition: all .5s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  background: #bbb;
+}
+
+.contentCheckBox {
+  display: inline-flex;
+  width: 100%;
+}
+
+/**
+ * Create the checked state
+ */
+.checkboxFour input[type=checkbox]:checked + label {
+  background: #26ca28;
+}
+
 #preorder{
   background-color: #71D7FF;
 }
 
+#preorder h1{
+  color:white;
+  font-weight: 300;
+}
 

@@ -24,6 +24,19 @@ block content
 							input#city.form-control(type='text', name='city', placeholder='City', required)
 							input#zipCodes.form-control(type='text', name='zipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
+<<<<<<< HEAD
+							input#plan.hidden(type="tex" name="plan" value=packageSlected)
+							select#package(title="Select your Biin Beacon Package" name="package")
+								option UNUM
+								option TRIBUS
+								option DECEM
+							input#qty(type="number" placeholder="Number of packages you are interested on?" name="qty")
+							label= "Usted está preordenando el plan " + packageSlected							
+							.row
+								span
+									input.validateCheck(type="checkbox" name="termsAdCond")
+									| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
+=======
 							input#plan.hidden(type="tex" name="plan" value=packageSlected)						
 							.row.text-center
 								.contentCheckBox
@@ -32,6 +45,7 @@ block content
 										label(for="checkboxFourInput")
 									span
 										| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
+>>>>>>> 08304af42e7536bcbf0ab2e7c4a22b245f9f7f90
 						.row.text-center
 							input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)
 							label.sent-message
