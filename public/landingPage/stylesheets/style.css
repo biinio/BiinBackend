@@ -1940,11 +1940,11 @@ nav a#pull {
 }
 
 #preRegister .btnEnviar,#preorder .btnEnviar{
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 #preRegister input, #preorder input{
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 
 }
 
