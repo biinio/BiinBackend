@@ -18,7 +18,7 @@
 "SLIDER.3.1.TEXT":"Sus campa&ntilde;as f&aacute;cil y r&aacute;pido.",
 "SLIDER.3.2.TEXT":"Administre y promueva la relaci&oacute;n con sus clientes.",
 "SLIDER.3.3.TEXT":"Monitoreo efectivo de los resultados de su campa&ntilde;as.",
-"SLIDER.3.BUTTON.SIGNUP":"Une a Biin.",
+"SLIDER.3.BUTTON.SIGNUP":"Unete a Biin",
 "SLIDER.4.TITLE":"Beacons Biin",
 "SLIDER.4.1.TEXT":"Desde que salen de su caja son una experiencia &uacute;nica.",
 "SLIDER.4.2.TEXT":"Inteligentes en su espacio f&iacute;sico.",
@@ -54,8 +54,8 @@
 "BIINFEATURES.BEACONS.TEXT":"Son los sensores que permiten la experiencia con contexto, simplemente se colocan en el espacio que quiera convertir en una vitrina digital, son f&#225;ciles de instalar y libres de mantenimiento ",
 "BIINFEATURES.CONTENTMANAGMENT.TITLE":"Administrador de contenido",
 "BIINFEATURES.CONTENTMANAGMENT.TEXT":"Gestione el contenido de sus vitrinas digitales de BiinApp, se sorprender&#225; de la facilidad y rapidez con la que podr&#225; crear contenido digital de calidad, administrar sus Beacons, crear ofertas, cupones, regalos ademas de definir mensajes y notificaciones indicados para el contexto en el que se encuentren sus visitantes.",
-"BIINFEATURES.LOYALTYPROGRAM.TITLE":"Programa de Lealtad",
-"BIINFEATURES.LOYALTYPROGRAM.TEXT":"Todos amamos ganar y con el programa de lealtad de Biin puedes asegurarse que sus clientes regresar&#225;n por m&#225;s.",
+"BIINFEATURES.LOYALTYPROGRAM.TITLE":"Programa de Lealtad BiinCard",
+"BIINFEATURES.LOYALTYPROGRAM.TEXT":"Todos amamos ganar y con el programa de lealtad de Biin vas a mejorar la relaci&oacute;n con tus clientes actuales y a atraer m&aacute;s clientes a tu negocio.",
 "BIINFEATURES.MANAGEMENTPORTAL.TITLE":"Portal de clientes y visitantes ",
 "BIINFEATURES.MANAGEMENTPORTAL.TEXT":"Obtenga informaci&#243;n en tiempo real de los resultados de su campa&#241;a en Biin, informaci&#243;n din&#225;mica y accionable sobre la interacci&#243;n de sus visitantes con los Beacons y con el contenido, resultados de las promociones, integraci&#243;n con redes sociales, estad&#237;sticas y mucho mas.",
 
@@ -66,10 +66,10 @@
 
 "MANAGECONTENTFORBIIN.TITLE":"Gestor de Contenido y clientes de Biin",
 "MANAGECONTENTFORBIIN.SUBTITLE":"Dise&#241;e y genere una experiencia digital relevante para sus clientes y visitantes de manera facil y r&#225;pida. ",
-"MANAGECONTENTFORBIIN.TEXT1":"En esta herramienta web de facil uso usted puede administrar el contenido que se mostrar&#229; en la aplicaci&#243;n m&#243;vil de Biin, por ejemplo,  productos, servicios y promociones o cualquier informaci&#243;n relevante para sus clientes y visitantes. ",
+"MANAGECONTENTFORBIIN.TEXT1":"En esta herramienta web de facil uso usted puede administrar el contenido que se mostrar&aacute; en la aplicaci&#243;n m&#243;vil de Biin, por ejemplo,  productos, servicios y promociones o cualquier informaci&#243;n relevante para sus clientes y visitantes. ",
 "MANAGECONTENTFORBIIN.TEXT2":"Podr&#225; asignar el contenido a uno de los Biin Beacons y colocarlo en el lugar indicado para crear la experiencia con contexto en la aplicacion Biin. ",
 "MANAGECONTENTFORBIIN.TEXT3":"Sus visitantes podr&#225;n acceder el contenido de manera sencilla en el app movil cuando est&#233;n cerca de los Biin Beacons, o encontrarlo mediante una b&#250;squeda desde cualquier lugar. ",
-"MANAGECONTENTFORBIIN.BUTTON.SIGNUP":"Registrarme",
+"MANAGECONTENTFORBIIN.BUTTON.SIGNUP":"Ver precios",
 
 "BIINBEACONS.TITLE":"&#191;Que son los Beacons de Biin?",
 "BIINBEACONS.SUBTITLE":"La puerta de entrada a la micro-localizaci&#243;n",
@@ -79,7 +79,7 @@
 "BIINBEACONS.LIST.ITEM2":"La señal tiene un alcance de hasta 70 metros",
 "BIINBEACONS.LIST.ITEM3":"Libres de mantenimiento por hasta 3 años",
 "BIINBEACONS.LIST.ITEM4":"Bajo costo",
-"BIINBEACONS.BUTTON.BUY":"Comprar",
+"BIINBEACONS.BUTTON.BUY":"Ver Paquetes",
 
 "TEST": "Prueba de lenguaje spañol",
 "LOGIN":"Iniciar sessión",
