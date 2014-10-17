@@ -96,6 +96,22 @@ module.exports = function () {
                     "<b>Titulo</b>: <pre style='font-size: 14px'>" + req.query.title + "</pre>" +
                     "<b>Mensaje</b>: <pre style='font-size: 14px'>" + req.query.comments + "</pre>";
                 break;
+            case "PreOrderBeacons":
+                subject = "Pre Order Beacons of "+req.query.name;
+                htmlBody = "<h3>" + subject + "</h3>" +
+                    "<b>Nombre</b>: <pre style='font-size: 14px'>" + req.query.name + "</pre>" +
+                    "<b>Email</b>: <pre style='font-size: 14px'>" + req.query.email + "</pre>" +
+                    "<b>Titulo</b>: <pre style='font-size: 14px'>" + req.query.title + "</pre>" +
+                    "<b>Mensaje</b>: <pre style='font-size: 14px'>" + req.query.comments + "</pre>";
+                break;
+            case "PreRegistrarBiin":
+                subject = "Pre Registrar Biin "+req.query.name;
+                htmlBody = "<h3>" + subject + "</h3>" +
+                    "<b>Nombre</b>: <pre style='font-size: 14px'>" + req.query.name + "</pre>" +
+                    "<b>Email</b>: <pre style='font-size: 14px'>" + req.query.email + "</pre>" +
+                    "<b>Titulo</b>: <pre style='font-size: 14px'>" + req.query.title + "</pre>" +
+                    "<b>Mensaje</b>: <pre style='font-size: 14px'>" + req.query.comments + "</pre>";
+                break;    
         }
 
         // setup e-mail data with unicode symbols

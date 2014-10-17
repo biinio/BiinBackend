@@ -25,7 +25,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/login',routes.login);
     app.get('/home',routes.home);
     app.get('/preregister/:packageSlected',routes.preregister);
-    app.get('/preorder',routes.preorder);
+    app.get('/preorder/:packageSlected',routes.preorder);
     app.post('/login',passport.authenticate('clientLocal',{
         failureRedirect:'/login',
         successRedirect:'/dashboard'

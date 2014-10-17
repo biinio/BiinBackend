@@ -305,7 +305,7 @@ block content
 								li 1 usuario
 							//Table Button
 							.price-footer
-								a.btn.btn-black(href='/preregister/lite') Pre-registrate ahora! 
+								a.btn.btn-black(href='#') Pre-registrate ahora! 
 					//END PRICE PLAN STANDARD
 					//PRICE PLAN ADVANCED
 					#price_2.col-xs-12.col-sm-4.col-md-4
@@ -326,7 +326,8 @@ block content
 								li Contenido ilimitado
 							//Table Button
 							.price-footer
-								a.btn.btn-theme(href='/preregister/standard') Pre-registrate ahora! 					
+								a.btn.btn-theme(href='#') Pre-registrate ahora! 
+					
 					//END PRICE PLAN ADVANCED
 					//PRICE PLAN ULTIMATE
 					#price_3.col-xs-12.col-sm-4.col-md-4
@@ -346,7 +347,7 @@ block content
 								li Usuarios ilimitados 
 							//Table Button
 							.price-footer
-								a.btn.btn-black(href='/preregister/premiun') Pre-registrate ahora!
+								a.btn.btn-black(href='#') Pre-registrate ahora!
 					//END PRICE PLAN ULTIMATE
 				//End Pricing Section Content		
 		//BEAN PACKAGES============================================= 
@@ -378,7 +379,11 @@ block content
 								li Compre este paquete por solo &#36;45
 							//Table Button
 							.price-footer
-								a.btn.btn-theme(href='/prerorder/unum') Pre-ordena ahora!
+<<<<<<< HEAD
+								a.btn.btn-theme(href='/preorder/unum') Pre-order
+=======
+								a.btn.btn-theme(href='/preregister/unum') Pre-ordena ahora!
+>>>>>>> FETCH_HEAD
 					//END PRICE PLAN UNUM					
 					//PRICE PLAN STANDARD
 					#price_1.col-xs-12.col-sm-6.col-md-4
@@ -399,7 +404,11 @@ block content
 								li Compre el paquete basico por solo &#36;117
 							//Table Button
 							.price-footer
-								a.btn.btn-theme(href='/preorder/tribus') Pre-ordena ahora!
+<<<<<<< HEAD
+								a.btn.btn-theme(href='/preorder/tribus') Pre-order
+=======
+								a.btn.btn-theme(href='/preregister/tribus') Pre-ordena ahora!
+>>>>>>> FETCH_HEAD
 					//END PRICE PLAN STANDARD
 					//PRICE PLAN ADVANCED
 					#price_2.col-xs-12.col-sm-6.col-md-4
@@ -418,7 +427,11 @@ block content
 								li Compre el paquete empresarial  por solo &#36;350
 							//Table Button
 							.price-footer
-								a.btn.btn-theme(href='/preorder/decem') Pre-ordena ahora!					
+<<<<<<< HEAD
+								a.btn.btn-theme(href='/preorder/decem') Pre-order				
+=======
+								a.btn.btn-theme(href='/preregister/decem') Pre-ordena ahora!					
+>>>>>>> FETCH_HEAD
 					//END PRICE PLAN ADVANCED
 				//End Pricing Section Content
 			//End container

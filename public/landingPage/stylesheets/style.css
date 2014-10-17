@@ -1922,14 +1922,14 @@ nav a#pull {
 }
 
 /* ==========================================================================
-   16. CONTACT FORM RESPONSE PAGE   
+   16. Preorder and register Style
    ========================================================================== */
-#preorder .container {
+#preRegister  .container, #preorder .container {
   padding-top: 150px;
   padding-bottom: 100px;
 } 
 
-#preorder .imgPreOrder img{
+#preRegister .imgPreOrder img, #preorder .imgPreOrder img{
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -1939,14 +1939,63 @@ nav a#pull {
   vertical-align:middle;
 }
 
-#preorder .btnEnviar{
-  margin-top: 20px;
+#preRegister .btnEnviar,#preorder .btnEnviar{
+  margin-top: 60px;
 }
-#preorder input{
-  margin-bottom: 10px;
+
+#preRegister input, #preorder input{
+  margin-bottom: 0px;
 
 }
 
 #preorder h1{
+  color: #FFF;;
+}
+
+#preRegister h1{
   color: #71D7FF;
 }
+
+#preRegister .form-control {
+  height: 50px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 0px;
+  padding: 6px 20px;
+}
+
+#preRegister span {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+
+}
+#preRegister span input {
+  margin-left: 15px;
+  margin-right: 10px;
+
+}
+
+
+#preRegister p {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+#preRegister label {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+#preorder{
+  background-color: #71D7FF;
+}
+
+
