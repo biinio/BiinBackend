@@ -108,7 +108,7 @@ html[xmlns] .slides {
   text-indent: -9999px;
   opacity: 0;
   font-size: 30px;
-  padding-left: 12px;
+  /*padding-left: 12px;*/
 
   -webkit-transition: all .3s ease;
 }

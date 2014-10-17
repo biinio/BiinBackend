@@ -520,18 +520,18 @@ ul {
   position: relative;
   content: "\f053";
   text-align: center;
-  margin-left: -15px;
-  font-size: 26px;
+  /*margin-left: -15px;*/
+  font-size: 24px;
 }
 .flex-next:before {
   content:"\f054";
   text-align: center;
-  margin-left: -7px;
+  /*margin-left: -7px;*/
   font-size: 24px;
 }
 
 .flex-prev,.flex-next{
-  padding-top:10px;
+  padding-top:8px;
   color: black !important;
   font-size: 36px!important;
   line-height: 40px;
