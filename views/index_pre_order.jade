@@ -13,7 +13,7 @@ block content
 								|empresa. Perm&iacute;tenos saber a quien estaremos contactando cuando los Biin Beacons
 								| est&eacute;n disponibles.								
 						form#pre-order-form.row(action="#" name="pre-registform", method="post")
-							label= "Estas pre-registrando el paquete " + packageSlected
+							label= "Usted está pre-ordenando el PAQUETE " + packageSlected
 							input#name.form-control(type='text' name='full_name' placeholder='Full Name' required)
 							input#company.form-control(type='text', name='company', placeholder='Company (mandatory if shipping to a business addres)', required)
 							input#email.form-control(type='text', name='email', placeholder='Email', required)
@@ -23,13 +23,16 @@ block content
 							input#city.form-control(type='text', name='City', placeholder='City', required)
 							input#zipCodes.form-control(type='text', name='ZipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
-							.input-group.spinner
-								input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested')
-								.input-group-btn-vertical
-									button.btn.btn-default
-										i.fa.fa-caret-up
-									button.btn.btn-default
-										i.fa.fa-caret-down								
+							.row
+								.cantidadPaquetes
+									p Cantidad de Paquetes
+									.input-group.spinner
+										input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested')
+										.input-group-btn-vertical
+											button.btn.btn-default
+												i.fa.fa-caret-up
+											button.btn.btn-default
+												i.fa.fa-caret-down								
 							input#pack.hidden(type="tex" name="plan" value=packageSlected)
 							select#plan.selectpicker(title='Seleccione una subscripcion' name="pack" multiple data-max-options="1")
 								option LITE
