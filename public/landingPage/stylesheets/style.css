@@ -1969,10 +1969,10 @@ nav a#pull {
 }
 
 #registerSucced{
-  background-color: #71D7FF;
+  background-color: #FFF;
 }
 #registerSucced.blue{
- background-color: #FFF!important; 
+  background-color: #71D7FF!important; 
 }
 
 #registerSucced .container{
@@ -2135,6 +2135,13 @@ input[type="number"] {
   font-weight: 300;
   font-size: 70px;
   margin-left: 100px;
+}
+
+.thankYuoTitleBeacons h1{
+  font-weight: 300;
+  font-size: 70px;
+  margin-left: 100px;
+  color: white;
 }
 
 .thankYouParagraph p{
