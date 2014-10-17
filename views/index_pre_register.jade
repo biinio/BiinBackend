@@ -25,6 +25,17 @@ block content
 							input#zipCodes.form-control(type='text', name='zipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
 							input#plan.hidden(type="tex" name="plan" value=packageSlected)						
+							select#package.selectpicker(title='Select your Biin Beacon Package' name="package" multiple data-max-options="1")
+								option UNUM
+								option TRIBUS
+								option DECEM					
+							.input-group.spinner
+								input.form-control(type="text" value="42")
+								.input-group-btn-vertical
+									button.btn.btn-default
+										i.fa.fa-caret-up
+									button.btn.btn-default
+										i.fa.fa-caret-down
 							.row.text-center
 								.contentCheckBox
 									.checkboxFour

@@ -529,6 +529,23 @@ $(document).ready(function() {
     });
 });
 /*----------------------------------------------------*/
+/*  Document Controls
+/*----------------------------------------------------*/
+$(document).ready(function () {
+    //Picker instance
+    $('.selectpicker').selectpicker();
+    //Number function
+    $('.spinner .btn:first-of-type').on('click', function(e) {
+        e.preventDefault();
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+    });
+    $('.spinner .btn:last-of-type').on('click', function(e) {
+        e.preventDefault();
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+    });    
+
+});
+/*----------------------------------------------------*/
 /*  Form pre-register
  /*----------------------------------------------------*/
 
