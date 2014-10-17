@@ -1948,6 +1948,8 @@ nav a#pull {
   width: 100%;
   height:  auto;
   vertical-align:middle;
+  margin-top: 20%;
+
 }
 
 #preRegister .btnEnviar,#preorder .btnEnviar{
