@@ -1981,7 +1981,8 @@ nav a#pull {
   font-size: 20px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
-
+  margin-left: 10px;
+  margin-top: 2px;
 }
 #preRegister span input {
   margin-left: 15px;
@@ -2003,6 +2004,44 @@ nav a#pull {
   font-family: 'Lato', sans-serif;
   font-weight: 500;
   margin-bottom: 20px;
+}
+
+.checkboxFour {
+  width: 30px;
+  height: 30px;
+  background: #333;
+  margin-left: 15px;
+  border-radius: 100%;
+  position: relative;
+}
+
+.checkboxFour label {
+  width: 22px;
+  height: 22px;
+  border-radius: 100px;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  transition: all .5s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  background: #bbb;
+}
+
+.contentCheckBox {
+  display: inline-flex;
+  width: 100%;
+}
+
+/**
+ * Create the checked state
+ */
+.checkboxFour input[type=checkbox]:checked + label {
+  background: #26ca28;
 }
 
 #preorder{
