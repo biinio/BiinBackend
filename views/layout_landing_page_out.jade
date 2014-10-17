@@ -34,9 +34,11 @@ html(lang='es')
 		link(href='/landingPage/stylesheets/google-fonts-open-sans.css', rel='stylesheet', type='text/css')
 		script(src="/angular/angular.js")
 		script(src="/angular-route/angular-route.js")
-		script(src="/javascripts/angular/app.js")			
+		script(src="/javascripts/angular/app.js")		
+		script(src="/angular-translate/angular-translate.min.js")
+		script(src="/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js")			
 		block head_scripts			
-	body
+	body(ng-app="landingPage" ng-controller="indexController")
 		
 		//PRELOADER =============================================
 		#preloader

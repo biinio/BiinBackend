@@ -1881,6 +1881,7 @@ nav a#pull {
    ========================================================================== */
 #preorder .container {
   padding-top: 150px;
+  padding-bottom: 100px;
 } 
 
 #preorder .imgPreOrder img{
@@ -1893,6 +1894,14 @@ nav a#pull {
   vertical-align:middle;
 }
 
-.btnEnviar{
+#preorder .btnEnviar{
   margin-top: 20px;
+}
+#preorder input{
+  margin-bottom: 10px;
+
+}
+
+#preorder h1{
+  color: #71D7FF;
 }
