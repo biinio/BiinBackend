@@ -542,8 +542,7 @@ $(document).ready(function () {
                 required: true
             },
             company: {
-                required: true,
-                email: true
+                required: true
             },
             email: {
                 required: true,
@@ -639,7 +638,7 @@ $(document).ready(function () {
                     title     : "Pre-registrar Biin",
                     comments  : msg
                 },
-                url: "sendEmail/",
+                url: "/sendEmail/",
                 beforeSend: function(){
                     $('#btn-preRegist').attr("disabled", "true");
                     $('#btn-preRegist').val("Enviando mensaje...");
@@ -774,7 +773,7 @@ $(document).ready(function () {
                     title     : "Beacons Pre-Order",
                     comments  : msg
                 },
-                url: "sendEmail/",
+                url: "/sendEmail/",
                 beforeSend: function(){
                     $('#btn-preOrder').attr("disabled", "true");
                     $('#btn-preOrder').val("Enviando mensaje...");
