@@ -78,7 +78,7 @@ h1,
 h2,
 h3 {
   margin-top: 0;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 h4,
@@ -1131,6 +1131,7 @@ ul {
   font-size: 45px;
   font-weight: 300;
   margin-bottom: 10px;
+  color: #71D7FF;
 }
 #newsletter_title p {
   line-height: 24px;
@@ -1149,8 +1150,8 @@ ul {
   width: 90%;
 }
 .subscribe-form input {
-  border: 1px solid #ddd;
-  border-right: none;
+  /*border: 1px solid #ddd;
+  border-right: none;*/
   width: 100%;
 }
 .subscribe-input {
@@ -1160,20 +1161,21 @@ ul {
   font-size: 16px;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
-  padding-left: 10px;
+  padding-left: 20px;
+  border: none;
 }
 .subscribe-submit {
-  width: 30%;
+  width: 35% !important;
   height: 54px;
   position: absolute;
   top: 0px;
   right: 0px;
   background-color: #71D7FF;
-  border: 1px solid #71D7FF;
+  /*border: 1px solid #71D7FF;*/
   color: #fff;
   font-size: 18px;
   font-family: 'Lato', sans-serif;
-  font-weight: 900;
+  font-weight: 500;
   text-decoration: none;
   text-align: center;
   display: block;
@@ -1618,7 +1620,8 @@ ul {
   height: 50px;
   font-size: 16px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: none;
+  /*border: 1px solid #ccc;*/
   border-radius: 0px;
 }
 .contact-form input[type="text"],
