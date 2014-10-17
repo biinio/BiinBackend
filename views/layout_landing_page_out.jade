@@ -40,13 +40,38 @@ html(lang='es')
 		script(src="/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js")			
 		block head_scripts			
 	body(ng-app="landingPage" ng-controller="indexController")
-		
-		//PRELOADER =============================================
-		#preloader
-			#status
 
 		//HEADER=============================================
 		header#header
+			.nav.navbar-helper
+				ul.nav.navbar-nav.navbar-right
+					li(style='cursor: pointer;').dropdown
+						a.dropdown-toggle(data-toggle='dropdown')
+							p(translate="LOGIN")
+						ul.dropdown-menu.loginDropDown
+							li
+								h4 Biin Dashboard login.
+								form.loginForm(action='/login', method='POST')
+									input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
+									input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password')
+									a.forgotPass.pull-right(href='') Forgot password?
+									div(data-toggle='buttons-checkbox')
+										.checkbox.stayLogged
+											label
+												input(type='checkbox')
+												| Stay Logged In
+										span.adviceLoggedIn.pull-left Keep me logged in until I log out
+										a#buttonLogin.btn.btn-theme.fulllWidth Login
+										a#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up						
+					//li.btn-group
+						a.dropdown-toggle(data-toggle='dropdown')
+							img(src="/landingPage/img/thumbs/spanishIcon.png" ng-if="lang==='ES'")
+							img(src="/landingPage/img/thumbs/englishIcon.png" ng-if="lang==='EN'")
+						ul.dropdown-menu.langsDropDown							
+							li
+								img(src="/landingPage/img/thumbs/englishIcon.png" ng-click="changeLanguage('EN')" ng-if="lang!=='EN'")
+							li
+								img(src="/landingPage/img/thumbs/spanishIcon.png" ng-click="changeLanguage('ES')" ng-if="lang!=='ES'")
 			.navbar.navbar-fixed-top.scroll-fixed-navbar
 				.container
 					.transparency					
@@ -64,36 +89,21 @@ html(lang='es')
 					nav#navigation-menu.collapse.navbar-collapse(role='navigation')
 						ul.nav.navbar-nav.navbar-right
 							li
-								a(href='/#intro') Inicio
+								a(href='/#intro' translate="MENU.HOME")
 							li
-								a(href='/#features') Caracter&iacute;sticas								
+								a(href='/#videoHistory' translate="MENU.MEETBIIN")
 							li
-								a(href='/#screens') Qui&eacute;n usa Biin?
+								a(href='/#banner_1' translate="MENU.MOBILEAPP")
 							li
-								a(href='/#newsletter') Bolet&iacute;n
+								a(href='/#crm_banner' translate="MENU.CMS")
 							li
-								a(href='/#pricing') Precios
+								a(href='/#banner_2' translate="MENU.BEACONS")
 							li
-								a(href='/#contact') Contact&aacute;nos
-							li(style='cursor: pointer;').dropdown
-								a.dropdown-toggle(data-toggle='dropdown')
-									| Inicio Sessi&oacute;n
-									b.caret
-								ul.dropdown-menu.loginDropDown
-									li
-										h4 Biin Dashboard login.
-										form.loginForm(action='/login', method='POST')
-											input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
-											input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password')
-											a.forgotPass.pull-right(href='') Forgot password?
-											div(data-toggle='buttons-checkbox')
-												.checkbox.stayLogged
-													label
-														input(type='checkbox')
-														| Stay Logged In
-												span.adviceLoggedIn.pull-left Keep me logged in until I log out
-												a#buttonLogin.btn.btn-theme.fulllWidth Login
-												a#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up
+								a(href='/#pricing' translate="MENU.PRICES")
+							li
+								a(href='/#contact' translate="MENU.CONTACT")
+							li
+								a(href='/#newsletter' translate="MENU.NEWS")
 					//End nav-collapse
 				//End container
 			//End navbar

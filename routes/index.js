@@ -60,12 +60,21 @@ module.exports = function () {
 	  res.render("_partials/" + filename );
 	}
 
+	//Get the pre-register form
 	functions.preregister =function(req,res){
-		res.render("index_pre_register",{packageSlected:req.params.packageSlected});
+		res.render("index_pre_register",{packageSlected:req.params.packageSlected,accept:req.params.accept});
 	}
 
+	//Get the pre-order form
 	functions.preorder =function(req,res){
-		res.render("index_pre_order",{packageSlected:req.params.packageSlected});
+		res.render("index_pre_order",{packageSlected:req.params.packageSlected,accept:req.params.accept});
+	}
+
+	//Get the pre-order form
+	functions.terms=function(req,res){
+
+		var backPage = req.params.backPage.replace('-','/');
+		res.render("termsAndConditions",{backPage:backPage});
 	}
 	
 	//Send emails

@@ -2141,7 +2141,6 @@ input[type="number"] {
   font-weight: 300;
   font-size: 20px;
   margin-left: 100px !important;
-
 }
 
 .thankYouButton {
@@ -2154,10 +2153,27 @@ input[type="number"] {
   font-size: 22px;
 }
 
-
 .happyBiinie img{
   width: 100%;
   height: 100%;
   margin-top: -135px;
   margin-left: -31px;
+}
+
+/* ==========================================================================
+   Terms And Conditions Style
+   ========================================================================== */
+#termsAndConditions .container{
+  height: 100%;
+  padding-top: 150px;
+  padding-bottom:100px;
+}
+
+.btn-termsAccept{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  display: block;
+  width: 150px;
+  height: 50px!important;
 }

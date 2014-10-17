@@ -29,17 +29,28 @@ block content
 									button.btn.btn-default
 										i.fa.fa-caret-up
 									button.btn.btn-default
-										i.fa.fa-caret-down								
+										i.fa.fa-caret-down
 							input#pack.hidden(type="tex" name="plan" value=packageSlected)
 							select#plan.selectpicker(title='Seleccione una subscripcion' name="pack" multiple data-max-options="1")
 								option LITE
 								option STANDART
 								option PREMIUN												
-							input.validateCheck(type="checkbox" name="termsAdCond")
-							span
-								| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
+							.row.text-center
+								.contentCheckBox
+									.checkboxFour
+										if(typeof(accept)==="undefined")
+											input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond")
+											label(for="checkboxFourInput")
+										else
+											input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond" checked)
+											label(for="checkboxFourInput")
+									a(href="/termsAndConditions/preorder-"+packageSlected)
+										| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
 						.row.text-center
-							input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)
+							if(typeof(accept)==="undefined")
+								input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)
+							else
+								input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" )
 							label.sent-message
 					.col-md-6
 						.row.imgPreOrder
@@ -51,7 +62,7 @@ block content
 						.thankYuoTitle
 							h1 Thanks for you registration
 						.thankYouParagraph
-							p We are goint to contact you to soon
+							p We are going to contact you to soon
 						.row
 							.thankYouButton
 								a.btn.btn-black(href="/") Continue enjoying our page
