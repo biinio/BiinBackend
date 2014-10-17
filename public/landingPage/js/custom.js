@@ -647,19 +647,22 @@ $(document).ready(function () {
             var zipCodes = $('#zipCodes').val();
             var streetAddres = $('#streetAddres').val();
             var plan =$('#plan').val();
-
             var qty = $('#qty').val();
+            var pack = $('#pack').val();
+
             var msg=" name: " +name;
-            msg+=" || company: " +company;
-            msg+=" || email: " +email;
-            msg+=" || phone: " +phone;
-            msg+=" || country: " +country;
-            msg+=" || state: " +state;
-            msg+=" || city: " +city;
-            msg+=" || zipCodes: " +zipCodes;
-            msg+=" || streetAddres: " +plan;
-            msg+=" || plan: " +plan;
-            msg+=" || qty: " +qty;
+            msg+="<br/> company: " +company;
+            msg+=" <br/> email: " +email;
+            msg+=" <br/> phone: " +phone;
+            msg+=" <br/> country: " +country;
+            msg+=" <br/> state: " +state;
+            msg+=" <br/> city: " +city;
+            msg+=" <br/> zipCodes: " +zipCodes;
+            msg+=" <br/> streetAddres: " +plan;
+            msg+=" <br/> plan: " +plan;
+            msg+=" <br/> package: " +pack;
+            msg+=" <br/> qty: " +qty;
+
             //"<b>Nombre</b>: <pre style='font-size: 14px'>" + req.query.name + "</pre>" +
             $.ajax({
                 type: "GET",
