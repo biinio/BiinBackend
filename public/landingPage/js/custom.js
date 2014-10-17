@@ -535,7 +535,7 @@ $(document).ready(function () {
     //Picker instance
     if($('.selectpicker').length>0)
         $('.selectpicker').selectpicker();
-    
+
     //Number function
     $('.spinner .btn:first-of-type').on('click', function(e) {
         e.preventDefault();
@@ -674,7 +674,9 @@ $(document).ready(function () {
                     $('#btn-preRegist').removeAttr("disabled");
                     $('#btn-preRegist').val("Mensaje enviado!");
                     $('.sent-message').text("Hemos recibido su mensaje pronto nos contactaremos con usted.");
-                    $("#pre-registform").find("input[type=text], textarea").val("");                    
+                    $("#pre-registform").find("input[type=text], textarea").val("");
+                    $("#preRegister").hide();
+                    $("#registerSucced").show();
                 },
                 error: function(){
                     $('#btn-preRegist').removeAttr("disabled");
