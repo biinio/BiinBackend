@@ -2145,6 +2145,12 @@ input[type="number"] {
   margin-top: 20px;
 }
 
+.thankYouButton > .btn {
+  font-weight: 300;
+  font-size: 22px;
+}
+
+
 .happyBiinie img{
   width: 100%;
   height: 100%;
