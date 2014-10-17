@@ -999,7 +999,7 @@ ul {
 /*	  Feature Box
 /*------------------------------------------*/
 .feature-box {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   padding-left: 5px;
   padding-right: 5px;
   height: 130px;
@@ -1108,7 +1108,7 @@ ul {
   margin-bottom: 20px;
 }
 .list-item i {
-  color: #fff;
+  color: black;
   margin-right: 8px;
   font-size: 18px;
 }
@@ -1619,10 +1619,11 @@ ul {
 #contact-form .form-control {
   height: 50px;
   font-size: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border: none;
   /*border: 1px solid #ccc;*/
   border-radius: 0px;
+  padding: 6px 20px;
 }
 .contact-form input[type="text"],
 .contact-form input[type="email"],
@@ -1645,6 +1646,16 @@ ul {
 /*------------------------------------------*/
 /*	  Contact Form Input Focus
 /*------------------------------------------*/
+.col-md-6 {
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+}
+
+.col-md-12 {
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+}
+
 .form-control:focus {
   outline: 0px none;
   box-shadow: none;
@@ -1834,6 +1845,7 @@ nav a#pull {
 }
 .loginDropDown .form-control {
   margin-bottom: 20px;
+
 }
 .loginDropDown input.form-control {
   height: 50px;
