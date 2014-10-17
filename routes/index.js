@@ -61,11 +61,11 @@ module.exports = function () {
 	}
 
 	functions.preregister =function(req,res){
-		res.render("index_pre_register");
+		res.render("index_pre_register",{packageSlected:req.params.packageSlected});
 	}
 
 	functions.preorder =function(req,res){
-		res.render("index_pre_order");
+		res.render("index_pre_order",{packageSlected:req.params.packageSlected});
 	}
 	
 	//Send emails
