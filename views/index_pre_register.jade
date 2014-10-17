@@ -3,17 +3,17 @@ block head_scripts
 	script(src="/landingPage/js/angular/landing.js")
 block content
 	#contentWrapper
-		section#preorder
+		section#preRegister
 			.container
 				.row
 					.col-md-6
 						.row
-							h1 Excelente! Pre-ordena Biin ahora
-							p Sea parte de las primeras empresas que aprovechan Biin. Pre-ordene ahora y reciba
+							h1 Excelente! Pre-registre Biin ahora
+							p Sea parte de las primeras empresas que aprovechan Biin. Pre-registe ahora y reciba
 								| atenci&oacute;n personalizada para crear la nueva experiencia para sus clientes. Biin estar&aacute;
 								| disponible pronto, permitanos saber a qui&eacute;n contactar para coordinar los detalles de la puesta
 								| en marcha de Biin en su empresa.
-						.row
+						form#pre-registform.row(action="#" name="pre-registform", method="post")
 							label= "Estas pre-registrando el paquete " + packageSlected
 							input#name.form-control(type='text' name='full_name' placeholder='Full Name' required)
 							input#company.form-control(type='text', name='company', placeholder='Company (mandatory if shipping to a business addres)', required)
@@ -25,11 +25,14 @@ block content
 							input#zipCodes.form-control(type='text', name='ZipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
 							input#qty.form-control(type='number', name='qty', placeholder='How many are you interested', required)
-							input(type="checkbox" name="termsAdCond")
-							span
-								| I have read and agreed to the Sale  Terms of Biin Beacons 
+							input#plan.hidden(type="tex" name="plan" value=packageSlected)
+							label= "Usted está preordenando el plan " + packageSlected							
+							.row
+								span
+									input(type="checkbox" name="termsAdCond")
+									| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
 						.row.text-center
-							button.btn.btn-black.btn-lg.btnEnviar() Enviar
+							input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar")
 					.col-md-6
 						.row.imgPreOrder
 							img(src="/landingPage/img/thumbs/biinCMS.png")

@@ -528,4 +528,273 @@ $(document).ready(function() {
         }
     });
 });
+/*----------------------------------------------------*/
+/*  Form pre-register
+ /*----------------------------------------------------*/
 
+$(document).ready(function () {
+
+    "use strict";
+
+    $("#pre-registform").validate({
+        rules: {
+            name: {
+                required: true
+            },
+            company: {
+                required: true,
+                email: true
+            },
+            email: {
+                required: true,
+                minlength: 4,
+                maxlength: 24
+            },
+            country: {
+                required: true,
+                minlength: 2
+            },
+            state: {
+                required: true,
+                minlength: 2
+            },
+            city: {
+                required: true,
+                minlength: 2
+            },
+            zipCodes: {
+                required: true,
+                minlength: 2
+            } ,
+            streetAddres: {
+                required: true,
+                minlength: 2
+            } ,
+            qty:{
+                required: true,
+                minlength: 2                
+            }                       
+        },
+        messages: {
+            name: {
+                required: "Ingresa un nombre."
+            },
+            company: {
+                required: "Ingresa una compa&ntilde;&iacute;a."
+            },
+            email: {
+                required: "Ingresa un correo electrónico.",
+                email: "Verifica el formato del correcto electr&oacute;nico nombre@dominio.com"
+            },            
+            phone: {
+                required: "Ingresa un n&uacute;mero de tel&eacute;fono."
+            },
+            country: {
+                required: "Ingresa un p&iacute;s."
+            },
+            state: {
+                required: "Ingresa un estado."
+            },
+            city: {
+                required: "Ingresa una ciudad."
+            },
+            zipCodes: {
+                required: "Ingresa tu zip-code."
+            },
+            streetAddres:{
+              required: "Ingresa una direcci&oacute;n."  
+            },
+            qty:{
+              required: "Ingresa una cantidad."  
+            }
+        }
+    });
+
+    $('#btn-preRegist').click(function(e){
+        e.preventDefault();
+        if($('#pre-registform').valid()){
+            var name   = $('#name').val();
+            var company    = $('#company').val();
+            var email    = $('#email').val();
+            var phone   = $('#phone').val();
+            var country = $('#country').val();
+            var state = $('#state').val();
+            var city = $('#city').val();
+            var zipCodes = $('#zipCodes').val();
+            var streetAddres = $('#streetAddres').val();
+            var qty = $('#qty').val();
+            var msg=" name: " +name;
+            msg+=" || company: " +company;
+            msg+=" || email: " +email;
+            msg+=" || phone: " +phone;
+            msg+=" || country: " +country;
+            msg+=" || state: " +state;
+            msg+=" || city: " +city;
+            msg+=" || zipCodes: " +zipCodes;
+            msg+=" || streetAddres: " +streetAddres;
+            msg+=" || qty: " +qty;
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    typeEmail : "PreRegistrarBiin",
+                    name      : name,
+                    email     : email,
+                    title     : "Pre-registrar Biin",
+                    comments  : msg
+                },
+                url: "sendEmail/",
+                beforeSend: function(){
+                    $('#btn-preRegist').attr("disabled", "true");
+                    $('#btn-preRegist').val("Enviando mensaje...");
+                },
+                success: function(){
+                    $('#btn-preRegist').removeAttr("disabled");
+                    $('#btn-preRegist').val("Mensaje enviado!");
+                    $('.sent-message').text("Hemos recibido su mensaje pronto nos contactaremos con usted.");
+                },
+                error: function(){
+                    $('#btn-preRegist').removeAttr("disabled");
+                    $('#btn-preRegist').val("Error al enviar el mensaje");
+                }
+            });
+        }
+    });
+
+});
+
+/*----------------------------------------------------*/
+/*  Form pre-order
+ /*----------------------------------------------------*/
+
+$(document).ready(function () {
+
+    "use strict";
+
+    $("#pre-order-form").validate({
+        rules: {
+            name: {
+                required: true
+            },
+            company: {
+                required: true  
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            country: {
+                required: true,
+                minlength: 2
+            },
+            state: {
+                required: true,
+                minlength: 2
+            },
+            city: {
+                required: true,
+                minlength: 2
+            },
+            zipCodes: {
+                required: true,
+                minlength: 2
+            } ,
+            streetAddres: {
+                required: true,
+                minlength: 2
+            } ,
+            qty:{
+                required: true,
+                minlength: 2                
+            }                       
+        },
+        messages: {
+            name: {
+                required: "Ingresa un nombre."
+            },
+            company: {
+                required: "Ingresa una compa&ntilde;&iacute;a."
+            },
+            email: {
+                required: "Ingresa un correo electrónico.",
+                email: "Verifica el formato del correcto electr&oacute;nico nombre@dominio.com"
+            },            
+            phone: {
+                required: "Ingresa un n&uacute;mero de tel&eacute;fono."
+            },
+            country: {
+                required: "Ingresa un pa&iacute;s."
+            },
+            state: {
+                required: "Ingresa un estado."
+            },
+            city: {
+                required: "Ingresa una ciudad."
+            },
+            zipCode: {
+                required: "Ingresa tu zip-code."
+            },
+            streetAddres:{
+              required: "Ingresa una direcci&oacute;n."  
+            },
+            qty:{
+              required: "Ingresa una cantidad."  
+            }
+        }
+    });
+
+    $('#btn-preOrder').click(function(e){
+        e.preventDefault();
+        if($('#pre-order-form').valid()){
+            var name   = $('#name').val();
+            var company    = $('#company').val();
+            var email    = $('#email').val();
+            var phone   = $('#pgone').val();
+            var country = $('#country').val();
+            var state = $('#state').val();
+            var city = $('#city').val();
+            var zipCodes = $('#zipCodes').val();
+            var streetAddres = $('#streetAddres').val();
+            var plan = $('#plan').val();
+            var qty = $('#qty').val();
+            var msg=" name: " +name;
+            msg+=" || plan "+plan;
+            msg+=" || company: " +company;
+            msg+=" || email: " +email;
+            msg+=" || phone: " +phone;
+            msg+=" || country: " +country;
+            msg+=" || state: " +state;
+            msg+=" || city: " +city;
+            msg+=" || zipCodes: " +zipCodes;
+            msg+=" || streetAddres: " +streetAddres;
+            msg+=" || qty: " +qty;
+
+            $.ajax({
+                type: "GET",
+                data: {
+                    typeEmail : "PreOrderBeacons",
+                    name      : name,
+                    email     : email,
+                    title     : "Beacons Pre-Order",
+                    comments  : msg
+                },
+                url: "sendEmail/",
+                beforeSend: function(){
+                    $('#btn-preOrder').attr("disabled", "true");
+                    $('#btn-preOrder').val("Enviando mensaje...");
+                },
+                success: function(){
+                    $('#btn-preOrder').removeAttr("disabled");
+                    $('#btn-preOrder').val("Mensaje enviado!");
+                    $('.sent-message').text("Hemos recibido su mensaje pronto nos contactaremos con usted.");
+                    $("#pre-order-form").find("input[type=text], textarea").val("");
+                },
+                error: function(){
+                    $('#btn-preOrder').removeAttr("disabled");
+                    $('#btn-preOrder').val("Error al enviar el mensaje");
+                }
+            });
+        }
+    });
+
+});

@@ -1913,14 +1913,14 @@ nav a#pull {
 }
 
 /* ==========================================================================
-   16. CONTACT FORM RESPONSE PAGE   
+   16. Preorder and register Style
    ========================================================================== */
-#preorder .container {
+#preRegister  .container, #preorder .container {
   padding-top: 150px;
   padding-bottom: 100px;
 } 
 
-#preorder .imgPreOrder img{
+#preRegister .imgPreOrder img, #preorder .imgPreOrder img{
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -1930,14 +1930,22 @@ nav a#pull {
   vertical-align:middle;
 }
 
-#preorder .btnEnviar{
+#preRegister .btnEnviar,#preorder .btnEnviar{
   margin-top: 20px;
 }
-#preorder input{
+#preRegister input, #preorder input{
   margin-bottom: 10px;
 
 }
 
 #preorder h1{
+  color: #FFF;;
+}
+
+#preRegister h1{
   color: #71D7FF;
+}
+
+#preorder{
+  background-color: #71D7FF;
 }
