@@ -23,13 +23,19 @@ block content
 							input#city.form-control(type='text', name='City', placeholder='City', required)
 							input#zipCodes.form-control(type='text', name='ZipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
-							.input-group.spinner
-								input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested' isNumber)
-								.input-group-btn-vertical
-									button.btn.btn-default
-										i.fa.fa-caret-up
-									button.btn.btn-default
-										i.fa.fa-caret-down
+							
+
+							.spinner-packages
+								.spinner-package-label
+									| Cantidad de paquetes
+								.input-group.spinner
+									input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested' isNumber)
+									.input-group-btn-vertical
+										button.btn.btn-default
+											i.fa.fa-caret-up
+										button.btn.btn-default
+											i.fa.fa-caret-down
+
 							input#pack.hidden(type="tex" name="plan" value=packageSlected)
 							select#plan.selectpicker(title='Seleccione una subscripcion' name="pack" multiple data-max-options="1")
 								option LITE
