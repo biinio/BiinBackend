@@ -1969,10 +1969,10 @@ nav a#pull {
 }
 
 #registerSucced{
-  background-color: #71D7FF;
+  background-color: #FFF;
 }
 #registerSucced.blue{
- background-color: #FFF!important; 
+ background-color: #71D7FF!important; 
 }
 
 #registerSucced .container{
