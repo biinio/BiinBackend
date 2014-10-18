@@ -661,18 +661,18 @@ $(document).ready(function () {
             var qty = $('#qty').val();
             var pack = $('#pack').val();
 
-            var msg=" name: " +name;
-            msg+="<br/> company: " +company;
-            msg+=" <br/> email: " +email;
-            msg+=" <br/> phone: " +phone;
-            msg+=" <br/> country: " +country;
-            msg+=" <br/> state: " +state;
-            msg+=" <br/> city: " +city;
-            msg+=" <br/> zipCodes: " +zipCodes;
-            msg+=" <br/> streetAddres: " +streetAddres;
-            msg+=" <br/> plan: " +plan;
-            msg+=" <br/> package: " +pack;
-            msg+=" <br/> qty: " +qty;
+            var msg=" <h1> Pre register Information</h1> "
+            msg+="<br/><h2>Package Information</h2>";
+            msg+=" <br/> Plan: " +plan;
+            msg+=" <br/> Package: " +pack;
+            msg+=" <br/> Quantity: " +qty;
+            msg+="<br/><h2>Other Contact Information</h2>";
+            msg+=" <br/> Phone: " +phone;
+            msg+=" <br/> Country: " +country;
+            msg+=" <br/> State: " +state;
+            msg+=" <br/> City: " +city;
+            msg+=" <br/> ZipCodes: " +zipCodes;
+            msg+=" <br/> StreetAddres: " +streetAddres;
 
             //"<b>Nombre</b>: <pre style='font-size: 14px'>" + req.query.name + "</pre>" +
             $.ajax({
@@ -814,18 +814,18 @@ $(document).ready(function () {
             var qty = $('#qty').val();
             var pack = $('#pack').val();
 
-            var msg=" name: " +name;
-            msg+="<br/> company: " +company;
-            msg+=" <br/> email: " +email;
-            msg+=" <br/> phone: " +phone;
-            msg+=" <br/> country: " +country;
-            msg+=" <br/> state: " +state;
-            msg+=" <br/> city: " +city;
-            msg+=" <br/> zipCodes: " +zipCodes;
-            msg+=" <br/> streetAddres: " +streetAddres;
-            msg+=" <br/> plan: " +plan;
-            msg+=" <br/> package: " +pack;
-            msg+=" <br/> qty: " +qty;
+            var msg=" <h1> Pre Order Information</h1> "
+            msg+="<br/><h2>Order Information</h2>";
+            msg+=" <br/> Plan: " +plan;
+            msg+=" <br/> Package: " +pack;
+            msg+=" <br/> Quantity: " +qty;
+            msg+="<br/> <h2>Other Contact Information</h2>";
+            msg+=" <br/> Phone: " +phone;
+            msg+=" <br/> Country: " +country;
+            msg+=" <br/> State: " +state;
+            msg+=" <br/> City: " +city;
+            msg+=" <br/> ZipCodes: " +zipCodes;
+            msg+=" <br/> StreetAddres: " +streetAddres;
 
             $.ajax({
                 type: "GET",
