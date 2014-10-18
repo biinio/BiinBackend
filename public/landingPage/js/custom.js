@@ -134,35 +134,36 @@ $(document).ready(function () {
     offsetTolerance = 100;
 
     //Detecting user's scroll
-    $(window).scroll(function () {
+    if($("#intro").length)
+        $(window).scroll(function () {
 
-        //Check scroll position
-        scrollPosition = parseInt($(this).scrollTop());
+            //Check scroll position
+            scrollPosition = parseInt($(this).scrollTop());
 
-        //Move trough each menu and check its position with scroll position then add selected-nav class
-        $('.navbar-nav > li > a').each(function () {
-            thisHref = $(this).attr('href');
-            if (thisHref) {
-                thisTruePosition = parseInt($(thisHref).offset().top);
-                thisPosition = thisTruePosition - headerWrapper - offsetTolerance;
+            //Move trough each menu and check its position with scroll position then add selected-nav class
+            $('.navbar-nav > li > a').each(function () {
+                thisHref = $(this).attr('href');
+                if (thisHref) {
+                    thisTruePosition = parseInt($(thisHref).offset().top);
+                    thisPosition = thisTruePosition - headerWrapper - offsetTolerance;
 
-                if (scrollPosition >= thisPosition) {
-                    $('.selected-nav').removeClass('selected-nav');
-                    $('.navbar-nav > li > a[href=' + thisHref + ']').addClass('selected-nav');
+                    if (scrollPosition >= thisPosition) {
+                        $('.selected-nav').removeClass('selected-nav');
+                        $('.navbar-nav > li > a[href=' + thisHref + ']').addClass('selected-nav');
+                    }
                 }
+            });
+
+
+            //If we're at the bottom of the page, move pointer to the last section
+            bottomPage = parseInt($(document).height()) - parseInt($(window).height());
+
+            if (scrollPosition == bottomPage || scrollPosition >= bottomPage) {
+
+                $('.selected-nav').removeClass('selected-nav');
+                $('navbar-nav > li > a:last').addClass('selected-nav');
             }
         });
-
-
-        //If we're at the bottom of the page, move pointer to the last section
-        bottomPage = parseInt($(document).height()) - parseInt($(window).height());
-
-        if (scrollPosition == bottomPage || scrollPosition >= bottomPage) {
-
-            $('.selected-nav').removeClass('selected-nav');
-            $('navbar-nav > li > a:last').addClass('selected-nav');
-        }
-    });
 
 });
 
@@ -174,11 +175,12 @@ $(document).ready(function () {
 
     "use strict";
 
-    $("#slides").superslides({
-        play: 9000,
-        animation: "fade",
-        pagination: true
-    });
+    if($("#slides").length>0)
+        $("#slides").superslides({
+            play: 9000,
+            animation: "fade",
+            pagination: true
+        });
 
     /*
     $('#slides-forwhoIsBiin').superslides({
@@ -225,7 +227,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 
     "use strict";
-
+    if($(".flexslider").length>0)
     $('.flexslider').flexslider({
         animation: "fade",
         controlNav: true,
@@ -237,6 +239,7 @@ $(document).ready(function () {
         }
     });
 
+    if($('.forwhoIsBiin-slider').length>0)
     $('.forwhoIsBiin-slider').flexslider({
         animation: "slide",
         controlNav: true,
