@@ -2187,11 +2187,35 @@ input[type="number"] {
   padding-bottom:100px;
 }
 
-.btn-termsAccept{
+#termsAndConditions .container h1{
+  font-size: 50px;
+  font-weight: 300;
+  color: #71D7FF;
+  margin-bottom: 30px!important;
+}
+
+
+#termsAndConditions .container h2{
+  font-weight: 400;
+  margin-bottom: 10px!important;
+}
+
+#termsAndConditions .container p{
+  font-weight: 300;
+  font-size: 20px;
+  margin-bottom: 40px!important;
+}
+
+.btn-termsAccept {
+  margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   display: block;
-  width: 150px;
-  height: 50px!important;
+  width: 250px;
+  height: 70px!important;
+  font-weight: 300;
+  font-size: 25px;
 }
+
+
