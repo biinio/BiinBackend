@@ -16,7 +16,7 @@ biinLandingPage.controller("indexController",['$translate','$scope', '$http',fun
 
   //Switch landing page preferences
   $scope.changeLanguage = function (langKey) {
-    $translate.use(langKey);
+    $translate.use(langKey.toLowerCase());
     $scope.lang=langKey;
   };
 
