@@ -24,18 +24,19 @@ block content
 							input#city.form-control(type='text', name='city', placeholder='City', required)
 							input#zipCodes.form-control(type='text', name='zipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
-							input#plan.hidden(type="tex" name="plan" value=packageSlected)						
-							select#pack.selectpicker(title='Seleccione un paquete de Biin Beacons' name="pack" multiple data-max-options="1" required)
-								option UNUM
-								option TRIBUS
-								option DECEM					
-							.input-group.spinner
-								input#qty.form-control(type="text" value="0" name="qty" isNumber)
-								.input-group-btn-vertical
-									button.btn.btn-default
-										i.fa.fa-caret-up
-									button.btn.btn-default
-										i.fa.fa-caret-down
+							input#plan.hidden(type="tex" name="plan" value=packageSlected)													
+							#packGroup.input-group
+									select#pack.selectpicker(title='Seleccione un paquete de Biin Beacons' name="pack" multiple data-max-options="1" required)
+										option UNUM
+										option TRIBUS
+										option DECEM					
+									.input-group.spinner
+										input#qty.form-control(type="text" value="0" name="qty" isNumber)
+										.input-group-btn-vertical
+											button.btn.btn-default
+												i.fa.fa-caret-up
+											button.btn.btn-default
+												i.fa.fa-caret-down
 							.row.text-center
 								.contentCheckBox
 									.checkboxFour

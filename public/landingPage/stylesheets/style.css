@@ -1973,7 +1973,10 @@ nav a#pull {
   color: #71D7FF;
   font-weight: 300;
 }
-
+#packGroup .selectpicker{
+  height: 50px!important;
+  margin-top: -10px;
+}
 #registerSucced{
   background-color: #FFF;
 }
