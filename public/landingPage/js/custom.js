@@ -543,9 +543,21 @@ $(document).ready(function () {
     });
     $('.spinner .btn:last-of-type').on('click', function(e) {
         e.preventDefault();
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+        if(eval($('.spinner input').val())>0)
+            $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
     });    
 
+    if($('[isNumber]').length>0){
+
+        $('[isNumber]').on('keypress',function(evt){            
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        return true;
+        });
+    }
 });
 /*----------------------------------------------------*/
 /*  Form pre-register
@@ -569,27 +581,24 @@ $(document).ready(function () {
                 maxlength: 24
             },
             country: {
-                required: true,
-                minlength: 2
+                required: true
             },
             state: {
-                required: true,
-                minlength: 2
+                required: true
             },
             city: {
-                required: true,
-                minlength: 2
+                required: true
             },
             zipCodes: {
-                required: true,
-                minlength: 2
+                required: true
             } ,
             streetAddres: {
-                required: true,
-                minlength: 2
+                required: true
             } ,
             qty:{
-                required: true
+                required: true,
+                number: true,
+                min: 0
             },
             plan:{
                 required:true
@@ -740,7 +749,9 @@ $(document).ready(function () {
                 minlength: 2
             } ,
             qty:{
-                required: true
+                required: true,
+                number: true,
+                min: 0
             },
             plan:{
                 required:true

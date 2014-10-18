@@ -1959,14 +1959,8 @@ nav a#pull {
   margin-bottom: 0px;
 }
 
-#preRegister label[generated]{
-  display: none!important;
-}
 #preorder h1{
   color: #FFF;;
-}
-#preorder label[generated]{
-  display: none!important;
 }
 
 #preRegister h1{
@@ -1978,7 +1972,11 @@ nav a#pull {
   background-color: #FFF;
 }
 #registerSucced.blue{
-  background-color: #71D7FF!important;
+<<<<<<< HEAD
+ background-color: #71D7FF!important; 
+=======
+  background-color: #71D7FF!important; 
+>>>>>>> 2e71fb00c88b7c2f622f1c3d5b40cb5b22761607
 }
 
 #registerSucced .container{
@@ -2173,20 +2171,7 @@ input[type="number"] {
   margin-left: -31px;
 }
 
-.cantidadPaquetes {
-}
-
-.cantidadPaqueteTexto {
-
-}
-
-.cantidadPaquetesContador {
-}
-
-.error{
-  border-color:#F50000!important;
-}
-
+<<<<<<< HEAD
 /* ==========================================================================
    Terms And Conditions Style
    ========================================================================== */
@@ -2204,3 +2189,16 @@ input[type="number"] {
   width: 150px;
   height: 50px!important;
 }
+=======
+.cantidadPaquetes {
+
+}
+
+.cantidadPaqueteTexto {
+
+}
+
+.cantidadPaquetesContador {
+
+}
+>>>>>>> 2e71fb00c88b7c2f622f1c3d5b40cb5b22761607
