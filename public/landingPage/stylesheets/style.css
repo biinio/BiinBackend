@@ -1965,14 +1965,11 @@ nav a#pull {
   margin-bottom: 0px;
 }
 
-#preRegister label[generated]{
+label[generated]{
   display: none!important;
 }
 #preorder h1{
   color: #FFF;;
-}
-#preorder label[generated]{
-  display: none!important;
 }
 
 #preRegister h1{
@@ -2204,6 +2201,8 @@ input[type="number"] {
 
 .error{
   border-color:#F50000!important;
+  border:solid!important;
+  border-width:medium!important;
 }
 
 /* ==========================================================================
