@@ -1973,7 +1973,7 @@ nav a#pull {
   color: #71D7FF;
   font-weight: 300;
 }
-#packGroup .selectpicker{
+#packGroup .selectpicker:not(ul){
   height: 50px!important;
   margin-top: -10px;
 }
@@ -2233,6 +2233,15 @@ input[type="number"] {
   height: 70px!important;
   font-weight: 300;
   font-size: 25px;
+}
+
+.termsWhite{
+  color:#fff;
+  font-weight: bold;
+}
+.termsWhite:hover{
+  color:orange;
+  font-weight: bold; 
 }
 
 
