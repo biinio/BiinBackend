@@ -2259,5 +2259,10 @@ input[type="number"] {
   color:#0932BF;
   font-weight: 400; 
 }
+.form-control {
+  -webkit-box-shadow:none;
+  box-shadow:none;
+  -webkit-transition:none;
+}
 
 
