@@ -2203,7 +2203,7 @@ input[type="number"] {
   font-size: 50px;
   font-weight: 300;
   color: #71D7FF;
-  margin-bottom: 30px!important;
+  margin-bottom: 45px!important;
 }
 
 
@@ -2216,6 +2216,11 @@ input[type="number"] {
   font-weight: 300;
   font-size: 20px;
   margin-bottom: 40px!important;
+}
+
+#termsAndConditions .container {
+  width: 50%;
+  padding-top: 170px;
 }
 
 .btn-termsAccept {
