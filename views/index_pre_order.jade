@@ -13,7 +13,7 @@ block content
 								|empresa. Perm&iacute;tenos saber a quien estaremos contactando cuando los Biin Beacons
 								| est&eacute;n disponibles.								
 						form#pre-order-form.row(action="#" name="pre-registform", method="post")
-							label= "Estas pre-registrando el paquete " + packageSlected
+							label= "Estas pre-registrando el paquete " + packageSlected.toUpperCase()
 							input#name.form-control(type='text' name='full_name' placeholder='Full Name' required)
 							input#company.form-control(type='text', name='company', placeholder='Company (mandatory if shipping to a business addres)', required)
 							input#email.form-control(type='text', name='email', placeholder='Email', required)
