@@ -8,7 +8,7 @@ var biinLandingPage = angular.module('landingPage',['pascalprecht.translate']);
     });
 
      //var language = window.navigator.userLanguage || window.navigator.language
-    $translateProvider.preferredLanguage('ES');
+    $translateProvider.preferredLanguage('es');
 });
 
 biinLandingPage.controller("indexController",['$translate','$scope', '$http',function($translate,$scope,$http){
