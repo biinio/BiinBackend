@@ -1137,7 +1137,7 @@ ul {
   line-height: 24px;
   font-size: 20px;
   font-family: 'Lato', sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   padding: 0 8%;
 }
 /*------------------------------------------*/
@@ -1726,7 +1726,7 @@ ul {
 .foo_social {
   width: 40px;
   height: 40px;
-  color: #777;
+  color: #DEDEDE;
   font-size: 50px;
   line-height: 40px;
   text-align: center;
