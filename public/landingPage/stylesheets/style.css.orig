@@ -1959,29 +1959,24 @@ nav a#pull {
   margin-bottom: 0px;
 }
 
-#preRegister label[generated]{
-  display: none!important;
-}
 #preorder h1{
   color: #FFF;;
-}
-#preorder label[generated]{
-  display: none!important;
 }
 
 #preRegister h1{
   color: #71D7FF;
   font-weight: 300;
 }
-#packGroup .selectpicker{
-  height: 50px!important;
-  margin-top: -10px;
-}
+
 #registerSucced{
   background-color: #FFF;
 }
 #registerSucced.blue{
-  background-color: #71D7FF!important;
+<<<<<<< HEAD
+ background-color: #71D7FF!important; 
+=======
+  background-color: #71D7FF!important; 
+>>>>>>> 2e71fb00c88b7c2f622f1c3d5b40cb5b22761607
 }
 
 #registerSucced .container{
@@ -2176,20 +2171,7 @@ input[type="number"] {
   margin-left: -31px;
 }
 
-.cantidadPaquetes {
-}
-
-.cantidadPaqueteTexto {
-
-}
-
-.cantidadPaquetesContador {
-}
-
-.error{
-  border-color:#F50000!important;
-}
-
+<<<<<<< HEAD
 /* ==========================================================================
    Terms And Conditions Style
    ========================================================================== */
@@ -2199,40 +2181,24 @@ input[type="number"] {
   padding-bottom:100px;
 }
 
-#termsAndConditions .container h1{
-  font-size: 50px;
-  font-weight: 300;
-  color: #71D7FF;
-  margin-bottom: 45px!important;
-}
-
-
-#termsAndConditions .container h2{
-  font-weight: 400;
-  margin-bottom: 10px!important;
-}
-
-#termsAndConditions .container p{
-  font-weight: 300;
-  font-size: 20px;
-  margin-bottom: 40px!important;
-}
-
-#termsAndConditions .container {
-  width: 50%;
-  padding-top: 170px;
-}
-
-.btn-termsAccept {
-  margin-top: 50px;
+.btn-termsAccept{
   margin-left: auto;
   margin-right: auto;
   position: relative;
   display: block;
-  width: 250px;
-  height: 70px!important;
-  font-weight: 300;
-  font-size: 25px;
+  width: 150px;
+  height: 50px!important;
+}
+=======
+.cantidadPaquetes {
+
 }
 
+.cantidadPaqueteTexto {
 
+}
+
+.cantidadPaquetesContador {
+
+}
+>>>>>>> 2e71fb00c88b7c2f622f1c3d5b40cb5b22761607

@@ -13,7 +13,7 @@ block content
 								|empresa. Perm&iacute;tenos saber a quien estaremos contactando cuando los Biin Beacons
 								| est&eacute;n disponibles.								
 						form#pre-order-form.row(action="#" name="pre-registform", method="post")
-							label= "Usted está pre-ordenando el PAQUETE " + packageSlected
+							label= "Estas pre-registrando el paquete " + packageSlected
 							input#name.form-control(type='text' name='full_name' placeholder='Full Name' required)
 							input#company.form-control(type='text', name='company', placeholder='Company (mandatory if shipping to a business addres)', required)
 							input#email.form-control(type='text', name='email', placeholder='Email', required)
@@ -24,7 +24,7 @@ block content
 							input#zipCodes.form-control(type='text', name='ZipCodes', placeholder='Zip Code', required)
 							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
 							.input-group.spinner
-								input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested')
+								input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested' isNumber)
 								.input-group-btn-vertical
 									button.btn.btn-default
 										i.fa.fa-caret-up
@@ -44,8 +44,9 @@ block content
 										else
 											input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond" checked)
 											label(for="checkboxFourInput")
-									a(href="/termsAndConditions/preorder-"+packageSlected)
-										| He le&iacute;do y estoy de acuerdo con los t&eacute;rminos de venta de Biin.
+									span
+										| He le&iacute;do y estoy de acuerdo con los 
+										a(href="/termsAndConditions/preorder-"+packageSlected) t&eacute;rminos de venta de Biin.
 						.row.text-center
 							if(typeof(accept)==="undefined")
 								input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)
@@ -65,7 +66,11 @@ block content
 							p Le hemos enviado un correo electronico con información de su suscripción y sobre los siguientes pasos para la exitosa implementación de Biin en su empresa o institución.
 						.row
 							.thankYouButton
+<<<<<<< HEAD
 								a.btn.btn-black(href="/") Continua conociendo mas de Biin.
+=======
+								a.btn.btn-black(href="/") Continua disfrutando nuestra p&aacute;gina
+>>>>>>> f4dbbb4d12f9bfdf5410da7db36676df819e0340
 					.col-md-6
 						.row
 							.happyBiinie
