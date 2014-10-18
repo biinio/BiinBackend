@@ -2242,12 +2242,12 @@ input[type="number"] {
 }
 
 .termsWhite{
-  color:#fff;
-  font-weight: bold;
+  color:#077CC7;
+  font-weight: 400;
 }
 .termsWhite:hover{
-  color:orange;
-  font-weight: bold; 
+  color:#0932BF;
+  font-weight: 400; 
 }
 
 
