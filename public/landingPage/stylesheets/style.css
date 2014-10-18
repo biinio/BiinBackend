@@ -1873,6 +1873,12 @@ nav a#pull {
   margin-bottom: 20px;
   border: 1px solid #ccc;
 }
+
+.loginForm .btn-theme{
+  background-color: #71D7FF;
+  border-color: #71D7FF;
+
+}
 .forgotPass {
   font-size: 12px;
   /*color: red;*/
