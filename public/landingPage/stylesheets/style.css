@@ -807,9 +807,8 @@ ul {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  width:854px;
+  max-width:854px;
   height:480px;
-
 }
 
 #videoHistory iframe{
