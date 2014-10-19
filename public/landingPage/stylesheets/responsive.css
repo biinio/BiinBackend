@@ -191,15 +191,18 @@
   }
   .navbar-nav > li > a:hover,
   .navbar-nav > li > a.selected-nav {
-    color: #333;
+    color: #71D7FF;
     background-color: transparent;
   }
   .nav.navbar-helper{
-    bottom: 0px;
+    /*bottom: 0px;*/
+  }
+  .navbar-toggle{
+    margin: 48px 30px 13px 0;
   }
   .navbar-helper .navbar-right{
     position: relative;
-    float: left;
+    float: right;
   }>
   .navbar-helper .navbar-right li{
     position: relative;
