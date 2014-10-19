@@ -230,6 +230,10 @@
   .feature-box {
     margin-bottom: 30px;
   }
+
+  .forwhoIsBiin-wrapper{
+    height: 100%;
+  }
 }
 @media (max-width: 480px) {
   /*------------------------------------------*/
@@ -310,6 +314,10 @@
     display: block;
     margin-bottom: 8px;
   }
+
+  .forwhoIsBiin-wrapper{
+    height: 100%;
+  }
 }
 @media (max-width: 320px) {
   .titlebar,
@@ -351,5 +359,8 @@
   .titlebar p {
     font-size: 15px;
     margin-bottom: 25px;
+  }
+  .forwhoIsBiin-wrapper{
+    height: 100%;
   }
 }
