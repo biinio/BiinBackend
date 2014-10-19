@@ -53,8 +53,8 @@ module.exports = function (db) {
         }));
 
         //SSL configuration
-        /*app.enable('trust proxy');
-        app.use(forceSsl);*/
+        app.enable('trust proxy');
+        app.use(forceSsl);
     }
 
     // View engine setup
@@ -63,6 +63,7 @@ module.exports = function (db) {
 
     app.use(express.static(path.join(process.env.PWD , 'public')));
     app.use(express.static(path.join(process.env.PWD,'bower_components')));
+    //app.use(express.static(path.join(process.env.PWD,'bower_components')));
     app.use(favicon());
     app.use(logger('dev'));
     app.use(bodyParser.urlencoded());
