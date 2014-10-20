@@ -275,7 +275,7 @@ $(document).ready(function () {
                 //required: "We need your email address to contact you",
                 required: "Nosostros necesitamoso una dirección de correo electrónica para contactarte.",
                 email: "Tu dirección de correo tiene que estar en el siguiente formato nombre@dominio.com"
-            },
+            }
         }
     });
 
