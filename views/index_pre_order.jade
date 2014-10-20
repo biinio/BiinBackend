@@ -50,14 +50,14 @@ block content
 										else
 											input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond" checked)
 											label(for="checkboxFourInput")
-									span
+									//span
 										| He le&iacute;do y estoy de acuerdo con los 
 										a.termsWhite(href="/termsAndConditions/preorder-"+packageSlected) t&eacute;rminos de venta de Biin.
 						.row.text-center
-							if(typeof(accept)==="undefined")
+							//if(typeof(accept)==="undefined")
 								input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)
-							else
-								input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" )
+							//else
+							input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" )
 							label.sent-message
 					.col-md-6
 						.row.imgPreOrder

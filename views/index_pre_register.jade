@@ -46,13 +46,13 @@ block content
 										else
 											input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond" checked)
 											label(for="checkboxFourInput")
-									span
-											| He le&iacute;do y estoy de acuerdo con los 
-											a(href="/termsAndConditions/preregister-"+packageSlected) t&eacute;rminos de venta de Biin.
-							if(typeof(accept)==="undefined")
+									//span
+										| He le&iacute;do y estoy de acuerdo con los 
+										a(href="/termsAndConditions/preregister-"+packageSlected) t&eacute;rminos de venta de Biin.
+							//if(typeof(accept)==="undefined")
 								input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)
-							else
-								input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" )								
+							//else
+							input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" )
 							label.sent-message
 					.col-md-6
 						.row.imgPreOrder
