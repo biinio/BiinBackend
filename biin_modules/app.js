@@ -53,8 +53,8 @@ module.exports = function (db) {
         }));
 
         //SSL configuration
-        app.enable('trust proxy');
-        app.use(forceSsl);
+        //app.enable('trust proxy');
+        //app.use(forceSsl);
     }
 
     // View engine setup
