@@ -10,7 +10,7 @@ div
 				.img-block( ng-repeat="item in sites[selectedSite].biins" ng-click="editBiin(sites[selectedSite].biins.indexOf(item))")
 					.moduleWrapper(ng-class="{active: sites[selectedSite].biins.indexOf(item) == selectedBiin}")
 						p Biin# {{item.minor}}
-						p(ng-if="item.name.length>0" {{item.name}}
+						p(ng-if="item.name.length>0") {{item.name}}
 	.section(ng-if="selectedBiin!=null && sites[selectedSite].biins.length>0")
 		row
 			input.form-control(type="text" ng-model="sites[selectedSite].biins[selectedBiin].name" placeholder="Name")
