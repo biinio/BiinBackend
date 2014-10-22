@@ -1,5 +1,6 @@
 module.exports = function () {
 	var functions = {};
+	var fs = require('fs');
 
 	//Get the index page
 	functions.index = function(req, res){
@@ -128,61 +129,68 @@ module.exports = function () {
         var name= req.query.name;
         if(indexName>0)
         	var name= req.query.name.substring(0,indexName);
-        var backEmailtemplate='<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Hola '+name+'</span></span></p><p>&nbsp;</p><p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Gracias por su inter&eacute;s en Biin, usted ha elegido deleitar a sus visitantes con una experiencia digital con contexto e incrementar su presencia digital en beneficio de su negocio o instituci&oacute;n.</span></span></p><p>&nbsp;</p><p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">En los pr&oacute;ximos d&iacute;as nos pondremos en contacto con usted para informarlo sobre detalles importantes de la plataforma, as&iacute; como para brindarle informaci&oacute;n que lo prepare para la implementaci&oacute;n de Biin en su empresa o instituci&oacute;n.</span></span></p><p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Tambi&eacute;n estaremos coordinando las instrucciones para el pago de la suscripci&oacute;n y los detalles de env&iacute;o de los Biin Beacons. </span></span></p><p>&nbsp;</p><p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">En Biin estamos trabajando fuerte para completar los elementos de la plataforma y proveer un servicio de alta calidad.</span></span></p><p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Biin estar&aacute; disponible iniciando el 2015, lo mantendremos informado sobre el avance y le daremos informaci&oacute;n relevante que lo ayude a planificar la implementaci&oacute;n de su campa&ntilde;a con Biin. </span></span></p><p><br />&nbsp;</p><p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Saludos cordiales</span></span></p><p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">C&eacute;sar Arce </span></span></p><p><span id="docs-internal-guid-ed5a30ee-25e1-2bd6-124b-ef48aea7619a"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;"><span id="docs-internal-guid-ed5a30ee-25e5-e09a-9578-19235364f0ea"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">CEO en Biin</span></span></span></span></p>';
-        // setup e-mail data with unicode symbols
-        var mailOptions = {
-        	// sender address
-            from: "Biin Message <" + process.env.EMAIL_ACCOUNT + ">",
+        //Load the template
+        //../public/landingPage/templates/emailTemplate.html
+        console.log(__dirname)
+        var env =process.env;
+        fs.readFile(__dirname +'/../public/landingPage/templates/emailTemplate.html', function (err, backEmailtemplate) {
+		  if (err) throw err;
+		  var processedEmail = " " +backEmailtemplate;
+		  processedEmail= processedEmail.replace('[[name]]',name);
+			// setup e-mail data with unicode symbols
+			var mailOptions = {
+				// sender address
+			    from: "Biin Message <" + process.env.EMAIL_ACCOUNT + ">",
 
-            // list of receivers
-            to: process.env.EMAIL_TO,
+			    // list of receivers
+			    to: process.env.EMAIL_TO,
 
-            // Subject line
-            subject: subject,
+			    // Subject line
+			    subject: subject,
 
-            // plaintext body
-            text: "",
+			    // plaintext body
+			    text: "",
 
-            // html body
-            html: htmlBody
-        };
-        var backMailServer={
-        	// sender address
-            from: "Biin Message <" + process.env.EMAIL_ACCOUNT + ">",
+			    // html body
+			    html: htmlBody
+			};
+			var backMailServer={
+				// sender address
+			    from: "Biin Message <" + process.env.EMAIL_ACCOUNT + ">",
 
-            // list of receivers
-            to: req.query.email ,
+			    // list of receivers
+			    to: req.query.email ,
 
-            // Subject line
-            subject: "Biin Contact",
+			    // Subject line
+			    subject: "Biin Contact",
 
-            // plaintext body
-            text: "",
+			    // plaintext body
+			    text: "",
 
-            // html body
-            html: backEmailtemplate
-        }
+			    // html body
+			    html: processedEmail
+			}
 
-        // send mail with defined transport object
-        transporter.sendMail(mailOptions, function(error, info){
-            if(error){
-                console.log(error);
-                res.end(error.response);
-            }else{
-            	//Send the e-mail back
-            	transporter.sendMail(backMailServer,function(error,info){
-            		if(error){
-            			console.log(error);
-            			res.end(error.response);
-            		}else{
-						console.log('Message sent: ' + info.response);
-						res.end(info.response.toString());            			
-            		}
+			// send mail with defined transport object
+			transporter.sendMail(mailOptions, function(error, info){
+			    if(error){
+			        console.log(error);
+			        res.end(error.response);
+			    }else{
+			    	//Send the e-mail back
+			    	transporter.sendMail(backMailServer,function(error,info){
+			    		if(error){
+			    			console.log(error);
+			    			res.end(error.response);
+			    		}else{
+							console.log('Message sent: ' + info.response);
+							res.end(info.response.toString());            			
+			    		}
 
-            	})               
-            }
-        });
-
+			    	})               
+			    }
+			});		  
+		});        
 
     }
 	return functions;
