@@ -130,9 +130,6 @@ module.exports = function () {
         if(indexName>0)
         	var name= req.query.name.substring(0,indexName);
         //Load the template
-        //../public/landingPage/templates/emailTemplate.html
-        console.log(__dirname)
-        var env =process.env;
         fs.readFile(__dirname +'/../public/landingPage/templates/emailTemplate.html', function (err, backEmailtemplate) {
 		  if (err) throw err;
 		  var processedEmail = " " +backEmailtemplate;
