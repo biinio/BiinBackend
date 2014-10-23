@@ -404,7 +404,11 @@ ul {
   margin: 13px 30px 13px 0;
   border: none;
   color: #fff;
-  border: 2px solid #fff;
+  background-image: url(../img/menuIconMovil.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50px;
+  width: 50px;
 }
 
 .navbar-toggle .icon-bar {
