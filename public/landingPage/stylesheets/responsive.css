@@ -235,11 +235,21 @@
     margin-right: 100px;
     margin-left: 100px;
   }
+/*------------------------------------------*/
+  /*    Features section
+  /*------------------------------------------*/
+
+  .feature-box-content p
+  {
+    font-size: 17px;
+  }  
   /*------------------------------------------*/
   /*	  Feature Box
 	/*------------------------------------------*/
   .feature-box {
     margin-bottom: 30px;
+    margin-right: 15px;
+    margin-left: 15px;
   }
 
   .forwhoIsBiin-wrapper{
@@ -310,6 +320,25 @@
   }
   .subscribe-submit {
     width: 35%;
+  }
+
+/*------------------------------------------*/
+  /*    Features section
+  /*------------------------------------------*/
+  .feature-box-icon{
+    clear: left;
+    width: 100%;
+    position: relative;
+  }
+
+  .feature-box-content{
+     padding-left: initial!important; 
+     text-align: center;
+  }
+
+  .feature-box-content p
+  {
+    font-size: 17px;
   }
   /*------------------------------------------*/
   /*	  Screens
