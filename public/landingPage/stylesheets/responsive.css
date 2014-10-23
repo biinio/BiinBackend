@@ -315,14 +315,19 @@
     box-shadow:initial!important;
   }
 
+  .forhow-content .titlebar h2{
+    margin-bottom: 15px!important;
+  }
+
   /*------------------------------------------*/
   /*	  Titlebar
 	/*------------------------------------------*/
   .titlebar h2 {
-    font-size: 26px;
+    font-size: 19px;
+
   }
   .titlebar h3 {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
     margin-bottom: 15px;
   }
