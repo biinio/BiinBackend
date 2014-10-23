@@ -734,7 +734,7 @@ ul {
   width: 80%;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 45%;
   color: #fff;
   text-align: center;
   display: inline-block;
@@ -767,7 +767,7 @@ ul {
 .slides-pagination, .flex-control-nav{
   width: 100%!important;
   position: absolute!important;
-  bottom: 15%!important;
+  bottom: 16%!important;
   z-index: 20!important;
   text-align: center!important;
 }
