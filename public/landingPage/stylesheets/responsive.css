@@ -272,6 +272,50 @@
     font-size: 150%;
   }
   /*------------------------------------------*/
+  /*    Slider
+  /*------------------------------------------*/
+  .flex-control-paging li a{
+    height: 15px!important;
+    width: 15px!important;
+    border-radius: 50%!important;
+  }
+
+  #FORWHOISBIIN .flex-control-paging{
+    bottom:50px!important;
+  }
+
+  .flex-direction-nav a{
+    top: initial!important;
+    bottom:20px!important;
+  }
+
+  .forwhoIsBiin-slider .flex-direction-nav .flex-next{
+    background-color: initial!important;
+    color: #FFFFFF!important;
+  }
+
+  .forwhoIsBiin-slider .flex-direction-nav .flex-prev{
+    background-color: initial!important;
+    color: #FFFFFF!important;;
+
+  }
+
+  .flex-prev:before{
+    font-size:50px!important;
+    margin-left: -40px!important;
+  }
+
+  .flex-next:before{
+    font-size:50px!important;
+    margin-right: -40px!important;
+  }
+  .flex-prev:hover, .flex-next:hover{
+    background-color: initial!important;
+    border-color:initial!important;
+    box-shadow:initial!important;
+  }
+
+  /*------------------------------------------*/
   /*	  Titlebar
 	/*------------------------------------------*/
   .titlebar h2 {
@@ -359,6 +403,8 @@
   .forwhoIsBiin-wrapper{
     height: 100%;
   }
+
+
 }
 @media (max-width: 320px) {
   .titlebar,
