@@ -166,6 +166,14 @@
 }
 @media only screen and (max-width: 767px) {
   /*------------------------------------------*/
+  /*  Top Menu of Language and Login
+  /*------------------------------------------*/
+
+  .iniciarSessionToggle{
+    display: none!important;
+  }
+
+  /*------------------------------------------*/
   /*	 Responsive Menu
 	/*------------------------------------------*/
   .navbar {
@@ -202,7 +210,8 @@
   .navbar-helper .navbar-right{
     position: relative;
     float: right;
-  }>
+  }
+
   .navbar-helper .navbar-right li{
     position: relative;
     display: inline-block;
@@ -238,6 +247,7 @@
   }
 }
 @media (max-width: 480px) {
+
   /*------------------------------------------*/
   /*	 Intro Page
 	/*------------------------------------------*/
