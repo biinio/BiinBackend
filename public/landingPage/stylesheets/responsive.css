@@ -468,6 +468,13 @@
     height: 100%;
   }
 
+  #preRegister button.selectpicker{
+    width: 45%;
+    margin-top: 0px;
+  }
+
+.btn-group.bootstrap-select.show-tick.input-group-btn{
+  display: inline!important;
 }
 @media (max-width: 320px) {
   .titlebar,
