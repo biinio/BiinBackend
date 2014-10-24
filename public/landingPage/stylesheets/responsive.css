@@ -78,6 +78,7 @@
     font-size: 22px;
   }
 }
+
 @media only screen and (max-width: 991px) {
 
   /*------------------------------------------*/
@@ -240,6 +241,7 @@
     margin-right: 100px;
     margin-left: 100px;
   }
+
 /*------------------------------------------*/
   /*    Features section
   /*------------------------------------------*/
@@ -379,6 +381,36 @@
     margin-bottom: 15px!important;
   }
 
+  /*------------------------------------------*/
+  /*    Slider section
+  /*------------------------------------------*/
+  .wrapperButtonInfo{
+     bottom: 90px;
+  }
+  .btn.btn-comprar, .btn-store-slide{
+    width: 140px!important;
+    height: 50px!important;
+    font-size: 12px!important;
+    line-height: 35px!important;
+  }
+  .scroll-down {
+    bottom: -48px;
+  }
+  .slides-pagination, .flex-control-nav{
+    bottom: 60px!important;
+  }
+
+  .scroll-down span{
+    height: 30px;
+    width: 30px;
+    margin-bottom: 20px;
+  }
+  .scroll-down p{
+    padding-top: -100px;
+  }
+  .scroll-down span [class*="fa-"]{
+    line-height: 28px;
+  }
   /*------------------------------------------*/
   /*	  Titlebar
 	/*------------------------------------------*/

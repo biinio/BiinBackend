@@ -843,7 +843,7 @@ ul {
   text-align: center;
   text-transform: uppercase;
   position: absolute;
-  bottom: -1%;
+  bottom: -30px;
   z-index: 99;
   text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
 }
