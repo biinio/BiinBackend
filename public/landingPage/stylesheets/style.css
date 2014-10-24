@@ -272,8 +272,8 @@ ul {
   margin-top: 34px!important;
 }
 .navbar.navbar-fixed-top .navbar-brand > img{
-  position: relative;
-  margin-top:-15px;
+  position: absolute!important;
+  left: 50px!important;
 }
 
 .navbar-brand img{
