@@ -8,51 +8,50 @@ block content
 				.row
 					.col-md-6
 						.row
-							h1 Excelente! Pre-ordena sus Biin Beacons ahora
-							p Pre-Ordene los Biin Beacons y sea de los primeros en traer la experiencia de Biin a sus
-								|empresa. Perm&iacute;tenos saber a qui&eacute;n estaremos contactando cuando los Biin Beacons
-								| est&eacute;n disponibles.								
-						form#pre-order-form.row(action="#" name="pre-registform", method="post")
-							label= "Estas pre-registrando el paquete " + packageSlected.toUpperCase()
-							input#name.form-control(type='text' name='full_name' placeholder='Full Name' required)
-							input#company.form-control(type='text', name='company', placeholder='Company (mandatory if shipping to a business addres)', required)
-							input#email.form-control(type='text', name='email', placeholder='Email', required)
-							input#phone.form-control(type='text', name='phone', placeholder='Phone number', required)
-							input#country.form-control(type='text', name='country', placeholder='Country **', required)
-							input#state.form-control(type='text', name='state', placeholder='State', required)
-							input#city.form-control(type='text', name='City', placeholder='City', required)
-							input#zipCodes.form-control(type='text', name='ZipCodes', placeholder='Zip Code', required)
-							input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
-							
-
-							.spinner-packages
-								.spinner-package-label
-									| Cantidad de paquetes
-								.input-group.spinner
-									input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested' isNumber)
-									.input-group-btn-vertical
-										button.btn.btn-default
-											i.fa.fa-caret-up
-										button.btn.btn-default
-											i.fa.fa-caret-down
-
-							input#pack.hidden(type="tex" name="plan" value=packageSlected)
-							select#plan.selectpicker(title='Seleccione una subscripci&oacute;n' name="pack" multiple data-max-options="1")
-								option LITE
-								option STANDART
-								option PREMIUN												
-							//.row.text-center
-								.contentCheckBox
-									.checkboxFour
-										if(typeof(accept)==="undefined")
-											input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond")
-											label(for="checkboxFourInput")
-										else
-											input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond" checked)
-											label(for="checkboxFourInput")
-									//span
-										| He le&iacute;do y estoy de acuerdo con los 
-										a.termsWhite(href="/termsAndConditions/preorder-"+packageSlected) t&eacute;rminos de venta de Biin.
+							.col-md-12
+								h1 Excelente! Pre-ordena sus Biin Beacons ahora
+								p Pre-Ordene los Biin Beacons y sea de los primeros en traer la experiencia de Biin a sus
+									|empresa. Perm&iacute;tenos saber a qui&eacute;n estaremos contactando cuando los Biin Beacons
+									| est&eacute;n disponibles.								
+						.row
+							form#pre-order-form.col-md-12(action="#" name="pre-registform", method="post")
+								label= "Estas pre-registrando el paquete " + packageSlected.toUpperCase()
+								input#name.form-control(type='text' name='full_name' placeholder='Full Name' required)
+								input#company.form-control(type='text', name='company', placeholder='Company (mandatory if shipping to a business addres)', required)
+								input#email.form-control(type='text', name='email', placeholder='Email', required)
+								input#phone.form-control(type='text', name='phone', placeholder='Phone number', required)
+								input#country.form-control(type='text', name='country', placeholder='Country **', required)
+								input#state.form-control(type='text', name='state', placeholder='State', required)
+								input#city.form-control(type='text', name='City', placeholder='City', required)
+								input#zipCodes.form-control(type='text', name='ZipCodes', placeholder='Zip Code', required)
+								input#streetAddres.form-control(type='text', name='streetAddres', placeholder='Street Address', required)
+								.spinner-packages
+									.spinner-package-label
+										| Cantidad de paquetes
+									.input-group.spinner
+										input#qty.form-control(type="text" value="0" name="qty" placeholder='How many are you interested' isNumber)
+										.input-group-btn-vertical
+											button.btn.btn-default
+												i.fa.fa-caret-up
+											button.btn.btn-default
+												i.fa.fa-caret-down
+								input#pack.hidden(type="tex" name="plan" value=packageSlected)
+								select#plan.selectpicker(title='Seleccione una subscripci&oacute;n' name="pack" multiple data-max-options="1")
+									option LITE
+									option STANDART
+									option PREMIUN												
+								//.row.text-center
+									.contentCheckBox
+										.checkboxFour
+											if(typeof(accept)==="undefined")
+												input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond")
+												label(for="checkboxFourInput")
+											else
+												input.validateCheck(type="checkbox" value="1" id="checkboxFourInput" name="termsAdCond" checked)
+												label(for="checkboxFourInput")
+										//span
+											| He le&iacute;do y estoy de acuerdo con los 
+											a.termsWhite(href="/termsAndConditions/preorder-"+packageSlected) t&eacute;rminos de venta de Biin.
 						.row.text-center
 							//if(typeof(accept)==="undefined")
 								input#btn-preOrder.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" disabled)

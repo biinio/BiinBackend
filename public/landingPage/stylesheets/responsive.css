@@ -166,6 +166,14 @@
 }
 @media only screen and (max-width: 767px) {
   /*------------------------------------------*/
+  /*  Top Menu of Language and Login
+  /*------------------------------------------*/
+
+  .iniciarSessionToggle{
+    display: none!important;
+  }
+
+  /*------------------------------------------*/
   /*	 Responsive Menu
 	/*------------------------------------------*/
   .navbar {
@@ -202,7 +210,8 @@
   .navbar-helper .navbar-right{
     position: relative;
     float: right;
-  }>
+  }
+
   .navbar-helper .navbar-right li{
     position: relative;
     display: inline-block;
@@ -226,18 +235,38 @@
     margin-right: 100px;
     margin-left: 100px;
   }
+/*------------------------------------------*/
+  /*    Features section
+  /*------------------------------------------*/
+
+  .feature-box-content p
+  {
+    font-size: 17px;
+  }  
   /*------------------------------------------*/
   /*	  Feature Box
 	/*------------------------------------------*/
   .feature-box {
     margin-bottom: 30px;
+    margin-right: 15px;
+    margin-left: 15px;
   }
 
   .forwhoIsBiin-wrapper{
     height: 100%;
   }
+
+  /*------------------------------------------*/
+  /*    Pre-Register adn Pre-Order Forms
+  /*------------------------------------------*/
+  #preRegister .container, #preorder .container{
+    margin-left: 15px;
+    margin-right: 15px;
+  }
 }
+
 @media (max-width: 480px) {
+
   /*------------------------------------------*/
   /*	 Intro Page
 	/*------------------------------------------*/
@@ -252,13 +281,62 @@
     font-size: 150%;
   }
   /*------------------------------------------*/
+  /*    Slider
+  /*------------------------------------------*/
+  .flex-control-paging li a{
+    height: 15px!important;
+    width: 15px!important;
+    border-radius: 50%!important;
+  }
+
+  #FORWHOISBIIN .flex-control-paging{
+    bottom:50px!important;
+  }
+
+  .flex-direction-nav a{
+    top: initial!important;
+    bottom:20px!important;
+  }
+
+  .forwhoIsBiin-slider .flex-direction-nav .flex-next{
+    background-color: initial!important;
+    color: #FFFFFF!important;
+  }
+
+  .forwhoIsBiin-slider .flex-direction-nav .flex-prev{
+    background-color: initial!important;
+    color: #FFFFFF!important;;
+
+  }
+
+  .flex-prev:before{
+    font-size:50px!important;
+    margin-left: -40px!important;
+  }
+
+  .flex-next:before{
+    font-size:50px!important;
+    margin-right: -40px!important;
+  }
+  .flex-prev:hover, .flex-next:hover{
+    background-color: initial!important;
+    border-color:initial!important;
+    box-shadow:initial!important;
+  }
+
+  .forhow-content .titlebar h2{
+    margin-bottom: 15px!important;
+  }
+
+  /*------------------------------------------*/
   /*	  Titlebar
 	/*------------------------------------------*/
   .titlebar h2 {
-    font-size: 26px;
+    font-size: 19px;
+
   }
   .titlebar h3 {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
     margin-bottom: 15px;
   }
@@ -301,6 +379,25 @@
   .subscribe-submit {
     width: 35%;
   }
+
+/*------------------------------------------*/
+  /*    Features section
+  /*------------------------------------------*/
+  .feature-box-icon{
+    clear: left;
+    width: 100%;
+    position: relative;
+  }
+
+  .feature-box-content{
+     padding-left: initial!important; 
+     text-align: center;
+  }
+
+  .feature-box-content p
+  {
+    font-size: 17px;
+  }
   /*------------------------------------------*/
   /*	  Screens
 	/*------------------------------------------*/
@@ -320,6 +417,7 @@
   .forwhoIsBiin-wrapper{
     height: 100%;
   }
+
 }
 @media (max-width: 320px) {
   .titlebar,
