@@ -82,6 +82,10 @@
   /*------------------------------------------*/
   /*	  Titlebar
 	/*------------------------------------------*/
+
+  #preRegister .imgPreOrder img, #preorder .imgPreOrder img {
+    margin-top: -13%;
+  }
   .titlebar h2 {
     font-size: 26px;
   }
@@ -259,6 +263,10 @@
   /*------------------------------------------*/
   /*    Pre-Register adn Pre-Order Forms
   /*------------------------------------------*/
+  #preRegister .imgPreOrder img, #preorder .imgPreOrder img {
+    margin-top: -13%;
+  }
+
   #preRegister .container, #preorder .container{
     margin-left: 15px;
     margin-right: 15px;
