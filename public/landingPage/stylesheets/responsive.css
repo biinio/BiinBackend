@@ -385,6 +385,7 @@
 	/*------------------------------------------*/
   .intro-content {
     width: 100%;
+    top:35%;
   }
   .intro-content h1 {
     font-size: 350%;
@@ -398,7 +399,10 @@
     width: 20px !important;
     height: 20px !important;
     border-radius: 50%;
-    /* border: solid; */
+
+  }
+  #intro {
+    padding-top: 111px!important;
   }
   /*------------------------------------------*/
   /*    Slider
