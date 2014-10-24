@@ -388,11 +388,11 @@
     top:35%;
   }
   .intro-content h1 {
-    font-size: 350%;
+    font-size: 250%;
     line-height: 100%;
   }
   .intro-content h3 {
-    font-size: 150%;
+    font-size: 100%;
   }
   .slides-pagination a, .flex-control-nav a {
     padding-top: 5px;
