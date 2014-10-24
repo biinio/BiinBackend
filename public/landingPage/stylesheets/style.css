@@ -470,9 +470,9 @@ ul {
 
 .forwhoIsBiin-wrapper .titlebar{  
   height: 20%!important;
-  padding-top: 100px;
+  /*padding-top: 100px;
   padding-left: 10%;
-  padding-right: 10%;
+  padding-right: 10%;*/
   color: #fff;
 }
 
@@ -881,6 +881,17 @@ ul {
 /* ==========================================================================
    04. BANNER_1
    ========================================================================== */
+.banner-container{
+  padding-top: 80px;
+  border-bottom: 1px solid #ddd;
+  background-color: #71D7FF;
+}
+.banner-container .container{
+  position: relative;
+  margin-top: 50px; 
+  margin-bottom: 100px; 
+}
+
 #banner_1 {
   padding-top: 80px;
   border-bottom: 1px solid #ddd;
@@ -1670,13 +1681,13 @@ ul {
 /*	  Contact Form Input Focus
 /*------------------------------------------*/
 .col-md-6 {
-  padding-right: 5px !important;
-  padding-left: 5px !important;
+  /*padding-right: 5px !important;*/
+  /*padding-left: 5px !important;*/
 }
 
 .col-md-12 {
-  padding-right: 5px !important;
-  padding-left: 5px !important;
+  /*padding-right: 5px !important;*/
+  /*padding-left: 5px !important;*/
 }
 
 .form-control:focus {

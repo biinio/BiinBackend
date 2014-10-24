@@ -266,7 +266,10 @@
 }
 
 @media (max-width: 480px) {
-
+  blockquote {
+    font-size: 20px !important;
+    margin: 60px 0px 80px 0px;
+  }
   /*------------------------------------------*/
   /*	 Intro Page
 	/*------------------------------------------*/
