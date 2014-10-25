@@ -77,9 +77,49 @@
   .testimonials p {
     font-size: 22px;
   }
+
 }
 
 @media only screen and (max-width: 991px) {
+
+/*------------------------------------------*/
+  /*    Video Responsive section
+  /*------------------------------------------*/
+
+  #videoHistory iframe{
+    max-height: 405px;
+  }
+
+  /*------------------------------------------*/
+  /*    Slider section
+  /*------------------------------------------*/
+  .wrapperButtonInfo{
+     bottom: 90px;
+  }
+  .btn.btn-comprar, .btn-store-slide{
+    width: 140px!important;
+    height: 50px!important;
+    font-size: 12px!important;
+    line-height: 35px!important;
+  }
+  .scroll-down {
+    bottom: -48px;
+  }
+  .slides-pagination, .flex-control-nav{
+    bottom: 60px!important;
+  }
+
+  .scroll-down span{
+    height: 30px;
+    width: 30px;
+    margin-bottom: 20px;
+  }
+  .scroll-down p{
+    padding-top: -100px;
+  }
+  .scroll-down span [class*="fa-"]{
+    line-height: 28px;
+  }
 
   /*------------------------------------------*/
   /*	  Titlebar
@@ -169,8 +209,20 @@
   .pricing-table ul.features {
     padding: 5px;
   }
+
 }
 @media only screen and (max-width: 767px) {
+  /*------------------------------------------*/
+  /*    Video Responsive section
+  /*------------------------------------------*/
+
+  #videoHistory iframe{
+    max-height: 228px;
+    max-width: 400px;
+
+  }
+  
+
   /*------------------------------------------*/
   /*  Top Menu of Language and Login
   /*------------------------------------------*/
@@ -312,11 +364,18 @@
     margin-top: 0%;
     margin-left: 0%;
   }
-
 }
 
 @media (max-width: 480px) {
   
+  #videoHistory iframe {
+    max-height: 200px;
+    max-width: 346px;
+  }
+
+  #videoHistory .row{
+    max-height: 250px!important;
+  }
   blockquote {
     font-size: 20px !important;
     margin: 60px 0px 80px 0px;
@@ -326,14 +385,24 @@
 	/*------------------------------------------*/
   .intro-content {
     width: 100%;
-    padding: 20px;
+    top:35%;
   }
   .intro-content h1 {
-    font-size: 230%;
+    font-size: 100%;
     line-height: 100%;
   }
   .intro-content h3 {
-    font-size: 140%;
+    font-size: 90%;
+  }
+  .slides-pagination a, .flex-control-nav a {
+    padding-top: 5px;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50%;
+
+  }
+  #intro {
+    padding-top: 111px!important;
   }
   /*------------------------------------------*/
   /*    Slider
@@ -383,42 +452,15 @@
     margin-bottom: 15px!important;
   }
 
-  /*------------------------------------------*/
-  /*    Slider section
-  /*------------------------------------------*/
-  .wrapperButtonInfo{
-     bottom: 90px;
-  }
-  .btn.btn-comprar, .btn-store-slide{
-    width: 140px!important;
-    height: 50px!important;
-    font-size: 12px!important;
-    line-height: 35px!important;
-  }
-  .scroll-down {
-    bottom: -48px;
-  }
-  .slides-pagination, .flex-control-nav{
-    bottom: 60px!important;
-  }
-
-  .scroll-down span{
-    height: 30px;
-    width: 30px;
-    margin-bottom: 20px;
-  }
-  .scroll-down p{
-    padding-top: -100px;
-  }
-  .scroll-down span [class*="fa-"]{
-    line-height: 28px;
+  .subscribe-submit{
+    font-size: 13px!important;
   }
   /*------------------------------------------*/
   /*	  Titlebar
 	/*------------------------------------------*/
   .titlebar h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 19px;
+
   }
   .titlebar h3 {
     font-size: 18px;
@@ -512,6 +554,16 @@
   display: inline!important;
 }
 @media (max-width: 320px) {
+
+  #videoHistory iframe {
+    max-height: 172px;
+    max-width: 290px;
+  }
+
+  #videoHistory .row{
+    max-height: 200px!important;
+  }
+
   .titlebar,
   .banner_1_content,
   #features .col-sm-6,
@@ -531,11 +583,11 @@
     width: 100%;
   }
   .intro-content h1 {
-    font-size: 250%;
+    font-size: 150%;
     line-height: 100%;
   }
   .intro-content h3 {
-    font-size: 120%;
+    font-size: 90%;
   }
   /*------------------------------------------*/
   /*	  Titlebar
