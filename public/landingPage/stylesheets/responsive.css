@@ -459,8 +459,8 @@
   /*	  Titlebar
 	/*------------------------------------------*/
   .titlebar h2 {
-    font-size: 19px;
-
+    font-size: 28px;
+    margin-bottom: 20px;
   }
   .titlebar h3 {
     font-size: 18px;
