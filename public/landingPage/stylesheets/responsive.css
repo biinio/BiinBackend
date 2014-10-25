@@ -312,6 +312,7 @@
     margin-top: 0%;
     margin-left: 0%;
   }
+
 }
 
 @media (max-width: 480px) {
@@ -325,13 +326,14 @@
 	/*------------------------------------------*/
   .intro-content {
     width: 100%;
+    padding: 20px;
   }
   .intro-content h1 {
-    font-size: 350%;
+    font-size: 230%;
     line-height: 100%;
   }
   .intro-content h3 {
-    font-size: 150%;
+    font-size: 140%;
   }
   /*------------------------------------------*/
   /*    Slider
@@ -415,8 +417,8 @@
   /*	  Titlebar
 	/*------------------------------------------*/
   .titlebar h2 {
-    font-size: 19px;
-
+    font-size: 28px;
+    margin-bottom: 20px;
   }
   .titlebar h3 {
     font-size: 18px;
