@@ -355,8 +355,11 @@
 
   .thankYouButton {
     margin-left: 0%;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
     margin-top: 0%;
-    padding: 16px;
     text-align: center;
   }
 
@@ -366,7 +369,8 @@
     text-align: center;
     margin: auto;
     margin-left: 0%;
-    margin-right: 0%;
+    margin-right:pre-wrap;
+    white-space: normal!important;
   }
   .happyBiinie img {
     width: 100%;
