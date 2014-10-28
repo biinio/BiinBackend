@@ -1164,9 +1164,9 @@ ul {
   width: 90%;
 }
 .subscribe-form input {
-  /*border: 1px solid #ddd;
-  border-right: none;*/
   width: 100%;
+  border: none;
+  border-radius: initial!important;
 }
 .subscribe-input {
   width: 75%;
