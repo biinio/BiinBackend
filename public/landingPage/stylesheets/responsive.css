@@ -553,8 +553,18 @@
   }
 
   #preRegister button.selectpicker{
-    width: 45%;
+    width: 100%!important;;
     margin-top: 0px;
+  }
+
+  .input-group.spinner{
+    padding-top: 10px;
+    clear: left;
+    width: 100%;
+  }
+
+  div#packGroup.input-group {
+    display: block
   }
 
 .btn-group.bootstrap-select.show-tick.input-group-btn{

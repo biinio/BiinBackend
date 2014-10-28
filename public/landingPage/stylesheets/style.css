@@ -1972,6 +1972,10 @@ nav a#pull {
   margin-top: 20%;
 }
 
+div#packGroup.input-group{
+  width: 100%;
+}
+
 #preRegister .btnEnviar,#preorder .btnEnviar{
   margin-top: 60px;
 }
