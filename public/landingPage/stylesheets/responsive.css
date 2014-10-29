@@ -389,7 +389,35 @@
 }
 
 @media (max-width: 480px) {
-  
+ /*------------------------------------------*/
+  /*   General
+  /*------------------------------------------*/  
+  input::-webkit-input-placeholder { /* WebKit browsers */
+    line-height: 3em;
+    font-size: 9px;
+  }
+  input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    line-height: 3em;
+    font-size: 9px;
+  }
+  input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    line-height: 3em;
+    font-size: 9px;
+  }
+  input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    line-height: 3em;
+    font-size: 9px;
+  }
+
+  #preRegister span, #preorder span{
+   line-height: 3em;
+    font-size: 12px; 
+  }
+  .form-control{
+    line-height: 3em!important;
+    font-size: 12px!important; 
+  }
+
   #videoHistory iframe {
     max-height: 200px;
     max-width: 346px;
@@ -423,6 +451,8 @@
     border-radius: 50%;
 
   }
+
+
   /*------------------------------------------*/
   /*    Slider
   /*------------------------------------------*/
