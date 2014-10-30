@@ -4,6 +4,70 @@
 		"selected_items":
 		[
 			[
+				"margin",
+				"margin"
+			],
+			[
+				"paddin",
+				"padding"
+			],
+			[
+				"marg",
+				"margin-top"
+			],
+			[
+				"col",
+				"col-md-12"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"fo",
+				"font-size"
+			],
+			[
+				"ba",
+				"background-image"
+			],
+			[
+				"he",
+				"height	Attr"
+			],
+			[
+				"proc",
+				"processedEmail"
+			],
+			[
+				"index",
+				"indexName"
+			],
+			[
+				"inde",
+				"indexName"
+			],
+			[
+				"re",
+				"response"
+			],
+			[
+				"functo",
+				"function"
+			],
+			[
+				"send",
+				"sendMail"
+			],
+			[
+				"transp",
+				"transporter"
+			],
+			[
 				"acce",
 				"accessTokenHash"
 			],
@@ -244,10 +308,6 @@
 				"organizationIdentifier"
 			],
 			[
-				"index",
-				"indexOf"
-			],
-			[
 				"inse",
 				"insertGalleryItem"
 			],
@@ -316,10 +376,6 @@
 				"panel-heading"
 			],
 			[
-				"mar",
-				"margin-top"
-			],
-			[
 				"tab",
 				"tabName"
 			],
@@ -346,10 +402,6 @@
 			[
 				"qu",
 				"quarter-heigth"
-			],
-			[
-				"col",
-				"colPreview"
 			],
 			[
 				"m",
@@ -444,14 +496,6 @@
 				"border-left"
 			],
 			[
-				"margin",
-				"margin-top"
-			],
-			[
-				"ba",
-				"background-color"
-			],
-			[
 				"padin",
 				"padding-left"
 			],
@@ -470,50 +514,6 @@
 			[
 				"elemen",
 				"elementHeight"
-			],
-			[
-				"paddin",
-				"padding-bottom"
-			],
-			[
-				"first",
-				"firstColor"
-			],
-			[
-				"margi",
-				"margin-bottom"
-			],
-			[
-				"slec",
-				"selectedSite"
-			],
-			[
-				"selected",
-				"selectedSite"
-			],
-			[
-				"selc",
-				"selectedOrganization"
-			],
-			[
-				"max-wi",
-				"max-width"
-			],
-			[
-				"padd",
-				"padding-top"
-			],
-			[
-				"sitePro",
-				"sitePrototypeObj"
-			],
-			[
-				"inde",
-				"indexOf"
-			],
-			[
-				"siteP",
-				"sitePrototypeObj"
 			]
 		]
 	},
@@ -523,9 +523,17 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 67.0,
 		"selected_items":
 		[
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
 			[
 				"insta",
 				"Package Control: Install Package"
@@ -573,13 +581,9 @@
 			[
 				"Package Control: insta",
 				"Package Control: Install Package"
-			],
-			[
-				"Package Control: ins",
-				"Package Control: Install Package"
 			]
 		],
-		"width": 467.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -597,23 +601,56 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/Users/lbonilla/Developments/Biin",
+		"/Users/lbonilla/Developments/Biin/public",
+		"/Users/lbonilla/Developments/Biin/views",
+		"/Users/lbonilla/Developments/Biin/views/showcase",
+		"/Users/lbonilla/Developments/Biin/views/site",
+		"/Users/lbonilla/Developments/Biin/views/user"
+	],
 	"file_history":
 	[
-		"/Users/lbonilla/Developments/Biin/views/_partials/notificationWidget.jade",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/stylesheets/style.css",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/stylesheets/responsive.css",
+		"/Users/lbonilla/Developments/Biin/views/site/wizardBiinsPurchaseModal.jade",
+		"/Users/lbonilla/Developments/Biin/node_modules/less-livereload/node_modules/ws/install.js",
+		"/Users/lbonilla/Developments/Biin/node_modules/less/test/less/errors/import-no-semi.less",
+		"/Users/lbonilla/Developments/Biin/routes/index.js",
+		"/Users/lbonilla/Developments/Biin/Procfile",
+		"/Users/lbonilla/Developments/Biin/node_modules/mongoose/node_modules/mpromise/test/promises.Aplus.js",
+		"/Users/lbonilla/Developments/Biin/package.json",
+		"/Users/lbonilla/Developments/Biin/node_modules/less/test/less/errors/parse-error-curly-bracket.less",
+		"/Users/lbonilla/Developments/Biin/views/index_pre_order.jade",
+		"/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 10-23-2014.txt",
+		"/Users/lbonilla/Developments/Biin/views/layout_landing_page.jade",
+		"/Users/lbonilla/Developments/Biin/views/layout_landing_page_out.jade",
+		"/Users/lbonilla/Developments/Biin/views/index_pre_register.jade",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/templates/emailTemplate_table.html",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/locals/es.json",
+		"/Users/lbonilla/Developments/Biin/views/index.jade",
 		"/Users/lbonilla/Developments/Biin/.env",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/templates/emailTemplate.html",
+		"/Users/lbonilla/Developments/Biin/public/test.html",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/js/custom.js",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/templates/emailTemplates.html",
+		"/Users/lbonilla/Developments/Biin/bower_components/flexslider/jquery.flexslider.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/app.js",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/js/jquery.flexslider.js",
+		"/Users/lbonilla/Developments/Biin/views/termsAndConditions.jade",
+		"/Users/lbonilla/Developments/Biin/views/_partials/notificationWidget.jade",
 		"/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 09-18-2014.txt",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
 		"/Users/lbonilla/Developments/Biin/biin.sublime-workspace",
 		"/Users/lbonilla/Developments/Biin/routes/clients.js",
 		"/Users/lbonilla/Developments/Biin_Stuff/AutorizationFlowExample",
 		"/Users/lbonilla/Developments/Biin/views/_partials/notificationTemplate.jade",
-		"/Users/lbonilla/Developments/Biin/biin_modules/app.js",
 		"/Users/lbonilla/Developments/Biin/bin/www",
 		"/Users/lbonilla/Developments/Biin/biin_modules/mobileOauthManager.js",
 		"/Users/lbonilla/Developments/Biin/biin_modules/auth.js",
 		"/Users/lbonilla/Developments/Biin/views/showcase/index.jade",
 		"/Users/lbonilla/Developments/Biin/.gitignore",
-		"/Users/lbonilla/Developments/Biin/Procfile",
 		"/Users/lbonilla/Developments/Biin/schemas/mobileUser.js",
 		"/Users/lbonilla/Developments/Biin/routes/mobileUser.js",
 		"/Users/lbonilla/Developments/Biin/biin_modules/awsManager.js",
@@ -624,7 +661,6 @@
 		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileAPIGrants.js",
 		"/Users/lbonilla/Developments/Biin/schemas/organization.js",
 		"/Users/lbonilla/Developments/Biin/biin_modules/mobileUser.js",
-		"/Users/lbonilla/Developments/Biin/routes/index.js",
 		"/Users/lbonilla/Developments/Biin/routes/organizations.js",
 		"/Users/lbonilla/Developments/Biin/routes/showcases.js",
 		"/Users/lbonilla/Developments/Biin/routes/sites.js",
@@ -658,7 +694,6 @@
 		"/Users/lbonilla/Developments/Biin/public/javascripts/ui.js",
 		"/Users/lbonilla/Developments/Biin/views/organization/index.jade",
 		"/Users/lbonilla/Developments/Biin/biin_modules/db.js",
-		"/Users/lbonilla/Developments/Biin/package.json",
 		"/Users/lbonilla/Developments/Biin/sslcert/biin.csr",
 		"/Users/lbonilla/Developments/Biin/sslcert/server.key",
 		"/Users/lbonilla/Developments/Biin/.git/COMMIT_EDITMSG",
@@ -704,37 +739,15 @@
 		"/Users/lbonilla/Library/Application Support/Sublime Text 2/Packages/LESS/README.md",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.css",
 		"/Users/lbonilla/Developments/Biin/biin.sublime-project",
-		"/Users/lbonilla/Developments/Biin/views/sites/index.jade",
-		"/Users/lbonilla/Developments/Biin/views/layout_organizations.jade",
-		"/Users/lbonilla/Developments/Biin/views/utils/layout_organizations.jade",
-		"/Users/lbonilla/Developments/Biin/auth.js",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/naturalSortVersion.js",
-		"/Users/lbonilla/Developments/Biin/views/index.jade",
-		"/Users/lbonilla/Developments/Biin/views/index.html",
-		"/Users/lbonilla/Developments/Biin/views/homeDashboard.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/controls.js",
-		"/Users/lbonilla/Developments/Biin/views/objects/index.jade",
-		"/Users/lbonilla/Developments/Biin_Stuff/scripts/showcase1.json",
-		"/Users/lbonilla/Developments/Biin_Stuff/scripts/showcase2.json",
-		"/Users/lbonilla/Developments/Biin_Stuff/scripts/showcase3.json",
-		"/Users/lbonilla/Developments/Biin/schemas/region.js",
-		"/Users/lbonilla/Developments/Biin_Stuff/scripts/biins.json",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/objects.js",
-		"/Users/lbonilla/Developments/Biin/app.js",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/bootstrap.min.js",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/croppic.css",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/croppic.js",
-		"/Users/lbonilla/Developments/Biin/public/workingFiles/photo44200775914727372.jpeg",
-		"/Users/lbonilla/Developments/Biin/db.js",
-		"/Users/lbonilla/Developments/Biin/.git/config"
+		"/Users/lbonilla/Developments/Biin/views/sites/index.jade"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"/Users/lbonilla/Developments/Biin",
@@ -749,6 +762,52 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			".thankYouButton",
+			"#preRegister button.selectpicker",
+			"input",
+			"subscribe-form",
+			"toggle",
+			"navbar-toggle",
+			"responsive",
+			"background-image",
+			"backgroun",
+			"background-ima",
+			"nav-to",
+			"sing",
+			"img",
+			"newsletter",
+			"forceSsl",
+			"price",
+			"envio",
+			"periodo",
+			"Envio",
+			"credito",
+			"suscripcion",
+			"Ademas",
+			"aplicacion",
+			"perm",
+			"permitanos",
+			"Pre-ordena",
+			"rapidez",
+			"Beacons de Biin",
+			"Para quien",
+			"sessi ",
+			"sessión ",
+			"complementaria",
+			"coplementaria",
+			"in Comp",
+			"In Comp",
+			"inc",
+			"in",
+			"incomputer",
+			"ademas",
+			"Quienes",
+			"Como",
+			"movil",
+			"Subcribase",
+			"facil",
+			"estas",
+			"movil",
 			"console.log",
 			"process.env",
 			"DB_CONNECTION",
@@ -830,53 +889,7 @@
 			"img",
 			"pending-indicator",
 			"imagesLoaded",
-			"upload",
-			"uploadFile",
-			"util",
-			"Here",
-			"insertElementAfter",
-			"setDragElement",
-			"inverse",
-			"moduleWrapper",
-			"'",
-			"\"",
-			"biinAppOrganization",
-			"max-height",
-			"nav-var",
-			"cropper",
-			"createShowcaseCropper",
-			"image",
-			"radius",
-			"col",
-			"slimscroll",
-			".col-list",
-			"bt-save",
-			"btn",
-			"slimscroll",
-			"remove",
-			"media",
-			"console.log",
-			"    \n",
-			"280",
-			"showcaseWorkArea",
-			"\n",
-			"00adef",
-			"069FCE",
-			"biinSrv",
-			"max",
-			"max-heigth",
-			"max-height",
-			"cropperEditor",
-			"$set",
-			"indentifier",
-			"currentModelId",
-			"mainImageUrl",
-			".panel-heading ",
-			".panel-default>.panel-heading ",
-			"setDragBiin",
-			"max-height",
-			"indexOf",
-			"updateShowcaseObjectsPosition"
+			"upload"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -910,7 +923,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -936,7 +949,7 @@
 		"cols":
 		[
 			0.0,
-			0.51909573269,
+			0.239216014105,
 			1.0
 		],
 		"rows":
@@ -984,7 +997,7 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},
@@ -992,7 +1005,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 265.0,
+	"side_bar_width": 252.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

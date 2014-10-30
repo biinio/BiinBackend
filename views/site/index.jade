@@ -10,18 +10,21 @@ block content
 						.row
 							.col-md-12(style='padding:8px;')
 								button.btn.btn-default.btn-block.btn-biin(ng-click='create()') ADD NEW SITE
-					.container-fluid(style='padding:5px;')
+					.container-fluid.container-list-scroll-fixed
 						.row
-							.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
-								.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
-									.moduleTitle {{item.title1}}
-									img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-									img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-									.btnDelete.icon-round-control.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))")
-										.icon.icon-bin-2
-									.btnShowcasePreview.icon-round-control.btn-on-hover
-										.icon.icon-arrange-1
-						
+							.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+								.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
+									.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
+										.moduleTitle {{item.title1}}
+										img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+										img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+										.btnDelete.icon-round-control.btn-on-hover(ng-click="removeSiteAt(sites.indexOf(item))")
+											.icon.icon-bin-2
+										.btnShowcasePreview.icon-round-control.btn-on-hover
+											.icon.icon-arrange-1
+					.container-fluid.searchBox
+						.searchBox-wrapper
+							input.form-control(type="text" placeholder="search" ng-model="query" autofocus)
 				.right-section-content
 					div(ng-if="selectedSite!=null")
 						.animate-switch.wizard-wrapper

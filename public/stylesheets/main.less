@@ -70,6 +70,32 @@ input.ng-valid.ng-dirty{
 	width: 85%;
 }
 
+.scroll-vertical-container{
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 100%;
+	max-height:  100%;
+	width: 100%;
+	max-width: 100%;
+	overflow-x: hidden!important;
+	overflow-y: hidden!important;
+	white-space: nowrap;
+	padding-right: 8px;
+}
+
+.container-list-scroll-fixed{
+	padding:5px;
+	position:relative; 
+	height: 95vh;
+	.row{
+		position:relative;
+		max-height: 90%; 
+		height: 100%;
+		padding-bottom: 10px;
+	}
+}
+
 /*------------------------------------------*/
 /*	Main Containers
 /*------------------------------------------*/
@@ -601,11 +627,13 @@ input.ng-valid.ng-dirty{
 }
 
 .left-section-content {
+	position: relative;
 	float: left;
 	position: fixed;
 	bottom: 0;
+	/*
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: auto;*/
 
 	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 	@media (min-width: 768px) {	
@@ -620,7 +648,32 @@ input.ng-valid.ng-dirty{
         top: @screenLgBodyPaddingTop;
         background-color: @colorBackground;
     }
+
+    .scroll-x{
+    	display:none;
+    }
+
+	.searchBox{
+		position: fixed;
+		bottom: 5px;
+		width: 22%;
+		.searchBox-wrapper{
+			position: relative;
+			width: 100%;
+			margin-left: auto;
+			margin-right: auto;			
+
+			input{
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				background-color: @colorWhite;
+			}			
+		}
+
+	}
 }
+
 
 .right-section-content {
 	float: left;
@@ -647,7 +700,7 @@ input.ng-valid.ng-dirty{
 	margin-top: auto;
 	margin-right: auto;
 	margin-left: auto;
-
+	background-color: @colorBaseWhite;
 	//Module Title
 	.moduleTitle{
 		position: absolute;
@@ -659,8 +712,7 @@ input.ng-valid.ng-dirty{
 
 	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 	@media (min-width: 768px) {	
-		width: @screenMdLeftContBoxWidth;
-		background-color: @colorWhite;
+		width: @screenMdLeftContBoxWidth;		
 		margin-bottom: @screenMdLeftContBoxImgMargin;
 
 		//Wrapper Image
@@ -1089,5 +1141,77 @@ li>.nav{
 	width: @elementWidth;
 	height: 10px;
 }
+
+
+/*------------------------------------------*/
+/*	BiinINNER SCROLLBAR 
+/*------------------------------------------*/
+
+.scrollbar-inner > .scroll-element,
+.scrollbar-inner > .scroll-element div
+{
+    border: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 10;
+}
+
+.scrollbar-inner > .scroll-element div {
+    display: block;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.scrollbar-inner > .scroll-element.scroll-x {
+    bottom: 2px;
+    height: 8px;
+    left: 0;
+    width: 100%;
+}
+
+.scrollbar-inner > .scroll-element.scroll-y {
+    height: 100%;
+    right: 6px;
+    top: 0;
+    width: 8px;
+}
+
+.scrollbar-inner > .scroll-element .scroll-element_outer {
+    overflow: hidden;
+}
+
+.scrollbar-inner > .scroll-element .scroll-element_outer,
+.scrollbar-inner > .scroll-element .scroll-element_track,
+.scrollbar-inner > .scroll-element .scroll-bar {
+    /*-webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;*/
+}
+
+.scrollbar-inner > .scroll-element .scroll-element_track,
+.scrollbar-inner > .scroll-element .scroll-bar {
+   /* -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+    filter: alpha(opacity=40);
+    opacity: 0.4;*/
+}
+
+.scrollbar-inner > .scroll-element .scroll-element_track { background-color:@colorWhite; }
+.scrollbar-inner > .scroll-element .scroll-bar { background-color:  @colorBlueLight; }
+.scrollbar-inner > .scroll-element:hover .scroll-bar { background-color: @colorBlue; }
+.scrollbar-inner > .scroll-element.scroll-draggable .scroll-bar { background-color: @colorBlueDark; }
+
+
+/* update scrollbar offset if both scrolls are visible */
+
+.scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_track { left: -12px; }
+.scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_track { top: -12px; }
+
+
+.scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -12px; }
+.scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -12px; }
+
 
 @import "controls";
