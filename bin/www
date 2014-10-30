@@ -16,6 +16,8 @@ var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8').toString();;
 var certificate = fs.readFileSync('sslcert/combined.crt', 'utf8').toString();;
 var credentials = {key: privateKey, cert: certificate};
 
+console.log("Key: "+ util.inspect(privateKey));
+console.log("Cerficate: "+ util.inspect(certificate));
 //Http Server instance
 var httpServer = http.createServer(app).listen(httpPort,function(){
 	console.log("Listing server");
