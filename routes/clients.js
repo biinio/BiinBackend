@@ -39,6 +39,31 @@ module.exports = function(db){
 			console.log('saved');
 		});
 
+		var admin1 = new client({
+		    name: 'carce@biinapp.com',
+		    password: 'abc1236',
+		    displayName:'Cesar Arce',
+		    accountIdentifier:'1005',
+		    emails:['cdominguez@biinapp.com']
+		});	
+		// save a client to the database
+		admin1.save(function(err) {
+			console.log(err);
+			console.log('saved');
+		});
+
+		var admin2 = new client({
+		    name: 'lbonilla@biinapp.com',
+		    password: 'abc1236',
+		    displayName:'Luis Bonilla',
+		    accountIdentifier:'1006',
+		    emails:['lbonilla@biinapp.com']
+		});	
+		// save a client to the database
+		admin2.save(function(err) {
+			console.log(err);
+			console.log('saved');
+		});
 		res.render('client/create',req.client);	
 	}
 

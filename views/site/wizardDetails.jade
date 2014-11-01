@@ -1,6 +1,6 @@
 form.novalidate
 	.section
-		h1 Site Information
+		h1 Site detail
 		p Add site information to your organization here. Information that will be shown on the mobile app is mark with **
 	.section
 		h2 Site title
@@ -12,12 +12,12 @@ form.novalidate
 		h2 About your bussines
 		p Our customer want to know more about you!! Scroll throw and answer the following questions.
 	.section
-		h2 Search Criteria
+		h2 Search criteria
 		p This information could be useful to others for found your information
 		row
 			.search-criteria-control
 				.search-body
-					div(slimscroll="" slimscroll-option="{height:'auto'}")
+					.searchScroll.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 						.col-md-1.tag(ng-repeat="tag in sites[selectedSite].searchTags")
 							.btn-close(ng-click="removeSiteTag($index)")
 								span X

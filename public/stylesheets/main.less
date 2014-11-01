@@ -70,6 +70,27 @@ input.ng-valid.ng-dirty{
 	width: 85%;
 }
 
+.form-control{
+	height: 40px!important;
+	border-width: 2px;
+}
+
+::-webkit-input-placeholder {
+   padding-left: 15px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  padding-left: 15px;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   padding-left: 15px;
+}
+
+:-ms-input-placeholder {  
+   padding-left: 15px;
+}
+
 .scroll-vertical-container{
 	position: relative;
 	overflow-x: hidden;
@@ -271,6 +292,10 @@ input.ng-valid.ng-dirty{
 .roundedOptionsForm {
 	margin-top: -28px
 }
+.btn{
+	border:initial!important;
+	border-radius:initial!important;
+}
 
 .btn-rounded {
 	border-radius: @controlsRadiusRounded;
@@ -297,6 +322,7 @@ input.ng-valid.ng-dirty{
 	color: @secondColor;
 	border-color: none;
 }
+
 
 .colPreview{
 
@@ -475,7 +501,7 @@ input.ng-valid.ng-dirty{
 				position: relative;
 				width: 100%;
 				height: 130px;
-				background-color: @forthColor;
+				background-color: @colorGrayLight!important;
 
 				.search-body{
 					height: 66px;
@@ -528,6 +554,11 @@ input.ng-valid.ng-dirty{
 						width: 100%;
 					}
 				}
+			}
+			.searchScroll{
+				overflow-x: hidden;
+				overflow-y:visible;
+				height: 66px;
 			}
 			//Map Section
 			.mapWrapper{
@@ -631,20 +662,17 @@ input.ng-valid.ng-dirty{
 	float: left;
 	position: fixed;
 	bottom: 0;
-	/*
-	overflow-x: hidden;
-	overflow-y: auto;*/
+	z-index: 9999999999;
+	width: @screenMdLeftContWidth;
 
 	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 	@media (min-width: 768px) {	
-		width: @screenMdLeftContWidth;
 		top: @screenMdBodyPaddingTop;
 		background-color: @colorBackground;
 	}
 
     /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
     @media (min-width: 1550px) {
-        width: @screenLgLeftContWidth;
         top: @screenLgBodyPaddingTop;
         background-color: @colorBackground;
     }
@@ -953,8 +981,8 @@ input.ng-valid.ng-dirty{
 //Wizard animations Section
 .wizard{
 	height: 100%;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 .wizard.ng-enter,
 .wizard.ng-leave
