@@ -501,7 +501,7 @@ input.ng-valid.ng-dirty{
 				position: relative;
 				width: 100%;
 				height: 130px;
-				background-color: @colorGrayLight!important;
+				background-color:@colorWhite!important;
 
 				.search-body{
 					height: 66px;
@@ -547,6 +547,7 @@ input.ng-valid.ng-dirty{
 
 					input{
 						width: 100%;
+						border:none;
 					}
 
 					.btn{
@@ -903,6 +904,12 @@ input.ng-valid.ng-dirty{
 			color: @colorWhite;
 		} 
 
+		.circle.valid{
+			background-color: @colorGrayDark;
+			color: #fff;
+			border:solid;
+			border-color: @colorFocus;
+		}
 		.circle:hover{
 			background-color: @colorFocus;
 			color: @colorWhite;
@@ -912,6 +919,75 @@ input.ng-valid.ng-dirty{
 			text-align: center;
 			font-size: 11px;
 			color: @colorWhite;
+		}
+
+	}
+
+
+	.wizard-options-wrapper{
+		position: relative;
+		z-index: 9999;
+		.option{
+			position: relative;
+		}
+	}
+
+	#guide-line-division{
+		position: absolute;
+		border-bottom: solid;
+		border-bottom-color: @colorWhite;
+		top:0px;
+		left: 5%;
+		height: 50%;
+		width: 50%;
+		z-index: 1;
+	}
+
+	#guide-wizard-pointer{
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		height: 13px;
+		width: 10px;	
+		border-style: solid;
+		border-width: 18px 17.5px 0 17.5px;
+		border-color:transparent transparent transparent transparent;
+	}
+
+	#guide-wizard-pointer.active{
+		border-color: #fff transparent transparent transparent;
+	}
+
+    .wizard-options-item.completeOption{
+    	.circle{
+    		position: relative;
+    		margin-top: 18px;
+    		background-color: initial;
+    	}
+		.circle-inner{
+			position: absolute;
+			border-radius: 50%;
+			border: none;
+			
+			top:12px;
+			left:12px;
+			margin-left: auto;
+			margin-right: auto;
+
+			cursor: pointer;
+			height: 40px;
+			width: 40px;
+			font-size: 15px;
+			text-align: center;			
+			background-color: #fff;
+			.icon{
+				line-height: 45px;
+			}
+		}
+
+		.circle.complete{
+			color:@colorGreen;
+			background-color: @colorGreen;
 		}
 	}
 
@@ -924,7 +1000,7 @@ input.ng-valid.ng-dirty{
 			.circle{
 				width: 65px;
 				height: 65px;
-				margin-top: 16px;
+				margin-top: 0px;
 				font-size: 25px;
 				padding: 18px;
 			}
@@ -952,6 +1028,13 @@ input.ng-valid.ng-dirty{
 	            font-size: 14px;
 	        }
 	    }
+
+		.wizard-options-item.completeOption{
+			.circle {
+				height: 9px
+
+			}
+		}
    }
 }
 

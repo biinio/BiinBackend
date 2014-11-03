@@ -62,6 +62,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.galleries= promise.data.data;
   });
 
+
   //Chante the tab selected
   $scope.changeTabTo=function(tabName){
     $scope.activeTab=tabName;
@@ -332,7 +333,10 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       }
 
       if( eval($scope.wizardPosition)==3 || validate){
-         $scope.wizard3IsValid=true;
+        var coloursValidation=false;
+        coloursValidation=typeof($scope.sites[$scope.selectedSite].mainColor)!='undefined' && $scope.sites[$scope.selectedSite].mainColor!="";
+        coloursValidation=coloursValidation && typeof($scope.sites[$scope.selectedSite].textColor)!='undefined' && $scope.sites[$scope.selectedSite].textColor!=""; 
+        $scope.wizard3IsValid=coloursValidation;
       }
 
       if( eval($scope.wizardPosition)==4 || validate){
@@ -430,4 +434,3 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         "type": "simple"
     }; */
   }]);
-
