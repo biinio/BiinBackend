@@ -98,13 +98,16 @@ biinServicesModule.directive("dropFiles", function(){
             }
 
             var files = event.dataTransfer.files;
-            var formData = new FormData();
-            for (var i = 0; i < files.length; i++) {
-              formData.append('file', files[i], autoInsert);
-            }
+            if(files.length){
+              var formData = new FormData();
+              for (var i = 0; i < files.length; i++) {
+                formData.append('file', files[i], autoInsert);
+              }
 
-            //Upload The media information
-            uploadMedia(scope,formData);
+              //Upload The media information
+              uploadMedia(scope,formData);
+            }
+              
             return false;
           });
 

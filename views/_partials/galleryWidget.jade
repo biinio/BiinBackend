@@ -1,12 +1,14 @@
-#gallery(slimscroll="" slimscroll-option="{height:'auto'}")
-	.row.gallery(ng-if="loadingImages==false")
-		a.col-md1.galleryImage(ng-repeat="galleItem in galleries| filter: queryGallery" drag="galleries" element-index="galleries.indexOf(galleItem)")
-				img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
-	.row.gallery(ng-if="loadingImages==true")					
+#gallery
+	.row.scrollbar-inner(scrollbar="scrollbarOptionsStandard" ng-if="loadingImages==false")
+		.col-md-12.nopaddin.gallery
+			a.col-md-1.galleryImageWrapper(ng-repeat="galleItem in galleries| filter: queryGallery" drag="galleries" element-index="galleries.indexOf(galleItem)")
+				.galleryImageWrapperContent.contentHideButtons
+					img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
+	.row.gallery(ng-if="loadingImages==true")
 		p loading images please wait
 		.row
 			img(src="images/ajax-loader.gif")
 	.galleryControls
-		button.btn(upload-files="#uploadGallery") UPLOAD
+		button.btn.btn-default(upload-files="#uploadGallery") UPLOAD
 		input(type="text" ng-model="queryGallery" placeholder="Search" autofocus)
 		input#uploadGallery.hidden(type="file" name="mediaFiles" accept="image/*" multiple="true")

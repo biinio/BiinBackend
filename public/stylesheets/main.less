@@ -174,9 +174,25 @@ input.ng-valid.ng-dirty{
 }
 
 .gallery{
-	img{
-		max-width: 125px;
-		min-width: 125px;
+	position: relative;
+	.galleryImageWrapper	{
+		max-height: 200px;
+		max-width: 200px;
+		height: 120px;
+		width: 120px;
+		padding: 5px 5px 5px 5px;
+		.galleryImageWrapperContent{
+			background-color: #fff;	
+		}		
+		margin: 5px 5px 5px 5px;
+		
+		
+	}
+
+	img{		
+		margin:5px 5px 5px 5px;				
+		max-width: 100px;
+		min-width: 100px;
 	}
 }
 
@@ -573,17 +589,20 @@ input.ng-valid.ng-dirty{
 			}
 			//Gallery owned images section
 			.ownedGalleryWrapper{
-				height: 174px;
-				max-height:  174px;
+				height: 30vh;
+				max-height:  30vh;
+				margin-top: 5px;
 				width: 1000%;
 				max-width: 100%;
 				overflow-x: scroll;
 				overflow-y: hidden!important;
 				white-space: nowrap;
 				background-color: @colorWhite;
+
 				.img-block{
-					width: 174px;
-					height: 174px;
+					width: 28vh;
+					height: 28vh;
+					padding: 5px 5px 5px 5px;
 					display: inline-block;
 				    dsplay:inline;/* For IE7
 				    *zoom:1;/* For IE7*/
@@ -593,10 +612,22 @@ input.ng-valid.ng-dirty{
 				    	heigth:100%;
 				    }
 				}
+
 				margin-bottom: 10px;
+				.scroll-y{
+					display: none;
+				}
 			}
 			.galleryWrapper{
-				height: 180px;
+				background-color: @colorWhite;
+				position: relative;
+				margin-top: 5px;
+				height: 35vh;
+				.gallery{
+					padding-top: 10px;
+					margin-left: auto;
+					margin-right: auto;
+				}
 			}
 
 			//Biins Section Wrapper
@@ -1043,8 +1074,8 @@ input.ng-valid.ng-dirty{
 	width: 175px;
 }
 
-#gallery{
-	background-color: @colorWhite;
+#gallery{	
+	position: relative;
 	.galleryControls{
 		position: absolute;
 		bottom: 0px;
@@ -1054,11 +1085,19 @@ input.ng-valid.ng-dirty{
 
 		button{
 			width: 15%;
+			margin-left: 2%;
+			margin-right: 5px;
 		}
 
 		input{
+			height: 33px;
 			width: 80%;
+			display: inline;
 		}
+	}
+
+	.scrollbar-inner{
+		height: 34vh;	
 	}
 }
 
