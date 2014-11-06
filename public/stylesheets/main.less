@@ -25,7 +25,7 @@ p{
 
 .form-control {
 	height: 33px;
-	width: 95%;
+	width: 100%;
 	border-radius:initial!important;
 	margin-bottom: 5px;
 }
@@ -368,27 +368,32 @@ input.ng-valid.ng-dirty{
 
 #sitePreview{
 	position: relative;
-	height: 320px;
-	width: 320px;
+	height: 328px;
+	width: 328px;
+	border:solid;
+	border-color: @colorBlue;
+	border-width: 4px;
 	img{
 		height: 320px;
 		width: 320px;
 	}
 	.tittle{
 		position: absolute;
-		top: 0px;
+		left: 10px;
+		top: 10px;
 		height: 65px;
 		width: 300px;
 		.title1{
 			position: absolute;
 			top:0px;
+			left: 10px;
 			height: 40px;
 			font-size: 35px;
-
 		}
 
 		.title2{
 			position: absolute;
+			left: 15px;
 			top:40px;
 			height: 25px;
 		}
@@ -446,6 +451,29 @@ input.ng-valid.ng-dirty{
 		margin-left: auto;
 		margin-right: auto;
 		cursor: pointer;
+	}
+}
+.color-picker{
+	border:solid;
+	border-color: @colorWhite;
+	border-width: 2px;
+	width: 215px;
+	padding-top: 5px;
+	height: 40px;
+	input{
+		margin-left: 10px;
+		border:initial;
+
+	}
+
+	.sp-replacer{
+		background-color:initial;
+		border: solid 2px @colorWhite;
+		padding: 2px;
+	}
+	.sp-preview{
+		left:2px;
+		border:none;
 	}
 }
 
@@ -579,12 +607,11 @@ input.ng-valid.ng-dirty{
 				max-height: 66px;
 			}
 			//Map Section
-			.mapWrapper{
-				background-color: @colorWhite;
+			.mapWrapper{				
 				width: 100%;
 				.map{
-					height: 157px;
-					width: 313px;
+					height: 40vh;
+					width: 63vw;
 				}
 			}
 			//Gallery owned images section
@@ -609,7 +636,7 @@ input.ng-valid.ng-dirty{
 				    white-space:normal;
 				    .moduleWrapper{
 				    	width: 100%;
-				    	heigth:100%;
+				    	height:100%;
 				    }
 				}
 
@@ -632,14 +659,174 @@ input.ng-valid.ng-dirty{
 
 			//Biins Section Wrapper
 			.biinsWrapper{
+				height: 20vh;
+				max-height:  16vh;
+				margin-top: 5px;
+				width: 1000%;
+				max-width: 100%;
+				border: solid;
+				border-color: @colorGrayLight;
+				overflow-x: scroll;
+				overflow-y: hidden!important;
+				white-space: nowrap;
+				background-color: @colorGrayLight;				
 
+				.img-block{
+					width: 15vw;
+					height:14vh;
+					padding: 5px 5px 5px 5px;
+					display: inline-block;
+				    dsplay:inline;/* For IE7
+				    *zoom:1;/* For IE7*/
+				    white-space:normal;
+				    .moduleWrapper{
+				    	position: relative;
+				    	width: 100%;
+				    	height:100%;
+				    	padding: 8px 8px 8px 8px;
+				    }
+				    .biinElementWrapper{
+				    	position: relative;
+				    	height: 100%;
+				    	padding-top: 25%;
+				    	overflow: hidden;
+				    	text-align: center;
+				    	background-color: @colorGray;
+
+				    	p{
+				    		color: #fff;
+				    		font-size: 15px;
+				    	}				    	
+				    }
+				    .biinPurchasElementWrapper{
+				    	position: relative;
+				    	height: 100%;
+				    	padding-top: 25%;				    	
+				    	overflow: hidden;
+				    	text-align: center;
+
+				    }
+				    #purchaseBiinButton{
+				    	background-color: @colorFocus;				    	
+				    	position: relative;
+				    	width: 100%;
+				    	height:100%;
+
+				    	p{
+				    		color: #fff;	
+				    	}
+
+				    }
+				}
+
+				margin-bottom: 10px;
+				.scroll-y{
+					display: none;
+				}				
 			}
+			.biinPropertie{
+				height: 40px;
+				background-color: @colorGrayDark;
+				width: 100%;
+				color: #fff;
+				padding-top: 10px;
+				padding-left: 15px;
+			}
+			#categories{
+				margin-top:10vh;
+				.catModule{
+					height: 130px;
+					width: 130px;
+					background-color:@colorWhite;
+					border-radius:50%;
+					boder:solid;			
+					margin: 5px 5px 5px 5px;		
+					color: #fff;
+					//padding: 1px 1px 1px 1px;
+					cursor: pointer;
+					padding: 0px 0px 0px 0px;
+				}
+				.catModule:hover{
+					background-color:@colorFocus;
+				}
 
+				.catModuleWrapper{
+					margin-top: 5%;
+					margin-left: 5%;
+					height: 90%;
+					width: 90%;
+					position: relative;
+					text-align: center;					
+					background-color:@colorGray;
+					border-radius:50%;
+					p{
+						color:#fff;
+					}
+				}
+				.separator{
+					margin-left:8vw;					
+				}
+				.catModuleWrapper.active{
+					background-color: @colorFocus;
+				}
+				//Categories Section
+				.catIcon{
+					padding-top: 10px;					
+					font-size: 50px;
+				}			
+			}			
 		}
 		overflow: hidden;
 	}
 }
 
+//Beacon Modal
+#purchaseBeaconModal{
+	z-index: 9999999999;
+
+	.modal-header{
+		paddin:5px 5px 5px 5px;
+	}
+
+	.modal-body{
+		background-color:@colorYellowSticker;
+		margin-left: 15px;
+		margin-right: 15px;
+		p{
+			font-size: 14px;
+			color:@colorBlack;
+		}
+	}
+
+	.modal-header{
+		border-bottom:initial;
+	}
+
+	.modal-footer{
+		border-top:initial;
+		text-align: center;
+		margin-top: 0px;
+		padding: 15px 20px 20px;
+		button{
+			width: 200px;
+			height: 40px;
+		}
+		.btn.btn-primary{
+			background-color: @colorGreen;
+		}
+		.btn.btn-default{
+			background-color: @colorRed;	
+		}
+	}
+
+	.modal-title{		
+		background-color:@colorFocus;
+		height: 50px;
+		padding-left: 15px;
+		padding-top: 15px;
+		color: #fff;
+	}
+}
 .btn-biin{
     border: 0px;
     border-radius: 0px;
@@ -695,7 +882,7 @@ input.ng-valid.ng-dirty{
 	float: left;
 	position: fixed;
 	bottom: 0;
-	z-index: 9999999999;
+	z-index: 1;
 	width: @screenMdLeftContWidth;
 
 	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
@@ -734,7 +921,6 @@ input.ng-valid.ng-dirty{
 
 	}
 }
-
 
 .right-section-content {
 	float: left;
@@ -1101,6 +1287,16 @@ input.ng-valid.ng-dirty{
 	}
 }
 
+#galleryLoader{
+	img{
+		height: 300px;
+		width: auto;
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+	}
+}
+
 //Wizard animations Section
 .wizard{
 	height: 100%;
@@ -1365,6 +1561,12 @@ li>.nav{
     width: 0;
 }
 
+/*------------------------------------------*/
+/* Modal Style
+/*------------------------------------------*/
+.modal-content{
+	border-radius:initial;
+}
 
 /*------------------------------------------*/
 /*	Biin INNER SCROLLBAR 
@@ -1435,6 +1637,64 @@ li>.nav{
 
 .scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -12px; }
 .scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -12px; }
+
+/*------------------------------------------*/
+/*	Biin Slider
+/*------------------------------------------*/
+slider, [slider] {
+  display: inline-block;
+  position: relative;
+  height: 7px;
+  width: 100%;
+  margin: 25px 5px 25px 5px;
+  vertical-align: middle; }
+  slider div, [slider] div {
+    white-space: nowrap;
+    position: absolute; }
+    slider div.bar, [slider] div.bar {
+      width: 100%;
+      height: 100%;
+      border-radius: 7px;
+      background: #444;
+      overflow: hidden; }
+      slider div.bar .selection, [slider] div.bar .selection {
+        width: 0%;
+        height: 100%;
+        background: #13b6ff; }
+    slider div.handle, [slider] div.handle {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      top: -8px;
+      background-color: #fff;
+      border: 1px solid #000;
+      z-index: 2;
+      border-radius: 100%; }
+      slider div.handle:after, [slider] div.handle:after {
+        content: '';
+        background-color: #777;
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        border-radius: 100%; }
+        slider div.handle:after:hover, [slider] div.handle:after:hover {
+          background-color: #000; }
+      slider div.handle.active:after, [slider] div.handle.active:after {
+        background-color: #f00; }
+  slider div.bubble, [slider] div.bubble {
+  display: none;
+  cursor: default;
+  top: -22px;
+  padding: 1px 3px 1px 3px;
+  font-size: 0.7em;
+  font-family: sans-serif; }
+  slider div.bubble.active, [slider] div.bubble.active {
+    display: inline-block; }
+  slider div.bubble.limit, [slider] div.bubble.limit {
+    color: #777; 
+	}
 
 
 @import "controls";

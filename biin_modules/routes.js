@@ -35,7 +35,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     }));
 
     //Categories Routes
-    app.get('/api/categories',categories.list);
+    app.get('/api/categories',categories.list);    
+    app.get('/api/categories/set', categories.set)
 
     //Organization Routes
     app.get('/organizations',organizations.index);
