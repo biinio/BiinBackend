@@ -101,7 +101,9 @@ biinServicesModule.directive("dropFiles", function(){
             if(files.length){
               var formData = new FormData();
               for (var i = 0; i < files.length; i++) {
-                formData.append('file', files[i], autoInsert);
+                var mediaFile = files[i];
+                mediaFile.originalFilename=files[i].name;
+                formData.append('file', mediaFile);
               }
 
               //Upload The media information
@@ -135,7 +137,9 @@ biinServicesModule.directive('uploadFiles',function(){
             var files = $inputFileElement[0].files;
             var formData = new FormData();
             for (var i = 0; i < files.length; i++) {
-              formData.append('file', files[i], autoInsert);
+              var mediaFile = files[i];
+              mediaFile.originalFilename=files[i].name;
+              formData.append('file', mediaFile);
             }
             //Upload The media information
             uploadMedia(scope,formData);
