@@ -82,7 +82,7 @@ module.exports = function(){
 		
 		var mainBuquet =  process.env.S3_BUCKET;	
 	   	var systemImageName =path.join(directory,utils.getImageName(imageName,_workingImagePath));    
-		var newPath = path.join(process.env.IMAGES_REPOSITORY,systemImageName);	
+		var newPath = process.env.IMAGES_REPOSITORY+"/"+systemImageName;	
 
 		var buffer =fs.readFileSync(imagePath);
 		awsManager.uploadObjectToBuquet(mainBuquet, systemImageName, buffer);
