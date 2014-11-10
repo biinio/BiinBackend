@@ -10,6 +10,8 @@
 		input#uploadGallery.hidden(type="file" name="mediaFiles" accept="image/*" multiple="true")
 #galleryLoader(ng-if="loadingImages==true")
 	.row
-		p loading images please wait
-		.row
-			img(src="images/ajax-loader.gif")			
+		.col-md-12
+			.spinner-cube
+				div
+				div
+			p loading images please wait..
