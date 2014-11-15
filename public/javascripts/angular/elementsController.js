@@ -4,7 +4,7 @@ var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectru
 biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv',function($scope,$http,categorySrv,gallerySrv){
   
   //Constants
-  $scope.maxMedia=3;
+  $scope.maxMedia=0;
 
   //Draggable Properties
   $scope.dragCategoryIndex =-1;
@@ -13,36 +13,50 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.currentModelId = null;
   $scope.organizationId=selectedOrganization();
   $scope.activeTab ='details';
+  $scope.newTagField="";
+
+  //Loading images service propertie
+  $scope.loadingImages =false;
+
+  //Draggable Properties
+  //Wizard validations indicatos
+  $scope.wizard1IsValid = false;
+  $scope.wizard2IsValid =false;
 
   //Get the List of Objects
   $http.get('api/organizations/'+$scope.organizationId+'/elements').success(function(data){
-  	$scope.elements = data.data;    
-    $scope.elementPrototype = data.prototypeObj;
-    $scope.elementPrototypeBkp = $.extend(true, {}, data.prototypeObj);
+  	$scope.elements = data.data.elements;    
     if($scope.elements && $scope.elements != null &&  $scope.elements.length>0){
       
       //Select the first element
       $scope.edit(0);  
+
     } 
   });	
 
   //Push a new showcase in the list
   $scope.create = function(){
-    var newObject=$scope.elementPrototype;
-    if($scope.elements.indexOf(newObject)>-1){      
-      $scope.selectedElement=$scope.elements.indexOf(newObject); 
-    }else{
-        $scope.elementPrototype =  $.extend(true, {}, $scope.elementPrototypeBkp);
-        $scope.elementPrototype.isNew=true;
-        $scope.elements.push($scope.elementPrototype);     
-        $scope.edit($scope.elements.indexOf($scope.elementPrototype)); 
-    }
+    $http.post('api/organizations/'+$scope.organizationId+"/elements").success(function(element,status){
+      if(status==201){
+        $scope.elements.push(element);
+        $scope.wizardPosition=1;
+        $scope.clearValidations();
+        $scope.edit($scope.elements.indexOf(element));
+      }else{
+        displayErrorMessage(element,"Element Creation",status);
+      }
+    });
   }
 
   //Edit an element
   $scope.edit = function(index){
+
     $scope.selectedElement = index;
     $scope.currentModelId = $scope.elements[index].objectIdentifier;
+    $scope.clearValidations();
+    $scope.wizardPosition=1;
+    $scope.validate(); 
+
   }
 
   //Remove element at specific position
@@ -51,26 +65,22 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       $scope.selectedElement =null;
       $scope.currentModelId =null;
     }
-    if('isNew' in $scope.elements[index] ){
-      //remove the showcase
-      $scope.elements.splice(index,1);
-    }else//If the element is new is not in the data base      
-    {
-      var elementId = $scope.elements[index].objectIdentifier;      
-      $scope.elements.splice(index,1);
-      $http.delete('api/organizations/'+$scoper.organizationId+'/elements/'+elementId).success(function(data){
-          if(data.state=="success"){
-            //Todo: implement a pull of messages
-          }
+
+    var elementId = $scope.elements[index].objectIdentifier;      
+    $scope.elements.splice(index,1);
+    $http.delete('api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
+        if(data.state=="success"){
+          //Todo: implement a pull of messages
         }
-      );
-    }
+      }
+    );
   }
 
   //Save detail model object
-  $scope.saveDetail= function(){  
+  $scope.save= function(){  
     $http.put('api/organizations/'+$scope.organizationId+'/elements/'+$scope.currentModelId,{model:$scope.elements[$scope.selectedElement]}).success(function(data,status){
       if("replaceModel" in data){
+        console.log("save")
         $scope.elements[$scope.selectedElement] = data.replaceModel;
         $scope.elementPrototype =  $.extend(true, {}, $scope.elementPrototypeBkp);
       }
@@ -78,6 +88,95 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         $scope.succesSaveShow=true;
     });          
   } 
+
+  //Change Wizad tab manager
+  $scope.changeWizardTab=function(option){
+    switch(option){
+      case 1:
+        $scope.wizardPosition =option;
+      break;
+      case 2:
+        if($scope.wizard1IsValid)
+          $scope.wizardPosition =option;        
+      break      
+      case 3:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid)
+          $scope.wizardPosition =option;
+          $scope.wizard3IsValid=true;
+      break  
+      case 4:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid)
+          $scope.wizardPosition =option;
+      break 
+      case 5:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid)
+          $scope.wizardPosition =option;
+      break   
+      case 6:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid&& $scope.wizard5IsValid)
+          $scope.wizardPosition =option;
+      break         
+      default:
+        $scope.wizardPosition =option;
+      break;        
+    }
+
+    //Validate the current option
+    $scope.validate();
+  }
+
+  //Add tag information
+  $scope.addElementTag=function(value){
+
+    if(!$scope.elements[$scope.selectedElement].searchTags)
+      $scope.elements[$scope.selectedElement].searchTags=[];
+    
+    if(value!=""){    
+      //If the values is not in the array
+      if($.inArray(value, $scope.elements[$scope.selectedElement].searchTags)==-1)
+      {
+        $scope.elements[$scope.selectedElement].searchTags.push(value);
+        $scope.newTagField=""; 
+      }
+
+    }
+  }
+
+  //Remove of Site Tag
+  $scope.removeElementTag=function(index){
+    if($scope.elements[$scope.selectedElement].searchTags.length>index){
+      $scope.elements[$scope.selectedElement].searchTags.splice(index,1);
+    }
+  }
+
+
+  //Validations
+  //Validate the steps
+  $scope.validate=function(validateAll){
+    var validate=typeof(validateAll)!='undefined';
+    var currentValid=false;
+
+      if(eval($scope.wizardPosition)==1 || validate){     
+        if($scope.elements[$scope.selectedElement])
+          $scope.wizard1IsValid= (typeof($scope.elements[$scope.selectedElement].title)!='undefined' && $scope.elements[$scope.selectedElement].title.length>0) && (typeof($scope.elements[$scope.selectedElement].description)!='undefined' && $scope.elements[$scope.selectedElement].description.length>0);
+        else{
+          $scope.wizard1IsValid=false; 
+        }         
+        currentValid = $scope.wizard1IsValid;
+      }
+      if(eval($scope.wizardPosition)==2 || validate){
+        $scope.wizard2IsValid= (typeof($scope.elements[$scope.selectedElement].media)!='undefined' && $scope.elements[$scope.selectedElement].media.length>0);
+      }
+
+      $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid;
+
+      return currentValid;
+  }
+  //Clear the validations
+  $scope.clearValidations=function(){
+      $scope.isValid = false;    
+      $scope.wizard1IsValid =false;
+  }
 
   //Change tab to a specific section
   $scope.changeTabTo= function(tabToChange){
@@ -134,7 +233,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
   //Insert a gallery item to site
   $scope.insertGalleryItem = function(index){
-    if($scope.elements[$scope.selectedElement].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index]){
+    if(($scope.elements[$scope.selectedElement].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia==0){
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
       newObj.imgUrl = $scope.galleries[index].url;

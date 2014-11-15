@@ -108,7 +108,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     {
       var siteId = $scope.sites[index].identifier;      
       $scope.sites.splice(index,1);
-      $http.delete('api/showcases/'+$scope.organizationId+'/sites/'+siteId).success(function(data){
+      $http.delete('api/organizations/'+$scope.organizationId+'/sites/'+siteId).success(function(data){
           if(data.state=="success"){
             //Todo: implement a pull of messages
           }
@@ -120,7 +120,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   //Save detail model object
   $scope.save= function(){  
       console.log("save");
-      $http.put('api/showcases/'+$scope.organizationId+'/sites/'+$scope.currentModelId,{model:$scope.sites[$scope.selectedSite]}).success(function(data,status){
+      $http.put('api/organizations/'+$scope.organizationId+'/sites/'+$scope.currentModelId,{model:$scope.sites[$scope.selectedSite]}).success(function(data,status){
         if("replaceModel" in data){
           $scope.sites[$scope.selectedSite] = data.replaceModel;
         }

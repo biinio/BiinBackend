@@ -129,8 +129,7 @@ module.exports = function () {
 		//Perform an update
 		var organizationIdentifier=req.param("orgIdentifier");
 		var siteIdentifier=req.param("siteIdentifier");
-		//Update the purchase history
-		var history ={}
+
 		organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
 			if(err)
 				throw err;

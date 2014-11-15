@@ -70,9 +70,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/biins/',sites.biinPurchase);    
 
     //Create a biin
-    app.put('/api/showcases/:orgIdentifier/sites/:siteIdentifier',sites.set);
-    app.put('/api/showcases/:orgIdentifier/sites/:siteIdentifier/purchase',sites.biinPurchase);    
-    app.delete('/api/showcases/:orgIdentifier/sites/:siteIdentifier',sites.delete);
+    app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.set);
+    app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier/purchase',sites.biinPurchase);    
+    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
 
     //Biins
     app.get('/api/biins',biins.list);
@@ -82,7 +82,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations/:identifier/elements', elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
+    //Element List
     app.get('/api/organizations/:identifier/elements',elements.list)
+    //Element Creation
+    app.post('/api/organizations/:identifier/elements',elements.set);
+    //Element Update
     app.put('/api/organizations/:identifier/elements/:element',elements.set);
     app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
 

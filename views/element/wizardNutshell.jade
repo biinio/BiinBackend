@@ -1,0 +1,35 @@
+form.novalidate
+	.section
+		h1 Nutshell
+		p Add information about the element here.
+	.section
+		h2 Title
+		p Add here a Title for the element
+		.row
+			input.form-control.title-value(ng-model="elements[selectedElement].title" name="title" type="text" placeholder="Title **"  ng-blur="validate()"  required )
+	.section
+		h2 Description
+		p Descrive the higthlights of the deal. For example if you are offering a mani-pedi. you coul describe it like this.
+		p
+			i Technician shape finger and toenails, tend to cutie and apply colorful coats of polish.
+		a
+			i See more examples			
+		.row
+			input.form-control.title-value(ng-model="elements[selectedElement].description" name="description" type="text" placeholder="Description **"  ng-blur="validate()"  required )
+			textarea.form-control.title-value(ng-model="elements[selectedElement].longDescription" name="longDescription" type="text" placeholder="Your answer here."  ng-blur="validate()"  required )							
+	.section
+		h2 Search criteria
+		p This information could be useful to others for found your information
+		row
+			.search-criteria-control
+				.search-body
+					.searchScroll.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+						.col-md-1.tag(ng-repeat="tag in elements[selectedElement].searchTags")
+							.btn-close(ng-click="removeElementTag($index)")
+								span X
+							p {{tag}}
+				.search-add
+					.col-md-9
+						input.form-control(ng-model="newTagField")
+					.col-md-3
+						button.btn.btn-default(ng-click="addElementTag(newTagField);newTagField=''" ng-enter="addElementTag(newTagField);newTagField=''") Add

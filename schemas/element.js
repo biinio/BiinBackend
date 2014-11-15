@@ -1,13 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var elementSchema = new Schema({
+
     objectIdentifier:{type:String, default:"-1", index:true},
     organizationIdentifier:{type:String,default:""},
-    accountIdentifier:{type:String,default:""},
+    accountIdentifier:{type:String,default:""},    
     position:{type:String, default:""},
 	objectType:{type:String, default:""},
-	likes:{type:String, default:""},
-    title1:{type:String, default:""},
+
+    title:{type:String, default:""},
+    description:{type:String, default:""},
+    longDescription:{type:String, default:""},
+    searchTags:[],    
+
 	title2:{type:String, default:""},
 	title1Color:{type:String, default:""},
 	title2Color:{type:String, default:""},
@@ -22,6 +27,7 @@ var elementSchema = new Schema({
 	biinSold:{type:String, default:""},
 	timeFrame:{type:String, default:""},
 	imageUrl:{type:String, default:""},
+
 	categories:[
 		{
 			identifier:{type:String, index:true, default:"-1"},
