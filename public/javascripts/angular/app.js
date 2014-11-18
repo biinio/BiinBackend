@@ -22,6 +22,24 @@ biinServicesModule.factory('gallerySrv', ['$http', function (async) {
 }
 ]); 
 
+//Stickers Services
+biinServicesModule.factory('stickersSrv', ['$http', function (async) {
+    return {
+      getList: function () {
+              var promise = async({method:'GET', url:'api/stickers'})
+            .success(function (data, status, headers, config) {
+              return data.data;
+            })
+            .error(function (data, status, headers, config) {
+              return {"status": false};
+            });
+          
+          return promise; 
+      }
+    }
+  }
+  ]);
+
 //Image uploades pending indicator
 biinServicesModule.directive('pendingIndicator', function(){
     return {

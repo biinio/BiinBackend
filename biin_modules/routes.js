@@ -16,7 +16,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var mobileUser = require('../routes/mobileUser')();
     var oauthMobileAPIGrants = require('../routes/oauthMobileAPIGrants')(); 
     var mobileOauthManager= require('./mobileOauthManager');
-
+    var stickers = require('../routes/stickers')();
+    var mobileRoutes = require('../routes/mobileRoutes')();
     //Application routes
     app.get('/sendEmail', routes.sendEmail)
     app.get('/partials/:filename', routes.partials);
@@ -112,12 +113,18 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/client',clients.create);
     app.get('/logout',clients.logout);
 
+    //Stickers services
+    app.get('/api/stickers',stickers.get);
+    app.get('/api/stickers/create',stickers.set);
+
     //Mobile routes
-    app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
+    /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
     app.put('/mobile/client',passport.authenticate(['mobileClientBasic', 'mobileClientPassword']), mobileUser.set);
     app.post('/mobile/client/token', mobileOauthManager.token);
-    app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);
+    app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);*/
     
+    app.get('/mobile/regions',mobileRoutes.getRegions);
+    app.get('/mobile/categories',mobileRoutes.getCategories);
     app.get('/blog/', blog.index);
     app.get('/api/blog', blog.list);
     app.get('/public/blog/:year/:month/:day/:title', blog.entry);

@@ -1,7 +1,7 @@
 var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services']);
 
 
-biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv',function($scope,$http,categorySrv,gallerySrv){
+biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv','stickersSrv',function($scope,$http,categorySrv,gallerySrv,stickersSrv){
   
   //Constants
   $scope.maxMedia=0;
@@ -229,6 +229,21 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.elements[$scope.selectedElement].categories.splice(scopeIndex,1);
   }
 
+  //Select an sticker
+  $scope.selectSticker=function(index){
+    if($scope.elements[$scope.selectedElement].sticker.identifier==""){
+      if($scope.elements[$scope.selectedElement].sticker.identifier !==$scope.stickers[index].identifier){
+        $scope.elements[$scope.selectedElement].sticker.identifier= $scope.stickers[index].identifier;
+        $scope.elements[$scope.selectedElement].sticker.color= $scope.stickers[index].color;        
+      }else{
+        $scope.elements[$scope.selectedElement].sticker.identifier="";
+        $scope.elements[$scope.selectedElement].sticker.color="";
+      }
+
+    }
+
+  }
+
   //Gallery Media Images
 
   //Insert a gallery item to site
@@ -245,6 +260,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     }
   } 
 
+  
   //Remove the media object at specific index
   $scope.removeMediaAt=function(index){
     if($scope.elements[$scope.selectedElement].media.length>=index)
@@ -253,7 +269,12 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
   //Get the list of the gallery
   gallerySrv.getList($scope.organizationId).then(function(promise){
-    $scope.galleries= promise.data.data;
+    $scope.galleries = promise.data.data;
+  });
+
+  //Get the list of stickers
+  stickersSrv.getList().then(function(promise){
+    $scope.stickers = promise.data.data;
   });
 
   //On gallery change method                

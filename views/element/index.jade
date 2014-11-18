@@ -30,8 +30,10 @@ block content
 						.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
 							#wizardOption1.wizard(ng-switch-when="1" )
 								include wizardNutshell
-							#wizardOption4.wizard(ng-switch-when="2" )
+							#wizardOption2.wizard(ng-switch-when="2" )
 								include wizardGallery								
+							#wizardOption3.wizard(ng-switch-when="3" )
+								include wizardDesign
 						.wizard-options
 							.container-fluid
 								.row.wizard-options-wrapper
@@ -49,6 +51,13 @@ block content
 												.icon.icon-photo-1
 											.textCirle 
 												| 2. IMAGES												
+									.col-md-1.col-sm-1.nopadding.option
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
+										.wizard-options-item(ng-click="changeWizardTab(3)")
+											.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid,'valid':wizard3IsValid}")
+												.icon.icon-photo-1
+											.textCirle 
+												| 3. Design
 									.col-md-1.col-sm-1.nopadding.option																							
 										.wizard-options-item.completeOption
 											.circle(ng-class="{'complete':isValid}")

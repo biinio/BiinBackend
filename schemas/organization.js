@@ -80,6 +80,7 @@ var orgSchema = new Schema({
 	}],
 	elements:[
 		{
+
 		    objectIdentifier:{type:String, default:"-1", index:true},
 		    organizationIdentifier:{type:String,default:""},
 		    accountIdentifier:{type:String,default:""},    
@@ -87,16 +88,13 @@ var orgSchema = new Schema({
 			objectType:{type:String, default:""},
 
 		    title:{type:String, default:""},
+		    mainColor:{type:String, default:""},
+		    textColor:{type:String, default:""},
 		    description:{type:String, default:""},
 		    longDescription:{type:String, default:""},
 		    searchTags:[],    
+		    sticker:{id:{type:String, default:""}, color:{type:String,default:""}},
 
-			title2:{type:String, default:""},
-			title1Color:{type:String, default:""},
-			title2Color:{type:String, default:""},
-			title1Size:{type:String, default:""},
-			title2Size:{type:String, default:""},
-			objectDescription:{type:String, default:""},
 			actionType:{type:String, default:""},
 			originalPrice:{type:String, default:""},
 			biinPrice:{type:String, default:""},
@@ -121,6 +119,7 @@ var orgSchema = new Schema({
 					imgUrl:{type:String,default:""}
 				}
 			]
+
 		}
 	],
 	gallery:[{

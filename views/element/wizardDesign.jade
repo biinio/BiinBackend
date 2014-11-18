@@ -1,0 +1,47 @@
+div(ng-click="validate()")
+	.section
+		h1 Element Design
+		p Add the colors that show in your site on the mobile application
+	.section.row
+		.col-md-5
+			#elementPreview
+				.tittle(style="background-color:{{elements[selectedElement].mainColor}}; color:{{elements[selectedElement].textColor}}")
+					.elementNumber
+						span 1
+					.title1
+						span(ng-if="elements[selectedElement].title.length>0") {{elements[selectedElement].title}}
+						span(ng-if="!elements[selectedElement].title.length") [YOUR ELEMENT TITLE]
+				img(ng-src="{{elements[selectedElement].media[0].imgUrl}}" ng-if="elements[selectedElement].media.length>0" pendingIndicator)
+				img(ng-src="images/warning_not_found.png" ng-if="!elements[selectedElement].media.length" )
+		.col-md-7			
+			#elementSticker
+				h3 Stickers
+				p Select an appropriate sticker for this element.
+				.stickersWrapper.scrollbar-inner(scrollbar="scrollbarOptionsStandard" )
+					.img-block(ng-repeat="item in stickers")
+						.stickerModuleWrapper(ng-click="selectSticker($index)" ng-class="{'active':item.identifier===elements[selectedElement].sticker.identifier}")
+							span.stickerTitle {{item.title1}} {{item.title2}}
+							.stickerContent(ng-class="item.identifier")
+								spectrum-colorpicker.picker(ng-model="item.color" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#edeeee', '#bbbdc0','#808284','#231f20'],['#69cdf1', '#2f83c0', '#005898'],['#5fc4bb','#88c53f','#0b8943'],['#fcbc15','#f47a26','#ed1c24','#ee4775'],['#9b3393','#4b3895'],['#c6a887','#7b3d1a']]}")
+								.sticker01(ng-if="item.identifier=='stick01'")
+									.circleOuter(style="background-color:{{item.color}}!important;")
+										.circleIn(style="background-color:{{item.color}}!important;")
+											.title1 {{item.title1}}
+											.title2 {{item.title2}}
+								.sticker02(ng-if="item.identifier=='stick02'")
+									.rectangle(style="background-color:{{item.color}}!important;")
+										.rectangleIn(style="background-color:{{item.color}}!important;")
+											.title1 {{item.title1}}
+											.title2 {{item.title2}}
+									.line2
+	.section(ng-mouseleave="validate()")
+		h2 BackGround Color
+		p Please select the Background color for the element
+		.color-picker
+			input(type="text" ng-model="elements[selectedElement].mainColor"  verify-on-change readonly )
+			spectrum-colorpicker.picker(ng-model="elements[selectedElement].mainColor" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#edeeee', '#bbbdc0','#808284','#231f20'],['#69cdf1', '#2f83c0', '#005898'],['#5fc4bb','#88c53f','#0b8943'],['#fcbc15','#f47a26','#ed1c24','#ee4775'],['#9b3393','#4b3895'],['#c6a887','#7b3d1a']]}")
+		h2 Text Color
+		p Please select the text color for your element
+		.color-picker
+			input(type="text" ng-model="elements[selectedElement].textColor" readonly)
+			spectrum-colorpicker.picker(ng-model="elements[selectedElement].textColor" options="{showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")

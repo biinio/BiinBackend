@@ -399,7 +399,51 @@ input.ng-valid.ng-dirty{
 		}
 	}
  }
+ 
+#elementPreview{
+	position: relative;
+	height: 328px;
+	width: 328px;
+	border:solid;
+	border-color: @colorBlue;
+	border-width: 4px;
+	img{
+		height: 320px;
+		width: 320px;
+	}
+	.tittle{
+		position: absolute;
+		left: 0px;
+		bottom: 10px;
+		height: 50px;
+		width: 320px;
+		.elementNumber{
+			background-color: red;
+			width: 40px;
+			position: absolute;
+			top:0px;
+			left: 0;
+			height: 50px;
+			font-size: 25px;
 
+			span{
+				padding-left: 10px;
+				position: absolute;
+				margin: initial;
+				margin-top: 5px;
+				text-align: center;
+			}
+		}
+		.title1{
+			text-align: center;
+			position: absolute;			
+			top:5px;
+			left: 45px;
+			height: 40px;
+			font-size: 25px;
+		}
+	}	
+}
 .contentHideButtons .btn-on-hover {
 	display: none;
 }
@@ -464,16 +508,6 @@ input.ng-valid.ng-dirty{
 		margin-left: 10px;
 		border:initial;
 
-	}
-
-	.sp-replacer{
-		background-color:initial;
-		border: solid 2px @colorWhite;
-		padding: 2px;
-	}
-	.sp-preview{
-		left:2px;
-		border:none;
 	}
 }
 
@@ -774,7 +808,43 @@ input.ng-valid.ng-dirty{
 					padding-top: 10px;					
 					font-size: 50px;
 				}			
-			}			
+			}
+
+			#elementSticker{
+
+				padding-top: 5px;
+				height: 330px;
+				background-color: @colorWhite;
+				padding-left: 10px;
+				padding-right: 10px;
+				//Sticker Section
+				.stickersWrapper{
+					height: 230px;
+					min-height: 230px;
+					max-height:  230px;
+					width: 1000%;
+					max-width: 100%;
+					overflow-x: scroll;
+					overflow-y: hidden!important;
+					white-space: nowrap;
+					background-color: @colorGray;
+
+					.img-block{
+						//padding: 5px 5px 5px 5px;
+						display: inline-flex;
+					    dsplay:inline;/* For IE7
+					    *zoom:1;/* For IE7*/
+					    white-space:normal;
+					    padding-left: 10px;
+					}
+
+					margin-bottom: 10px;
+					.scroll-y{
+						display: none;
+					}
+				}					
+			}
+					
 		}
 		overflow: hidden;
 	}
@@ -1577,6 +1647,125 @@ li>.nav{
 }
 
 /*------------------------------------------*/
+/* Stickers Style
+/*------------------------------------------*/
+
+.stickerModuleWrapper {
+	margin-top:stickerModuleWrapper auto;
+	background-color: @colorGrayLight2;
+	height: 220px;
+	width: 200px;
+	min-height: 220px;
+	max-height: 220px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.stickerModuleWrapper:hover{
+	background-color: @colorFocusHover;
+}
+
+.stickerTitle{
+	color:#fff;
+	font-size: 20px;
+}
+.stickerContent{
+	padding-top: 10px;
+	padding-left: 10px;
+	background-color: @colorBaseWhite;
+	height: 180px;
+}
+
+
+
+//Sticker 01 Style
+.stick01{
+	position: relative;
+	.circleSelectedIn{
+			background-color: @colorRedSticker;
+		}
+
+	.circleOuter{
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+		
+		height: 130px;
+		width: 130px;
+		-moz-border-radius: 65px;
+		-webkit-border-radius: 65px;
+		border-radius: 65px;
+		text-align: center;
+		padding-top: 5px;
+		.circleIn{		
+			position: relative;
+			margin-left: auto;
+			margin-right: auto;			
+			height: 120px;
+			width: 120px;
+		 	-moz-border-radius: 60px;
+		    -webkit-border-radius: 60px;
+		    border-radius: 60px;	
+		    border: solid;
+		    border-color:@colorBaseWhite;	    
+
+		    overflow: hidden;
+
+		    .title1{
+		    	color:@colorBaseWhite;
+		    	position:absolute;
+		    	top: 20px;
+		    	left:30px;
+		    	display: block;
+		    	max-width: 40px;
+		    	font-variant: small-caps;
+		    	font-size: 35px;
+		    	line-height: 33px;
+		    }	    
+		}
+	}
+}
+
+//Sticker 02 Style
+.stick02{
+	position: relative;
+	overflow: hidden;
+	.rectangle{
+		position: absolute;
+		height: 70px;
+		left: 0px;
+		bottom: 0px;
+		width: 250px;		
+		 -ms-transform: rotate(-40deg); /* IE 9 */
+	    -webkit-transform: rotate(-40deg); /* Chrome, Safari, Opera */
+	    transform: rotate(-40deg);
+	    .rectangleIn{
+			position: absolute;
+			height: 60px;
+			left: 0px;
+			bottom: 5px;
+			width: 250px;		    
+		    border:solid;
+		    border-color: @colorBaseWhite;
+		    text-align: center;
+		    color: @colorBaseWhite;
+		    font-variant:  small-caps;
+		    line-height: 25px;
+	    }
+	    .title1{
+	    	padding-left: 20px;
+	    	font-size: 35px;
+	    	font-weight: 600;
+	    }
+	    .title2{
+	    	padding-left: 20px;
+	    	font-size: 30px;
+	    }
+	}
+}
+
+
+/*------------------------------------------*/
 /* Modal Style
 /*------------------------------------------*/
 .modal-content{
@@ -1652,6 +1841,22 @@ li>.nav{
 
 .scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -12px; }
 .scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -12px; }
+
+/*------------------------------------------*/
+/*	Color Picker Styles
+/*------------------------------------------*/
+.picker{
+
+	.sp-replacer{
+		background-color:initial;
+		border: solid 2px @colorWhite;
+		padding: 2px;
+	}
+	.sp-preview{
+		left:2px;
+		border:none;
+	}
+}
 
 /*------------------------------------------*/
 /*	Biin Slider
