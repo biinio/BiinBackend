@@ -125,6 +125,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     
     app.get('/mobile/regions',mobileRoutes.getRegions);
     app.get('/mobile/categories',mobileRoutes.getCategories);
+    app.get('/mobile/elements/:identifier',mobileRoutes.getElement);
+    app.get('/mobile/sites/:identifier',mobileRoutes.getSite);
+    app.get('/mobile/showcases/:identifier',mobileRoutes.getShowcase);
+
     app.get('/blog/', blog.index);
     app.get('/api/blog', blog.list);
     app.get('/public/blog/:year/:month/:day/:title', blog.entry);
