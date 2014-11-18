@@ -1,0 +1,65 @@
+{
+    "data": {
+        "identifier": "converseSite01",
+        "proximityUUID": "D2B1B724-EB40-426F-9860-9B6E124472D1",
+        "major": "1",
+        "title": "Converse",
+        "subTitle": "Multiplaza Escazu",
+        "color": "47,131,192",
+        "textColor": "255,255,255",
+        "country": "Costa Rica",
+        "state": "San Jose",
+        "city": "Escazu",
+        "zipCode": "1001",
+        "streetAddress1": "100 metros norte del cementerio local",
+        "streetAddress2": "Frente al Mall",
+        "imagesURL": [
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/converse1.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/converse2.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/converse3.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/converse4.jpg"
+            }
+        ],
+        "biins": [
+            {
+                "identifier": "converseSite01WebBiin",
+                "minor": "-1",
+                "biinType": "1",
+                "showcaseIdentifier": "converseShowcase01",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/converseShowcase01"
+            },
+            {
+                "identifier": "converseSite01Biin01",
+                "minor": "1",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase04",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase04"
+            },
+            {
+                "identifier": "converseSite01Biin02",
+                "minor": "2",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase01",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase01"
+            },
+            {
+                "identifier": "converseSite01Biin02",
+                "minor": "2",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase03",
+                "lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase03"
+            }
+        ]
+    }
+}

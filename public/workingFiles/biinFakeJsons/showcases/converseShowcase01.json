@@ -1,0 +1,26 @@
+{
+    "data": {
+        "identifier": "converseShowcase01",
+        "lastUpdate": "2015-01-01 12:00:00",
+        "theme": "1",
+        "showcaseType":"2",
+        "elements": [
+            {
+                "elementIdentifier": "converseElement01",
+                Url": "https://biin-qa.herokuapp.com/mobile/elements/converseElement01"
+            },
+            {
+                "elementIdentifier": "fakeElement02",
+                Url": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement02"
+            },
+            {
+                "elementIdentifier": "fakeElement03",
+                Url": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement03"
+            },
+            {
+                "elementIdentifier": "fakeElement04",
+                Url": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement04"
+            }
+        ]
+    }
+}

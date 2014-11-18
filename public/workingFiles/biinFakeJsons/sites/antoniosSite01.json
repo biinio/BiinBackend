@@ -1,0 +1,65 @@
+{
+    "data": {
+        "identifier": "antoniosSite01",
+        "proximityUUID": "69C952E0-E383-4BAB-96D4-006DA2A3287E",
+        "major": "1",
+        "title": "Antonios",
+        "subTitle": "Multiplaza Escazu",
+        "color": "136,197,63",
+        "textColor": "255,255,255",
+        "country": "Costa Rica",
+        "state": "San Jose",
+        "city": "Escazu",
+        "zipCode": "1001",
+        "streetAddress1": "100 metros norte del cementerio local",
+        "streetAddress2": "Frente al Mall",
+        "imagesURL": [
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/antonios1.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/antonios2.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/antonios3.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/antonios4.jpg"
+            }
+        ],
+        "biins": [
+            {
+                "identifier": "antoniosSite01WebBiin",
+                "minor": "-1",
+                "biinType": "1",
+                "showcaseIdentifier": "antoniosShowcase01",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/antoniosShowcase01"
+            },
+            {
+                "identifier": "antoniosSite01Biin01",
+                "minor": "1",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase03",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase03"
+            },
+            {
+                "identifier": "antoniosSite01Biin02",
+                "minor": "2",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase04",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase04"
+            },
+            {
+                "identifier": "antoniosSite01Biin02",
+                "minor": "2",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase01",
+                "lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase01"
+            }
+        ]
+    }
+}

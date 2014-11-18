@@ -1,0 +1,26 @@
+{
+    "data": {
+        "identifier": "samsungShowcase01",
+        "lastUpdate": "2015-01-01 12:00:00",
+        "theme": "1",
+        "showcaseType":"2",
+        "elements": [
+            {
+                "elementIdentifier": "samsungElement01",
+                "jsonUrl": "https://biin-qa.herokuapp.com/mobile/elements/samsungElement01"
+            },
+            {
+                "elementIdentifier": "fakeElement03",
+                "jsonUrl": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement03"
+            },
+            {
+                "elementIdentifier": "fakeElement04",
+                "jsonUrl": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement04"
+            },
+            {
+                "elementIdentifier": "fakeElement01",
+                "jsonUrl": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement01"
+            }
+        ]
+    }
+}

@@ -1,0 +1,103 @@
+{
+    "data": {
+        "identifier": "01",
+        "elementType": "3",
+        "position": "2",
+        "title": "Apple Watch",
+        "descriptionTitle": "The best watch on the world.",
+        "elementDescription": "Lorem ipsum dolor sit amet, eum ut nemore bonorum legendos, ex pro utinam labitur. Mel integre officiis te, his ne audiam placerat maluisset. Vix nibh blandit luptatum ne, te sit simul vocibus suscipit. Vel no dicit forensibus.",
+        "titleColor": "",
+        "titleBackgroundColor": "",
+        "hasListPrice": "1",
+        "listPrice": "$400",
+        "hasDiscount": "1",
+        "discount": "25%",
+        "price": "$300",
+        "savings": "$100",
+        "hasTimming": "1",
+        "initialDate": "00/00/2015",
+        "expirationDate": "00/00/2015",
+        "hasQuantity": "1",
+        "quantity": "12",
+        "reservedQuantity": "34",
+        "claimedQuantity": "23",
+        "actualQuantity": "12",
+        "details": [
+            {
+                "elementDetailType": "1",
+                "text": "Lorem ipsum dolor sit amet"
+            },
+            {
+                "elementDetailType": "2",
+                "text": "Cu sale illud vocibus pri. Et illud scaevola definitionem eos, ne falli mentitum moderatius his. Eu tacimates percipitur efficiendi eum, cum modus falli ut, no vix impetus laboramus delicatissimi. Ex case adhuc signiferumque cum, te viderer conclusionemque ius, nostrud sententiae mel ei. Per ei minimum scribentur, an pri viderer electram conclusionemque, no tamquam virtute sea."
+            },
+            {
+                "elementDetailType": "3",
+                "text": "Aliquid vituperatoribus vis ad. Cu pro dolorem adipiscing delicatissimi, soleat graecis an cum. Primis nostrum eu eos, qui fabulas corrumpit dissentiunt ne. Duo at accusam molestie qualisque, eum no ullum erant."
+            },
+            {
+                "elementDetailType": "4",
+                "text": "Lorem ipsum dolor sit amet."
+            },
+            {
+                "elementDetailType": "4",
+                "text": "Lorem ipsum dolor sit amet."
+            },
+            {
+                "elementDetailType": "4",
+                "text": "Lorem ipsum dolor sit amet."
+            },
+            {
+                "elementDetailType": "5",
+                "text": "Lorem ipsum dolor sit amet."
+            },
+            {
+                "elementDetailType": "1",
+                "text": "Lorem ipsum dolor sit amet"
+            },
+            {
+                "elementDetailType": "2",
+                "text": "Cu sale illud vocibus pri. Et illud scaevola definitionem eos, ne falli mentitum moderatius his. Eu tacimates percipitur efficiendi eum, cum modus falli ut, no vix impetus laboramus delicatissimi. Ex case adhuc signiferumque cum, te viderer conclusionemque ius, nostrud sententiae mel ei. Per ei minimum scribentur, an pri viderer electram conclusionemque, no tamquam virtute sea."
+            },
+            {
+                "elementDetailType": "2",
+                "text": "Cu sale illud vocibus pri. Et illud scaevola definitionem eos, ne falli mentitum moderatius his. Eu tacimates percipitur efficiendi eum, cum modus falli ut, no vix impetus laboramus delicatissimi. Ex case adhuc signiferumque cum, te viderer conclusionemque ius, nostrud sententiae mel ei. Per ei minimum scribentur, an pri viderer electram conclusionemque, no tamquam virtute sea."
+            }
+        ],
+        "imagesURL": [
+            {
+                "url": "http://ludusy.com/ludusy_dev/CMS%20Content/iCon/Sites/01iCon.jpg"
+            },
+            {
+                "url": "http://ludusy.com/ludusy_dev/CMS%20Content/iCon/Sites/02iCon.jpg"
+            },
+            {
+                "url": "http://ludusy.com/ludusy_dev/CMS%20Content/iCon/Sites/03iCon.jpg"
+            },
+            {
+                "url": "http://ludusy.com/ludusy_dev/CMS%20Content/iCon/Sites/04iCon.jpg"
+            }
+        ],
+        "hasPushNotification": "0",
+        "pushNotification": "",
+        "pushNotificationTime": "",
+        "hasInmediateNotification": "0",
+        "inmediateNotification": "",
+        "inmediateNotificationTime": "",
+        "hasNearNotification": "0",
+        "nearNotification": "",
+        "nearNotificationTime": "",
+        "hasFarNotification": "0",
+        "farNotification": "",
+        "farNotificationTime": "",
+        "hasOfflineNotification": "0",
+        "offlineNotification": "",
+        "pins": "12",
+        "likes": "34",
+        "comments": "23",
+        "userPinned": "0",
+        "userLiked": "0",
+        "userCommented": "0",
+        "userViewed": "0"
+    }
+}

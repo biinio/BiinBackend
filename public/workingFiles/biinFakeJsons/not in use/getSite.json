@@ -1,0 +1,54 @@
+{
+    "data": {
+        "identifier": "iConSite01",
+        "proximityUUID": "5780124F-CCD1-444D-9D9A-C94FF16441B7",
+        "major": "1",
+        "title": "iCon",
+        "subTitle": "Multiplaza Escazu",
+        "color": "",
+        "textColor": "",
+        "country": "Costa Rica",
+        "state": "San Jose",
+        "city": "Escazu",
+        "zipCode": "1001",
+        "streetAddress1": "100 metros norte del cementerio local",
+        "streetAddress2": "Frente al Mall",
+        "imagesURL": [
+            {
+                "url": "http://ludusy.com/ludusy_dev/CMS%20Content/iCon/Sites/01iCon.jpg"
+            },
+            {
+                "url": "http://ludusy.com/ludusy_dev/CMS%20Content/iCon/Sites/02iCon.jpg"
+            },
+            {
+                "url": "http://ludusy.com/ludusy_dev/CMS%20Content/iCon/Sites/03iCon.jpg"
+            },
+            {
+                "url": "http://ludusy.com/ludusy_dev/CMS%20Content/iCon/Sites/04iCon.jpg"
+            }
+        ],
+        "biins": [
+            {
+                "identifier": "iConSite01WebBiin",
+                "minor": "-1",
+                "biinType": "1",
+                "showcaseIdentifier": "01",
+                "showcaseLastUpdate": "00/00/2015"
+            },
+            {
+                "identifier": "iConSite01Biin01",
+                "minor": "1",
+                "biinType": "2",
+                "showcaseIdentifier": "02",
+                "showcaseLastUpdate": "00/00/2015"
+            },
+            {
+                "identifier": "iConSite01Biin01",
+                "minor": "2",
+                "biinType": "2",
+                "showcaseIdentifier": "03",
+                "showcaseLastUpdate": "00/00/2015"
+            }
+        ]
+    }
+}

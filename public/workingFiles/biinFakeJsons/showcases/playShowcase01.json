@@ -1,0 +1,26 @@
+{
+    "data": {
+        "identifier": "playShowcase01",
+        "lastUpdate": "2015-01-01 12:00:00",
+        "theme": "2",
+        "showcaseType":"2",
+        "elements": [
+            {
+                "elementIdentifier": "playElement01",
+                "jsonUrl": "https://biin-qa.herokuapp.com/mobile/elements/playElement01"
+            },
+            {
+                "elementIdentifier": "fakeElement01",
+                "jsonUrl": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement01"
+            },
+            {
+                "elementIdentifier": "fakeElement03",
+                "jsonUrl": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement03"
+            },
+            {
+                "elementIdentifier": "fakeElement02",
+                "jsonUrl": "https://biin-qa.herokuapp.com/mobile/elements/fakeElement02"
+            }
+        ]
+    }
+}

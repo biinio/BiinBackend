@@ -1,0 +1,15 @@
+{
+    "data": {
+        "identifier": "01",
+        "lastUpdate": "00/00/2015",
+        "theme": "dark",
+        "elements": [
+            {
+                "elementIdentifier": "01"
+            },
+            {
+                "elementIdentifier": "02"
+            }
+        ]
+    }
+}
