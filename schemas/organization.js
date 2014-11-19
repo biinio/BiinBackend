@@ -93,7 +93,7 @@ var orgSchema = new Schema({
 		    description:{type:String, default:""},
 		    longDescription:{type:String, default:""},
 		    searchTags:[],    
-		    sticker:{id:{type:String, default:""}, color:{type:String,default:""}},
+		    sticker:{identifier:{type:String, default:""}, color:{type:String,default:""}},
 
 			actionType:{type:String, default:""},
 			originalPrice:{type:String, default:""},

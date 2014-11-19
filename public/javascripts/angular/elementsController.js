@@ -22,6 +22,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   //Wizard validations indicatos
   $scope.wizard1IsValid = false;
   $scope.wizard2IsValid =false;
+  $scope.wizard3IsValid =false;
 
   //Get the List of Objects
   $http.get('api/organizations/'+$scope.organizationId+'/elements').success(function(data){
@@ -55,7 +56,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.currentModelId = $scope.elements[index].objectIdentifier;
     $scope.clearValidations();
     $scope.wizardPosition=1;
-    $scope.validate(); 
+    $scope.validate(true); 
 
   }
 
@@ -168,7 +169,14 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         $scope.wizard2IsValid= (typeof($scope.elements[$scope.selectedElement].media)!='undefined' && $scope.elements[$scope.selectedElement].media.length>0);
       }
 
-      $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid;
+    if(eval($scope.wizardPosition)==3 || validate){
+        var coloursValidation=false;
+        coloursValidation=typeof($scope.elements[$scope.selectedElement].mainColor)!='undefined' && $scope.elements[$scope.selectedElement].mainColor!="";
+        coloursValidation=coloursValidation && typeof($scope.elements[$scope.selectedElement].textColor)!='undefined' && $scope.elements[$scope.selectedElement].textColor!="";
+        $scope.wizard3IsValid= coloursValidation;
+      }
+
+      $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid;
 
       return currentValid;
   }
@@ -231,7 +239,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
   //Select an sticker
   $scope.selectSticker=function(index){
-    if($scope.elements[$scope.selectedElement].sticker.identifier==""){
       if($scope.elements[$scope.selectedElement].sticker.identifier !==$scope.stickers[index].identifier){
         $scope.elements[$scope.selectedElement].sticker.identifier= $scope.stickers[index].identifier;
         $scope.elements[$scope.selectedElement].sticker.color= $scope.stickers[index].color;        
@@ -239,9 +246,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         $scope.elements[$scope.selectedElement].sticker.identifier="";
         $scope.elements[$scope.selectedElement].sticker.color="";
       }
-
-    }
-
   }
 
   //Gallery Media Images
@@ -254,6 +258,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       newObj.imgUrl = $scope.galleries[index].url;
       $scope.elements[$scope.selectedElement].media.push(newObj);  
 
+      $scope.wizard2IsValid= typeof($scope.elements[$scope.selectedElement].media)!='undefined'&& $scope.elements[$scope.selectedElement].media.length>0;
       //Apply the changes
       $scope.$digest();
       $scope.$apply();    

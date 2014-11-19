@@ -22,20 +22,28 @@ div(ng-click="validate()")
 						.stickerModuleWrapper(ng-click="selectSticker($index)" ng-class="{'active':item.identifier===elements[selectedElement].sticker.identifier}")
 							span.stickerTitle {{item.title1}} {{item.title2}}
 							.stickerContent(ng-class="item.identifier")
-								spectrum-colorpicker.picker(ng-model="item.color" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#edeeee', '#bbbdc0','#808284','#231f20'],['#69cdf1', '#2f83c0', '#005898'],['#5fc4bb','#88c53f','#0b8943'],['#fcbc15','#f47a26','#ed1c24','#ee4775'],['#9b3393','#4b3895'],['#c6a887','#7b3d1a']]}")
+								spectrum-colorpicker.picker(ng-model="item.color" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#ed1c24'],['#fff100'],['#38b449'],['#00adef'],['#000000'],['#f7931d'],['#86328b']]}" ng-if="item.identifier!==elements[selectedElement].sticker.identifier")
+								spectrum-colorpicker.picker(ng-model="elements[selectedElement].sticker.color" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#ed1c24'],['#fff100'],['#38b449'],['#00adef'],['#000000'],['#f7931d'],['#86328b']]}" ng-if="item.identifier===elements[selectedElement].sticker.identifier")									
 								.sticker01(ng-if="item.identifier=='stick01'")
-									.circleOuter(style="background-color:{{item.color}}!important;")
-										.circleIn(style="background-color:{{item.color}}!important;")
+									.circleOuter(style="background-color:{{item.color}}!important;" ng-if="item.identifier!==elements[selectedElement].sticker.identifier")
+										.circleIn
 											.title1 {{item.title1}}
 											.title2 {{item.title2}}
+									.circleOuter(style="background-color:{{elements[selectedElement].sticker.color}}!important;" ng-if="item.identifier===elements[selectedElement].sticker.identifier")
+										.circleIn
+											.title1 {{item.title1}}
+											.title2 {{item.title2}}											
 								.sticker02(ng-if="item.identifier=='stick02'")
-									.rectangle(style="background-color:{{item.color}}!important;")
-										.rectangleIn(style="background-color:{{item.color}}!important;")
+									.rectangle(style="background-color:{{item.color}}!important;" ng-if="item.identifier!==elements[selectedElement].sticker.identifier")
+										.rectangleIn
 											.title1 {{item.title1}}
 											.title2 {{item.title2}}
-									.line2
+									.rectangle(style="background-color:{{elements[selectedElement].sticker.color}}!important;" ng-if="item.identifier===elements[selectedElement].sticker.identifier")
+										.rectangleIn
+											.title1 {{item.title1}}
+											.title2 {{item.title2}}											
 	.section(ng-mouseleave="validate()")
-		h2 BackGround Color
+		h2 Background Color
 		p Please select the Background color for the element
 		.color-picker
 			input(type="text" ng-model="elements[selectedElement].mainColor"  verify-on-change readonly )
