@@ -5,12 +5,16 @@ div(ng-click="validate()")
 	.section.row
 		.col-md-5
 			#elementPreview
-				.tittle(style="background-color:{{elements[selectedElement].mainColor}}; color:{{elements[selectedElement].textColor}}")
+				.tittle(style="color:{{elements[selectedElement].titleColor}}")
 					.elementNumber
 						span 1
 					.title1
 						span(ng-if="elements[selectedElement].title.length>0") {{elements[selectedElement].title}}
 						span(ng-if="!elements[selectedElement].title.length") [YOUR ELEMENT TITLE]
+					.socialButtons
+						i.icon-heart-1
+						i.icon-baloon
+						i.icon-compass-3
 				img(ng-src="{{elements[selectedElement].media[0].imgUrl}}" ng-if="elements[selectedElement].media.length>0" pendingIndicator)
 				img(ng-src="images/warning_not_found.png" ng-if="!elements[selectedElement].media.length" )
 		.col-md-7			
@@ -43,13 +47,16 @@ div(ng-click="validate()")
 											.title1 {{item.title1}}
 											.title2 {{item.title2}}											
 	.section(ng-mouseleave="validate()")
-		h2 Background Color
-		p Please select the Background color for the element
-		.color-picker
-			input(type="text" ng-model="elements[selectedElement].mainColor"  verify-on-change readonly )
-			spectrum-colorpicker.picker(ng-model="elements[selectedElement].mainColor" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#edeeee', '#bbbdc0','#808284','#231f20'],['#69cdf1', '#2f83c0', '#005898'],['#5fc4bb','#88c53f','#0b8943'],['#fcbc15','#f47a26','#ed1c24','#ee4775'],['#9b3393','#4b3895'],['#c6a887','#7b3d1a']]}")
-		h2 Text Color
-		p Please select the text color for your element
-		.color-picker
-			input(type="text" ng-model="elements[selectedElement].textColor" readonly)
-			spectrum-colorpicker.picker(ng-model="elements[selectedElement].textColor" options="{showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")
+		.row
+			.col-md-4
+				h2 Text Color
+				p Please select the Text color for the element
+				.color-picker
+					input(type="text" ng-model="elements[selectedElement].titleColor"  verify-on-change readonly )
+					spectrum-colorpicker.picker(ng-model="elements[selectedElement].titleColor" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")
+//			.col-md-4			
+				h2 Social Buttons Color
+				p Please select the social Buttons color
+				.color-picker
+					input(type="text" ng-model="elements[selectedElement].socialButtonsColor" readonly)
+					spectrum-colorpicker.picker(ng-model="elements[selectedElement].socialButtonsColor" options="{showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")

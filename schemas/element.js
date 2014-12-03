@@ -8,14 +8,15 @@ var elementSchema = new Schema({
     position:{type:String, default:""},
 	objectType:{type:String, default:""},
 
-    title:{type:String, default:""},
-    mainColor:{type:String, default:""},
-    textColor:{type:String, default:""},
+    title:{type:String, default:""},   
     description:{type:String, default:""},
     longDescription:{type:String, default:""},
     searchTags:[],    
     sticker:{identifier:{type:String, default:""}, color:{type:String,default:""}},
 
+    titleColor:{type:String, default:""},
+    socialButtonsColor:{type:String, default:""},
+    
 	actionType:{type:String, default:""},
 	listPriceEnable:{type:Boolean, default:0},	
 	listPrice:{type:String, default:""},

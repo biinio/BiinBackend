@@ -6,7 +6,7 @@
   src:url("../fonts/streamline-30px-filled-in.eot?#iefix") format("embedded-opentype"),
     url("../fonts/streamline-30px-filled-in.woff") format("woff"),
     url("../fonts/streamline-30px-filled-in.ttf") format("truetype"),
-    url("../fonts/streamline-30px-filled-in.svg#streamline-30px") format("svg");
+    url("../fonts/streamline-30px-filled-in.svg#streamline-30px-filled-in") format("svg");
   font-weight: normal;
   font-style: normal;
 
@@ -38,31 +38,31 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-aim-1:before {
-  content: "a";
-}
-.icon-aim-2:before {
-  content: "b";
-}
-.icon-aim-3:before {
-  content: "c";
-}
 .icon-bin-1:before {
-  content: "d";
+  content: "a";
 }
 .icon-bin-2:before {
   content: "b";
 }
 .icon-binocular:before {
-  content: "f";
+  content: "c";
 }
 .icon-bomb:before {
-  content: "g";
+  content: "d";
 }
 .icon-clip-1:before {
-  content: "h";
+  content: "e";
 }
 .icon-clip-2:before {
+  content: "f";
+}
+.icon-crosshair-1:before {
+  content: "g";
+}
+.icon-crosshair-2:before {
+  content: "h";
+}
+.icon-crosshair-3:before {
   content: "i";
 }
 .icon-cutter:before {
@@ -4061,13 +4061,13 @@
 .icon-cocktail-3:before {
   content: "\e4de";
 }
-.icon-coffee-cup:before {
+.icon-coffee-cup-2:before {
   content: "\e4df";
 }
-.icon-coffee-cup-1:before {
+.icon-coffee-pot:before {
   content: "\e4e0";
 }
-.icon-coffee-pot:before {
+.icon-cup-2:before {
   content: "\e4e1";
 }
 .icon-deep-fry:before {

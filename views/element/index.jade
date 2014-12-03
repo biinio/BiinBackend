@@ -72,28 +72,28 @@ block content
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
 										.wizard-options-item(ng-click="changeWizardTab(3)")
 											.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid,'valid':wizard3IsValid}")
-												.icon.icon-photo-1
+												.icon.icon-palette
 											.textCirle 
 												| 3. Design
 									.col-md-1.col-sm-1.nopadding.option
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
 										.wizard-options-item(ng-click="changeWizardTab(4)")
 											.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
-												.icon.icon-photo-1
+												.icon.icon-crosshair-1
 											.textCirle 
 												| 4. Highlights
 									.col-md-1.col-sm-1.nopadding.option
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==5}")
 										.wizard-options-item(ng-click="changeWizardTab(5)")
 											.circle(ng-class="{'active':wizardPosition ==5,'disabled':!wizard4IsValid,'valid':wizard5IsValid}")
-												.icon.icon-photo-1
+												.icon.icon-list-1-1
 											.textCirle 
 												| 5. Details
 									.col-md-1.col-sm-1.nopadding.option
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==6}")
 										.wizard-options-item(ng-click="changeWizardTab(6)")
 											.circle(ng-class="{'active':wizardPosition ==6,'disabled':!wizard5IsValid,'valid':wizard6IsValid}")
-												.icon.icon-photo-1
+												.icon.icon-message
 											.textCirle 
 												| 6. Notifications
 									.col-md-1.col-sm-1.nopadding.option																							
@@ -102,4 +102,4 @@ block content
 												.circle-inner
 													.icon.icon-check-1
 											.textCirle 
-								#guide-line-division
+								#guide-line-division.elementsWizard
