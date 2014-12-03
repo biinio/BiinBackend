@@ -40,6 +40,7 @@ biinServicesModule.factory('stickersSrv', ['$http', function (async) {
   }
   ]);
 
+
 //Image uploades pending indicator
 biinServicesModule.directive('pendingIndicator', function(){
     return {
@@ -283,6 +284,25 @@ biinServicesModule.directive('guide',function(){
     }
   }
 });
+
+
+//Directive for numberFields
+biinServicesModule.directive('isNumber',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+      $(element).on('keypress',function(evt){            
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        return true;
+        });
+    }
+  }
+});
+
 
 //Define the map window behaviour
 biinServicesModule.directive('map',function(){

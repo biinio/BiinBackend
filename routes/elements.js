@@ -36,7 +36,8 @@ module.exports = function(){
          newModel.objectIdentifier=utils.getGUID();
          newModel.accountIdentifier = req.user.accountIdentifier;
          newModel.organizationIdentifier = organizationIdentifier;
-         
+         newModel.notifications =[{isActive:"0",notificationType:'1',text:''},{isActive:"0",notificationType:'2',text:''},{isActive:"0",notificationType:'3',text:''}];
+
          organization.update({
          	identifier:organizationIdentifier,accountIdentifier:req.user.accountIdentifier
          },

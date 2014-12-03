@@ -40,6 +40,7 @@ function controls(){
    var modal =  $('.modal').modal({
         "backdrop" : "static"
     });
+
 }
 
 jQuery(function ($) {

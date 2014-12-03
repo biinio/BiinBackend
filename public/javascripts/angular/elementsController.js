@@ -1,4 +1,4 @@
-var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services']);
+var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services','ui.checkbox','datePicker']);
 
 
 biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv','stickersSrv',function($scope,$http,categorySrv,gallerySrv,stickersSrv){
@@ -14,15 +14,20 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.organizationId=selectedOrganization();
   $scope.activeTab ='details';
   $scope.newTagField="";
+  $scope.activeValue='1';
 
   //Loading images service propertie
   $scope.loadingImages =false;
 
   //Draggable Properties
   //Wizard validations indicatos
+  $scope.wizard0IsValid = false;
   $scope.wizard1IsValid = false;
   $scope.wizard2IsValid =false;
   $scope.wizard3IsValid =false;
+  $scope.wizard4IsValid =false;
+  $scope.wizard5IsValid =false;
+  $scope.wizard6IsValid =false;
 
   //Get the List of Objects
   $http.get('api/organizations/'+$scope.organizationId+'/elements').success(function(data){
@@ -55,11 +60,21 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.selectedElement = index;
     $scope.currentModelId = $scope.elements[index].objectIdentifier;
     $scope.clearValidations();
-    $scope.wizardPosition=1;
+    $scope.wizardPosition=0;
     $scope.validate(true); 
 
   }
 
+  //Select Element Type function
+  $scope.selectType=function(index){
+    if($scope.elements[$scope.selectedElement].objectType!==''+index)
+      $scope.elements[$scope.selectedElement].objectType=""+index;
+    else
+      $scope.elements[$scope.selectedElement].objectType="";
+
+    $scope.validate();
+
+  }
   //Remove element at specific position
   $scope.removeElementAt = function(index){
     if($scope.selectedElement==index){
@@ -94,7 +109,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.changeWizardTab=function(option){
     switch(option){
       case 1:
-        $scope.wizardPosition =option;
+        if($scope.wizard0IsValid)
+          $scope.wizardPosition =option;
       break;
       case 2:
         if($scope.wizard1IsValid)
@@ -157,6 +173,10 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     var validate=typeof(validateAll)!='undefined';
     var currentValid=false;
 
+      if(eval($scope.wizardPosition)==0 || validate){     
+         $scope.wizard0IsValid= $scope.elements[$scope.selectedElement].objectType!='';
+      }
+
       if(eval($scope.wizardPosition)==1 || validate){     
         if($scope.elements[$scope.selectedElement])
           $scope.wizard1IsValid= (typeof($scope.elements[$scope.selectedElement].title)!='undefined' && $scope.elements[$scope.selectedElement].title.length>0) && (typeof($scope.elements[$scope.selectedElement].description)!='undefined' && $scope.elements[$scope.selectedElement].description.length>0);
@@ -176,7 +196,64 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         $scope.wizard3IsValid= coloursValidation;
       }
 
-      $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid;
+       if(eval($scope.wizardPosition)==4 || validate){
+        var wizard4IsValid =(typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price.length>0) && (typeof($scope.elements[$scope.selectedElement].savings)!='undefined' && $scope.elements[$scope.selectedElement].savings.length>0);
+        if($scope.elements[$scope.selectedElement].listPriceEnable)
+            wizard4IsValid=  wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
+
+        if($scope.elements[$scope.selectedElement].discountEnable)
+          wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].discount)!='undefined' && $scope.elements[$scope.selectedElement].discount.length>0);
+
+        if($scope.elements[$scope.selectedElement].limitedTimeEnabled)
+          wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].initialDate) !='undefined') && (typeof($scope.elements[$scope.selectedElement].expirationDate)!='undefined');
+        
+        if($scope.elements[$scope.selectedElement].quantityEnabled)
+          wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].quantity)!='undefined' && $scope.elements[$scope.selectedElement].quantity>0);
+
+        $scope.wizard4IsValid=wizard4IsValid;
+       }
+
+       if(eval($scope.wizardPosition)==5 || validate){
+        var wizard5IsValid = false;
+        if($scope.elements[$scope.selectedElement].details){
+          //Validate each element
+          for(var index=0;index <$scope.elements[$scope.selectedElement].details.length;index++){
+
+            if($scope.elements[$scope.selectedElement].details[index].elementDetailType=='4'){                        
+              if($scope.elements[$scope.selectedElement].details[index].body.length>0){
+                //Foreach line in body validate the text
+                wizard5IsValid=true;
+                  for(var line=0; line<$scope.elements[$scope.selectedElement].details[index].body.length;line++){
+                    wizard5IsValid= wizard5IsValid & (typeof($scope.elements[$scope.selectedElement].details[index].body[line].line)!='undefined'&& $scope.elements[$scope.selectedElement].details[index].body[line].line.length>0);
+                  }
+              }
+
+            }else{
+              wizard5IsValid= (typeof($scope.elements[$scope.selectedElement].details[index].text)!='undefined' && $scope.elements[$scope.selectedElement].details[index].text.length>0);
+            }
+          }
+        }
+
+        $scope.wizard5IsValid= wizard5IsValid;
+      }
+
+      if(eval($scope.wizardPosition)==6 || validate){
+        var wizard6IsValid = false;
+        if($scope.elements[$scope.selectedElement].activateNotification===$scope.activeValue ){
+           wizard6IsValid=true;
+          for(var i=0; i<$scope.elements[$scope.selectedElement].notifications.length;i++){
+            if($scope.elements[$scope.selectedElement].notifications[i].isActive===$scope.activeValue)
+              wizard6IsValid = wizard6IsValid && $scope.elements[$scope.selectedElement].notifications[i].isActive === $scope.activeValue && typeof($scope.elements[$scope.selectedElement].notifications[i].text)!=='undefined' && $scope.elements[$scope.selectedElement].notifications[i].text.length>0;
+          }
+        }else{
+         wizard6IsValid=true; 
+        }
+
+        $scope.wizard6IsValid= wizard6IsValid; 
+      }
+
+
+      $scope.isValid = $scope.wizard0IsValid && $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid &&  $scope.wizard5IsValid &&  $scope.wizard6IsValid;
 
       return currentValid;
   }
@@ -204,38 +281,13 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     return categories;
   }
 
-  //Set the category index when start draggin
-  $scope.setDragCategory=function(scopeIndex){
-    $scope.dragCategoryIndex= scopeIndex;
-  }
 
   //Set the gallery index when start draggin
   $scope.setDragGallery=function(scopeIndex){
     $scope.dragGalleryIndex= scopeIndex;
   }
 
- //Insert category in the site
-  $scope.insertCategory = function(index){
-
-    var elementToPush =$scope.categories[$scope.dragCategoryIndex];
-
-    delete elementToPush._id;
-    if(!$scope.elements[$scope.selectedElement].categories)
-      $scope.elements[$scope.selectedElement].categories=[];
-
-    //$scope.sites[$scope.selectedSite].categories.push(elementToPush);
-    $scope.elements[$scope.selectedElement].categories.splice(0, 0, elementToPush);
-
-    //Apply the changes    },
-
-    $scope.$digest();
-    $scope.$apply();    
-  }
-
-  //Remove categorie a specific position
-  $scope.removeCategoryAt=function(scopeIndex){
-    $scope.elements[$scope.selectedElement].categories.splice(scopeIndex,1);
-  }
+ 
 
   //Select an sticker
   $scope.selectSticker=function(index){
@@ -298,6 +350,59 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     }
   }
 
+
+  //Element Details Methods
+  $scope.insertDetail =function(elementType){
+    if(typeof($scope.elements[$scope.selectedElement].details)==='undefined')
+      $scope.elements[$scope.selectedElement].details=[];
+    
+    var newDetail ={elementDetailType:elementType, text:"", body:[]};    
+    $scope.elements[$scope.selectedElement].details.push(newDetail);
+
+    if(elementType=='4')
+       $scope.addListItem($scope.elements[$scope.selectedElement].details.indexOf(newDetail));
+  }
+
+  //Remove a element a specific index
+  $scope.removeDetailAt=function(index){
+    if($scope.elements[$scope.selectedElement].details.length>=index)
+      $scope.elements[$scope.selectedElement].details.splice(index,1);
+  }
+
+  //Remove the list Item of an element
+  $scope.removeListItemAt=function(detailIndex, listItemIndex){
+   if($scope.elements[$scope.selectedElement].details.length>=detailIndex)
+      $scope.elements[$scope.selectedElement].details[detailIndex].body.splice(listItemIndex,1);
+  }
+
+  //Add a list item of an element
+  $scope.addListItem =function(detailIndex){
+    $scope.elements[$scope.selectedElement].details[detailIndex].body.push({line:""});
+    $scope.validate();
+  }
+
+  //Notification Section
+
+  //Toggle notifications state
+  $scope.setNotificationActive=function(){
+    if($scope.elements[$scope.selectedElement].activateNotification!=='1')
+      $scope.elements[$scope.selectedElement].activateNotification=$scope.activeValue;
+    else
+      $scope.elements[$scope.selectedElement].activateNotification='0';
+    $scope.validate();
+  }
+
+  //Toggle a specific notification enabled
+  $scope.setNotificationActiveAt=function(index){
+    if($scope.elements[$scope.selectedElement].activateNotification==='1')
+    {
+      if($scope.elements[$scope.selectedElement].notifications[index].isActive!==$scope.activeValue)
+        $scope.elements[$scope.selectedElement].notifications[index].isActive=$scope.activeValue;
+      else
+        $scope.elements[$scope.selectedElement].notifications[index].isActive='0';
+    }      
+    $scope.validate();
+  }
 }]);
 
 //Change of image directive
