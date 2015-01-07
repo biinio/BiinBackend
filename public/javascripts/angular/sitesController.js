@@ -283,8 +283,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     delete elementToPush._id;
     if(!$scope.sites[$scope.selectedSite].categories)
       $scope.sites[$scope.selectedSite].categories=[];
-
-    //$scope.sites[$scope.selectedSite].categories.push(elementToPush);
+       
     $scope.sites[$scope.selectedSite].categories.splice(0, 0, elementToPush);
 
     //Apply the changes
@@ -298,6 +297,8 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
       newObj.imgUrl = $scope.galleries[index].url;
+      newObj.mainColor = $scope.galleries[index].mainColor;
+
       $scope.sites[$scope.selectedSite].media.push(newObj);  
 
       $scope.wizard2IsValid= typeof($scope.sites[$scope.selectedSite].media)!='undefined'&& $scope.sites[$scope.selectedSite].media.length>0
@@ -314,6 +315,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
     $scope.wizard2IsValid= typeof($scope.sites[$scope.selectedSite].media)!='undefined'&& $scope.sites[$scope.selectedSite].media.length>0
   }
+
 
   $scope.validate=function(validateAll){
     var validate=typeof(validateAll)!='undefined';
@@ -373,10 +375,11 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       }
 
     $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid&& $scope.wizard3IsValid&& $scope.wizard4IsValid&& $scope.wizard5IsValid&& $scope.wizard6IsValid;
-
+    
     return currentValid;
-
+    
   }
+
   $scope.clearValidations=function(){
     $scope.isValid = false;    
     $scope.wizard1IsValid =false;

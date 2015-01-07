@@ -2,13 +2,22 @@ var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpec
 
 //App define controllers
 biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routeParams','elementSrv','biinSrv', function($scope,$http,$routeParams, elementSrv,biinSrv) {
-  $scope.activeTab='details';
   $scope.selectedShowcase = null;
   $scope.currentModelId = null;
   $scope.dragElementIndex=-1;
   $scope.dragBiinIndex =-1;
   $scope.organizationId =selectedOrganization();
-    
+  $scope.activeValue='1';
+  $scope.search='';
+
+  //Draggable Properties
+  //Wizard validations indicatos
+  $scope.wizard0IsValid = false;
+  $scope.wizard1IsValid = false;
+  $scope.wizard2IsValid =false;
+  $scope.wizard3IsValid =false;
+  $scope.wizard4IsValid =false;
+
   //Get the List of Showcases
   $http.get('api/organizations/'+$scope.organizationId+'/showcases').success(function(data){
   	$scope.showcases = data.data;
@@ -22,7 +31,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
 
   //Get the List of Elements
   elementSrv.getList($scope.organizationId).then(function(promise){
-    $scope.elements = promise.data.data;    
+    $scope.elements = promise.data.data.elements;    
   });
 
   //Get the List of Biins
@@ -32,28 +41,52 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
 
   //Push a new showcase in the list
   $scope.create = function(){
-    var newObject=$scope.showcasePrototype;
-    if($scope.showcases.indexOf(newObject)>-1){      
-      $scope.selectedShowcase=$scope.showcases.indexOf(newObject); 
-    }else{
+    //Create a new Showcase
+    $http.post('api/organizations/'+$scope.organizationId+"/showcases").success(function(showcase,status){
+      if(status==201){
+        $scope.showcases.push(showcase);
+        $scope.wizardPosition=1;
+        $scope.clearValidations();
+        $scope.edit($scope.showcases.indexOf(showcase));
+      }else{
+        displayErrorMessage(element,"Showcases Creation",status);
+      }
+    });
 
-        //Generate an identifier for the showcase and set it to the prototype object
-        $http.get('api/organizations/'+$scope.organizationId+'/showcases/id').success(function(data){
-          $scope.showcasePrototype =  $.extend(true, {}, $scope.showcasePrototypeBkp);
-          $scope.showcasePrototype.identifier =data.data;
-          $scope.showcasePrototype.isNew=true;
-          $scope.showcases.push($scope.showcasePrototype);     
-          $scope.edit($scope.showcases.indexOf($scope.showcasePrototype)); 
-        });
-    }
   }
 
   //Edit an showcase
   $scope.edit = function(index){
     $scope.selectedShowcase = index;
     $scope.currentModelId = $scope.showcases[index].identifier;
+
+    $scope.clearValidations();
+    $scope.wizardPosition=1;
+    $scope.validate(true); 
+
   }
 
+  //Select Element Type function
+  $scope.selectType=function(index){
+    if($scope.showcases[$scope.selectedShowcase].showcaseType!==''+index)
+      $scope.showcases[$scope.selectedShowcase].showcaseType=""+index;
+    else
+      $scope.showcases[$scope.selectedShowcase].showcaseType="";
+
+    $scope.validate(true);
+
+  }
+
+  //Select the showcase theme function
+  $scope.selectTheme=function(index){
+    if($scope.showcases[$scope.selectedShowcase].theme!==''+index)
+      $scope.showcases[$scope.selectedShowcase].theme=""+index;
+    else
+      $scope.showcases[$scope.selectedShowcase].theme="";
+
+    $scope.validate(true);
+
+  }  
   //Remove showcase at specific position
   $scope.removeShowcaseAt = function(index){
     if($scope.selectedShowcase==index){
@@ -77,7 +110,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
   }
 
   //Save detail model object
-  $scope.saveDetail= function(){ 
+  $scope.save= function(){ 
 
     $http.put('api/showcases/'+$scope.currentModelId,{model:$scope.showcases[$scope.selectedShowcase]}).success(function(data,status){
       if("replaceModel" in data){
@@ -100,23 +133,81 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     });          
   } 
 
+  //Change Wizad tab manager
+  $scope.changeWizardTab=function(option){
+    switch(option){
+      case 1:
+          $scope.wizardPosition =option;
+      break;
+      case 2:
+        if($scope.wizard1IsValid)
+          $scope.wizardPosition =option;        
+      break      
+      case 3:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid)
+          $scope.wizardPosition =option;
+      break  
+      case 4:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid )
+          $scope.wizardPosition =option;
+      break   
+      default:
+        $scope.wizardPosition =option;
+      break;        
+    }
+
+    //Validate the current option
+    $scope.validate();
+  }
+
+  //Validations
+  //Validate the steps
+  $scope.validate=function(validateAll){
+    var validate=typeof(validateAll)!='undefined';
+    var currentValid=false;
+
+      if(eval($scope.wizardPosition)==1 || validate){     
+         $scope.wizard1IsValid= $scope.showcases[$scope.selectedShowcase].showcaseType!='';
+      }
+
+      if(eval($scope.wizardPosition)==2 || validate){
+        $scope.wizard2IsValid= $scope.showcases[$scope.selectedShowcase].theme!='';
+      }
+
+      if(eval($scope.wizardPosition)==3 || validate){
+        $scope.wizard3IsValid=  (typeof($scope.showcases[$scope.selectedShowcase].elements) != 'undefined' && $scope.showcases[$scope.selectedShowcase].elements.length>0);
+      }      
+
+      $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid && $scope.wizard3IsValid;
+
+      return currentValid;
+  }
+
   //Remove an element of a Showcase
   $scope.removeElementAt=function(index){
-    var position = $scope.showcases[$scope.selectedShowcase].objects[index].position;
-    $scope.showcases[$scope.selectedShowcase].objects.splice(index,1);
+    var position = $scope.showcases[$scope.selectedShowcase].elements[index].position;
+    $scope.showcases[$scope.selectedShowcase].elements.splice(index,1);
 
     //Update the elements position
     updateShowcaseObjectsPositionWhenDelete(eval(position));
+
+    $scope.validate();
+  }
+
+  //Clear the validations
+  $scope.clearValidations=function(){
+      $scope.isValid = false;    
+      $scope.wizard1IsValid =false;
   }
 
   //Move element of a showcase to up
   $scope.moveElementUp=function(index){
-    var oldPosition =eval($scope.showcases[$scope.selectedShowcase].objects[index].position);
+    var oldPosition =eval($scope.showcases[$scope.selectedShowcase].elements[index].position);
     if(oldPosition>1){      
       var newPosition =oldPosition-1;
 
-      var prevObj= _.find($scope.showcases[$scope.selectedShowcase].objects, function (obj) { return eval(obj.position) === newPosition})      
-      $scope.showcases[$scope.selectedShowcase].objects[index].position=""+newPosition;
+      var prevObj= _.find($scope.showcases[$scope.selectedShowcase].elements, function (obj) { return eval(obj.position) === newPosition})
+      $scope.showcases[$scope.selectedShowcase].elements[index].position=""+newPosition;
       
       //Modify the position of the prev object
       prevObj.position = ""+oldPosition;
@@ -129,11 +220,11 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
 
   //Move element of a showcase to down
   $scope.moveElementDown=function(index){
-    var oldPosition =eval($scope.showcases[$scope.selectedShowcase].objects[index].position);
-    if(oldPosition<$scope.showcases[$scope.selectedShowcase].objects.length){        
+    var oldPosition =eval($scope.showcases[$scope.selectedShowcase].elements[index].position);
+    if(oldPosition<$scope.showcases[$scope.selectedShowcase].elements.length){        
         var newPosition =oldPosition+1;
-        var nextObj= _.find($scope.showcases[$scope.selectedShowcase].objects, function (obj) { return eval(obj.position) === newPosition })      
-        $scope.showcases[$scope.selectedShowcase].objects[index].position= ""+newPosition;        
+        var nextObj= _.find($scope.showcases[$scope.selectedShowcase].elements, function (obj) { return eval(obj.position) === newPosition })
+        $scope.showcases[$scope.selectedShowcase].elements[index].position= ""+newPosition;        
         nextObj.position = ""+oldPosition;
     }
   }
@@ -141,7 +232,11 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
   //Add element to a showcase
   $scope.insertElementAfter= function(indexElementToDrop,position){
   
-    var elementToPush = $scope.elements[indexElementToDrop];
+    // Deep copy
+    //var elementToPush = jQuery.extend({}, $scope.elements[indexElementToDrop]);
+  
+    var elementToPush = {};
+    jQuery.extend(elementToPush,$scope.elements[indexElementToDrop]);    
     var positionToGive= eval(position)+1;
     //Give the position of the next element
     elementToPush.position= ""+positionToGive;
@@ -151,11 +246,14 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     delete elementToPush._id;
     
     //Push the element int he collection
-    $scope.showcases[$scope.selectedShowcase].objects.push(elementToPush);
+    $scope.showcases[$scope.selectedShowcase].elements.push(elementToPush);
+
+    $scope.validate();
 
     //Apply the changes
     $scope.$digest();
     $scope.$apply();
+
   } 
 
   //Set the dragged biin showcase
@@ -190,21 +288,51 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     return element.objects[foundPosition];
   }
 
+  //Get the status of a Biin
+  $scope.getBiinStatus =function(biin){
+    var result="";
+    for(var i=0;i<biin.showcasesAsigned.length && result==="";i++){
+      if(biin.showcasesAsigned[i].showcaseIdentifier===$scope.currentModelId)
+        result="active";
+      else{
+        if(biin.showcasesAsigned[i].showcaseIdentifier==="")
+          result="taken";
+      }
+    }
+    return result;
+  }
+
+  //Set the Showcase in Biin as Active
+  $scope.setShowcaseInBiinActive=function( indexSite,indexBiin){
+
+    if(typeof($scope.biinSite[indexSite]!='undefined')){
+
+
+      if($scope.biinSite[indexSite].biins[indexBiin].showcasesAsigned.length>0)
+        $scope.biinSite[indexSite].biins[indexBiin].showcasesAsigned=[];
+      else{
+          var asignedBiin = {showcaseIdentifier:$scope.currentModelId};
+          $scope.biinSite[indexSite].biins[indexBiin].showcasesAsigned.push(asignedBiin);
+      }
+
+    }
+  }
+
   //Update the position of the rest of the elements to add one when is added a new element
    updateShowcaseObjectsPosition= function(position){
-    for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].objects.length;i++){
-      var objPosition = eval($scope.showcases[$scope.selectedShowcase].objects[i].position);
+    for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].elements.length;i++){
+      var objPosition = eval($scope.showcases[$scope.selectedShowcase].elements[i].position);
       if(objPosition>=position)
-        $scope.showcases[$scope.selectedShowcase].objects[i].position= ""+ eval(objPosition+1);
+        $scope.showcases[$scope.selectedShowcase].elements[i].position= ""+ eval(objPosition+1);
     }
    }
 
   //Update the position of the rest of the elements when a element removed
    updateShowcaseObjectsPositionWhenDelete= function(position){
-    for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].objects.length;i++){
-      var objPosition = eval($scope.showcases[$scope.selectedShowcase].objects[i].position);
+    for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].elements.length;i++){
+      var objPosition = eval($scope.showcases[$scope.selectedShowcase].elements[i].position);
       if(objPosition>=position)
-        $scope.showcases[$scope.selectedShowcase].objects[i].position= ""+objPosition-1;
+        $scope.showcases[$scope.selectedShowcase].elements[i].position= ""+objPosition-1;
     }
    }
 
@@ -214,6 +342,17 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
         $scope.biinSite[indexSite].biins[indexBiin].showcaseAsigned = $scope.currentModelId;
       else
         $scope.biinSite[indexSite].biins[indexBiin].showcaseAsigned=undefined
+    }
+
+    $scope.elementInShowcase=function(elIndex){
+      var elementToCompare = $scope.elements[elIndex];
+      var check = _.some( $scope.showcases[$scope.selectedShowcase].elements, function( el ) {
+        return el.elementIdentifier === elementToCompare.elementIdentifier;
+      } );
+      if(check)
+        return "dragDisabled";
+      else
+        return "";
     }
 }]);
 
@@ -275,6 +414,123 @@ biinAppShowCases.directive('inputChange',function(){
   }
 });
 
+//Sortable directive
+biinAppShowCases.directive('dropElement',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element, attrs){       
+      $el = $(element);
+      var higthLigthObj=null;
+
+       $el.droppable({ over: function( event, ui ) {          
+          $('.elementHigthLight').remove();
+          if(!higthLigthObj)
+            higthLigthObj= $( "<div class='.col-xs-4 col-sm-6 col-md-6 col-lg-6 nopadding moduleWrapper elementHigthLight'/>" );
+          $('.elementDropContainerHelper').append(higthLigthObj);
+       },
+        out:function(event,ui){
+          if(higthLigthObj){
+            $('.elementHigthLight').remove();
+            higthLigthObj=null;
+          }
+        },
+        drop:function( event, ui )
+        {
+          $('.elementHigthLight').remove();
+          var dragPosition = scope.$eval(attrs.elementPosition);
+          if(!dragPosition)
+            dragPosition=0;
+          scope.insertElementAfter(scope.dragElementIndex,dragPosition);          
+        }        
+     });
+    }
+  }
+});
+
+
+//Sortable directive
+biinAppShowCases.directive('dropUp',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element, attrs){       
+      $el = $(element);
+      var higthLigthObj=null;
+      var elementIndex= scope.$eval(attrs.dropUp);
+      var elementId = scope.showcases[scope.selectedShowcase].elements[elementIndex].elementIdentifier;
+
+      var functionDrop= function(event, ui){
+          $('.elementHigthLight').remove();
+          var dragPosition = scope.$eval(attrs.elementPosition);
+          if(!dragPosition)
+            dragPosition=0;
+          scope.insertElementAfter(scope.dragElementIndex,dragPosition);           
+      }
+
+       $el.droppable({ 
+        over: function( event, ui ) {          
+          $('.elementHigthLight').remove();
+          if(!higthLigthObj){
+
+            higthLigthObj= $( "<div class='.col-xs-4 col-sm-6 col-md-6 col-lg-6 nopadding moduleWrapper elementHigthLight'/>" );
+            higthLigthObj.droppable({drop:functionDrop});
+          }
+
+          $('#'+elementId).before(higthLigthObj);
+
+        },
+        drop:functionDrop,       
+        out:function(event,ui){
+          if(higthLigthObj){
+            $('.elementHigthLight').remove();
+            higthLigthObj=null;
+          }
+        }
+     });
+    }
+  }
+});
+
+biinAppShowCases.directive('dropDown',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element, attrs){       
+      $el = $(element);
+  
+      var higthLigthObj=null;
+      var elementIndex= scope.$eval(attrs.dropDown);
+      var elementId = scope.showcases[scope.selectedShowcase].elements[elementIndex].elementIdentifier;
+             
+      var functionDrop= function(event, ui){
+          $('.elementHigthLight').remove();
+          var dragPosition = scope.$eval(attrs.elementPosition);
+          if(!dragPosition)
+            dragPosition=0;
+          //Post insert
+          dragPosition=dragPosition+1;
+          scope.insertElementAfter(scope.dragElementIndex,dragPosition);           
+      }
+
+       $el.droppable({ over: function( event, ui ) {          
+          $('.elementHigthLight').remove();
+          if(!higthLigthObj)
+          {
+            higthLigthObj= $( "<div class='.col-xs-4 col-sm-6 col-md-6 col-lg-6 nopadding moduleWrapper elementHigthLight'/>" );
+            higthLigthObj.droppable({drop:functionDrop});
+          }
+            
+          $('#'+elementId).after(higthLigthObj);
+       },
+        out:function(event,ui){
+          if(higthLigthObj){
+            $('.elementHigthLight').remove();
+            higthLigthObj=null;
+          }
+        },
+        drop:functionDrop
+     });
+    }
+  }
+});
 /****
     Custom Filters
 ****/

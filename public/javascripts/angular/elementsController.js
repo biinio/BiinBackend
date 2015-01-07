@@ -1,5 +1,4 @@
-var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services','ui.checkbox','datePicker']);
-
+var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services','ui.checkbox','datePicker','angular-bootstrap-select']);
 
 biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv','stickersSrv',function($scope,$http,categorySrv,gallerySrv,stickersSrv){
   
@@ -19,7 +18,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   //Loading images service propertie
   $scope.loadingImages =false;
 
-  //Draggable Properties
   //Wizard validations indicatos
   $scope.wizard0IsValid = false;
   $scope.wizard1IsValid = false;
@@ -28,6 +26,12 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.wizard4IsValid =false;
   $scope.wizard5IsValid =false;
   $scope.wizard6IsValid =false;
+
+  //Boolean values 
+  $scope.hasListPriceBool=false;
+  $scope.hasDiscountBool=false;
+  $scope.hasTimmingBool =false;
+  $scope.hasQuantityBool=false;
 
   //Get the List of Objects
   $http.get('api/organizations/'+$scope.organizationId+'/elements').success(function(data){
@@ -45,7 +49,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $http.post('api/organizations/'+$scope.organizationId+"/elements").success(function(element,status){
       if(status==201){
         $scope.elements.push(element);
-        $scope.wizardPosition=1;
+        $scope.wizardPosition=0;
         $scope.clearValidations();
         $scope.edit($scope.elements.indexOf(element));
       }else{
@@ -58,7 +62,14 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.edit = function(index){
 
     $scope.selectedElement = index;
-    $scope.currentModelId = $scope.elements[index].objectIdentifier;
+    $scope.currentModelId = $scope.elements[index].elementIdentifier;
+
+    //Set the Booleans Values
+    $scope.hasListPriceBool= $scope.elements[index].hasListPrice==='1';
+    $scope.hasDiscountBool= $scope.elements[index].hasDiscount==='1';
+    $scope.hasTimmingBool= $scope.elements[index].hasTimming==='1';
+    $scope.hasQuantityBool= $scope.elements[index].hasQuantity==='1';
+
     $scope.clearValidations();
     $scope.wizardPosition=0;
     $scope.validate(true); 
@@ -67,14 +78,15 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
   //Select Element Type function
   $scope.selectType=function(index){
-    if($scope.elements[$scope.selectedElement].objectType!==''+index)
-      $scope.elements[$scope.selectedElement].objectType=""+index;
+    if($scope.elements[$scope.selectedElement].elementType!==''+index)
+      $scope.elements[$scope.selectedElement].elementType=""+index;
     else
-      $scope.elements[$scope.selectedElement].objectType="";
+      $scope.elements[$scope.selectedElement].elementType="";
 
-    $scope.validate();
+    $scope.validate(true);
 
   }
+
   //Remove element at specific position
   $scope.removeElementAt = function(index){
     if($scope.selectedElement==index){
@@ -82,7 +94,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       $scope.currentModelId =null;
     }
 
-    var elementId = $scope.elements[index].objectIdentifier;      
+    var elementId = $scope.elements[index].elementIdentifier;      
     $scope.elements.splice(index,1);
     $http.delete('api/organizations/'+$scope.organizationId+'/elements/'+elementId).success(function(data){
         if(data.state=="success"){
@@ -122,7 +134,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           $scope.wizard3IsValid=true;
       break  
       case 4:
-        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid)
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.elements[$scope.selectedElement].elementType === '1')
           $scope.wizardPosition =option;
       break 
       case 5:
@@ -174,12 +186,12 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     var currentValid=false;
 
       if(eval($scope.wizardPosition)==0 || validate){     
-         $scope.wizard0IsValid= $scope.elements[$scope.selectedElement].objectType!='';
+         $scope.wizard0IsValid= $scope.elements[$scope.selectedElement].elementType!='';
       }
 
       if(eval($scope.wizardPosition)==1 || validate){     
         if($scope.elements[$scope.selectedElement])
-          $scope.wizard1IsValid= (typeof($scope.elements[$scope.selectedElement].title)!='undefined' && $scope.elements[$scope.selectedElement].title.length>0) && (typeof($scope.elements[$scope.selectedElement].description)!='undefined' && $scope.elements[$scope.selectedElement].description.length>0);
+           $scope.wizard1IsValid= (typeof($scope.elements[$scope.selectedElement].title)!='undefined' && $scope.elements[$scope.selectedElement].title.length>0) && (typeof($scope.elements[$scope.selectedElement].nutshellDescriptionTitle)!='undefined' && $scope.elements[$scope.selectedElement].nutshellDescriptionTitle.length>0);
         else{
           $scope.wizard1IsValid=false; 
         }         
@@ -190,31 +202,39 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       }
 
     if(eval($scope.wizardPosition)==3 || validate){
-        var coloursValidation=false;
-        coloursValidation=typeof($scope.elements[$scope.selectedElement].mainColor)!='undefined' && $scope.elements[$scope.selectedElement].mainColor!="";
-        coloursValidation=coloursValidation && typeof($scope.elements[$scope.selectedElement].textColor)!='undefined' && $scope.elements[$scope.selectedElement].textColor!="";
+        var coloursValidation=false;        
+        coloursValidation= typeof($scope.elements[$scope.selectedElement].textColor)!='undefined' && $scope.elements[$scope.selectedElement].textColor!="";
         $scope.wizard3IsValid= coloursValidation;
       }
 
        if(eval($scope.wizardPosition)==4 || validate){
-        var wizard4IsValid =(typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price.length>0) && (typeof($scope.elements[$scope.selectedElement].savings)!='undefined' && $scope.elements[$scope.selectedElement].savings.length>0);
-        if($scope.elements[$scope.selectedElement].listPriceEnable)
-            wizard4IsValid=  wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
+        //If the element type is Benefit
+        if($scope.elements[$scope.selectedElement].elementType==='1')
+        {
+          var wizard4IsValid =(typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price.length>0) && (typeof($scope.elements[$scope.selectedElement].savings)!='undefined' && $scope.elements[$scope.selectedElement].savings.length>0);
+          if(eval($scope.elements[$scope.selectedElement].hasListPrice))
+              wizard4IsValid=  wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
 
-        if($scope.elements[$scope.selectedElement].discountEnable)
-          wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].discount)!='undefined' && $scope.elements[$scope.selectedElement].discount.length>0);
+          if(eval($scope.elements[$scope.selectedElement].hasDiscount))
+            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].discount)!='undefined' && $scope.elements[$scope.selectedElement].discount.length>0);
 
-        if($scope.elements[$scope.selectedElement].limitedTimeEnabled)
-          wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].initialDate) !='undefined') && (typeof($scope.elements[$scope.selectedElement].expirationDate)!='undefined');
-        
-        if($scope.elements[$scope.selectedElement].quantityEnabled)
-          wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].quantity)!='undefined' && $scope.elements[$scope.selectedElement].quantity>0);
+          if(eval($scope.elements[$scope.selectedElement].hasTimming))
+            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].initialDate) !='undefined') && (typeof($scope.elements[$scope.selectedElement].expirationDate)!='undefined');
+          
+          if(eval($scope.elements[$scope.selectedElement].hasQuantity))
+            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].quantity)!='undefined' && $scope.elements[$scope.selectedElement].quantity>0);
 
-        $scope.wizard4IsValid=wizard4IsValid;
+          $scope.wizard4IsValid=wizard4IsValid;          
+        } 
+        else
+        {
+          $scope.wizard4IsValid=true;
+        }
+
        }
 
        if(eval($scope.wizardPosition)==5 || validate){
-        var wizard5IsValid = false;
+        var wizard5IsValid = false;        
         if($scope.elements[$scope.selectedElement].details){
           //Validate each element
           for(var index=0;index <$scope.elements[$scope.selectedElement].details.length;index++){
@@ -257,6 +277,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
       return currentValid;
   }
+
   //Clear the validations
   $scope.clearValidations=function(){
       $scope.isValid = false;    
@@ -284,6 +305,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
   //Set the gallery index when start draggin
   $scope.setDragGallery=function(scopeIndex){
+
     $scope.dragGalleryIndex= scopeIndex;
   }
 
@@ -307,7 +329,9 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     if(($scope.elements[$scope.selectedElement].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia==0){
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
-      newObj.imgUrl = $scope.galleries[index].url;
+      newObj.url = $scope.galleries[index].url;
+      newObj.mainColor = $scope.galleries[index].mainColor;
+      
       $scope.elements[$scope.selectedElement].media.push(newObj);  
 
       $scope.wizard2IsValid= typeof($scope.elements[$scope.selectedElement].media)!='undefined'&& $scope.elements[$scope.selectedElement].media.length>0;
@@ -316,7 +340,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       $scope.$apply();    
     }
   } 
-
   
   //Remove the media object at specific index
   $scope.removeMediaAt=function(index){
@@ -350,6 +373,10 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     }
   }
 
+  $scope.loadingImagesChange=function(state){
+    $scope.loadingImages = state;
+    $scope.$digest();
+  }
 
   //Element Details Methods
   $scope.insertDetail =function(elementType){
@@ -403,6 +430,39 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     }      
     $scope.validate();
   }
+
+ 
+  //Toggle the changes 
+  $scope.changeBoolStateHighlights=function(model,value){
+    switch(model){
+      case 'hasListPrice':
+          if(value)
+            $scope.elements[$scope.selectedElement].hasListPrice='1'
+          else
+            $scope.elements[$scope.selectedElement].hasListPrice='0'          
+        break;
+      case 'hasDiscount':
+        if(value)
+            $scope.elements[$scope.selectedElement].hasDiscount='1'
+          else
+            $scope.elements[$scope.selectedElement].hasDiscount='0'          
+        break;
+        case 'hasTimming':
+          if(value)
+            $scope.elements[$scope.selectedElement].hasTimming='1'
+          else
+            $scope.elements[$scope.selectedElement].hasTimming='0'          
+          break;
+        case 'hasQuantity':
+          if(value)
+            $scope.elements[$scope.selectedElement].hasQuantity='1'
+          else
+            $scope.elements[$scope.selectedElement].hasQuantity='0'          
+          break;
+    }
+    $scope.validate();
+  }
+
 }]);
 
 //Change of image directive
@@ -420,3 +480,13 @@ biinAppObjects.directive('inputChange',function(){
     }
   }
 });
+
+biinAppObjects.directive('selectPicker',function(){
+  return{
+    restrict:'A',
+    link:function(scope,element){       
+      $el = $(element).selectpicker({width:'50px'});      
+    }
+  }
+})
+;

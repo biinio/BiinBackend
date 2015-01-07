@@ -1,8 +1,9 @@
 extends ../layout_dashboard
 block head_scripts
+	//Css Style
 	link(rel="stylesheet" href="/angular-datepicker/dist/index.css")
 	script(src="/angular-datepicker/dist/index.js")
-	script(src="/javascripts/angular/elementsController.js") 
+	script(src="/javascripts/angular/elementsController.js") 	
 block content	
 	#sectionContent(ng-app="biinAppElements" ng-controller="elementsController")
 		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
@@ -18,7 +19,7 @@ block content
 								.moduleWrapper.contentHideButtons(ng-class="{active: elements.indexOf(item) == selectedElement}")
 									.moduleTitle {{item.title1}}
 									img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-									img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+									img(ng-if="item.media.length>0" ng-src="{{item.media[0].url}}" style="max-width: 250px;height: auto;" pending-indicator)
 									.btnDelete.icon-round-control.btn-on-hover(ng-click="removeElementAt(elements.indexOf(item))")
 										.icon.icon-bin-2
 									.btnShowcasePreview.icon-round-control.btn-on-hover
@@ -58,44 +59,44 @@ block content
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==1}")
 										.wizard-options-item(ng-click="changeWizardTab(1)")
 											.circle(ng-class="{'active':wizardPosition ==1,'disabled':!wizard0IsValid,'valid':wizard1IsValid}")
-												.icon.icon-list-1-1
+												.icon.icon-book-1
 											.textCirle 
-												| 1. Nutshell
+												| 2. Nutshell
 									.col-md-1.col-sm-1.nopadding.option
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==2}")
 										.wizard-options-item(ng-click="changeWizardTab(2)")
 											.circle(ng-class="{'active':wizardPosition ==2,'disabled':!wizard1IsValid,'valid':wizard2IsValid}")
 												.icon.icon-photo-1
 											.textCirle 
-												| 2. IMAGES												
+												| 3. IMAGES												
 									.col-md-1.col-sm-1.nopadding.option
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
 										.wizard-options-item(ng-click="changeWizardTab(3)")
 											.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid,'valid':wizard3IsValid}")
 												.icon.icon-palette
 											.textCirle 
-												| 3. Design
+												| 4. Design
 									.col-md-1.col-sm-1.nopadding.option
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
 										.wizard-options-item(ng-click="changeWizardTab(4)")
-											.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
+											.circle(ng-class="{'active':wizardPosition ==4, 'disabled':!wizard3IsValid, 'valid':wizard4IsValid, 'optionInvisible': elements[selectedElement].elementType !== '1'}")
 												.icon.icon-crosshair-1
 											.textCirle 
-												| 4. Highlights
+												| 5. Highlights
 									.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==5}")
+										#guide-wizard-pointer(ng-class="{'active' : wizardPosition ==5}")
 										.wizard-options-item(ng-click="changeWizardTab(5)")
 											.circle(ng-class="{'active':wizardPosition ==5,'disabled':!wizard4IsValid,'valid':wizard5IsValid}")
 												.icon.icon-list-1-1
 											.textCirle 
-												| 5. Details
+												| 6. Details
 									.col-md-1.col-sm-1.nopadding.option
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==6}")
 										.wizard-options-item(ng-click="changeWizardTab(6)")
 											.circle(ng-class="{'active':wizardPosition ==6,'disabled':!wizard5IsValid,'valid':wizard6IsValid}")
 												.icon.icon-message
 											.textCirle 
-												| 6. Notifications
+												| 7. Notifications
 									.col-md-1.col-sm-1.nopadding.option																							
 										.wizard-options-item.completeOption
 											.circle(ng-class="{'complete':isValid}")

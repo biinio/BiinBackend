@@ -51,6 +51,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Showcase routes
     app.get('/organizations/:identifier/showcases',showcases.index);
     app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId)
+    //Showcases creation
+    app.post('/api/organizations/:identifier/showcases',showcases.set);
+    //Showcases Update
+    app.put('/api/organizations/:identifier/showcases/:showcase',showcases.set);    
     app.post('/showcases/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/showcases/:identifier',showcases.get);

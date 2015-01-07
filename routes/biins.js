@@ -29,7 +29,7 @@ module.exports = function () {
 		var organizationId = req.param('identifier');
 		var userAccount = req.user.accountIdentifier;
 		
-		organization.find({accountIdentifier:userAccount,identifier:organizationId,'sites.biins': { "$gt": {} }},{'_id':0,'sites.identifier':1,'sites.name':1,'sites.biins':1},function(err,data){
+		organization.find({accountIdentifier:userAccount,identifier:organizationId,'sites.biins': { "$gt": {} }},{'_id':0, 'sites.identifier':1, 'sites.title1':1,'sites.title2':2, 'sites.media':1,'sites.biins':1},function(err,data){
 			if(err)
 				throw err;
 			else{
@@ -39,7 +39,9 @@ module.exports = function () {
 						res.json({})
 				}
 		});	
+
 	}
+
 	//POST Update the biins of the specific sites
 	functions.updateSiteBiins=function(req,res){
 		var organizationId = req.param('identifier');
@@ -56,7 +58,7 @@ module.exports = function () {
 									return siteDoc.identifier == req.body[siteIndex].identifier;
 								 });
 
-					//If the site to wor is not null
+					//If the site to work is not null
 					if(siteToWorkDocument){
 						var biins = req.body[siteIndex].biins;
 						for(var biinIndex=0; biinIndex< biins.length; biinIndex++){
@@ -66,11 +68,11 @@ module.exports = function () {
 							})
 
 							if(biinToUpdate){
-								var showcaseToAsign = '';
-							    if('showcaseAsigned' in biins[biinIndex])
-							    	showcaseToAsign = biins[biinIndex].showcaseAsigned;
+								//var showcaseToAsign = '';
+							    //if('showcaseAsigned' in biins[biinIndex])
+							    //	showcaseToAsign = biins[biinIndex].showcasesAsigned;
 
-							   biinToUpdate.showcaseAsigned = showcaseToAsign;
+							   biinToUpdate.showcasesAsigned = biins[biinIndex].showcasesAsigned;
 							   countOfChanges++;
 							}
 						}

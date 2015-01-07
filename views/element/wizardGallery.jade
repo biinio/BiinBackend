@@ -7,7 +7,7 @@
 			.ownedGalleryWrapper.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 				.img-block(ng-repeat="item in elements[selectedElement].media")
 					.moduleWrapper.contentHideButtons
-						img.imagegallery.img-responsive(ng-src="{{item.imgUrl}}" pending-indicator)
+						img.imagegallery.img-responsive(ng-src="{{item.url}}"  pending-indicator)
 						.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(elements[selectedElement].media.indexOf(item))")
 							.icon.icon-bin-2
 	.section

@@ -2,77 +2,75 @@ extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/showcasesController.js")
 block content	
-	#sectionContent.max-height(ng-app="biinAppShowCases" ng-controller="showcasesController")
-			#wrapperHeader.row
-			#wrapperContent.row.max-height
-				.panel-default.max-height
-					.body-list.max-height
-						.col-lg-4.col-md-3.col-sm-3.col-list.max-height
-							.row(slimscroll="" slimscroll-option="{height: 'auto'}" )
-								a.col-md-1.module(ng-click="create()")				
-									.moduleWrapper.remove-module
-										.btn-rounded.center.icon.icon-add-1
-								a.col-md-1.module(ng-repeat="item in showcases | filter: query | orderBy:orderShowcases" ng-click="edit(showcases.indexOf(item))")					
-									.moduleWrapper.contentHideButtons(ng-class="{active: showcases.indexOf(item) == selectedShowcase}")				
-										img.img-responsive(ng-src="{{getFirstElementByPosition(item).media[0].imgUrl}}" ng-if="item.objects.length > 0" style="max-width: 250px;height: auto;" pending-indicator)
-										.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeShowcaseAt(showcases.indexOf(item))")
-											.icon.icon-bin-2 	
-						.col-lg-8.col-md-9.col-sm-9.colOptions.max-height
-							.animate-switch.max-height(ng-if="selectedShowcase!=null")
-								ul.workAreaHeader.nav.nav-tabs
-									li(ng-class="{active:activeTab == 'details'}")
-										a(ng-click="activeTab='details'") Details
-									li(ng-class="{active:activeTab == 'biins'}")
-										a(ng-click="activeTab='biins'") Biins						
-									li(ng-class="{active:activeTab == 'objects'}")
-										a(ng-click="activeTab='objects'") Elements					
-								.row.workArea.max-height.showcaseWorkArea.colAppend
-									.col-md-6.col-sm-6.colPreview.max-height.max-elementWidth-OverFlow
-										button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="saveDetail()") SAVE
-										.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: '95%', railVisible:true, wrapperClass:'slimScrollDivContrast'}" slimscroll-obj="showCasePreviewScroll" drop)
-											.previewShowcaseWrapper
-											.previewShowcaseElements.row.max-height
-												.col-md1.hide.dropColumn
-													.imgElementPreview
-												.col-md1.moduleWrapperShowcaseElement.center.contentHideButtons(ng-repeat-start="obj in showcases[selectedShowcase].objects | orderBy:natural('position')" element-position="{{obj.position}}" droppable)
-													img.imgElementPreview(ng-src="{{obj.media[0].imgUrl}}")
-													div.btnShowcasePreview.icon-round-control.btn-on-hover(ng-click="removeElementAt(showcases[selectedShowcase].objects.indexOf(obj))")
-															.icon.icon-bin-2 
-													div.btnShowcasePreview.icon-round-control.up.btn-on-hover(ng-click="moveElementUp(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index>0")
-															.icon.icon-arrow-33
-													div.btnShowcasePreview.icon-round-control.down.btn-on-hover(ng-click="moveElementDown(showcases[selectedShowcase].objects.indexOf(obj))" ng-if="$index<showcases[selectedShowcase].objects.length-1") 
-															.icon.icon-arrow-34
-												.col-md1.hide.dropColumn(ng-repeat-end)							
-													.imgElementPreview				
-									.col-md-6.col-sm-6.colPreview.max-height.col-splitter
-										.tab-content.max-height(ng-switch='activeTab')					
-											#details(ng-switch-when='details')
-												.hidden
-													input.form-control( ng-model="showcases[selectedShowcase].identifier")				
-													input.form-control( ng-model="showcases[selectedShowcase].customerIdentifier")																						
-													input.form-control( ng-model="showcases[selectedShowcase].organizationIdentifier")
-													input.form-control( ng-model="showcases[selectedShowcase].type")										
-												.row
-													label Description:				
-												.row
-													textarea.form-group.form-control( ng-model="showcases[selectedShowcase].showcaseDescription")
-											#biins.max-height(ng-switch-when='biins')
-												.max-height.col-list
-													.row.elementList(slimscroll slimscroll-option="{height: 'auto', railVisible:true}")
-														.row(ng-repeat="site in biinSite" ng-if="site.biins.length>0")
-															p {{site.name}}
-															a.col-md2(ng-repeat="biinEl in site.biins")
-																.moduleWrapper.center(ng-class="{'disabled': (biinEl.showcaseAsigned != undefined && biinEl.showcaseAsigned !=''),'activeShowcase':biinEl.showcaseAsigned==showcases[selectedShowcase].identifier}" ng-click="setBiinToShowcase(biinSite.indexOf(site),site.biins.indexOf(biinEl))" )										
-																	p {{biinEl.name}}
-																	p {{biinEl.mayor}}
-																	p {{showcaseAsignedz.minor}}
-																	p {{biinEl.showcaseAsigned}}
-											#objects.max-height(ng-switch-when='objects')		
-												.max-height																				
-													.row.elementList(slimscroll slimscroll-option="{height: 'auto', railVisible:true}")											
-														.col-md1.moduleWrapperElement.searchElements
-															input.form-control.max-width( ng-model="queryElements" placeholder="Search" autofocus)										
-														a.col-md1(ng-repeat="element in elements|difference:showcases[selectedShowcase].objects:'objectIdentifier'|filter:queryElements")
-															.moduleWrapperElement
-																	img.imgElementPreview(ng-src="{{element.media[0].imgUrl}}" pending-indicator element-index="{{elements.indexOf(element)}}" drag="showcaseElement")
-							.animate-switch(ng-if="selectedShowcase==null")				
+	#sectionContent(ng-app="biinAppShowCases" ng-controller="showcasesController")
+		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
+			.left-section-content
+				.container-fluid
+					.row
+						.col-md-12(style='padding:8px;')
+							button.btn.btn-default.btn-block.btn-biin(ng-click='create()') ADD NEW SHOWCASE
+				.container-fluid
+					.row
+						.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+							.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in showcases | filter: query" ng-click="edit(showcases.indexOf(item))")
+								.moduleWrapper.contentHideButtons(ng-class="{active: showcases.indexOf(item) == selectedShowcase}")
+									.moduleTitle {{item.title1}}
+									img(ng-if="item.elements.length == 0 || (item.elements.length >0 && item.elements[0].media.length>0)" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+									img(ng-if="item.elements.length >0 && item.elements.media.length>0" ng-src="{{item.media[0].url}}" style="max-width: 250px;height: auto;" pending-indicator)
+									.btnDelete.icon-round-control.btn-on-hover(ng-click="removeElementAt(elements.indexOf(item))")
+										.icon.icon-bin-2
+									.btnShowcasePreview.icon-round-control.btn-on-hover
+										.icon.icon-arrange-1
+				.container-fluid.searchBox
+					.searchBox-wrapper
+						input.form-control(type="text" placeholder="search" ng-model="query" autofocus )			
+			.right-section-content
+				div(ng-if="selectedShowcase!=null")
+					.animate-switch.wizard-wrapper
+						.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
+							#wizardOption1.wizard(ng-switch-when="1")
+								include wizardDetails	
+							#wizardOption2.wizard(ng-switch-when="2")
+								include wizardColors				
+							#wizardOption3.wizard(ng-switch-when="3")
+								include wizardElements									
+							#wizardOption4.wizard(ng-switch-when="4")
+								include wizardBiins								
+						.wizard-options
+							.container-fluid
+								.row.wizard-options-wrapper
+									.col-md-1.col-sm-1.nopadding.option
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==1}")
+										.wizard-options-item(ng-click="changeWizardTab(1)")
+											.circle(ng-class="{'active':wizardPosition ==1,'valid':wizard1IsValid}")
+												.icon.icon-network-1-1
+											.textCirle 
+												| 1. Details
+									.col-md-1.col-sm-1.nopadding.option
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==2}")
+										.wizard-options-item(ng-click="changeWizardTab(2)")
+											.circle(ng-class="{'active':wizardPosition ==2,'disabled':!wizard1IsValid,'valid':wizard2IsValid}")
+												.icon.icon-book-1
+											.textCirle 
+												| 2. Colors
+									.col-md-1.col-sm-1.nopadding.option
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
+										.wizard-options-item(ng-click="changeWizardTab(3)")
+											.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid,'valid':wizard3IsValid}")
+												.icon.icon-photo-1
+											.textCirle 
+												| 3. Elements											
+									.col-md-1.col-sm-1.nopadding.option
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
+										.wizard-options-item(ng-click="changeWizardTab(4)")
+											.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
+												.icon.icon-palette
+											.textCirle 
+												| 4. Biins												
+									.col-md-1.col-sm-1.nopadding.option																							
+										.wizard-options-item.completeOption
+											.circle(ng-class="{'complete':isValid}")
+												.circle-inner
+													.icon.icon-check-1
+											.textCirle 
+								#guide-line-division.showcasesWizard		

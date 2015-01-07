@@ -1,0 +1,22 @@
+form.novalidate
+	.section
+		h1 Showcase Details
+		p Add information about the showcases here.
+		.row
+			input.form-control.title-value(ng-model="showcases[selectedShowcase].name" name="name" type="text" placeholder="Name **"  ng-blur="validate()"  required )
+		.row
+			input.form-control.title-value(ng-model="showcases[selectedShowcase].description" name="description" type="text" placeholder="Description **"  ng-blur="validate()"  required )
+	.section.darkSection				
+		h2 Showcase Type
+		p Please select the showcase type
+		.typeWrapper
+			.type-block
+				.moduleType(ng-click="selectType(0)" ng-class="{'active':'0'===showcases[selectedShowcase].showcaseType}")						
+					.circleInner
+						i.icon.icon-file-1
+						span Single
+			.type-block
+				.moduleType(ng-click="selectType(1)" ng-class="{'active':'1'===showcases[selectedShowcase].showcaseType}")						
+					.circleInner
+						i.icon.icon-files-1
+						span Multiple

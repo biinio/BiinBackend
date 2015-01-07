@@ -196,6 +196,32 @@ input.ng-valid.ng-dirty{
 	}
 }
 
+/*------------------------------------------*/
+/*	Dragable Properties
+/*------------------------------------------*/
+
+.ui-draggable-helper{
+	position: relative;
+	z-index: 9999999999999;	
+	min-width: @elementWidth/2;
+	min-height: @elementHeight/2;
+	max-height: @elementHeight/2;
+	max-width: @elementWidth/2;
+
+	margin-top:  @standardPadding;
+	border:solid;
+	border-color: @colorGray;
+	background-color: @colorBaseWhite;
+
+}
+
+.ui-state-highlight{
+	height: 100px; 
+	width: 100%;
+	line-height: 1.2em; 
+	color:green;
+	background-color: green;
+}
 //User guide main style
 .user-guide-wrapper{
 	.guide-header{
@@ -868,66 +894,6 @@ input.ng-valid.ng-dirty{
 			
 			//Main parent of Elements Type Wizard		
 			#elementType{
-				.typeWrapper{
-					height: 170px;
-					max-height:  170px;
-					margin-top: 5px;
-					width: 1000%;
-					max-width: 500px;
-					overflow-x: scroll;
-					overflow-y: hidden!important;
-					white-space: nowrap;
-					background-color: @colorWhite;
-
-					.type-block{
-						width: 200px;
-						height: 200px;
-						padding: 5px 5px 5px 5px;
-						display: inline-block;
-					    dsplay:inline;/* For IE7
-					    *zoom:1;/* For IE7*/
-					    white-space:normal;
-
-					    .moduleElementType{
-					    	position: relative;
-					    	width: 150px;
-					    	height:150px;					    	
-					    	-moz-border-radius: 75px;
-							-webkit-border-radius: 75px;
-							border-radius: 75px;
-							text-align: center;
-							color:@colorBaseWhite;
-							cursor: pointer;
-							.circleInner{
-						    	width: 130px;
-						    	height:130px;																		
-								position: relative;
-								margin-left: auto;
-								margin-right: auto;
-								top:10px;
-								padding-top: 15px;
-								background-color: @colorGray;	
-						    	-moz-border-radius: 65px;
-								-webkit-border-radius: 65px;
-								border-radius: 65px;
-
-								.icon{
-									font-size: 50px;
-								}
-								span{
-									font-size: 15px;
-								}
-							}
-					    }
-
-					    .moduleElementType.active{
-					    	background-color: @colorFocus;
-					    }
-					    .moduleElementType:hover{
-							background-color: @colorFocus;
-					    }
-					}
-				}	
 
 				.scroll-y{
 					display: none;
@@ -1111,6 +1077,10 @@ input.ng-valid.ng-dirty{
 					[date-picker-wrapper] {					
 					  display: inline!important;					
 					}
+					.bootstrap-select{
+						margin-left: @standardPadding;
+						margin-top: 5px;
+					}
 				}
 			}
 
@@ -1228,6 +1198,8 @@ input.ng-valid.ng-dirty{
 				.circleButtonNotification.active{
 					background-color: @colorFocus;
 				}
+
+
 				.notifcationGroup{		
 					display: inline-block;		
 					width: 100%- 18px;
@@ -1237,6 +1209,274 @@ input.ng-valid.ng-dirty{
 					}
 				}
 			}
+
+			//Showcase Elements
+			#showcaseElements{
+				position: relative;
+		
+				/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+				@media (min-width: 768px) {	
+					height: 58vh;
+					width: 100vw;
+				}
+
+			    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+			    @media (min-width: 1200px) {
+			       	height: 70vh;
+					width: 100vw;
+			    }
+
+				.showcaseElementsList{					
+					position: relative;
+					float:left;
+					width: @elementWidth + (@standardPadding*2)+60px;
+					height: 100%;
+					background-color: @colorWhite;
+					padding-left: @standardPadding;
+					padding-right: @standardPadding;
+					padding-top: @standardPadding;
+					padding-bottom: @standardPadding;
+
+					.elementWrapper{
+						position: relative;
+						height: 100%;
+						width: 100%;
+						background-color: white;	
+						overflow-y: scroll;	
+
+						.topDrop{
+							height: 50%;
+							width: 100%;
+							bottom: 50%;
+							//background-color: red;
+							z-index: 1;
+							position: absolute;
+						}	
+
+						.botomDrop{
+							bottom: 0;
+							height: 50%;
+							width: 100%;
+							z-index: 1;
+							//background-color:black;
+							position: absolute;
+						}			
+						.btn-on-hover{
+							z-index: 2;
+						}
+
+						.btnArrowUp{
+							position: absolute;
+			    			bottom: 25px;
+			    			right: 20px;
+			    			background-color: @colorGreen;
+						}
+						.btnArrowDown{
+							position: absolute;
+			    			bottom: 25px;
+							right: 55px;
+			    			background-color: @colorGreen;							
+						}
+					}
+
+
+					//Test Higth Ligth
+					.elementHigthLight{
+						background-color: @colorFocus;
+						width: 100%;
+						height: 50px;
+
+						-webkit-animation:openAnimation 1s;
+						animation:openAnimation 1s;
+					}
+
+					.elementDropContainerHelper{
+						width: 100%;
+						height: 100%;
+					}
+
+					@-webkit-keyframes openAnimation{
+						from{height: 0px; opacity: 0;}
+						to{height: 50px; opacity: 0.4;}
+					}
+					@keyframes openAnimation{
+						from{height: 0px; opacity: 0;}
+						to{height: 50px; opacity: 0.4;}
+					}
+
+					.moduleWrapper{
+						min-height: @elementHeight;
+						min-width: @elementWidth;
+						img{
+							min-height: @elementHeight;
+							min-width: @elementWidth;
+						}
+					}
+
+					//Remove the X scroll
+					.scroll-x {
+						display: none;
+					}
+				}
+				.elementsAvailableList{
+					margin-left: @standardPadding;
+					background-color: @colorWhite;
+					position: relative;					
+					float:left;
+					width: 38vw;
+					height: 100%;	
+					max-height: 100%; 
+					overflow: scroll;
+
+					padding-top: @standardPadding;
+
+					//Remove the X scroll
+					.scroll-x {
+						display: none;
+					}
+
+					.searchBox{
+						width:35%;
+						position: fixed;
+						bottom: 110px;
+						.searchBox-wrapper{
+							width: 100%;
+							position: relative;
+							margin-left: 10px;
+							margin-right: 10px;
+
+						}						
+					}
+
+					.dragDisabled{
+						opacity: 0.2;
+						filter: alpha(opacity=20); /* For IE8 and earlier */
+					}
+				}
+			}
+
+			//Type Style Buttons
+			.typeWrapper{
+				height: 170px;
+				max-height:  170px;
+				margin-top: 5px;
+				width: 1000%;
+				max-width: 500px;
+				overflow-x: scroll;
+				overflow-y: hidden!important;
+				white-space: nowrap;
+				background-color: @colorWhite;
+
+				.type-block{
+					width: 200px;
+					height: 200px;
+					padding: 5px 5px 5px 5px;
+					display: inline-block;
+				    dsplay:inline;/* For IE7
+				    *zoom:1;/* For IE7*/
+				    white-space:normal;
+
+				    .moduleType{
+				    	position: relative;
+				    	width: 150px;
+				    	height:150px;					    	
+				    	-moz-border-radius: 75px;
+						-webkit-border-radius: 75px;
+						border-radius: 75px;
+						text-align: center;
+						color:@colorBaseWhite;
+						cursor: pointer;
+						.circleInner{
+					    	width: 130px;
+					    	height:130px;																		
+							position: relative;
+							margin-left: auto;
+							margin-right: auto;
+							top:10px;
+							padding-top: 15px;
+							background-color: @colorGray;	
+					    	-moz-border-radius: 65px;
+							-webkit-border-radius: 65px;
+							border-radius: 65px;
+
+							.icon{
+								font-size: 50px;
+							}
+							span{
+								font-size: 15px;
+							}
+						}
+				    }
+
+				    .moduleType.active{
+				    	background-color: @colorFocus;
+				    }
+				    .moduleType:hover{
+						background-color: @colorFocus;
+				    }
+				}
+			}
+
+			#wizardBiinsWrapper{
+				position: relative;
+				height: 70vh;
+				width: 100vh;
+
+				background-color: @colorWhite;
+				overflow: hidden;
+
+				.siteModule{
+
+					display: block;
+					position: relative;
+					width: 200px;
+					height: 100%;
+					overflow: hidden;
+					float: left;
+
+					padding-left: @standardPadding;
+					padding-right: @standardPadding;
+					padding-top: @standardPadding;
+
+					background-color:@colorGray;
+					margin-left: @standardPadding;
+					.imgSite{
+						position:relative;
+						background-color: @colorBaseWhite;
+						padding: @standardPadding/2 @standardPadding/2 @standardPadding/2 @standardPadding/2;
+						img{
+							width: 100%;
+						}	
+
+						p{
+							position: absolute;
+						}	
+						height:180px; 				
+					}
+
+
+					.biin{
+					 	width: 100%;
+					 	height: 40px;
+					 	margin-top: @standardPadding;
+					 	background-color: @colorGrayDark;
+					 	padding: @standardPadding/2 @standardPadding/2 @standardPadding/2 @standardPadding/2;
+
+					}
+
+					.biin.active{
+						background-color: @colorGreen;
+					}
+					.biinWrapper{
+						height: 100%;
+						width: 100%;
+						background-color: @colorBaseWhite;
+						text-align: center;;
+					}
+
+				}
+			}
+
 		}
 		.section.darkSection{
 			background-color: @colorWhite;
@@ -1601,6 +1841,12 @@ input.ng-valid.ng-dirty{
 			border:solid;
 			border-color: @colorFocus;
 		}
+
+		.circle.optionInvisible{
+			border-color: @colorGray!important;
+			opacity: 0.3;
+		}
+
 		.circle:hover{
 			background-color: @colorFocus;
 			color: @colorWhite;
@@ -1651,6 +1897,7 @@ input.ng-valid.ng-dirty{
 	#guide-wizard-pointer.active{
 		border-color: #fff transparent transparent transparent;
 	}
+
 
     .wizard-options-item.completeOption{
     	.circle{
@@ -2095,6 +2342,7 @@ li>.nav{
 		border-radius: 65px;
 		text-align: center;
 		padding-top: 5px;
+
 		.circleIn{		
 			position: relative;
 			margin-left: auto;
@@ -2128,7 +2376,9 @@ li>.nav{
 .stick02{
 	position: relative;
 	overflow: hidden;
+
 	.rectangle{
+
 		position: absolute;
 		height: 70px;
 		left: 0px;
@@ -2137,7 +2387,9 @@ li>.nav{
 		 -ms-transform: rotate(-40deg); /* IE 9 */
 	    -webkit-transform: rotate(-40deg); /* Chrome, Safari, Opera */
 	    transform: rotate(-40deg);
+
 	    .rectangleIn{
+
 			position: absolute;
 			height: 60px;
 			left: 0px;

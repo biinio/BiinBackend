@@ -1,4 +1,4 @@
-var biinLandingPage = angular.module('landingPage',['pascalprecht.translate']);
+var biinLandingPage = angular.module('landingPage',['pascalprecht.translate','biin.services']);
 //Translation Provider
  biinLandingPage.config(function($translateProvider) {
     // Our translations will go in here

@@ -33,7 +33,7 @@ module.exports = function(){
    
          var newModel  = new element();
 
-         newModel.objectIdentifier=utils.getGUID();
+         newModel.elementIdentifier=utils.getGUID();
          newModel.accountIdentifier = req.user.accountIdentifier;
          newModel.organizationIdentifier = organizationIdentifier;
          newModel.notifications =[{isActive:"0",notificationType:'1',text:''},{isActive:"0",notificationType:'2',text:''},{isActive:"0",notificationType:'3',text:''}];
@@ -72,7 +72,7 @@ module.exports = function(){
 				}
 
 				organization.update(
-					{identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,"elements.objectIdentifier":elementIdentifier},
+					{identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,"elements.elementIdentifier":elementIdentifier},
 					{$set:setModel},
 					{upsert:false},
 					function(err,cantAffected){
@@ -97,7 +97,7 @@ module.exports = function(){
 		var elementIdentifier=req.param("element");
 		removeElementsInShowcases(elementIdentifier,function(){
 			
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{elements:{objectIdentifier:elementIdentifier}}},function(err){
+			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
 				if(err)
 					throw err;
 				else
@@ -138,13 +138,13 @@ module.exports = function(){
 
     //Update elements in showcases
     function updateElementsInShowcases(model,elementId,callback){
-	    	showcase.find({"objects.objectIdentifier":elementId},"",function(err,data){
+	    	showcase.find({"objects.elementIdentifier":elementId},"",function(err,data){
 				if(err){
 					throw err;    		
 				}
 				else{
 					for(var i=0; i<data.length;i++){
-						showcase.update({"identifier":data[i].identifier,"objects.objectIdentifier":elementId},
+						showcase.update({"identifier":data[i].identifier,"objects.elementIdentifier":elementId},
 						{$set:{"objects.$.objectType":model.objectType,
 							    "objects.$.likes":model.likes,
 								"objects.$.title1":model.title1,
@@ -176,7 +176,7 @@ module.exports = function(){
     function removeElementsInShowcases(elementId,callback){
     	console.log("Remove elements in showcase: "+elementId );
     	//Update the showcases associated
-    	showcase.find({"objects.objectIdentifier":elementId},"",function(err,data){
+    	showcase.find({"objects.elementIdentifier":elementId},"",function(err,data){
     		if(err)
     			throw err;
     		else
@@ -192,7 +192,7 @@ module.exports = function(){
 
     					//Search for the object to remove in showcases
     					for(var objElement =0; objElement<workingElement.objects.length && removedElement ==false; objElement++){    			
-    						if(workingElement.objects[objElement].objectIdentifier === elementId){
+    						if(workingElement.objects[objElement].elementIdentifier === elementId){
     							removedElement =true;    							
     							elementToRemovePosition = workingElement.objects[objElement].position;
     							workingElement.objects.splice(objElement,1);

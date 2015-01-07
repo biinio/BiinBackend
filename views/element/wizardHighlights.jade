@@ -5,17 +5,22 @@
 		.section.darkSection
 			.row
 				i.icon.icon-cash-register
-				.highlightTitler
+				.highlightTitle
 					h2 Price
 					p Element Price
 			.row
 				form.novalidate
-					checkbox.btn-checkbox( ng-model="elements[selectedElement].listPriceEnable" ng-change="validate()" large )
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" ng-disabled="!elements[selectedElement].listPriceEnable" placeholder="List Price**" ng-blur="validate()" required)
-					checkbox.btn-checkbox( ng-model="elements[selectedElement].discountEnable" ng-change="validate()" large)						
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].discount" ng-disabled="!elements[selectedElement].discountEnable"  placeholder="Discount **" ng-blur="validate()" required)
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="Price **" ng-blur="validate()" required)
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="Savings **" ng-blur="validate()" required)
+					select(title='Currency' name="Currency"  ng-model="elements[selectedElement].currencyType" select-picker)
+						option(value='1') &#36;
+						option(value='2') &#162;
+						option(value='3') &#8359;
+						option(value='4') &#128;
+					checkbox.btn-checkbox( ng-model="hasListPriceBool" ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)" large )
+					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" ng-disabled="!hasListPriceBool" placeholder="List Price**" ng-blur="validate()" required is-number)
+					checkbox.btn-checkbox( ng-model="hasDiscountBool" ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)" large)						
+					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].discount" ng-disabled="!hasDiscountBool"  placeholder="Discount **" ng-blur="validate()" required is-number)
+					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="Price **" ng-blur="validate()" required is-number)
+					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="Savings **" ng-blur="validate()" required is-number)
 		.section.darkSection
 			.row
 				i.price.icon.icon-timer-1
@@ -24,9 +29,9 @@
 					p Limit Time
 			.row
 				form.novalidate
-					checkbox.btn-checkbox( ng-model="elements[selectedElement].limitedTimeEnabled" ng-change="validate()" large)
-					input.highlightInput(type="datetime" date-time ng-model="elements[selectedElement].initialDate" ng-disabled="!elements[selectedElement].limitedTimeEnabled" placeholder="Initial Date**" ng-blur="validate()" required readonly)
-					input.highlightInput(type="datetime" date-time ng-model="elements[selectedElement].expirationDate" ng-disabled="!elements[selectedElement].limitedTimeEnabled" placeholder="Expiration Date**" ng-blur="validate()" required readonly)					
+					checkbox.btn-checkbox( ng-model="hasTimmingBool" ng-change="changeBoolStateHighlights('hasTimming', hasTimmingBool)" large)
+					input.highlightInput(type="datetime" date-time ng-model="elements[selectedElement].initialDate" ng-disabled="!hasTimmingBool" placeholder="Initial Date**" ng-blur="validate()" required readonly)
+					input.highlightInput(type="datetime" date-time ng-model="elements[selectedElement].expirationDate" ng-disabled="!hasTimmingBool" placeholder="Expiration Date**" ng-blur="validate()" required readonly)
 		.section.darkSection
 			.row
 				i.price.icon.icon-cube
@@ -35,5 +40,5 @@
 					p The information type is an element that describe a product or service
 			.row
 				form.novalidate
-					checkbox.btn-checkbox( ng-model="elements[selectedElement].quantityEnabled" ng-change="validate()" large)
-					input.highlightInput(type="number" ng-model="elements[selectedElement].quantity"  ng-disabled="!elements[selectedElement].quantityEnabled" placeholder="Quantity **" ng-blur="validate()" required is-number)
+					checkbox.btn-checkbox( ng-model="hasQuantityBool" ng-change="changeBoolStateHighlights('hasQuantity', hasQuantityBool)" large)
+					input.highlightInput(type="text" ng-model="elements[selectedElement].quantity"  ng-disabled="!hasQuantityBool" placeholder="Quantity **" ng-blur="validate()" required is-number)

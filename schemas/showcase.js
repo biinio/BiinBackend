@@ -4,13 +4,17 @@ var showcaseObj={
 	identifier:{ type: String, index: true, default:"-1"},
 	accountIdentifier:{type:String, default:"000"},
 	organizationIdentifier:{type:String, default:""},
-	siteIdentifier:{type:String,default:""},
+
 	showcaseType:{type:String, default:""},
-	showcaseDescription:{type:String, default:""},
+	theme:{type:String,default:""},
+
+	name:{type:String, default:""},
+	description:{type:String, default:""},
 	pushNotification:{type:String, default:""},
-	objects:[
+
+	elements:[
 		{
-			objectIdentifier:String,
+			elementIdentifier:String,
 			position:String,
 			objectType:{type:String},
 			likes:String,
@@ -44,7 +48,8 @@ var showcaseObj={
 				}
 			]
 		}
-	]
+	],
+	webAvailable:[]
 };
 var showcaseSchema = new Schema(showcaseObj);
 showcaseSchema.methods.createNew = function() {	

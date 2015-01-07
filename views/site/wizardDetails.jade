@@ -4,7 +4,7 @@ form.novalidate
 		p Add site information to your organization here. Information that will be shown on the mobile app is mark with **
 	.section
 		h2 Site title
-		.row
+		.row			
 			input.form-control.title-value(ng-model="sites[selectedSite].title1" name="title1" type="text" placeholder="Tittle **"  ng-blur="validate()"  required )
 		.row
 			input.form-control.title-value(ng-model="sites[selectedSite].title2" name="title1" type="text" placeholder="Subtittle **" ng-blur="validate()"  required )

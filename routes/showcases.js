@@ -49,57 +49,56 @@ module.exports = function () {
    		});
 	}
 
-	//PUT an update of the showcase
+	//POST/PUT an update of the showcase
 	functions.set=function(req,res){
-		var model =req.body.model;
+
 		//Perform an update
+		var organizationIdentifier= req.param('identifier');
 		var showcaseIdentifier=req.param("showcase");
-		var model = req.body.model;			
-		delete model._id;
 
-		//Set the account identifier for the model
-		model.accountIdentifier=req.user.accountIdentifier;
-		if(model)
+		//If is a new element
+		if(typeof(showcaseIdentifier)==="undefined"){
+
+	         var newModel  = new showcase();
+	         newModel.identifier=utils.getGUID();
+	         newModel.accountIdentifier = req.user.accountIdentifier;
+	         newModel.organizationIdentifier = organizationIdentifier;		      
+
+
+	         newModel.save(function(err){
+	         	if(err)
+	         		res.send(err,500);
+	         	else
+					res.send(newModel,201);
+	         	});
+		}else
 		{
-			//If is pushing a new model
-			if('isNew' in model){
-				delete model.isNew;
+			var model = req.body.model;		
+			if(model)	
+				delete model._id;		
 
-				if(model.identifier=='')
-                	model.identifier=utils.getGUID();
-                var newModel = new showcase(model);
-				//Perform an create
-				newModel.save(function(err){
-					if(err)
-						throw err;
-					else{
-						//Return the state and the object
-						res.json({state:"success",replaceModel:model});
-					}
-				});
-			}else{
-				showcase.update(
-	                     {
-	                       identifier:showcaseIdentifier,
-	                     	organizationIdentifier:model.organizationIdentifier, 
-	                     	accountIdentifier:req.user.accountIdentifier
-	                     },
-	                     { $set :model },
-	                     { upsert : true },
-	                     function(err){
-	                     	
-	                     	if(err)
-								res.json(null);
-							else{
-								//Update the biins last update property asynchronous
-	                            updateBiinsLastUpdate(showcaseIdentifier);
-	                            //Return the state
-								res.json({state:'success'});							
-							}
-	                     }
-	                   );
-			}
-		}
+			//Update the showcase information
+			showcase.update(
+                     {
+                       identifier:showcaseIdentifier,
+                     	organizationIdentifier:model.organizationIdentifier, 
+                     	accountIdentifier:req.user.accountIdentifier
+                     },
+                     { $set :model },
+                     { upsert : true },
+                     function(err){
+                     	
+                     	if(err)
+							res.json(null);
+						else{
+							//Update the biins last update property asynchronous
+                            updateBiinsLastUpdate(showcaseIdentifier);
+                            //Return the state
+							res.json({state:'success'});							
+						}
+                     }
+             );
+		}						
 	}
 
 	//DELETE an specific showcase

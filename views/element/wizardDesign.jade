@@ -5,7 +5,7 @@ div(ng-click="validate()")
 	.section.row
 		.col-md-5
 			#elementPreview
-				.tittle(style="color:{{elements[selectedElement].titleColor}}")
+				.tittle(style="color:{{elements[selectedElement].textColor}}")
 					.elementNumber
 						span 1
 					.title1
@@ -15,7 +15,7 @@ div(ng-click="validate()")
 						i.icon-heart-1
 						i.icon-baloon
 						i.icon-compass-3
-				img(ng-src="{{elements[selectedElement].media[0].imgUrl}}" ng-if="elements[selectedElement].media.length>0" pendingIndicator)
+				img(ng-src="{{elements[selectedElement].media[0].url}}" ng-if="elements[selectedElement].media.length>0" pendingIndicator)
 				img(ng-src="images/warning_not_found.png" ng-if="!elements[selectedElement].media.length" )
 		.col-md-7			
 			#elementSticker
@@ -52,8 +52,8 @@ div(ng-click="validate()")
 				h2 Text Color
 				p Please select the Text color for the element
 				.color-picker
-					input(type="text" ng-model="elements[selectedElement].titleColor"  verify-on-change readonly )
-					spectrum-colorpicker.picker(ng-model="elements[selectedElement].titleColor" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")
+					input(type="text" ng-model="elements[selectedElement].textColor"  verify-on-change readonly )
+					spectrum-colorpicker.picker(ng-model="elements[selectedElement].textColor" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")
 //			.col-md-4			
 				h2 Social Buttons Color
 				p Please select the social Buttons color

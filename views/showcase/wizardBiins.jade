@@ -1,0 +1,15 @@
+.section
+	h1 Wizard Biins
+	p Please select the Biins 
+.section
+	#wizardBiinsWrapper		
+		.siteModule(ng-repeat="site in biinSite")
+			.imgSite
+				p {{site.title1}}
+				img(ng-src="{{site.media[0].imgUrl}}")
+			.biin(ng-repeat="biin in site.biins" ng-class="getBiinStatus(biin)" ng-click="setShowcaseInBiinActive(biinSite.indexOf(site),site.biins.indexOf(biin))")
+				.biinWrapper
+					p(ng-if="!biin.name.length") Biin# {{biin.minor}}													
+					p(ng-if="biin.name.length>0") {{biin.name}}
+					p(ng-if="biin.showcasesAsigned.length>0 && biin.showcasesAsigned[0].showcaseIdentifier!='' && biin.showcasesAsigned[0].showcaseIdentifier!= currentModelId")
+						{{biin.showcasesAsigned[0].showcaseIdentifier}}

@@ -38,7 +38,8 @@ var siteObj ={
 		{
 			identifier:{type:String, default:""},
 			title1:{type:String, default:""},
-			imgUrl:{type:String,default:""}
+			imgUrl:{type:String,default:""},
+			mainColor:{type:String,default:""}
 		}
 	],
 	biins:[
@@ -50,7 +51,9 @@ var siteObj ={
 			proximityUUID:{type:String, Default:""},
 			location:{type:String, Default:""},
 			registerDate:{type:String, Default:""},
-			showcaseAsigned:{type:String, Default:""}
+			showcasesAsigned:[{
+				showcaseIdentifier:{type:String, Default:""}
+			}]
 		}
 	]
 }
