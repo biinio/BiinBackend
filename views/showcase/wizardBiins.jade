@@ -2,14 +2,20 @@
 	h1 Wizard Biins
 	p Please select the Biins 
 .section
-	#wizardBiinsWrapper		
-		.siteModule(ng-repeat="site in biinSite")
-			.imgSite
-				p {{site.title1}}
-				img(ng-src="{{site.media[0].imgUrl}}")
-			.biin(ng-repeat="biin in site.biins" ng-class="getBiinStatus(biin)" ng-click="setShowcaseInBiinActive(biinSite.indexOf(site),site.biins.indexOf(biin))")
-				.biinWrapper
-					p(ng-if="!biin.name.length") Biin# {{biin.minor}}													
-					p(ng-if="biin.name.length>0") {{biin.name}}
-					p(ng-if="biin.showcasesAsigned.length>0 && biin.showcasesAsigned[0].showcaseIdentifier!='' && biin.showcasesAsigned[0].showcaseIdentifier!= currentModelId")
-						{{biin.showcasesAsigned[0].showcaseIdentifier}}
+	#wizardBiinsWrapper
+		.biinWrapperContainer.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+			.siteModule(ng-repeat="site in biinSite")
+				.imgSite
+					p {{site.title1}}
+					img(ng-src="{{site.media[0].imgUrl}}")
+				.biin.biinOnline(ng-class="getOnlineInSite(site)" ng-click="setOnlineSite(site)")
+					.biinWrapper
+						i.icon.icon-globe-1
+						p Web Available
+				.biin(ng-repeat="biin in site.biins" ng-class="getBiinStatus(biin)" ng-click="setShowcaseInBiinActive(biinSite.indexOf(site),site.biins.indexOf(biin))")
+					.biinWrapper					
+							p(ng-if="!biin.name.length") Biin# {{biin.minor}}													
+							p(ng-if="biin.name.length>0") {{biin.name}}
+							p(ng-if="biin.showcasesAsigned.length>0 && biin.showcasesAsigned[0].showcaseIdentifier!='' && biin.showcasesAsigned[0].showcaseIdentifier!= currentModelId")
+								{{getShowcaseByIdentifier(biin.showcasesAsigned[0].showcaseIdentifier).name}}
+								img(ng-src="{{getShowcaseByIdentifier(biin.showcasesAsigned[0].showcaseIdentifier).elements[0].media[0].url}}")

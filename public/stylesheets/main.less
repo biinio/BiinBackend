@@ -97,7 +97,7 @@ input.ng-valid.ng-dirty{
 	overflow-y: scroll;
 	height: 83vh;
 	max-height:  83vh;
-	width: 100%;
+	width: 98%;
 	max-width: 100%;
 	overflow-x: scroll;
 	overflow-y: hidden!important;
@@ -590,9 +590,22 @@ input.ng-valid.ng-dirty{
 /*	Wizzard
 /*------------------------------------------*/
 .wizard-wrapper{
+	position: relative;
 	.wizard-body{
 		position: relative;
 		height: 85%;
+
+	    /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	    @media (min-width: 768px) {
+	        margin-bottom: 100px;
+	        max-height: 75vh;
+	        overflow-y: scroll;
+	    }
+
+	    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+	    @media (min-width: 1550px) {
+	        margin-bottom: 160px;
+	    }
 		.section{
 			h1
 			{
@@ -1404,6 +1417,7 @@ input.ng-valid.ng-dirty{
 							}
 							span{
 								font-size: 15px;
+								display: block;
 							}
 						}
 				    }
@@ -1418,28 +1432,42 @@ input.ng-valid.ng-dirty{
 			}
 
 			#wizardBiinsWrapper{
-				position: relative;
-				height: 70vh;
-				width: 100vh;
-
+				position: relative;				
 				background-color: @colorWhite;
-				overflow: hidden;
+				max-width:70vw;							  
+
+				overflow-x: scroll;
+			    overflow-y: hidden;
+				/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+				@media (min-width: 768px) {	
+					max-height: 60vh;
+					width: auto;
+				}
+
+			    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+			    @media (min-width: 1200px) {
+			    	max-height: 64vh;
+			       	height: 80vh;
+					width: auto;
+			    }
 
 				.siteModule{
-
-					display: block;
 					position: relative;
+					float: left;
+					display: inline-block;
+					min-width: 200px;
 					width: 200px;
 					height: 100%;
-					overflow: hidden;
-					float: left;
+					overflow: scroll;
 
 					padding-left: @standardPadding;
 					padding-right: @standardPadding;
 					padding-top: @standardPadding;
+					padding-bottom: @standardPadding*6;
 
 					background-color:@colorGray;
 					margin-left: @standardPadding;
+
 					.imgSite{
 						position:relative;
 						background-color: @colorBaseWhite;
@@ -1457,23 +1485,56 @@ input.ng-valid.ng-dirty{
 
 					.biin{
 					 	width: 100%;
-					 	height: 40px;
+					 	min-height: 40px;
 					 	margin-top: @standardPadding;
 					 	background-color: @colorGrayDark;
 					 	padding: @standardPadding/2 @standardPadding/2 @standardPadding/2 @standardPadding/2;
 
+					 	img{
+					 		position:relative;					 		
+					 		clear: left;
+					 		height: 50px;
+					 		width: 50px;
+					 		display: block;
+							text-align: center;
+							margin-left: 35%;
+					 	}
 					}
 
 					.biin.active{
 						background-color: @colorGreen;
+
+						.icon{
+							color: @colorGreen;
+						}
 					}
+
+					.biin.taken{
+						background-color: @colorRed;
+					}					
+
 					.biinWrapper{
 						height: 100%;
 						width: 100%;
 						background-color: @colorBaseWhite;
-						text-align: center;;
+						text-align: center;
 					}
 
+				}
+
+				.biinWrapperContainer{
+					margin-top: @standardPadding;
+					position: relative;			
+					height: 100% - @standardPadding/2;					
+					width: 1000%;
+					max-width:100%;
+
+					float: left;
+
+					display: inline-flex;
+					white-space: nowrap;		
+					overflow-x: scroll;
+					overflow-y: hidden;
 				}
 			}
 
@@ -1785,18 +1846,6 @@ input.ng-valid.ng-dirty{
 	}
 }
 
-.wizard-body{
-    /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-    @media (min-width: 768px) {
-        margin-bottom: 100px;
-    }
-
-    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
-    @media (min-width: 1550px) {
-        margin-bottom: 160px;
-    }
-}
-
 .wizard-options{
 	width: 100%;
 	position: fixed;
@@ -1879,8 +1928,13 @@ input.ng-valid.ng-dirty{
 		width: 50%;
 		z-index: 1;
 	}
+
 	#guide-line-division.elementsWizard{
 		width: 60%;
+	}
+
+	#guide-line-division.showcasesWizard{
+		width: 32%;
 	}
 
 	#guide-wizard-pointer{
@@ -2032,6 +2086,7 @@ input.ng-valid.ng-dirty{
 	height: 100%;
 	padding-left: 15px;
 	padding-right: 15px;
+
 }
 .wizard.ng-enter,
 .wizard.ng-leave

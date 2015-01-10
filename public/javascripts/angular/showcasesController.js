@@ -93,20 +93,16 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
       $scope.selectedShowcase =null;
       $scope.currentModelId =null;
     }
-    if('isNew' in $scope.showcases[index] ){
-      //remove the showcase
-      $scope.showcases.splice(index,1);
-    }else//If the element is new is not in the data base      
-    {
-      var showcaseId = $scope.showcases[index].identifier;      
-      $scope.showcases.splice(index,1);
-      $http.delete('api/organizations/'+$scope.organizationId+'/showcases/'+showcaseId).success(function(data){
-          if(data.state=="success"){
-            //Todo: implement a pull of messages
-          }
+
+    var showcaseId = $scope.showcases[index].identifier;      
+    $scope.showcases.splice(index,1);
+    $http.delete('api/organizations/'+$scope.organizationId+'/showcases/'+showcaseId).success(function(data){
+        if(data.state=="success"){
+          //Todo: implement a pull of messages
         }
-      );
-    }
+      }
+    );
+    
   }
 
   //Save detail model object
@@ -295,7 +291,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
       if(biin.showcasesAsigned[i].showcaseIdentifier===$scope.currentModelId)
         result="active";
       else{
-        if(biin.showcasesAsigned[i].showcaseIdentifier==="")
+        if(biin.showcasesAsigned[i].showcaseIdentifier!=="")
           result="taken";
       }
     }
@@ -318,6 +314,45 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }
   }
 
+  //Get the online status of showcase in a site
+  $scope.getOnlineInSite= function(site){
+    //Get the site by id to eval is online
+    var siteOnline=_.find($scope.showcases[$scope.selectedShowcase].webAvailable,function(siteId){
+      return siteId=== site.identifier;
+    })
+    
+    if(typeof(siteOnline)!=="undefined")
+      return "active";
+    return "";
+  }
+
+  //Set the showcase estatus in a site
+  $scope.setOnlineSite=function(site){
+    //Get the site by id to eval is online
+    var siteOnline=_.find($scope.showcases[$scope.selectedShowcase].webAvailable,function(siteId){
+      return siteId=== site.identifier;
+    })
+    
+    if(typeof($scope.showcases[$scope.selectedShowcase].webAvailable)==='undefined')
+      $scope.showcases[$scope.selectedShowcase].webAvailable=[];
+
+    if(typeof(siteOnline)!=="undefined"){
+
+      var siteIndex=$scope.showcases[$scope.selectedShowcase].webAvailable.indexOf(siteOnline);
+      $scope.showcases[$scope.selectedShowcase].webAvailable.splice(siteIndex,1);
+
+    }else{
+      $scope.showcases[$scope.selectedShowcase].webAvailable.push(site.identifier);      
+    }
+
+
+  }
+
+
+  $scope.getShowcaseByIdentifier=function(identifier){
+   var showcaseObj= _.find($scope.showcases, function (obj) { return obj.identifier === identifier })
+   return showcaseObj;
+  }
   //Update the position of the rest of the elements to add one when is added a new element
    updateShowcaseObjectsPosition= function(position){
     for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].elements.length;i++){
