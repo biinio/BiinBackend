@@ -1,7 +1,7 @@
 #gallery(ng-if="loadingImages==false")
 	.row.scrollbar-inner(scrollbar="scrollbarOptionsStandard" )
 		.col-md-12.nopaddin.gallery
-			a.col-md-1.galleryImageWrapper(ng-repeat="galleItem in galleries| filter: queryGallery" drag="galleries" element-index="galleries.indexOf(galleItem)" style="background-color:RGB({{galleItem.mainColor}})")
+			.col-md-1.galleryImageWrapper(ng-repeat="galleItem in galleries| filter: queryGallery" drag="galleries" element-index="galleries.indexOf(galleItem)" style="background-color:RGB({{galleItem.mainColor}})")
 				.galleryImageWrapperContent.contentHideButtons
 					img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
 	.galleryControls

@@ -224,6 +224,16 @@ input.ng-valid.ng-dirty{
 	border-color: @colorGray;
 	background-color: @colorBaseWhite;
 
+	img{
+		position: relative;
+		width: 100%;
+	}
+	.galleryImageWrapperContent{
+		position: relative;
+		height: 100%;
+		width: 100%;
+	}
+	padding: 0px 0px 0px 0px;
 }
 
 .ui-state-highlight{
@@ -752,11 +762,18 @@ input.ng-valid.ng-dirty{
 				position: relative;
 				margin-top: 5px;
 				height: 35vh;
-				.gallery{
+
+				.gallery{					
 					padding-top: 10px;
+					padding-bottom: 60px;
 					margin-left: auto;
-					margin-right: auto;
+					margin-right: auto;					
 				}
+
+				.scroll-x{
+					display: none!important;
+				}
+
 			}
 
 			//Biins Section Wrapper
@@ -2053,7 +2070,7 @@ input.ng-valid.ng-dirty{
 	position: relative;
 	.galleryControls{
 		position: absolute;
-		bottom: 0px;
+		bottom: 15px;
 		width: 100%;
 		display: inline-block;
 		float: left;
