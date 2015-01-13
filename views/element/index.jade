@@ -12,7 +12,7 @@ block content
 					.row
 						.col-md-12(style='padding:8px;')
 							button.btn.btn-default.btn-block.btn-biin(ng-click='create()') ADD NEW ELEMENT
-				.container-fluid
+				.container-fluid.main-views-list
 					.row
 						.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 							.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in elements | filter: query" ng-click="edit(elements.indexOf(item))")

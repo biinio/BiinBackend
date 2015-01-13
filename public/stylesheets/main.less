@@ -105,6 +105,17 @@ input.ng-valid.ng-dirty{
 	padding-right: 8px;
 }
 
+.main-views-list{
+	 margin-left: 3px!important;
+
+	 .scroll-wrapper > .scroll-content {
+	 	width: inherit!important;
+	}
+	.scroll-vertical-container{
+		padding-bottom: 50px!important;
+	}
+}
+
 .container-list-scroll-fixed{
 	padding:5px;
 	position:relative; 
@@ -2277,6 +2288,7 @@ li>.nav{
 
 /*************** SCROLLBAR BASE CSS ***************/
 
+
 .scroll-wrapper {
     overflow: hidden !important;
     padding: 0 !important;
@@ -2286,7 +2298,6 @@ li>.nav{
 .scroll-wrapper > .scroll-content {
     border: none !important;
     box-sizing: content-box !important;
-    height: auto;
     left: 0;
     margin: 0;
     max-height: none !important;
@@ -2295,6 +2306,8 @@ li>.nav{
     padding: 0;
     position: relative !important;
     top: 0;
+
+    height: auto;
     width: auto !important;
 }
 
