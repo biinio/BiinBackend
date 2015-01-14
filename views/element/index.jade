@@ -44,7 +44,9 @@ block content
 							#wizardOption5.wizard(ng-switch-when="5" )
 								include wizardDetails
 							#wizardOption6.wizard(ng-switch-when="6" )
-								include wizardNotifications				
+								include wizardNotifications	
+							#wizardOption7.wizard(ng-switch-when="7" )
+								include wizardCategories								
 						.wizard-options
 							.container-fluid
 								.row.wizard-options-wrapper
@@ -97,6 +99,13 @@ block content
 												.icon.icon-message
 											.textCirle 
 												| 7. Notifications
+									.col-md-1.col-sm-1.nopadding.option												
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==7}")
+										.wizard-options-item(ng-click="changeWizardTab(7)")
+											.circle(ng-class="{'active':wizardPosition ==7,'disabled':!wizard6IsValid,'valid':wizard7IsValid}")
+												.icon.icon-tag-1
+											.textCirle 
+												| 8. CATEGORIES												
 									.col-md-1.col-sm-1.nopadding.option																							
 										.wizard-options-item.completeOption
 											.circle(ng-class="{'complete':isValid}")

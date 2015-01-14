@@ -137,6 +137,14 @@ var orgSchema = new Schema({
 			mediaType:{type:String,default:""},
 			mainColor:{type:String,default:""}
 		}],
+		categories:[
+			{
+				identifier:{type:String, index:true, default:"-1"},
+				name:{type:String, default:""},
+				displayName:{type:String, default:""},
+				imgUrl:{type:String, default:""}
+			}
+		],		
 		documentIdentifier:{type:String,index:"true"}
 
 	}],

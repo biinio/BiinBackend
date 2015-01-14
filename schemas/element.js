@@ -48,6 +48,14 @@ var elementSchema = new Schema({
 		notificationType:{type:String, default:""},
 		text:{type:String, default:""}
 	}],
+	categories:[
+		{
+			identifier:{type:String, index:true, default:"-1"},
+			name:{type:String, default:""},
+			displayName:{type:String, default:""},
+			imgUrl:{type:String, default:""}
+		}
+	],
 	media:[{
 		identifier:{type:String, default:""},
 		title1:{type:String, default:""},

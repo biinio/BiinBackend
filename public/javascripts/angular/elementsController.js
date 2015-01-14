@@ -26,6 +26,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.wizard4IsValid =false;
   $scope.wizard5IsValid =false;
   $scope.wizard6IsValid =false;
+  $scope.wizard7IsValid = false;
 
   //Boolean values 
   $scope.hasListPriceBool=false;
@@ -144,7 +145,11 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       case 6:
         if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid&& $scope.wizard5IsValid)
           $scope.wizardPosition =option;
-      break         
+      break   
+      case 7:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid&& $scope.wizard5IsValid && $scope.wizard6IsValid)
+          $scope.wizardPosition =option;
+      break               
       default:
         $scope.wizardPosition =option;
       break;        
@@ -272,8 +277,16 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         $scope.wizard6IsValid= wizard6IsValid; 
       }
 
+      //Categories Validate
+      if(eval($scope.wizardPosition)== 7 || validate){
+        if($scope.elements[$scope.selectedElement]){
+         $scope.wizard7IsValid=$scope.elements[$scope.selectedElement].categories.length>0;
+        }else{
+          $scope.wizard7IsValid=false; 
+        }          
+      }
 
-      $scope.isValid = $scope.wizard0IsValid && $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid &&  $scope.wizard5IsValid &&  $scope.wizard6IsValid;
+      $scope.isValid = $scope.wizard0IsValid && $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid &&  $scope.wizard5IsValid &&  $scope.wizard6IsValid && $scope.wizard7IsValid;
 
       return currentValid;
   }
@@ -390,6 +403,32 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
        $scope.addListItem($scope.elements[$scope.selectedElement].details.indexOf(newDetail));
   }
 
+  //Category return if contains a specific categoru
+  $scope.containsCategory=function(category){
+    if(typeof(_.findWhere($scope.elements[$scope.selectedElement].categories,{identifier:category.identifier}))!='undefined')
+      return 'active'
+    else
+      return "";
+  }
+  //Change the state of the category relation with the Site
+  $scope.switchCategoryState =function(category){
+    var index =-1;
+    var cat = _.findWhere($scope.elements[$scope.selectedElement].categories,{identifier:category.identifier});
+    if(typeof(cat)!='undefined'){
+      index=$scope.elements[$scope.selectedElement].categories.indexOf(cat);
+    }
+
+    if(index>=0)
+      $scope.elements[$scope.selectedElement].categories.splice(index,1)
+    else
+      $scope.elements[$scope.selectedElement].categories.push(category);
+
+    $scope.validate();
+    if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+        $scope.$apply();
+        $scope.$digest();
+    }
+  }
   //Remove a element a specific index
   $scope.removeDetailAt=function(index){
     if($scope.elements[$scope.selectedElement].details.length>=index)

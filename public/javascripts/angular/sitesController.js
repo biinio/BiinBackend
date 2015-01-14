@@ -260,37 +260,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
   //Categories
 
-  //Remove categorie a specific position
-  $scope.removeCategoryAt=function(scopeIndex){
-    $scope.sites[$scope.selectedSite].categories.splice(scopeIndex,1);
-  }
-
-  //Set the category index when start draggin
-  $scope.setDragCategory=function(scopeIndex){
-    $scope.dragCategoryIndex= scopeIndex;
-  }
-
-  //Set the gallery index when start draggin
-  $scope.setDragGallery=function(scopeIndex){
-    $scope.dragGalleryIndex= scopeIndex;
-  }
-
-  //Insert category in the site
-  $scope.insertCategory = function(index){
-
-    var elementToPush =$scope.categories[$scope.dragCategoryIndex];
-
-    delete elementToPush._id;
-    if(!$scope.sites[$scope.selectedSite].categories)
-      $scope.sites[$scope.selectedSite].categories=[];
-       
-    $scope.sites[$scope.selectedSite].categories.splice(0, 0, elementToPush);
-
-    //Apply the changes
-    $scope.$digest();
-    $scope.$apply();    
-  }
-
   //Insert a gallery item to site
   $scope.insertGalleryItem = function(index){
     if(($scope.sites[$scope.selectedSite].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia==0){
