@@ -2,7 +2,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
  
     //Others routes
     var routes = require('../routes')();
-    var clients = require('../routes/clients')(db);
+    var accounts = require('../routes/accounts')();
+    var clients = require('../routes/clients')();
     var organizations = require('../routes/organizations')();
     var showcases = require('../routes/showcases')(db);
     var sites = require('../routes/sites')();
@@ -25,15 +26,28 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/dashboard', routes.dashboard);    
     app.get('/login',routes.login);
     app.get('/home',routes.home);
+    app.get('/singup',routes.singup);
     app.get('/preregister/:packageSlected/:accept',routes.preregister);
     app.get('/preorder/:packageSlected/:accept',routes.preorder);
     app.get('/preregister/:packageSlected',routes.preregister);
     app.get('/preorder/:packageSlected',routes.preorder);
     app.get('/termsAndConditions/:backPage',routes.terms);
+    app.post('/api/singup',clients.set);    
+    app.get('/client/:identifier/activate',clients.activate);
+    app.post('/client/:identifier/activate',clients.activate);
     app.post('/login',passport.authenticate('clientLocal',{
         failureRedirect:'/login',
         successRedirect:'/dashboard'
     }));
+    app.get('/mobileTest',routes.mobileTest);
+
+    //Acounts Routes
+    app.get('/accounts',accounts.index);    
+    app.put('/api/accounts',accounts.set);
+    app.post('/api/accounts/:organizationIdentifier/default',accounts.setDefaultOrganization);
+    app.get('/api/accounts',accounts.list);        
+    
+    app.post('/api/imageProfile',multipartMiddleware,accounts.uploadImageProfile);
 
     //Categories Routes
     app.get('/api/categories',categories.list);    
@@ -43,6 +57,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations',organizations.index);
     app.get('/api/organizations',organizations.list);
     app.put('/api/organizations/:identifier',organizations.set);
+    app.post('/api/organizations',organizations.set);
+    app.post('/api/organizations/:identifier/image',multipartMiddleware,organizations.uploadImage); 
+
     app.delete('/api/organizations/:identifier',organizations.delete);
     app.post('/organizations/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
@@ -67,15 +84,14 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Sites routes
     app.get('/organizations/:identifier/sites',sites.index);    
-    //Biins Creation
     app.get('/api/organizations/:identifier/sites',sites.get);
-    //Biins Update
     app.post('/api/organizations/:orgIdentifier/sites',sites.set);
     //Biins Purchase
     app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/biins/',sites.biinPurchase);    
 
-    //Create a biin
+    //Update a Site
     app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.set);
+    //Create a biin
     app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier/purchase',sites.biinPurchase);    
     app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
 
@@ -121,7 +137,20 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/stickers',stickers.get);
     app.get('/api/stickers/create',stickers.set);
 
-    //Mobile routes
+    //Binnies Routes
+    app.get('/binnies',mobileUser.index);
+    app.get('/api/binnies',mobileUser.get);
+    app.put('/api/binnies',mobileUser.set);
+    app.delete('/api/binnies/:identifier',mobileUser.delete); 
+    app.post('/api/binnies/:identifier/image',multipartMiddleware,mobileUser.uploadImage); 
+
+    //Mobile Binnies services
+    app.put('/mobile/binnies',mobileUser.setMobile);
+    app.get('/mobile/binnies/:identifier/isactivate',mobileUser.isActivate);
+    app.get('/binnie/:identifier/activate',mobileUser.activate);
+    app.post('/binnie/:identifier/activate',mobileUser.activate);
+    
+    //Mobile routes    
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
     app.put('/mobile/client',passport.authenticate(['mobileClientBasic', 'mobileClientPassword']), mobileUser.set);
     app.post('/mobile/client/token', mobileOauthManager.token);
@@ -132,6 +161,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/elements/:identifier',mobileRoutes.getElement);
     app.get('/mobile/sites/:identifier',mobileRoutes.getSite);
     app.get('/mobile/showcases/:identifier',mobileRoutes.getShowcase);
+
+    
 
     app.get('/blog/', blog.index);
     app.get('/api/blog', blog.list);

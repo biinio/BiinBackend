@@ -843,6 +843,7 @@ input.ng-valid.ng-dirty{
 					display: none;
 				}				
 			}
+
 			.biinPropertie{
 				height: 40px;
 				background-color: @colorGrayDark;
@@ -851,6 +852,7 @@ input.ng-valid.ng-dirty{
 				padding-top: 10px;
 				padding-left: 15px;
 			}
+
 			#categories{
 				margin-top:10vh;
 				.catModule{
@@ -1086,6 +1088,7 @@ input.ng-valid.ng-dirty{
 					}
 				}
 			}
+
 			//Highlights Style
 			#highlightsSection{
 				.darkSection{
@@ -1566,12 +1569,164 @@ input.ng-valid.ng-dirty{
 				}
 			}
 
+
+			//Organization List
+			#organizationListWrapper{				
+				height: 30vh;
+				max-height:  30vh;
+				margin-top: 5px;
+				width: 1000%;
+				max-width: 100%;
+				overflow-x: scroll;
+				overflow-y: hidden!important;
+				white-space: nowrap;
+				background-color: @colorWhite;				
+					.img-block{
+						width: 28vh;
+						height: 28vh;
+						padding: 5px 5px 5px 5px;
+						display: inline-block;
+					    dsplay:inline;/* For IE7
+					    *zoom:1;/* For IE7*/
+					    white-space:normal;
+					    .moduleWrapper{
+					    	position: relative;
+					    	width: 100%;
+					    	height:100%;
+					    	min-height: 100%;
+					    	min-width: 100%;
+					    	overflow: hidden;
+					    }
+					}
+					.active{
+						background-color: @colorFocus;
+					}				
+
+				.moduleTitle{
+					position: absolute;
+					background-color: black;
+					color: white;
+					opacity: 0.5;
+					padding-left: 6px;
+				}
+
+				.btnCreate{
+					.moduleWrapper{
+						position: relative;
+						color: @colorBaseWhite;
+						background-color: @colorFocus!important;
+						text-align: center;
+
+						span{
+							position: relative;
+							top:40%;
+						}
+					}
+				}
+			}
+			.organizationInformation{
+
+				margin-top: @standardPadding;
+				img{
+					height: 20vh;
+				}
+				.organizationId{
+					background-color: @colorGrayDark;
+					color:@colorBaseWhite;
+					padding: @standardPadding @standardPadding @standardPadding @standardPadding;
+					width: 100%;
+				}
+
+				.col-md-4, .col-md-8{
+					padding-left: 0px!important;
+					padding-right: 0px!important;
+				}
+			}
+			.defaultOrganization{
+				margin-top: @standardPadding;
+				height: 100px;
+				width: 100%;
+				background-color: @colorWhite;
+			}
 		}
 		.section.darkSection{
 			background-color: @colorWhite;
 		}
 		overflow: hidden;
 	}
+}
+
+.wizardProfile	{
+	padding-top: 15%;
+	a{
+
+		height: 150px;
+		margin-left: 10%;
+
+		.icon-wrapper{
+			position: relative;
+			overflow: hidden;
+			background-color: @colorBaseWhite;
+			height: 80px;
+			width: 80px;
+			display: inline-block;
+
+
+			border-radius: 50%;
+	    	-moz-border-radius: 50%;
+			-webkit-border-radius: 50%;
+			border-radius: 50%;
+
+		}
+
+		i{	
+
+			position: relative;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top:20%;
+			display: block;
+			height: 40px;
+			width: 40px;
+			font-size: 40px;
+			color:@colorGray;
+		}
+
+		.text-wrapper{
+			position: absolute;
+			display: inline-block;			
+			height: 80px;
+			padding-top: 10%;
+			padding-left: 10px;
+
+			span{				
+				position: relative;
+				margin-top: 50px;
+				color:@colorBaseWhite;
+			}			
+		}
+
+
+	}
+}
+
+//Profile Section
+#profileSection{
+
+	img{
+
+		border: solid;
+		border-color: @colorGray;
+		border-width: 5px;
+		height: 127px;
+	}
+
+	.btn-default{
+		margin-top: @standardPadding;
+		display:table;
+	 	text-transform: uppercase;
+	}
+
 }
 
 //Beacon Modal
@@ -1621,6 +1776,7 @@ input.ng-valid.ng-dirty{
 		color: #fff;
 	}
 }
+
 .btn-biin{
     border: 0px;
     border-radius: 0px;
@@ -1738,6 +1894,13 @@ input.ng-valid.ng-dirty{
         top: @screenLgBodyPaddingTop;
         margin-left: @rightContMargingLeft;
     }
+}
+
+.right-section-content.account-section-content{
+	.wizard-body{
+		height: 100%!important;
+		max-height:100%!important;
+	}
 }
 
 

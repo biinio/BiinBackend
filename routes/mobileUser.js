@@ -3,56 +3,259 @@ module.exports = function(){
 	var mobileUser = require('../schemas/mobileUser'), 
 		util = require('util'),
 		bcrypt = require('bcrypt'),
+		imageManager=require('../biin_modules/imageManager')(),
 		utils =require("../biin_modules/utils")();
 
 	var functions ={};
+
+	//GET the Main view of an Binnies
+	functions.index = function(req, res){
+		res.render('binnie/index', { title: 'Binnies list' ,user:req.user,organization:null});
+	}
+
+	//Get the list of Binnies
+	functions.get = function(req,res){
+		var prototype = new mobileUser();
+
+		res.setHeader('Content-Type', 'application/json');
+		mobileUser.find({},function(err,binnies){
+			if(err)
+				res.send(500);
+			else
+				res.json({data:binnies, prototype:prototype});
+		});
+	}
 
 	//PUT a new Mobile User
 	functions.set = function(req,res){
 
 		res.setHeader('Content-Type', 'application/json');
-		var errors = utils.validate(new mobileUser().validations(),req,'');
-		if (errors) {
-        	res.send(errors, 400)
-    	} else {
-			//Get the Body Information
-			var firstName = req.body['firsName']
-			 ,lastName = req.body['lastName']
-			 ,biinName = req.body['biinName']
-			 ,password = req.body['password']
-			 ,birthDate = req.body['birthDate']
-			 ,gender = req.body['gender']
-			 ,joinDate = util.getDateNow()
-			 ,accountState = 'active';
+		var model =req.body['model'],
+				   joinDate = utils.getDateNow(),
+				   accountState = 'active';
+
+		if('isNew' in model){
 			 
-			mobileUser.findOne({biinName:biinName},function(err,mobileUserAccount){
+			mobileUser.findOne({biinName:model.biinName},function(err,mobileUserAccount){
 				if(mobileUserAccount){
-					util.inspect(mobileUserAccount,{depth:null});
 					res.send('The Account Name is already taken');
 				}else{
-					bcrypt.hash(password, 11, function (err, hash) {
+					bcrypt.hash(model.password, 11, function (err, hash) {
+
 						var newModel = new mobileUser({
-							firsName:firstName,
-							lastName:lastName,
-							biinName:biinName,
+							identifier: utils.getGUID(),
+							firstName:model.firstName,
+							lastName:model.lastName,
+							biinName:model.biinName,
 							password:hash,
-							birthDate:birthDate,
-							gender:gender,
+							birthDate:model.birthDate,
+							gender:model.gender,
 							joinDate:joinDate,
-							accountState:accountState
-						})
+							accountState:accountState,
+							comments:model.comments,
+							userBiined:model.userBiined,
+							userCommented:model.userCommented,
+							userShared:model.userShared,
+							categories:model.categories,
+							imgUrl:model.imgUrl
+						});
+
 						//Save The Model
 						newModel.save(function(err){
 							if(err)
 								throw err;
 							else
-								res.send('The user was registered');
+								res.send(201);
 						});
 			 		});
 				}
 			});
-		}	
+		}else{//Update the Binnie information profile
+			mobileUser.update(
+				{identifier:model.identifier},
+				{
+					firstName:model.firstName,
+					lastName:model.lastName,
+					birthDate:model.birthDate,
+					gender:model.gender,
+					comments:model.comments,
+					userBiined:model.userBiined,
+					userCommented:model.userCommented,
+					userShared:model.userShared,
+					categories:model.categories,
+					imgUrl:model.imgUrl
+				},
+				function(err,cantUpdate){
+					if(err)
+						res.send(err,500);
+					else
+						res.send(201)
+				}
+			);
+		}				   
+		/*
+		var errors = null;//utils.validate(new mobileUser().validations(),req,'');
+		if (errors) {
+        	res.send(errors, 400)
+    	} else {
+
+		}	*/
 	}
+
+	//Set a new Mobile User
+	functions.setMobile = function(req,res){
+
+		var model =req.body.model;		
+		mobileUser.findOne({biinName:model.biinName},function(err,mobileUserAccount){
+				if(mobileUserAccount){
+					res.send('The Account Name is already taken');
+				}else{
+					bcrypt.hash(model.password, 11, function (err, hash) {
+						var joinDate = utils.getDateNow();
+						var identifier= utils.getGUID();
+
+						var newModel = new mobileUser({
+							identifier: identifier,
+							firstName:model.firstName,
+							lastName:model.lastName,
+							biinName:model.biinName,
+							password:hash,
+							birthDate:model.birthDate,
+							gender:model.gender,
+							joinDate:joinDate,
+							accountState:false
+						});
+
+						//Save The Model
+						newModel.save(function(err){
+							if(err)
+								throw err;
+							else{
+
+								//Send the verification of the e-mail
+								sendVerificationMail(req,newModel,function(){
+									//callback of mail verification
+									res.send({data:{identifier:identifier}});	
+								});
+							}
+																
+						});
+			 		});
+				}
+			});
+	}
+
+	//GET/POST the activation of the user
+	functions.activate=function(req,res){
+		var identifier = req.param("identifier");
+		mobileUser.findOne({identifier:identifier, accountState:false},function(err, foundBinnie){
+			if(err)
+				res.send(500,"The user was not found")
+			else{
+				if(typeof(foundBinnie)==='undefined'|| foundBinnie===null)
+					res.send(500,"The user was not found")	
+
+				foundBinnie.accountState=true;
+				foundBinnie.save(function(err){
+					if(err)
+						res.send(err, 500);
+					else{
+							//Return the state and the object
+							res.json("/verifiedBinnie");											
+						}
+				});		
+			}
+		})
+	}
+
+	//Get if an Biinie is active
+	functions.isActivate=function(req,res){
+		var identifier = req.param("identifier");
+		mobileUser.findOne({identifier:identifier, accountState:true},function(err, foundBinnie){
+			if(err)
+				res.send(500,"The user was not found")
+			else{
+				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
+				res.json({data:result});
+			}
+		});
+	}
+
+	//Send an e-mail verification
+	function sendVerificationMail(req,model,callback){
+
+		var transporter = require('nodemailer').createTransport({
+	        service: 'gmail',
+	        auth: {
+	            user: process.env.EMAIL_ACCOUNT,
+	            pass: process.env.EMAIL_PASSWORD
+	        }
+	    });
+
+		var url= req.protocol + '://' + req.get('host')+"/binnie/"+model.identifier+"/activate";
+		var subject ="Wellcome to Biin";
+		var htmlBody = "<h3>"+subject+"</h3>" +
+                    "<b>Hi</b>: <pre style='font-size: 14px'>" + model.firstName + "</pre>" +                    
+                    "<b>Thanks for join Biin</b>" +
+                    "<b>Your user is </b>: <pre style='font-size: 14px'>" + model.biinName + "</pre>" +
+                    "<b>In order to complete your registration please visit the following link</b><a href='"+url+"'> BIIN USER ACTIVATION </a>";
+
+        // setup e-mail data with unicode symbols
+		var mailOptions = {
+			// sender address
+		    from: "[ BIIN NO REPLY] <" + process.env.EMAIL_ACCOUNT + ">",
+
+		    // list of receivers
+		    to: model.biinName,
+
+		    // Subject line
+		    subject: subject,
+
+		    // plaintext body
+		    text: "",
+
+		    // html body
+		    html: htmlBody
+		};
+		// send mail with defined transport object
+		transporter.sendMail(mailOptions, function(error, info){
+		    callback();
+		});		
+	}
+
+	//DELETE an specific showcase
+	functions.delete= function(req,res){
+		//Perform an update
+		var identifier = req.param('identifier');
+				
+		mobileUser.remove({identifier:identifier},function(err){
+			if(err)
+				res.send(err,500)
+			else
+				res.send(200);
+		});
+	}
+
+	//Post the Image of the Organization
+	functions.uploadImage = function(req,res){
+		//Read the fileer.name;
+		var binnieIdentifier =req.param("identifier");
+		res.setHeader('Content-Type', 'application/json');
+
+ 		if(!util.isArray(req.files.file)){
+
+ 			var file =req.files.file;
+
+	 		//var data = fs.readFileSync(file.path);
+	 		var imagesDirectory = 'binnies';
+	 		var systemImageName = '/media/'+ binnieIdentifier+"/"+utils.getGUID()+"."+ utils.getExtension(file.originalFilename);
+ 			var imgURL= imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false);	
+ 			var mediaObj={imgUrl:imgURL}; 			
+			res.json({data:mediaObj});
+ 		} else{
+ 			res.send(err, 500);
+ 		}
+	}		
 
 	return functions;
 }

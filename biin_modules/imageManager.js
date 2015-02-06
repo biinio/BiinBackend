@@ -79,9 +79,20 @@ module.exports = function(){
 
 	//Uploads an imag
 	functions.uploadFile = function(imagePath,directory, imageName){		
-		
+		this.uploadFile(imagePath, directory, imageName,true);
+	}
+
+	//Uploads an imag
+	functions.uploadFile = function(imagePath,directory, imageName, generateName){		
 		var mainBuquet =  process.env.S3_BUCKET;	
-	   	var systemImageName =path.join(directory,utils.getImageName(imageName,_workingImagePath));    
+
+
+	   	var systemImageName ="";//path.join(directory,utils.getImageName(imageName,_workingImagePath));
+	   	if(generateName)
+	   		systemImageName =path.join(directory,utils.getImageName(imageName,_workingImagePath));
+	   	else
+	   		systemImageName =path.join(directory,imageName);
+
 		var newPath = process.env.IMAGES_REPOSITORY+"/"+systemImageName;	
 
 		var buffer =fs.readFileSync(imagePath);

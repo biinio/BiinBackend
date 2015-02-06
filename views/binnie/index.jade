@@ -1,0 +1,64 @@
+extends ../layout_dashboard
+block head_scripts
+	script(src="/javascripts/angular/binniesController.js")
+block content	
+	#sectionContent(ng-app="biinAppBinnies" ng-controller="binniesController")
+		#wrapperContent
+			.left-section-content
+				.container-fluid
+					.row
+						.col-md-12
+							button.btn.btn-default.btn-block.btn-biin(ng-click='create()') ADD NEW BINNIE
+				.container-fluid.main-views-list
+					.row
+						.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+							.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in binnies | filter: query" ng-click="edit(binnies.indexOf(item))")
+								.moduleWrapper.contentHideButtons(ng-class="{active: binnies.indexOf(item) == selectedBinnie}")
+									.moduleTitle {{item.biinName}}
+									img(ng-if="item.imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+									img(ng-if="item.imgUrl.length>0" ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+									.btnDelete.icon-round-control.btn-on-hover(ng-click="removeAt(binnies.indexOf(item))")
+										.icon.icon-bin-2
+				.container-fluid.searchBox
+					.searchBox-wrapper
+						input.form-control(type="text" placeholder="search" ng-model="query" autofocus)
+			.right-section-content.wizard-wrapper(ng-if="selectedBinnie>=0")
+				.wizard-body
+					.container-fluid
+						.row.section
+							.col-md-6
+								h2 Binnie main Information
+							.col-md-6
+								img(ng-if="binnies[selectedBinnie].imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+								img(ng-if="binnies[selectedBinnie].imgUrl.length>0" style="max-width:140px;" ng-src="{{binnies[selectedBinnie].imgUrl}}"  pending-indicator)
+								a.btn.btn-default(upload-binnie-image="#binnieInput") Upload Biinie Image
+								input.hidden#binnieInput(type="file")								
+							.col-md-4								
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].firstName" placeholder="First Name")
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].lastName" placeholder="Last Name")
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].biinName" placeholder="Biin Name")
+								input.form-control(type="password" ng-model="binnies[selectedBinnie].password" placeholder="Password" ng-if="binnies[selectedBinnie].isNew===true")
+								label Password: *****************
+							.col-md-4							
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].birthDate" placeholder="Birth Date")
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].gender" placeholder="Gender")
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].comments" placeholder="Comments")
+							.col-md-4									
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].userBiined" placeholder="User Biined")
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].userCommented" placeholder="User Commented")
+								input.form-control(type="text" ng-model="binnies[selectedBinnie].userShared" placeholder="User Shared")
+					.container-fluid
+						.row
+							.col-md-12.section
+								h2 Categories
+									.container
+						.row.section
+							#categories
+								.container
+									.row
+										a.col-md-1.catModule(ng-class="{'separator':$index==5}" ng-repeat="cat in categories" ng-click="switchCategoryState(cat)")
+											.catModuleWrapper(ng-class="containsCategory(cat)")
+												.catIcon(class="icon icon-{{cat.icon}}")
+												p {{cat.displayName}}
+						.row
+							a.btn.btn-lg.btn-warning(ng-click="save()") Save

@@ -1,3 +1,4 @@
+//Mobile User or Binnie
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 //Define the validations for an organization
@@ -15,6 +16,7 @@ var validations={
 };
 
 var mobileUserSchema=new Schema({
+	identifier:{type:String,index:true},
 	firstName: String,
 	lastName:String,
 	biinName:String,
@@ -23,7 +25,7 @@ var mobileUserSchema=new Schema({
 	gender:String,
 	joinDate:String,
 	leftDate:String,
-	accountState:String,
+	accountState:{type:Boolean, default:false},
 	thirdPartyAccounts:[{
 		type:String,
 		accountIdentifier:String,
@@ -32,8 +34,21 @@ var mobileUserSchema=new Schema({
 		RefreshToken:String,
 		expireDate:String,
 	}],
+	imgUrl:{type:String, default:""},
+	comments:String,
+	userBiined:String,
+	userCommented:String,
+	userShared:String,
 	//Activity of the user in the app
-	actvityHistory:[]
+	actvityHistory:[],
+	categories:[
+			{
+				identifier:{type:String, index:true, default:"-1"},
+				name:{type:String, default:""},
+				displayName:{type:String, default:""},
+				url:{type:String, default:""}
+			}
+	]
 });
 
 //Methods

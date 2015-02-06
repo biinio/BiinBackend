@@ -1,7 +1,8 @@
-module.exports = function(db){
+module.exports = function(){
 
     //Schemas
 	var client = require('../schemas/client');
+	var utils = require('../biin_modules/utils')();
 	var functions ={}
 
 	//Get Client List
@@ -13,7 +14,114 @@ module.exports = function(db){
 	functions.createView = function(req,res){
 		res.render('client/create',req.client);
 	}
+	//Set the singup user information
+	functions.set =function(req,res){
+	 	var model = req.body.model;
+	 	
+		client.findOne({name:model.name},function(err,foundClient){
+			if(foundClient){
+				res.send(500,'The Account Name is already taken');
+			}else{
 
+				var newModel = new client({
+						accountIdentifier: utils.getGUID(),
+						name:model.name,
+						lastName:model.lastName,
+						displayName:model.displayName,						
+						password:model.password,
+						emails:model.emails,
+						phoneNumber:model.phoneNumber,
+                        accountState:false
+					});
+
+					//Save The Model
+					newModel.save(function(err){
+						if(err)
+							throw err;
+						else{
+							//Sent the e-mail verification
+							sendVerificationMail(req,newModel,function(err){
+								if(err)
+									res.send(500);
+								else									
+									res.send(201);	
+							})							
+						}
+					});
+			}
+		});
+	}
+
+	//Send an e-mail verification
+	function sendVerificationMail(req,model,callback){
+
+		var transporter = require('nodemailer').createTransport({
+	        service: 'gmail',
+	        auth: {
+	            user: process.env.EMAIL_ACCOUNT,
+	            pass: process.env.EMAIL_PASSWORD
+	        }
+	    });
+
+		var url= req.protocol + '://' + req.get('host')+"/client/"+model.accountIdentifier+"/activate";
+		var subject ="Wellcome to Biin";
+		var htmlBody = "<h3>"+subject+"</h3>" +
+                    "<b>Hi</b>: <pre style='font-size: 14px'>" + model.displayName + "</pre>" +                    
+                    "<b>Thanks for join Biin</b>" +
+                    "<b>Your user is </b>: <pre style='font-size: 14px'>" + model.name + "</pre>" +
+                    "<b>In order to complete your registration please visit the following link</b><a href='"+url+"'> BIIN USER ACTIVATION </a>";
+
+        // setup e-mail data with unicode symbols
+		var mailOptions = {
+			// sender address
+		    from: "[ BIIN NO REPLY] <" + process.env.EMAIL_ACCOUNT + ">",
+
+		    // list of receivers
+		    to: model.emails[0],
+
+		    // Subject line
+		    subject: subject,
+
+		    // plaintext body
+		    text: "",
+
+		    // html body
+		    html: htmlBody
+		};
+		// send mail with defined transport object
+		transporter.sendMail(mailOptions, function(error, info){
+		    callback();
+		});		
+	}
+
+	//Set the activation of an user
+	functions.activate= function(req,res){
+
+		var userAccount=req.param("identifier");
+		client.findOne({accountIdentifier:userAccount, accountState:false},function(err, foundClient){
+			if(err)
+				res.send(500,"The user was not found")
+			else{
+				if(foundClient==null || typeof(foundClient)==='undefined')
+					res.send(500,"The user was not found")
+				foundClient.accountState=true;
+				foundClient.save(function(err){
+					if(err)
+						res.send(err, 500);
+					else{
+						req.logIn(foundClient,function(err){
+							if(err)
+								res.send(500)
+							else
+								//Return the state and the object
+								res.redirect("/home");
+						})						
+					}
+				});		
+			}
+		})
+
+	}
 	//Post Creation of a Client
 	functions.create = function(req,res){
 		// create a Client

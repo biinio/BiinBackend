@@ -1,11 +1,12 @@
 module.exports = function () {
 	var functions = {};
 	var fs = require('fs');
-
+	var organization= require('../schemas/organization');
+	var client = require('../schemas/client');
+	var utils = require('../biin_modules/utils')();
 	//Get the index page
 	functions.index = function(req, res){
-	  res.render('index', { title: 'Biin' });
-	  //res.sendfile('views/index.html');
+	  res.render('index', { title: 'Biin' });	  
 	};
 
 	//Get the Login
@@ -25,8 +26,27 @@ module.exports = function () {
 
 	//Get the Dashboard
 	functions.home = function(req,res){
-		res.render('homeDashboard',{title:'Welcome!',user:req.user});	
+		//var organization={};
+		if(typeof(req.session.defaultOrganization)==='undefined')
+			if(typeof(req.user.defaultOrganization)!='undefined' && req.user.defaultOrganization!='')
+				organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.user.defaultOrganization},{name:true, identifier:true},function (err, data) {
+					//set the first time for the data
+					req.session.defaultOrganization = data;					
+					res.render('homeDashboard',{title:'Welcome!',user:req.user,organization:data});						
+				});
+			else{
+				req.user.defaultOrganization = null;
+				res.render('homeDashboard',{title:'Welcome!',user:req.user});	
+			}				
+		else
+			res.render('homeDashboard',{title:'Welcome!',user:req.user});	
 	}
+
+	//Post the SingUp information of a client
+	functions.singup =function(req,res){	
+		res.render('singup',{title:'Signup!',user:req.user});
+	}
+    	
 
 	//Get the dashboard
 	functions.dashboard = function (req,res) {
@@ -189,6 +209,12 @@ module.exports = function () {
 			});		  
 		});        
 
+    }
+
+
+    //Get the mobile Test page
+    functions.mobileTest =function(req,res){    	
+    	res.render('mobileTest', { title: 'Biin' });	
     }
 	return functions;
 };

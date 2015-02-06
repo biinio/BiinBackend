@@ -1,10 +1,14 @@
 module.exports =function (){
 
-	//Custom Utils
-	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path');
+	//Common Libraries
+	var util = require('util'), fs=require('fs');
 
-	//Schemas
+	//Custom Utils
+	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path'),imageManager=require('../biin_modules/imageManager')();
+	//Schemas	
 	var organization = require('../schemas/organization'), site = require('../schemas/site');
+
+
 	var functions ={};
 
 	//GET the Main view of an Organization
@@ -13,74 +17,93 @@ module.exports =function (){
 	}	
 
 	//GET the list of organizations
-	functions.list = function(req,res){		
+	functions.list = function(req,res){	
+		res.setHeader('Content-Type', 'application/json');	
 		organization.find({"accountIdentifier":req.user.accountIdentifier},function (err, data) {
 			   res.json({data:data, prototypeObj : new organization()});
 		});		
 	}
 
-	//PUT an update of the organization
-	functions.set=function(req,res){	 
-		var model =req.body.model;
-		//Perform an update
+	//PUT/POST an organization
+	functions.set=function(req,res){
+	//Perform an update
 		var organizationIdentifier=req.param("identifier");
-		var model = req.body.model;			
-		delete model._id;
+		res.setHeader('Content-Type', 'application/json');
 
-		//Validate the Model
-		var errors =utils.validate(new organization().validations(),req,'model');
+		//If is pushing a new model
+		if(typeof(organizationIdentifier)==="undefined"){
+	        var newModel = new organization();
+	        organizationIdentifier = utils.getGUID();
 
-		//Validate the model
-		res.setHeader('Content-Type', 'application/json');		
+			//Set the account and de user identifier
+	        newModel.identifier=organizationIdentifier
+			newModel.accountIdentifier= req.user.accountIdentifier;
+			
+			//Perform an create
+			newModel.save(function(err){
+				if(err)
+					res.send(err, 500);
+				else{
+					//Return the state and the object
+					res.send(newModel, 201);
+				}
+			});			
+		}else{
+			var model = req.body.model;			
+			delete model._id;
 
-		if(errors){
-			res.send(errors,400);
-		}else
-		{
-			if(model)
-			{			
-				//If is pushing a new model
-				if('isNew' in model){
-
-					delete model.isNew;
-	                
-	                var newModel = new organization(model);
-	                organizationIdentifier = utils.getGUID();
-
-					//Set the account and de user identifier
-	                newModel.identifier=organizationIdentifier
-					newModel.accountIdentifier= req.user.accountIdentifier;
-					
-					//Perform an create
-					newModel.save(function(err){
-						if(err)
-							throw err;
-						else{
-								//Return the state and the object
-								res.json({state:"success",replaceModel:newModel});
-						}
-					});
-					
-				}else{
-					organization.update(
-		                     { identifier:organizationIdentifier},
-		                     { $set :model },
-		                     { upsert : true },
-		                     function(err){
-		                     	if(err){
-		                     		throw err;
-		                     		res.json(null);
-		                     	}
-								else{
-		                            //Return the state
-									res.json({state:'success',replaceModel:model});							
-								}
-		                     }
-		                   );
-				}							
-			}
-		}
+			//Validate the Model
+			var errors =utils.validate(new organization().validations(),req,'model');
+			if(errors)
+				res.send(errors,400);
+			else
+				organization.update(
+				                     { identifier:organizationIdentifier},
+				                     { $set :model },
+				                     { upsert : true },
+				                     function(err){
+				                     	if(err)
+											res.send(err, 500);
+										else
+				                            //Return the state
+											res.send(model,200);							
+				                     }
+				                   );					
+		}		
 	}
+
+	//Post the Image of the Organization
+	functions.uploadImage = function(req,res){
+		//Read the file
+		var userAccount = req.user.accountIdentifier;
+		var userIdentifier = req.user.name;
+		var organizationIdentifier =req.param("identifier");
+		res.setHeader('Content-Type', 'application/json');
+
+ 		if(!util.isArray(req.files.file)){
+
+ 			var file =req.files.file;
+
+	 		//var data = fs.readFileSync(file.path);
+	 		var imagesDirectory = userAccount;
+	 		var systemImageName = 'media/'+ userAccount+"/" +organizationIdentifier+"/media/img."+ utils.getExtension(file.originalFilename);	 			 			
+ 			var imgURL= imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false);	
+ 			var mediaObj={imgUrl:imgURL};
+
+ 			organization.update({identifier:organizationIdentifier },{media:mediaObj},function(err){
+ 				if(err)
+ 					res.send(err, 500);
+ 				else
+ 				{
+ 					res.json({data:mediaObj});	
+ 				}
+ 			});
+ 			
+
+ 		} else{
+ 			res.send(err, 500);
+ 		}
+	 }		
 
 	//DELETE an specific Organization
 	functions.delete= function(req,res){

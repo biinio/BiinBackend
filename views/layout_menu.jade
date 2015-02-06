@@ -82,11 +82,14 @@
 					ul.nav-user.navbar-right
 						li.dropdown
 							a.dropdown-toggle(href='#fakelink', data-toggle='dropdown')
-								img.avatar.img-circle(src='images/icons/avatar.png', alt='Avatar')
+								img.avatar.img-circle(src=user.profilePhoto, alt='Avatar')
 								| Hi, 
 								strong=user.displayName
 								img.avatarSettings(src='images/icons/bnSettingsIcon.png', alt='Avatar')
 							ul.dropdown-menu.square.primary.margin-list-rounded.with-triangle
+								li
+									a(href='/binnies') Binnies								
+								li.divider								
 								li
 									a(href='#fakelink') Account setting
 								li

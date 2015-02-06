@@ -219,7 +219,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
     });
   }
-  //Category return if contains a specific categoru
+  //Category return if contains a specific category
   $scope.containsCategory=function(category){
     if(typeof(_.findWhere($scope.sites[$scope.selectedSite].categories,{identifier:category.identifier}))!='undefined')
       return 'active'
@@ -361,12 +361,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   /**** 
     Methods
   ****/
-  //validation methods
-  /*$scope.$watch('form.$valid', function(newVal, oldVal) {
-    console.log('Validaion')
-   $scope.$emit('validityChange', {'form':newVal});
-  });*/
-
 
   //On gallery change method                
   $scope.onGalleryChange= function(obj,autoInsert){
@@ -386,23 +380,15 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       }
     }
   }
+  //Set the gallery index when start draggin
+  $scope.setDragGallery=function(scopeIndex){
+    $scope.dragGalleryIndex= scopeIndex;
+  }
+
 
   $scope.loadingImagesChange=function(state){
     $scope.loadingImages = state;
     $scope.$digest();
   }
 
-  //Scroll Bars Options
-  /*$scope.scrollbarOptionsOwnedGallery = {
-        "type": "simple",
-        "onScroll":function(y, x){
-            if(x.scroll == x.maxScroll){
-                alert('Scrolled to bottom');
-            }
-        }
-    }; 
-
-  $scope.scrollbarOptionsStandard = {
-        "type": "simple"
-    }; */
   }]);

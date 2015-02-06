@@ -318,7 +318,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
   //Set the gallery index when start draggin
   $scope.setDragGallery=function(scopeIndex){
-
     $scope.dragGalleryIndex= scopeIndex;
   }
 

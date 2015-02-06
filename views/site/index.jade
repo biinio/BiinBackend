@@ -13,7 +13,7 @@ block content
 								button.btn.btn-default.btn-block.btn-biin(ng-click='create()') ADD NEW SITE
 					.container-fluid.main-views-list
 						.row
-							.main-views-list.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+							.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 								.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in sites | filter: query" ng-click="edit(sites.indexOf(item))")
 									.moduleWrapper.contentHideButtons(ng-class="{active: sites.indexOf(item) == selectedSite}")
 										.moduleTitle {{item.title1}}

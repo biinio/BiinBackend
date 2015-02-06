@@ -2277,6 +2277,12 @@ input[type="number"] {
   color:#0932BF;
   font-weight: 400; 
 }
+
+#singupWrapper{
+  padding-top: 150px;
+  padding-bottom: 100px;
+}
+
 .form-control {
   -webkit-box-shadow:none;
   box-shadow:none;

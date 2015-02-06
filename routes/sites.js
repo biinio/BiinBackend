@@ -80,7 +80,6 @@ module.exports = function () {
 						}
 							
 						else{
-
 							//Return the state and the object
 							res.send(model, 201);
 						}						
