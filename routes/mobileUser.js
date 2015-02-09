@@ -106,43 +106,49 @@ module.exports = function(){
 	functions.setMobile = function(req,res){
 
 		var model =req.body.model;		
-		mobileUser.findOne({biinName:model.biinName},function(err,mobileUserAccount){
-				if(mobileUserAccount){
-					res.send('The Account Name is already taken');
-				}else{
-					bcrypt.hash(model.password, 11, function (err, hash) {
-						var joinDate = utils.getDateNow();
-						var identifier= utils.getGUID();
+		res.setHeader('Content-Type', 'application/json');
+		var errors = utils.validate(new mobileUser().validations(),req,'model');
+		if(!errors){
+			mobileUser.findOne({biinName:model.biinName},function(err,mobileUserAccount){
+					if(mobileUserAccount){
+						res.json({data:{status:1,identifier:""}});
+					}else{
+						bcrypt.hash(model.password, 11, function (err, hash) {
+							var joinDate = utils.getDateNow();
+							var identifier= utils.getGUID();
 
-						var newModel = new mobileUser({
-							identifier: identifier,
-							firstName:model.firstName,
-							lastName:model.lastName,
-							biinName:model.biinName,
-							password:hash,
-							birthDate:model.birthDate,
-							gender:model.gender,
-							joinDate:joinDate,
-							accountState:false
-						});
+							var newModel = new mobileUser({
+								identifier: identifier,
+								firstName:model.firstName,
+								lastName:model.lastName,
+								biinName:model.biinName,
+								password:hash,
+								gender:model.gender,
+								joinDate:joinDate,
+								accountState:false
+							});
 
-						//Save The Model
-						newModel.save(function(err){
-							if(err)
-								throw err;
-							else{
+							//Save The Model
+							newModel.save(function(err){
+								if(err)
+									res.json({data:{status:5,identifier:""}});	
+								else{
 
-								//Send the verification of the e-mail
-								sendVerificationMail(req,newModel,function(){
-									//callback of mail verification
-									res.send({data:{identifier:identifier}});	
-								});
-							}
-																
-						});
-			 		});
-				}
-			});
+									//Send the verification of the e-mail
+									sendVerificationMail(req,newModel,function(){
+										//callback of mail verification
+										res.json({data:{status:0,identifier:identifier}});	
+									});
+								}
+																	
+							});
+				 		});
+					}
+				});			
+		}
+		else{
+			res.send({data:{status:0006,errors:errors}});
+		}
 	}
 
 	//GET/POST the activation of the user
@@ -171,12 +177,13 @@ module.exports = function(){
 	//Get if an Biinie is active
 	functions.isActivate=function(req,res){
 		var identifier = req.param("identifier");
+		res.setHeader('Content-Type', 'application/json');
 		mobileUser.findOne({identifier:identifier, accountState:true},function(err, foundBinnie){
 			if(err)
-				res.send(500,"The user was not found")
+				res.json({data:{status:7,result:""}})
 			else{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
-				res.json({data:result});
+				res.json({data:{status:0, result:result}});
 			}
 		});
 	}

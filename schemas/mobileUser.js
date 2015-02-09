@@ -3,12 +3,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 //Define the validations for an organization
 var validations={
-	required :['firstName','lastName','biinName','birthDate','gender'],
+	required :['firstName','lastName','biinName','password','gender'],
 	len :[
 			{field:'firstName',min:3,max:40},
 			{field:'lastName',min:3,max:40},
 			{field:'biinName',min:3,max:40},
-			{field:'birthDate',min:3,max:40},
 			{field:'gender',min:3,max:40},
 			{field:'password',min:6,max:20}
 		],
