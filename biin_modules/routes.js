@@ -146,6 +146,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Mobile Binnies services
     app.get('/mobile/binnies/:firstName/:lastName/:biinName/:password/:gender',mobileUser.setMobileByURLParams);
+    app.get('/mobile/binnies/auth/:user/:password',mobileUser.login);
     app.put('/mobile/binnies',mobileUser.setMobile);
     app.get('/mobile/binnies/:identifier/isactivate',mobileUser.isActivate);
     app.get('/binnie/:identifier/activate',mobileUser.activate);

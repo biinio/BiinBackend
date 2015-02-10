@@ -103,7 +103,7 @@ module.exports = function(){
 	}
 
 
-	//SET a new Mobile user Takin the params from the URL
+	//SET a new Mobile user Takin the params from the URL **To change **Deprecated 
 	functions.setMobileByURLParams =function(req,res){
 		var model ={};
 		model.firstName = req.param('firstName');
@@ -115,8 +115,34 @@ module.exports = function(){
 		req.body.model = model;
 		functions.setMobile(req,res);
 	}
+	//Get the authentication of the user **To change **Deprecated 
+	functions.login =function(req,res){
+		var user =req.param('user');
+		var password= req.param('password');
 
-	//Set a new Mobile User
+		mobileUser.findOne({biinName:user},function(err,foundBinnie){
+			if(err)
+				res.json({data:{status:5,identifier:""}});	
+			else
+			{
+				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
+				var identifier="";
+				if(result){
+					foundBinnie.comparePassword(password,function(err,isMath){
+					identifier = foundBinnie.identifier;
+
+					res.json({data:{status:0, result:isMath, identifier:identifier}});							
+				})
+					
+				}else{
+					res.json({data:{status:0, result:result, identifier:identifier}});					
+				}
+				
+			}
+			
+		})
+	}
+	//Set a new Mobile User 
 	functions.setMobile = function(req,res){
 
 		var model =req.body.model;		

@@ -1,6 +1,7 @@
 //Mobile User or Binnie
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var bcrypt= require('bcrypt');
 //Define the validations for an organization
 var validations={
 	required :['firstName','lastName','biinName','password','gender'],
@@ -54,5 +55,12 @@ var mobileUserSchema=new Schema({
 
 mobileUserSchema.methods.validations = function() {
 	return validations;
+};
+
+mobileUserSchema.methods.comparePassword = function(candidatePassword, cb) {
+	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+	    if (err) return cb(err);
+	    cb(null, isMatch);
+	});
 };
 module.exports = mongoose.model('mobileUsers', mobileUserSchema);
