@@ -42,9 +42,9 @@ module.exports = function () {
 			res.render('homeDashboard',{title:'Welcome!',user:req.user});	
 	}
 
-	//Post the SingUp information of a client
+	//Get the SingUp information of a client
 	functions.singup =function(req,res){	
-		res.render('singup',{title:'Signup!',user:req.user});
+		res.render('singup/index',{title:'Signup!',user:req.user});
 	}
     	
 

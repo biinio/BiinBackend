@@ -102,6 +102,20 @@ module.exports = function(){
 		}	*/
 	}
 
+
+	//SET a new Mobile user Takin the params from the URL
+	functions.setMobileByURLParams =function(req,res){
+		var model ={};
+		model.firstName = req.param('firstName');
+		model.lastName = req.param('lastName');
+		model.biinName= req.param('biinName');
+		model.password= req.param('password');
+		model.gender= req.param('gender');
+
+		req.body.model = model;
+		functions.setMobile(req,res);
+	}
+
 	//Set a new Mobile User
 	functions.setMobile = function(req,res){
 

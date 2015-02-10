@@ -2225,6 +2225,83 @@ input[type="number"] {
 }
 
 /* ==========================================================================
+   SingUp Style
+   ========================================================================== */
+
+.wizardProfile  {
+  padding-top: 15%;
+  a{
+
+    height: 150px;
+    margin-left: 10%;
+
+    .icon-wrapper{
+      position: relative;
+      overflow: hidden;
+      background-color: @colorBaseWhite;
+      height: 80px;
+      width: 80px;
+      display: inline-block;
+
+
+      border-radius: 50%;
+        -moz-border-radius: 50%;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+
+    }
+
+    i{  
+
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top:20%;
+      display: block;
+      height: 40px;
+      width: 40px;
+      font-size: 40px;
+      color:@colorGray;
+    }
+
+    .text-wrapper{
+      position: absolute;
+      display: inline-block;      
+      height: 80px;
+      padding-top: 10%;
+      padding-left: 10px;
+
+      span{       
+        position: relative;
+        margin-top: 50px;
+        color:@colorBaseWhite;
+      }     
+    }
+
+
+  }
+}
+
+//Profile Section
+#profileSection{
+
+  img{
+
+    border: solid;
+    border-color: @colorGray;
+    border-width: 5px;
+    height: 127px;
+  }
+
+  .btn-default{
+    margin-top: @standardPadding;
+    display:table;
+    text-transform: uppercase;
+  }
+
+}
+
+/* ==========================================================================
    Terms And Conditions Style
    ========================================================================== */
 #termsAndConditions .container{

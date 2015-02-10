@@ -145,6 +145,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/binnies/:identifier/image',multipartMiddleware,mobileUser.uploadImage); 
 
     //Mobile Binnies services
+    app.get('/mobile/binnies/:firstName/:lastName/:biinName/:password/:gender',mobileUser.setMobileByURLParams);
     app.put('/mobile/binnies',mobileUser.setMobile);
     app.get('/mobile/binnies/:identifier/isactivate',mobileUser.isActivate);
     app.get('/binnie/:identifier/activate',mobileUser.activate);
