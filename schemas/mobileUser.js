@@ -31,9 +31,10 @@ var mobileUserSchema=new Schema({
 		accountIdentifier:String,
 		email:String,
 		token:String,
-		RefreshToken:String,
-		expireDate:String,
+		refreshToken:String,
+		expireDate:String
 	}],
+	email:{type:String, default:""},
 	imgUrl:{type:String, default:""},
 	comments:String,
 	userBiined:String,

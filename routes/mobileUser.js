@@ -26,6 +26,30 @@ module.exports = function(){
 		});
 	}
 
+	//Get the profile of a biinnie
+	functions.getProfile = function(req,res){
+		var identifier= req.param('identifier');
+
+		//Find the mobile user
+		/*mobileUser.findOne({identifier:identifier},{"identifier":1, "biinName":1,"firstName":1,"lastName":1,"imgUrl":1},function(errors,foundBinnie){
+
+		});*/
+
+		/*
+
+		"identifier": "@epadilla",
+        "biinName":"@epadilla",
+        "name": "Esteban",
+        "lastName":"Padilla",
+        "email":"epadilla@mail.com",
+        "avatarUrl": "http://s3-us-west-2.amazonaws.com/biintest/BiinJsons/biinieImages/@epadilla.jpg",
+        "biins":"234",
+        "following":"456",
+        "followers":"567",
+		"friends": 
+		*/
+	}
+
 	//PUT a new Mobile User
 	functions.set = function(req,res){
 
@@ -112,6 +136,8 @@ module.exports = function(){
 		model.password= req.param('password');
 		model.gender= req.param('gender');
 
+		//** Set that the email is the same as biinName
+		model.email = model.biinName;
 		req.body.model = model;
 		functions.setMobile(req,res);
 	}
@@ -122,7 +148,7 @@ module.exports = function(){
 
 		mobileUser.findOne({biinName:user},function(err,foundBinnie){
 			if(err)
-				res.json({data:{status:5,identifier:""}});	
+				res.json({data:{status:"5",identifier:""}});	
 			else
 			{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
@@ -131,11 +157,11 @@ module.exports = function(){
 					foundBinnie.comparePassword(password,function(err,isMath){
 					identifier = foundBinnie.identifier;
 					var isMathToString = isMath? "1":"0";
-					res.json({data:{status:"0", result:isMathToString, identifier:identifier}});							
+					res.json({data:{status:"0", result:isMathToString, identifier:identifier}});
 				})
 					
 				}else{
-					var isMathToString = isMath? "1":"0";
+					var isMathToString = result? "1":"0";
 					res.json({data:{status:"0", result:result, identifier:identifier}});					
 				}
 				
@@ -144,11 +170,6 @@ module.exports = function(){
 		})
 	}
 
-	//Get the profile of a biinnie
-	functions.getProfile = function(req,res){
-		var identifier= req.param('identifier');
-
-	}
 
 	//Set a new Mobile User 
 	functions.setMobile = function(req,res){
@@ -170,6 +191,7 @@ module.exports = function(){
 								firstName:model.firstName,
 								lastName:model.lastName,
 								biinName:model.biinName,
+								email:model.email,
 								password:hash,
 								gender:model.gender,
 								joinDate:joinDate,
