@@ -212,7 +212,7 @@ module.exports = function(){
 				});			
 		}
 		else{
-			res.send({data:{status:0006,errors:errors}});
+			res.send({data:{status:"6",errors:errors}});
 		}
 	}
 
