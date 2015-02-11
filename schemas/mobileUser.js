@@ -6,11 +6,11 @@ var bcrypt= require('bcrypt');
 var validations={
 	required :['firstName','lastName','biinName','password','gender'],
 	len :[
-			{field:'firstName',min:3,max:40},
+			/*{field:'firstName',min:3,max:40},
 			{field:'lastName',min:3,max:40},
 			{field:'biinName',min:3,max:40},
 			{field:'gender',min:3,max:40},
-			{field:'password',min:6,max:20}
+			{field:'password',min:6,max:20}*/
 		],
 	email:['biinName']
 };

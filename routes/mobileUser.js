@@ -175,7 +175,7 @@ module.exports = function(){
 		if(!errors){
 			mobileUser.findOne({biinName:model.biinName},function(err,mobileUserAccount){
 					if(mobileUserAccount){
-						res.json({data:{status:1,identifier:""}});
+						res.json({data:{status:"1",identifier:""}});
 					}else{
 						bcrypt.hash(model.password, 11, function (err, hash) {
 							var joinDate = utils.getDateNow();
@@ -196,13 +196,13 @@ module.exports = function(){
 							//Save The Model
 							newModel.save(function(err){
 								if(err)
-									res.json({data:{status:5,identifier:""}});	
+									res.json({data:{status:"5",identifier:""}});	
 								else{
 
 									//Send the verification of the e-mail
 									sendVerificationMail(req,newModel,function(){
 										//callback of mail verification
-										res.json({data:{status:0,identifier:identifier}});	
+										res.json({data:{status:"0",identifier:identifier}});	
 									});
 								}
 																	
@@ -245,10 +245,10 @@ module.exports = function(){
 		res.setHeader('Content-Type', 'application/json');
 		mobileUser.findOne({identifier:identifier, accountState:true},function(err, foundBinnie){
 			if(err)
-				res.json({data:{status:7,result:""}})
+				res.json({data:{status:"7",result:""}})
 			else{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
-				res.json({data:{status:0, result:result}});
+				res.json({data:{status:"0", result:result}});
 			}
 		});
 	}
