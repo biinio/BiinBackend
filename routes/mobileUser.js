@@ -202,7 +202,7 @@ module.exports = function(){
 									//Send the verification of the e-mail
 									sendVerificationMail(req,newModel,function(){
 										//callback of mail verification
-										res.json({data:{status:"0",identifier:identifier}});	
+										res.json({data:{status:"0", result"1",identifier:identifier}});	
 									});
 								}
 																	
