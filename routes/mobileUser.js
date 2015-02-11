@@ -31,9 +31,17 @@ module.exports = function(){
 		var identifier= req.param('identifier');
 
 		//Find the mobile user
-		/*mobileUser.findOne({identifier:identifier},{"identifier":1, "biinName":1,"firstName":1,"lastName":1,"imgUrl":1},function(errors,foundBinnie){
-
-		});*/
+		mobileUser.findOne({identifier:identifier},{"identifier":1, "biinName":1,"firstName":1,"lastName":1,"imgUrl":1},function(err,foundBinnie){
+			if(err)
+				res.json({data:{status:"5",result:""}});
+			else{
+				var isFound = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
+				if(!isFound)
+					res.json({data:{status:"7",result:""}});
+				else
+					res.json({data:{status:"0",data:foundBinnie}});
+			}
+		});
 
 		/*
 
@@ -157,12 +165,12 @@ module.exports = function(){
 					foundBinnie.comparePassword(password,function(err,isMath){
 					identifier = foundBinnie.identifier;
 					var isMathToString = isMath? "1":"0";
-					res.json({data:{status:"0", result:isMathToString, identifier:identifier}});
+					var code = isMath ? "0" :"8";
+					res.json({data:{status: code, result:isMathToString, identifier:identifier}});
 				})
 					
 				}else{
-					var isMathToString = result? "1":"0";
-					res.json({data:{status:"0", result:result, identifier:identifier}});					
+					res.json({data:{status:"7", result:"0", identifier:identifier}});					
 				}
 				
 			}
