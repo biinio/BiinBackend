@@ -196,13 +196,13 @@ module.exports = function(){
 							//Save The Model
 							newModel.save(function(err){
 								if(err)
-									res.json({data:{status:"5",identifier:""}});	
+									res.json({data:{status:"5", result:"0",identifier:""}});	
 								else{
 
 									//Send the verification of the e-mail
 									sendVerificationMail(req,newModel,function(){
 										//callback of mail verification
-										res.json({data:{status:"0", result"1",identifier:identifier}});	
+										res.json({data:{status:"0", result:"1",identifier:identifier}});	
 									});
 								}
 																	
