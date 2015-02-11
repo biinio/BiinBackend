@@ -19,6 +19,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var mobileOauthManager= require('./mobileOauthManager');
     var stickers = require('../routes/stickers')();
     var mobileRoutes = require('../routes/mobileRoutes')();
+
     //Application routes
     app.get('/sendEmail', routes.sendEmail)
     app.get('/partials/:filename', routes.partials);
@@ -147,11 +148,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Mobile Binnies services
     app.get('/mobile/binnies/:firstName/:lastName/:biinName/:password/:gender',mobileUser.setMobileByURLParams);
     app.get('/mobile/binnies/auth/:user/:password',mobileUser.login);
+    app.get('/mobile/binnies/:identifier',mobileUser.getProfile);
     app.put('/mobile/binnies',mobileUser.setMobile);
     app.get('/mobile/binnies/:identifier/isactivate',mobileUser.isActivate);
     app.get('/binnie/:identifier/activate',mobileUser.activate);
     app.post('/binnie/:identifier/activate',mobileUser.activate);
-    
+
     //Mobile routes    
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
     app.put('/mobile/client',passport.authenticate(['mobileClientBasic', 'mobileClientPassword']), mobileUser.set);

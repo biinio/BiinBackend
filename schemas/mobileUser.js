@@ -40,6 +40,9 @@ var mobileUserSchema=new Schema({
 	userBiined:String,
 	userCommented:String,
 	userShared:String,
+	biiins:{type:String, default:"0"},
+	following:{type:String, default:"0"},
+	followers:{type:String, default:"0"},
 	friends:[],
 	//Activity of the user in the app
 	actvityHistory:[],

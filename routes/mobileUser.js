@@ -31,31 +31,17 @@ module.exports = function(){
 		var identifier= req.param('identifier');
 
 		//Find the mobile user
-		mobileUser.findOne({identifier:identifier},{"identifier":1, "biinName":1,"firstName":1,"lastName":1,"imgUrl":1},function(err,foundBinnie){
+		mobileUser.findOne({identifier:identifier},{"identifier":1, "biinName":1,"firstName":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1},function(err,foundBinnie){
 			if(err)
 				res.json({data:{status:"5",result:""}});
 			else{
 				var isFound = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
 				if(!isFound)
-					res.json({data:{status:"7",result:""}});
+					res.json({data:{status:"7"}});
 				else
-					res.json({data:{status:"0",data:foundBinnie}});
+					res.json({data:{status:"0",result:foundBinnie}});
 			}
 		});
-
-		/*
-
-		"identifier": "@epadilla",
-        "biinName":"@epadilla",
-        "name": "Esteban",
-        "lastName":"Padilla",
-        "email":"epadilla@mail.com",
-        "avatarUrl": "http://s3-us-west-2.amazonaws.com/biintest/BiinJsons/biinieImages/@epadilla.jpg",
-        "biins":"234",
-        "following":"456",
-        "followers":"567",
-		"friends": 
-		*/
 	}
 
 	//PUT a new Mobile User
@@ -149,6 +135,7 @@ module.exports = function(){
 		req.body.model = model;
 		functions.setMobile(req,res);
 	}
+
 	//Get the authentication of the user **To change **Deprecated 
 	functions.login =function(req,res){
 		var user =req.param('user');
