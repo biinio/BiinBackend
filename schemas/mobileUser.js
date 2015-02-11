@@ -39,6 +39,7 @@ var mobileUserSchema=new Schema({
 	userBiined:String,
 	userCommented:String,
 	userShared:String,
+	friends:[],
 	//Activity of the user in the app
 	actvityHistory:[],
 	categories:[

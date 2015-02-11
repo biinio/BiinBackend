@@ -130,18 +130,26 @@ module.exports = function(){
 				if(result){
 					foundBinnie.comparePassword(password,function(err,isMath){
 					identifier = foundBinnie.identifier;
-
-					res.json({data:{status:0, result:isMath, identifier:identifier}});							
+					var isMathToString = isMath? "1":"0";
+					res.json({data:{status:"0", result:isMathToString, identifier:identifier}});							
 				})
 					
 				}else{
-					res.json({data:{status:0, result:result, identifier:identifier}});					
+					var isMathToString = isMath? "1":"0";
+					res.json({data:{status:"0", result:result, identifier:identifier}});					
 				}
 				
 			}
 			
 		})
 	}
+
+	//Get the profile of a biinnie
+	functions.getProfile = function(req,res){
+		var identifier= req.param('identifier');
+
+	}
+
 	//Set a new Mobile User 
 	functions.setMobile = function(req,res){
 
