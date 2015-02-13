@@ -11,7 +11,9 @@ module.exports = function () {
 
 	//Get the Login
 	functions.login = function (req,res) {
-		var is_ajax_request = req.xhr;
+
+		//The none ajax request is not available
+		var is_ajax_request = true;// req.xhr;
 		if(!is_ajax_request){
 			res.render('login',{title:'login'});
 		}
@@ -22,6 +24,7 @@ module.exports = function () {
 			}
 			res.json(obj);			
 		}
+
 	};
 
 	//Get the Dashboard
@@ -50,7 +53,8 @@ module.exports = function () {
 
 	//Get the dashboard
 	functions.dashboard = function (req,res) {
-		var is_ajax_request = req.xhr;
+		//The none ajax request is not available
+		var is_ajax_request = true;// req.xhr;
 		if(!is_ajax_request){
 			if(req.session.passport.user==undefined){
 				res.redirect('/login');

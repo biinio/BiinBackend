@@ -414,7 +414,7 @@ $(document).ready(function () {
 /*----------------------------------------------------*/
 /*	Form login cancel click action
  /*----------------------------------------------------*/
-$(document).ready(function() {
+/*$(document).ready(function() {
 
     $("body").on("click touch",".loginDropDown", function(e){
         e.stopPropagation();
@@ -530,7 +530,7 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
-});
+});*/
 /*----------------------------------------------------*/
 /*  Document Controls
 /*----------------------------------------------------*/

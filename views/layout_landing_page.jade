@@ -51,9 +51,11 @@ html(lang='es')
 			.nav.navbar-helper
 				ul.nav.navbar-nav.navbar-right
 					li(style='cursor: pointer;').dropdown
-						a.dropdown-toggle.iniciarSessionToggle(data-toggle='dropdown')
+						a.dropdown-toggle.iniciarSessionToggle(data-toggle='modal' data-target="#singUpModal")
+							| {{ "LOGIN" | translate }}					
+						//a.dropdown-toggle.iniciarSessionToggle(data-toggle='dropdown')
 							| {{ "LOGIN" | translate }}
-						ul.dropdown-menu.loginDropDown
+						//ul.dropdown-menu.loginDropDown
 							li
 								h4 Biin Dashboard login.
 								form.loginForm(action='/login', method='POST')
@@ -153,6 +155,7 @@ html(lang='es')
 					//End Footer Copy
 				//End container
 			//END FOOTER	
+		include _partials/singUpModal
 		//END CONTENT WRAPPER 
 		//EXTERNAL SCRIPTS=============================================
 		script(src='/landingPage/js/bootstrap.min.js', type='text/javascript')

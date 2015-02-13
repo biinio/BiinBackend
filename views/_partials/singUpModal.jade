@@ -1,0 +1,71 @@
+#singUpModal.modal.fade
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type="button" data-dismiss="modal" aria-label="close")
+					span(aria-hidden="true") &times;
+			.modal-body(ng-if="authView==='singin'")
+				.welComeText
+					h1 Wellcome
+					p على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم لأنها تعطي توزيعاَ طبيعياَ -إلى حد ما- للأحرف عوضاً عن استخدام "هنا يوجد محتوى نصي، هنا يوجد محتوى نصي" فتجعلها تبدو (أي الأحرف) وكأنها نص مقروء. العديد من برامح النشر المكتبي وبرامح تحرير صفحات الويب تستخدم لوريم إيبسوم بشكل إفتراضي كنموذج عن
+					.notifications
+						.alert.alert-info.alert-dismissible(role="alert" ng-if="processing")
+							button.close(data-dismiss="alert" aria-label="Close")
+								span(aria-hidden='true') &times;
+							strong  Processing please wait.
+						.alert.alert-danger.alert-dismissible(role="alert" ng-if="connectionError")
+							button.close(data-dismiss="alert" aria-label="Close")
+								span(aria-hidden='true') &times;
+							strong  Upps...!!, looks like was a problem with the request to server, lets try again...!!
+						.alert.alert-warning.alert-dismissible(role="alert" ng-if="credentialsError")
+							button.close(data-dismiss="alert" aria-label="Close")
+								span(aria-hidden='true') &times;
+							strong  Ohhh... User and Password does not match, try again..!!
+				.loginDropDown
+					form.loginForm
+						input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
+						input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password' login)
+						a.forgotPass.pull-right(href='') Forgot password?
+						div(data-toggle='buttons-checkbox')
+							.checkbox.stayLogged
+								label
+									input(type='checkbox')
+									| Stay Logged In
+							span.adviceLoggedIn.pull-left Keep me logged in until I log out
+							a#buttonLogin.btn.btn-theme.fulllWidth(ng-click="login()") 
+								span(ng-if="!processing") Login
+								span(ng-if="processing") processing...
+							a(ng-click="switchAuthView('singup')")#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up
+			.modal-body(ng-if="authView==='singup'")
+				.welComeText
+					h1 Wellcome to the singup
+					p Fill the fields below in order to register in biin APP.
+					.notifications
+						.alert.alert-info.alert-dismissible(role="alert" ng-if="processing")
+							button.close(data-dismiss="alert" aria-label="Close")
+								span(aria-hidden='true') &times;
+							strong  Processing please wait.
+						.alert.alert-danger.alert-dismissible(role="alert" ng-if="connectionError")
+							button.close(data-dismiss="alert" aria-label="Close")
+								span(aria-hidden='true') &times;
+							strong  Upps...!!, looks like was a problem with the request to server, lets try again...!!
+						.alert.alert-warning.alert-dismissible(role="alert" ng-if="credentialsError")
+							button.close(data-dismiss="alert" aria-label="Close")
+								span(aria-hidden='true') &times;
+							strong  Ohhh... User and Password does not match, try again..!!
+				.loginDropDown
+					form.loginForm
+						input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
+						input.form-control.input-block-level(name='company', type='text', placeholder='company')							
+						input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password' login)
+						input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='confirm password' login)
+						div(data-toggle='buttons-checkbox')
+							.checkbox.stayLogged
+								label
+									input(type='checkbox')
+									| Stay Logged In
+							span.adviceLoggedIn.pull-left Keep me logged in until I log out
+							a#buttonLogin.btn.btn-theme.fulllWidth(ng-click="singup()")
+								span(ng-if="!processing") Sing up
+								span(ng-if="processing") processing...
+							a(ng-click="switchAuthView('singin')").btn.btn-theme.btn-signUp.fulllWidth Login

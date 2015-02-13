@@ -147,12 +147,14 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Mobile Binnies services
     app.get('/mobile/binnies/:firstName/:lastName/:biinName/:password/:gender',mobileUser.setMobileByURLParams);
-    app.get('/mobile/binnies/auth/:user/:password',mobileUser.login);
-    app.get('/mobile/binnies/:identifier',mobileUser.getProfile);
+    app.get('/mobile/binnies/:identifier/isactivate', mobileUser.isActivate);
+    app.post('/mobile/binnies/:identifier/categories', mobileUser.setCategories);
+    app.get('/mobile/binnies/auth/:user/:password', mobileUser.login);
+    app.get('/mobile/binnies/:identifier',mobileUser.getProfile);    
     app.put('/mobile/binnies',mobileUser.setMobile);
     app.get('/mobile/binnies/:identifier/isactivate',mobileUser.isActivate);
     app.get('/binnie/:identifier/activate',mobileUser.activate);
-    app.post('/binnie/:identifier/activate',mobileUser.activate);
+    app.post('/binnie/:identifier/activate',mobileUser.activate);    
 
     //Mobile routes    
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);

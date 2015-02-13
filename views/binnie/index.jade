@@ -28,17 +28,20 @@ block content
 						.row.section
 							.col-md-6
 								h2 Binnie main Information
-							.col-md-6
+							.col-md-6								
 								img(ng-if="binnies[selectedBinnie].imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
 								img(ng-if="binnies[selectedBinnie].imgUrl.length>0" style="max-width:140px;" ng-src="{{binnies[selectedBinnie].imgUrl}}"  pending-indicator)
 								a.btn.btn-default(upload-binnie-image="#binnieInput") Upload Biinie Image
 								input.hidden#binnieInput(type="file")								
-							.col-md-4								
+							.col-md-4
+								label Identifier: {{binnies[selectedBinnie].identifier}}	
 								input.form-control(type="text" ng-model="binnies[selectedBinnie].firstName" placeholder="First Name")
 								input.form-control(type="text" ng-model="binnies[selectedBinnie].lastName" placeholder="Last Name")
 								input.form-control(type="text" ng-model="binnies[selectedBinnie].biinName" placeholder="Biin Name")
 								input.form-control(type="password" ng-model="binnies[selectedBinnie].password" placeholder="Password" ng-if="binnies[selectedBinnie].isNew===true")
-								label Password: *****************
+								label Email verificado: {{binnies[selectedBinnie].accountState}}
+								br
+								label Password: {{binnies[selectedBinnie].tempPassword}}
 							.col-md-4							
 								input.form-control(type="text" ng-model="binnies[selectedBinnie].birthDate" placeholder="Birth Date")
 								input.form-control(type="text" ng-model="binnies[selectedBinnie].gender" placeholder="Gender")

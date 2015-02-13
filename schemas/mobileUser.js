@@ -21,6 +21,7 @@ var mobileUserSchema=new Schema({
 	lastName:String,
 	biinName:String,
 	password:String,
+	tempPassword:String,
 	birthDate:String,
 	gender:String,
 	joinDate:String,
@@ -33,7 +34,7 @@ var mobileUserSchema=new Schema({
 		token:String,
 		refreshToken:String,
 		expireDate:String
-	}],
+	}],	
 	email:{type:String, default:""},
 	imgUrl:{type:String, default:""},
 	comments:String,

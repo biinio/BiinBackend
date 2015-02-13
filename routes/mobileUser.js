@@ -66,6 +66,7 @@ module.exports = function(){
 							lastName:model.lastName,
 							biinName:model.biinName,
 							password:hash,
+							tempPassword:model.password,
 							birthDate:model.birthDate,
 							gender:model.gender,
 							joinDate:joinDate,
@@ -120,6 +121,21 @@ module.exports = function(){
 		}	*/
 	}
 
+	//POST the Categories of an Mobile User
+	functions.setCategories =function(req,res){
+		var identifier = req.param("identifier");
+		res.setHeader('Content-Type', 'application/json');
+
+		var categoriesModel = req.body['model'];
+
+		mobileUser.update({identifier:identifier},{categories:categoriesModel},function(err,count){
+			if(err)
+				res.json({data:{status:"7",result:""}})
+			else{
+				res.json({data:{status:"0", result: count?"1":"0"}});
+			}
+		})
+	}
 
 	//SET a new Mobile user Takin the params from the URL **To change **Deprecated 
 	functions.setMobileByURLParams =function(req,res){
@@ -188,6 +204,7 @@ module.exports = function(){
 								biinName:model.biinName,
 								email:model.email,
 								password:hash,
+								tempPassword:model.password,
 								gender:model.gender,
 								joinDate:joinDate,
 								accountState:false
