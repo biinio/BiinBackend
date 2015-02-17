@@ -19,7 +19,8 @@ passport.use('clientLocal',new LocalStrategy(
 		function(clientName, password, done) {
 
 			//var user = userSchema.find();
-			clientSchema.findOne({ name: clientName, accountState:true},function (err, client) {
+            //model
+			clientSchema.findOne({ name: clientName},function (err, client) {
 
 			if(client!=null && client!=undefined){
 				//Test the Password 

@@ -2398,3 +2398,19 @@ input[type="number"] {
 }
 
 
+/* ==========================================================================
+   Validation Indicators
+   ========================================================================== */
+
+input[require].ng-pristine{
+  border-color: #e74c3c;
+}
+
+input.ng-invalid.ng-dirty{
+  border-color:#e74c3c;
+}
+
+input.ng-valid.ng-dirty{
+  border-color: #2ecc71;
+}
+

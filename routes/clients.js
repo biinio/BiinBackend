@@ -1,7 +1,7 @@
 module.exports = function(){
 
     //Schemas
-	var client = require('../schemas/client');
+	var client = require('../schemas/client'), organization = require('../schemas/organization')
 	var utils = require('../biin_modules/utils')();
 	var functions ={}
 
@@ -14,24 +14,26 @@ module.exports = function(){
 	functions.createView = function(req,res){
 		res.render('client/create',req.client);
 	}
-	//Set the singup user information
+	
 	functions.set =function(req,res){
-	 	var model = req.body.model;
-	 	
+	 	var model = req.body.model;	 	
+	 	var company = req.body.model.company;
+
 		client.findOne({name:model.name},function(err,foundClient){
 			if(foundClient){
 				res.send(500,'The Account Name is already taken');
 			}else{
 
+				var organizationIdentifier = utils.getGUID();
+
+				var accountIdentifier= utils.getGUID();
 				var newModel = new client({
-						accountIdentifier: utils.getGUID(),
+						accountIdentifier: accountIdentifier,
 						name:model.name,
-						lastName:model.lastName,
-						displayName:model.displayName,						
 						password:model.password,
-						emails:model.emails,
-						phoneNumber:model.phoneNumber,
-                        accountState:false
+                        accountState:false,
+                        defaultOrganization:organizationIdentifier,
+                        emails:[model.name]
 					});
 
 					//Save The Model
@@ -39,13 +41,25 @@ module.exports = function(){
 						if(err)
 							throw err;
 						else{
-							//Sent the e-mail verification
-							sendVerificationMail(req,newModel,function(err){
-								if(err)
-									res.send(500);
-								else									
-									res.send(201);	
-							})							
+							//Create the default Organization and then send the e-mail verification
+							createDefaultOrganization(accountIdentifier,organizationIdentifier, company,function(organization){
+								//Sent the e-mail verification
+								sendVerificationMail(req,newModel,function(err){
+									if(err)
+										res.send(500);
+									else	
+										//login with the client								
+										req.logIn(newModel,function(err){
+											if(err)
+												res.json({status:1})
+											else{
+												req.session.defaultOrganization = organization;
+												//Return the state and the object
+												res.json({status:0,redirect:"/home"});
+											}
+										})						
+								});								
+							})						
 						}
 					});
 			}
@@ -94,6 +108,21 @@ module.exports = function(){
 		});		
 	}
 
+	//GET verify a e-mail availability
+	functions.verifyEmailAvailability=function (req,res){
+		var value =req.body.value;
+		if(value){
+			client.findOne({name:value},function(err,model){
+				if(err)
+					res.json({result:false});
+				res.json({result:typeof(model)==='undefined'|| model===null})
+			});
+		}else{
+			res.json({result:false});
+		}
+
+	}
+
 	//Set the activation of an user
 	functions.activate= function(req,res){
 
@@ -102,7 +131,7 @@ module.exports = function(){
 			if(err)
 				res.send(500,"The user was not found")
 			else{
-				if(foundClient==null || typeof(foundClient)==='undefined')
+				if( typeof(foundClient)==='undefined'|| foundClient==null)
 					res.send(500,"The user was not found")
 				foundClient.accountState=true;
 				foundClient.save(function(err){
@@ -180,6 +209,26 @@ module.exports = function(){
 		req.session.destroy();
 		req.logout();
 		res.redirect('/');
+	}
+
+	//Other Functions 
+	function createDefaultOrganization(accountIdentifier, organizationIdentifier, companyName , callback){
+	    var newModel = new organization();	    
+
+		//Set the account and de user identifier
+	    newModel.identifier=organizationIdentifier
+		newModel.accountIdentifier= accountIdentifier;
+		newModel.name=companyName;
+
+		//Perform an create
+		newModel.save(function(err){
+			if(err)
+				res.send(err, 500);
+			else{
+				//Return the state and the object
+				callback(newModel)
+			}
+		});			
 	}
 	return functions;
 }

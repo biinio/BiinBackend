@@ -37,26 +37,27 @@ Usage
 		spectrum.css
 		spectrum.js
 		angular-spectrum-colorpicker.min.js
-
 2. Add angular spectrum colorpicker module to your angular app
-
 ```javascript
 angular.module('yourFancyApp', ['angularSpectrumColorpicker']);
 ```
-
 3. Use the directive whereever you want
-
 ```html
 <spectrum-colorpicker ng-model="yourFancyModel"></spectrum-colorpicker>
 ```
-
-4. Customize colorpicker with spectrum params via the options attribute:
-
+ * (Optional) Customize colorpicker with spectrum params via the options attribute:
 ```html
-<spectrum-colorpicker ng-model="yourFancyModel" options="{showInput: true, showAlpha: true}"></spectrum-colorpicker>
+<spectrum-colorpicker
+  ng-model="yourFancyModel"
+  options="{showInput: true, showAlpha: true}">
+</spectrum-colorpicker>
 ```
-
 All valid options: [http://bgrins.github.io/spectrum/#options](http://bgrins.github.io/spectrum/#options)
+ * (Optional) Choose a output format
+```html
+<spectrum-colorpicker format="hex"></spectrum-colorpicker>
+```
+Changes the format of the final value. A list of formats can be found in the [spectrum documentation](http://bgrins.github.io/spectrum/#details-acceptedColorInputs).
 
 
 Initialize the source project
@@ -80,13 +81,25 @@ grunt demo
 Grunt Tasks
 -----------
 
- * `grunt`: Execute tests and build dist
- * `grunt demo`: Start a local webserver serving the demo html on port 8000
- * `grunt test`: All test
- * `grunt watch:start`: Watch source and test files and run karma on change
+ * `grunt`: Execute tests
+ * `grunt test`: Just test
+ * `grunt test:e2e`: Just test end to end
+ * `grunt test:unit`: Just test unit
+ * `grunt tdd`: Watch source and test files and run tests
+ * `grunt tdd:e2e`: Watch and test just end to end
+ * `grunt tdd:unit`: Watch and test just unit
  * `grunt build`: Just build
- * `grunt test:e2e`: Just test end to end tests
  * `grunt release`: Test, build, bump patch version, commit, add version tag and push
+
+ `test` tasks have a `--browsers` option to specify the browsers you want to use
+
+ Browsers can also be set by the following environment-variables
+ ```
+   PROTRACTOR_BROWSERS=Firefox,Chrome
+   KARMA_BROWSERS=Firefox,PhantomJS
+ ```
+
+_See Gruntfile.js and tasks/options for all task details._
 
 
 LICENSE

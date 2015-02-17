@@ -133,6 +133,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Client routes
     app.get('/client',clients.create);
     app.get('/logout',clients.logout);
+    app.post('/api/clients/verify', clients.verifyEmailAvailability);
 
     //Stickers services
     app.get('/api/stickers',stickers.get);

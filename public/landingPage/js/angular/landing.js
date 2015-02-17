@@ -16,6 +16,7 @@ biinLandingPage.controller("indexController",['$translate','$scope', '$http',fun
   $scope.processing=false;
 
   $scope.succesSaveShow=false;  
+  $scope.singUpProcessing=false;  
   $scope.credentialsError=false;  
   $scope.connectionError=false;  
   $scope.authView="singin";
@@ -53,15 +54,26 @@ biinLandingPage.controller("indexController",['$translate','$scope', '$http',fun
   }
 
   //Validate the information
-  $scope.submit=function(){
+  $scope.singupClient=function(){
+      $scope.singUpProcessing =true;
       $http.post('api/singup',{model:$scope.profile}).success(function(data,status){
-        if(status==500){
-          displayValidationErrors(data);
-        }else{            
-            $scope.succesSaveShow=true;
 
+        if(status==500){  
+          displayValidationErrors(data);
+          $scope.singUpProcessing =false;
+        }else{            
+            if(data.status!==0){
+
+              displayValidationErrors(data);
+              $scope.singUpProcessing =false;
+            }
+            else{
+              changeLocation(data.redirect,true);
+              $scope.singUpProcessing =false;
+            }
         }
       });
+
   }
 
   //Login Procesing
@@ -139,7 +151,36 @@ biinLandingPage.controller("indexController",['$translate','$scope', '$http',fun
   $scope.switchAuthView=function(method){
     $scope.authView = method; 
   }
-  
+
+  //Verify the user e-mail availability
+  $scope.verifyEmail =function(value, callback){
+
+    $http.post('/api/clients/verify',{value:value}).success(function(data,status){
+      if(status==500){
+        callback(false);
+      }else{ 
+        callback(data.result);
+      }
+    });
+
+  }
+
+
+  //Change location
+  var changeLocation = function(url, forceReload) {
+    $scope = $scope || angular.element(document).scope();
+    if(forceReload || $scope.$$phase) {
+      window.location = url;
+    }
+    else {
+      //only use this if you want to replace the history stack
+      //$location.path(url).replace();
+
+      //this this if you want to change the URL and add it to the history stack
+      $location.path(url);
+      $scope.$apply();
+    }
+  };
 }]);
 
 //Directive for login when press the enter key
@@ -157,5 +198,49 @@ biinLandingPage.directive("login",function(){
   }
 });
 
+//Verify Password directive
+biinLandingPage.directive("verifypassword",function(){
+  return{
+    require:"ngModel",
+    link: function(scope, elm, attrs, ctrl){
+        ctrl.$validators.verifypassword=function(modelValue,viewValue){
+          if(ctrl.$isEmpty(modelValue))
+            return true;
 
+          if(viewValue === scope.profile.password)
+            return true;
+          return false;
+        }
+      }
+    }
+  });
+
+//Verify  e-mail availability
+biinLandingPage.directive("verifyemail",function($q){
+  return{
+    require:"ngModel",
+    link: function(scope, elm, attrs, ctrl){
+        ctrl.$asyncValidators.verifyemail=function(modelValue,viewValue){
+          if(ctrl.$isEmpty(modelValue))
+            return $q.when();
+
+          var def = $q.defer();
+
+          //Verify the e-mail
+          scope.verifyEmail(viewValue,function(result){
+            if(result)
+              def.resolve()
+            else
+              def.reject();
+
+          });
+
+          if(viewValue === scope.profile.password)
+            return true;
+
+          return def.promise;
+        }
+      }
+    }
+  });
 

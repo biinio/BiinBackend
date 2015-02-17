@@ -22,7 +22,7 @@
 								span(aria-hidden='true') &times;
 							strong  Ohhh... User and Password does not match, try again..!!
 				.loginDropDown
-					form.loginForm
+					form.loginForm(no-validate)
 						input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
 						input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password' login)
 						a.forgotPass.pull-right(href='') Forgot password?
@@ -54,18 +54,23 @@
 								span(aria-hidden='true') &times;
 							strong  Ohhh... User and Password does not match, try again..!!
 				.loginDropDown
-					form.loginForm
-						input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
-						input.form-control.input-block-level(name='company', type='text', placeholder='company')							
-						input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password' login)
-						input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='confirm password' login)
+					form.loginForm(name="singupForm" no-validate)
+						input.form-control.input-block-level(name='username', type='email', placeholder='e-mail' ng-model="profile.name" ng-model-options="{ updateOn: 'blur' }" required verifyemail )
+						span.form-control.input-block-level.alert.alert-info(ng-show="singupForm.username.$pending.verifyemail") Verifying the e-mail availability...						
+						span.form-control.input-block-level.aler.alert-danger(ng-show="singupForm.username.$error.verifyemail") The e-mail is not available, please try other.
+						span.form-control.input-block-level.aler.alert-danger(ng-show="singupForm.username.$error.email") Please enter a valid e-mail.
+						input.form-control.input-block-level(name='company', type='text', placeholder='company' ng-model="profile.company" required )
+						input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password' ng-model="profile.password" login required)
+						input#passwordInput.form-control.input-block-level(name='verifyPassword', type='password', placeholder='confirm password' ng-model="profile.verifyPassword" ng-model-options="{ updateOn: 'blur' }" verifypassword  login)
+						span.form-control.input-block-level.alert.alert-danger(ng-show="singupForm.verifyPassword.$error.verifypassword") Ohh the password doesn't match!!
 						div(data-toggle='buttons-checkbox')
 							.checkbox.stayLogged
 								label
 									input(type='checkbox')
 									| Stay Logged In
 							span.adviceLoggedIn.pull-left Keep me logged in until I log out
-							a#buttonLogin.btn.btn-theme.fulllWidth(ng-click="singup()")
-								span(ng-if="!processing") Sing up
-								span(ng-if="processing") processing...
+						div(ng-show="singUpProcessing===false")
+							input.btn.btn-theme.fulllWidth(type="submit" ng-click="singupClient()" value="Sing up" ng-disabled="singupForm.$invalid")
 							a(ng-click="switchAuthView('singin')").btn.btn-theme.btn-signUp.fulllWidth Login
+						div(ng-show="singUpProcessing===true")
+							span processing the sing up, please wait...
