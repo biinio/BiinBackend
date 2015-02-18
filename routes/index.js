@@ -30,8 +30,8 @@ module.exports = function () {
 	//Get the Dashboard
 	functions.home = function(req,res){
 		//var organization={};
-		if(typeof(req.session.defaultOrganization)==='undefined')
-			if(typeof(req.user.defaultOrganization)!='undefined' && req.user.defaultOrganization!='')
+		if(typeof(req.session.defaultOrganization)==='undefined'){
+			if(typeof(req.user.defaultOrganization)!=='undefined' && req.user.defaultOrganization!=='')
 				organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.user.defaultOrganization},{name:true, identifier:true},function (err, data) {
 					//set the first time for the data
 					req.session.defaultOrganization = data;					
@@ -39,10 +39,11 @@ module.exports = function () {
 				});
 			else{
 				req.user.defaultOrganization = null;
-				res.render('homeDashboard',{title:'Welcome!',user:req.user});	
-			}				
+				res.render('homeDashboard',{title:'Welcome!',user:req.user, organization:req.user.defaultOrganization});	
+			}
+		}				
 		else
-			res.render('homeDashboard',{title:'Welcome!',user:req.user});	
+			res.render('homeDashboard',{title:'Welcome!',user:req.user,organization:req.session.defaultOrganization});	
 	}
 
 	//Get the SingUp information of a client
