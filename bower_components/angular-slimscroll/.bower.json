@@ -31,6 +31,7 @@
     "commit": "02569589f84a56a478c2a31ac36366cea7afb6c2"
   },
   "_source": "git://github.com/ziscloud/angular-slimscroll.git",
-  "_target": "*",
-  "_originalSource": "angular-slimscroll"
+  "_target": "~1.1.2",
+  "_originalSource": "angular-slimscroll",
+  "_direct": true
 }

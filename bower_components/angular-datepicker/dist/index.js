@@ -235,23 +235,23 @@ Module.directive('datePicker', function datePickerDirective(datePickerConfig) {
       };
 
       scope.isSameMonth = function (date) {
-        return scope.isSameYear(date) && new Date(scope.model).getMonth() === date.getMonth();
+        return scope.isSameYear(date) && scope.model.getMonth() === date.getMonth();
       };
 
       scope.isSameYear = function (date) {
-        return (scope.model ? new Date(scope.model).getFullYear() === date.getFullYear() : false);
+        return (scope.model ? scope.model.getFullYear() === date.getFullYear() : false);
       };
 
       scope.isSameDay = function (date) {
-        return scope.isSameMonth(date) && new Date(scope.model).getDate() === date.getDate();
+        return scope.isSameMonth(date) && scope.model.getDate() === date.getDate();
       };
 
       scope.isSameHour = function (date) {
-        return scope.isSameDay(date) && new Date(scope.model).getHours() === date.getHours();
+        return scope.isSameDay(date) && scope.model.getHours() === date.getHours();
       };
 
       scope.isSameMinutes = function (date) {
-        return scope.isSameHour(date) && new Date(scope.model).getMinutes() === date.getMinutes();
+        return scope.isSameHour(date) && scope.model.getMinutes() === date.getMinutes();
       };
 
       scope.isNow = function (date) {

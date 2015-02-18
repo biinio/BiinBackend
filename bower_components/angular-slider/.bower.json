@@ -30,6 +30,7 @@
     "commit": "5820367308a7792d3fc670eeb6470daf33e66222"
   },
   "_source": "git://github.com/PopSugar/angular-slider.git",
-  "_target": "~0.2.3",
-  "_originalSource": "angular-slider"
+  "_target": "~0.2.14",
+  "_originalSource": "angular-slider",
+  "_direct": true
 }

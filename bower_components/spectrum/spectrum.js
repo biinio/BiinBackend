@@ -1,9 +1,21 @@
-// Spectrum Colorpicker v1.4.1
+// Spectrum Colorpicker v1.6.0
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
 
-(function (window, $, undefined) {
+(function (factory) {
+    "use strict";
+
+    if (typeof define === 'function' && define.amd) { // AMD
+        define(['jquery'], factory);
+    }
+    else if (typeof exports == "object" && typeof module == "object") { // CommonJS
+        module.exports = factory;
+    }
+    else { // Browser
+        factory(jQuery);
+    }
+})(function($, undefined) {
     "use strict";
 
     var defaultOpts = {
@@ -25,6 +37,7 @@
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
+        hideAfterPaletteSelect: false,
         togglePaletteOnly: false,
         showSelectionPalette: true,
         localStorageKey: false,
@@ -44,7 +57,8 @@
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
-        disabled: false
+        disabled: false,
+        offset: null
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -324,7 +338,8 @@
             cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                hide("cancel");
+                revert();
+                hide();
             });
 
             clearButton.attr("title", opts.clearText);
@@ -448,7 +463,9 @@
                     set($(e.target).closest(".sp-thumb-el").data("color"));
                     move();
                     updateOriginalInput(true);
-                    hide();
+                    if (opts.hideAfterPaletteSelect) {
+                      hide();
+                    }
                 }
 
                 return false;
@@ -601,7 +618,7 @@
             hideAll();
             visible = true;
 
-            $(doc).bind("click.spectrum", hide);
+            $(doc).bind("click.spectrum", clickout);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
@@ -616,31 +633,29 @@
             boundElement.trigger('show.spectrum', [ colorOnShow ]);
         }
 
-        function hide(e) {
+        function clickout(e) {
+            // Return on right click.
+            if (e.button == 2) { return; }
 
-            // Return on right click
-            if (e && e.type == "click" && e.button == 2) { return; }
+            if (clickoutFiresChange) {
+                updateOriginalInput(true);
+            }
+            else {
+                revert();
+            }
+            hide();
+        }
 
+        function hide() {
             // Return if hiding is unnecessary
             if (!visible || flat) { return; }
             visible = false;
 
-            $(doc).unbind("click.spectrum", hide);
+            $(doc).unbind("click.spectrum", clickout);
             $(window).unbind("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
             container.addClass("sp-hidden");
-
-            var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
-
-            if (colorHasChanged) {
-                if (clickoutFiresChange && e !== "cancel") {
-                    updateOriginalInput(true);
-                }
-                else {
-                    revert();
-                }
-            }
 
             callbacks.hide(get());
             boundElement.trigger('hide.spectrum', [ get() ]);
@@ -840,8 +855,6 @@
                 boundElement.val(displayColor);
             }
 
-            colorOnShow = color;
-
             if (fireCallback && hasChanged) {
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
@@ -860,7 +873,11 @@
 
             if (!flat) {
                 container.css("position", "absolute");
-                container.offset(getOffset(container, offsetElement));
+                if (opts.offset) {
+                    container.offset(opts.offset);
+                } else {
+                    container.offset(getOffset(container, offsetElement));
+                }
             }
 
             updateHelperLocations();
@@ -905,6 +922,11 @@
             offsetElement.addClass("sp-disabled");
         }
 
+        function setOffset(coord) {
+            opts.offset = coord;
+            reflow();
+        }
+
         initialize();
 
         var spect = {
@@ -915,6 +937,7 @@
             option: option,
             enable: enable,
             disable: disable,
+            offset: setOffset,
             set: function (c) {
                 set(c);
                 updateOriginalInput();
@@ -990,7 +1013,7 @@
         onmove = onmove || function () { };
         onstart = onstart || function () { };
         onstop = onstop || function () { };
-        var doc = element.ownerDocument || document;
+        var doc = document;
         var dragging = false;
         var offset = {};
         var maxHeight = 0;
@@ -1016,11 +1039,11 @@
         function move(e) {
             if (dragging) {
                 // Mouseup happened outside of window
-                if (IE && document.documentMode < 9 && !e.button) {
+                if (IE && doc.documentMode < 9 && !e.button) {
                     return stop();
                 }
 
-                var touches = e.originalEvent.touches;
+                var touches = e.originalEvent && e.originalEvent.touches;
                 var pageX = touches ? touches[0].pageX : e.pageX;
                 var pageY = touches ? touches[0].pageY : e.pageY;
 
@@ -1038,7 +1061,6 @@
 
         function start(e) {
             var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
-            var touches = e.originalEvent.touches;
 
             if (!rightclick && !dragging) {
                 if (onstart.apply(element, arguments) !== false) {
@@ -1150,7 +1172,7 @@
         }
     };
 
-    // TinyColor v1.0.0
+    // TinyColor v1.1.1
     // https://github.com/bgrins/TinyColor
     // Brian Grinstead, MIT License
 
@@ -1180,6 +1202,7 @@
         }
 
         var rgb = inputToRGB(color);
+        this._originalInput = color,
         this._r = rgb.r,
         this._g = rgb.g,
         this._b = rgb.b,
@@ -1209,6 +1232,9 @@
         },
         isValid: function() {
             return this._ok;
+        },
+        getOriginalInput: function() {
+          return this._originalInput;
         },
         getFormat: function() {
             return this._format;
@@ -2026,6 +2052,7 @@
         plum: "dda0dd",
         powderblue: "b0e0e6",
         purple: "800080",
+        rebeccapurple: "663399",
         red: "f00",
         rosybrown: "bc8f8f",
         royalblue: "4169e1",
@@ -2173,6 +2200,7 @@
             hsl: new RegExp("hsl" + PERMISSIVE_MATCH3),
             hsla: new RegExp("hsla" + PERMISSIVE_MATCH4),
             hsv: new RegExp("hsv" + PERMISSIVE_MATCH3),
+            hsva: new RegExp("hsva" + PERMISSIVE_MATCH4),
             hex3: /^([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
             hex6: /^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
             hex8: /^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
@@ -2214,6 +2242,9 @@
         if ((match = matchers.hsv.exec(color))) {
             return { h: match[1], s: match[2], v: match[3] };
         }
+        if ((match = matchers.hsva.exec(color))) {
+            return { h: match[1], s: match[2], v: match[3], a: match[4] };
+        }
         if ((match = matchers.hex8.exec(color))) {
             return {
                 a: convertHexToDecimal(match[1]),
@@ -2253,4 +2284,4 @@
         }
     });
 
-})(window, jQuery);
+});
