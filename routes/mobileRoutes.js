@@ -58,28 +58,48 @@ module.exports =function(){
 
 					//Get The sites by Each Category
 					var categoriesProcessed = 0;
-					//Order the sites by Category Identifier
-					for(var i=0; i< foundCategories.categories.length;i++){
-						//var categorySites = _.where(sitesCategories.sites, {categories});
+					var categoriesKeys =  _.pluck(foundCategories.categories,"identifier")
 
-						//Return the sites by Categories
-						organization.find({'sites.categories.identifier':{$in:foundCategories.categories[i].identifier}},{"_id":0,"sites.identifier":1},function(err,sitesCategories){
-							categoriesProcessed++;
-							if(err)
-								res.json({data:{status:"5",data:{}}});
-							else
-							{
-								var allSites = _.pluck(sitesCategories,"sites");
-								result.categories.push({"identifier":foundCategories.categories[i].identifier, sites:allSites});
 
-								//Return the categories if all is processed
-								if(categoriesProcessed===foundCategories.categories.length){
-									result.status=0;
-									res.json(result);
+					var getSitesByCat = function(pcategory,callback){
+							//Return the sites by Categories
+							organization.find({'sites.categories.identifier':pcategory},{"_id":0,"sites.identifier":1},function(err,sitesCategories){
+								categoriesProcessed++;
+								if(err)
+									res.json({data:{status:"5",data:{}}});
+								else
+								{
+									var allSites = _.pluck(sitesCategories,"sites");
+									var sitesResult=[];
+
+									//Remove the Organization
+									for(var orgIndex =0; orgIndex<allSites.length; orgIndex++){
+										for(var siteIndex=0; siteIndex<allSites[0].length ;siteIndex++)
+											sitesResult.push(allSites[orgIndex][siteIndex]);
+									}	
+
+									callback({"identifier":pcategory, sites:sitesResult});
+									
 								}
-							}
 
-						});						
+							});								
+					}
+					//Order the sites by Category Identifier
+					for(var i=0; i< categoriesKeys.length;i++){
+						//var categorySites = _.where(sitesCategories.sites, {categories});
+						
+						getSitesByCat(categoriesKeys[i],function(categorySite){
+							result.data.categories.push(categorySite);
+							categoriesProcessed++;
+							
+							//Return the categories if all is processed
+							if(categoriesProcessed===foundCategories.categories.length){
+								result.status=0;
+								res.json(result);
+							}							
+						})
+						
+						
 					}					
 
 				}else{
