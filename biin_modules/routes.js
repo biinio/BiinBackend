@@ -140,11 +140,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/stickers/create',stickers.set);
 
     //Binnies Routes
-    app.get('/binnies',mobileUser.index);
-    app.get('/api/binnies',mobileUser.get);
-    app.put('/api/binnies',mobileUser.set);
-    app.delete('/api/binnies/:identifier',mobileUser.delete); 
-    app.post('/api/binnies/:identifier/image',multipartMiddleware,mobileUser.uploadImage); 
+    app.get('/biinies',mobileUser.index);
+    app.get('/api/biinies',mobileUser.get);
+    app.put('/api/biinies',mobileUser.set);
+    app.delete('/api/biinies/:identifier',mobileUser.delete); 
+    app.post('/api/biinies/:identifier/image',multipartMiddleware,mobileUser.uploadImage); 
 
     //Mobile Binnies services
     app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender',mobileUser.setMobileByURLParams);
