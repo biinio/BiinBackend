@@ -47,11 +47,11 @@ module.exports =function(){
 			if(err){
 
 			}else{
-				
-				if(categories){
+
+				/*if(categories){
 					for(var i =0; i< categories.length)			
 					//Get The sites by Each Category
-				}	
+				}*/	
 			}
 		});
 	}

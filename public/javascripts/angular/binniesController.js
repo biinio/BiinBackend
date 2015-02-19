@@ -7,7 +7,7 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
   $scope.currentModelId="";
   var protoTypeObj = null;
   //Get the binnies list
-  $http.get('api/binnies').success(function(data){
+  $http.get('api/biinies').success(function(data){
     $scope.binnies= data.data;
     $scope.protoTypeObj = data.prototype;
   });
@@ -31,7 +31,7 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
 
   //Save the Biinie information
   $scope.save = function(){
-    $http.put('api/binnies',{model:$scope.binnies[$scope.selectedBinnie]}).success(function(data,status){
+    $http.put('api/biinies',{model:$scope.binnies[$scope.selectedBinnie]}).success(function(data,status){
       if(status==201){
         console.log("save")       
         if('isNew' in $scope.binnies[$scope.selectedBinnie])
@@ -54,7 +54,7 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
     }else//If the element is new is not in the data base      
     {
       var binnieId = $scope.binnies[index].identifier;      
-      $http.delete('api/binnies/'+binnieId).success(function(data,status){
+      $http.delete('api/biinies/'+binnieId).success(function(data,status){
           if(status===200){
                $scope.binnies.splice(index,1);
           }
@@ -133,7 +133,7 @@ biinAppBinnies.directive('uploadBinnieImage',function(){
             // now post a new XHR request
             var xhr = new XMLHttpRequest();
 
-            xhr.open('POST', 'api/binnies/'+scope.currentModelId+'/image');
+            xhr.open('POST', 'api/biinies/'+scope.currentModelId+'/image');
             xhr.onload = function (data) {
               if (xhr.status === 200) {
                 var obj= $.parseJSON(xhr.response);
