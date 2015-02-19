@@ -1,8 +1,10 @@
 module.exports =function(){
 	var fs=require('fs');
+	var _= require('underscore');
 	var functions ={};
-	var client = require('../schemas/client');
-
+	var mobileUser = require('../schemas/mobileUser');
+	var organization = require('../schemas/organization');
+	
 	//GET Categories
 	/*functions.getCategories=function(req,res){
 		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getCategories.json", "utf8");		
@@ -42,16 +44,47 @@ module.exports =function(){
 		var xcord = req.param("xcord");
 		var ycord = req.param("ycord");
 
+		//Todo Implements Coordinates routes
+
 		//Get the categories of the user
-		client.findOne({identifier:userIdentifier},{categories:1},function(err,categories){			
+		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1},function(err,foundCategories){			
 			if(err){
-
+				res.json({data:{status:"5",data:{}}});
 			}else{
+				if(foundCategories && "categories" in foundCategories){
 
-				/*if(categories){
-					for(var i =0; i< categories.length)			
+					//var catArray = _.pluck(foundCategories.categories,'identifier')
+					var result = {data:{categories:[]}};
+
 					//Get The sites by Each Category
-				}*/	
+					var categoriesProcessed = 0;
+					//Order the sites by Category Identifier
+					for(var i=0; i< foundCategories.categories.length;i++){
+						//var categorySites = _.where(sitesCategories.sites, {categories});
+
+						//Return the sites by Categories
+						organization.find({'sites.categories.identifier':{$in:foundCategories.categories[i].identifier}},{"_id":0,"sites.identifier":1},function(err,sitesCategories){
+							categoriesProcessed++;
+							if(err)
+								res.json({data:{status:"5",data:{}}});
+							else
+							{
+								var allSites = _.pluck(sitesCategories,"sites");
+								result.categories.push({"identifier":foundCategories.categories[i].identifier, sites:allSites});
+
+								//Return the categories if all is processed
+								if(categoriesProcessed===foundCategories.categories.length){
+									result.status=0;
+									res.json(result);
+								}
+							}
+
+						});						
+					}					
+
+				}else{
+					res.json({data:{status:"9",data:{}}});	
+				}
 			}
 		});
 	}
