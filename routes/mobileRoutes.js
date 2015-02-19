@@ -67,7 +67,7 @@ module.exports =function(){
 						organization.find({'sites.categories.identifier':pcategory},{"_id":0,"sites.identifier":1},function(err,sitesCategories){
 							categoriesProcessed++;
 							if(err)
-								res.json({data:{status:"5",data:{}}});
+								res.json({data:{status:"5",data:{}, err:err}});
 							else
 							{
 								var allSites = _.pluck(sitesCategories,"sites");
