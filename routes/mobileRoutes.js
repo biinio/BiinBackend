@@ -58,28 +58,28 @@ module.exports =function(){
 
 					//Get The sites by Each Category
 					var categoriesProcessed = 0;
-					var categoriesKeys =  _.pluck(foundCategories.categories,"identifier")
-
 
 					///Get the Sites By categories
 					var getSitesByCat = function(pcategory, index, total, callback){
 						//Return the sites by Categories
-						var orgResult=organization.find({'sites.categories.identifier':pcategory},{"_id":0,"sites.identifier":1},function(err,sitesCategories){
+						var orgResult=organization.find({'sites.categories.identifier':pcategory},{"_id":0,"sites.identifier":1, "identifier":1},function(err,sitesCategories){
 							if(err)
 								res.json({data:{status:"5",data:{}, err:err}});
 							else
 							{
-								var allSites = _.pluck(sitesCategories,"sites");
 								var sitesResult=[];
 
 								//Remove the Organization
-								for(var orgIndex =0; orgIndex<allSites.length; orgIndex++){
-									for(var siteIndex=0; siteIndex<allSites[0].length ;siteIndex++)
-										sitesResult.push(allSites[orgIndex][siteIndex]);
+								for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){
+									if('sites' in sitesCategories[0])
+										for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){
+												sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
+										}
 								}	
 
 								//Callback function
-								callback(index,total,{"identifier":pcategory, sites:sitesResult});
+								var result = {'identifier' :pcategory, 'sites':sitesResult};
+								callback(index,total,result);
 								
 							}
 
@@ -88,7 +88,7 @@ module.exports =function(){
 					}
 
 					var finalCursor=function(index,total,data){
-						result.data.categories.push(data);
+						result.data.categories[index]=data;
 						categoriesProcessed++;
 
 						//Return the categories if all is processed
@@ -99,8 +99,8 @@ module.exports =function(){
 					}
 
 					//Order the sites by Category Identifier
-					for(var i=0; i< categoriesKeys.length;i++){						
-						getSitesByCat(categoriesKeys[i],i,categoriesKeys.length,finalCursor);						
+					for(var i=0; i< foundCategories.categories.length;i++){						
+						getSitesByCat(foundCategories.categories[i].identifier,i,foundCategories.categories.length,finalCursor);						
 					}					
 				}
 				else{
