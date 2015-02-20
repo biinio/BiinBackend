@@ -62,10 +62,9 @@ module.exports =function(){
 
 
 					///Get the Sites By categories
-					var getSitesByCat = function(pcategory,callback){
+					var getSitesByCat = function(pcategory, index, total, callback){
 						//Return the sites by Categories
-						organization.find({'sites.categories.identifier':pcategory},{"_id":0,"sites.identifier":1},function(err,sitesCategories){
-							categoriesProcessed++;
+						var orgResult=organization.find({'sites.categories.identifier':pcategory},{"_id":0,"sites.identifier":1},function(err,sitesCategories){
 							if(err)
 								res.json({data:{status:"5",data:{}, err:err}});
 							else
@@ -79,30 +78,32 @@ module.exports =function(){
 										sitesResult.push(allSites[orgIndex][siteIndex]);
 								}	
 
-								callback({"identifier":pcategory, sites:sitesResult});
+								//Callback function
+								callback(index,total,{"identifier":pcategory, sites:sitesResult});
 								
 							}
 
-						});								
+						});		
+
+					}
+
+					var finalCursor=function(index,total,data){
+						result.data.categories.push(data);
+						categoriesProcessed++;
+
+						//Return the categories if all is processed
+						if(categoriesProcessed===total){
+							result.status=0;
+							res.json(result);
+						}				
 					}
 
 					//Order the sites by Category Identifier
-					for(var i=0; i< categoriesKeys.length;i++){
-						//var categorySites = _.where(sitesCategories.sites, {categories});
-						
-						getSitesByCat(categoriesKeys[i],function(categorySite){
-							result.data.categories.push(categorySite);
-							categoriesProcessed++;
-
-							//Return the categories if all is processed
-							if(categoriesProcessed===foundCategories.categories.length){
-								result.status=0;
-								res.json(result);
-							}							
-						});												
+					for(var i=0; i< categoriesKeys.length;i++){						
+						getSitesByCat(categoriesKeys[i],i,categoriesKeys.length,finalCursor);						
 					}					
-
-				}else{
+				}
+				else{
 					res.json({data:{status:"9",data:{}}});	
 				}
 			}
