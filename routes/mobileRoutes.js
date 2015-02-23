@@ -138,6 +138,7 @@ module.exports =function(){
 			});
 	}
 
+	//Map the Site information
 	mapSiteMissingFields= function(model){
 		var newModel={};
 
@@ -187,5 +188,11 @@ module.exports =function(){
 		return newModel;
 	}
 
+
+	//Get a specific showcas
+	functions.getShowcase =function(req,res){
+		var showcase = req.param("identifier");
+		showcases.find("identifier")
+	}
 	return functions;
 }

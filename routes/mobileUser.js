@@ -39,7 +39,7 @@ module.exports = function(){
 				if(!isFound)
 					res.json({data:{status:"7"}});
 				else
-					res.json({data:{status:"0",result:foundBinnie}});
+					res.json({data:foundBinnie,status:"0"});
 			}
 		});
 	}
