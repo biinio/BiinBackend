@@ -132,10 +132,10 @@ module.exports =function(){
 						if(data.sites && data.sites.length){	
 
 							var siteResult = mapSiteMissingFields(data.sites[0]);
-							res.json({data:siteResult,status:0});
+							res.json({data:siteResult,status:"0"});
 						}
 						else{
-							res.json({data:data.sites[0],status:0});
+							res.json({data:data.sites[0],status:"0"});
 						}
 			});
 	}
@@ -146,7 +146,7 @@ module.exports =function(){
 
 		newModel.proximityUUID= model.proximityUUID; 
 		newModel.identifier = model.identifier;
-		newModel.major = model.major;
+		newModel.major =""+ model.major;
 		newModel.contry = model.contry;
 		newModel.state = model.state;
 		newModel.city = model.city;
@@ -155,8 +155,8 @@ module.exports =function(){
 
 		newModel.title = model.title1;			
 		newModel.subTitle = model.title1;
-		newModel.mainColor = model.textColor;
-		newModel.subtitleColor = model.textColor;//* Deprecated
+		newModel.mainColor = model.textColor.replace("rgb(","").replace(")","");
+		newModel.subtitleColor = model.textColor.replace("rgb(","").replace(")","");//* Deprecated
 		newModel.zipCode = model.zipCode
 		newModel.streetAddres = model.streetAddres1;
 		newModel.latitude = model.lat;
@@ -165,10 +165,10 @@ module.exports =function(){
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
-				newModel.media[i]={};
-				newModel.media[i].imgUrl= model.media[i].url;
-				newModel.media[i].domainColor= "";
+				newModel.media[i]={};				
+				newModel.media[i].domainColor= model.media[i].mainColor.replace("rgb(","").replace(")");
 				newModel.media[i].type="1";
+				newModel.media[i].imgUrl= model.media[i].imgUrl;
 			}
 		}
 
@@ -180,7 +180,7 @@ module.exports =function(){
 					newModel.biins[i]={};//model.biins[i];					
 					newModel.biins[i].proximityUUID= model.biins[i].proximityUUID;
 					newModel.biins[i].identifier= model.biins[i].identifier;
-					newModel.biins[i].minor= model.biins[i].minor;
+					newModel.biins[i].minor= +"" +model.biins[i].minor;
 					newModel.biins[i].lastUpdate=date;
 					newModel.biins[i].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
 				}
