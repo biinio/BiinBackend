@@ -4,12 +4,24 @@ module.exports =function(){
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var organization = require('../schemas/organization');
+	var site = require('../schemas/site');
+	var utils = require('../biin_modules/utils')()
 	
 	//GET Categories
-	/*functions.getCategories=function(req,res){
+	/*
+	functions.getCategories=function(req,res){
 		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getCategories.json", "utf8");		
 		res.json(JSON.parse(jsonObj));
-	}*/
+	}
+
+
+	//GET Site
+	functions.getSite=function(req,res){
+		var site = req.param("identifier");
+		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/sites/'+site+".json", "utf8");
+		res.json(JSON.parse(jsonObj));
+	}
+	*/
 
 	//GET Regions
 	functions.getRegions=function(req,res){
@@ -24,12 +36,6 @@ module.exports =function(){
 		res.json(JSON.parse(jsonObj));
 	}
 
-	//GET Site
-	functions.getSite=function(req,res){
-		var site = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/sites/'+site+".json", "utf8");
-		res.json(JSON.parse(jsonObj));
-	}
 
 	//GET Site
 	functions.getShowcase=function(req,res){
@@ -104,10 +110,81 @@ module.exports =function(){
 					}					
 				}
 				else{
-					res.json({data:{status:"9",data:{}}});	
+					res.json({status:"9",data:{}});	
 				}
 			}
 		});
+	}
+
+	//GET Site
+	functions.getSite=function(req,res){
+		var siteId = req.param("identifier");
+		if(siteId)
+			organization.findOne({"sites.identifier":siteId},{"_id":0,"sites.$":1},function(err, data){
+				if(err)
+					res.json({data:{status:"7",data:{}}});	
+				else
+					if(data==null)
+						res.json({data:{status:"9",data:{}}});	
+					else
+						if(data.sites && data.sites.length){	
+
+							var siteResult = mapSiteMissingFields(data.sites[0]);
+							res.json({data:siteResult,status:0});
+						}
+						else{
+							res.json({data:data.sites[0],status:0});
+						}
+			});
+	}
+
+	mapSiteMissingFields= function(model){
+		var newModel={};
+
+		newModel.proximityUUID= model.proximityUUID; 
+		newModel.identifier = model.identifier;
+		newModel.major = model.major;
+		newModel.contry = model.contry;
+		newModel.state = model.state;
+		newModel.city = model.city;
+		newModel.zipCode = model.zipCode;		
+		//Map fields;
+
+		newModel.title = model.title1;			
+		newModel.subTitle = model.title1;
+		newModel.mainColor = model.textColor;
+		newModel.subtitleColor = model.textColor;//* Deprecated
+		newModel.zipCode = model.zipCode
+		newModel.streetAddres = model.streetAddres1;
+		newModel.latitude = model.lat;
+		newModel.longitude = model.lng;
+
+		if(typeof(model.media)!='undefined' && model.media.length>0){
+			newModel.media=[];
+			for(var i=0; i<model.media.length;i++){
+				newModel.media[i]={};
+				newModel.media[i].imgUrl= model.media[i].url;
+				newModel.media[i].domainColor= "";
+				newModel.media[i].type="1";
+			}
+		}
+
+		if(typeof(model.biins)!='undefined'){
+			newModel.biins=[];
+			var date = utils.getDateNow();
+			for(var i=0; i<model.biins.length;i++){
+				if(typeof(model.biins[i].showcasesAsigned)!='undefined' && model.biins[i].showcasesAsigned.length>0){
+					newModel.biins[i]={};//model.biins[i];					
+					newModel.biins[i].proximityUUID= model.biins[i].proximityUUID;
+					newModel.biins[i].identifier= model.biins[i].identifier;
+					newModel.biins[i].minor= model.biins[i].minor;
+					newModel.biins[i].lastUpdate=date;
+					newModel.biins[i].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
+				}
+			}
+		}
+
+		return newModel;
 	}
 
 	return functions;

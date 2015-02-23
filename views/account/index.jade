@@ -8,17 +8,17 @@ block content
 				.container-fluid
 					.row.wizardProfile			
 						a.col-md-12(ng-click="changeWizardTo(1)")
-							.icon-wrapper
+							.icon-wrapper( ng-class="{'active':wizardPosition==1}")
 								i.icon.icon-profile-1
 							.text-wrapper
 								span 1. Profile
 						a.col-md-12(ng-click="changeWizardTo(2)")
-							.icon-wrapper
+							.icon-wrapper(ng-class="{'active':wizardPosition==2}")
 								i.icon.icon-hand-card
 							.text-wrapper									
 								span 2. Billing
 						a.col-md-12(ng-click="changeWizardTo(3)")
-							.icon-wrapper
+							.icon-wrapper( ng-class="{'active':wizardPosition==3}")
 								i.icon.icon-buildings-3
 							.text-wrapper									
 								span 3. Organizations
@@ -26,7 +26,7 @@ block content
 					.wizard-lin
 			.right-section-content.account-section-content
 				.animate-switch.wizard-wrapper
-					.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
+					.wizard-body.wizard(ng-switch="wizardPosition")
 						#wizardOption1.wizard(ng-switch-when="1")
 							include wizardProfile
 						#wizardOption2.wizard(ng-switch-when="2")

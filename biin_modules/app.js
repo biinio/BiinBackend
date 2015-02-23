@@ -108,8 +108,7 @@ module.exports = function (db) {
         // production error handler
         // no stacktraces leaked to user
         app.use(function(err, req, res, next) {
-            console.log("Hellow error of production "+err );
-            res.render('error', {
+                res.render('error', {
                 message: err.message,
                 error: {}
             });

@@ -6,6 +6,10 @@ biinAppAccount.controller("accountController",['$scope', '$http',function($scope
   $scope.selectedOrganization='';
   $scope.isDefaultOrganization=false;
 
+  $scope.prevSaveOrganization=null;
+  $scope.isAnalazingOrg=false;//Indicates if the organization form is analyzed to detect changes
+
+
   $http.get('/api/accounts/').success(function(data){
     $scope.account = data.data;
 
@@ -18,6 +22,14 @@ biinAppAccount.controller("accountController",['$scope', '$http',function($scope
 
     if(!('phoneNumber' in $scope.account.profile))
       $scope.account.profile.phoneNumber=""; 
+  });
+
+  //Get the organizations of the Account
+  $http.get('api/organizations').success(function(data){
+    $scope.organizations = data.data;
+    $scope.currentModelId = null;
+    $scope.organizationId= null;
+
   });
 
 
@@ -43,27 +55,23 @@ biinAppAccount.controller("accountController",['$scope', '$http',function($scope
     $scope.$apply();
   }
 
-  $scope.changeOrganizationToDefault=function(){
-    $scope.isDefaultOrganization= !$scope.isDefaultOrganization;
-    var organizationId = $scope.isDefaultOrganization ? $scope.organizations[$scope.selectedOrganization].identifier: "";
-    $scope.account.profile.defaultOrganization=organizationId;
-    $http.post('api/accounts/'+organizationId+'/default').success(function(data,status){
-      if(status===200){ 
-        setOrganization();
-        $scope.succesSaveShow=true;
-      }else
-        $scope.errorSaveShow=true;
-    });                
+  changeOrganizationToDefault=function(){    
+    var organizationId = $scope.organizations[$scope.selectedOrganization].identifier;
+    if($scope.account.profile.defaultOrganization!==organizationId){      
+      $http.post('api/accounts/'+organizationId+'/default').success(function(data,status){
+        if(status===200){ 
+          setOrganization();
+          $scope.account.profile.defaultOrganization=organizationId;
+          $scope.succesSaveShow=true;
+        }else
+          $scope.errorSaveShow=true;
+      });                
+    }
+    
 
   }
-  /*********************  Organization Methods ********************/
 
-  //Get the organizations of the Account
-  $http.get('api/organizations').success(function(data){
-    $scope.organizations = data.data;
-    $scope.currentModelId = null;
-    $scope.organizationId= null;
-  });
+/*********************  Organization Methods ********************/
 
  /**** 
     Methods
@@ -84,11 +92,11 @@ biinAppAccount.controller("accountController",['$scope', '$http',function($scope
 
   //Edit an site
   $scope.editOrganization = function(index){
-
-    $scope.selectedOrganization = index;
-    $scope.currentModelId = $scope.organizations[index].identifier;
-    $scope.organizationId =$scope.organizations[index].identifier;
-    $scope.isDefaultOrganization= $scope.organizations[index].identifier===$scope.account.profile.defaultOrganization;
+      $scope.selectedOrganization = index;
+      $scope.currentModelId = $scope.organizations[index].identifier;
+      $scope.organizationId =$scope.organizations[index].identifier;
+      $scope.prevSaveOrganization =  jQuery.extend({}, $scope.organizations[index]);      
+      changeOrganizationToDefault();
     //$scope.clearValidations();
     //$scope.wizardPosition=1;
     //$scope.validate(true);
@@ -115,24 +123,40 @@ biinAppAccount.controller("accountController",['$scope', '$http',function($scope
 
   //Save the Profile Settings
   $scope.save=function(){
-    $http.put('api/accounts',{model:$scope.account.profile}).success(function(data,status){
-      if(status===200){      
-        $scope.succesSaveShow=true;
-      }else
-        $scope.errorSaveShow=true;
-    });                
+    if(typeof($scope.account) !== 'undefined' ){
+      if(typeof($scope.account.profile) !=='undefined'){      
+        if(isProfileDirty()){//If is Profile Dirty
+          $http.put('api/accounts',{model:$scope.account.profile}).success(function(data,status){      
+            if(status===200){      
+              $scope.succesSaveShow=true;
+            }else
+              $scope.errorSaveShow=true;
+          });                       
+        }
+    }
+    }     
   }
+
 
   //Update the changes of the Selected Organization
   $scope.saveOrganization=function(){
     if(typeof($scope.currentModelId)!=='undefined' && $scope.currentModelId !== null && $scope.selectedOrganization>=0){
-      $http.put('api/organizations/'+$scope.currentModelId,{model:$scope.organizations[$scope.selectedOrganization]}).success(function(data,status){
-        if(status===200){
-          $scope.organizations[$scope.selectedOrganization] = data;
-          $scope.succesSaveShow=true;
-        }else
-          $scope.errorSaveShow=true;
-      });        
+      if(!$scope.isAnalazingOrg){
+        if(isOrganizationDirty()){
+
+          $scope.prevSaveOrganization=jQuery.extend({}, $scope.organizations[$scope.selectedOrganization]);
+          $scope.isAnalazingOrg=false;          
+
+          $http.put('api/organizations/'+$scope.currentModelId,{model:$scope.organizations[$scope.selectedOrganization]}).success(function(data,status){
+            if(status===200){
+              $scope.succesSaveShow=true;
+            }else
+              $scope.errorSaveShow=true;
+          });          
+
+        }
+        $scope.isAnalazingOrg=false;        
+      }
     }
               
   }
@@ -149,6 +173,28 @@ biinAppAccount.controller("accountController",['$scope', '$http',function($scope
     if($scope.organizations[$scope.selectedOrganization]){
       setOrganizationMenu($scope.currentModelId, $scope.organizations[$scope.selectedOrganization].name)
     }
+  }
+
+  //Models Validators
+  isProfileDirty=function(){
+    var propertiesToCheck= ["displayName","lastName","name","phoneNumber"];
+    //emails[0]
+    return true;
+  }
+
+  //Indicate if an organization data is changed
+  isOrganizationDirty =function(){
+    $scope.isAnalazingOrg=true;
+    var propertiesToCheck= ["name","brand","description","extraInfo"];
+
+    if($scope.prevSaveOrganization != null){
+      var foundChange= false;//$scope.organizations[$scope.selectedOrganization].media[0].imgUrl!==$scope.prevSaveOrganization.media[0].imgUrl;
+      for(var i =0; i<propertiesToCheck.length && !foundChange; i++){
+        foundChange=  $scope.organizations[$scope.selectedOrganization][propertiesToCheck[i]] !== $scope.prevSaveOrganization[propertiesToCheck[i]];
+      }
+    }
+
+    return foundChange;
   }
 
 }]);

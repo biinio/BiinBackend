@@ -19,8 +19,8 @@ module.exports =function (){
 	//GET the list of organizations
 	functions.list = function(req,res){	
 		res.setHeader('Content-Type', 'application/json');	
-		organization.find({"accountIdentifier":req.user.accountIdentifier},function (err, data) {
-			   res.json({data:data, prototypeObj : new organization()});
+		organization.find({"accountIdentifier":req.user.accountIdentifier},{_id:0,identifier:1,name:1,brand:1,description:1,extraInfo:1,media:1},function (err, data) {
+			   res.json({data:data});
 		});		
 	}
 
@@ -53,22 +53,26 @@ module.exports =function (){
 			delete model._id;
 
 			//Validate the Model
+			/*
+
 			var errors =utils.validate(new organization().validations(),req,'model');
 			if(errors)
 				res.send(errors,400);
 			else
-				organization.update(
-				                     { identifier:organizationIdentifier},
-				                     { $set :model },
-				                     { upsert : true },
-				                     function(err){
-				                     	if(err)
-											res.send(err, 500);
-										else
-				                            //Return the state
-											res.send(model,200);							
-				                     }
-				                   );					
+			*/
+			delete model.identifier;
+			organization.update(
+			                     { identifier:organizationIdentifier},
+			                     { $set :model },
+			                     { upsert : false },
+			                     function(err){
+			                     	if(err)
+										res.send(err, 500);
+									else
+			                            //Return the state
+										res.send(model,200);							
+			                     }
+			                   );					
 		}		
 	}
 
