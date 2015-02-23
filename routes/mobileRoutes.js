@@ -3,9 +3,11 @@ module.exports =function(){
 	var _= require('underscore');
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
-	var organization = require('../schemas/organization');
-	var site = require('../schemas/site');
-	var utils = require('../biin_modules/utils')()
+	var utils = require('../biin_modules/utils')();
+
+	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase');
+
+	
 	
 	//GET Categories
 	/*
@@ -191,8 +193,8 @@ module.exports =function(){
 
 	//Get a specific showcas
 	functions.getShowcase =function(req,res){
-		var showcase = req.param("identifier");
-		showcases.find({"identifier":showcase},{"identifier":1,"elements.identifier":1,"elements._id":1},function(err,data){
+		var identifier = req.param("identifier");
+		showcase.find({"identifier":identifier},{"identifier":1,"elements.identifier":1,"elements._id":1},function(err,data){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else
