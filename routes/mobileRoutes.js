@@ -198,7 +198,7 @@ module.exports =function(){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else
-				if(typeof(data)===undefined && data===null && data.length===0)
+				if(typeof(data)==='undefined' || data===null || data.length===0)
 					res.json({data:{status:"9",data:{}}});	
 				else{
 					res.json({data:data,status:0});
