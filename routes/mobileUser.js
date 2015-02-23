@@ -31,7 +31,7 @@ module.exports = function(){
 		var identifier= req.param('identifier');
 
 		//Find the mobile user
-		mobileUser.findOne({identifier:identifier},{"identifier":1, "biinName":1,"firstName":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1},function(err,foundBinnie){
+		mobileUser.findOne({identifier:identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1},function(err,foundBinnie){
 			if(err)
 				res.json({data:{status:"5",result:""}});
 			else{

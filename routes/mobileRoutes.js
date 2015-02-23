@@ -38,11 +38,11 @@ module.exports =function(){
 
 
 	//GET Site
-	functions.getShowcase=function(req,res){
+	/*functions.getShowcase=function(req,res){
 		var showcase = req.param("identifier");
 		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/showcases/'+showcase+".json", "utf8");
 		res.json(JSON.parse(jsonObj));
-	}
+	}*/
 
 	//GET Categories
 	functions.getCategories=function(req,res){
@@ -192,7 +192,17 @@ module.exports =function(){
 	//Get a specific showcas
 	functions.getShowcase =function(req,res){
 		var showcase = req.param("identifier");
-		showcases.find("identifier")
+		showcases.find({"identifier":showcase},{"identifier":1,"elements.identifier":1,"elements._id":1},function(err,data){
+			if(err)
+				res.json({data:{status:"7",data:{}}});	
+			else
+				if(data==null)
+					res.json({data:{status:"9",data:{}}});	
+				else{
+					res.json({data:data,status:0});
+				}
+		})
+
 	}
 	return functions;
 }
