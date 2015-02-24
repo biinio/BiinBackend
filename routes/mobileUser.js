@@ -210,7 +210,7 @@ module.exports = function(){
 		var identifier = req.param("identifier")				;
 
 		if(model && identifier){
-			mobileUser.update({identifier:identifier},{firstName:model.firstName, lastName:model.lastName,email:model.email},function(err,count){
+			mobileUser.update({identifier:identifier},{firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender},function(err,count){
 				if(err)
 					res.json({data:{status:"5", result:"0",identifier:""}});	
 				else
