@@ -149,7 +149,7 @@ module.exports = function(){
 		model.biinName= req.param('biinName');
 		model.password= req.param('password');
 		model.gender= req.param('gender');
-
+		model.birthDate = utils.getDateNow();
 		//** Set that the email is the same as biinName
 		model.email = model.biinName;
 		req.body.model = model;
@@ -178,6 +178,7 @@ module.exports = function(){
 								biinName:model.biinName,
 								email:model.email,
 								password:hash,
+								birthDate:model.birthDate,
 								tempPassword:model.password,
 								gender:model.gender,
 								joinDate:joinDate,
