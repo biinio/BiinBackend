@@ -22,7 +22,7 @@ var mobileUserSchema=new Schema({
 	biinName:String,
 	password:String,
 	tempPassword:String,
-	birthDate:String,
+	birthDate:{type:String,default:""},
 	gender:String,
 	joinDate:String,
 	leftDate:String,
