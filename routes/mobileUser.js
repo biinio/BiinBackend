@@ -152,36 +152,6 @@ module.exports = function(){
 		functions.setMobile(req,res);
 	}
 
-	//Get the authentication of the user **To change **Deprecated 
-	functions.login =function(req,res){
-		var user =req.param('user');
-		var password= req.param('password');
-
-		mobileUser.findOne({biinName:user},function(err,foundBinnie){
-			if(err)
-				res.json({data:{status:"5",identifier:""}});	
-			else
-			{
-				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
-				var identifier="";
-				if(result){
-					foundBinnie.comparePassword(password,function(err,isMath){
-					identifier = foundBinnie.identifier;
-					var isMathToString = isMath? "1":"0";
-					var code = isMath ? "0" :"8";
-					res.json({data:{status: code, result:isMathToString, identifier:identifier}});
-				})
-					
-				}else{
-					res.json({data:{status:"7", result:"0", identifier:identifier}});					
-				}
-				
-			}
-			
-		})
-	}
-
-
 	//Set a new Mobile User 
 	functions.setMobile = function(req,res){
 
@@ -231,6 +201,56 @@ module.exports = function(){
 		else{
 			res.send({data:{status:"6",errors:errors}});
 		}
+	}
+
+	//Update by mobile Id
+	functions.updateMobile =function(req,res){
+
+		var model = req.body.model;
+		var identifier = req.param("identifier")				;
+
+		if(model && identifier){
+			mobileUser.update({identifier:identifier},{firstName:model.firstName, lastName:model.lastName,email:model.email},function(err,count){
+				if(err)
+					res.json({data:{status:"5", result:"0",identifier:""}});	
+				else
+				{
+					var status = count>0?"0":"9";
+					var result = count>0?"1":"0";
+					res.json({data:{status:status, result:result}});	
+				}
+			})
+		}
+
+	}
+
+	//Get the authentication of the user **To change **Deprecated 
+	functions.login =function(req,res){
+		var user =req.param('user');
+		var password= req.param('password');
+
+		mobileUser.findOne({biinName:user},function(err,foundBinnie){
+			if(err)
+				res.json({data:{status:"5",identifier:""}});	
+			else
+			{
+				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
+				var identifier="";
+				if(result){
+					foundBinnie.comparePassword(password,function(err,isMath){
+					identifier = foundBinnie.identifier;
+					var isMathToString = isMath? "1":"0";
+					var code = isMath ? "0" :"8";
+					res.json({data:{status: code, result:isMathToString, identifier:identifier}});
+				})
+					
+				}else{
+					res.json({data:{status:"7", result:"0", identifier:identifier}});					
+				}
+				
+			}
+			
+		})
 	}
 
 	//GET/POST the activation of the user

@@ -51,7 +51,7 @@ module.exports = function(){
   }
 
   functions.getDateNow=function(){
-    return moment().format('yyyy-MM-dd HH:mm:ss');
+    return moment().format('yyyy-mm-dd HH:mm:ss');
   }
 
   /*

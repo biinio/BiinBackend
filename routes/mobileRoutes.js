@@ -101,7 +101,7 @@ module.exports =function(){
 
 						//Return the categories if all is processed
 						if(categoriesProcessed===total){
-							result.status=0;
+							result.status="0";
 							res.json(result);
 						}				
 					}
@@ -201,7 +201,7 @@ module.exports =function(){
 				if(typeof(data)==='undefined' || data===null || data.length===0)
 					res.json({data:{status:"9",data:{}}});	
 				else{
-					res.json({data:data,status:0});
+					res.json({data:data,status:"0"});
 				}
 		})
 
