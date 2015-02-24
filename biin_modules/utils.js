@@ -6,6 +6,9 @@ var path = require("path"), uuid=require('node-uuid'),
   ftp = require("ftp")
   moment = require('moment');
 
+//Constants
+var dateFormat ='YYYY-MM-DD HH:mm:ss';
+
 module.exports = function(){
 	var functions={};
     
@@ -51,9 +54,13 @@ module.exports = function(){
   }
 
   functions.getDateNow=function(){
-    return moment().format('yyyy-mm-dd HH:mm:ss');
+    return moment().format(dateFormat);
   }
 
+
+  functions.getDate=function(pdate){
+    return moment(pdate).format(dateFormat);
+  }
   /*
    * Return a unique identifier with the given `len`.
    *

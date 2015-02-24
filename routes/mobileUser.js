@@ -31,15 +31,19 @@ module.exports = function(){
 		var identifier= req.param('identifier');
 
 		//Find the mobile user
-		mobileUser.findOne({identifier:identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1},function(err,foundBinnie){
+		mobileUser.findOne({identifier:identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1},function(err,foundBinnie){
 			if(err)
 				res.json({data:{status:"5",result:""}});
 			else{
 				var isFound = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
 				if(!isFound)
 					res.json({data:{status:"7"}});
-				else
-					res.json({data:foundBinnie,status:"0"});
+				else{
+					var result = foundBinnie.toObject();
+					result.isEmailVerified = foundBinnie.accountState;
+					delete result.accountState;
+					res.json({data:result,status:"0"});
+				}
 			}
 		});
 	}
@@ -207,19 +211,50 @@ module.exports = function(){
 	functions.updateMobile =function(req,res){
 
 		var model = req.body.model;
-		var identifier = req.param("identifier")				;
+		var identifier = req.param("identifier");
 
-		if(model && identifier){
-			mobileUser.update({identifier:identifier},{firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender},function(err,count){
+		var updateModel = function(model){
+			var birthDate = utils.getDate(model.birthDate);
+			mobileUser.update({identifier:identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false},function(err,count){
 				if(err)
-					res.json({data:{status:"5", result:"0",identifier:""}});	
+					res.json({data:{status:"5", result:"0"}});	
 				else
 				{
 					var status = count>0?"0":"9";
 					var result = count>0?"1":"0";
-					res.json({data:{status:status, result:result}});	
+
+					//Send the email verification if all is ok.
+					if(count>0){
+						model.identifier = identifier;
+						model.biinName= model.email;
+						sendVerificationMail(req,model,function(){
+							res.json({data:{status:status, result:result}});		
+						})
+					}else
+					{
+						res.json({data:{status:status, result:result}});		
+					}
+					
 				}
 			})
+		}
+		//Chek if the User exist and if the e-mail is available
+		if(model && identifier){
+			mobileUser.findOne({biinName:model.email},function(err,foundEmail){
+				if(err)
+					res.json({data:{status:"5", result:"0"}});	
+				else
+					if(typeof(foundEmail)==="undefined" || foundEmail===null){
+						updateModel(model);
+					}else{
+						if(foundEmail.identifier === identifier)
+							updateModel(model);
+						else{
+							res.json({data:{status:"1", result:"0"}});		
+						}
+					}
+			})
+			
 		}
 
 	}
