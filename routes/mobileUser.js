@@ -192,7 +192,7 @@ module.exports = function(){
 							var defBiinedCollection = [{
 								identifier:collectionIdentifier,
 								subTitle:"This is a list of all your biined elements and sites.",
-								title:"Biined element and sites",
+								title:"Biined elements and sites",
 								elements:[],
 								sites:[]
 							}];
