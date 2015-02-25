@@ -67,6 +67,11 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
   //Change the image of a binnie
   $scope.binnieImage=function(imageObj){
   	$scope.binnies[$scope.selectedBinnie].imgUrl= imageObj.imgUrl;
+    
+     if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+        $scope.$apply();
+        $scope.$digest();
+    }
   }
 
   //Get the List of Categories

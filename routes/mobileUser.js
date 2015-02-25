@@ -71,16 +71,16 @@ module.exports = function(){
 							biinName:model.biinName,
 							password:hash,
 							tempPassword:model.password,
-							birthDate:model.birthDate,
-							gender:model.gender,
+							birthDate:model.birthDate?model.birthDate:"",
+							gender:model.gender?model.gender:"",
 							joinDate:joinDate,
 							accountState:accountState,
-							comments:model.comments,
-							userBiined:model.userBiined,
-							userCommented:model.userCommented,
-							userShared:model.userShared,
-							categories:model.categories,
-							imgUrl:model.imgUrl
+							comments:model.comments?model.comments:"",
+							userBiined:model.userBiined?model.userBiined:"",
+							userCommented:model.userCommented?model.userCommented:"",
+							userShared:model.userShared?model.userShared:"",
+							categories:model.categories?model.categories:[],
+							imgUrl:model.imgUrl?model.imgUrl:""
 						});
 
 						//Save The Model
@@ -99,14 +99,14 @@ module.exports = function(){
 				{
 					firstName:model.firstName,
 					lastName:model.lastName,
-					birthDate:model.birthDate,
-					gender:model.gender,
-					comments:model.comments,
-					userBiined:model.userBiined,
-					userCommented:model.userCommented,
-					userShared:model.userShared,
-					categories:model.categories,
-					imgUrl:model.imgUrl
+					birthDate:model.birthDate?model.birthDate:"",
+					gender:model.gender?model.gender:"",
+					comments:model.comments? model.comments:"",
+					userBiined:model.userBiined? model.comments:"",
+					userCommented:model.userCommented? model.userCommented:"",
+					userShared:model.userShared? model.userShared:"",
+					categories:model.categories? model.categories:[],
+					imgUrl:model.imgUrl?model.imgUrl:""
 				},
 				function(err,cantUpdate){
 					if(err)
