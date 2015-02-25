@@ -40,7 +40,7 @@ module.exports = function(){
 					res.json({data:{status:"7"}});
 				else{
 					var result = foundBinnie.toObject();
-					result.isEmailVerified = foundBinnie.accountState;
+					result.isEmailVerified = foundBinnie.accountState?"1":"0";
 					delete result.accountState;
 					res.json({data:result,status:"0"});
 				}
