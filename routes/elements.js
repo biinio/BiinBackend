@@ -17,6 +17,23 @@ module.exports = function(){
 			req.session.selectedOrganization = data;
 			res.json({data:data});
 		});
+	}	
+
+	//GET Mobile info of Elements
+	functions.getMobile=function(req,res){
+		var identifier=req.param("identifier");
+		if(identifier){
+			organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
+				if(err)
+					res.json({status:"7",data:{}});	
+				else
+					if(data!=null && "elements" in data && data.elements.length>0){
+						res.json({data:data.elements[0],status:0,result:1});
+					}else{
+						res.json({status:"9", result:0,data:{}});		
+					}
+			});	
+		}
 	}
 
 	//PUT an update of the showcase

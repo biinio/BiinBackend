@@ -55,7 +55,7 @@ var mobileUserSchema=new Schema({
 				url:{type:String, default:""}
 			}
 	],
-	biinedCollections:[
+	biinieCollections:[
 		{
 			identifier:{type:String, index:true, default:"-1"},
 			boardDescription:{type:String, default:""},

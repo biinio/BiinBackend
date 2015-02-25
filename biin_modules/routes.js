@@ -160,6 +160,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/biinie/:identifier/activate',mobileUser.activate);
     app.post('/biinie/:identifier/activate',mobileUser.activate);    
 
+    app.get('/mobile/elements/:identifier',elements.getMobile);
+
     app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
     app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedElement);
     //Mobile routes    /:

@@ -52,12 +52,12 @@ module.exports = function(){
 	functions.getCollections =function(req,res){
 		res.setHeader('Content-Type', 'application/json');
 		var identifier =req.param("identifier");
-		mobileUser.findOne({"identifier":identifier},{_id:0,biinedCollections:1},function(err,data){
+		mobileUser.findOne({"identifier":identifier},{_id:0,biinieCollections:1},function(err,data){
 			if(err)
 				res.json({data:{status:"5", result:"0"}});	
 			else
-				if(data!=null && data.biinedCollections!=null && data.biinedCollections.length>0){
-					res.json({data:data.biinedCollections,status:"1"});						
+				if(data!=null && data.biinieCollections!=null && data.biinieCollections.length>0){
+					res.json({data:{biinieCollections:data.biinieCollections},status:"1"});						
 				}else{
 					res.json({data:{status:"9", result:"0"}});	
 				}
@@ -191,8 +191,8 @@ module.exports = function(){
 							var collectionIdentifier= utils.getGUID();
 							var defBiinedCollection = [{
 								identifier:collectionIdentifier,
-								boardDescription:"My Board",
-								name:"My Board",
+								boardDescription:"This is a list of all your biined element and sites.",
+								name:"Biined element and sites",
 								elements:[],
 								sites:[]
 							}];
@@ -209,7 +209,7 @@ module.exports = function(){
 								gender:model.gender,
 								joinDate:joinDate,
 								accountState:false,
-								biinedCollections:defBiinedCollection
+								biinieCollections:defBiinedCollection
 							});
 
 							//Save The Model
@@ -245,8 +245,8 @@ module.exports = function(){
 		if(identifier && model){
 			var obj={identifier:model.identifier,"_id":model._id};
 			mobileUser.update({identifier:identifier,
-				"biinedCollections.identifier":collectionIdentifier},
-				{$push:{"biinedCollections.$.elements":obj}},function(err, affectedDocs){
+				"biinieCollections.identifier":collectionIdentifier},
+				{$push:{"biinieCollections.$.elements":obj}},function(err, affectedDocs){
 					if(err){
 						res.json({status:"5", result:"0",data:{}});	
 					}else{
