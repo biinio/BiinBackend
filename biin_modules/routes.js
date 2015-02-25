@@ -154,11 +154,15 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier',mobileUser.getProfile);    
     app.put('/mobile/biinies',mobileUser.setMobile);
     app.post('/mobile/biinies/:identifier',mobileUser.updateMobile);
+
+    //Activation Routes
     app.get('/mobile/biinies/:identifier/isactivate',mobileUser.isActivate);
     app.get('/biinie/:identifier/activate',mobileUser.activate);
     app.post('/biinie/:identifier/activate',mobileUser.activate);    
 
-    //Mobile routes    
+    app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
+    app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedElement);
+    //Mobile routes    /:
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
     app.put('/mobile/client',passport.authenticate(['mobileClientBasic', 'mobileClientPassword']), mobileUser.set);
     app.post('/mobile/client/token', mobileOauthManager.token);

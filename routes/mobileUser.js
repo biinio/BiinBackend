@@ -48,6 +48,22 @@ module.exports = function(){
 		});
 	}
 
+	//Get The Biinie Biined Collections
+	functions.getCollections =function(req,res){
+		res.setHeader('Content-Type', 'application/json');
+		var identifier =req.param("identifier");
+		mobileUser.findOne({"identifier":identifier},{_id:0,biinedCollections:1},function(err,data){
+			if(err)
+				res.json({data:{status:"5", result:"0"}});	
+			else
+				if(data!=null && data.biinedCollections!=null && data.biinedCollections.length>0){
+					res.json({data:data.biinedCollections,status:"1"});						
+				}else{
+					res.json({data:{status:"9", result:"0"}});	
+				}
+		});
+	}
+
 	//PUT a new Mobile User
 	functions.set = function(req,res){
 
@@ -171,6 +187,16 @@ module.exports = function(){
 							var joinDate = utils.getDateNow();
 							var identifier= utils.getGUID();
 
+							//Build the default Biined Collection
+							var collectionIdentifier= utils.getGUID();
+							var defBiinedCollection = [{
+								identifier:collectionIdentifier,
+								boardDescription:"My Board",
+								name:"My Board",
+								elements:[],
+								sites:[]
+							}];
+
 							var newModel = new mobileUser({
 								identifier: identifier,
 								firstName:model.firstName,
@@ -182,7 +208,8 @@ module.exports = function(){
 								tempPassword:model.password,
 								gender:model.gender,
 								joinDate:joinDate,
-								accountState:false
+								accountState:false,
+								biinedCollections:defBiinedCollection
 							});
 
 							//Save The Model
@@ -208,6 +235,29 @@ module.exports = function(){
 		}
 	}
 
+	//POST a new Biined Element
+	functions.setMobileBiinedElement=function(req,res){
+		var identifier=req.param("identifier");
+		var collectionIdentifier= req.param("collectionIdentifier");
+
+		var model = req.body.model;
+		
+		if(identifier && model){
+			var obj={identifier:model.identifier,"_id":model._id};
+			mobileUser.update({identifier:identifier,
+				"biinedCollections.identifier":collectionIdentifier},
+				{$push:{"biinedCollections.$.elements":obj}},function(err, affectedDocs){
+					if(err){
+						res.json({status:"5", result:"0",data:{}});	
+					}else{
+						if(affectedDocs>0)
+							res.json({status:"0",result:"1"});	
+						else
+							res.json({status:"1",result:"0"});	
+					}
+				});
+		}
+	}
 	//Update by mobile Id
 	functions.updateMobile =function(req,res){
 
@@ -257,7 +307,6 @@ module.exports = function(){
 			})
 			
 		}
-
 	}
 
 	//Get the authentication of the user **To change **Deprecated 

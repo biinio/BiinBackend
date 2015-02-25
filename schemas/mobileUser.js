@@ -54,6 +54,20 @@ var mobileUserSchema=new Schema({
 				displayName:{type:String, default:""},
 				url:{type:String, default:""}
 			}
+	],
+	biinedCollections:[
+		{
+			identifier:{type:String, index:true, default:"-1"},
+			boardDescription:{type:String, default:""},
+			name:{type:String, default:""},
+			elements:[{
+				identifier:{type:String, index:true, default:"-1"},
+				_id:{type:String, index:true, default:"-1"}
+			}],
+			sites:[{
+				identifier:{type:String, index:true, default:"-1"}
+			}]
+		}
 	]
 });
 
