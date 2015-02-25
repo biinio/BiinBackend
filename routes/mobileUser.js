@@ -191,8 +191,8 @@ module.exports = function(){
 							var collectionIdentifier= utils.getGUID();
 							var defBiinedCollection = [{
 								identifier:collectionIdentifier,
-								boardDescription:"This is a list of all your biined element and sites.",
-								name:"Biined element and sites",
+								subTitle:"This is a list of all your biined elements and sites.",
+								title:"Biined element and sites",
 								elements:[],
 								sites:[]
 							}];

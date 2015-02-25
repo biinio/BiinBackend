@@ -58,8 +58,8 @@ var mobileUserSchema=new Schema({
 	biinieCollections:[
 		{
 			identifier:{type:String, index:true, default:"-1"},
-			boardDescription:{type:String, default:""},
-			name:{type:String, default:""},
+			subTitle:{type:String, default:""},
+			title:{type:String, default:""},
 			elements:[{
 				identifier:{type:String, index:true, default:"-1"},
 				_id:{type:String, index:true, default:"-1"}
