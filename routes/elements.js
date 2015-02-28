@@ -34,7 +34,7 @@ module.exports = function(){
 						var elementObj = data.elements[0].toObject();
 						elementObj.identifier = element.elementIdentifier;
 						delete elementObj.identifier;
-						elementObj.textColor = elementObj.textColor.replace('rgb(','').replace(")",'');
+						elementObj.titleColor = elementObj.textColor.replace('rgb(','').replace(")",'');
 						elementObj.reservedQuantity="0";
 						elementObj.claimedQuantity="0";
 						elementObj.actualQuantity="0";
@@ -50,14 +50,20 @@ module.exports = function(){
 							media.url = data.elements[0].media[i].url;
 							elementObj.media.push(media);
 						}
+						elementObj.hasQuantity=eval(elementObj.hasQuantity)?"1":"0";
 						elementObj.hasSticker=elementObj.sticker!=''?"1":"0"
 						elementObj.biins="0";
 						elementObj.comments="0";
 						elementObj.userBiined="0";
 						elementObj.userShared="0";
 						elementObj.userCommented="0";
-						elementObj.userViewed="0";
 						elementObj.isActive="1";
+
+						delete elementObj.accountIdentifier;
+						delete elementObj.organizationIdentifier;
+						delete elementObj.domainColor;
+						delete elementObj.actionType;
+						delete elementObj.categories;
 						//To implement
 						/*
 						"reservedQuantity": "34",

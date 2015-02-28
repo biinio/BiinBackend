@@ -14,7 +14,7 @@ var orgSchema = new Schema({
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
 	extraInfo:{type:String, default:""},
-	majorCounter:{type: Number, default:0},		
+	majorCounter:{type: Number, default:1},		
 	//Count off biins purchased
 	purchasedBiinsHist:[{
 				date:{type:String,default:""},

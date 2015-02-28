@@ -55,45 +55,50 @@ module.exports =function(){
 		//Todo Implements Coordinates routes
 
 		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1},function(err,foundCategories){			
+		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
 			if(err){
 				res.json({data:{status:"5",data:{}}});
 			}else{
 				if(foundCategories && "categories" in foundCategories){
 
-					//var catArray = _.pluck(foundCategories.categories,'identifier')
-					var result = {data:{categories:[]}};
+					if(foundCategories.categories.length===0)
+						res.json({data:{status:"9",data:{}}});
+					else{
+						//var catArray = _.pluck(foundCategories.categories,'identifier')
+						var result = {data:{categories:[]}};
 
-					//Get The sites by Each Category
-					var categoriesProcessed = 0;
+						//Get The sites by Each Category
+						var categoriesProcessed = 0;
 
-					///Get the Sites By categories
-					var getSitesByCat = function(pcategory, index, total, callback){
-						//Return the sites by Categories
-						var orgResult=organization.find({'sites.categories.identifier':pcategory},{"_id":0,"sites.identifier":1, "identifier":1},function(err,sitesCategories){
-							if(err)
-								res.json({data:{status:"5",data:{}, err:err}});
-							else
-							{
-								var sitesResult=[];
+						///Get the Sites By categories
+						var getSitesByCat = function(pcategory, index, total, callback){
+							//Return the sites by Categories
+							var orgResult=organization.find({'sites.categories.identifier':pcategory.identifier},{"_id":0,"sites.identifier":1, "identifier":1},function(err,sitesCategories){
+								if(err)
+									res.json({data:{status:"5",data:{}, err:err}});
+								else
+								{
+									var sitesResult=[];
 
-								//Remove the Organization
-								for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){
-									if('sites' in sitesCategories[0])
-										for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){
-												sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
-										}
-								}	
+									//Remove the Organization
+									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){
+										if('sites' in sitesCategories[0])
+											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){
+													sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
+											}
+									}	
 
-								//Callback function
-								var result = {'identifier' :pcategory, 'sites':sitesResult};
-								callback(index,total,result);
-								
-							}
+									//Callback function
+									var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
+									callback(index,total,result);
+									
+								}
 
-						});		
+							});		
 
 					}
+					
+				}
 
 					var finalCursor=function(index,total,data){
 						result.data.categories[index]=data;
@@ -108,7 +113,7 @@ module.exports =function(){
 
 					//Order the sites by Category Identifier
 					for(var i=0; i< foundCategories.categories.length;i++){						
-						getSitesByCat(foundCategories.categories[i].identifier,i,foundCategories.categories.length,finalCursor);						
+						getSitesByCat(foundCategories.categories[i],i,foundCategories.categories.length,finalCursor);						
 					}					
 				}
 				else{
@@ -159,21 +164,20 @@ module.exports =function(){
 		newModel.titleColor = model.textColor.replace("rgb(","").replace(")","");
 		newModel.zipCode = model.zipCode
 		newModel.streetAddres1 = model.streetAddres?model.streetAddres:"";
-		newModel.streetAddres2 = model.streetAddres2?model.streetAddres2:"";
 		newModel.latitude =""+ model.lat;
 		newModel.longitude =""+ model.lng;
 		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
 		newModel.email = model.email?model.email:"";
-		newModel.phoneNumber = model.phoneNumber?model.phoneNumber:"";
+		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
 		var userShare =_.findWhere(model.userShared,{biinieIdentifier:biinieId});
 		var userComment =_.findWhere(model.userComments,{biinieIdentifier:biinieId});
 
-		newModel.userBiined = typeof(userbiined)!=="undefined";
-		newModel.userShared = typeof(userShare)!=="undefined";
-		newModel.userCommented = typeof(userCommented)!=="undefined";
-		newModel.userViewed=false; //This property is used in the moble logic
+		newModel.userBiined = typeof(userbiined)!=="undefined"?"1":"0";
+		newModel.userShared = typeof(userShare)!=="undefined"?"1":"0";
+		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
+
 
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
@@ -190,10 +194,10 @@ module.exports =function(){
 			var date = utils.getDateNow();// This because some biins are was not created with lastUpdate
 			for(var i=0; i<model.biins.length;i++){
 				if(typeof(model.biins[i].showcasesAsigned)!='undefined' && model.biins[i].showcasesAsigned.length>0){
-					newModel.biins[i]={};
-					newModel.biins[i].proximityUUID= model.biins[i].proximityUUID;
+					newModel.biins[i]={};				
 					newModel.biins[i].identifier= model.biins[i].identifier;
 					newModel.biins[i].minor= "" +model.biins[i].minor;
+					newModel.biins[i].biinType= model.biins[i].biinType;
 					newModel.biins[i].lastUpdate= newModel.biins[i].lastUpdate?newModel.biins[i].lastUpdate:date;
 					newModel.biins[i].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
 

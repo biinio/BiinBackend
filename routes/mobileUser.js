@@ -4,6 +4,7 @@ module.exports = function(){
 		util = require('util'),
 		bcrypt = require('bcrypt'),
 		imageManager=require('../biin_modules/imageManager')(),
+		category = require('../schemas/category')
 		utils =require("../biin_modules/utils")();
 
 	var functions ={};
@@ -148,13 +149,20 @@ module.exports = function(){
 
 		var categoriesModel = req.body['model'];
 
-		mobileUser.update({identifier:identifier},{categories:categoriesModel},function(err,count){
+		var catArray = _.pluck(model,'identifier')
+		category.find({identifier:{$in:catArray}},function(err,data){
 			if(err)
-				res.json({data:{status:"7",result:""}})
+				res.json({data:{status:"5", result:"0"}});
 			else{
-				res.json({data:{status:"0", result: count?"1":"0"}});
+				mobileUser.update({identifier:identifier},{categories:data},function(err,count){
+						if(err)
+							res.json({data:{status:"7",result:""}})
+						else{
+							res.json({data:{status:"0", result: count?"1":"0"}});
+						}
+				})				
 			}
-		})
+		});
 	}
 
 	//SET a new Mobile user Takin the params from the URL **To change **Deprecated 
@@ -235,35 +243,60 @@ module.exports = function(){
 		}
 	}
 
-	//POST a new Biined Element
-	functions.setMobileBiinedElement=function(req,res){
+	//POST a new item to a collection
+	functions.setMobileBiinedToCollection=function(req,res){
 		var identifier=req.param("identifier");
 		var collectionIdentifier= req.param("collectionIdentifier");
 
 		var model = req.body.model;
 		
-		if(identifier && model){
-			var obj={identifier:model.identifier,"_id":model._id};
-			mobileUser.update({identifier:identifier,
-				"biinieCollections.identifier":collectionIdentifier},
-				{$push:{"biinieCollections.$.elements":obj}},function(err, affectedDocs){
-					if(err){
-						res.json({status:"5", result:"0",data:{}});	
-					}else{
-						if(affectedDocs>0)
-							res.json({status:"0",result:"1"});	
-						else
-							res.json({status:"1",result:"0"});	
-					}
-				});
+		var objType= model.type;
+		if(objType!=='site'){
+			if(identifier && model){
+				var obj={identifier:model.identifier,"_id":model._id};
+				mobileUser.update({identifier:identifier,
+					"biinieCollections.identifier":collectionIdentifier},
+					{$push:{"biinieCollections.$.elements":obj}},function(err, affectedDocs){
+						if(err){
+							res.json({status:"5", result:"0",data:{}});	
+						}else{
+							if(affectedDocs>0)
+								res.json({status:"0",result:"1"});	
+							else
+								res.json({status:"1",result:"0"});	
+						}
+					});
+				}	
+		}else{
+			if(identifier && model){
+				var obj={identifier:model.identifier,"_id":model._id};
+				mobileUser.update({identifier:identifier,
+					"biinieCollections.identifier":collectionIdentifier},
+					{$push:{"biinieCollections.$.sites":obj}},function(err, affectedDocs){
+						if(err){
+							res.json({status:"5", result:"0",data:{}});	
+						}else{
+							if(affectedDocs>0)
+								res.json({status:"0",result:"1"});	
+							else
+								res.json({status:"1",result:"0"});	
+						}
+					});
+				}	
 		}
+		
 	}
 
-	//DELETE a
-	functions.deleteMobileBiinedElement=function(req,res){
+	//DELETE a object to a Biined Collection
+	functions.deleteMobileBiinedToCollection=function(req,res){
+		var identifier=req.param("identifier");
+		var collectionIdentifier= req.param("collectionIdentifier");
+		var objType = req.param("objType");
+		var objIdentifier = req.param("objIdentifier")
 
 	}
 
+	
 	//Update by mobile Id
 	functions.updateMobile =function(req,res){
 

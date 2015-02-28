@@ -110,11 +110,11 @@ module.exports = function(){
   functions.get ={};
 
   functions.get.majorIncrement =function(){
-    return 10;
+    return 1;
   }
 
   functions.get.minorIncrement =function(){
-    return 10;
+    return 1;
   }
 
   /**

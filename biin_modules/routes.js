@@ -163,7 +163,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/elements/:identifier',elements.getMobile);
 
     app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
-    app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedElement);
+    app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedToCollection);
     //Mobile routes    /:
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
     app.put('/mobile/client',passport.authenticate(['mobileClientBasic', 'mobileClientPassword']), mobileUser.set);
