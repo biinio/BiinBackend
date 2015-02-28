@@ -32,6 +32,7 @@ var orgSchema = new Schema({
 		identifier:{type:String, default:"-1", index:true},
 		accountIdentifier:{type:String, default:"000"},
 		organizationIdentifier:{type:String,default:""},
+		proximityUUID:{type:String,default:""},	
 		title1:{type:String, default:""},	
 		title2:{type:String, default:""},	
 		mainColor:{type:String,default:""},
@@ -44,7 +45,8 @@ var orgSchema = new Schema({
 		city:{type:String, default:""},
 		zipCode:{type:String, default:""},
 		streetAddres:{type:String, default:""},
-		phoneNumber:{type:String, default:""},
+		phoneNumber:{type:String, default:"1-800-888-8888"},
+		email:{type:String, default:"email@email.com"},
 		lat:{type:String,default:0},
 		lng:{type:String,default:0},
 		searchTags:[],
@@ -73,13 +75,20 @@ var orgSchema = new Schema({
 				proximityUUID:{type:String, Default:""},
 				location:{type:String, Default:""},
 				registerDate:{type:String, Default:""},
-
+				lastUpdate:{type:String, Default:""},
+				
 				showcasesAsigned:[{
 					showcaseIdentifier:{type:String, Default:""}
 				}]
 
 			}
-		]
+		],
+		biinedCount:{type:Number,default:0},
+		sharedCount:{type:Number,default:0},
+		commentedCount:{Integer:Number,default:0},
+		biinedUsers:[{biinieIdentifier:String}],
+		userShared:[{biinieIdentifier:String,sharedTo:String}],
+		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}]		
 	}],
 	elements:[{
 

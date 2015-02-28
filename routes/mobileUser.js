@@ -258,6 +258,12 @@ module.exports = function(){
 				});
 		}
 	}
+
+	//DELETE a
+	functions.deleteMobileBiinedElement=function(req,res){
+
+	}
+
 	//Update by mobile Id
 	functions.updateMobile =function(req,res){
 

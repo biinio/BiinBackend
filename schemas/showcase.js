@@ -11,7 +11,9 @@ var showcaseObj={
 	name:{type:String, default:""},
 	description:{type:String, default:""},
 	pushNotification:{type:String, default:""},
-
+	lastUpdate:{type:String,default:""},
+	titleColor:{type:String,default:"rgb(0,0,0)"},
+	
 	elements:[
 		{
 			elementIdentifier:String,

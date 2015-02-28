@@ -120,9 +120,10 @@ module.exports =function(){
 
 	//GET Site
 	functions.getSite=function(req,res){
+		var biinieIdentifier = req.param("biinieIdentifier");
 		var siteId = req.param("identifier");
 		if(siteId)
-			organization.findOne({"sites.identifier":siteId},{"_id":0,"sites.$":1},function(err, data){
+			organization.findOne({"sites.identifier":siteId},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
 				if(err)
 					res.json({data:{status:"7",data:{}}});	
 				else
@@ -131,7 +132,7 @@ module.exports =function(){
 					else
 						if(data.sites && data.sites.length){	
 
-							var siteResult = mapSiteMissingFields(data.sites[0]);
+							var siteResult = mapSiteMissingFields(biinieIdentifier,data.identifier,data.sites[0]);
 							res.json({data:siteResult,status:"0"});
 						}
 						else{
@@ -141,13 +142,13 @@ module.exports =function(){
 	}
 
 	//Map the Site information
-	mapSiteMissingFields= function(model){
+	mapSiteMissingFields= function(biinieId,orgId,model){
 		var newModel={};
 
-		newModel.proximityUUID= model.proximityUUID; 
+		newModel.proximityUUID= orgId;
 		newModel.identifier = model.identifier;
 		newModel.major =""+ model.major;
-		newModel.contry = model.contry;
+		newModel.country = model.country;
 		newModel.state = model.state;
 		newModel.city = model.city;
 		newModel.zipCode = model.zipCode;		
@@ -155,34 +156,50 @@ module.exports =function(){
 
 		newModel.title = model.title1;			
 		newModel.subTitle = model.title1;
-		newModel.mainColor = model.textColor.replace("rgb(","").replace(")","");
-		newModel.subtitleColor = model.textColor.replace("rgb(","").replace(")","");//* Deprecated
+		newModel.titleColor = model.textColor.replace("rgb(","").replace(")","");
 		newModel.zipCode = model.zipCode
-		newModel.streetAddres = model.streetAddres1;
-		newModel.latitude = model.lat;
-		newModel.longitude = model.lng;
+		newModel.streetAddres1 = model.streetAddres?model.streetAddres:"";
+		newModel.streetAddres2 = model.streetAddres2?model.streetAddres2:"";
+		newModel.latitude =""+ model.lat;
+		newModel.longitude =""+ model.lng;
+		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
+		newModel.email = model.email?model.email:"";
+		newModel.phoneNumber = model.phoneNumber?model.phoneNumber:"";
+
+		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
+		var userShare =_.findWhere(model.userShared,{biinieIdentifier:biinieId});
+		var userComment =_.findWhere(model.userComments,{biinieIdentifier:biinieId});
+
+		newModel.userBiined = typeof(userbiined)!=="undefined";
+		newModel.userShared = typeof(userShare)!=="undefined";
+		newModel.userCommented = typeof(userCommented)!=="undefined";
+		newModel.userViewed=false; //This property is used in the moble logic
 
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
 				newModel.media[i]={};				
 				newModel.media[i].domainColor= model.media[i].mainColor.replace("rgb(","").replace(")");
-				newModel.media[i].type="1";
+				newModel.media[i].mediaType="1";
 				newModel.media[i].imgUrl= model.media[i].imgUrl;
 			}
 		}
 
 		if(typeof(model.biins)!='undefined'){
 			newModel.biins=[];
-			var date = utils.getDateNow();
+			var date = utils.getDateNow();// This because some biins are was not created with lastUpdate
 			for(var i=0; i<model.biins.length;i++){
 				if(typeof(model.biins[i].showcasesAsigned)!='undefined' && model.biins[i].showcasesAsigned.length>0){
-					newModel.biins[i]={};//model.biins[i];					
+					newModel.biins[i]={};
 					newModel.biins[i].proximityUUID= model.biins[i].proximityUUID;
 					newModel.biins[i].identifier= model.biins[i].identifier;
-					newModel.biins[i].minor= +"" +model.biins[i].minor;
-					newModel.biins[i].lastUpdate=date;
+					newModel.biins[i].minor= "" +model.biins[i].minor;
+					newModel.biins[i].lastUpdate= newModel.biins[i].lastUpdate?newModel.biins[i].lastUpdate:date;
 					newModel.biins[i].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
+
+					//If is not there an identifier
+					if(!model.biins[i].identifier)
+						newModel.biins[i].identifier= utils.getGUID();
 				}
 			}
 		}
@@ -191,17 +208,27 @@ module.exports =function(){
 	}
 
 
-	//Get a specific showcas
+	//Get a specific showcase
 	functions.getShowcase =function(req,res){
 		var identifier = req.param("identifier");
-		showcase.find({"identifier":identifier},{"identifier":1,"elements.identifier":1,"elements._id":1},function(err,data){
+		showcase.findOne({"identifier":identifier},{"identifier":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"theme":1,"elements.elementIdentifier":1,"elements._id":1},function(err,data){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else
 				if(typeof(data)==='undefined' || data===null || data.length===0)
 					res.json({data:{status:"9",data:{}}});	
 				else{
-					res.json({data:data,status:"0"});
+					var showcaseObj = {}
+
+					showcaseObj.title = data.name?data.name:"";
+					showcaseObj.subTitle= data.description?data.description:"";
+					showcaseObj.titleColor=data.titleColor?data.titleColor.replace('rgb(','').replace(')',''):"0,0,0";
+					showcaseObj.lastUpdate = data.lastUpdate& data.lastUpdate!=""?data.lastUpdate:utils.getDateNow();
+					showcaseObj.identifier = data.identifier?data.identifier:"";
+					showcaseObj.theme = data.theme?data.theme:"";
+					showcaseObj.elements = data.elements;
+
+					res.json({data:showcaseObj,status:"0"});
 				}
 		})
 

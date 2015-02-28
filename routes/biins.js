@@ -6,8 +6,9 @@ module.exports = function () {
 	    organization = require('../schemas/organization');
 
 
-	    var _ = require('underscore');
+	var _ = require('underscore');
 	var functions = {};
+	var utils = require('../biin_modules/utils')();
     
     //GET the list of biins
 	functions.list = function(req,res){
@@ -53,6 +54,7 @@ module.exports = function () {
 			organization.findOne({accountIdentifier:userAccount, identifier:organizationId},function(err,doc){
 				//Modify the site
 				var countOfChanges =0;
+				var date = utils.getDateNow();
 				for(var siteIndex=0; siteIndex< req.body.length; siteIndex++){
 					var siteToWorkDocument =_.find(doc.sites,function(siteDoc){
 									return siteDoc.identifier == req.body[siteIndex].identifier;
@@ -60,7 +62,7 @@ module.exports = function () {
 
 					//If the site to work is not null
 					if(siteToWorkDocument){
-						var biins = req.body[siteIndex].biins;
+						var biins = req.body[siteIndex].biins;						
 						for(var biinIndex=0; biinIndex< biins.length; biinIndex++){
 
 							var biinToUpdate = _.find(siteToWorkDocument.biins,function(biinDoc){
@@ -73,6 +75,7 @@ module.exports = function () {
 							    //	showcaseToAsign = biins[biinIndex].showcasesAsigned;
 
 							   biinToUpdate.showcasesAsigned = biins[biinIndex].showcasesAsigned;
+							   biinToUpdate.lastUpdate=date;
 							   countOfChanges++;
 							}
 						}

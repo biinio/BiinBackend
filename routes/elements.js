@@ -2,6 +2,7 @@ module.exports = function(){
 	var functions ={};
 	var element = require('../schemas/element'), showcase = require('../schemas/showcase'), organization= require('../schemas/organization');
 	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')();
+	
 	//Get the index view of the elements
 	functions.index = function(req,res){
 		var callback= function(organization,req, res){
@@ -21,14 +22,48 @@ module.exports = function(){
 
 	//GET Mobile info of Elements
 	functions.getMobile=function(req,res){
+		var biinieIdentifier= req.param("biinieIdentifier");
 		var identifier=req.param("identifier");
+
 		if(identifier){
 			organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
 				if(err)
 					res.json({status:"7",data:{}});	
 				else
 					if(data!=null && "elements" in data && data.elements.length>0){
-						res.json({data:data.elements[0],status:0,result:1});
+						var elementObj = data.elements[0].toObject();
+						elementObj.identifier = element.elementIdentifier;
+						delete elementObj.identifier;
+						elementObj.textColor = elementObj.textColor.replace('rgb(','').replace(")",'');
+						elementObj.reservedQuantity="0";
+						elementObj.claimedQuantity="0";
+						elementObj.actualQuantity="0";
+
+						elementObj.expirationDate=elementObj.expirationDate?elementObj.expirationDate:"";
+						elementObj.initialDate=elementObj.initialDate?elementObj.initialDate:"";
+						delete elementObj.media;
+						elementObj.media=[];
+						for(var i=0; i< data.elements[0].media.length; i++){
+							var media ={};
+							media.mediaType=1;
+							media.domainColor=  data.elements[0].media[i].mainColor;
+							media.url = data.elements[0].media[i].url;
+							elementObj.media.push(media);
+						}
+						elementObj.hasSticker=elementObj.sticker!=''?"1":"0"
+						elementObj.biins="0";
+						elementObj.comments="0";
+						elementObj.userBiined="0";
+						elementObj.userShared="0";
+						elementObj.userCommented="0";
+						elementObj.userViewed="0";
+						elementObj.isActive="1";
+						//To implement
+						/*
+						"reservedQuantity": "34",
+        				"claimedQuantity": "23",
+        				"actualQuantity": "12",*/
+						res.json({data:elementObj,status:0,result:1});
 					}else{
 						res.json({status:"9", result:0,data:{}});		
 					}

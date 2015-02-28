@@ -170,13 +170,14 @@ module.exports = function () {
 							newMinorValue += eval(minor);
 							var newBeacons =[];
 							var dateNow = utils.getDateNow();
-							var cantMinorToInc = utils.get.minorIncrement() ;
+							var cantMinorToInc = utils.get.minorIncrement() ;							
 							var minorIncrement =minor;
 
 							//Create the new Beacons
  							for(var i=0; i<qty;i++){
+ 								var biinIdentifier = utils.getGUID();
  								minorIncrement+=cantMinorToInc;
- 								newBeacons.push(new biin({registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement}));
+ 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement}));
  							}
 
  							//Organization Update

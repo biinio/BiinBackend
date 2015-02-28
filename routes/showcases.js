@@ -63,7 +63,7 @@ module.exports = function () {
 	         newModel.identifier=utils.getGUID();
 	         newModel.accountIdentifier = req.user.accountIdentifier;
 	         newModel.organizationIdentifier = organizationIdentifier;		      
-
+	         newModel.lastUpdate =  utils.getDateNow();
 
 	         newModel.save(function(err){
 	         	if(err)
@@ -73,7 +73,8 @@ module.exports = function () {
 	         	});
 		}else
 		{
-			var model = req.body.model;		
+			var model = req.body.model;	
+			model.lastUpdate = utils.getDateNow();	
 			if(model)	
 				delete model._id;		
 

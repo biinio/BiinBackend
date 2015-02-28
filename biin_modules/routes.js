@@ -172,8 +172,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     
     app.get('/mobile/regions',mobileRoutes.getRegions);
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
-    app.get('/mobile/elements/:identifier',mobileRoutes.getElement);
-    app.get('/mobile/sites/:identifier',mobileRoutes.getSite);
+    app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
+    app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);
     app.get('/mobile/showcases/:identifier',mobileRoutes.getShowcase);
 
     
