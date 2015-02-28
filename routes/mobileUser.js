@@ -1,4 +1,7 @@
 module.exports = function(){
+
+	var _= require('underscore');
+
 	//Schemas
 	var mobileUser = require('../schemas/mobileUser'), 
 		util = require('util'),
@@ -269,7 +272,7 @@ module.exports = function(){
 				}	
 		}else{
 			if(identifier && model){
-				var obj={identifier:model.identifier,"_id":model._id};
+				var obj={identifier:model.identifier};
 				mobileUser.update({identifier:identifier,
 					"biinieCollections.identifier":collectionIdentifier},
 					{$push:{"biinieCollections.$.sites":obj}},function(err, affectedDocs){
@@ -288,14 +291,56 @@ module.exports = function(){
 	}
 
 	//DELETE a object to a Biined Collection
-	functions.deleteMobileBiinedToCollection=function(req,res){
+	functions.deleteMobileBiinedElementToCollection=function(req,res){
 		var identifier=req.param("identifier");
 		var collectionIdentifier= req.param("collectionIdentifier");
-		var objType = req.param("objType");
 		var objIdentifier = req.param("objIdentifier")
+
+		mobileUser.findOne({identifier:identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
+			if(err)
+				res.json({status:"5", result:"0",err:err});	
+			else{				
+				var el = _.findWhere(data.biinieCollections[0].elements,{identifier:objIdentifier});
+				data.biinieCollections[0].elements.pull({_id:el._id});
+				data.save(function(err){
+				if(err)
+						res.json({status:"5", err:err});	
+					else{
+						//Return the state and the object
+						res.json({status:"0", result:"1"});	
+					}
+				});		
+				
+			}
+		})
 
 	}
 
+	//DELETE a object to a Biined Collection
+	functions.deleteMobileBiinedSiteToCollection=function(req,res){
+		var identifier=req.param("identifier");
+		var collectionIdentifier= req.param("collectionIdentifier");
+		var objIdentifier = req.param("objIdentifier")
+
+		mobileUser.findOne({identifier:identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
+			if(err)
+				res.json({status:"5", result:"0",err:err});	
+			else{				
+				var el = _.findWhere(data.biinieCollections[0].sites,{identifier:objIdentifier});
+				data.biinieCollections[0].sites.pull({_id:el._id});
+				data.save(function(err){
+				if(err)
+						res.json({status:"5", err:err});	
+					else{
+						//Return the state and the object
+						res.json({status:"0", result:"1"});	
+					}
+				});		
+				
+			}
+		})
+
+	}
 	
 	//Update by mobile Id
 	functions.updateMobile =function(req,res){

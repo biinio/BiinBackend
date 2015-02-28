@@ -168,7 +168,7 @@ module.exports =function(){
 		newModel.longitude =""+ model.lng;
 		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
 		newModel.email = model.email?model.email:"";
-		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-',''):"";
+		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
 		var userShare =_.findWhere(model.userShared,{biinieIdentifier:biinieId});

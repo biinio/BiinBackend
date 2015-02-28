@@ -164,6 +164,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
     app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedToCollection);
+    app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileBiinedElementToCollection);
+    app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
+
     //Mobile routes    /:
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
     app.put('/mobile/client',passport.authenticate(['mobileClientBasic', 'mobileClientPassword']), mobileUser.set);

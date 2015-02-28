@@ -63,6 +63,7 @@ module.exports = function(){
 						delete elementObj.organizationIdentifier;
 						delete elementObj.domainColor;
 						delete elementObj.actionType;
+						delete elementObj.textColor;
 						delete elementObj.categories;
 						//To implement
 						/*
