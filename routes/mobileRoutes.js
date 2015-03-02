@@ -177,7 +177,7 @@ module.exports =function(){
 		newModel.userBiined = typeof(userbiined)!=="undefined"?"1":"0";
 		newModel.userShared = typeof(userShare)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
-
+		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
@@ -192,18 +192,20 @@ module.exports =function(){
 		if(typeof(model.biins)!='undefined'){
 			newModel.biins=[];
 			var date = utils.getDateNow();// This because some biins are was not created with lastUpdate
+			var biinArray= 0;
 			for(var i=0; i<model.biins.length;i++){
 				if(typeof(model.biins[i].showcasesAsigned)!='undefined' && model.biins[i].showcasesAsigned.length>0){
-					newModel.biins[i]={};				
-					newModel.biins[i].identifier= model.biins[i].identifier;
-					newModel.biins[i].minor= "" +model.biins[i].minor;
-					newModel.biins[i].biinType= model.biins[i].biinType;
-					newModel.biins[i].lastUpdate= newModel.biins[i].lastUpdate?newModel.biins[i].lastUpdate:date;
-					newModel.biins[i].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
+					newModel.biins[biinArray]={};				
+					newModel.biins[biinArray].identifier= model.biins[i].identifier;
+					newModel.biins[biinArray].minor= "" +model.biins[i].minor;
+					newModel.biins[biinArray].biinType= model.biins[i].biinType;
+					newModel.biins[biinArray].lastUpdate= model.biins[i].lastUpdate?model.biins[i].lastUpdate:date;
+					newModel.biins[biinArray].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
 
 					//If is not there an identifier
 					if(!model.biins[i].identifier)
-						newModel.biins[i].identifier= utils.getGUID();
+						newModel.biins[biinArray].identifier= utils.getGUID();
+					biinArray++;
 				}
 			}
 		}
