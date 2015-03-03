@@ -179,12 +179,14 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);
     app.get('/mobile/showcases/:identifier',mobileRoutes.getShowcase);
 
-    
 
     app.get('/blog/', blog.index);
     app.get('/api/blog', blog.list);
     app.get('/public/blog/:year/:month/:day/:title', blog.entry);
     //Blog routes
+
+    //Utils
+    app.get('/sites/update/validation',sites.setSitesValid);
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {

@@ -66,7 +66,9 @@ var siteObj ={
 	commentedCount:{type:Number,default:0},
 	biinedUsers:[{biinieIdentifier:String}],
 	userShared:[{biinieIdentifier:String,sharedTo:String}],
-	usercomments:[{position:Number, biinieIdentifier:String,comment:String,date:String}]
+	usercomments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],
+	isValid:{type:Boolean,default:false},
+	isDeleted:{type:Boolean,default:false}
 }
 var siteSchema = new Schema(siteObj);
 

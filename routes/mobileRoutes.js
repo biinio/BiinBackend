@@ -69,29 +69,41 @@ module.exports =function(){
 
 						//Get The sites by Each Category
 						var categoriesProcessed = 0;
+						var categoriesWithSites=0;
 
 						///Get the Sites By categories
 						var getSitesByCat = function(pcategory, index, total, callback){
 							//Return the sites by Categories
-							var orgResult=organization.find({'sites.categories.identifier':pcategory.identifier},{"_id":0,"sites.identifier":1, "identifier":1},function(err,sitesCategories){
+							var orgResult=organization.find({'sites.categories.identifier':pcategory.identifier, "sites.isValid":true},{"_id":0,"sites.identifier":1,"sites.categories.identifier":1,"sites.categories.identifier":1,"sites.isValid":1, "identifier":1,},function(err,sitesCategories){
 								if(err)
 									res.json({data:{status:"5",data:{}, err:err}});
 								else
 								{
 									var sitesResult=[];
 
+									var cantSitesAdded =0;
+
 									//Remove the Organization
-									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){
-										if('sites' in sitesCategories[0])
-											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){
-													sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
+									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){										
+										if('sites' in sitesCategories[0] )
+											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){								
+
+													if( sitesCategories[0].sites[siteIndex].isValid=true && 'categories' in sitesCategories[0].sites[siteIndex] && sitesCategories[0].sites[siteIndex].categories.length>0){
+														//Get the categories of the site
+														var sitesCat = _.pluck(sitesCategories[0].sites[siteIndex].categories,'identifier')
+
+														if(_.indexOf(sitesCat,pcategory.identifier)!=-1){
+															sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
+															cantSitesAdded++;
+														}
+													}
+													
 											}
 									}	
 
 									//Callback function
 									var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
-									callback(index,total,result);
-									
+									callback(index,total,result,cantSitesAdded);									
 								}
 
 							});		
@@ -100,14 +112,26 @@ module.exports =function(){
 					
 				}
 
-					var finalCursor=function(index,total,data){
-						result.data.categories[index]=data;
+					var finalCursor=function(index,total,data,cantSites){
+
+						if(cantSites>0){
+							result.data.categories.push(data)
+							categoriesWithSites++;
+						}
 						categoriesProcessed++;
 
 						//Return the categories if all is processed
 						if(categoriesProcessed===total){
-							result.status="0";
-							res.json(result);
+
+							if(categoriesWithSites==0){
+								res.json({data:{status:"9",data:{}}});
+
+							}
+							else{
+								result.status="0";
+								res.json(result);
+							}
+
 						}				
 					}
 

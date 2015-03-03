@@ -216,10 +216,11 @@ module.exports = function () {
 
     }
 
-
     //Get the mobile Test page
     functions.mobileTest =function(req,res){    	
     	res.render('mobileTest', { title: 'Biin' });	
     }
+
+    
 	return functions;
 };

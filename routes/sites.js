@@ -63,6 +63,7 @@ module.exports = function () {
 			var model = new site();
             model.identifier=utils.getGUID();
 			model.accountIdentifier= req.user.accountIdentifier;
+			model.isValid = false;
 
 			//Get the Mayor and Update
 			getMajor(organizationIdentifier,req.user.accountIdentifier,function(major){
@@ -88,6 +89,7 @@ module.exports = function () {
 			});
 		}else{
 			var model = req.body.model;		
+			model.isValid = utils.validate(new site().validations(),req,'model')==null;
 			if(model)
 			{	
 				delete model._id;
@@ -229,5 +231,36 @@ module.exports = function () {
 	}
 
 
+
+	//Test and other Utils
+	functions.setSitesValid= function(req,res){
+		var processed =0;
+		organization.find({'sites.isValid':{ $exists: false }},{"identifier":1,"sites":1},function(err,data){
+			var orgCant = data.length;
+			for(var o =0; o<data.length;o++){
+				var organization = data[o];
+				for(var s=0; s<data[o].sites.length;s++){
+					req.body.model = organization.sites[s];
+					var errors =  utils.validate(new site().validations(),req,'model');
+					console.log(errors);
+					data[o].sites.isValid = errors.length===0;	
+					console.log('Is site valid: '+ data[o].sites.isValid);
+				}
+
+				organization.save(function(err){
+					processed++;
+					if(err)
+						throw err;
+					else
+						console.log("save changes in org: " + organization.identifier)
+
+					if(processed ===orgCant)
+						res.json({status:0});
+				})
+			}
+
+		})
+    	
+    }
 	return functions;
 }

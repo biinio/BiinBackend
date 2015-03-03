@@ -88,7 +88,9 @@ var orgSchema = new Schema({
 		commentedCount:{type:Number,default:0},
 		biinedUsers:[{biinieIdentifier:String}],
 		userShared:[{biinieIdentifier:String,sharedTo:String}],
-		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}]		
+		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],	
+		isValid:{type:Boolean,default:false},
+		isDeleted:{type:Boolean,default:false}		
 	}],
 	elements:[{
 
