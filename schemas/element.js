@@ -62,8 +62,10 @@ var elementSchema = new Schema({
 		url:{type:String,default:""},
 		mediaType:{type:String,default:""},
 		mainColor:{type:String,default:""}
-	}]
-
+	}],
+	biinedCount:{type:Number,default:0},
+	sharedCount:{type:Number,default:0},
+	commentedCount:{type:Number,default:0}
 });
 
 module.exports = mongoose.model('elements', elementSchema);

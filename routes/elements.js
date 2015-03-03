@@ -59,7 +59,12 @@ module.exports = function(){
 						elementObj.userCommented="0";
 						elementObj.isActive="1";
 						elementObj.position=elementObj.position?elementObj.position:"1";
+						elementObj.identifier= elementObj.elementIdentifier;
 
+						elementObj.initialDate = elementObj.initialDate? utils.getDate(elementObj.initialDate):utils.getDateNow();
+						elementObj.expirationDate = elementObj.expirationDate? utils.getDate(elementObj.expirationDate):utils.getDateNow();
+
+						delete elementObj.elementIdentifier;
 						delete elementObj.notifications;
 						delete elementObj.accountIdentifier;
 						delete elementObj.organizationIdentifier;
