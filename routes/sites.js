@@ -243,7 +243,7 @@ module.exports = function () {
 					req.body.model = organization.sites[s];
 					var errors =  utils.validate(new site().validations(),req,'model');
 					console.log(errors);
-					data[o].sites.isValid = errors.length===0;	
+					data[o].sites.isValid = errors===null;	
 					console.log('Is site valid: '+ data[o].sites.isValid);
 				}
 

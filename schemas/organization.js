@@ -97,7 +97,7 @@ var orgSchema = new Schema({
 	    elementIdentifier:{type:String, default:"-1", index:true},
 	    organizationIdentifier:{type:String,default:""},
 	    accountIdentifier:{type:String,default:""},    
-	    position:{type:String, default:""},
+	    position:{type:String, default:"1"},
 		elementType:{type:String, default:""},
 
 	    title:{type:String, default:""}, 
@@ -156,7 +156,10 @@ var orgSchema = new Schema({
 				imgUrl:{type:String, default:""}
 			}
 		],		
-		documentIdentifier:{type:String,index:"true"}
+		documentIdentifier:{type:String,index:"true"},
+		biinedCount:{type:Number,default:0},
+		sharedCount:{type:Number,default:0},
+		commentedCount:{type:Number,default:0}		
 
 	}],
 	gallery:[{

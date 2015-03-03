@@ -5,7 +5,7 @@ var elementSchema = new Schema({
     elementIdentifier:{type:String, default:"-1", index:true},
     organizationIdentifier:{type:String,default:""},
     accountIdentifier:{type:String,default:""},    
-    position:{type:String, default:""},
+    position:{type:String, default:"1"},
 	elementType:{type:String, default:""},
 
     title:{type:String, default:""}, 

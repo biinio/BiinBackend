@@ -17,7 +17,7 @@ var showcaseObj={
 	elements:[
 		{
 			elementIdentifier:String,
-			position:String,
+			position:{type:String, default:"1"},
 			objectType:{type:String},
 			likes:String,
             title1:String,
@@ -50,7 +50,10 @@ var showcaseObj={
 					mediaType:{type:String,default:""},
 					mainColor:{type:String,default:""}
 				}
-			]
+			],
+			biinedCount:{type:Number,default:0},
+			sharedCount:{type:Number,default:0},
+			commentedCount:{type:Number,default:0}			
 		}
 	],
 	webAvailable:[]

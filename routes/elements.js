@@ -46,19 +46,21 @@ module.exports = function(){
 						for(var i=0; i< data.elements[0].media.length; i++){
 							var media ={};
 							media.mediaType=1;
-							media.domainColor=  data.elements[0].media[i].mainColor;
+							media.domainColor=  data.elements[0].media[i].mainColor?data.elements[0].media[i].mainColor.replace('rgb(','').replace(')',''):"0,0,0";
 							media.url = data.elements[0].media[i].url;
 							elementObj.media.push(media);
 						}
 						elementObj.hasQuantity=eval(elementObj.hasQuantity)?"1":"0";
 						elementObj.hasSticker=elementObj.sticker!=''?"1":"0"
-						elementObj.biins="0";
-						elementObj.comments="0";
+						elementObj.biinedCount =  elementObj.biinedCount?""+elementObj.biinedCount:"0";
+						elementObj.commentedCount =  elementObj.commentedCount?""+elementObj.commentedCount:"0";
 						elementObj.userBiined="0";
 						elementObj.userShared="0";
 						elementObj.userCommented="0";
 						elementObj.isActive="1";
+						elementObj.position=elementObj.position?elementObj.position:"1";
 
+						delete elementObj.notifications;
 						delete elementObj.accountIdentifier;
 						delete elementObj.organizationIdentifier;
 						delete elementObj.domainColor;
