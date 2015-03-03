@@ -67,6 +67,7 @@ module.exports = function(){
 						delete elementObj.actionType;
 						delete elementObj.textColor;
 						delete elementObj.categories;
+						delete elementObj.activateNotification;
 						//To implement
 						/*
 						"reservedQuantity": "34",
