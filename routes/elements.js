@@ -34,7 +34,7 @@ module.exports = function(){
 						var elementObj = data.elements[0].toObject();
 						elementObj.identifier = element.elementIdentifier;
 						delete elementObj.identifier;
-						elementObj.titleColor = elementObj.textColor.replace('rgb(','').replace(")",'');
+						elementObj.titleColor = getColor(elementObj.textColor);
 						elementObj.reservedQuantity="0";
 						elementObj.claimedQuantity="0";
 						elementObj.actualQuantity="0";
@@ -46,7 +46,7 @@ module.exports = function(){
 						for(var i=0; i< data.elements[0].media.length; i++){
 							var media ={};
 							media.mediaType=1;
-							media.domainColor=  data.elements[0].media[i].mainColor?data.elements[0].media[i].mainColor.replace('rgb(','').replace(')',''):"0,0,0";
+							media.domainColor=  getColor(data.elements[0].media[i].mainColor);
 							media.url = data.elements[0].media[i].url;
 							elementObj.media.push(media);
 						}
@@ -286,6 +286,14 @@ module.exports = function(){
     	})
     }
 
+    //Return the Color
+    function getColor(pcolor){
+    	if(pcolor && pcolor.indexOf('rgb(') > -1) {
+    		return pcolor.replace('rgb(','').replace(')','');
+    	}else{
+    		return '0,0,0'
+    	}
+    }
 
 	return functions;
 }
