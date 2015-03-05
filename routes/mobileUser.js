@@ -152,7 +152,7 @@ module.exports = function(){
 
 		var categoriesModel = req.body['model'];
 
-		var catArray = _.pluck(model,'identifier')
+		var catArray = _.pluck(categoriesModel,'identifier')
 		category.find({identifier:{$in:catArray}},function(err,data){
 			if(err)
 				res.json({data:{status:"5", result:"0"}});
