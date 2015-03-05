@@ -68,21 +68,36 @@ var orgSchema = new Schema({
 		],
 		biins:[
 			{
-				identifier:{type:String, index:true, Default:""},
-				name:{type:String, Default:""},
-				major:{type:String, Default:""},
-				minor:{type:String, Default:""},
-				proximityUUID:{type:String, Default:""},
-				location:{type:String, Default:""},
-				registerDate:{type:String, Default:""},
-				lastUpdate:{type:String, Default:""},
-				
+				identifier:{type:String, index:true, default:""},
+				name:{type:String, default:""},
+				major:{type:String, default:""},
+				minor:{type:String, default:""},
+				proximityUUID:{type:String, default:""},
+				location:{type:String, default:""},
+				registerDate:{type:String, default:""},
+				lastUpdate:{type:String, default:""},
 				showcasesAsigned:[{
-					showcaseIdentifier:{type:String, Default:""}
+					showcaseIdentifier:{type:String, default:""}
 				}]
 
 			}
 		],
+		loyalty: {
+	       isSubscribed:{type:String, default:"0"},
+	       subscriptionDate:{type:String, default:"2014-01-01 12:00:00"},
+	       points:{type:String, default:"0"},
+	       level:{type:String,default:"0"},
+	       achievements: [
+	           {
+	               achievementIdentifier:{type:String, default:"0"}
+	           }
+	       ],
+	       badges: [
+	           {
+	               badgeIdentifier:{type:String, default:"0"}
+	           }
+	       ]
+		},
 		biinedCount:{type:Number,default:0},
 		sharedCount:{type:Number,default:0},
 		commentedCount:{type:Number,default:0},
