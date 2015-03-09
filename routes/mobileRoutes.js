@@ -85,12 +85,12 @@ module.exports =function(){
 
 									//Remove the Organization
 									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){										
-										if('sites' in sitesCategories[0] )
+										if('sites' in sitesCategories[orgIndex] )
 											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){								
 
-													if( sitesCategories[0].sites[siteIndex].isValid=true && 'categories' in sitesCategories[0].sites[siteIndex] && sitesCategories[0].sites[siteIndex].categories.length>0){
+													if( sitesCategories[orgIndex].sites[siteIndex].isValid=true && 'categories' in sitesCategories[orgIndex].sites[siteIndex] && sitesCategories[orgIndex].sites[siteIndex].categories.length>0){
 														//Get the categories of the site
-														var sitesCat = _.pluck(sitesCategories[0].sites[siteIndex].categories,'identifier')
+														var sitesCat = _.pluck(sitesCategories[orgIndex].sites[siteIndex].categories,'identifier')
 
 														if(_.indexOf(sitesCat,pcategory.identifier)!=-1){
 															sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
