@@ -64,6 +64,7 @@ module.exports = function () {
 	         newModel.accountIdentifier = req.user.accountIdentifier;
 	         newModel.organizationIdentifier = organizationIdentifier;		      
 	         newModel.lastUpdate =  utils.getDateNow();
+	         newModel.notifications = [{isActive:"0",notificationType:'1',text:''},{isActive:"0",notificationType:'2',text:''},{isActive:"0",notificationType:'3',text:''}];
 
 	         newModel.save(function(err){
 	         	if(err)
@@ -159,6 +160,7 @@ module.exports = function () {
 		  	console.log(err);
 		}
 	}
+
 
 	/****
 	 Other methods

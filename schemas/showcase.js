@@ -56,7 +56,13 @@ var showcaseObj={
 			commentedCount:{type:Number,default:0}			
 		}
 	],
-	webAvailable:[]
+	webAvailable:[],
+	activateNotification:{type:String,default:"0"},
+	notifications:[{
+		isActive:{type:String, default:"0"},
+		notificationType:{type:String, default:""},
+		text:{type:String, default:""}
+	}]
 };
 var showcaseSchema = new Schema(showcaseObj);
 showcaseSchema.methods.createNew = function() {	

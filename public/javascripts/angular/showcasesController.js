@@ -162,22 +162,45 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     var validate=typeof(validateAll)!='undefined';
     var currentValid=false;
 
+      //Validation of Details
       if(eval($scope.wizardPosition)==1 || validate){     
-         $scope.wizard1IsValid= $scope.showcases[$scope.selectedShowcase].showcaseType!='';
+         $scope.wizard1IsValid= (typeof($scope.showcases[$scope.selectedShowcase].name)!='undefined' && $scope.showcases[$scope.selectedShowcase].name!='') && (typeof($scope.showcases[$scope.selectedShowcase].titleColor)!='undefined' && $scope.showcases[$scope.selectedShowcase].titleColor!='');
       }
 
+      //Validation of Elements
       if(eval($scope.wizardPosition)==2 || validate){
-        $scope.wizard2IsValid= $scope.showcases[$scope.selectedShowcase].theme!='';
-      }
-
-      if(eval($scope.wizardPosition)==3 || validate){
-        $scope.wizard3IsValid=  (typeof($scope.showcases[$scope.selectedShowcase].elements) != 'undefined' && $scope.showcases[$scope.selectedShowcase].elements.length>0);
+        $scope.wizard2IsValid=  (typeof($scope.showcases[$scope.selectedShowcase].elements) != 'undefined' && $scope.showcases[$scope.selectedShowcase].elements.length>0);
       }      
 
-      $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid && $scope.wizard3IsValid;
+
+      //Validaton of Biin Sites
+      if(eval($scope.wizardPosition)==3 || validate){      
+        $scope.wizard3IsValid= typeof($scope.biinSite)!='undefined'&& $scope.biinSite!=null && $scope.biinSite.length>0;
+      }
+
+      //Validation of Notificatins
+      if(eval($scope.wizardPosition)==4 || validate){
+        var wizard4IsValid = false;
+
+        var isShowcaseTypeValid = $scope.showcases[$scope.selectedShowcase].showcaseType=='1' || $scope.showcases[$scope.selectedShowcase].showcaseType=='2';
+        //Validate the Notification
+        if($scope.showcases[$scope.selectedShowcase].activateNotification===$scope.activeValue ){
+           wizard4IsValid=true;
+          for(var i=0; i<$scope.showcases[$scope.selectedShowcase].notifications.length;i++){
+            if($scope.showcases[$scope.selectedShowcase].notifications[i].isActive===$scope.activeValue)
+              wizard4IsValid = wizard4IsValid && $scope.showcases[$scope.selectedShowcase].notifications[i].isActive === $scope.activeValue && typeof($scope.showcases[$scope.selectedShowcase].notifications[i].text)!=='undefined' && $scope.showcases[$scope.selectedShowcase].notifications[i].text.length>0;
+          }                 
+        }else{
+         wizard4IsValid=true; 
+        }
+
+        $scope.wizard4IsValid= wizard4IsValid && isShowcaseTypeValid; 
+      }
+      $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid && $scope.wizard4IsValid;
 
       return currentValid;
   }
+
 
   //Remove an element of a Showcase
   $scope.removeElementAt=function(index){
@@ -389,6 +412,30 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
       else
         return "";
     }
+
+    //Notification Section
+
+    //Toggle notifications state
+    $scope.setNotificationActive=function(){
+      if($scope.showcases[$scope.selectedShowcase].activateNotification!=='1')
+        $scope.showcases[$scope.selectedShowcase].activateNotification=$scope.activeValue;
+      else
+        $scope.showcases[$scope.selectedShowcase].activateNotification='0';
+      $scope.validate();
+    }
+
+    //Toggle a specific notification enabled
+    $scope.setNotificationActiveAt=function(index){
+      if($scope.showcases[$scope.selectedShowcase].activateNotification==='1')
+      {
+        if($scope.showcases[$scope.selectedShowcase].notifications[index].isActive!==$scope.activeValue)
+          $scope.showcases[$scope.selectedShowcase].notifications[index].isActive=$scope.activeValue;
+        else
+          $scope.showcases[$scope.selectedShowcase].notifications[index].isActive='0';
+      }      
+      $scope.validate();
+    }
+
 }]);
 
 // Define the Elements Service

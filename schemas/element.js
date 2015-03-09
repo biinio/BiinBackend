@@ -41,13 +41,7 @@ var elementSchema = new Schema({
 			body:[{
 				line:{type:String,default:""}
 			}]
-		}],
-	activateNotification:{type:String,default:"0"},
-	notifications:[{
-		isActive:{type:String, default:"0"},
-		notificationType:{type:String, default:""},
-		text:{type:String, default:""}
-	}],
+		}],	
 	categories:[
 		{
 			identifier:{type:String, index:true, default:"-1"},

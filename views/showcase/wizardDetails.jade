@@ -6,17 +6,9 @@ form.novalidate
 			input.form-control.title-value(ng-model="showcases[selectedShowcase].name" name="name" type="text" placeholder="Name **"  ng-blur="validate()"  required )
 		.row
 			input.form-control.title-value(ng-model="showcases[selectedShowcase].description" name="description" type="text" placeholder="Description **"  ng-blur="validate()"  required )
-	.section.darkSection				
-		h2 Showcase Type
-		p Please select the showcase type
-		.typeWrapper
-			.type-block
-				.moduleType(ng-click="selectType(0)" ng-class="{'active':'0'===showcases[selectedShowcase].showcaseType}")						
-					.circleInner
-						i.icon.icon-file-1
-						span Single
-			.type-block
-				.moduleType(ng-click="selectType(1)" ng-class="{'active':'1'===showcases[selectedShowcase].showcaseType}")						
-					.circleInner
-						i.icon.icon-files-1
-						span Multiple
+		.row
+			h2 Title Color
+			p Please select the title color for your the showcase
+			.color-picker
+				input(type="text" ng-model="showcases[selectedShowcase].titleColor" verify-on-change readonly)
+				spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].titleColor" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#edeeee', '#bbbdc0','#808284','#231f20'],['#69cdf1', '#2f83c0', '#005898'],['#5fc4bb','#88c53f','#0b8943'],['#fcbc15','#f47a26','#ed1c24','#ee4775'],['#9b3393','#4b3895'],['#c6a887','#7b3d1a']]}")

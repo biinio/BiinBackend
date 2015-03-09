@@ -65,7 +65,10 @@ module.exports = function(){
 						elementObj.expirationDate = elementObj.expirationDate? utils.getDate(elementObj.expirationDate):utils.getDateNow();
 
 						delete elementObj.elementIdentifier;
-						delete elementObj.notifications;
+
+						//Remove the old notifications object
+						if('notifications' in elementObj)
+							delete elementObj.notifications;
 						delete elementObj.accountIdentifier;
 						delete elementObj.organizationIdentifier;
 						delete elementObj.domainColor;
@@ -103,7 +106,6 @@ module.exports = function(){
          newModel.elementIdentifier=utils.getGUID();
          newModel.accountIdentifier = req.user.accountIdentifier;
          newModel.organizationIdentifier = organizationIdentifier;
-         newModel.notifications =[{isActive:"0",notificationType:'1',text:''},{isActive:"0",notificationType:'2',text:''},{isActive:"0",notificationType:'3',text:''}];
 
          organization.update({
          	identifier:organizationIdentifier,accountIdentifier:req.user.accountIdentifier

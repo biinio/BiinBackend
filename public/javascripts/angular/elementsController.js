@@ -26,7 +26,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.wizard4IsValid =false;
   $scope.wizard5IsValid =false;
   $scope.wizard6IsValid =false;
-  $scope.wizard7IsValid = false;
 
   //Boolean values 
   $scope.hasListPriceBool=false;
@@ -262,31 +261,16 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         $scope.wizard5IsValid= wizard5IsValid;
       }
 
-      if(eval($scope.wizardPosition)==6 || validate){
-        var wizard6IsValid = false;
-        if($scope.elements[$scope.selectedElement].activateNotification===$scope.activeValue ){
-           wizard6IsValid=true;
-          for(var i=0; i<$scope.elements[$scope.selectedElement].notifications.length;i++){
-            if($scope.elements[$scope.selectedElement].notifications[i].isActive===$scope.activeValue)
-              wizard6IsValid = wizard6IsValid && $scope.elements[$scope.selectedElement].notifications[i].isActive === $scope.activeValue && typeof($scope.elements[$scope.selectedElement].notifications[i].text)!=='undefined' && $scope.elements[$scope.selectedElement].notifications[i].text.length>0;
-          }
-        }else{
-         wizard6IsValid=true; 
-        }
-
-        $scope.wizard6IsValid= wizard6IsValid; 
-      }
-
       //Categories Validate
-      if(eval($scope.wizardPosition)== 7 || validate){
+      if(eval($scope.wizardPosition)== 6 || validate){
         if($scope.elements[$scope.selectedElement]){
-         $scope.wizard7IsValid=$scope.elements[$scope.selectedElement].categories.length>0;
+         $scope.wizard6IsValid=$scope.elements[$scope.selectedElement].categories.length>0;
         }else{
-          $scope.wizard7IsValid=false; 
+          $scope.wizard6IsValid=false; 
         }          
       }
 
-      $scope.isValid = $scope.wizard0IsValid && $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid &&  $scope.wizard5IsValid &&  $scope.wizard6IsValid && $scope.wizard7IsValid;
+      $scope.isValid = $scope.wizard0IsValid && $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid &&  $scope.wizard5IsValid &&  $scope.wizard6IsValid;
 
       return currentValid;
   }
@@ -445,30 +429,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.elements[$scope.selectedElement].details[detailIndex].body.push({line:""});
     $scope.validate();
   }
-
-  //Notification Section
-
-  //Toggle notifications state
-  $scope.setNotificationActive=function(){
-    if($scope.elements[$scope.selectedElement].activateNotification!=='1')
-      $scope.elements[$scope.selectedElement].activateNotification=$scope.activeValue;
-    else
-      $scope.elements[$scope.selectedElement].activateNotification='0';
-    $scope.validate();
-  }
-
-  //Toggle a specific notification enabled
-  $scope.setNotificationActiveAt=function(index){
-    if($scope.elements[$scope.selectedElement].activateNotification==='1')
-    {
-      if($scope.elements[$scope.selectedElement].notifications[index].isActive!==$scope.activeValue)
-        $scope.elements[$scope.selectedElement].notifications[index].isActive=$scope.activeValue;
-      else
-        $scope.elements[$scope.selectedElement].notifications[index].isActive='0';
-    }      
-    $scope.validate();
-  }
-
  
   //Toggle the changes 
   $scope.changeBoolStateHighlights=function(model,value){

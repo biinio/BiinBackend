@@ -1132,6 +1132,14 @@ input.ng-valid.ng-dirty{
 			#elementNotifications{
 				position:relative;
 
+				.notificationWrapper{
+					//margin-right: @standardPadding!important;
+					padding-left: initial;
+					margin-right: initial;;
+					margin-left: initial;
+
+				}
+
 				.mainNotificationActivation{
 					padding-bottom: @standardPadding;
 					margin-bottom:  @standardPadding;
@@ -1250,6 +1258,41 @@ input.ng-valid.ng-dirty{
 
 					.form-control{
 						border-style: none;
+					}
+				}
+
+				.typeWrapper{
+					width: 100%;
+					overflow: initial;
+					height: auto;
+
+					.type-block	{
+						height: 130px;
+						width: 30%;
+						.moduleType{
+							height: 86px;
+							width: 86px;
+							-moz-border-radius: 50%;
+						    -webkit-border-radius: 50%;
+						    border-radius: 50%;							
+						}
+
+						.circleInner{
+							top: 5px;
+							margin-left: auto;
+							padding-top: 5px;
+							margin-right: auto;
+							height: 76px;
+							width: 76px;
+							-moz-border-radius: 50%;
+						    -webkit-border-radius: 50%;
+						    border-radius: 50%;
+
+						    .icon{
+						    	font-size: 25px;
+						    }
+						}
+
 					}
 				}
 			}
@@ -1549,6 +1592,12 @@ input.ng-valid.ng-dirty{
 						width: 100%;
 						background-color: @colorBaseWhite;
 						text-align: center;
+						cursor: pointer;
+					}
+
+					.biinWrapper:hover{
+						background-color: @colorFocus;
+
 					}
 
 				}
@@ -2436,6 +2485,11 @@ li>.nav{
 .nopadding {
   padding: 0 !important;
   margin: 0 !important;
+}
+
+.left-nopadding{
+	padding-left: inherit;
+	margin-left: inherit;
 }
 
 /*------------------------------------------*/

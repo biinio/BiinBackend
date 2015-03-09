@@ -1,0 +1,45 @@
+.section
+	h1 Notifications
+	p Add the custom notifications for your customers
+.section
+	#elementNotifications
+		.row
+			.col-md-5.notificationWrapper
+				.section.darkSection.mainNotificationActivation
+					h2 In-app notification
+					p Turn on/off the in-app notifications about this element
+					.circleButtonActiveNotifications(ng-class="{'active':showcases[selectedShowcase].activateNotification===activeValue}" ng-click="setNotificationActive()" )
+						.icon.icon-bell
+							p Activate Notification
+			.col-md-7.nopadding
+				.section.darkSection				
+					h2 Showcase Type
+					p Please select the showcase type
+					.typeWrapper
+						.type-block
+							.moduleType(ng-click="selectType(1)" ng-class="{'active':'1'===showcases[selectedShowcase].showcaseType}")
+								.circleInner
+									i.icon.icon-file-1
+									span Externo
+						.type-block
+							.moduleType(ng-click="selectType(2)" ng-class="{'active':'2'===showcases[selectedShowcase].showcaseType}")
+								.circleInner
+									i.icon.icon-files-1
+									span Interno					
+		.section.darkSection.notificationOptions(ng-repeat="el in showcases[selectedShowcase].notifications" ng-disabled="showcases[selectedShowcase].activateNotification!==activeValue")
+			.circleButtonNotification( ng-click="setNotificationActiveAt($index)"  ng-class="{'disabled':showcases[selectedShowcase].activateNotification!==activeValue,'active':el.isActive===activeValue}")
+				.icon.icon-hand-like-1.stimulus(ng-if="el.notificationType==='1'" )
+				.icon.icon-link-3.engage(ng-if="el.notificationType==='2'")
+				.icon.icon-loop-3.convert(ng-if="el.notificationType==='3'")
+			.notifcationGroup(ng-if="el.notificationType==='1'")
+				h2 Stimulus
+				p Stimulus notification text.
+				input.form-control(type="text" ng-model="el.text" placeholder="Text here." ng-disabled="showcases[selectedShowcase].activateNotification !==activeValue || el.isActive !== activeValue" ng-blur="validate()")
+			.notifcationGroup(ng-if="el.notificationType==='2'")
+				h2 Engage
+				p Engage notification
+				input.form-control(type="text" ng-model="el.text" placeholder="Text here." ng-disabled="showcases[selectedShowcase].activateNotification !==activeValue || el.isActive !== activeValue" ng-blur="validate()")
+			.notifcationGroup(ng-if="el.notificationType==='3'")
+				h2 Convert
+				p Convert notification
+				input.form-control(type="text" ng-model="el.text" placeholder="Text here." ng-disabled="showcases[selectedShowcase].activateNotification !==activeValue || el.isActive !== activeValue" ng-blur="validate()")
