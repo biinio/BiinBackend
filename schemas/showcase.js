@@ -5,8 +5,7 @@ var showcaseObj={
 	accountIdentifier:{type:String, default:"000"},
 	organizationIdentifier:{type:String, default:""},
 
-	showcaseType:{type:String, default:""},
-	theme:{type:String,default:""},
+	showcaseType:{type:String, default:"1"},
 
 	name:{type:String, default:""},
 	description:{type:String, default:""},
