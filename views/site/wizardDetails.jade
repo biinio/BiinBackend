@@ -8,6 +8,8 @@ form.novalidate
 			input.form-control.title-value(ng-model="sites[selectedSite].title1" name="title1" type="text" placeholder="Tittle **"  ng-blur="validate()"  required )
 		.row
 			input.form-control.title-value(ng-model="sites[selectedSite].title2" name="title1" type="text" placeholder="Subtittle **" ng-blur="validate()"  required )
+		.row
+			h4 Identifier: {{sites[selectedSite].identifier}}
 	.section
 		h2 Search criteria
 		p This information could be useful to others for found your information
