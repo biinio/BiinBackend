@@ -17,9 +17,9 @@ div(ng-click="validate()")
 		p Please select the main color for your site
 		.color-picker
 			input(type="text" ng-model="sites[selectedSite].mainColor" verify-on-change readonly)
-			spectrum-colorpicker.picker(ng-model="sites[selectedSite].mainColor" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#edeeee', '#bbbdc0','#808284','#231f20'],['#69cdf1', '#2f83c0', '#005898'],['#5fc4bb','#88c53f','#0b8943'],['#fcbc15','#f47a26','#ed1c24','#ee4775'],['#9b3393','#4b3895'],['#c6a887','#7b3d1a']]}")
+			spectrum-colorpicker.picker(ng-model="sites[selectedSite].mainColor" options="{clickoutFiresChange: true, showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#edeeee', '#bbbdc0','#808284','#231f20'],['#69cdf1', '#2f83c0', '#005898'],['#5fc4bb','#88c53f','#0b8943'],['#fcbc15','#f47a26','#ed1c24','#ee4775'],['#9b3393','#4b3895'],['#c6a887','#7b3d1a']]}")
 		h2 Text Color
 		p Please select the text color for your site
 		.color-picker
 			input(type="text" ng-model="sites[selectedSite].textColor" readonly)
-			spectrum-colorpicker.picker(ng-model="sites[selectedSite].textColor" options="{showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")		
+			spectrum-colorpicker.picker(ng-model="sites[selectedSite].textColor" options="{clickoutFiresChange: true, showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")		

@@ -26,8 +26,8 @@ div(ng-click="validate()")
 						.stickerModuleWrapper(ng-click="selectSticker($index)" ng-class="{'active':item.identifier===elements[selectedElement].sticker.identifier}")
 							span.stickerTitle {{item.title1}} {{item.title2}}
 							.stickerContent(ng-class="item.identifier")
-								spectrum-colorpicker.picker(ng-model="item.color" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#ed1c24'],['#fff100'],['#38b449'],['#00adef'],['#000000'],['#f7931d'],['#86328b']]}" ng-if="item.identifier!==elements[selectedElement].sticker.identifier")
-								spectrum-colorpicker.picker(ng-model="elements[selectedElement].sticker.color" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#ed1c24'],['#fff100'],['#38b449'],['#00adef'],['#000000'],['#f7931d'],['#86328b']]}" ng-if="item.identifier===elements[selectedElement].sticker.identifier")									
+								spectrum-colorpicker.picker(ng-model="item.color" options="{clickoutFiresChange: true, showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#ed1c24'],['#fff100'],['#38b449'],['#00adef'],['#000000'],['#f7931d'],['#86328b']]}" ng-if="item.identifier!==elements[selectedElement].sticker.identifier")
+								spectrum-colorpicker.picker(ng-model="elements[selectedElement].sticker.color" options="{clickoutFiresChange: true, showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#ed1c24'],['#fff100'],['#38b449'],['#00adef'],['#000000'],['#f7931d'],['#86328b']]}" ng-if="item.identifier===elements[selectedElement].sticker.identifier")									
 								.sticker01(ng-if="item.identifier=='stick01'")
 									.circleOuter(style="background-color:{{item.color}}!important;" ng-if="item.identifier!==elements[selectedElement].sticker.identifier")
 										.circleIn
@@ -53,7 +53,7 @@ div(ng-click="validate()")
 				p Please select the Text color for the element
 				.color-picker
 					input(type="text" ng-model="elements[selectedElement].textColor"  verify-on-change readonly )
-					spectrum-colorpicker.picker(ng-model="elements[selectedElement].textColor" options="{ showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")
+					spectrum-colorpicker.picker(ng-model="elements[selectedElement].textColor" options="{clickoutFiresChange: true, showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:['#FFF','#000']}")
 //			.col-md-4			
 				h2 Social Buttons Color
 				p Please select the social Buttons color
