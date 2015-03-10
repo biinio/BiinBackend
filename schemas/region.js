@@ -5,6 +5,10 @@ module.exports = mongoose.model('regions', {
 	radious: String,
 	latitude:String,
 	longitude:String,
+	sites:[{
+		identifier:String
+	}],
+	sitesCount:String,
 	biins:[
 		{
 			identifier:String,

@@ -184,7 +184,7 @@ module.exports =function(){
 		//Map fields;
 
 		newModel.title = model.title1;			
-		newModel.subTitle = model.title1;
+		newModel.subTitle = model.title2;
 		newModel.titleColor = model.textColor.replace("rgb(","").replace(")","");
 		newModel.zipCode = model.zipCode
 		newModel.streetAddress1 = model.streetAddres?model.streetAddres:"";

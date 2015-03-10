@@ -1,5 +1,6 @@
 module.exports = function () {
-	var region = require('../schemas/region');
+	var math = require('mathjs');
+	var region = require('../schemas/region');	
 	var functions = {};
 
 	//GET the index view of a regions
@@ -29,8 +30,8 @@ module.exports = function () {
 			 	if(err){
 			 		throw err;
 			 	}else{
-			 		console.log(regionSaved)
-			 		res.redirect("/regions")
+			 		console.log(regionSaved);
+			 		res.redirect("/regions");
 			 	}
 
 			 })
@@ -67,6 +68,53 @@ module.exports = function () {
 			});
 		});	
 
+	}
+
+	//Returns a region by calculing the proximity of the coord
+	functions.getRegionByProximity=function(lat, lon){
+		region.find({},'',function(err,regions){
+			if(err)
+				throw err;
+			else{
+
+				var regionCloser={};
+				var closerValue=0;
+
+				var insideRegion=0;
+				//Iterate over the regions 
+				for(var i =0; i, regions.length;i++){
+				 	var region = rebion[i];
+
+				 	var resultLat = region.latitude - lat;
+				 	var resultLong = region.longitude -lon;
+
+				 	console.log('Region: '+ region.identifier);
+				 	console.log('Lat: '+ region.latitude);
+				 	console.log('Long: '+ region.longitude);
+					console.log('Radious: '+ region.radious);
+
+					console.log('Result Lat: '+ resultLat)
+					console.log('Result Long: '+ resultLong)
+
+				 	var distance= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
+
+				 	console.log('Distance: '+ distance);	
+
+				 	console.log('Analizing if is inside the region');
+				 	if(distance< region.radious){
+				 		console.log('Inside region: ')
+				 		insideRegion = region.identifier;
+				 		//regionCloser
+				 	}
+
+				 	if(closerValue=0){
+				 		closerValue = distance;
+				 	}
+
+				}	
+			}		
+		});
+		
 	}	
 
 	//GET the list of regions

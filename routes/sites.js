@@ -230,7 +230,7 @@ module.exports = function () {
 		});
 	}
 
-
+	
 
 	//Test and other Utils
 	functions.setSitesValid= function(req,res){
@@ -259,8 +259,7 @@ module.exports = function () {
 				})
 			}
 
-		})
-    	
+		})    	
     }
 	return functions;
 }

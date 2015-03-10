@@ -18,7 +18,8 @@ div
 		row
 			input.form-control(type="text" ng-model="sites[selectedSite].biins[selectedBiin].name" placeholder="Name")
 			input.form-control(type="text" ng-model="sites[selectedSite].biins[selectedBiin].location" placeholder="location")				
-			p.biinPropertie Organization id: {{organizationId}}
+			p.biinPropertie Identifier: {{sites[selectedSite].biins[selectedBiin].identifier}}			
+			p.biinPropertie Organization id: {{organizationId}}			
 			p.biinPropertie Site id: {{sites[selectedSite].major}}
 			p.biinPropertie Biin id: {{sites[selectedSite].biins[selectedBiin].minor}}
 include wizardBiinsPurchaseModal
