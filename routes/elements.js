@@ -35,6 +35,8 @@ module.exports = function(){
 						elementObj.identifier = element.elementIdentifier;
 						delete elementObj.identifier;
 						elementObj.titleColor = getColor(elementObj.textColor);
+						elementObj.subTitle = elementObj.subTitle?elementObj.subTitle :'';
+						
 						elementObj.reservedQuantity="0";
 						elementObj.claimedQuantity="0";
 						elementObj.actualQuantity="0";
@@ -217,6 +219,7 @@ module.exports = function(){
 						{$set:{"objects.$.objectType":model.objectType,
 							    "objects.$.likes":model.likes,
 								"objects.$.title1":model.title1,
+								"objects.$.subTitle":model.subTitle,
 								"objects.$.title1Color":model.title1Color,								
 								"objects.$.title2Color":model.title2Color,
 								"objects.$.title1Size":model.title1Size,																

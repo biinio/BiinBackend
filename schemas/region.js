@@ -6,7 +6,15 @@ module.exports = mongoose.model('regions', {
 	latitude:String,
 	longitude:String,
 	sites:[{
-		identifier:String
+		identifier:{type:String, index:true},
+		categories:[
+			{
+				identifier:{type:String, index:true, default:"-1"},
+				name:{type:String, default:""},
+				displayName:{type:String, default:""},
+				imgUrl:{type:String, default:""}
+			}
+		]		
 	}],
 	sitesCount:String,
 	biins:[

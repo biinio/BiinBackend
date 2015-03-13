@@ -5,7 +5,8 @@ module.exports =function(){
 	var mobileUser = require('../schemas/mobileUser');
 	var utils = require('../biin_modules/utils')();
 
-	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase');
+	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
+		region= require('../schemas/region');
 
 	
 	
@@ -147,6 +148,59 @@ module.exports =function(){
 		});
 	}
 
+	functions.getCategoriesByRegionId=function(req,res){
+		var userIdentifier = req.param("identifier");
+		var regionIdentifier = req.param('regionIdentifier');
+
+		//Get the categories of the user
+		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){		
+			if(err)				
+				res.json({data:{},status:"5"});	
+			else{
+				if((!foundCategories) || foundCategories.categories.length===0)
+					res.json({data:{status:"9",data:{}}});
+				else{
+					region.findOne({identifier:regionIdentifier},function(err,foundRegion){
+						var categories =[];
+						if(err)
+							res.json({data:{},status:"5"});	
+						if(!foundRegion )
+							res.json({data:{},status:"9"});	
+						else{
+							if(!foundRegion.sites || foundRegion.sites.length==0)
+								res.json({data:{},status:"9"});	
+							else{
+
+								//Iterate over the categories
+								for(var i =0; i<foundCategories.categories.length;i++){
+									var category = foundCategories.categories[i];
+									var categoryResult ={identifier:category.identifier,name:category.name};
+									var categorySites =[];	
+									for(var j=0;j<foundRegion.sites.length;j++){
+										var categoryFound =_.findWhere(foundRegion.sites[j].categories,{identifier:category.identifier})
+										if(categoryFound)
+											categorySites.push({identifier:foundRegion.sites[j].identifier})
+									}
+									if(categorySites.length>0){
+										categoryResult.sites=categorySites;
+										categories.push(categoryResult)
+
+									}
+								}
+								//Result of categogry with sites
+								if(categories.length>0){
+									res.json({data:{categories:categories},status:0});
+								}else{
+									res.json({data:{},status:"9"});	
+								}
+							}
+						}
+					});
+				}			
+			}
+		});
+
+	}
 	//GET Site
 	functions.getSite=function(req,res){
 		var biinieIdentifier = req.param("biinieIdentifier");

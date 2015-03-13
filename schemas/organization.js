@@ -105,7 +105,8 @@ var orgSchema = new Schema({
 		userShared:[{biinieIdentifier:String,sharedTo:String}],
 		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],	
 		isValid:{type:Boolean,default:false},
-		isDeleted:{type:Boolean,default:false}		
+		isDeleted:{type:Boolean,default:false},
+		region:{type:String,default:""}		
 	}],
 	elements:[{
 

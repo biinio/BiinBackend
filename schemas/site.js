@@ -84,7 +84,8 @@ var siteObj ={
 	userShared:[{biinieIdentifier:String,sharedTo:String}],
 	usercomments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],
 	isValid:{type:Boolean,default:false},
-	isDeleted:{type:Boolean,default:false}
+	isDeleted:{type:Boolean,default:false},
+	region:{type:String,default:""}
 }
 var siteSchema = new Schema(siteObj);
 

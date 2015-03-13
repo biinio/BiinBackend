@@ -6,6 +6,7 @@ module.exports = function () {
 	//Schemas
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
 					   biin = require('../schemas/biin');
+	var regionRoutes = require('./regions')();
 
 	var functions={};
 
@@ -116,8 +117,15 @@ module.exports = function () {
 	                     		res.json(null);
 	                     	}
 							else{
-	                            //Return the state
-								res.send(model,200);							
+								if(model.region)
+									regionRoutes.updateRegionSiteCategories(model.region,model.identifier,model.categories,function(succes){
+										//Return the state
+										res.send(model,200);							
+									});
+								else
+									//Return the state
+									res.send(model,200);							
+	                            
 							}
 	                     }
 	                   );
@@ -131,12 +139,15 @@ module.exports = function () {
 		var organizationIdentifier=req.param("orgIdentifier");
 		var siteIdentifier=req.param("siteIdentifier");
 
-		organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
-			if(err)
-				throw err;
-			else
-				res.json({state:"success"});
-		});
+		regionRoutes.removeSiteToRegionBySite(siteIdentifier,function(){
+			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
+						if(err)
+							throw err;
+						else
+							res.json({state:"success"});
+					});			
+		})
+		
 	}
 
 	//PUT Purchase a Biin to a Site
@@ -200,6 +211,82 @@ module.exports = function () {
 		}
 	}
 
+	//Post add Site to a region
+	functions.addSiteToRegion =function(req,res){
+		var orgIdentifier = req.param('orgIdentifier');
+		var siteIdentifier= req.param('siteIdentifier')
+
+		var addSiteLogic = function(siteObj){
+			addSiteToRegion(siteObj,function(result,regionId){							
+				if(result){
+					organization.update({'identifier':orgIdentifier,'sites.identifier':siteObj.identifier},{$set:{'sites.$.region':regionId}},function(err,cantAffected){
+						if(!err && cantAffected>0)	
+							res.json({status:0, data: regionId})
+						else
+							res.json({status:5})
+					});
+
+					
+				}else{
+					res.json({status:5})
+				}
+
+			})
+		}
+
+		organization.findOne({identifier:orgIdentifier, "sites.identifier":siteIdentifier},{"sites.$":1},function(err,foundSite){
+			if(err)
+				throw err;
+			else{
+				if(foundSite && foundSite.sites){
+					if(foundSite.sites[0].region===''){
+						addSiteLogic(foundSite.sites[0])
+					}else{
+						console.log("Updating the site region");
+						//Unsubscribe the site to the region
+						regionRoutes.removeSiteToRegion(foundSite.sites[0].region,siteIdentifier,function(){
+							addSiteLogic(foundSite.sites[0]);
+						})
+					}
+				}
+			}
+		})
+	}	
+
+	//Function to add a site inside a region.
+	addSiteToRegion =function(site,callback){
+
+		//Verify the  closest region
+		regionRoutes.getRegionByProximity(site.lat,site.lng,function(isInside,region){
+			//If is inside a region
+			if(isInside){
+				regionRoutes.addSiteToRegion(region.identifier,{identifier:site.identifier},function(wasAdded,regionId){
+					if(wasAdded){
+						console.log("The site was added to the region: "+region.identifier +", succesfully")
+						callback(true,region.identifier);
+					}
+					else{
+						console.log("The site was not added to the region for some reason");
+						callback(false,null);
+					}
+				});
+			}else{
+				//If is not inside a region
+				regionRoutes.createRegion(site.lat,site.lng,{identifier:site.identifier},function(wasAdded,region){
+					if(wasAdded){
+						console.log("Was created the region: " + region)
+						console.log("Was added the site in the new region succesfully: ");
+						callback(true,region);
+					}else{
+						console.log("Was not created the region: ");
+						callback(false,null);
+					}
+				})
+			}
+
+
+		});
+	}
 	//Minor and major Functions
 
 	//GET the major of the organization
@@ -229,8 +316,6 @@ module.exports = function () {
 			callback(data,req,res);
 		});
 	}
-
-	
 
 	//Test and other Utils
 	functions.setSitesValid= function(req,res){

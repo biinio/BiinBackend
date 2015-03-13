@@ -285,7 +285,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.wizard2IsValid= typeof($scope.sites[$scope.selectedSite].media)!='undefined'&& $scope.sites[$scope.selectedSite].media.length>0
   }
 
-
+  //Validate the Form
   $scope.validate=function(validateAll){
     var validate=typeof(validateAll)!='undefined';
     //var validations =$scope.sitePrototype.validations();
@@ -357,6 +357,27 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.wizard4IsValid=false;
     $scope.wizard5IsValid=false;
     $scope.wizard6IsValid=false;
+  }
+
+  //Subscribe to a region
+  $scope.subscribeToRegion=function(){
+
+    //Post the a site in to a region
+    $http.post("api/organizations/"+$scope.organizationId+"/sites/"+$scope.sites[$scope.selectedSite].identifier+"/region").success(function(data,status){
+      if(status===200){
+        if(data.status===0){
+          $scope.sites[$scope.selectedSite].region=data.data;
+
+            //Apply the changes
+            $scope.$digest();
+            $scope.$apply();    
+        }
+        console.log(data);
+        
+      }else
+         displayErrorMessage(data,"Site Region",status)
+
+    });    
   }
   /**** 
     Methods

@@ -94,6 +94,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Update a Site
     app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.set);
+    app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/region',sites.addSiteToRegion);
+    
     //Create a biin
     app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier/purchase',sites.biinPurchase);    
     app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
@@ -106,6 +108,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations/:identifier/elements', elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
+    
     //Element List
     app.get('/api/organizations/:identifier/elements',elements.list)
     //Element Creation
@@ -176,6 +179,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);*/
     
     app.get('/mobile/regions',mobileRoutes.getRegions);
+    app.get('/mobile/biinies/:identifier/:regionIdentifier/categories',mobileRoutes.getCategoriesByRegionId);
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);

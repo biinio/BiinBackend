@@ -15,6 +15,9 @@ div
 			input.form-control.title-value(ng-model="sites[selectedSite].streetAddres" name="streetAddres" type="text" placeholder="Street Address **"  ng-blur="validate()" required )
 		.row
 			input.form-control.title-value(ng-model="sites[selectedSite].phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" ng-blur="validate()" required )
+		.row
+			h4(ng-if="sites[selectedSite].region && sites[selectedSite].region!=='' && isValid") Region: {{sites[selectedSite].region}}
+			.btn.btn-lg.btn-warning(ng-click="subscribeToRegion()") Subscribe to a region
 	.section
 		h2 Map Location
 		p Select your location
