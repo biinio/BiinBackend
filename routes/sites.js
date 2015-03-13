@@ -287,6 +287,7 @@ module.exports = function () {
 
 		});
 	}
+	
 	//Minor and major Functions
 
 	//GET the major of the organization

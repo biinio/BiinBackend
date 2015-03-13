@@ -1,4 +1,17 @@
-var biinAppObjects = angular.module('biinAppElements',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services','ui.checkbox','datePicker','angular-bootstrap-select']);
+var biinAppObjects = angular.module('biinAppElements',['pascalprecht.translate','ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services','ui.checkbox','datePicker','angular-bootstrap-select']);
+
+//Translation Provider
+biinAppObjects.config(function($translateProvider) {
+    // Our translations will go in here
+     $translateProvider.useStaticFilesLoader({
+      prefix: '/locals/element/',
+      suffix: '.json'
+    });
+
+     //var language = window.navigator.userLanguage || window.navigator.language
+    $translateProvider.preferredLanguage('es');
+});
+
 
 biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv','stickersSrv',function($scope,$http,categorySrv,gallerySrv,stickersSrv){
   

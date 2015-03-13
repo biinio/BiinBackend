@@ -1,4 +1,16 @@
-var biinAppShowCases = angular.module('biinAppShowCases',['ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services']);
+var biinAppShowCases = angular.module('biinAppShowCases',['pascalprecht.translate','ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services']);
+
+//Translation Provider
+biinAppShowCases.config(function($translateProvider) {
+    // Our translations will go in here
+     $translateProvider.useStaticFilesLoader({
+      prefix: '/locals/showcase/',
+      suffix: '.json'
+    });
+
+     //var language = window.navigator.userLanguage || window.navigator.language
+    $translateProvider.preferredLanguage('es');
+});
 
 //App define controllers
 biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routeParams','elementSrv','biinSrv', function($scope,$http,$routeParams, elementSrv,biinSrv) {

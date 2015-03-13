@@ -1,6 +1,17 @@
-var biinAppSite= angular.module('biinAppSites',['ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate','angularSpectrumColorpicker']);
+var biinAppSite= angular.module('biinAppSites',['pascalprecht.translate','ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate','angularSpectrumColorpicker']);
 
 var tabBiin="biins", tabDetails="details";
+
+biinAppSite.config(function($translateProvider) {
+    // Our translations will go in here
+     $translateProvider.useStaticFilesLoader({
+      prefix: '/locals/site/',
+      suffix: '.json'
+    });
+
+     //var language = window.navigator.userLanguage || window.navigator.language
+    $translateProvider.preferredLanguage('es');
+});
 
 biinAppSite.controller("siteController",['$scope','$http','$location','$routeParams','categorySrv','gallerySrv',function($scope,$http,$location,$routeParams,categorySrv,gallerySrv){
 

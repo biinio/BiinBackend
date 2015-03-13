@@ -1,6 +1,18 @@
-var biinAppAccount = angular.module('biinAppAccount',['ngRoute','ui.checkbox']);
+var biinAppAccount = angular.module('biinAppAccount',['pascalprecht.translate','ngRoute','ui.checkbox']);
 
-biinAppAccount.controller("accountController",['$scope', '$http',function($scope,$http){
+//Translation Provider
+biinAppAccount.config(function($translateProvider) {
+    // Our translations will go in here
+     $translateProvider.useStaticFilesLoader({
+      prefix: '/locals/account/',
+      suffix: '.json'
+    });
+
+     //var language = window.navigator.userLanguage || window.navigator.language
+    $translateProvider.preferredLanguage('es');
+});
+
+biinAppAccount.controller("accountController",['$translate','$scope', '$http',function($translate,$scope,$http){
 
   $scope.wizardPosition=1;
   $scope.selectedOrganization='';
