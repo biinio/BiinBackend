@@ -3,8 +3,7 @@ module.exports =function(){
 	var _= require('underscore');
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
-	var utils = require('../biin_modules/utils')();
-
+	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
 		region= require('../schemas/region');
 
@@ -257,6 +256,8 @@ module.exports =function(){
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
+
+		//If is not loyalty
 		if(!('loyalty' in newModel)){
 			newModel.loyalty ={
 	                isSubscribed:"0",
@@ -275,6 +276,7 @@ module.exports =function(){
 	                ]
 	        }
 		}
+
 
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
@@ -297,7 +299,15 @@ module.exports =function(){
 					newModel.biins[biinArray].minor= "" +model.biins[i].minor;
 					newModel.biins[biinArray].biinType= model.biins[i].biinType;
 					newModel.biins[biinArray].lastUpdate= model.biins[i].lastUpdate?model.biins[i].lastUpdate:date;
-					newModel.biins[biinArray].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
+					//newModel.biins[biinArray].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
+
+					if( model.biins[biinArray].showcasesAsigned.length>0){
+						var startTime= utils.getDate({hour: 0});
+						var endTime= utils.getDate({hour: 0});
+						var showcaseBiin={isDefault:'0', showcaseIdentifier:model.biins[i].showcasesAsigned[0].showcaseIdentifier,startTime:startTime,endTime:endTime};						
+						newModel.biins[biinArray].showcases=[];
+						newModel.biins[biinArray].showcases.push(showcaseBiin);				
+					}
 
 					//If is not there an identifier
 					if(!model.biins[i].identifier)
@@ -307,6 +317,8 @@ module.exports =function(){
 			}
 		}
 
+		//If the user was not notifier
+		newModel.isUserNotified='0';
 		return newModel;
 	}
 

@@ -57,8 +57,13 @@ var siteObj ={
 			lastUpdate:{type:String, default:""},
 			showcasesAsigned:[{
 				showcaseIdentifier:{type:String, default:""}
-			}]
-
+			}],
+			showcases:[{
+                isDefault: {type:String,default:"0"},
+                showcaseIdentifier:{type:String,default:""},
+                startTime:{type:String,default:""},
+                entTime:{type:String,default:""}
+            }]
 		}
 	],
 	loyalty: {

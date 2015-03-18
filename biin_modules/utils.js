@@ -61,6 +61,8 @@ module.exports = function(){
   functions.getDate=function(pdate){
     return moment(pdate).format(dateFormat);
   }
+
+  
   /*
    * Return a unique identifier with the given `len`.
    *
