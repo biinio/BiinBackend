@@ -68,6 +68,11 @@ var mobileUserSchema=new Schema({
 				identifier:{type:String, index:true, default:"-1"}
 			}]
 		}
+	],
+	sitesNotified:[
+		{
+			identifier:{type:String,index:true}
+		}
 	]
 });
 

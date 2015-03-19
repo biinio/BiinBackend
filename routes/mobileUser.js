@@ -248,7 +248,7 @@ module.exports = function(){
 
 	//POST a new item to a collection
 	functions.setMobileBiinedToCollection=function(req,res){
-		var identifier=req.param("identifier");
+			
 		var collectionIdentifier= req.param("collectionIdentifier");
 
 		var model = req.body.model;
@@ -286,8 +286,32 @@ module.exports = function(){
 						}
 					});
 				}	
-		}
+		}		
+	}
+
+	//PUT Site Notified
+	functions.setSiteNotified=function(req,res){
+		var identifier=req.param("biinieIdentifier");
+		var siteIdentifier=req.param("identifier");
 		
+		mobileUser.findOne({identifier:identifier},{'sitesNotified':1},function(err,user){
+			if(err)
+				res.json({status:"5",data:{}});
+			else{
+				var  siteObj=_.findWhere(user.sitesNotified,{identifier:siteIdentifier});
+				if(typeof(siteObj)==='undefined'){
+					user.sitesNotified.push({identifier:siteIdentifier});
+					user.save(function(err){
+						if(err)
+							res.json({status:"5",data:{}});
+						else
+							res.json({status:"0",data:{}});
+					});
+				}else{
+					res.json({status:"0",data:{}});
+				}
+			}
+		})
 	}
 
 	//DELETE a object to a Biined Collection
@@ -313,7 +337,6 @@ module.exports = function(){
 				
 			}
 		})
-
 	}
 
 	//DELETE a object to a Biined Collection
@@ -339,7 +362,6 @@ module.exports = function(){
 				
 			}
 		})
-
 	}
 	
 	//Update by mobile Id

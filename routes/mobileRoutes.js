@@ -147,6 +147,7 @@ module.exports =function(){
 		});
 	}
 
+	//Get Categories by Region Identifier
 	functions.getCategoriesByRegionId=function(req,res){
 		var userIdentifier = req.param("identifier");
 		var regionIdentifier = req.param('regionIdentifier');
@@ -204,27 +205,38 @@ module.exports =function(){
 	functions.getSite=function(req,res){
 		var biinieIdentifier = req.param("biinieIdentifier");
 		var siteId = req.param("identifier");
-		if(siteId)
-			organization.findOne({"sites.identifier":siteId},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
-				if(err)
-					res.json({data:{status:"7",data:{}}});	
-				else
-					if(data==null)
-						res.json({data:{status:"9",data:{}}});	
+		var getSiteInformation = function(err,mobileUser){
+			if(err)
+				res.json({data:{status:"7",data:{}}});	
+			else{
+				organization.findOne({"sites.identifier":siteId},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
+					if(err)
+						res.json({data:{status:"7",data:{}}});	
 					else
-						if(data.sites && data.sites.length){	
+						if(data==null)
+							res.json({data:{status:"9",data:{}}});	
+						else
+							if(data.sites && data.sites.length){	
 
-							var siteResult = mapSiteMissingFields(biinieIdentifier,data.identifier,data.sites[0]);
-							res.json({data:siteResult,status:"0"});
-						}
-						else{
-							res.json({data:data.sites[0],status:"0"});
-						}
-			});
+								var siteResult = mapSiteMissingFields(biinieIdentifier,siteId,data.identifier,data.sites[0],mobileUser);
+								res.json({data:siteResult,status:"0"});
+							}
+							else{
+								res.json({data:data.sites[0],status:"0"});
+							}
+				});
+			}			
+		}
+		if(siteId && biinieIdentifier){
+			mobileUser.findOne({'identifier':biinieIdentifier},{sitesNotified:1},getSiteInformation)
+		}else{
+			res.json({data:{status:"7",data:{}}});
+		}
+			
 	}
 
 	//Map the Site information
-	mapSiteMissingFields= function(biinieId,orgId,model){
+	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser){
 		var newModel={};
 
 		newModel.proximityUUID= orgId;
@@ -299,15 +311,16 @@ module.exports =function(){
 					newModel.biins[biinArray].minor= "" +model.biins[i].minor;
 					newModel.biins[biinArray].biinType= model.biins[i].biinType;
 					newModel.biins[biinArray].lastUpdate= model.biins[i].lastUpdate?model.biins[i].lastUpdate:date;
-					//newModel.biins[biinArray].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
-
-					if( model.biins[biinArray].showcasesAsigned.length>0){
+					
+					newModel.biins[biinArray].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
+				
+					/*if( model.biins[biinArray].showcasesAsigned.length>0){
 						var startTime= utils.getDate({hour: 0});
 						var endTime= utils.getDate({hour: 0});
-						var showcaseBiin={isDefault:'0', showcaseIdentifier:model.biins[i].showcasesAsigned[0].showcaseIdentifier,startTime:startTime,endTime:endTime};						
+						//var showcaseBiin={isDefault:'0', showcaseIdentifier:model.biins[i].showcasesAsigned[0].showcaseIdentifier,startTime:startTime,endTime:endTime};						
 						newModel.biins[biinArray].showcases=[];
 						newModel.biins[biinArray].showcases.push(showcaseBiin);				
-					}
+					}*/
 
 					//If is not there an identifier
 					if(!model.biins[i].identifier)
@@ -317,8 +330,14 @@ module.exports =function(){
 			}
 		}
 
-		//If the user was not notifier
-		newModel.isUserNotified='0';
+		if(mobileUser && ('sitesNotified' in mobileUser)){
+			var siteNotified=_.findWhere(mobileUser.sitesNotified,{identifier:siteId});
+			newModel.isUserNotified=typeof(siteNotified)!='undefined'?'1':'0';
+		}else{
+			//If the user was not notifier
+			newModel.isUserNotified='0';			
+		}
+
 		return newModel;
 	}
 
