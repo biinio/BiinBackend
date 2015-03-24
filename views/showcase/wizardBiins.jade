@@ -18,7 +18,7 @@
 							p(ng-if="!biin.name.length") Biin# {{biin.minor}}													
 							p(ng-if="biin.name.length>0") {{biin.name}}
 							//Showcases old version
-							p(ng-if="biin.showcasesAsigned.length>0 && biin.showcasesAsigned[0].showcaseIdentifier!='' && biin.showcasesAsigned[0].showcaseIdentifier!= currentModelId")
+							//p(ng-if="biin.showcasesAsigned.length>0 && biin.showcasesAsigned[0].showcaseIdentifier!='' && biin.showcasesAsigned[0].showcaseIdentifier!= currentModelId")
 								{{getShowcaseByIdentifier(biin.showcasesAsigned[0].showcaseIdentifier).name}}
 								img(ng-src="{{getShowcaseByIdentifier(biin.showcasesAsigned[0].showcaseIdentifier).elements[0].media[0].url}}")
 							//Showcases new version									
