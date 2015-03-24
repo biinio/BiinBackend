@@ -22,4 +22,25 @@ div
 			p.biinPropertie Organization id: {{organizationId}}			
 			p.biinPropertie Site id: {{sites[selectedSite].major}}
 			p.biinPropertie Biin id: {{sites[selectedSite].biins[selectedBiin].minor}}
+			p(ng-if="sites[selectedSite].biins[selectedBiin].isRequiredBiin").biinPropertie This is a biin of Basic Package
+			.col-md-12.nopadding
+				.section.darkSection				
+					h2 Biin Type
+					p Please select the biin type
+					.typeWrapper
+						.type-block
+							.moduleType(ng-click="selectBiinType(1)" ng-class="{'active':'1'===sites[selectedSite].biins[selectedBiin].biinType}")
+								.circleInner
+									i.icon.icon-file-1
+									span Externo
+						.type-block
+							.moduleType(ng-click="selectBiinType(2)" ng-class="{'active':'2'===sites[selectedSite].biins[selectedBiin].biinType}")
+								.circleInner
+									i.icon.icon-files-1
+									span Interno
+						.type-block
+							.moduleType(ng-click="selectBiinType(3)" ng-class="{'active':'3'===sites[selectedSite].biins[selectedBiin].biinType}")
+								.circleInner
+									i.icon.icon-files-1
+									span Producto									
 include wizardBiinsPurchaseModal

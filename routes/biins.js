@@ -74,7 +74,7 @@ module.exports = function () {
 							    //if('showcaseAsigned' in biins[biinIndex])
 							    //	showcaseToAsign = biins[biinIndex].showcasesAsigned;
 
-							   biinToUpdate.showcasesAsigned = biins[biinIndex].showcasesAsigned;
+							   biinToUpdate.showcases= biins[biinIndex].showcases;
 							   biinToUpdate.lastUpdate=date;
 							   countOfChanges++;
 							}

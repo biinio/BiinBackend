@@ -290,26 +290,32 @@ module.exports = function(){
 	}
 
 	//PUT Site Notified
-	functions.setSiteNotified=function(req,res){
+	functions.setBiinNotified=function(req,res){
 		var identifier=req.param("biinieIdentifier");
-		var siteIdentifier=req.param("identifier");
-		
-		mobileUser.findOne({identifier:identifier},{'sitesNotified':1},function(err,user){
+		var siteIdentifier=req.param("siteIdentifier");
+		var biinIdentifier=req.param("biinIdentifier");
+
+		mobileUser.findOne({identifier:identifier},{'biinNotified':1},function(err,user){
 			if(err)
 				res.json({status:"5",data:{}});
 			else{
-				var  siteObj=_.findWhere(user.sitesNotified,{identifier:siteIdentifier});
-				if(typeof(siteObj)==='undefined'){
-					user.sitesNotified.push({identifier:siteIdentifier});
-					user.save(function(err){
-						if(err)
-							res.json({status:"5",data:{}});
-						else
-							res.json({status:"0",data:{}});
-					});
+				if(user){
+					var  siteObj=_.findWhere(user.biinNotified,{siteIdentifier:siteIdentifier,biinIdentifier:biinIdentifier});
+					if(typeof(siteObj)==='undefined'){
+						user.biinNotified.push({siteIdentifier:siteIdentifier,biinIdentifier:biinIdentifier});
+						user.save(function(err){
+							if(err)
+								res.json({status:"5",data:{}});
+							else
+								res.json({status:"0",data:{}});
+						});
+					}else{
+						res.json({status:"0",data:{}});
+					}					
 				}else{
-					res.json({status:"0",data:{}});
+					res.json({status:"5",data:{}});	
 				}
+				
 			}
 		})
 	}

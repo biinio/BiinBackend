@@ -76,7 +76,7 @@ var showcaseObj={
 				displayName:{type:String, default:""},
 				imgUrl:{type:String, default:""}
 			}
-		],		
+		],
 		documentIdentifier:{type:String,index:"true"},
 		biinedCount:{type:Number,default:0},
 		sharedCount:{type:Number,default:0},
@@ -89,7 +89,9 @@ var showcaseObj={
 		isActive:{type:String, default:"0"},
 		notificationType:{type:String, default:""},
 		text:{type:String, default:""}
-	}]
+	}],
+	startTime:{type:String, default:"000000"},
+	endTime:{type:String, default:"000000"}
 };
 var showcaseSchema = new Schema(showcaseObj);
 showcaseSchema.methods.createNew = function() {	

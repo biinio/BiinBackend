@@ -155,9 +155,12 @@ module.exports = function () {
 		var organizationIdentifier=req.param("orgIdentifier");
 		var siteIdentifier=req.param("siteIdentifier");
 		var qty= eval(req.body['biinsQty']);
+		var isBasicPackage= eval(req.body['isBasicPackage']);
+		if(isBasicPackage)
+			qty=2;
 		res.setHeader('Content-Type', 'application/json');
 
-		if(qty && organizationIdentifier && siteIdentifier){
+		if((qty || isBasicPackage) && organizationIdentifier && siteIdentifier){
 			var newMinorValue = utils.get.minorIncrement() *qty;
 			organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},{_id:false,'sites.$':true},function(err, siteInfo){
 				if(err)
@@ -171,7 +174,7 @@ module.exports = function () {
 						major= siteInfo.sites[0].major;
 					}
 
-					//To Do the process of the deduccion in the Credit Card
+					//Todo the process of the deduction of the Credit Card
 					var historyRecord ={} ;			
 					historyRecord.date=utils.getDateNow(); historyRecord.quantity=qty; historyRecord.site=siteIdentifier;
 
@@ -189,8 +192,11 @@ module.exports = function () {
 							//Create the new Beacons
  							for(var i=0; i<qty;i++){
  								var biinIdentifier = utils.getGUID();
- 								minorIncrement+=cantMinorToInc;
- 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement}));
+ 								minorIncrement+=cantMinorToInc; 								
+ 								var biintype=1; 								
+ 								if(isBasicPackage)
+ 									biintype=(i%2)+1;
+ 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype}));
  							}
 
  							//Organization Update

@@ -75,16 +75,18 @@ var orgSchema = new Schema({
 				proximityUUID:{type:String, default:""},
 				location:{type:String, default:""},
 				registerDate:{type:String, default:""},
-				lastUpdate:{type:String, default:""},
+				lastUpdate:{type:String, default:""},			
 				showcasesAsigned:[{
 					showcaseIdentifier:{type:String, default:""}
 				}],
 				showcases:[{
 	                isDefault: {type:String,default:"0"},
 	                showcaseIdentifier:{type:String,default:""},
-	                startTime:{type:String,default:""},
-	                entTime:{type:String,default:""}
-	            }]				
+	                startTime:{type:String,default:"00:00"},
+	                endTime:{type:String,default:"00:00"}
+	            }],
+	            biinType:{type:String,default:"1"},
+	            isRequiredBiin:{type:Boolean,default:'false'}
 			}
 		],
 		loyalty: {

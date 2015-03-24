@@ -4,27 +4,31 @@
 		"selected_items":
 		[
 			[
-				"margin",
-				"margin"
+				"sites",
+				"sitesNotified"
 			],
 			[
-				"paddin",
-				"padding"
+				"SITES",
+				"sitesNotified"
 			],
 			[
-				"marg",
-				"margin-top"
+				"biin",
+				"biinieIdentifier"
 			],
 			[
-				"col",
-				"col-md-12"
+				"getSite",
+				"getSiteInformation"
 			],
 			[
-				"mar",
-				"margin-right"
+				"inde",
+				"index"
 			],
 			[
-				"font",
+				"showca",
+				"showcaseIdentifier"
+			],
+			[
+				"fon",
 				"font-size"
 			],
 			[
@@ -32,506 +36,561 @@
 				"font-size"
 			],
 			[
-				"ba",
-				"background-image"
+				"categor",
+				"category"
 			],
 			[
-				"he",
-				"height	Attr"
+				"categ",
+				"categories"
 			],
 			[
-				"proc",
-				"processedEmail"
-			],
-			[
-				"index",
-				"indexName"
-			],
-			[
-				"inde",
-				"indexName"
-			],
-			[
-				"re",
-				"response"
-			],
-			[
-				"functo",
-				"function"
-			],
-			[
-				"send",
-				"sendMail"
-			],
-			[
-				"transp",
-				"transporter"
-			],
-			[
-				"acce",
-				"accessTokenHash"
-			],
-			[
-				"s",
-				"send"
-			],
-			[
-				"new",
-				"newModel"
-			],
-			[
-				"client",
-				"clientIdentifier"
-			],
-			[
-				"clien",
-				"clientIdentifier"
-			],
-			[
-				"Cli",
-				"clientId"
-			],
-			[
-				"clientI",
-				"clientId"
-			],
-			[
-				"org",
-				"organizationUpdate"
-			],
-			[
-				"orga",
-				"organizationUpdate"
-			],
-			[
-				"or",
-				"organizationId"
-			],
-			[
-				"buqu",
-				"buquetFolder"
-			],
-			[
-				"bu",
-				"buquetFolder"
-			],
-			[
-				"imgU",
-				"imgURL"
-			],
-			[
-				"funct",
-				"functions"
-			],
-			[
-				"create",
-				"createBucket"
-			],
-			[
-				"buquet",
-				"buquetFolder"
-			],
-			[
-				"buq",
-				"buquetName"
-			],
-			[
-				"orgn",
-				"organizationIdentifier"
-			],
-			[
-				"FTPC",
-				"FTPConn"
-			],
-			[
-				"fTPCONN",
-				"FTPConn"
-			],
-			[
-				"function",
-				"functions"
-			],
-			[
-				"ftp",
-				"ftpConn"
-			],
-			[
-				"au",
-				"authenticated"
-			],
-			[
-				"FTP_P",
-				"FTP_PASS"
-			],
-			[
-				"media",
-				"mediaRepository"
-			],
-			[
-				"functi",
-				"function"
-			],
-			[
-				"fun",
-				"functions"
-			],
-			[
-				"gal",
-				"galObj"
-			],
-			[
-				"serv",
-				"serverUrl"
-			],
-			[
-				"get",
-				"getFTPConn"
-			],
-			[
-				"server",
-				"serverCopy"
-			],
-			[
-				"gall",
-				"gallery"
-			],
-			[
-				"cant",
-				"cantAffected"
-			],
-			[
-				"htt",
-				"httpPort"
-			],
-			[
-				"conne",
-				"connectionString"
-			],
-			[
-				"conn",
-				"connectionString"
-			],
-			[
-				"dra",
-				"dragPosition"
-			],
-			[
-				"max",
-				"max-width"
-			],
-			[
-				"acti",
-				"activeTab"
-			],
-			[
-				"selecte",
-				"selectedOrganization"
-			],
-			[
-				"BIIN",
-				"biinToUpdate"
-			],
-			[
-				"showca",
-				"showcaseToAsign"
-			],
-			[
-				"bii",
-				"biinIndex"
-			],
-			[
-				"site",
-				"siteToWorkDocument"
-			],
-			[
-				"biin",
-				"biins"
-			],
-			[
-				"showCa",
-				"showcaseToAsign"
-			],
-			[
-				"selec",
-				"selectedSite"
-			],
-			[
-				"organ",
-				"organizations"
-			],
-			[
-				"ma",
-				"mayorCounter"
-			],
-			[
-				"drop",
-				"dropFiles"
-			],
-			[
-				"medi",
-				"mediaItm"
-			],
-			[
-				"ng-p",
-				"ng-repeat"
-			],
-			[
-				"pro",
-				"property"
-			],
-			[
-				"select",
-				"selectedSite"
-			],
-			[
-				"show",
-				"showcaseAsigned"
-			],
-			[
-				"sav",
-				"saveList"
-			],
-			[
-				"modu",
-				"moduleWrapper"
-			],
-			[
-				"organi",
-				"organizationId"
-			],
-			[
-				"Orga",
-				"organizationIdentifier"
-			],
-			[
-				"organio",
-				"organizationIdentifier"
-			],
-			[
-				"inse",
-				"insertGalleryItem"
-			],
-			[
-				"g",
-				"galleryModule"
-			],
-			[
-				"galler",
-				"galleries"
-			],
-			[
-				"gallery",
-				"dragGalleryIndex"
-			],
-			[
-				"sc",
-				"scope"
-			],
-			[
-				"drag",
-				"dragGalleryIndex"
-			],
-			[
-				"galle",
-				"galleItem"
-			],
-			[
-				"all",
-				"allGallery"
-			],
-			[
-				"th",
-				"throw"
-			],
-			[
-				"user",
-				"userAccount"
-			],
-			[
-				"files",
-				"filesUploaded"
-			],
-			[
-				"file",
-				"filesUploaded"
-			],
-			[
-				"uo",
-				"uploadImage"
-			],
-			[
-				"attr",
-				"attrId"
-			],
-			[
-				"magi",
-				"margin-bottom"
-			],
-			[
-				"pane",
-				"panel-body"
-			],
-			[
-				"panel",
-				"panel-heading"
-			],
-			[
-				"tab",
-				"tabName"
-			],
-			[
-				"ol",
-				"oldValue"
-			],
-			[
-				"sele",
-				"selectedBiin"
-			],
-			[
-				"biinP",
-				"biinPrototypeBkp"
-			],
-			[
-				"scope",
-				"scope"
-			],
-			[
-				"pad",
-				"padding-top"
-			],
-			[
-				"qu",
-				"quarter-heigth"
-			],
-			[
-				"m",
-				"max-height"
-			],
-			[
-				"scp",
-				"scopeIndex"
-			],
-			[
-				"elment",
-				"elementToPush"
-			],
-			[
-				"insert",
-				"insertCategory"
+				"category",
+				"categoryResul"
 			],
 			[
 				"cate",
 				"categories"
 			],
 			[
-				"bac",
-				"background-color"
+				"ca",
+				"categorySites"
 			],
 			[
-				"mod",
-				"moduleWrapper"
+				"cae",
+				"categories"
 			],
 			[
-				"h",
-				"href"
+				"fou",
+				"foundCategories"
 			],
 			[
-				"Organz",
-				"organizationName"
+				"region",
+				"regionRoutes"
 			],
 			[
-				"data",
-				"data-organizationName"
+				"index",
+				"index"
 			],
 			[
-				"pr",
-				"param"
+				"site",
+				"siteIdentifier"
 			],
 			[
-				"proto",
-				"prototypeObj"
+				"selecte",
+				"selectedSite"
 			],
 			[
-				"func",
-				"function"
+				"regionI",
+				"regionId"
 			],
 			[
-				"organizationNa",
-				"organizationName"
+				"orga",
+				"organization"
 			],
 			[
-				"paddi",
+				"insid",
+				"insideRegion"
+			],
+			[
+				"insi",
+				"insideRegion"
+			],
+			[
+				"resul",
+				"resultLong"
+			],
+			[
+				"LOn",
+				"longitude"
+			],
+			[
+				"lat",
+				"latitude"
+			],
+			[
+				"margin",
+				"margin-left"
+			],
+			[
+				"wizard",
+				"wizard4IsValid"
+			],
+			[
+				"paddin",
 				"padding-left"
 			],
 			[
-				"wor",
-				"workAreaHeader"
+				"no",
+				"nopadding"
 			],
 			[
-				"foun",
-				"foundPosition"
+				"margi",
+				"margin-left"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"selected",
+				"selectedShowcase"
+			],
+			[
+				"org",
+				"organization"
+			],
+			[
+				"orgn",
+				"Organization"
+			],
+			[
+				"sitesc",
+				"sitesCat"
+			],
+			[
+				"biinie",
+				"biinieCollections"
+			],
+			[
+				"organ",
+				"organizationIdentifier"
+			],
+			[
+				"obj",
+				"objType"
+			],
+			[
+				"eleme",
+				"elementObj"
+			],
+			[
+				"elemen",
+				"elementObj"
+			],
+			[
+				"elem",
+				"elementObj"
+			],
+			[
+				"text",
+				"textColor"
+			],
+			[
+				"element",
+				"elementObj"
+			],
+			[
+				"show",
+				"showcaseObj"
+			],
+			[
+				"last",
+				"lastUpdate"
+			],
+			[
+				"ti",
+				"titleColor"
+			],
+			[
+				"shwo",
+				"showcaseObj"
+			],
+			[
+				"user",
+				"userbiined"
+			],
+			[
+				"da",
+				"default"
+			],
+			[
+				"get",
+				"getGUID"
 			],
 			[
 				"ele",
 				"element"
 			],
 			[
-				"organiza",
+				"bii",
+				"biinedCollections"
+			],
+			[
+				"find",
+				"findOne"
+			],
+			[
+				"getDate",
+				"getDateNow"
+			],
+			[
+				"foun",
+				"foundBinnie"
+			],
+			[
+				"type",
+				"typeof"
+			],
+			[
+				"is",
+				"isOrganizationChanged"
+			],
+			[
+				"pr",
+				"propertiesToCheck"
+			],
+			[
+				"catego",
+				"category"
+			],
+			[
+				"all",
+				"allSites"
+			],
+			[
+				"alert",
+				"alert-danger"
+			],
+			[
+				"alert-",
+				"alert-info"
+			],
+			[
+				"accoun",
+				"accountIdentifier"
+			],
+			[
+				"sing",
+				"singup"
+			],
+			[
+				"loi",
+				"loginDropDown"
+			],
+			[
+				"login",
+				"login"
+			],
+			[
+				"pro",
+				"processing"
+			],
+			[
+				"aria",
+				"aria-hidden"
+			],
+			[
+				"data-",
+				"data-dismiss"
+			],
+			[
+				"pa",
+				"padding-bottom"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"pad",
+				"padding-bottom"
+			],
+			[
+				"bor",
+				"border"
+			],
+			[
+				"data",
+				"data-target"
+			],
+			[
+				"found",
+				"foundBinnie"
+			],
+			[
+				"errr",
+				"errors"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"re",
+				"result"
+			],
+			[
+				"error",
+				"errors"
+			],
+			[
+				"mobile",
+				"mobileUser"
+			],
+			[
+				"SEND",
+				"sendVerificationMail"
+			],
+			[
+				"acc",
+				"accountState"
+			],
+			[
+				"sen",
+				"sendVerificationMail"
+			],
+			[
+				"Acc",
+				"accountIdentifier"
+			],
+			[
+				"mode",
+				"modelObject"
+			],
+			[
+				"BINN",
+				"binnies"
+			],
+			[
+				"binn",
+				"binnieId"
+			],
+			[
+				"IM",
+				"imgUrl"
+			],
+			[
+				"sl",
+				"selectedBinnie"
+			],
+			[
+				"btn-",
+				"btn-lg"
+			],
+			[
+				"col",
+				"col-md-6"
+			],
+			[
+				"conta",
+				"container-fluid"
+			],
+			[
+				"sele",
+				"selectedBinnie"
+			],
+			[
+				"p",
+				"protoTypeObj"
+			],
+			[
+				"prot",
+				"prototype"
+			],
+			[
+				"mobi",
+				"mobileUser"
+			],
+			[
+				"or",
 				"organizationIdentifier"
 			],
 			[
-				"curr",
-				"currentModelSiteId"
+				"fom",
+				"form-inline"
 			],
 			[
-				"eleme",
-				"elementWidth"
+				"form",
+				"form-group"
 			],
 			[
-				"border-left",
-				"border-left-color"
+				"media",
+				"media"
 			],
 			[
-				"borde-",
-				"border-left"
+				"me",
+				"mediaObj"
 			],
 			[
-				"padin",
+				"im",
+				"imgURL"
+			],
+			[
+				"padi",
 				"padding-left"
 			],
 			[
-				"border",
-				"border-style"
+				"colorGra",
+				"colorGray"
 			],
 			[
-				"back",
-				"background"
+				"MARGIN",
+				"margin-top"
 			],
 			[
-				"sel",
-				"selectedSite"
+				"rig",
+				"right-section-content"
 			],
 			[
-				"elemen",
-				"elementHeight"
+				"organi",
+				"organizations"
+			],
+			[
+				"marign",
+				"margin-top"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"prof",
+				"profilePhoto"
+			],
+			[
+				"image",
+				"imageName"
+			],
+			[
+				"colorGray",
+				"colorGrayLight2"
+			],
+			[
+				"borde",
+				"border-width"
+			],
+			[
+				"bo",
+				"border"
+			],
+			[
+				"paddi",
+				"padding-left"
+			],
+			[
+				"over",
+				"overflow"
+			],
+			[
+				"main",
+				"main-views-list"
+			],
+			[
+				"blo",
+				"block"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			],
+			[
+				"inline-",
+				"inline-table"
+			],
+			[
+				"block",
+				"inline-block"
+			],
+			[
+				"ove",
+				"overflow-y"
+			],
+			[
+				"overflow-",
+				"overflow-x"
+			],
+			[
+				"un",
+				"undefined"
+			],
+			[
+				"showcaseI",
+				"showcaseIdentifier"
+			],
+			[
+				"colorGre",
+				"colorGreen"
+			],
+			[
+				"background",
+				"background-color"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"contents": "1. Agregar 2 campos para mensajes a showcase en notifications.\n2. Definir tiempo en showcase details (lista de tiempos de visibilidad). Recuerde lo que hablamos al respecto.\n3. Set web-availble as bool in showcase.\n4. Lista de showcase no ver tiles y ver lista. (No prioridad)\n5. Agregar lista de showcases relacionados con biin (list de showcase en biin json, como te mande el json de ejemplo). \n6. Representar visualmente los showcase con las horas en showcase-biins.",
+			"settings":
+			{
+				"buffer_size": 469,
+				"line_ending": "Unix",
+				"name": "1. Agregar 2 campos para mensajes a showcase en no"
+			}
+		},
+		{
+			"file": "/Users/lbonilla/Developments/Biin_Stuff/Miising thinks",
+			"settings":
+			{
+				"buffer_size": 337,
+				"line_ending": "Unix",
+				"name": "Miising thinks"
+			}
+		},
+		{
+			"file": "/Users/lbonilla/Developments/Biin_Stuff/Color Names mapper",
+			"settings":
+			{
+				"buffer_size": 17503,
+				"line_ending": "Unix",
+				"name": "Color Names mapper"
+			}
+		},
+		{
+			"file": "public/locals/account/en.json",
+			"settings":
+			{
+				"buffer_size": 3,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "routes/mobileRoutes.js",
+			"settings":
+			{
+				"buffer_size": 13113,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "biin_modules/routes.js",
+			"settings":
+			{
+				"buffer_size": 9773,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Procfile",
+			"settings":
+			{
+				"buffer_size": 25,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 67.0,
+		"height": 47.0,
 		"selected_items":
 		[
 			[
-				"Package Control: in",
+				"Package Control: ins",
 				"Package Control: Install Package"
 			],
 			[
-				"Package Control: ins",
+				"Package Control: in",
 				"Package Control: Install Package"
 			],
 			[
@@ -604,142 +663,140 @@
 	"expanded_folders":
 	[
 		"/Users/lbonilla/Developments/Biin",
-		"/Users/lbonilla/Developments/Biin/public",
-		"/Users/lbonilla/Developments/Biin/views",
-		"/Users/lbonilla/Developments/Biin/views/showcase",
-		"/Users/lbonilla/Developments/Biin/views/site",
-		"/Users/lbonilla/Developments/Biin/views/user"
+		"/Users/lbonilla/Developments/Biin/biin_modules",
+		"/Users/lbonilla/Developments/Biin/routes",
+		"/Users/lbonilla/Developments/Biin/schemas"
 	],
 	"file_history":
 	[
-		"/Users/lbonilla/Developments/Biin/public/landingPage/stylesheets/style.css",
-		"/Users/lbonilla/Developments/Biin/public/landingPage/stylesheets/responsive.css",
-		"/Users/lbonilla/Developments/Biin/views/site/wizardBiinsPurchaseModal.jade",
-		"/Users/lbonilla/Developments/Biin/node_modules/less-livereload/node_modules/ws/install.js",
-		"/Users/lbonilla/Developments/Biin/node_modules/less/test/less/errors/import-no-semi.less",
-		"/Users/lbonilla/Developments/Biin/routes/index.js",
-		"/Users/lbonilla/Developments/Biin/Procfile",
-		"/Users/lbonilla/Developments/Biin/node_modules/mongoose/node_modules/mpromise/test/promises.Aplus.js",
-		"/Users/lbonilla/Developments/Biin/package.json",
-		"/Users/lbonilla/Developments/Biin/node_modules/less/test/less/errors/parse-error-curly-bracket.less",
-		"/Users/lbonilla/Developments/Biin/views/index_pre_order.jade",
-		"/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 10-23-2014.txt",
-		"/Users/lbonilla/Developments/Biin/views/layout_landing_page.jade",
-		"/Users/lbonilla/Developments/Biin/views/layout_landing_page_out.jade",
-		"/Users/lbonilla/Developments/Biin/views/index_pre_register.jade",
-		"/Users/lbonilla/Developments/Biin/public/landingPage/templates/emailTemplate_table.html",
-		"/Users/lbonilla/Developments/Biin/public/landingPage/locals/es.json",
-		"/Users/lbonilla/Developments/Biin/views/index.jade",
-		"/Users/lbonilla/Developments/Biin/.env",
-		"/Users/lbonilla/Developments/Biin/public/landingPage/templates/emailTemplate.html",
-		"/Users/lbonilla/Developments/Biin/public/test.html",
-		"/Users/lbonilla/Developments/Biin/public/landingPage/js/custom.js",
-		"/Users/lbonilla/Developments/Biin/public/landingPage/templates/emailTemplates.html",
-		"/Users/lbonilla/Developments/Biin/bower_components/flexslider/jquery.flexslider.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/app.js",
-		"/Users/lbonilla/Developments/Biin/public/landingPage/js/jquery.flexslider.js",
-		"/Users/lbonilla/Developments/Biin/views/termsAndConditions.jade",
-		"/Users/lbonilla/Developments/Biin/views/_partials/notificationWidget.jade",
-		"/Users/lbonilla/Google Drive/BiinApp/Product Development/Biin Daily Report/Luis Bonilla/lbonilla 09-18-2014.txt",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
-		"/Users/lbonilla/Developments/Biin/biin.sublime-workspace",
-		"/Users/lbonilla/Developments/Biin/routes/clients.js",
-		"/Users/lbonilla/Developments/Biin_Stuff/AutorizationFlowExample",
-		"/Users/lbonilla/Developments/Biin/views/_partials/notificationTemplate.jade",
-		"/Users/lbonilla/Developments/Biin/bin/www",
-		"/Users/lbonilla/Developments/Biin/biin_modules/mobileOauthManager.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/auth.js",
-		"/Users/lbonilla/Developments/Biin/views/showcase/index.jade",
-		"/Users/lbonilla/Developments/Biin/.gitignore",
-		"/Users/lbonilla/Developments/Biin/schemas/mobileUser.js",
 		"/Users/lbonilla/Developments/Biin/routes/mobileUser.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/awsManager.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/routes.js",
-		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileAccesTokens.js",
-		"/Users/lbonilla/Developments/Biin/routes/oauthMobileAPIGrants.js",
-		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileRefreshTokens.js",
-		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileAPIGrants.js",
-		"/Users/lbonilla/Developments/Biin/schemas/organization.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/mobileUser.js",
-		"/Users/lbonilla/Developments/Biin/routes/organizations.js",
-		"/Users/lbonilla/Developments/Biin/routes/showcases.js",
-		"/Users/lbonilla/Developments/Biin/routes/sites.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/routesMobile.js",
-		"/Users/lbonilla/Developments/Biin/routes/gallery.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/oauthManager.js",
-		"/Users/lbonilla/Developments/Biin/schemas/gallery.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/utils.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/authManager.js",
-		"/Users/lbonilla/Developments/Biin/schemas/oauthMobileClientsGrants.js",
+		"/Users/lbonilla/Developments/Biin/views/account/index.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/accountController.js",
+		"/Users/lbonilla/Developments/Biin/schemas/mobileUser.js",
+		"/Users/lbonilla/Developments/Biin/schemas/client.js",
+		"/Users/lbonilla/Developments/Biin/routes/mobileRoutes.js",
 		"/Users/lbonilla/Developments/Biin/schemas/site.js",
-		"/Users/lbonilla/Developments/Biin/schemas/user.js",
-		"/Users/lbonilla/Developments/Biin/routes/regions.js",
-		"/Users/lbonilla/Developments/Biin/routes/elements.js",
-		"/Users/lbonilla/Developments/Biin/routes/errors.js",
-		"/Users/lbonilla/Developments/Biin/biin_modules/imageManager.js",
-		"/Users/lbonilla/Developments/Biin/.git/MERGE_MSG",
-		"/Users/lbonilla/Developments/Biin/views/gallery/index.jade",
-		"/Users/lbonilla/Developments/Biin/routes/categories.js",
-		"/Users/lbonilla/Developments/Biin/routes/biins.js",
+		"/Users/lbonilla/Developments/Biin/schemas/organization.js",
+		"/Users/lbonilla/Developments/Biin/routes/organizations.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/utils.js",
+		"/Users/lbonilla/Developments/Biin/Procfile",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/showcasesController.js",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/elementsController.js",
 		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/sitesController.js",
-		"/Users/lbonilla/Developments/Biin/routes/users.js",
-		"/Users/lbonilla/Developments/Biin/views/_partials/galleryWidget.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/galleryController.js",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/showcasesController.js",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/organizationsController.js",
-		"/Users/lbonilla/Developments/Biin/node_modules/jsftp/lib/jsftp.js",
-		"/Users/lbonilla/Developments/Biin/sslcert/combined.crt",
+		"/Users/lbonilla/Developments/Biin/public/locals/account/es.json",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/js/angular/landing.js",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/locals/en.json",
+		"/Users/lbonilla/Developments/Biin/views/site/wizardLocation.jade",
 		"/Users/lbonilla/Developments/Biin/views/layout_dashboard.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/ui.js",
-		"/Users/lbonilla/Developments/Biin/views/organization/index.jade",
-		"/Users/lbonilla/Developments/Biin/biin_modules/db.js",
-		"/Users/lbonilla/Developments/Biin/sslcert/biin.csr",
-		"/Users/lbonilla/Developments/Biin/sslcert/server.key",
-		"/Users/lbonilla/Developments/Biin/.git/COMMIT_EDITMSG",
-		"/Users/lbonilla/Developments/Biin/views/element/index.jade",
+		"/Users/lbonilla/Developments/Biin/routes/sites.js",
+		"/Users/lbonilla/Developments/Biin/public/locals/account/es.js",
+		"/Users/lbonilla/Developments/Biin/public/locals/account/en.js",
+		"/Users/lbonilla/Developments/Biin/routes/index.js",
+		"/Users/lbonilla/Developments/Biin/routes/biins.js",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.less",
-		"/Users/lbonilla/Developments/Biin/schemas/showcase.js",
-		"/Users/lbonilla/Developments/Biin/schemas/element.js",
-		"/Users/lbonilla/Developments/Biin/views/site/index.jade",
-		"/Users/lbonilla/Developments/Biin/views/layout_menu.jade",
-		"/Users/lbonilla/Developments/Biin/schemas/error.js",
-		"/Users/lbonilla/Developments/Biin/public/workingFiles/174ecf0f7b35-402f-973a-71d58632bd8b.jpg",
-		"/Users/lbonilla/Developments/Biin/views/_partials/galleryList.jade",
-		"/Users/lbonilla/Developments/Biin/views/_partials/categoriesWidget.jade",
-		"/Users/lbonilla/Developments/Biin/views/_partials/categoriesWidgetWidget.jade",
-		"/Users/lbonilla/Developments/Biin/views/_partials/showcaseList.jade",
+		"/Users/lbonilla/Developments/Biin/biin_modules/routes.js",
 		"/Users/lbonilla/Developments/Biin/schemas/biin.js",
-		"/Users/lbonilla/Developments/Biin/views/_partials/organizationList.jade",
-		"/Users/lbonilla/Developments/Biin/views/_partials/siteList.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/utilities.js",
-		"/Users/lbonilla/Developments/Biin/bower_components/angular-slimscroll/angular-slimscroll.js",
-		"/Users/lbonilla/Developments/Biin/views/layout_accountObjects.jade",
-		"/Users/lbonilla/Developments/Biin/public/javascripts/h5utils.js",
-		"/Users/lbonilla/Developments/Biin/views/_partials/gallery.jade",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/variables.less",
+		"/Users/lbonilla/Developments/Biin/routes/regions.js",
+		"/Users/lbonilla/Developments/Biin/biin_modules/auth.js",
+		"/Users/lbonilla/Developments/Biin/schemas/region.js",
+		"/Users/lbonilla/Developments/Biin/.env",
+		"/Users/lbonilla/Developments/Biin/routes/elements.js",
+		"/Users/lbonilla/Developments/Biin/schemas/showcase.js",
+		"/Users/lbonilla/Developments/Biin/views/element/wizardNutshell.jade",
+		"/Users/lbonilla/Developments/Biin/schemas/error.js",
+		"/Users/lbonilla/Developments/Biin/views/showcase/wizardDetails.jade",
+		"/Users/lbonilla/Developments/Biin/views/site/wizardDetails.jade",
+		"/Users/lbonilla/Developments/Biin/views/showcase/wizardNotifications.jade",
+		"/Users/lbonilla/Developments/Biin/views/site/wizardColors.jade",
+		"/Users/lbonilla/Developments/Biin/views/element/wizardType.jade",
+		"/Users/lbonilla/Developments/Biin/views/element/wizardDetails.jade",
+		"/Users/lbonilla/Developments/Biin/views/region/edit.jade",
+		"/Users/lbonilla/Developments/Biin/views/region/index.jade",
+		"/Users/lbonilla/Developments/Biin/views/region/create.jade",
+		"/Users/lbonilla/Developments/Biin/views/element/index.jade",
+		"/Users/lbonilla/Developments/Biin/views/element/wizardDesign.jade",
+		"/Users/lbonilla/Developments/Biin/views/site/wizardBiins.jade",
+		"/Users/lbonilla/Developments/Biin/views/showcase/index.jade",
+		"/Users/lbonilla/Developments/Biin/routes/showcases.js",
+		"/Users/lbonilla/Developments/Biin/.bashrc",
+		"/Users/lbonilla/Developments/Biin/schemas/element.js",
+		"/Users/lbonilla/Developments/Biin/views/binnie/index.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/binniesController.js",
+		"/Users/lbonilla/Developments/Biin/views/account/wizardOrganizations.jade",
+		"/Users/lbonilla/Developments/Biin/views/account/wizardProfile.jade",
+		"/Users/lbonilla/Developments/Biin/biin_modules/app.js",
 		"/Users/lbonilla/Developments/Biin/schemas/category.js",
-		"/Users/lbonilla/Developments/Biin_Stuff/scripts/categories.json",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/sidebar.less",
-		"/Users/lbonilla/Developments/Biin/bower_components/jquery.slimscroll/jquery.slimscroll.js",
-		"/Users/lbonilla/Developments/Biin/views/_partials/elementList.jade",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/style.css",
-		"/Users/lbonilla/Developments/Biin/bower_components/slimScroll/jquery.slimscroll.js",
-		"/Users/lbonilla/Developments/Biin/public/workingFiles/file.txt",
-		"/Users/lbonilla/Developments/Biin/bower_components/bootstrap/less/scaffolding.less",
+		"/Users/lbonilla/Developments/Biin/views/layout_menu.jade",
+		"/Users/lbonilla/Developments/Biin/bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js",
+		"/Users/lbonilla/Developments/Biin/bower.json",
+		"/Users/lbonilla/Developments/Biin/bower_components/eventie/README.md",
+		"/Users/lbonilla/Developments/Biin/bower_components/spectrum/spectrum.js",
+		"/Users/lbonilla/Developments/Biin/bower_components/angular-spectrum-colorpicker/.bower.json",
+		"/Users/lbonilla/Developments/Biin/views/homeDashboard.jade",
+		"/Users/lbonilla/Developments/Biin/routes/clients.js",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/stylesheets/style.css",
+		"/Users/lbonilla/Developments/Biin/views/_partials/singUpModal.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/app.js",
+		"/Users/lbonilla/Developments/Biin/views/singup/wizardProfile.jade",
+		"/Users/lbonilla/Developments/Biin/public/landingPage/js/custom.js",
+		"/Users/lbonilla/Developments/Biin/views/layout_landing_page.jade",
+		"/Users/lbonilla/Developments/Biin/views/singup/index.jade",
+		"/Users/lbonilla/Developments/Biin/routes/categories.js",
+		"/Users/lbonilla/Developments/Biin/views/mobileTest.jade",
+		"/Users/lbonilla/Developments/Biin/views/verifiedBinnie.jade",
+		"/Users/lbonilla/Developments/Biin/views/singup.jade",
+		"/Users/lbonilla/Developments/Biin/routes/blog.js",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/organizationsController.js",
+		"/Users/lbonilla/Developments/Biin/routes/accounts.js",
+		"/Users/lbonilla/Developments/Biin/views/layout_landing_page_out.jade",
+		"/Users/lbonilla/Developments/Biin/views/index_pre_order.jade",
+		"/Users/lbonilla/Developments/Biin/views/user/index.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/utilities.js",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/variables.less",
 		"/Users/lbonilla/Developments/Biin/public/stylesheets/controls.less",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/cmsMain.css",
-		"/Users/lbonilla/Developments/Biin/views/layout.jade",
-		"/Users/lbonilla/Developments/Biin/less/lessTest.less",
-		"/Users/lbonilla/Developments/Biin/public/less/lessTest.less",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/lessTestmain.less",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/main.css",
-		"/Users/lbonilla/Developments/Biin/views/error.jade",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/less/main.less",
-		"/Users/lbonilla/Library/Application Support/Sublime Text 2/Packages/LESS/README.md",
-		"/Users/lbonilla/Developments/Biin/public/stylesheets/main.css",
-		"/Users/lbonilla/Developments/Biin/biin.sublime-project",
-		"/Users/lbonilla/Developments/Biin/views/sites/index.jade"
+		"/Users/lbonilla/Developments/Biin/views/organization/index.jade",
+		"/Users/lbonilla/Developments/Biin/biin_modules/imageManager.js",
+		"/Users/lbonilla/Developments/Biin/routes/gallery.js",
+		"/Users/lbonilla/Developments/Biin/views/account/wizardBilling.jade",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/angular/blogController.js",
+		"/Users/lbonilla/Developments/Biin/views/site/index.jade",
+		"/Users/lbonilla/Developments/Biin/views/blog/index.jade",
+		"/Users/lbonilla/Developments/Biin/views/element/wizardCategories.jade",
+		"/Users/lbonilla/Developments/Biin/views/_partials/galleryWidget.jade",
+		"/Users/lbonilla/Developments/Biin/views/showcase/wizardBiins.jade",
+		"/Users/lbonilla/Developments/Biin/views/showcase/wizardElements.jade",
+		"/Users/lbonilla/Documents/Rutina_Ejercicios/rutina.html",
+		"/Users/lbonilla/Developments/Biin/views/showcase/wizardColors.jade",
+		"/Users/lbonilla/Developments/BiinJsons/BiinFakeJsons/getCategories.json",
+		"/Users/lbonilla/Developments/BiinJsons/BiinFakeJsons/getBoards.json",
+		"/Users/lbonilla/Developments/Biin/views/element/wizardGallery.jade",
+		"/Users/lbonilla/Developments/Biin/views/element/wizardHighlights.jade",
+		"/Users/lbonilla/Developments/BiinJsons/BiinFakeJsons/showcases/adidasShowcase01.json",
+		"/Users/lbonilla/Developments/Biin/bower_components/angular-bootstrap-select/build/angular-bootstrap-select.js",
+		"/Users/lbonilla/Developments/BiinJsons/BiinFakeJsons/elements/adidasElement01.json",
+		"/Users/lbonilla/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/lbonilla/Developments/Biin/views/index.jade",
+		"/Users/lbonilla/Developments/Biin/schemas/gallery.js",
+		"/Users/lbonilla/Developments/BiinJsons/BiinFakeJsons/elements/antoniosElement01.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/BiinFakeJsons/elements/fakeElement01.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/BiinFakeJsons/elements/adidasElement01.json",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/font-streamline.css",
+		"/Users/lbonilla/Developments/Biin/public/stylesheets/croppic.css",
+		"/Users/lbonilla/Developments/Biin/views/element/wizardNotifications.jade",
+		"/Users/lbonilla/Developments/Biin_Stuff/BiinFakeJsons/elements/joesElement01.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/BiinFakeJsons/elements/xboxElement01.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/BiinFakeJsons/elements/pumaElement01.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/BiinFakeJsons/elements/nikeElement01.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/BiinFakeJsons/elements/nokiaElement01.json",
+		"/Users/lbonilla/Developments/Biin_Stuff/BiinFakeJsons/elements/antoniosElement01.json",
+		"/Users/lbonilla/Developments/Biin/bower_components/angular-datepicker/dist/index.css",
+		"/Users/lbonilla/Developments/Biin/public/javascripts/ui.js",
+		"/Users/lbonilla/Developments/Biin/bower_components/angular-datepicker/dist/index.js",
+		"/Users/lbonilla/Developments/Biin/public/workingFiles/BiinFakeJsons/showcases/adidasShowcase01.json",
+		"/Users/lbonilla/Library/Containers/com.apple.mail/Data/Library/Mail Downloads/F4C7226F-1158-4843-8651-1C842B049416/getCategories.json",
+		"/Users/lbonilla/Developments/Biin/schemas/sticker.js",
+		"/Users/lbonilla/Developments/Biin/routes/stickers.js",
+		"/Users/lbonilla/Developments/Biin/views/site/wizardGallery.jade"
 	],
 	"find":
 	{
@@ -762,134 +819,134 @@
 		"case_sensitive": true,
 		"find_history":
 		[
-			".thankYouButton",
-			"#preRegister button.selectpicker",
-			"input",
-			"subscribe-form",
-			"toggle",
-			"navbar-toggle",
-			"responsive",
-			"background-image",
-			"backgroun",
-			"background-ima",
-			"nav-to",
-			"sing",
-			"img",
-			"newsletter",
-			"forceSsl",
-			"price",
-			"envio",
-			"periodo",
-			"Envio",
-			"credito",
-			"suscripcion",
-			"Ademas",
-			"aplicacion",
-			"perm",
-			"permitanos",
-			"Pre-ordena",
-			"rapidez",
-			"Beacons de Biin",
-			"Para quien",
-			"sessi ",
-			"sessión ",
-			"complementaria",
-			"coplementaria",
-			"in Comp",
-			"In Comp",
-			"inc",
-			"in",
-			"incomputer",
-			"ademas",
-			"Quienes",
-			"Como",
-			"movil",
-			"Subcribase",
-			"facil",
-			"estas",
-			"movil",
-			"console.log",
-			"process.env",
-			"DB_CONNECTION",
-			"biinName",
-			"expressValidator",
-			"routes",
-			"})\n",
-			"passport",
-			"ClientPasswordStrategy",
-			"local",
-			"client",
-			"console.lgo",
-			"console.log",
-			"uploadObjectToBuquet",
-			"concat",
-			"galle",
-			"concat",
+			"public",
+			"(translate=\"SLIDER.1.TITLE\")",
+			"transl",
+			"_",
+			"getOganization",
+			"utils",
+			"#wizardBiinsWrapper ",
+			"wizard5IsValid",
+			"validate",
 			"showcase",
-			"insertGalleryItem",
-			"serverCop",
-			"aut",
-			"copyToFtp",
-			"gallery",
-			"galler",
-			"gallery",
-			"galler",
-			"in",
-			"organizationsCropper",
-			"organization",
-			"push",
+			"standardPadding",
+			"validate",
+			"selectedElement",
+			"notifications",
+			"wizard",
+			"7",
+			"wizard7",
+			"activeValue",
+			"validate",
+			"changeBoolStateHighlights",
+			"setCate",
+			"setCa",
+			"streetAddres",
+			"color",
+			"reserV",
+			"identifier",
+			"position",
+			"biins",
+			"vali",
+			"iden",
+			"lastUpdate",
+			"textColor",
+			"$pull",
+			"pull",
+			"phoneNumber",
 			"update",
-			"galler",
-			"express",
-			"express-session",
-			"http",
-			".imgElementPreview",
-			"draggableShowcaseElement",
-			"draggable-showcase-element",
-			"drag",
-			"drop",
-			"imageCropper",
-			"cropper",
-			"colAppend",
-			".colCategories",
-			"setGallery",
-			"guid",
-			"console",
-			"save",
-			"biinSrv",
-			"console",
-			"$scoper",
 			"major",
-			"mayor",
-			"minor",
-			"()\n",
-			"onGalleryChange",
-			"att",
-			"attrs",
-			"insertGalleryItem",
-			"gallerySrv",
-			"gallery",
-			"removeCategoryAt",
+			"nam",
+			"functions.setMobileBiinedElement",
+			"_",
+			"biinedCo",
+			"biinieCollections",
+			"new",
+			"status",
+			"isOrganizationChanged",
+			"prevSaveOrganization",
+			"prevSaveOrganizat",
+			"isOrganizationChanged",
+			"client",
+			"regions",
+			"forceSsl",
+			"binnies",
+			"createDefaultOrganization",
+			"/api/client",
+			"LOGIN",
+			"25px",
+			"singup",
+			"singUP",
+			"setCategories",
+			"update",
+			"status",
+			"{status",
+			"imgUrl",
+			"data-organizationId",
+			"moment",
+			"save",
+			"home",
+			"singup",
+			"$http",
+			"number",
+			"binnieImage",
+			"utils",
+			"categorySrv",
+			",categorySrv",
+			"organization",
+			"mobileUser",
+			"dragGalleryIndex",
+			"setDragGallery",
+			"organization",
+			"edi",
+			"getOganization",
+			"checkbox",
+			"clearSelectedOrganization",
+			"save",
+			"changeOrganizationImage",
+			"save",
+			".img-block",
+			"edit",
+			"avatar",
+			".avatar",
+			"colorWhite",
+			".moduleTitle",
+			"appl",
+			"data",
+			"identifier",
+			"account",
+			"client",
+			"imageManager",
+			"uploadMedia",
+			"uploadProfileImage",
+			"border-radius",
+			"round",
+			"white",
+			"db",
+			"validate",
+			"categorySrv",
+			"delete",
+			".wizard-body",
+			"wizard",
+			"_find",
+			"biin",
+			"active",
+			"saveList",
+			"save",
+			"push",
+			"identifier",
+			"biinSrv",
+			"getFirstElementByPosition",
+			"50px",
+			"drag",
+			"insertElementAfter",
 			"drop",
 			"drag",
-			"differe",
-			"categories",
-			"changeTabTo",
-			"console",
-			"cropper",
-			"cropp",
-			"/organizations/:identifier/elements",
-			"extend",
-			"elementSrv",
-			"ng-class",
-			"biinUnasocciated",
-			"getByShowcase",
-			"biinsr",
-			"shocase",
-			"img",
-			"pending-indicator",
-			"imagesLoaded",
-			"upload"
+			"drop",
+			"objectIdenti",
+			"ide",
+			"objectIdenti",
+			"objectIdentifier"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -897,6 +954,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"isOrganizationDirty",
 			"user",
 			"\"",
 			"'",
@@ -911,23 +969,229 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 469,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								469,
+								469
+							]
+						],
+						"settings":
+						{
+							"auto_name": "1. Agregar 2 campos para mensajes a showcase en no",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
 			]
 		},
 		{
+			"selected": 5,
 			"sheets":
 			[
+				{
+					"buffer": 1,
+					"file": "/Users/lbonilla/Developments/Biin_Stuff/Miising thinks",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 337,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								281,
+								281
+							]
+						],
+						"settings":
+						{
+							"auto_name": "Miising thinks",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/lbonilla/Developments/Biin_Stuff/Color Names mapper",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17503,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18,
+								18
+							]
+						],
+						"settings":
+						{
+							"auto_name": "Color Names mapper",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/locals/account/en.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1,
+								1
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "routes/mobileRoutes.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13113,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10834,
+								10834
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2853.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "biin_modules/routes.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9773,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8924,
+								8931
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2119.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Procfile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15,
+								15
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 22.0
 	},
 	"input":
 	{
-		"height": 34.0
+		"height": 38.0
 	},
 	"layout":
 	{
@@ -949,7 +1213,7 @@
 		"cols":
 		[
 			0.0,
-			0.239216014105,
+			0.26258718076,
 			1.0
 		],
 		"rows":
@@ -970,7 +1234,7 @@
 	"project": "biin.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 40.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1005,7 +1269,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 252.0,
+	"side_bar_width": 206.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

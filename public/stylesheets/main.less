@@ -1464,7 +1464,7 @@ input.ng-valid.ng-dirty{
 				max-height:  170px;
 				margin-top: 5px;
 				width: 1000%;
-				max-width: 500px;
+				max-width: 100%;
 				overflow-x: scroll;
 				overflow-y: hidden!important;
 				white-space: nowrap;
@@ -1587,7 +1587,14 @@ input.ng-valid.ng-dirty{
 					 		width: 50px;
 					 		display: block;
 							text-align: center;
-							margin-left: 35%;
+						  	margin-left: auto;
+						  	margin-right: auto;
+					 	}
+					 	.isDefault{
+					 		text-align: right;
+					 		margin-right: auto;
+					 		color: @colorYellow!important;
+					 		font-size: 30px;
 					 	}
 					}
 
@@ -1596,7 +1603,7 @@ input.ng-valid.ng-dirty{
 
 						.icon{
 							color: @colorGreen;
-						}
+						}						
 					}
 
 					.biin.taken{
@@ -1609,6 +1616,7 @@ input.ng-valid.ng-dirty{
 						background-color: @colorBaseWhite;
 						text-align: center;
 						cursor: pointer;
+						overflow-x: hidden;
 					}
 
 					.biinWrapper:hover{

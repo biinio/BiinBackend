@@ -14,6 +14,7 @@ module.exports = function () {
 		});				
 	}
 
+
 	//GET the index view of a regions
 	functions.create = function(req,res){
 		res.render("region/create",{title:'Regions',user:req.user});
@@ -73,6 +74,13 @@ module.exports = function () {
 
 	}
 
+	//GET the list of regions
+	functions.listJson = function(req,res){
+		region.find({},{"identifier":1,"radious":1,"latitude":1,"longitude":1},function (err, data) {
+			   res.json({"data":{"regions":data}});
+		});		
+	}
+	
 	//Returns a region by calculing the proximity of the coord
 	functions.getRegionByProximity=function(lat, lon, callback){
 		region.find({},'',function(err,regions){
@@ -135,6 +143,7 @@ module.exports = function () {
 		});		
 	}	
 	
+
 	//Remove site in a region
 	functions.removeSiteToRegion =function(regionId, siteIdentifier,callback)	{
 		region.findOne({'identifier':regionId},function(err,regionFound){
@@ -222,12 +231,7 @@ module.exports = function () {
 		});
 	}
 
-	//GET the list of regions
-	functions.listJson = function(req,res){
-		region.find({},"identifier radious latitude longitude",function (err, data) {
-			   res.json({"data":{"regions":data}});
-		});		
-	}
+
 
 	return functions;
 }

@@ -172,8 +172,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileBiinedElementToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
+
     //Biinie/ Site relation
-    app.put('/mobile/biinies/:biinieIdentifier/sites/:identifier/notified',mobileUser.setSiteNotified);
+    app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/biin/:biinIdentifier/notified',mobileUser.setBiinNotified);
     
     //Mobile routes    /:
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
@@ -181,7 +182,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/mobile/client/token', mobileOauthManager.token);
     app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);*/
     
-    app.get('/mobile/regions',mobileRoutes.getRegions);
+    app.get('/mobile/regions',regions.listJson);
     app.get('/mobile/biinies/:identifier/:regionIdentifier/categories',mobileRoutes.getCategoriesByRegionId);
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);

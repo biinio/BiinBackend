@@ -218,7 +218,51 @@ module.exports = function () {
 
     //Get the mobile Test page
     functions.mobileTest =function(req,res){    	
-    	res.render('mobileTest', { title: 'Biin' });	
+    	//res.render('mobileTest', { title: 'Biin' });	
+    	var cantProced=0;
+    	var total=0;
+    	var callBack =function(){
+    		console.log("Processed one");
+    		cantProced++;
+			 if(total===cantProced){
+    				res.send('done');
+    		}    		
+    	}
+
+    	organization.find({},function(err,data){
+    		if(err)
+    			throw err;
+    		else{
+    			//organization
+    			total = data.length;
+    			for(var i=0;i<data.length;i++){
+    				for(var j=0; j<data[i].sites.length;j++){
+    					for(var b=0; b<data[i].sites[j].biins.length;b++){
+    						if('showcasesAsigned' in data[i].sites[j].biins[b]){
+    							var showcases =[];
+    							for(var s=0;s<data[i].sites[j].biins[b].showcasesAsigned.length;s++){
+    								showcases.push({'isDefault':true,'showcaseIdentifier':data[i].sites[j].biins[b].showcasesAsigned[0].showcaseIdentifier,'startTime':'2000-01-01T06:00:00.000Z', 'endTime':'2000-01-01T06:00:00.000Z'});
+    							}
+    							data[i].sites[j].biins[b].showcases=showcases;
+    						}
+    					}
+    				}
+    				console.log('modified of '+ data[i].identifier +' | '+data.length+' of '+ i+1);
+    				data[i].save(function(err){
+    					if(err)
+    						throw err
+    					else{
+    						callBack()
+    					}    						
+
+    				});
+    				
+    			}
+
+
+    		}
+    	})
+
     }
 
     

@@ -69,9 +69,10 @@ var mobileUserSchema=new Schema({
 			}]
 		}
 	],
-	sitesNotified:[
+	biinNotified:[
 		{
-			identifier:{type:String,index:true}
+			siteIdentifier:{type:String,index:true},
+			biinIdentifier:{type:String,index:true}
 		}
 	]
 });

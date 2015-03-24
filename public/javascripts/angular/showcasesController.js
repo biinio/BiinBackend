@@ -1,4 +1,4 @@
-var biinAppShowCases = angular.module('biinAppShowCases',['pascalprecht.translate','ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services']);
+var biinAppShowCases = angular.module('biinAppShowCases',['pascalprecht.translate','ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services','ui.bootstrap']);
 
 //Translation Provider
 biinAppShowCases.config(function($translateProvider) {
@@ -75,17 +75,6 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     $scope.clearValidations();
     $scope.wizardPosition=1;
     $scope.validate(true); 
-
-  }
-
-  //Select Element Type function
-  $scope.selectType=function(index){
-    if($scope.showcases[$scope.selectedShowcase].showcaseType!==''+index)
-      $scope.showcases[$scope.selectedShowcase].showcaseType=""+index;
-    else
-      $scope.showcases[$scope.selectedShowcase].showcaseType="";
-
-    $scope.validate(true);
 
   }
 
@@ -194,7 +183,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
       if(eval($scope.wizardPosition)==4 || validate){
         var wizard4IsValid = false;
 
-        var isShowcaseTypeValid = $scope.showcases[$scope.selectedShowcase].showcaseType=='1' || $scope.showcases[$scope.selectedShowcase].showcaseType=='2';
+        //var isShowcaseTypeValid = $scope.showcases[$scope.selectedShowcase].showcaseType=='1' || $scope.showcases[$scope.selectedShowcase].showcaseType=='2';
         //Validate the Notification
         if($scope.showcases[$scope.selectedShowcase].activateNotification===$scope.activeValue ){
            wizard4IsValid=true;
@@ -206,7 +195,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
          wizard4IsValid=true; 
         }
 
-        $scope.wizard4IsValid= wizard4IsValid && isShowcaseTypeValid; 
+        $scope.wizard4IsValid= wizard4IsValid ;//&& isShowcaseTypeValid; 
       }
       $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid && $scope.wizard4IsValid;
 
@@ -322,28 +311,29 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
   //Get the status of a Biin
   $scope.getBiinStatus =function(biin){
     var result="";
-    for(var i=0;i<biin.showcasesAsigned.length && result==="";i++){
-      if(biin.showcasesAsigned[i].showcaseIdentifier===$scope.currentModelId)
-        result="active";
-      else{
-        if(biin.showcasesAsigned[i].showcaseIdentifier!=="")
-          result="taken";
-      }
+    for(var i=0;i<biin.showcases.length && result==="";i++){
+      if(biin.showcases[i].showcaseIdentifier===$scope.currentModelId)
+        return "active";
     }
     return result;
   }
 
   //Set the Showcase in Biin as Active
-  $scope.setShowcaseInBiinActive=function( indexSite,indexBiin){
+  $scope.setShowcaseInBiinActive=function(indexSite,indexBiin){
 
     if(typeof($scope.biinSite[indexSite]!='undefined')){
 
-
-      if($scope.biinSite[indexSite].biins[indexBiin].showcasesAsigned.length>0)
-        $scope.biinSite[indexSite].biins[indexBiin].showcasesAsigned=[];
+      var existShowcaseInBiin = _.findWhere($scope.biinSite[indexSite].biins[indexBiin].showcases,{showcaseIdentifier:$scope.currentModelId})
+      if(typeof(existShowcaseInBiin)!='undefined'){
+          var index = $scope.biinSite[indexSite].biins[indexBiin].showcases.indexOf(existShowcaseInBiin);
+          $scope.biinSite[indexSite].biins[indexBiin].showcases.splice(index,1);
+        }
       else{
-          var asignedBiin = {showcaseIdentifier:$scope.currentModelId};
-          $scope.biinSite[indexSite].biins[indexBiin].showcasesAsigned.push(asignedBiin);
+          var asignedBiin = {showcaseIdentifier:$scope.currentModelId, startTime:$scope.showcases[$scope.selectedShowcase].startTime,endTime:$scope.showcases[$scope.selectedShowcase].endTime};
+          if(!$scope.biinSite[indexSite].biins[indexBiin].showcases)          
+            $scope.biinSite[indexSite].biins[indexBiin].showcases=[];
+          asignedBiin.isDefault= $scope.biinSite[indexSite].biins[indexBiin].showcases.length==0?'1':'0';
+          $scope.biinSite[indexSite].biins[indexBiin].showcases.push(asignedBiin);
       }
 
     }
@@ -379,23 +369,22 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }else{
       $scope.showcases[$scope.selectedShowcase].webAvailable.push(site.identifier);      
     }
-
-
   }
 
-
+  //Get the Shoscase by identifier
   $scope.getShowcaseByIdentifier=function(identifier){
    var showcaseObj= _.find($scope.showcases, function (obj) { return obj.identifier === identifier })
    return showcaseObj;
   }
+
   //Update the position of the rest of the elements to add one when is added a new element
-   updateShowcaseObjectsPosition= function(position){
+  updateShowcaseObjectsPosition= function(position){
     for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].elements.length;i++){
       var objPosition = eval($scope.showcases[$scope.selectedShowcase].elements[i].position);
-      if(objPosition>=position)
+       if(objPosition>=position)
         $scope.showcases[$scope.selectedShowcase].elements[i].position= ""+ eval(objPosition+1);
     }
-   }
+  }
 
   //Update the position of the rest of the elements when a element removed
    updateShowcaseObjectsPositionWhenDelete= function(position){

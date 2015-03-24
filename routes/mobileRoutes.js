@@ -26,10 +26,10 @@ module.exports =function(){
 	*/
 
 	//GET Regions
-	functions.getRegions=function(req,res){
+	/*functions.getRegions=function(req,res){
 		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getRegions.json", "utf8");		
 		res.json(JSON.parse(jsonObj));
-	}
+	}*/
 
 	//GET Element
 	functions.getElement=function(req,res){
@@ -218,8 +218,10 @@ module.exports =function(){
 						else
 							if(data.sites && data.sites.length){	
 
-								var siteResult = mapSiteMissingFields(biinieIdentifier,siteId,data.identifier,data.sites[0],mobileUser);
-								res.json({data:siteResult,status:"0"});
+								mapSiteMissingFields(biinieIdentifier,siteId,data.identifier,data.sites[0],mobileUser,function(siteResult){
+									res.json({data:siteResult,status:"0"});
+								});
+								
 							}
 							else{
 								res.json({data:data.sites[0],status:"0"});
@@ -228,7 +230,7 @@ module.exports =function(){
 			}			
 		}
 		if(siteId && biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{sitesNotified:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{biinNotified:1},getSiteInformation)
 		}else{
 			res.json({data:{status:"7",data:{}}});
 		}
@@ -236,8 +238,17 @@ module.exports =function(){
 	}
 
 	//Map the Site information
-	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser){
+	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,resultCallback){
 		var newModel={};
+
+		var getShowcasesWebAvailable=function(siteIdentifier,callback){
+			showcase.find({'webAvailable':siteIdentifier},{'_id':0,'identifier':1},function(err,data){
+				if(err)
+					throw err;
+				var webAvailable= data;//_.pluck(data,'identifier');
+				callback(webAvailable)
+			});
+		}
 
 		newModel.proximityUUID= orgId;
 		newModel.identifier = model.identifier;
@@ -300,45 +311,54 @@ module.exports =function(){
 			}
 		}
 
-		if(typeof(model.biins)!='undefined'){
+		if(typeof(model.biins)!=='undefined'){
 			newModel.biins=[];
 			var date = utils.getDateNow();// This because some biins are was not created with lastUpdate
 			var biinArray= 0;
 			for(var i=0; i<model.biins.length;i++){
-				if(typeof(model.biins[i].showcasesAsigned)!='undefined' && model.biins[i].showcasesAsigned.length>0){
+				if(typeof(model.biins[i].showcases)!='undefined' && model.biins[i].showcases.length>0){
 					newModel.biins[biinArray]={};				
 					newModel.biins[biinArray].identifier= model.biins[i].identifier;
 					newModel.biins[biinArray].minor= "" +model.biins[i].minor;
 					newModel.biins[biinArray].biinType= model.biins[i].biinType;
 					newModel.biins[biinArray].lastUpdate= model.biins[i].lastUpdate?model.biins[i].lastUpdate:date;
-					
-					newModel.biins[biinArray].showcaseIdentifier = model.biins[i].showcasesAsigned[0].showcaseIdentifier;
-				
-					/*if( model.biins[biinArray].showcasesAsigned.length>0){
-						var startTime= utils.getDate({hour: 0});
-						var endTime= utils.getDate({hour: 0});
-						//var showcaseBiin={isDefault:'0', showcaseIdentifier:model.biins[i].showcasesAsigned[0].showcaseIdentifier,startTime:startTime,endTime:endTime};						
-						newModel.biins[biinArray].showcases=[];
-						newModel.biins[biinArray].showcases.push(showcaseBiin);				
-					}*/
 
+					if(mobileUser && ('biinNotified' in mobileUser)){
+						var biinNot=_.findWhere(mobileUser.biinNotified,{siteIdentifier:siteId, biinIdentifier:model.biins[i].identifier});
+						newModel.biins[biinArray].isUserNotified=typeof(biinNot)!='undefined'?'1':'0';
+					}else{
+						//If the user was not notifier
+						newModel.biins[biinArray].isUserNotified='0';			
+					}
+
+					//Biins showcases
+					if( model.biins[i].showcases.length>0){
+						newModel.biins[biinArray].showcases=[];
+						for(var j =0;j<model.biins[i].showcases.length;j++){
+							 var biinShowcase = model.biins[i].showcases[j];
+							 biinShowcase.startTime= utils.getDate(biinShowcase.startTime);
+							 biinShowcase.endTime= utils.getDate(biinShowcase.endTime);
+							 newModel.biins[biinArray].showcases.push(biinShowcase);
+						}
+					}
 					//If is not there an identifier
 					if(!model.biins[i].identifier)
 						newModel.biins[biinArray].identifier= utils.getGUID();
 					biinArray++;
 				}
 			}
-		}
+		}		
 
-		if(mobileUser && ('sitesNotified' in mobileUser)){
-			var siteNotified=_.findWhere(mobileUser.sitesNotified,{identifier:siteId});
-			newModel.isUserNotified=typeof(siteNotified)!='undefined'?'1':'0';
-		}else{
-			//If the user was not notifier
-			newModel.isUserNotified='0';			
-		}
+		getShowcasesWebAvailable(siteId,function(webAvailable){
 
-		return newModel;
+			newModel.webAvailable = [];
+			if(webAvailable)
+				newModel.webAvailable =webAvailable;
+			
+			//Return the result callback
+			resultCallback(newModel)
+		})
+		
 	}
 
 

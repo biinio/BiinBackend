@@ -215,9 +215,9 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   //Create a  new Biin
 
   //Purchase Biin Function
-  $scope.purchaseBiin=function(qty){
+  $scope.purchaseBiin=function(qty, isBasicPackage){
     //Put the purchase order
-    $http.post("api/organizations/"+$scope.organizationId+"/sites/"+$scope.sites[$scope.selectedSite].identifier+"/biins",{biinsQty:qty}).success(function(data,status){
+    $http.post("api/organizations/"+$scope.organizationId+"/sites/"+$scope.sites[$scope.selectedSite].identifier+"/biins",{biinsQty:qty,isBasicPackage:isBasicPackage}).success(function(data,status){
       if(status==201){
         //Push the
         for(var i=0; i<data.length;i++)
@@ -230,6 +230,23 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
 
     });
   }
+
+  //Select Biin Type function
+  $scope.selectBiinType=function(type){
+    if('isRequiredBiin' in $scope.sites[$scope.selectedSite].biins[$scope.selectedBiin]){
+      if(!$scope.sites[$scope.selectedSite].biins[$scope.selectedBiin].isRequiredBiin){
+          if($scope.sites[$scope.selectedSite].biins[$scope.selectedBiin].biinType!==''+type)
+            $scope.sites[$scope.selectedSite].biins[$scope.selectedBiin].biinType=""+type;        
+      }
+
+    }else{
+      if($scope.sites[$scope.selectedSite].biins[$scope.selectedBiin].biinType!==''+type)
+        $scope.sites[$scope.selectedSite].biins[$scope.selectedBiin].biinType=""+type;      
+    }
+    $scope.validate(true);
+
+  }
+
   //Category return if contains a specific category
   $scope.containsCategory=function(category){
     if(typeof(_.findWhere($scope.sites[$scope.selectedSite].categories,{identifier:category.identifier}))!='undefined')
@@ -340,7 +357,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       if( eval($scope.wizardPosition)== 5 || validate)
       {
         if($scope.sites[$scope.selectedSite]){
-         $scope.wizard5IsValid=$scope.sites[$scope.selectedSite].biins.length>0;
+         $scope.wizard5IsValid=$scope.sites[$scope.selectedSite].biins.length>2;
         }else{
           $scope.wizard5IsValid=false; 
         }        

@@ -13,4 +13,12 @@ form.novalidate
 				input(type="text" ng-model="showcases[selectedShowcase].titleColor" verify-on-change readonly)
 				spectrum-colorpicker.picker(ng-model="showcases[selectedShowcase].titleColor" options="{clickoutFiresChange: true, showPaletteOnly:true, showInput: false, showAlpha: false, preferredFormat: 'rgb',palette:[['#edeeee', '#bbbdc0','#808284','#231f20'],['#69cdf1', '#2f83c0', '#005898'],['#5fc4bb','#88c53f','#0b8943'],['#fcbc15','#f47a26','#ed1c24','#ee4775'],['#9b3393','#4b3895'],['#c6a887','#7b3d1a']]}")
 		.row
+			h2 Activation time
+			.col-md-3
+				timepicker(ng-model="showcases[selectedShowcase].startTime" hour-step="1" minute-step="30" show-meridian='false')
+				h4 Start Time				
+			.col-md-3						
+				timepicker(ng-model="showcases[selectedShowcase].endTime" hour-step="1" minute-step="30" show-meridian='false')
+				h4 End Time				
+		.row
 			h4 Identifier: {{showcases[selectedShowcase].identifier}}					
