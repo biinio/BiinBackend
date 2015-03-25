@@ -397,8 +397,12 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
           $scope.sites[$scope.selectedSite].region=data.data;
 
             //Apply the changes
-            $scope.$digest();
-            $scope.$apply();    
+            if(!$scope.$$phase) {
+              //$digest or $apply
+              $scope.$digest();
+              $scope.$apply();                 
+            }
+
         }
         console.log(data);
         
