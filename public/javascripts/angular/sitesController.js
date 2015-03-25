@@ -357,7 +357,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       if( eval($scope.wizardPosition)== 5 || validate)
       {
         if($scope.sites[$scope.selectedSite]){
-         $scope.wizard5IsValid=$scope.sites[$scope.selectedSite].biins.length>2;
+         $scope.wizard5IsValid=$scope.sites[$scope.selectedSite].biins.length>1;
         }else{
           $scope.wizard5IsValid=false; 
         }        
