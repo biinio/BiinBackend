@@ -154,7 +154,7 @@ module.exports = function () {
 				var siteFound =_.findWhere(region.sites,{identifier:siteIdentifier});
 				if(siteFound){
 					var siteIndex = region.sites.indexOf(siteFound);
-					region.sites[siteIndex].remove()
+					region.sites.splice(siteIndex,1);
 
 				}
 				callback(true);
@@ -166,7 +166,6 @@ module.exports = function () {
 	//Remove site in a region
 	functions.removeSiteToRegionBySite =function(siteIdentifier,callback)	{
 
-
 		region.find({'sites.identifier':siteIdentifier},function(err,sitesFound){
 			if(err)
 				throw err;
@@ -175,7 +174,7 @@ module.exports = function () {
 					for(var i=0; i<sitesFound.length; i++){
 						var siteToRemove = _.findWhere(sitesFound[i].sites,{identifier:siteIdentifier});
 						var index = sitesFound[i].sites.indexOf(siteToRemove)
-						sitesFound[i].sites[index].remove();
+						sitesFound[i].sites.splice(index,1);
 						sitesFound[i].save();
 					}
 					callback(true);

@@ -336,6 +336,10 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
           $scope.biinSite[indexSite].biins[indexBiin].showcases.push(asignedBiin);
       }
 
+      //Set is default if the lenght of the showcase is one
+      if($scope.biinSite[indexSite].biins[indexBiin].showcases.length===1){
+        $scope.biinSite[indexSite].biins[indexBiin].showcases[0].isDefault='1';
+      }
     }
   }
 

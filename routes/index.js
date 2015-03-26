@@ -6,7 +6,7 @@ module.exports = function () {
 	var utils = require('../biin_modules/utils')();
 	//Get the index page
 	functions.index = function(req, res){
-	  res.render('index', { title: 'Biin' });	  
+	  res.render('index', { title: 'Biin', enviroment : process.env.NODE_ENV });	  
 	};
 
 	//Get the Login

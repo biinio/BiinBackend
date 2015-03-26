@@ -48,37 +48,12 @@ html(lang='es')
 
 		//HEADER=============================================
 		header#header
-			.nav.navbar-helper
-				ul.nav.navbar-nav.navbar-right
-					li(style='cursor: pointer;').dropdown
-						a.dropdown-toggle.iniciarSessionToggle(data-toggle='modal' data-target="#singUpModal")
-							| {{ "LOGIN" | translate }}					
-						//a.dropdown-toggle.iniciarSessionToggle(data-toggle='dropdown')
-							| {{ "LOGIN" | translate }}
-						//ul.dropdown-menu.loginDropDown
-							li
-								h4 Biin Dashboard login.
-								form.loginForm(action='/login', method='POST')
-									input.form-control.input-block-level(name='username', type='text', placeholder='e-mail')
-									input#passwordInput.form-control.input-block-level(name='password', type='password', placeholder='password')
-									a.forgotPass.pull-right(href='') Forgot password?
-									div(data-toggle='buttons-checkbox')
-										.checkbox.stayLogged
-											label
-												input(type='checkbox')
-												| Stay Logged In
-										span.adviceLoggedIn.pull-left Keep me logged in until I log out
-										a#buttonLogin.btn.btn-theme.fulllWidth Login
-										a(href="/singup")#buttonSignUP.btn.btn-theme.btn-signUp.fulllWidth Sign up
-					//li.btn-group
-						a.dropdown-toggle(data-toggle='dropdown')
-							img(src="/landingPage/img/thumbs/spanishIcon.png" ng-if="lang==='ES'")
-							img(src="/landingPage/img/thumbs/englishIcon.png" ng-if="lang==='EN'")
-						ul.dropdown-menu.langsDropDown							
-							li
-								img(src="/landingPage/img/thumbs/englishIcon.png" ng-click="changeLanguage('EN')" ng-if="lang!=='EN'")
-							li
-								img(src="/landingPage/img/thumbs/spanishIcon.png" ng-click="changeLanguage('ES')" ng-if="lang!=='ES'")
+			if(enviroment !== 'production')
+				.nav.navbar-helper
+					ul.nav.navbar-nav.navbar-right
+						li(style='cursor: pointer;').dropdown
+							a.dropdown-toggle.iniciarSessionToggle(data-toggle='modal' data-target="#singUpModal")
+								| {{ "LOGIN" | translate }}					
 			.navbar.navbar-fixed-top.scroll-fixed-navbar
 				.container
 					.transparency					
@@ -154,8 +129,9 @@ html(lang='es')
 							p © Biin All Rights Reserved - Website Version 1.1
 					//End Footer Copy
 				//End container
-			//END FOOTER	
-		include _partials/singUpModal
+			//END FOOTER
+		if(enviroment !== 'production')
+			include _partials/singUpModal
 		//END CONTENT WRAPPER 
 		//EXTERNAL SCRIPTS=============================================
 		script(src='/landingPage/js/bootstrap.min.js', type='text/javascript')

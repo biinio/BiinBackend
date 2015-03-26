@@ -250,7 +250,7 @@ module.exports = function () {
 					}else{
 						console.log("Updating the site region");
 						//Unsubscribe the site to the region
-						regionRoutes.removeSiteToRegion(foundSite.sites[0].region,siteIdentifier,function(){
+						regionRoutes.removeSiteToRegionBySite(siteIdentifier,function(){
 							addSiteLogic(foundSite.sites[0]);
 						})
 					}
@@ -268,11 +268,9 @@ module.exports = function () {
 			if(isInside){
 				regionRoutes.addSiteToRegion(region.identifier,{identifier:site.identifier},function(wasAdded,regionId){
 					if(wasAdded){
-						console.log("The site was added to the region: "+region.identifier +", succesfully")
 						callback(true,region.identifier);
 					}
 					else{
-						console.log("The site was not added to the region for some reason");
 						callback(false,null);
 					}
 				});
@@ -280,11 +278,8 @@ module.exports = function () {
 				//If is not inside a region
 				regionRoutes.createRegion(site.lat,site.lng,{identifier:site.identifier},function(wasAdded,region){
 					if(wasAdded){
-						console.log("Was created the region: " + region)
-						console.log("Was added the site in the new region succesfully: ");
 						callback(true,region);
 					}else{
-						console.log("Was not created the region: ");
 						callback(false,null);
 					}
 				})

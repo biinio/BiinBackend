@@ -29,3 +29,5 @@
 								span.row Start {{showcase.startTime | date:'HH:mm'}} 
 								span.row End {{showcase.endTime | date:'HH:mm'}}								
 								i.isDefault.icon.icon-star-8(ng-if="showcase.isDefault==='1'")
+								.btnDelete.icon-round-control.btn-on-hover(ng-click="removeElementAt(elements.indexOf(item))")
+									.icon.icon-bin-2(ng-click="removeShowcaseAt(showcases.indexOf(item))")									
