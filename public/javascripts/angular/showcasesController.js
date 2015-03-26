@@ -318,30 +318,6 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     return result;
   }
 
-  //Set the Showcase in Biin as Active
-  $scope.setShowcaseInBiinActive=function(indexSite,indexBiin){
-
-    if(typeof($scope.biinSite[indexSite]!='undefined')){
-
-      var existShowcaseInBiin = _.findWhere($scope.biinSite[indexSite].biins[indexBiin].showcases,{showcaseIdentifier:$scope.currentModelId})
-      if(typeof(existShowcaseInBiin)!='undefined'){
-          var index = $scope.biinSite[indexSite].biins[indexBiin].showcases.indexOf(existShowcaseInBiin);
-          $scope.biinSite[indexSite].biins[indexBiin].showcases.splice(index,1);
-        }
-      else{
-          var asignedBiin = {showcaseIdentifier:$scope.currentModelId, startTime:$scope.showcases[$scope.selectedShowcase].startTime,endTime:$scope.showcases[$scope.selectedShowcase].endTime};
-          if(!$scope.biinSite[indexSite].biins[indexBiin].showcases)          
-            $scope.biinSite[indexSite].biins[indexBiin].showcases=[];
-          asignedBiin.isDefault= $scope.biinSite[indexSite].biins[indexBiin].showcases.length==0?'1':'0';
-          $scope.biinSite[indexSite].biins[indexBiin].showcases.push(asignedBiin);
-      }
-
-      //Set is default if the lenght of the showcase is one
-      if($scope.biinSite[indexSite].biins[indexBiin].showcases.length===1){
-        $scope.biinSite[indexSite].biins[indexBiin].showcases[0].isDefault='1';
-      }
-    }
-  }
 
   //Get the online status of showcase in a site
   $scope.getOnlineInSite= function(site){
@@ -399,47 +375,75 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }
    }
 
-    //Biins Logic
-    $scope.setBiinToShowcase= function(indexSite,indexBiin){
-      if(!$scope.biinSite[indexSite].biins[indexBiin].showcaseAsigned)
-        $scope.biinSite[indexSite].biins[indexBiin].showcaseAsigned = $scope.currentModelId;
+  //Biins Logic    
+  //Set the Showcase in Biin as Active
+  $scope.setShowcaseInBiinActive=function(indexSite,indexBiin){
+
+    if(typeof($scope.biinSite[indexSite]!='undefined')){
+
+      var existShowcaseInBiin = _.findWhere($scope.biinSite[indexSite].biins[indexBiin].showcases,{showcaseIdentifier:$scope.currentModelId})
+      if(typeof(existShowcaseInBiin)==='undefined'){
+          var asignedBiin = {showcaseIdentifier:$scope.currentModelId, startTime:$scope.showcases[$scope.selectedShowcase].startTime,endTime:$scope.showcases[$scope.selectedShowcase].endTime};
+          if(!$scope.biinSite[indexSite].biins[indexBiin].showcases)          
+            $scope.biinSite[indexSite].biins[indexBiin].showcases=[];
+          asignedBiin.isDefault= $scope.biinSite[indexSite].biins[indexBiin].showcases.length==0?'1':'0';
+          $scope.biinSite[indexSite].biins[indexBiin].showcases.push(asignedBiin);
+      }
+
+      //Set is default if the lenght of the showcase is one
+      if($scope.biinSite[indexSite].biins[indexBiin].showcases.length===1){
+        $scope.biinSite[indexSite].biins[indexBiin].showcases[0].isDefault='1';
+      }
+    }
+  }
+
+  //Return if a selected Showcase exist in the selected biin
+  $scope.existSelectedShowcaseHere=function(indexSite,indexBiin){
+    return typeof(_.findWhere($scope.biinSite[indexSite].biins[indexBiin].showcases,{showcaseIdentifier:$scope.currentModelId}))!=='undefined';
+  }
+
+  //Remove the showcase in a Specifica Biin at 
+  $scope.removeShowcaseInBiinAt=function(indexSite,indexBiin,indexShowcase){
+    $scope.biinSite[indexSite].biins[indexBiin].showcases.splice(indexShowcase,1);
+    //Set is default if the lenght of the showcase is one
+    if($scope.biinSite[indexSite].biins[indexBiin].showcases.length===1){
+      $scope.biinSite[indexSite].biins[indexBiin].showcases[0].isDefault='1';
+    }
+  }
+
+  $scope.elementInShowcase=function(elIndex){
+    var elementToCompare = $scope.elements[elIndex];
+    var check = _.some( $scope.showcases[$scope.selectedShowcase].elements, function( el ) {
+      return el.elementIdentifier === elementToCompare.elementIdentifier;
+    } );
+    if(check)
+      return "dragDisabled";
+    else
+      return "";
+  }
+
+  //Notification Section
+
+  //Toggle notifications state
+  $scope.setNotificationActive=function(){
+    if($scope.showcases[$scope.selectedShowcase].activateNotification!=='1')
+      $scope.showcases[$scope.selectedShowcase].activateNotification=$scope.activeValue;
+    else
+      $scope.showcases[$scope.selectedShowcase].activateNotification='0';
+    $scope.validate();
+  }
+
+  //Toggle a specific notification enabled
+  $scope.setNotificationActiveAt=function(index){
+    if($scope.showcases[$scope.selectedShowcase].activateNotification==='1')
+    {
+      if($scope.showcases[$scope.selectedShowcase].notifications[index].isActive!==$scope.activeValue)
+        $scope.showcases[$scope.selectedShowcase].notifications[index].isActive=$scope.activeValue;
       else
-        $scope.biinSite[indexSite].biins[indexBiin].showcaseAsigned=undefined
-    }
-
-    $scope.elementInShowcase=function(elIndex){
-      var elementToCompare = $scope.elements[elIndex];
-      var check = _.some( $scope.showcases[$scope.selectedShowcase].elements, function( el ) {
-        return el.elementIdentifier === elementToCompare.elementIdentifier;
-      } );
-      if(check)
-        return "dragDisabled";
-      else
-        return "";
-    }
-
-    //Notification Section
-
-    //Toggle notifications state
-    $scope.setNotificationActive=function(){
-      if($scope.showcases[$scope.selectedShowcase].activateNotification!=='1')
-        $scope.showcases[$scope.selectedShowcase].activateNotification=$scope.activeValue;
-      else
-        $scope.showcases[$scope.selectedShowcase].activateNotification='0';
-      $scope.validate();
-    }
-
-    //Toggle a specific notification enabled
-    $scope.setNotificationActiveAt=function(index){
-      if($scope.showcases[$scope.selectedShowcase].activateNotification==='1')
-      {
-        if($scope.showcases[$scope.selectedShowcase].notifications[index].isActive!==$scope.activeValue)
-          $scope.showcases[$scope.selectedShowcase].notifications[index].isActive=$scope.activeValue;
-        else
-          $scope.showcases[$scope.selectedShowcase].notifications[index].isActive='0';
-      }      
-      $scope.validate();
-    }
+        $scope.showcases[$scope.selectedShowcase].notifications[index].isActive='0';
+    }      
+    $scope.validate();
+  }
 
 }]);
 

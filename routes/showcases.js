@@ -64,8 +64,9 @@ module.exports = function () {
 	         newModel.accountIdentifier = req.user.accountIdentifier;
 	         newModel.organizationIdentifier = organizationIdentifier;		      
 	         newModel.lastUpdate =  utils.getDateNow();
-	         newModel.notifications = [{isActive:"0",notificationType:'1',text:''},{isActive:"0",notificationType:'2',text:''},{isActive:"0",notificationType:'3',text:''}];
-
+	         newModel.notifications = [{isActive:"0",notificationType:'1',text:''}];
+	         newModel.startTime="2015-03-26T06:00:35.001Z";
+	         newModel.endTime="2015-03-26T06:00:35.001Z";
 	         newModel.save(function(err){
 	         	if(err)
 	         		res.send(err,500);
