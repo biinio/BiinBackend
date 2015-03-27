@@ -15,10 +15,10 @@ form.novalidate
 		.row
 			h2 Activation time
 			.col-md-3
-				timepicker(ng-model="showcases[selectedShowcase].startTime" hour-step="1" minute-step="30" show-meridian='false')
+				timepicker(ng-model="showcases[selectedShowcase].startTime" hour-step="1" minute-step="30" show-meridian='false' ng-change="updateShowcaseInBiins(showcases[selectedShowcase])")
 				h4 Start Time				
 			.col-md-3						
-				timepicker(ng-model="showcases[selectedShowcase].endTime" hour-step="1" minute-step="30" show-meridian='false')
+				timepicker(ng-model="showcases[selectedShowcase].endTime" hour-step="1" minute-step="30" show-meridian='false' ng-change="updateShowcaseInBiins(showcases[selectedShowcase])")
 				h4 End Time				
 		.row
 			h4 Identifier: {{showcases[selectedShowcase].identifier}}					

@@ -435,19 +435,16 @@ module.exports = function(){
 				var identifier="";
 				if(result){
 					foundBinnie.comparePassword(password,function(err,isMath){
-					identifier = foundBinnie.identifier;
-					var isMathToString = isMath? "1":"0";
-					var code = isMath ? "0" :"8";
-					res.json({data:{status: code, result:isMathToString, identifier:identifier}});
-				})
-					
+						identifier = foundBinnie.identifier;
+						var isMathToString = isMath? "1":"0";
+						var code = isMath ? "0" :"8";
+						res.json({data:{status: code, result:isMathToString, identifier:identifier}});
+					});
 				}else{
 					res.json({data:{status:"7", result:"0", identifier:identifier}});					
-				}
-				
-			}
-			
-		})
+				}				
+			}			
+		});
 	}
 
 	//GET/POST the activation of the user

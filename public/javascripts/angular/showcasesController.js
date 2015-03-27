@@ -357,6 +357,19 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
    return showcaseObj;
   }
 
+  //Update the showcase information in Biins
+  $scope.updateShowcaseInBiins=function(showcase){
+   for(var i=0; i<$scope.biinSite.length;i++){
+      for(var j=0; j<$scope.biinSite[i].biins.length;j++){
+        var showcaseObj = _.findWhere($scope.biinSite[i].biins[j].showcases,{showcaseIdentifier:showcase.identifier});
+        if(showcaseObj){
+            showcaseObj.startTime = showcase.startTime;
+            showcaseObj.endTime = showcase.endTime;
+        }
+      }
+   }
+  }
+
   //Update the position of the rest of the elements to add one when is added a new element
   updateShowcaseObjectsPosition= function(position){
     for(var i = 0; i<$scope.showcases[$scope.selectedShowcase].elements.length;i++){
