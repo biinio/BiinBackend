@@ -167,6 +167,40 @@ module.exports = function () {
 	 Other methods
 	***/
 
+	//Get a specific showcase
+	functions.getMobileShowcase =function(req,res){
+		var identifier = req.param("identifier");
+		//biinie getShowcase
+		showcase.findOne({"identifier":identifier},{"identifier":1,"showcaseType":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"elements.elementIdentifier":1,"elements._id":1, "notifications":1, "webAvailable":1},function(err,data){
+			if(err)
+				res.json({data:{status:"7",data:{}}});	
+			else
+				if(typeof(data)==='undefined' || data===null || data.length===0)
+					res.json({data:{status:"9",data:{}}});	
+				else{
+					var showcaseObj = {}
+
+					showcaseObj.title = data.name?data.name:"";
+					showcaseObj.subTitle= data.description?data.description:"";
+					showcaseObj.titleColor=data.titleColor?data.titleColor.replace('rgb(','').replace(')',''):"0,0,0";
+					showcaseObj.lastUpdate = data.lastUpdate& data.lastUpdate!=""?data.lastUpdate:utils.getDateNow();
+					showcaseObj.identifier = data.identifier?data.identifier:"";
+					showcaseObj.notifications = data.notifications;
+					showcaseObj.activateNotification = data.activateNotification?data.activateNotification:"0";					
+					showcaseObj.webAvailable = data.webAvailable;
+					showcaseObj.showcaseType = data.showcaseType?data.showcaseType:"1";
+					showcaseObj.elements = data.elements;					
+
+					res.json({data:showcaseObj,status:"0"});
+				}
+		})
+
+	}
+
+	/****
+	 Other methods
+	***/
+
 	getOganization = function(req, res, callback){
 		var identifier=req.param("identifier");
 

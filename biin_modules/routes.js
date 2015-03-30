@@ -187,8 +187,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    
-    app.get('/mobile/showcases/:identifier',mobileRoutes.getShowcase);
+    app.get('/mobile/showcases/:identifier',showcases.getMobileShowcase);
 
+
+    //Mobile History
+    app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory)
+    app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory)
 
     app.get('/blog/', blog.index);
     app.get('/api/blog', blog.list);

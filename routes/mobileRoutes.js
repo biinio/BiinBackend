@@ -6,7 +6,7 @@ module.exports =function(){
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
-		region= require('../schemas/region');
+		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory');
 
 	
 	
@@ -241,12 +241,28 @@ module.exports =function(){
  	//------------------  History Services  ------------------//
  	//Set a Mobile History Actions of an User
  	functions.setHistory=function(req,res){
- 		var mobileUser = req.param('mobileAccount');
+ 		var identifier = req.param('identifier');
  		var model = req.body.model;
 
-
+ 		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,affected){
+			if(err)
+ 				res.json({status:"7",data:{}, error:err});
+ 			else
+ 				res.json({status:"0",data:{}});	
+ 		});
  	}
 
+ 	functions.getHistory =function(req,res){
+ 		var identifier = req.param('identifier') 	
+
+ 		mobileHistory.findOne({identifier:identifier},function(err,data){
+ 			if(err || !(data))
+ 				res.json({status:"7",data:{}});
+ 			else
+ 				res.json({status:"0",data:data.actions});	
+
+ 		}) 			
+ 	}
 	//Map the Site information
 	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,resultCallback){
 		var newModel={};
@@ -374,33 +390,5 @@ module.exports =function(){
 	}
 
 
-	//Get a specific showcase
-	functions.getShowcase =function(req,res){
-		var identifier = req.param("identifier");
-		showcase.findOne({"identifier":identifier},{"identifier":1,"showcaseType":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"elements.elementIdentifier":1,"elements._id":1, "notifications":1, "webAvailable":1},function(err,data){
-			if(err)
-				res.json({data:{status:"7",data:{}}});	
-			else
-				if(typeof(data)==='undefined' || data===null || data.length===0)
-					res.json({data:{status:"9",data:{}}});	
-				else{
-					var showcaseObj = {}
-
-					showcaseObj.title = data.name?data.name:"";
-					showcaseObj.subTitle= data.description?data.description:"";
-					showcaseObj.titleColor=data.titleColor?data.titleColor.replace('rgb(','').replace(')',''):"0,0,0";
-					showcaseObj.lastUpdate = data.lastUpdate& data.lastUpdate!=""?data.lastUpdate:utils.getDateNow();
-					showcaseObj.identifier = data.identifier?data.identifier:"";
-					showcaseObj.notifications = data.notifications;
-					showcaseObj.activateNotification = data.activateNotification?data.activateNotification:"0";					
-					showcaseObj.webAvailable = data.webAvailable;
-					showcaseObj.showcaseType = data.showcaseType?data.showcaseType:"1";
-					showcaseObj.elements = data.elements;					
-
-					res.json({data:showcaseObj,status:"0"});
-				}
-		})
-
-	}
 	return functions;
 }
