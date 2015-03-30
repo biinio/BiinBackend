@@ -3,6 +3,7 @@ module.exports =function(){
 	var _= require('underscore');
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
+	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
 		region= require('../schemas/region');
@@ -236,6 +237,15 @@ module.exports =function(){
 		}
 			
 	}
+
+ 	//------------------  History Services  ------------------//
+ 	//Set a Mobile History Actions of an User
+ 	functions.setHistory=function(req,res){
+ 		var mobileUser = req.param('mobileAccount');
+ 		var model = req.body.model;
+
+
+ 	}
 
 	//Map the Site information
 	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,resultCallback){

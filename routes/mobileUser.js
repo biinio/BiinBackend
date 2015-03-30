@@ -248,7 +248,7 @@ module.exports = function(){
 
 	//POST a new item to a collection
 	functions.setMobileBiinedToCollection=function(req,res){
-			
+		var identifier= req.param('identifier');
 		var collectionIdentifier= req.param("collectionIdentifier");
 
 		var model = req.body.model;

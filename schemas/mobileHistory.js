@@ -3,12 +3,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var mobileHistorySchema=new Schema({
-	mobileUserIdentifier:{type:String,index:true}
+	mobileUserIdentifier:{type:String,index:true},
 	actions:[
-		at:{type:String},
-		did:{type:String},
-		to:{type:String},
-		toType:{type:String}
+		{
+			at:{type:String},
+			did:{type:String},
+			to:{type:String},
+			toType:{type:String}
+		}
+	
 	]
 });
 
