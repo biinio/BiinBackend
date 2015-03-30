@@ -231,7 +231,7 @@ module.exports =function(){
 			}			
 		}
 		if(siteId && biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{biinNotified:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1},getSiteInformation)
 		}else{
 			res.json({data:{status:"7",data:{}}});
 		}
@@ -333,21 +333,23 @@ module.exports =function(){
 					newModel.biins[biinArray].biinType= model.biins[i].biinType;
 					newModel.biins[biinArray].lastUpdate= model.biins[i].lastUpdate?model.biins[i].lastUpdate:date;
 
-					if(mobileUser && ('biinNotified' in mobileUser)){
-						var biinNot=_.findWhere(mobileUser.biinNotified,{siteIdentifier:siteId, biinIdentifier:model.biins[i].identifier});
-						newModel.biins[biinArray].isUserNotified=typeof(biinNot)!='undefined'?'1':'0';
-					}else{
-						//If the user was not notifier
-						newModel.biins[biinArray].isUserNotified='0';			
-					}
 
 					//Biins showcases
 					if( model.biins[i].showcases.length>0){
 						newModel.biins[biinArray].showcases=[];
 						for(var j =0;j<model.biins[i].showcases.length;j++){
-							 var biinShowcase = model.biins[i].showcases[j];
+							 var biinShowcase = {};
+							 biinShowcase.showcaseIdentifier = model.biins[i].showcases[j].showcaseIdentifier;
+							 biinShowcase.isDefault=model.biins[i].showcases[j].isDefault;
 							 biinShowcase.startTime= utils.getDate(biinShowcase.startTime);
 							 biinShowcase.endTime= utils.getDate(biinShowcase.endTime);
+							 biinShowcase.isUserNotified='0';
+							 //Is showcase Notified
+							if(mobileUser && ('showcaseNotified' in mobileUser)){
+								var biinNot=_.findWhere(mobileUser.showcaseNotified,{siteIdentifier:siteId, showcaseIdentifier:biinShowcase.showcaseIdentifier});
+								biinShowcase.isUserNotified=typeof(biinNot)!='undefined'?'1':'0';
+							}
+
 							 newModel.biins[biinArray].showcases.push(biinShowcase);
 						}
 					}

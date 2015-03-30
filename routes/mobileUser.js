@@ -290,19 +290,19 @@ module.exports = function(){
 	}
 
 	//PUT Site Notified
-	functions.setBiinNotified=function(req,res){
+	functions.setShowcaseNotified=function(req,res){
 		var identifier=req.param("biinieIdentifier");
 		var siteIdentifier=req.param("siteIdentifier");
-		var biinIdentifier=req.param("biinIdentifier");
+		var showcaseIdentifier=req.param("showcaseIdentifier");
 
-		mobileUser.findOne({identifier:identifier},{'biinNotified':1},function(err,user){
+		mobileUser.findOne({identifier:identifier},{'showcaseNotified':1},function(err,user){
 			if(err)
 				res.json({status:"5",data:{}});
 			else{
 				if(user){
-					var  siteObj=_.findWhere(user.biinNotified,{siteIdentifier:siteIdentifier,biinIdentifier:biinIdentifier});
+					var  siteObj=_.findWhere(user.showcaseNotified,{siteIdentifier:siteIdentifier,showcaseIdentifier:showcaseIdentifier});
 					if(typeof(siteObj)==='undefined'){
-						user.biinNotified.push({siteIdentifier:siteIdentifier,biinIdentifier:biinIdentifier});
+						user.showcaseNotified.push({siteIdentifier:siteIdentifier,showcaseIdentifier:showcaseIdentifier});
 						user.save(function(err){
 							if(err)
 								res.json({status:"5",data:{}});
@@ -314,10 +314,9 @@ module.exports = function(){
 					}					
 				}else{
 					res.json({status:"5",data:{}});	
-				}
-				
+				}				
 			}
-		})
+		});
 	}
 
 	//DELETE a object to a Biined Collection

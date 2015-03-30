@@ -69,10 +69,10 @@ var mobileUserSchema=new Schema({
 			}]
 		}
 	],
-	biinNotified:[
+	showcaseNotified:[
 		{
 			siteIdentifier:{type:String,index:true},
-			biinIdentifier:{type:String,index:true}
+			showcaseIdentifier:{type:String,index:true}
 		}
 	]
 });

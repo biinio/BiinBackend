@@ -174,7 +174,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
 
     //Biinie/ Site relation
-    app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/biin/:biinIdentifier/notified',mobileUser.setBiinNotified);
+    app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified',mobileUser.setShowcaseNotified);
     
     //Mobile routes    /:
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
