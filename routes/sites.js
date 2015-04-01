@@ -93,8 +93,14 @@ module.exports = function () {
 			model.isValid = utils.validate(new site().validations(),req,'model')==null;
 			if(model)
 			{	
-				delete model._id;
-				
+				delete model._id;				
+				delete model.minorCounter;
+				delete model.major;
+				delete model.isDeleted;
+				delete model.commentedCount;
+				delete model.sharedCount;
+				delete model.biinedCount;
+				delete model.loyalty;
 				//Remove the id of the new biins
 				for(var b =0; b< model.biins.length; b++){
 					if('isNew' in model.biins[b]){
@@ -104,7 +110,7 @@ module.exports = function () {
 				var set = {};
 
 				for (var field in model) {
-					//if(field!="biins")	//Add a filter for prevent inser other biins without purchase
+					if(field!="biins")	//Add a filter for prevent insert other biins without purchase
 				  		set['sites.$.' + field] = model[field];
 				}
 				organization.update(
@@ -162,7 +168,7 @@ module.exports = function () {
 
 		if((qty || isBasicPackage) && organizationIdentifier && siteIdentifier){
 			var newMinorValue = utils.get.minorIncrement() *qty;
-			organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},{_id:false,'sites.$':true},function(err, siteInfo){
+			organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},{'_id':1,'sites.$':1},function(err, siteInfo){
 				if(err)
 					res.send(err,500)					
 				else
@@ -196,11 +202,10 @@ module.exports = function () {
  								var biintype=1; 								
  								if(isBasicPackage)
  									biintype=(i%2)+1;
- 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype}));
+ 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype})); 								
  							}
-
  							//Organization Update
-							organization.update({"accountIdentifier":req.user.accountIdentifier,"identifier":organizationIdentifier,"sites.identifier":siteIdentifier},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
+							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
 								if(err)
 									res.send(err,500)
 								else{
