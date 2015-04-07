@@ -1,4 +1,4 @@
-var biinAppObjects = angular.module('biinAppElements',['pascalprecht.translate','ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services','ui.checkbox','datePicker','angular-bootstrap-select']);
+var biinAppObjects = angular.module('biinAppElements',['pascalprecht.translate','ngRoute','angularSpectrumColorpicker','ui.slimscroll','naturalSort','biin.services','ui.checkbox','datePicker','angular-bootstrap-select','ui.bootstrap']);
 
 //Translation Provider
 biinAppObjects.config(function($translateProvider) {
@@ -13,7 +13,8 @@ biinAppObjects.config(function($translateProvider) {
 });
 
 
-biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv','stickersSrv',function($scope,$http,categorySrv,gallerySrv,stickersSrv){
+
+biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv','gallerySrv','stickersSrv','$modal','$log',function($scope,$http,categorySrv,gallerySrv,stickersSrv,$modal,$log){
   
   //Constants
   $scope.maxMedia=0;
@@ -474,6 +475,27 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.validate();
   }
 
+  //Confirmation Modal of Remove
+  $scope.openConfirmation = function (size, selectedIndex) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/removeConfirmationModal',
+        controller: 'responseInstanceCtrl',
+        size: size,
+        resolve: {
+          selectedElement: function () {            
+            return {name:$scope.elements[selectedIndex].title,index:selectedIndex};
+          }
+        }
+      });
+
+    modalInstance.result.then(function (itemIndex) {
+      $scope.removeElementAt(itemIndex)
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
 }]);
 
 //Change of image directive
@@ -499,5 +521,19 @@ biinAppObjects.directive('selectPicker',function(){
       $el = $(element).selectpicker({width:'50px'});      
     }
   }
-})
-;
+});
+
+biinAppObjects.controller('responseInstanceCtrl', function ($scope, $modalInstance, selectedElement) {
+
+  $scope.objectName = selectedElement.name;
+  $scope.objectIndex = selectedElement.index;
+
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.objectIndex);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});

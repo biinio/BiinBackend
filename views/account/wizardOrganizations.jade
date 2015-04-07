@@ -11,7 +11,7 @@
 				.moduleWrapper.contentHideButtons
 					.moduleTitle {{item.name}}
 					img.imagegallery.img-responsive(ng-src="{{item.media[0].imgUrl}}" pending-indicator)				
-					.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
+					.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="openConfirmation('sm',organizations.indexOf(item))")
 						.icon.icon-bin-2
 	.row.organizationInformation(ng-if="selectedOrganization!==''" ng-mouseleave="saveOrganization()" )
 		.col-md-4

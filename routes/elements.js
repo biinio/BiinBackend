@@ -1,8 +1,9 @@
 module.exports = function(){
 	var functions ={};
+	var mobileUser = require('../schemas/mobileUser');
 	var element = require('../schemas/element'), showcase = require('../schemas/showcase'), organization= require('../schemas/organization');
 	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')();
-	
+	var _= require('underscore');
 	//Get the index view of the elements
 	functions.index = function(req,res){
 		var callback= function(organization,req, res){
@@ -26,68 +27,82 @@ module.exports = function(){
 		var identifier=req.param("identifier");
 
 		if(identifier){
-			organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
-				if(err)
-					res.json({status:"7",data:{}});	
-				else
-					if(data!=null && "elements" in data && data.elements.length>0){
-						var elementObj = data.elements[0].toObject();
-						elementObj.identifier = element.elementIdentifier;
-						delete elementObj.identifier;
-						elementObj.titleColor = getColor(elementObj.textColor);
-						elementObj.subTitle = elementObj.subTitle?elementObj.subTitle :'';
-						
-						elementObj.reservedQuantity="0";
-						elementObj.claimedQuantity="0";
-						elementObj.actualQuantity="0";
+			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1},function(err,userInfo){
+				organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
+					if(err)
+						res.json({status:"7",data:{}});	
+					else
+						if(data!=null && "elements" in data && data.elements.length>0){
+							var elementObj = data.elements[0].toObject();
+							elementObj.identifier = element.elementIdentifier;
+							delete elementObj.identifier;
+							elementObj.titleColor = getColor(elementObj.textColor);
+							elementObj.subTitle = elementObj.subTitle?elementObj.subTitle :'';
+							
+							elementObj.reservedQuantity="0";
+							elementObj.claimedQuantity="0";
+							elementObj.actualQuantity="0";
 
-						elementObj.expirationDate=elementObj.expirationDate?elementObj.expirationDate:"";
-						elementObj.initialDate=elementObj.initialDate?elementObj.initialDate:"";
-						delete elementObj.media;
-						elementObj.media=[];
-						for(var i=0; i< data.elements[0].media.length; i++){
-							var media ={};
-							media.mediaType=1;
-							media.domainColor=  getColor(data.elements[0].media[i].mainColor);
-							media.url = data.elements[0].media[i].url;
-							elementObj.media.push(media);
+							elementObj.expirationDate=elementObj.expirationDate?elementObj.expirationDate:"";
+							elementObj.initialDate=elementObj.initialDate?elementObj.initialDate:"";
+							delete elementObj.media;
+							elementObj.media=[];
+							for(var i=0; i< data.elements[0].media.length; i++){
+								var media ={};
+								media.mediaType=1;
+								media.domainColor=  getColor(data.elements[0].media[i].mainColor);
+								media.url = data.elements[0].media[i].url;
+								elementObj.media.push(media);
+							}
+
+							var isUserBiined = false;
+							for(var i=0; i<userInfo.biinieCollections.length & !isUserBiined;i++){
+								var el =_.findWhere(userInfo.biinieCollections[i].elements,{identifier:identifier})
+								if(el)
+									isUserBiined=true;
+							}
+
+							elementObj.hasQuantity=eval(elementObj.hasQuantity)?"1":"0";
+							elementObj.hasSticker=elementObj.sticker && elementObj.sticker.type ? "1":"0"
+							elementObj.biinedCount =  elementObj.biinedCount?""+elementObj.biinedCount:"0";
+							elementObj.commentedCount =  elementObj.commentedCount?""+elementObj.commentedCount:"0";
+							elementObj.userBiined=isUserBiined?'1':'0';
+							elementObj.userShared="0";
+							elementObj.userCommented="0";
+							elementObj.isActive="1";
+							elementObj.position=elementObj.position?elementObj.position:"1";
+							elementObj.identifier= elementObj.elementIdentifier;
+
+							elementObj.initialDate = elementObj.initialDate? utils.getDate(elementObj.initialDate):utils.getDateNow();
+							elementObj.expirationDate = elementObj.expirationDate? utils.getDate(elementObj.expirationDate):utils.getDateNow();
+
+							delete elementObj.elementIdentifier;
+
+							//Remove the old notifications object
+							if('notifications' in elementObj)
+								delete elementObj.notifications;
+							delete elementObj.accountIdentifier;
+							delete elementObj.organizationIdentifier;
+							delete elementObj.domainColor;
+							delete elementObj.actionType;
+							delete elementObj.textColor;
+							delete elementObj.categories;
+							delete elementObj.activateNotification;
+
+							//To implement
+							/*
+								"reservedQuantity": "34",
+		        				"claimedQuantity": "23",
+		        				"actualQuantity": "12",
+	        				*/
+
+							res.json({data:elementObj,status:0,result:1});
+						}else{
+							res.json({status:"9", result:0,data:{}});		
 						}
-						elementObj.hasQuantity=eval(elementObj.hasQuantity)?"1":"0";
-						elementObj.hasSticker=elementObj.sticker && elementObj.sticker.type ? "1":"0"
-						elementObj.biinedCount =  elementObj.biinedCount?""+elementObj.biinedCount:"0";
-						elementObj.commentedCount =  elementObj.commentedCount?""+elementObj.commentedCount:"0";
-						elementObj.userBiined="0";
-						elementObj.userShared="0";
-						elementObj.userCommented="0";
-						elementObj.isActive="1";
-						elementObj.position=elementObj.position?elementObj.position:"1";
-						elementObj.identifier= elementObj.elementIdentifier;
+				});					
 
-						elementObj.initialDate = elementObj.initialDate? utils.getDate(elementObj.initialDate):utils.getDateNow();
-						elementObj.expirationDate = elementObj.expirationDate? utils.getDate(elementObj.expirationDate):utils.getDateNow();
-
-						delete elementObj.elementIdentifier;
-
-						//Remove the old notifications object
-						if('notifications' in elementObj)
-							delete elementObj.notifications;
-						delete elementObj.accountIdentifier;
-						delete elementObj.organizationIdentifier;
-						delete elementObj.domainColor;
-						delete elementObj.actionType;
-						delete elementObj.textColor;
-						delete elementObj.categories;
-						delete elementObj.activateNotification;
-						//To implement
-						/*
-						"reservedQuantity": "34",
-        				"claimedQuantity": "23",
-        				"actualQuantity": "12",*/
-						res.json({data:elementObj,status:0,result:1});
-					}else{
-						res.json({status:"9", result:0,data:{}});		
-					}
-			});	
+			});			
 		}
 	}
 

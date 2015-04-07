@@ -9,6 +9,7 @@ module.exports = function(){
 		imageManager=require('../biin_modules/imageManager')(),
 		category = require('../schemas/category')
 		utils =require("../biin_modules/utils")();
+	var organization = require('../schemas/organization')
 
 	var functions ={};
 
@@ -256,7 +257,25 @@ module.exports = function(){
 		var objType= model.type;
 		if(objType!=='site'){
 			if(identifier && model){
+				//Update the collection
+				var updateCollectionCount= function(elId){
+					organization.findOne({'elements.elementIdentifier':elId},{'elements.$':1},function(err,el){
+						if(err)
+							throw err;
+						else{
+							if(el && el.elements && el.elements.length>0){
+								organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.biinedCount':1}},function(err,updCant){
+									if(err)
+										throw err;
+								});
+							}
+						}
+
+					})
+				}
+
 				var obj={identifier:model.identifier,"_id":model._id};
+				updateCollectionCount(model.identifier);
 				mobileUser.update({identifier:identifier,
 					"biinieCollections.identifier":collectionIdentifier},
 					{$push:{"biinieCollections.$.elements":obj}},function(err, affectedDocs){
@@ -272,7 +291,8 @@ module.exports = function(){
 				}	
 		}else{
 			if(identifier && model){
-				var obj={identifier:model.identifier};
+
+				var obj={identifier:model.identifier};				
 				mobileUser.update({identifier:identifier,
 					"biinieCollections.identifier":collectionIdentifier},
 					{$push:{"biinieCollections.$.sites":obj}},function(err, affectedDocs){
@@ -325,6 +345,25 @@ module.exports = function(){
 		var collectionIdentifier= req.param("collectionIdentifier");
 		var objIdentifier = req.param("objIdentifier")
 
+
+		//Update the collection
+		var updateCollectionCount= function(elId){
+			organization.findOne({'elements.elementIdentifier':elId},{'elements.$':1},function(err,el){
+				if(err)
+					throw err;
+				else{
+					if(el && el.elements && el.elements.length>0){
+						organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.biinedCount':-1}},function(err,updCant){
+							if(err)
+								throw err;
+						});
+					}
+				}
+
+			})
+		}
+
+		updateCollectionCount(objIdentifier);
 		mobileUser.findOne({identifier:identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
 			if(err)
 				res.json({status:"5", result:"0",err:err});	

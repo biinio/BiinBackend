@@ -33,11 +33,11 @@ module.exports =function(){
 	}*/
 
 	//GET Element
-	functions.getElement=function(req,res){
+	/*functions.getElement=function(req,res){
 		var element = req.param("identifier");
 		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/elements/'+element+".json", "utf8");		
 		res.json(JSON.parse(jsonObj));
-	}
+	}*/
 
 
 	//GET Site

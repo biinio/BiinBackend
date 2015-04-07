@@ -1,4 +1,4 @@
-var biinAppAccount = angular.module('biinAppAccount',['pascalprecht.translate','ngRoute','ui.checkbox']);
+var biinAppAccount = angular.module('biinAppAccount',['pascalprecht.translate','ngRoute','ui.checkbox','ui.bootstrap']);
 
 //Translation Provider
 biinAppAccount.config(function($translateProvider) {
@@ -12,7 +12,7 @@ biinAppAccount.config(function($translateProvider) {
     $translateProvider.preferredLanguage('es');
 });
 
-biinAppAccount.controller("accountController",['$translate','$scope', '$http',function($translate,$scope,$http){
+biinAppAccount.controller("accountController",['$translate','$scope', '$http','$modal','$log',function($translate,$scope,$http,$modal,$log){
 
   $scope.wizardPosition=1;
   $scope.selectedOrganization='';
@@ -34,6 +34,7 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http',fu
 
     if(!('phoneNumber' in $scope.account.profile))
       $scope.account.profile.phoneNumber=""; 
+
   });
 
   //Get the organizations of the Account
@@ -42,6 +43,16 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http',fu
     $scope.currentModelId = null;
     $scope.organizationId= null;
 
+    //Set the default organization
+    if($scope.account.profile.defaultOrganization){
+
+      var defaultOrg =_.findWhere($scope.organizations,{identifier:$scope.account.profile.defaultOrganization});
+      if(defaultOrg){
+        var index =$scope.organizations.indexOf(defaultOrg);
+        $scope.editOrganization(index);
+      }        
+
+    }
   });
 
 
@@ -70,14 +81,18 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http',fu
   changeOrganizationToDefault=function(){    
     var organizationId = $scope.organizations[$scope.selectedOrganization].identifier;
     if($scope.account.profile.defaultOrganization!==organizationId){      
+      setOrganization();
+      $scope.account.profile.defaultOrganization=organizationId;
       $http.post('api/accounts/'+organizationId+'/default').success(function(data,status){
-        if(status===200){ 
-          setOrganization();
-          $scope.account.profile.defaultOrganization=organizationId;
+        if(data.status===200){
           $scope.succesSaveShow=true;
         }else
           $scope.errorSaveShow=true;
+      }).error(function(data, status, headers, config) {
+        $scope.errorSaveShow=true;
       });                
+    }else{
+      setOrganization();
     }
     
 
@@ -172,6 +187,28 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http',fu
     }
               
   }
+
+  //Confirmation Modal of Remove
+  $scope.openConfirmation = function (size, selectedIndex) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/removeConfirmationModal',
+        controller: 'responseInstanceCtrl',
+        size: size,
+        resolve: {
+          selectedElement: function () {            
+            return {name:$scope.organizations[selectedIndex].name,index:selectedIndex};
+          }
+        }
+      });
+
+    modalInstance.result.then(function (itemIndex) {
+      $scope.removeOrganizationAt(itemIndex)
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
 
   //Clear selected organization
   clearSelectedOrganization= function(){
@@ -325,4 +362,20 @@ biinAppAccount.directive('uploadOrganizationImage',function(){
         });
     }
   }
+});
+
+  
+biinAppAccount.controller('responseInstanceCtrl', function ($scope, $modalInstance, selectedElement) {
+
+  $scope.objectName = selectedElement.name;
+  $scope.objectIndex = selectedElement.index;
+
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.objectIndex);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
 });

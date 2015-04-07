@@ -1,4 +1,4 @@
-var biinAppSite= angular.module('biinAppSites',['pascalprecht.translate','ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate','angularSpectrumColorpicker']);
+var biinAppSite= angular.module('biinAppSites',['pascalprecht.translate','ngRoute','ui.slimscroll','naturalSort','biin.services','ngAnimate','angularSpectrumColorpicker','ui.bootstrap']);
 
 var tabBiin="biins", tabDetails="details";
 
@@ -13,7 +13,7 @@ biinAppSite.config(function($translateProvider) {
     $translateProvider.preferredLanguage('es');
 });
 
-biinAppSite.controller("siteController",['$scope','$http','$location','$routeParams','categorySrv','gallerySrv',function($scope,$http,$location,$routeParams,categorySrv,gallerySrv){
+biinAppSite.controller("siteController",['$scope','$http','$location','$routeParams','categorySrv','gallerySrv','$modal','$log',function($scope,$http,$location,$routeParams,categorySrv,gallerySrv,$modal,$log){
 
   //Constants
   $scope.maxMedia=0;
@@ -444,4 +444,41 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.$digest();
   }
 
+   //Confirmation Modal of Remove
+  $scope.openConfirmation = function (size, selectedIndex) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/removeConfirmationModal',
+        controller: 'responseInstanceCtrl',
+        size: size,
+        resolve: {
+          selectedElement: function () {            
+            return {name:$scope.sites[selectedIndex].title1,index:selectedIndex};
+          }
+        }
+      });
+
+    modalInstance.result.then(function (itemIndex) {
+      $scope.removeSiteAt(itemIndex)
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+
   }]);
+
+biinAppSite.controller('responseInstanceCtrl', function ($scope, $modalInstance, selectedElement) {
+
+  $scope.objectName = selectedElement.name;
+  $scope.objectIndex = selectedElement.index;
+
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.objectIndex);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});

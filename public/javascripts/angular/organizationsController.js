@@ -1,6 +1,6 @@
 var biinAppOrganization= angular.module('biinAppOrganizations',['ngRoute','ui.slimscroll','naturalSort','biin.services']);
 
-biinAppOrganization.controller("organizationsController",['$scope','$http','$location','gallerySrv',function($scope,$http,$location,gallerySrv){
+biinAppOrganization.controller("organizationsController",['$scope','$http','$location','gallerySrv','$modal',function($scope,$http,$location,gallerySrv,$modal){
   var defaultTab = 'details';
   $scope.maxMedia =4;
   $scope.selectedOrganization = null;

@@ -67,20 +67,19 @@ module.exports = function(){
 		var orgIdentifier=req.param('organizationIdentifier');
 		client.update({name:req.user.name},{defaultOrganization:orgIdentifier},function(err){
 			if(err)
-				res.send(500);
+				res.send({status:500});
 			else{
 
 				if(orgIdentifier!==''){
 					//Update the organization in cache
 					organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":orgIdentifier},{name:true, identifier:true},function (err, data) {
 						//set the first time for the data
-						req.session.defaultOrganization = data;					
-						res.send(200);
+						req.session.defaultOrganization = data;											
+						res.send({status:200});
 					});
 				}
 			}
-		});
-
+		});	
 	}
 	//Post the Image of the Profile
 	functions.uploadImageProfile = function(req,res){
