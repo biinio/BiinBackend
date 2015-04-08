@@ -126,8 +126,6 @@ var orgSchema = new Schema({
 	    title:{type:String, default:""}, 
 	    subTitle:{type:String, default:""}, 
 
-	    nutshellDescriptionTitle:{type:String, default:""},
-	    nutshellDescription:{type:String, default:""},
 	    searchTags:[],    
 	    sticker:{identifier:{type:String, default:""}, color:{type:String,default:""}},
 

@@ -209,7 +209,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
       if(eval($scope.wizardPosition)==1 || validate){     
         if($scope.elements[$scope.selectedElement])
-           $scope.wizard1IsValid= (typeof($scope.elements[$scope.selectedElement].title)!='undefined' && $scope.elements[$scope.selectedElement].title.length>0) && (typeof($scope.elements[$scope.selectedElement].nutshellDescriptionTitle)!='undefined' && $scope.elements[$scope.selectedElement].nutshellDescriptionTitle.length>0);
+           $scope.wizard1IsValid= (typeof($scope.elements[$scope.selectedElement].title)!='undefined' && $scope.elements[$scope.selectedElement].title.length>0);
         else{
           $scope.wizard1IsValid=false; 
         }         

@@ -13,7 +13,7 @@ biinAppShowCases.config(function($translateProvider) {
 });
 
 //App define controllers
-biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routeParams','elementSrv','biinSrv', function($scope,$http,$routeParams, elementSrv,biinSrv) {
+biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routeParams','elementSrv','biinSrv','$modal','$log', function($scope,$http,$routeParams, elementSrv,biinSrv,$modal,$log) {
   $scope.selectedShowcase = null;
   $scope.currentModelId = null;
   $scope.dragElementIndex=-1;
@@ -265,7 +265,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
 
     delete elementToPush._id;
     
-    //Push the element int he collection
+    //Push the element in he collection
     $scope.showcases[$scope.selectedShowcase].elements.push(elementToPush);
 
     $scope.validate();
@@ -458,6 +458,33 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     $scope.validate();
   }
 
+   $scope.loadingImagesChange=function(state){
+    $scope.loadingImages = state;
+    $scope.$digest();
+  }
+
+   //Confirmation Modal of Remove
+  $scope.openConfirmation = function (size, selectedIndex) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/removeConfirmationModal',
+        controller: 'responseInstanceCtrl',
+        size: size,
+        resolve: {
+          selectedElement: function () {            
+            return {name:$scope.showcases[selectedIndex].name,index:selectedIndex};
+          }
+        }
+      });
+
+    modalInstance.result.then(function (itemIndex) {
+      $scope.removeShowcaseAt(itemIndex)
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+
 }]);
 
 // Define the Elements Service
@@ -647,4 +674,19 @@ biinAppShowCases.filter("undefinedValue",function(){
     });
     return result;
   }
+});
+
+biinAppShowCases.controller('responseInstanceCtrl', function ($scope, $modalInstance, selectedElement) {
+
+  $scope.objectName = selectedElement.name;
+  $scope.objectIndex = selectedElement.index;
+
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.objectIndex);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
 });

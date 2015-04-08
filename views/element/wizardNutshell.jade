@@ -9,16 +9,6 @@ form.novalidate
 			input.form-control.title-value(ng-model="elements[selectedElement].title" name="title" type="text" placeholder="Title **"  ng-blur="validate()"  required )		
 			input.form-control.title-value(ng-model="elements[selectedElement].subTitle" name="subTitle" type="text" placeholder="Subtitle"  ng-blur="validate()"  required )
 	.section
-		h2 Description
-		p Descrive the higthlights of the deal. For example if you are offering a mani-pedi. you coul describe it like this.
-		p
-			i Technician shape finger and toenails, tend to cutie and apply colorful coats of polish.
-		a
-			i See more examples			
-		.row
-			input.form-control.title-value(ng-model="elements[selectedElement].nutshellDescriptionTitle" name="nutshellDescriptionTitle" type="text" placeholder="Description **"  ng-blur="validate()"  required )
-			textarea.form-control.title-value(ng-model="elements[selectedElement].nutshellDescription" name="nutshellDescription" type="text" placeholder="Your answer here."  ng-blur="validate()"  required )
-	.section
 		h2 Search criteria
 		p This information could be useful to others for found your information
 		row

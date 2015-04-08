@@ -453,13 +453,13 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         size: size,
         resolve: {
           selectedElement: function () {            
-            return {name:$scope.sites[selectedIndex].title1,index:selectedIndex};
+            return {name:$scope.showcases[selectedIndex].title1,index:selectedIndex};
           }
         }
       });
 
     modalInstance.result.then(function (itemIndex) {
-      $scope.removeSiteAt(itemIndex)
+      $scope.removeShowcaseAt(itemIndex)
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
