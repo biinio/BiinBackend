@@ -125,6 +125,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/regions/:identifier',regions.editPost);
     app.get('/api/regions',regions.listJson);
     app.get('/api/regions/:region/biins',biins.listJson);
+    app.post('/mobile/regions/:identifier/:latitude/:longitude',regions.setCoordsToRegion);//Update the Coords of a region
 
     //Gallery Routes
     app.get('/organizations/:identifier/gallery', gallery.index);

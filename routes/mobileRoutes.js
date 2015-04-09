@@ -50,8 +50,8 @@ module.exports =function(){
 	//GET Categories
 	functions.getCategories=function(req,res){
 		var userIdentifier = req.param("identifier");
-		var xcord = req.param("xcord");
-		var ycord = req.param("ycord");
+		var xcord = req.param("latitude");
+		var ycord = req.param("longitude");
 
 		//Todo Implements Coordinates routes
 

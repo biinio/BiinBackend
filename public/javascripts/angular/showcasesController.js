@@ -480,7 +480,6 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     modalInstance.result.then(function (itemIndex) {
       $scope.removeShowcaseAt(itemIndex)
     }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
     });
   };
 

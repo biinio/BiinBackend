@@ -230,7 +230,28 @@ module.exports = function () {
 		});
 	}
 
+	//Set the coordenades to a specific region
+	functions.setCoordsToRegion = function(req,res){
+		var regionIdentifier=req.params.identifier;
+		var lat= req.params.latitude;
+		var lng = req.params.longitude;
 
+		region.findOne({identifier:regionIdentifier},function(err,regionObj){
+			if(err)
+				res.json({status:"5",data:{}});
+			else{
+				regionObj.latitude = lat;
+				regionObj.longitude= lng;
+				regionObj.save(function(err){
+					if(err)
+						res.json({status:"5",data:{}});
+					else
+						res.json({data:{status:"0",data:{}}});
+				});
+			}
+			
+		})
+	}
 
 	return functions;
 }

@@ -17,10 +17,11 @@
 						option(value='4') &#128;
 					checkbox.btn-checkbox( ng-model="hasListPriceBool" ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)" large )
 					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" ng-disabled="!hasListPriceBool" placeholder="List Price**" ng-blur="validate()" required is-number)
-					checkbox.btn-checkbox( ng-model="hasDiscountBool" ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)" large)						
+					checkbox.btn-checkbox( ng-model="hasDiscountBool" ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)" large)
 					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].discount" ng-disabled="!hasDiscountBool"  placeholder="Discount **" ng-blur="validate()" required is-number)
 					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="Price **" ng-blur="validate()" required is-number)
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="Savings **" ng-blur="validate()" required is-number)
+					checkbox.btn-checkbox( ng-model="hasSavingBool" ng-change="changeBoolStateHighlights('hasSaving', hasSavingBool)" large)
+					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="Savings **" ng-blur="validate()"  ng-disabled="!hasSavingBool" required is-number )
 		.section.darkSection
 			.row
 				i.price.icon.icon-timer-1

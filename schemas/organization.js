@@ -140,6 +140,7 @@ var orgSchema = new Schema({
 		
 		hasDiscount:{type:String, default:"0"},
 		discount:{type:String, default:""},
+		hasSaving:{type:String, default:'0'},
 		savings:{type:String, default:""},	
 
 		hasTimming:{type:String,default:"0"},
