@@ -148,6 +148,22 @@ input.ng-valid.ng-dirty{
 /*	Main Containers
 /*------------------------------------------*/
 
+#wrapperContent.loaded::before{
+	display: none;
+}
+
+#wrapperContent::before{
+	//background-image: 
+	content: url(../images/icons/loader.gif);
+	position: center;
+	background-repeat: no-repeat;
+	background-size: 125px 125px;
+	position: absolute;	
+	top: 40%;
+	left: 40%;	
+
+}
+
 .main-container {
 	height: 100%;
 }
@@ -1144,8 +1160,15 @@ input.ng-valid.ng-dirty{
 					  display: inline!important;					
 					}
 					.bootstrap-select{
-						margin-left: @standardPadding;
+						margin-left: 10px;
 						margin-top: 5px;
+						height: 31px!important;
+						width: 37px;
+						display: inline;
+						border: none;												
+						border-radius: initial!important;
+						-webkit-appearance: none;
+						-webkit-border-radius: 0px;
 					}
 				}
 			}
@@ -1919,6 +1942,7 @@ input.ng-valid.ng-dirty{
 	bottom: 0;
 	z-index: 1;
 	width: @screenMdLeftContWidth;
+	display: none;
 
 	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 	@media (min-width: 768px) {	
@@ -1965,7 +1989,7 @@ input.ng-valid.ng-dirty{
 	bottom: 0;
 	overflow-x: hidden;
 	overflow-y: auto;
-
+	display: none;
 	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 	@media (min-width: 768px) {	
 		width: @rightContWidth;

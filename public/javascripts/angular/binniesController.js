@@ -111,6 +111,9 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
         $scope.$digest();
     }
   }
+
+  //Turn off the Loader
+  turnLoaderOff();
 }]);
 
 //Upload the profile Image

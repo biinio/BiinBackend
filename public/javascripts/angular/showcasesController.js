@@ -483,7 +483,8 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     });
   };
 
-
+  //Turn off the Loader
+  turnLoaderOff();
 }]);
 
 // Define the Elements Service

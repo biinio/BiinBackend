@@ -10,7 +10,7 @@
 					p Element Price
 			.row
 				form.novalidate
-					select(title='Currency' name="Currency"  ng-model="elements[selectedElement].currencyType" select-picker)
+					select.form-control.bootstrap-select(title='Currency' name="Currency"  ng-model="elements[selectedElement].currencyType"  data-size="4")
 						option(value='1') &#36;
 						option(value='2') &#162;
 						option(value='3') &#8359;

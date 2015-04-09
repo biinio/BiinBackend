@@ -246,6 +246,9 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http','$
     return foundChange;
   }
 
+  //Turn off the Loader
+  turnLoaderOff();
+
 }]);
 
 //Upload the profile Image

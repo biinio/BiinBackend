@@ -465,7 +465,8 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     });
   };
 
-
+  //Turn off the Loader
+  turnLoaderOff();
   }]);
 
 biinAppSite.controller('responseInstanceCtrl', function ($scope, $modalInstance, selectedElement) {

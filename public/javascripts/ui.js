@@ -148,6 +148,13 @@ displayValidationErrors=function(errors){
 displayErrorMessage=function(error,section,status){
         console.log(error)
 }
+
+turnLoaderOff= function(){
+    $('#wrapperContent').toggleClass('loaded');
+    $('.left-section-content').show();
+    $('.left-section-content').show();
+    $('.right-section-content').show();
+}
 //Angular Custom Directives
 /*
 angular.module('biin.alertManager', []).directive('alertManager', function() {

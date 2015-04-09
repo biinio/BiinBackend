@@ -5,7 +5,7 @@ block head_scripts
 	script(src="/angular-datepicker/dist/index.js")
 	script(src="/javascripts/angular/elementsController.js") 	
 block content	
-	#sectionContent(ng-app="biinAppElements" ng-controller="elementsController")
+	#sectionContent(ng-app="biinAppElements" ng-controller="elementsController" ngCloack)
 		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
 			.left-section-content
 				.container-fluid

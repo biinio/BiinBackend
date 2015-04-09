@@ -2,7 +2,7 @@ extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/galleryController.js")  	
 block content	
-	#sectionContent.max-height(ng-app="biinAppGallery" ng-controller="galleryController")
+	#sectionContent.max-height(ng-app="biinAppGallery" ng-controller="galleryController" ngCloack)
 			#wrapperHeader.row
 			#wrapperContent.row.max-height
 				#dropFileSection.max-height.max-width(drop-files)

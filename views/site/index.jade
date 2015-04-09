@@ -4,7 +4,7 @@ block head_scripts
 	script(src="/angular-slider/slider.js")
 	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7b1kpDJjJ_cBG3_XPHf8lshevJOR-Dd8")
 block content	
-	#sectionContent(ng-app="biinAppSites" ng-controller="siteController")
+	#sectionContent(ng-app="biinAppSites" ng-controller="siteController" ngCloack)
 			#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
 				.left-section-content
 					.container-fluid

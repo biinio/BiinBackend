@@ -505,7 +505,9 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       $log.info('Modal dismissed at: ' + new Date());
     });
   };
-
+  
+  //Turn off the Loader
+  turnLoaderOff();
 }]);
 
 //Change of image directive

@@ -2,7 +2,7 @@ extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/showcasesController.js")
 block content	
-	#sectionContent(ng-app="biinAppShowCases" ng-controller="showcasesController")
+	#sectionContent(ng-app="biinAppShowCases" ng-controller="showcasesController" ngCloack)
 		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
 			.left-section-content
 				.container-fluid
