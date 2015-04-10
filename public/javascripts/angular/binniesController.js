@@ -27,6 +27,7 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
   	if(typeof($scope.binnies[$scope.selectedBinnie].categories)==='undefined'){
   		$scope.binnies[$scope.selectedBinnie].categories=[];
   	}
+
   }
 
   //Save the Biinie information
@@ -113,7 +114,7 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
   }
 
   //Turn off the Loader
-  turnLoaderOff();
+  turnLoaderOff();    
 }]);
 
 //Upload the profile Image

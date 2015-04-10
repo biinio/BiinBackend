@@ -22,8 +22,8 @@ block content
 				.container-fluid.searchBox
 					.searchBox-wrapper
 						input.form-control(type="text" placeholder="search" ng-model="query" autofocus)
-			.right-section-content.wizard-wrapper(ng-if="selectedBinnie>=0")
-				.wizard-body
+			.right-section-content.wizard-wrapper
+				.wizard-body(ng-if="selectedBinnie>=0")
 					.container-fluid
 						.row.section
 							.col-md-6

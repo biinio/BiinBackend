@@ -150,8 +150,7 @@ displayErrorMessage=function(error,section,status){
 }
 
 turnLoaderOff= function(){
-    $('#wrapperContent').toggleClass('loaded');
-    $('.left-section-content').show();
+    $('#wrapperContent').addClass('loaded');
     $('.left-section-content').show();
     $('.right-section-content').show();
 }
