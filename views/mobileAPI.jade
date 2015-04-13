@@ -1,12 +1,21 @@
 extends layout_landing_page_out
 block head_scripts
-	script(src="/landingPage/js/angular/landing.js")
 block content		
 	section#termsAndConditions
 		.container
 			//Section Tittle
 			.row
 				h1 Mobile Services List
-			.row								
 			.row
-			.row
+				.table-responsive
+					table.table-hover.table-striped
+						tr
+							th Service
+							th Method
+							th Description
+						tr
+							td https://biin-qa.herokuapp.com/
+							td GET
+							td Servicio 1
+
+

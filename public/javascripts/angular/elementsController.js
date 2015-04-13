@@ -47,6 +47,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.hasTimmingBool =false;
   $scope.hasQuantityBool=false;
   $scope.hasSavingBool=false;
+  $scope.hasPriceBool=false;
+  $scope.hasFromPriceBool=false;
 
   //Get the List of Objects
   $http.get('api/organizations/'+$scope.organizationId+'/elements').success(function(data){
@@ -85,6 +87,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.hasTimmingBool= $scope.elements[index].hasTimming==='1';
     $scope.hasQuantityBool= $scope.elements[index].hasQuantity==='1';
     $scope.hasSavingBool= $scope.elements[index].hasSaving==='1';
+    $scope.hasFromPriceBool= $scope.elements[index].hasFromPrice==='1';
+    $scope.hasPriceBool= $scope.elements[index].hasPrice==='1';
 
     $scope.clearValidations();
     $scope.wizardPosition=0;
@@ -231,7 +235,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         //If the element type is Benefit
         if($scope.elements[$scope.selectedElement].elementType==='1')
         {
-          var wizard4IsValid =(typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price.length>0);
+          var wizard4IsValid =true;
           if(eval($scope.elements[$scope.selectedElement].hasListPrice))
               wizard4IsValid=  wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
 
@@ -246,7 +250,13 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
           if(eval($scope.elements[$scope.selectedElement].hasSavingBool))
             wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].savings)!='undefined' && $scope.elements[$scope.selectedElement].savings>0);
-          $scope.wizard4IsValid=wizard4IsValid;          
+
+          if(eval($scope.elements[$scope.selectedElement].hasPriceBool))
+            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price>0); 
+
+          if(eval($scope.elements[$scope.selectedElement].hasFromPriceBool))
+            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].fromPrice)!='undefined' && $scope.elements[$scope.selectedElement].fromPrice>0);           
+          $scope.wizard4IsValid=wizard4IsValid;
         } 
         else
         {
@@ -481,6 +491,18 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           else
             $scope.elements[$scope.selectedElement].hasSaving='0'          
           break;          
+        case 'hasPrice':
+          if(value)
+            $scope.elements[$scope.selectedElement].hasPrice='1'
+          else
+            $scope.elements[$scope.selectedElement].hasPrice='0'          
+          break;                    
+        case 'hasFromPrice':
+          if(value)
+            $scope.elements[$scope.selectedElement].hasFromPrice='1'
+          else
+            $scope.elements[$scope.selectedElement].hasFromPrice='0'          
+          break;                              
     }
     $scope.validate();
   }

@@ -62,6 +62,9 @@ module.exports = function(){
 									isUserBiined=true;
 							}
 
+							//elementObj.hasFromPrice=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
+							//xelementObj.hasQuantity=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
+
 							elementObj.hasQuantity=eval(elementObj.hasQuantity)?"1":"0";
 							elementObj.hasSticker=elementObj.sticker && elementObj.sticker.type ? "1":"0"
 							elementObj.biinedCount =  elementObj.biinedCount?""+elementObj.biinedCount:"0";
@@ -76,6 +79,14 @@ module.exports = function(){
 							elementObj.initialDate = elementObj.initialDate? utils.getDate(elementObj.initialDate):utils.getDateNow();
 							elementObj.expirationDate = elementObj.expirationDate? utils.getDate(elementObj.expirationDate):utils.getDateNow();
 
+							if(!'hasFromPrice' in elementObj){
+								elementObj.hasFromPrice='0';
+								elementObj.hasFromPrice="0";
+							}								
+							if(!'hasPrice' in elementObj)
+								elementObj.hasPrice='0';
+							
+							
 							delete elementObj.elementIdentifier;
 
 							//Remove the old notifications object

@@ -9,19 +9,46 @@
 					h2 Price
 					p Element Price
 			.row
-				form.novalidate
-					select.form-control.bootstrap-select(title='Currency' name="Currency"  ng-model="elements[selectedElement].currencyType"  data-size="4")
-						option(value='1') &#36;
-						option(value='2') &#162;
-						option(value='3') &#8359;
-						option(value='4') &#128;
-					checkbox.btn-checkbox( ng-model="hasListPriceBool" ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)" large )
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" ng-disabled="!hasListPriceBool" placeholder="List Price**" ng-blur="validate()" required is-number)
-					checkbox.btn-checkbox( ng-model="hasDiscountBool" ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)" large)
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].discount" ng-disabled="!hasDiscountBool"  placeholder="Discount **" ng-blur="validate()" required is-number)
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="Price **" ng-blur="validate()" required is-number)
-					checkbox.btn-checkbox( ng-model="hasSavingBool" ng-change="changeBoolStateHighlights('hasSaving', hasSavingBool)" large)
-					input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="Savings **" ng-blur="validate()"  ng-disabled="!hasSavingBool" required is-number )
+				form.form-inline.novalidate
+					.form-group
+						.header					
+							select.form-control.bootstrap-select(title='Currency' name="Currency"  ng-model="elements[selectedElement].currencyType"  data-size="4")
+								option(value='1') &#36;
+								option(value='2') &#162;
+								option(value='3') &#8359;
+								option(value='4') &#128;
+						.body
+							//p test
+					.form-group.priceGroup
+						.header
+							checkbox#chkFromPrice.btn-checkbox( ng-model="hasFromPriceBool" ng-change="changeBoolStateHighlights('hasFromPrice', hasFromPriceBool)" large )
+							label(for="chkFromPrice") From Price
+						.body
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].fromPrice" ng-disabled="!hasFromPriceBool" placeholder="From Price**" ng-blur="validate()" required is-number)
+					.form-group.priceGroup
+						.header
+							checkbox#chkListPrice.btn-checkbox( ng-model="hasListPriceBool" ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)" large )
+							label(for="chkListPrice") Lis Price
+						.body
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" ng-disabled="!hasListPriceBool" placeholder="List Price**" ng-blur="validate()" required is-number)
+					.form-group.priceGroup
+						.header
+							checkbox#chkDiscount.btn-checkbox( ng-model="hasDiscountBool" ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)" large)
+							label(for="chkDiscount") Discount
+						.body						
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].discount" ng-disabled="!hasDiscountBool"  placeholder="Discount **" ng-blur="validate()" required is-number)
+					.form-group.priceGroup
+						.header
+							checkbox#chkPrice.btn-checkbox( ng-model="hasPriceBool" ng-change="changeBoolStateHighlights('hasPrice', hasPriceBool)" large)
+							label(for="chkPrice") Price After Discount
+						.body								
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="Price **" ng-blur="validate()" required is-number)
+					.form-group.priceGroup
+						.header								
+							checkbox#chkSaving.btn-checkbox( ng-model="hasSavingBool" ng-change="changeBoolStateHighlights('hasSaving', hasSavingBool)" large)
+							label(for="chkSaving") Savings with Discount
+						.body
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="Savings **" ng-blur="validate()"  ng-disabled="!hasSavingBool" required is-number )
 		.section.darkSection
 			.row
 				i.price.icon.icon-timer-1

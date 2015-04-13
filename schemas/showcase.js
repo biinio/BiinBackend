@@ -32,8 +32,12 @@ var showcaseObj={
 	    
 		actionType:{type:String, default:""},
 		currencyType:{type:String, default:"0"},
+
+		hasFromPrice:{type:String, default:"0"},
+		fromPrice:{type:String, default:""},
 		hasListPrice:{type:String, default:"0"},	
 		listPrice:{type:String, default:""},
+		hasPrice:{type:String, default:"0"},
 		price:{type:String, default:""},
 		
 		hasDiscount:{type:String, default:"0"},

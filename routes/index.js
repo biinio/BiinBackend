@@ -216,6 +216,11 @@ module.exports = function () {
 
     }
 
+    //Get the Mobile API
+    functions.mobileAPI=function(req,res){
+    	res.render('mobileAPI',{title:'Signup!',user:req.user});
+    }
+
     //Get the mobile Test page
     functions.mobileTest =function(req,res){    	
     	//res.render('mobileTest', { title: 'Biin' });	

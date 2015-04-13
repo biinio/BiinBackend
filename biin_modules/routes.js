@@ -28,6 +28,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/login',routes.login);
     app.get('/home',routes.home);
     app.get('/singup',routes.singup);
+    app.get('/mobileAPI',routes.mobileAPI);
     app.get('/preregister/:packageSlected/:accept',routes.preregister);
     app.get('/preorder/:packageSlected/:accept',routes.preorder);
     app.get('/preregister/:packageSlected',routes.preregister);
