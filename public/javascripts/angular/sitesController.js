@@ -113,7 +113,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       $scope.currentModelId =null;
     }
     if('isNew' in $scope.sites[index] ){
-      //remove the showcase
       $scope.sites.splice(index,1);
     }else//If the element is new is not in the data base      
     {
@@ -453,7 +452,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         size: size,
         resolve: {
           selectedElement: function () {            
-            return {name:$scope.showcases[selectedIndex].title1,index:selectedIndex};
+            return {name:$scope.sites[selectedIndex].title1,index:selectedIndex};
           }
         }
       });
