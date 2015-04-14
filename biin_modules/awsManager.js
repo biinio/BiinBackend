@@ -28,7 +28,7 @@ module.exports = function(){
 
 	//
 	//Put the Object in to a buquet
-	functions.uploadObjectToBuquet=function(buquetOwner,objKey,stream){
+	functions.uploadObjectToBuquet=function(buquetOwner,objKey,stream,callback){
 		var params = {
 		  Bucket: buquetOwner,//buquetOwner, /* required */
 		  Key: objKey, /* required */
@@ -40,7 +40,10 @@ module.exports = function(){
 		s3.putObject(params,function(err,data){
 			if(err)
 				throw err;
-			return 	data;
+			else{
+				callback(data);	
+			}
+			
 		});
 	}
 	return functions;

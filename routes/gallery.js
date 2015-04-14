@@ -59,46 +59,47 @@ module.exports =function(){
 	 		var systemImageName = userAccount+organizationId+ utils.getImageName(name,_workingImagePath); 
 
 	 		var mainColor="";
-	 		var imgURL= imageManager.uploadFile(file.path,imagesDirectory,systemImageName);	
-	 		var tempId=utils.getUIDByLen(40)+".";
+	 		imageManager.uploadFile(file.path,imagesDirectory,systemImageName,true,function(imgURL){
+		 		var tempId=utils.getUIDByLen(40)+".";
 
-			imageMagick(file.path).format(function(err,format){
-				var tempPath=_workingImagePath+tempId+format;
-		 		imageMagick(file.path).size(function(err,size){	 
-		 			var height=size.height*100/70;			
-		 			var width=size.width*100/70;		 			
-		 			imageMagick(file.path)
-		 					.gravity("Center")
-		 					.crop(height,width,0,0)
-		 					.scale(1,1)
-		 					.depth(8,function(err,data){
-		 						if(err)
-		 							console.log(err);
-		 					})
-		 					.write(tempPath,function(err,data){
-		 						imageMagick(tempPath).identify('%[pixel:s]',function(err,color){
-					 				console.log("Color of resized with Write: " +color);
-					 				mainColor=color.replace("srgb(","");
-					 				mainColor=mainColor.replace(")","");
+				imageMagick(file.path).format(function(err,format){
+					var tempPath=_workingImagePath+tempId+format;
+			 		imageMagick(file.path).size(function(err,size){	 
+			 			var height=size.height*100/70;			
+			 			var width=size.width*100/70;		 			
+			 			imageMagick(file.path)
+			 					.gravity("Center")
+			 					.crop(height,width,0,0)
+			 					.scale(1,1)
+			 					.depth(8,function(err,data){
+			 						if(err)
+			 							console.log(err);
+			 					})
+			 					.write(tempPath,function(err,data){
+			 						imageMagick(tempPath).identify('%[pixel:s]',function(err,color){
+						 				console.log("Color of resized with Write: " +color);
+						 				mainColor=color.replace("srgb(","");
+						 				mainColor=mainColor.replace(")","");
 
-						 			if(fs.existsSync(tempPath)){
-			 							fs.unlink(tempPath,function(err){
-			 								console.log("The image was removed succesfully");
-			 							});
-			 						}
+							 			if(fs.existsSync(tempPath)){
+				 							fs.unlink(tempPath,function(err){
+				 								console.log("The image was removed succesfully");
+				 							});
+				 						}
 
-							  		var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
-							  		originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
-							  		mainColor:mainColor
-							  		};
+								  		var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
+								  		originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
+								  		mainColor:mainColor
+								  		};
 
-							  		callback(galObj);	 		
+								  		callback(galObj);	 		
 
-					 			});
+						 			});
 
-		 					})
-		 		})	 			
-	 		});
+			 					})
+			 		})	 			
+		 		});
+	 		});	
 		}
 
 		//Update the organization
@@ -123,23 +124,27 @@ module.exports =function(){
 
 		//Upload of the files
 		if(util.isArray(req.files.file)){
+			var cantUploaded=0;
+			var totalToupload=req.files.file.length;
 		 	for(var i=0; i< req.files.file.length; i++){
 		 		uploadFile(req.files.file[i],function(galToUpload){
+		 			cantUploaded++;
 		 			filesUploaded.push(galToUpload);
+		 			if(cantUploaded===totalToupload){
+						//Lets update the buquet
+		 				setTimeout(organizationUpdate,60*60);		
+		 			}
 		 		});
 		 		
-		 	}		 
-		 	//Lets update the buquet
-		 	setTimeout(organizationUpdate,60*60);		
+		 	}		 		 	
 		}
 
 		else{
 			uploadFile(req.files.file,function(galToUpload){
 		 			filesUploaded.push(galToUpload);
-		 		});
-			
-			//Lets update the buquet
-			setTimeout(organizationUpdate,60*60);
+		 			//Lets update the buquet
+					setTimeout(organizationUpdate,60*60);
+		 		});		
 		}
 	}
 

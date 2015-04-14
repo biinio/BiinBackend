@@ -96,17 +96,19 @@ module.exports = function(){
 		 		var imagesDirectory = userAccount;
 		 		var systemImageName = 'media/'+ userAccount+"_profile." + utils.getExtension(file.originalFilename);
 		 			 			
-	 			var imgURL= imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false);	
+	 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(imgURL){
+					client.update({name: userIdentifier },{profilePhoto:imgURL},function(err){
+		 				if(err)
+		 					res.send(err, 500);
+		 				else
+		 				{
+		 					req.user.profilePhoto=imgURL;
+		 					res.json({data:imgURL});	
+		 				}
+		 			});	 				
+	 			});	
 
-	 			client.update({name: userIdentifier },{profilePhoto:imgURL},function(err){
-	 				if(err)
-	 					res.send(err, 500);
-	 				else
-	 				{
-	 					req.user.profilePhoto=imgURL;
-	 					res.json({data:imgURL});	
-	 				}
-	 			});
+	 			
 	 			
 
 	 		} else{

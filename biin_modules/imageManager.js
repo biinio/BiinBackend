@@ -4,6 +4,7 @@
 module.exports = function(){
 	var path = require("path"),fs = require("fs"), uuid=require("node-uuid");
 	var gm = require("gm"),imageMagick = gm.subClass({ imageMagick: true });
+	var im = require('imagemagick');
     var utils = require("./utils")(), util=require("util");
     var awsManager = require("./awsManager")();
 	var functions={},
@@ -78,26 +79,44 @@ module.exports = function(){
 	} 
 
 	//Uploads an imag
-	functions.uploadFile = function(imagePath,directory, imageName){		
-		this.uploadFile(imagePath, directory, imageName,true);
+	functions.uploadFile = function(imagePath,directory, imageName,callback){		
+		this.uploadFile(imagePath, directory, imageName,true,callback);
 	}
 
 	//Uploads an imag
-	functions.uploadFile = function(imagePath,directory, imageName, generateName){		
+	functions.uploadFile = function(imagePath,directory, imageName, generateName,callback){		
 		var mainBuquet =  process.env.S3_BUCKET;	
 
 
 	   	var systemImageName ="";//path.join(directory,utils.getImageName(imageName,_workingImagePath));
+	   	var imageFormat =utils.getExtension(imageName);
 	   	if(generateName)
 	   		systemImageName =path.join(directory,utils.getImageName(imageName,_workingImagePath));
 	   	else
 	   		systemImageName =path.join(directory,imageName);
 
 		var newPath = process.env.IMAGES_REPOSITORY+"/"+systemImageName;	
+		var sizeExtend =process.env.STANDARD_IMAGE_HEIGHT + "x"+process.env.STANDARD_IMAGE_WIDTH;
 
-		var buffer =fs.readFileSync(imagePath);
-		awsManager.uploadObjectToBuquet(mainBuquet, systemImageName, buffer);
-		return newPath;
+		imageMagick(imagePath)		
+		.resize( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT)
+		.crop( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT,0,0)		
+		.geometry(process.env.STANDARD_IMAGE_WIDTH+'!', process.env.STANDARD_IMAGE_HEIGHT+"!")		
+		.gravity('Center')
+		.quality(process.env.STANDARD_IMAGE_QUALITY)
+		.toBuffer(function (err, buffer) {
+		  if (err){
+		  	throw err;
+		  } 
+		  else{
+		  	awsManager.uploadObjectToBuquet(mainBuquet, systemImageName, buffer,function(data){
+		  		callback(newPath);
+		  	});
+		  	
+		  }
+
+		})
+		//var buffer =fs.readFileSync(imagePath);		
 	}
      
     //Copy a image to a FTP server

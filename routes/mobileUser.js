@@ -590,9 +590,11 @@ module.exports = function(){
 	 		//var data = fs.readFileSync(file.path);
 	 		var imagesDirectory = 'binnies';
 	 		var systemImageName = '/media/'+ binnieIdentifier+"/"+utils.getGUID()+"."+ utils.getExtension(file.originalFilename);
- 			var imgURL= imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false);	
- 			var mediaObj={imgUrl:imgURL}; 			
-			res.json({data:mediaObj});
+ 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(imgURL){
+	 			var mediaObj={imgUrl:imgURL}; 			
+				res.json({data:mediaObj}); 				
+ 			});	
+
  		} else{
  			res.send(err, 500);
  		}

@@ -91,18 +91,19 @@ module.exports =function (){
 	 		//var data = fs.readFileSync(file.path);
 	 		var imagesDirectory = userAccount;
 	 		var systemImageName = 'media/'+ userAccount+"/" +organizationIdentifier+"/media/img."+ utils.getExtension(file.originalFilename);	 			 			
- 			var imgURL= imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false);	
- 			var mediaObj={imgUrl:imgURL};
+ 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(imgURL){
+				var mediaObj={imgUrl:imgURL};
 
- 			organization.update({identifier:organizationIdentifier },{media:mediaObj},function(err){
- 				if(err)
- 					res.send(err, 500);
- 				else
- 				{
- 					res.json({data:mediaObj});	
- 				}
- 			});
+	 			organization.update({identifier:organizationIdentifier },{media:mediaObj},function(err){
+	 				if(err)
+	 					res.send(err, 500);
+	 				else
+	 				{
+	 					res.json({data:mediaObj});	
+	 				}
+	 			});
  			
+ 			});	
 
  		} else{
  			res.send(err, 500);
