@@ -8,25 +8,26 @@ block content
 	#sectionContent(ng-app="biinAppElements" ng-controller="elementsController" ngCloack)
 		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
 			.left-section-content
-				.container-fluid
-					.row
-						.col-md-12(style='padding:8px;')
-							button.btn.btn-default.btn-block.btn-biin(ng-click='create()') ADD NEW ELEMENT
 				.container-fluid.main-views-list
 					.row
 						.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
-							.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in elements | filter: query" ng-click="edit(elements.indexOf(item))")
-								.moduleWrapper.contentHideButtons(ng-class="{active: elements.indexOf(item) == selectedElement}")
-									.moduleTitle {{item.title1}}
-									img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-									img(ng-if="item.media.length>0" ng-src="{{item.media[0].url}}" style="max-width: 250px;height: auto;" pending-indicator)
-									.btnDelete.icon-round-control.btn-on-hover(ng-click="openConfirmation('sm',elements.indexOf(item))")
-										.icon.icon-bin-2
-									.btnShowcasePreview.icon-round-control.btn-on-hover
-										.icon.icon-arrange-1
-				.container-fluid.searchBox
-					.searchBox-wrapper
-						input.form-control(type="text" placeholder="search" ng-model="query" autofocus )
+							.col-xs-12.col-sm-12.col-md-12.col-lg-12.searchBoxList
+									.col-md-2
+										button.btn.btnAdd(ng-click='create()') &#43;
+									.col-md-10
+										.searchBox-wrapper
+											input.form-control(type="text" placeholder="filter" ng-model="query" autofocus)
+							.col-xs-12.col-sm-12.col-md-12.col-lg-12.nopadding(ng-repeat="item in elements | orderBy: '+title' | filter: query" ng-click="edit(elements.indexOf(item))")
+									.moduleWrapperList.contentHideButtons(ng-class="{active: elements.indexOf(item) == selectedElement}")
+										.col-md-3.thumbListImage
+											img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+											img(ng-if="item.media.length>0" ng-src="{{item.media[0].url}}" pending-indicator)													
+										.col-md-9
+											label.moduleTitle {{item.title}}
+											.btnDelete.icon-round-control.btn-on-hover(ng-click="openConfirmation('sm',elements.indexOf(item))")
+												.icon.icon-bin-2
+											.btnShowcasePreview.icon-round-control.btn-on-hover
+												.icon.icon-arrange-1
 			.right-section-content
 				div(ng-if="selectedElement!=null")
 					.animate-switch.wizard-wrapper

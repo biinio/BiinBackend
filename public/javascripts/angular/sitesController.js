@@ -458,7 +458,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
       });
 
     modalInstance.result.then(function (itemIndex) {
-      $scope.removeShowcaseAt(itemIndex)
+      $scope.removeSiteAt(itemIndex)
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
