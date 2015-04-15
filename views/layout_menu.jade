@@ -105,4 +105,26 @@
 									a(href='lock-screen.html') Lock screen
 								li
 									a(href='/logout') Log out
-	
+					ul.nav.navbar-left.navbar-organization
+						li#organizationMenu.dropdown
+							a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false")
+								i.icon.icon-buildings-3
+								if organization == null								
+									span Select an Organization
+								else
+									span=organization.name	
+								span.caret
+							ul.dropdown-menu(role="menu")
+								li
+									a(href="#") Organization 1
+								li
+									a(href="#") Organization 2									
+					//									
+						if organization == null									
+							ul.nav.navbar-left.navbar-organization
+								li
+									p Select an Organization
+						else								
+							ul.nav.navbar-left.navbar-organization
+								li
+									p= organization.name

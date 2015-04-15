@@ -39,8 +39,6 @@ html
 					if organization == null
 						ul#organizationNav.nav.nav-sidebar.hide(data-organization='')
 							li.nav-item
-								a.name="Selected Organization"
-							li.nav-item
 								a(href="" data-org-link="/organizations/{0}/sites") 
 									.icon.icon-shop
 									| SITES
@@ -58,8 +56,6 @@ html
 									| GALLERY
 					else
 						ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
-							li.nav-item
-								a.name= organization.name	
 							li.nav-item
 								a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites" ) 
 									.icon.icon-shop
