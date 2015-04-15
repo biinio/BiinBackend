@@ -39,7 +39,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.wizard3IsValid =false;
   $scope.wizard4IsValid =false;
   $scope.wizard5IsValid =false;
-  $scope.wizard6IsValid =false;
 
   //Boolean values 
   $scope.hasListPriceBool=false;
@@ -153,20 +152,20 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           $scope.wizardPosition =option;
           $scope.wizard3IsValid=true;
       break  
-      case 4:
+      /*case 4:
         if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.elements[$scope.selectedElement].elementType === '1')
           $scope.wizardPosition =option;
-      break 
+      break */
+      case 4:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid)
+          $scope.wizardPosition =option;
+      break   
       case 5:
         if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid)
           $scope.wizardPosition =option;
       break   
       case 6:
         if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid&& $scope.wizard5IsValid)
-          $scope.wizardPosition =option;
-      break   
-      case 7:
-        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid&& $scope.wizard5IsValid && $scope.wizard6IsValid)
           $scope.wizardPosition =option;
       break               
       default:
@@ -225,38 +224,38 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         $scope.wizard2IsValid= (typeof($scope.elements[$scope.selectedElement].media)!='undefined' && $scope.elements[$scope.selectedElement].media.length>0);
       }
 
-    if(eval($scope.wizardPosition)==3 || validate){
+      /*if(eval($scope.wizardPosition)==3 || validate){
         var coloursValidation=false;        
         coloursValidation= typeof($scope.elements[$scope.selectedElement].textColor)!='undefined' && $scope.elements[$scope.selectedElement].textColor!="";
         $scope.wizard3IsValid= coloursValidation;
-      }
+      }*/
 
-       if(eval($scope.wizardPosition)==4 || validate){
+       if(eval($scope.wizardPosition)==3 || validate){
         //If the element type is Benefit
         if($scope.elements[$scope.selectedElement].elementType==='1')
         {
-          var wizard4IsValid =true;
+          var wizard3IsValid =true;
           if(eval($scope.elements[$scope.selectedElement].hasListPrice))
-              wizard4IsValid=  wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
+              wizard3IsValid=  wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
 
           if(eval($scope.elements[$scope.selectedElement].hasDiscount))
-            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].discount)!='undefined' && $scope.elements[$scope.selectedElement].discount.length>0);
+            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].discount)!='undefined' && $scope.elements[$scope.selectedElement].discount.length>0);
 
           if(eval($scope.elements[$scope.selectedElement].hasTimming))
-            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].initialDate) !='undefined') && (typeof($scope.elements[$scope.selectedElement].expirationDate)!='undefined');
+            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].initialDate) !='undefined') && (typeof($scope.elements[$scope.selectedElement].expirationDate)!='undefined');
           
           if(eval($scope.elements[$scope.selectedElement].hasQuantity))
-            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].quantity)!='undefined' && $scope.elements[$scope.selectedElement].quantity>0);
+            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].quantity)!='undefined' && $scope.elements[$scope.selectedElement].quantity>0);
 
           if(eval($scope.elements[$scope.selectedElement].hasSavingBool))
-            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].savings)!='undefined' && $scope.elements[$scope.selectedElement].savings>0);
+            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].savings)!='undefined' && $scope.elements[$scope.selectedElement].savings>0);
 
           if(eval($scope.elements[$scope.selectedElement].hasPriceBool))
-            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price>0); 
+            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price>0); 
 
           if(eval($scope.elements[$scope.selectedElement].hasFromPriceBool))
-            wizard4IsValid=wizard4IsValid && (typeof($scope.elements[$scope.selectedElement].fromPrice)!='undefined' && $scope.elements[$scope.selectedElement].fromPrice>0);           
-          $scope.wizard4IsValid=wizard4IsValid;
+            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].fromPrice)!='undefined' && $scope.elements[$scope.selectedElement].fromPrice>0);           
+          $scope.wizard3IsValid=wizard3IsValid;
         } 
         else
         {
@@ -265,8 +264,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
        }
 
-       if(eval($scope.wizardPosition)==5 || validate){
-        var wizard5IsValid = false;        
+       if(eval($scope.wizardPosition)==4 || validate){
+        var wizard4IsValid = false;        
         if($scope.elements[$scope.selectedElement].details){
           //Validate each element
           for(var index=0;index <$scope.elements[$scope.selectedElement].details.length;index++){
@@ -274,31 +273,31 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
             if($scope.elements[$scope.selectedElement].details[index].elementDetailType=='4'){                        
               if($scope.elements[$scope.selectedElement].details[index].body.length>0){
                 //Foreach line in body validate the text
-                wizard5IsValid=true;
+                wizard4IsValid=true;
                   for(var line=0; line<$scope.elements[$scope.selectedElement].details[index].body.length;line++){
-                    wizard5IsValid= wizard5IsValid & (typeof($scope.elements[$scope.selectedElement].details[index].body[line].line)!='undefined'&& $scope.elements[$scope.selectedElement].details[index].body[line].line.length>0);
+                    wizard4IsValid= wizard4IsValid & (typeof($scope.elements[$scope.selectedElement].details[index].body[line].line)!='undefined'&& $scope.elements[$scope.selectedElement].details[index].body[line].line.length>0);
                   }
               }
 
             }else{
-              wizard5IsValid= (typeof($scope.elements[$scope.selectedElement].details[index].text)!='undefined' && $scope.elements[$scope.selectedElement].details[index].text.length>0);
+              wizard4IsValid= (typeof($scope.elements[$scope.selectedElement].details[index].text)!='undefined' && $scope.elements[$scope.selectedElement].details[index].text.length>0);
             }
           }
         }
 
-        $scope.wizard5IsValid= wizard5IsValid;
+        $scope.wizard4IsValid= wizard4IsValid;
       }
 
       //Categories Validate
-      if(eval($scope.wizardPosition)== 6 || validate){
+      if(eval($scope.wizardPosition)== 5 || validate){
         if($scope.elements[$scope.selectedElement]){
-         $scope.wizard6IsValid=$scope.elements[$scope.selectedElement].categories.length>0;
+         $scope.wizard5IsValid=$scope.elements[$scope.selectedElement].categories.length>0;
         }else{
-          $scope.wizard6IsValid=false; 
+          $scope.wizard5IsValid=false; 
         }          
       }
 
-      $scope.isValid = $scope.wizard0IsValid && $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid &&  $scope.wizard5IsValid &&  $scope.wizard6IsValid;
+      $scope.isValid = $scope.wizard0IsValid && $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid &&  $scope.wizard5IsValid;
 
       return currentValid;
   }
