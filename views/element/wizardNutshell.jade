@@ -2,12 +2,18 @@ form.novalidate
 	.section
 		h1 Nutshell
 		p Add information about the element here.
-	.section
+	.section.form-horizontal
 		h2 Title
 		p Add here a Title for the element
 		.row
-			input.form-control.title-value(ng-model="elements[selectedElement].title" name="title" type="text" placeholder="Title **"  ng-blur="validate()"  required )		
-			input.form-control.title-value(ng-model="elements[selectedElement].subTitle" name="subTitle" type="text" placeholder="Subtitle"  ng-blur="validate()"  required )
+			.form-group
+				label.col-sm-2.control-label(for='title1') Title
+				.col-sm-10
+					input#title1.form-control.title-value(ng-model="elements[selectedElement].title" name="title" type="text" placeholder="Title **"  ng-blur="validate()"  required )		
+			.form-group
+				label.col-sm-2.control-label(for='title2') Subtitle
+				.col-sm-10					
+					input#title2.form-control.title-value(ng-model="elements[selectedElement].subTitle" name="subTitle" type="text" placeholder="Subtitle"  ng-blur="validate()"  required )
 	.section
 		h2 Search criteria
 		p This information could be useful to others for found your information

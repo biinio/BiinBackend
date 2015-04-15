@@ -2,26 +2,53 @@ div
 	.section
 		h1 Location Information
 		p Add site information to your organization here. Information that will be shown on the mobile app is mark with **
-	.section
+	.section.form-horizontal
 		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].country" name="country" type="text" placeholder="Country **" ng-blur="validate()" required )
-		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].state" name="state" type="text" placeholder="State **" ng-blur="validate()" required )
-		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].city" name="city" type="text" placeholder="City **" ng-blur="validate()" required )
-		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].zipCode" name="zipCode" type="text" placeholder="Zip Code **" ng-blur="validate()" required )
-		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].streetAddres" name="streetAddres" type="text" placeholder="Street Address **"  ng-blur="validate()" required )
-		.row
-			input.form-control.title-value(ng-model="sites[selectedSite].phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" ng-blur="validate()" required )
+			.col-md-6
+				.form-group
+					label.col-sm-2.control-label(for='countryText') Country
+					.col-sm-10
+						input#countryText.form-control.title-value(ng-model="sites[selectedSite].country" name="country" type="text" placeholder="Country **" ng-blur="validate()" required )
+				.form-group
+					label.col-sm-2.control-label(for='stateText') State
+					.col-sm-10
+						input#stateText.form-control.title-value(ng-model="sites[selectedSite].state" name="state" type="text" placeholder="State **" ng-blur="validate()" required )
+			.col-md-6							
+				.form-group
+					label.col-sm-2.control-label(for='cityText') City
+					.col-sm-10
+						input#cityText.form-control.title-value(ng-model="sites[selectedSite].city" name="city" type="text" placeholder="City **" ng-blur="validate()" required )			
+				.form-group
+					label.col-sm-2.control-label(for='zipText') Zip Code
+					.col-sm-10
+						input#zipText.form-control.title-value(ng-model="sites[selectedSite].zipCode" name="zipCode" type="text" placeholder="Zip Code **" ng-blur="validate()" required )
+			.col-md-6														
+				.form-group
+					label.col-sm-2.control-label(for='stAddresText') Street Address
+					.col-sm-10			
+						input#stAddresText.form-control.title-value(ng-model="sites[selectedSite].streetAddres" name="streetAddres" type="text" placeholder="Street Address **"  ng-blur="validate()" required )
+				.form-group
+					label.col-sm-2.control-label(for='ubicationText') Ubication
+					.col-sm-10			
+						input#ubicationText.form-control.title-value(ng-model="sites[selectedSite].ubication" name="ubication" type="text" placeholder="Ubication **"  ng-blur="validate()" required )							
+			.col-md-6													
+				.form-group
+					label.col-sm-2.control-label(for='phoneNumText') Phone Number
+					.col-sm-10			
+						input#phoneNumText.form-control.title-value(ng-model="sites[selectedSite].phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" ng-blur="validate()" required )
 		.row
 			h4(ng-if="sites[selectedSite].region && sites[selectedSite].region!=='' && isValid") Region: {{sites[selectedSite].region}}
 			.btn.btn-lg.btn-warning(ng-click="subscribeToRegion()") Subscribe to a region
-	.section
+	.section.form-horizontal
 		h2 Map Location
 		p Select your location
-		input.form-control.title-value(type="text" ng-model="sites[selectedSite].lat" placeholder="Latitude" required )
-		input.form-control.title-value(type="text" ng-model="sites[selectedSite].lng" placeholder="Longitude" required)
+		.form-group
+			label.col-sm-2.control-label(for='latText') Latitude
+			.col-sm-10			
+				input#latText.form-control.title-value(type="text" ng-model="sites[selectedSite].lat" placeholder="Latitude" required )
+		.form-group
+			label.col-sm-2.control-label(for='lngText') Longitude
+			.col-sm-10							
+				input#lngText.form-control.title-value(type="text" ng-model="sites[selectedSite].lng" placeholder="Longitude" required)
 		.mapWrapper
 			.map(zoom='17' lat="{{sites[selectedSite].lat}}" lng="{{sites[selectedSite].lng}}" map)

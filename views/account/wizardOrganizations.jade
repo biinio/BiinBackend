@@ -1,7 +1,7 @@
 .section
 	h1 Organizations
 	p There are you can manage your Organizations information
-.section#organization
+#organization.section.form-horizontal
 	.row
 		#organizationListWrapper.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 			.img-block.btnCreate(ng-click="createOrganization()")
@@ -20,9 +20,21 @@
 			a.btn.btn-default(upload-organization-image="#organizationInput") Upload Image
 			input.hidden#organizationInput(type="file")				
 		.col-md-8
-			input.form-control(type="text" placeholder="Name **" ng-model="organizations[selectedOrganization].name")
-			input.form-control(type="text" placeholder="Brand Name **" ng-model="organizations[selectedOrganization].brand")
-			textarea.form-control(placeholder="Description **" ng-model="organizations[selectedOrganization].description")
-			input.form-control(type="text" placeholder="Extra Information **" ng-model="organizations[selectedOrganization].extraInfo")			
+			.form-group
+				label.col-sm-2.control-label(for='name') Name
+				.col-sm-10
+					input.form-control(type="text" placeholder="Name **" ng-model="organizations[selectedOrganization].name")
+			.form-group
+				label.col-sm-2.control-label(for='brand') Brand Name
+				.col-sm-10						
+					input#brand.form-control(type="text" placeholder="Brand Name **" ng-model="organizations[selectedOrganization].brand")
+			.form-group
+				label.col-sm-2.control-label(for='desc') Description
+				.col-sm-10												
+					textarea#description.form-control(placeholder="Description **" ng-model="organizations[selectedOrganization].description")
+			.form-group
+				label.col-sm-2.control-label(for='extraInfo') Extra Information
+				.col-sm-10										
+					input#extraInfo.form-control(type="text" placeholder="Extra Information **" ng-model="organizations[selectedOrganization].extraInfo")			
 			label.organizationId Organization id: {{organizations[selectedOrganization].identifier}}
 			

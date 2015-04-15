@@ -1,7 +1,7 @@
 .section
 	h1 Profile
 	p Please add the information for your profile
-.section#profileSection(ng-mouseleave="save()")
+#profileSection.section.form-horizontal(ng-mouseleave="save()")
 	.row
 		img(ng-if="account.profile.profilePhoto.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
 		img(ng-if="account.profile.profilePhoto.length > 0" ng-src="{{account.profile.profilePhoto}}" pending-indicator)
@@ -9,8 +9,23 @@
 		input.hidden#profileInput(type="file")
 		h2 Contact information
 		p Please fill the contact information
-		input.form-control(placeholder="First Name" ng-model="account.profile.displayName")
-		input.form-control(placeholder="Last Name" ng-model="account.profile.lastName")
-		input.form-control(placeholder="User Name" ng-model="account.profile.name" read-only)
-		input.form-control(placeholder="Email" ng-model="account.profile.emails[0]")
-		input.form-control(placeholder="Phone Number" ng-model="account.profile.phoneNumber")
+		.form-group
+			label.col-sm-2.control-label(for='firstName') First Name
+			.col-sm-10		
+				input#firstName.form-control(placeholder="First Name" ng-model="account.profile.displayName")
+		.form-group
+			label.col-sm-2.control-label(for='lastName') Last Name
+			.col-sm-10							
+				input#lastName.form-control(placeholder="Last Name" ng-model="account.profile.lastName")
+		.form-group
+			label.col-sm-2.control-label(for='userName') User Name
+			.col-sm-10												
+				input#userName.form-control(placeholder="User Name" ng-model="account.profile.name" read-only)
+		.form-group
+			label.col-sm-2.control-label(for='email') E-mail
+			.col-sm-10										
+				input#email.form-control(placeholder="Email" ng-model="account.profile.emails[0]")
+		.form-group
+			label.col-sm-2.control-label(for='phoneNumber') Phone Number
+			.col-sm-10										
+				input#phoneNumber.form-control(placeholder="Phone Number" ng-model="account.profile.phoneNumber")

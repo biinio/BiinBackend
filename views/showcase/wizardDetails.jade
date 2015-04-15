@@ -1,11 +1,16 @@
 form.novalidate
-	.section
+	.section.form-horizontal
 		h1 Showcase Details
 		p Add information about the showcases here.
 		.row
-			input.form-control.title-value(ng-model="showcases[selectedShowcase].name" name="name" type="text" placeholder="Name **"  ng-blur="validate()"  required )
-		.row
-			input.form-control.title-value(ng-model="showcases[selectedShowcase].description" name="description" type="text" placeholder="Description **"  ng-blur="validate()"  required )
+			.form-group
+				label.col-sm-2.control-label(for='title1') Tittle
+				.col-sm-10			
+					input#title1.form-control.title-value(ng-model="showcases[selectedShowcase].name" name="name" type="text" placeholder="Name **"  ng-blur="validate()"  required )
+			.form-group
+				label.col-sm-2.control-label(for='desctText') Description
+				.col-sm-10				
+					input#desctText.form-control.title-value(ng-model="showcases[selectedShowcase].description" name="description" type="text" placeholder="Description **"  ng-blur="validate()"  required )
 		.row
 			h2 Title Color
 			p Please select the title color for your the showcase
