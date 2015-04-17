@@ -74,6 +74,13 @@ var mobileUserSchema=new Schema({
 			siteIdentifier:{type:String,index:true},
 			showcaseIdentifier:{type:String,index:true}
 		}
+	],
+	shareObjects:[
+		{			
+			identifier:{type:String},
+			type:{type:String},
+			shareDate:{type:String}
+		}
 	]
 });
 

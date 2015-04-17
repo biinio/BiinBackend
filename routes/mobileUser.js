@@ -339,6 +339,40 @@ module.exports = function(){
 		});
 	}
 
+	//PUT Share object
+	functions.setShare=function(req,res){
+		var identifier=req.param("identifier");
+		var model=req.body.model;
+		model.shareDate= utils.getDateNow();
+
+		mobileUser.update({"identifier":identifier},{$push:{'shareObjects':model}},function(err,updatedCant){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(updatedCant>0)
+					res.json({status:"0",result:"1"});	
+				else
+					res.json({status:"1",result:"0"});	
+		});
+
+	}
+
+	//GET the share informatin of a biinie
+	functions.getShare=function(req,res){
+		var identifier = req.param('identifier');
+		mobileUser.findOne({'identifier':identifier},{'_id':0,'shareObjects':1},function(err,mobUser){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(mobUser && 'shareObjects' in mobUser){
+					res.json({status:"0",result:"1", data:mobUser.shareObjects});	
+
+				}else{
+					res.json({status:"1",result:"0"});	
+				}
+		})
+	}
+
 	//DELETE a object to a Biined Collection
 	functions.deleteMobileBiinedElementToCollection=function(req,res){
 		var identifier=req.param("identifier");

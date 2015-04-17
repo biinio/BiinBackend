@@ -162,6 +162,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies',mobileUser.setMobile);
     app.post('/mobile/biinies/:identifier',mobileUser.updateMobile);
 
+    //Mobile Biinies Share 
+    app.get('/mobile/biinies/:identifier/share',mobileUser.getShare);    
+    app.put('/mobile/biinies/:identifier/share',mobileUser.setShare);    
+    
     //Activation Routes
     app.get('/mobile/biinies/:identifier/isactivate',mobileUser.isActivate);
     app.get('/biinie/:identifier/activate',mobileUser.activate);
