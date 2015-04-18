@@ -1,4 +1,14 @@
 {
-	"MENU.PROFILE": "1. Profile translate test",
-	"MENU.BILLING": "Medio de pago"
+	"MENU.PROFILE": "Mi Perfil",
+	"MENU.BILLING": "Medio de pago",
+	"MENU.ORGANIZATION": "Mis Organizaciónes",
+	"PROFILE.CONTACT_INFO": "Información de contacto",
+	"PROFILE.UPLOAD_IMAGE": "Actualizar Imagen",
+	"PROFILE.FIRST_NAME": "Nombre",
+	"PROFILE.LAST_NAME": "Apellido",
+	"PROFILE.USER_NAME": "Nombre de usuario",
+	"PROFILE.EMAIL": "Correo electrónico",
+	"PROFILE.PHONE": "Teléfono",
+	"ORGANIZATION.TITLE": "Tus organizaciones"
+	"ORGANIZATION.SUB_TITLE": "Aquí puedes administrar las organizaciones que manejas en Biin"
 }
