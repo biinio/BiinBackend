@@ -1,24 +1,24 @@
 form.novalidate
 	.section
-		h1 Site detail
-		p Add site information to your organization here. Information that will be shown on the mobile app is mark with **
+		h1(translate="SITES.TITLE")
+		p(translate="SITES.SUB_TITLE")
 	.section.form-horizontal
-		h2 Site title
+		h2(translate="SITES.TITLE1")
 		.row
 			.form-group
-				label.col-sm-2.control-label(for='title1') Title
+				label.col-sm-2.control-label(for='title1')(translate="SITES.NAME")
 				.col-sm-10
 					input#title1.form-control.title-value(ng-model="sites[selectedSite].title1" name="title1" type="text" placeholder="Tittle **"  ng-blur="validate()"  required )
 		.row
 			.form-group
-				label.col-sm-2.control-label(for='title2') Subtitle
+				label.col-sm-2.control-label(for='title2')(translate="SITES.AT")
 				.col-sm-10
 					input#title2.form-control.title-value(ng-model="sites[selectedSite].title2" name="title1" type="text" placeholder="Subtittle **" ng-blur="validate()"  required )
 		.row
-			h4 Identifier: {{sites[selectedSite].identifier}}
+			h4(translate="GENERIC.IDENTIFIER"): {{sites[selectedSite].identifier}}
 	.section
-		h2 Search criteria
-		p This information could be useful to others for found your information
+		h2(translate="GENERIC.SEARCH_TAGS")
+		p(translate="GENERIC.SEARCH_TAGS_DESC")
 		row
 			.search-criteria-control
 				.search-body
@@ -31,4 +31,4 @@ form.novalidate
 					.col-md-9
 						input.form-control(ng-model="newTagField")
 					.col-md-3
-						button.btn.btn-default(ng-click="addSiteTag(newTagField);newTagField=''" ng-enter="addSiteTag(newTagField);newTagField=''") Add
+						button.btn.btn-default(ng-click="addSiteTag(newTagField);newTagField=''" ng-enter="addSiteTag(newTagField);newTagField=''")(translate="GENERIC.ADD")

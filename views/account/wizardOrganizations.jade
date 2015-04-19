@@ -1,12 +1,12 @@
 .section
-	h1 Organizations
-	p There are you can manage your Organizations information
+	h1(translate="ORGANIZATION.TITLE")
+	p(translate="ORGANIZATION.SUB_TITLE")
 #organization.section.form-horizontal
 	.row
 		#organizationListWrapper.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 			.img-block.btnCreate(ng-click="createOrganization()")
 				.moduleWrapper
-					span Add new Organization
+					span(translate="ORGANIZATION.ADD_NEW")
 			.img-block(ng-repeat="item in organizations" ng-click="editOrganization(organizations.indexOf(item))" ng-class="{'active':item.identifier===currentModelId}")
 				.moduleWrapper.contentHideButtons
 					.moduleTitle {{item.name}}
@@ -17,24 +17,24 @@
 		.col-md-4
 			img(ng-if="organizations[selectedOrganization].media.length===0 || organizations[selectedOrganization].media[0].imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
 			img(ng-if="typeof(organizations[selectedOrganization].media)!=='undefined' && organizations[selectedOrganization].media.length>0 && organizations[selectedOrganization].media[0].imgUrl.length > 0" ng-src="{{organizations[selectedOrganization].media[0].imgUrl}}"  pending-indicator)
-			a.btn.btn-default(upload-organization-image="#organizationInput") Upload Image
+			a.btn.btn-default(upload-organization-image="#organizationInput")(translate="GENERIC.UPLOAD_IMAGE")
 			input.hidden#organizationInput(type="file")				
 		.col-md-8
 			.form-group
-				label.col-sm-2.control-label(for='name') Name
+				label.col-sm-2.control-label(for='name')(translate="ORGANIZATION.NAME")
 				.col-sm-10
 					input.form-control(type="text" placeholder="Name **" ng-model="organizations[selectedOrganization].name")
 			.form-group
-				label.col-sm-2.control-label(for='brand') Brand Name
+				label.col-sm-2.control-label(for='brand')(translate="ORGANIZATION.BRAND")
 				.col-sm-10						
 					input#brand.form-control(type="text" placeholder="Brand Name **" ng-model="organizations[selectedOrganization].brand")
 			.form-group
-				label.col-sm-2.control-label(for='desc') Description
+				label.col-sm-2.control-label(for='desc')(translate="ORGANIZATION.INFORMATION")
 				.col-sm-10												
 					textarea#description.form-control(placeholder="Description **" ng-model="organizations[selectedOrganization].description")
 			.form-group
-				label.col-sm-2.control-label(for='extraInfo') Extra Information
+				label.col-sm-2.control-label(for='extraInfo')(translate="ORGANIZATION.MORE_INFO")
 				.col-sm-10										
 					input#extraInfo.form-control(type="text" placeholder="Extra Information **" ng-model="organizations[selectedOrganization].extraInfo")			
-			label.organizationId Organization id: {{organizations[selectedOrganization].identifier}}
+			label.organizationId(translate="ORGANIZATION.ORG_ID"): {{organizations[selectedOrganization].identifier}}
 			

@@ -4,18 +4,18 @@
 		//Clasic Purchase
 		.modal-content(ng-if="sites[selectedSite].biins.length>0")
 			.modal-header
-				h4.modal-title Purchase a Biin
+				h4.modal-title(translate="BIINS.BUY_BIINS")
 			.modal-body
-				p If you continue there is going to be a charge in your credit card.
-				p If you are agree please click on Continue button if else press Cancel
-				h1 How many Biins do you whant purchase
+				p(translate="BIINS.BUY_INFO")
+				p(translate="BIINS.BUY_INFO2")
+				h1(translate="BIINS.QTY")
 				form#purchaseBeaconForm
 					//slider(floor="1" ceiling="1000" step="1" precision="1" ng-model="biinsQty")					
 					input(type="number" name="biinsQty" ng-model="biinsQty" required)
 
 			.modal-footer
-				button.btn.btn-primary(type="button" ng-click="purchaseBiin(biinsQty,false)") Continue
-				button.btn.btn-default(type="button" data-dismiss="modal") Cancel				
+				button.btn.btn-primary(type="button" ng-click="purchaseBiin(biinsQty,false)")(translate="BIINS.CONTINUE")
+				button.btn.btn-default(type="button" data-dismiss="modal")(translate="BIINS.CANCEL")			
 			//Purchase Basic Package
 		.modal-content(ng-if="sites[selectedSite].biins.length===0")
 			.modal-header
