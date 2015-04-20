@@ -33,7 +33,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.wizard3IsValid =false;
   $scope.wizard4IsValid =false;
   $scope.wizard5IsValid =false;
-  $scope.wizard6IsValid =false;
 
   //Loading images service propertie
   $scope.loadingImages =false;
@@ -151,21 +150,21 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         if($scope.wizard1IsValid)
           $scope.wizardPosition =option;        
       break      
-      case 3:
+      /*case 3:
         if($scope.wizard1IsValid&& $scope.wizard2IsValid)
           $scope.wizardPosition =option;
           $scope.wizard3IsValid=true;
-      break  
+      break  */
+      case 3:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid)
+          $scope.wizardPosition =option;
+      break 
       case 4:
         if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid)
           $scope.wizardPosition =option;
-      break 
+      break   
       case 5:
         if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid)
-          $scope.wizardPosition =option;
-      break   
-      case 6:
-        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid&& $scope.wizard5IsValid)
           $scope.wizardPosition =option;
       break         
       default:
@@ -330,14 +329,14 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         $scope.wizard2IsValid= (typeof($scope.sites[$scope.selectedSite].media)!='undefined' && $scope.sites[$scope.selectedSite].media.length>0);
       }
 
-      if( eval($scope.wizardPosition)==3 || validate){
+      /*if( eval($scope.wizardPosition)==3 || validate){
         var coloursValidation=false;
         coloursValidation=typeof($scope.sites[$scope.selectedSite].mainColor)!='undefined' && $scope.sites[$scope.selectedSite].mainColor!="";
         coloursValidation=coloursValidation && typeof($scope.sites[$scope.selectedSite].textColor)!='undefined' && $scope.sites[$scope.selectedSite].textColor!=""; 
         $scope.wizard3IsValid=coloursValidation;
-      }
+      }*/
 
-      if( eval($scope.wizardPosition)==4 || validate){
+      if( eval($scope.wizardPosition)==3 || validate){
         var locationValidate = false;
         if($scope.sites[$scope.selectedSite]){
           locationValidate =typeof($scope.sites[$scope.selectedSite].country)!='undefined' && $scope.sites[$scope.selectedSite].country.length>0;
@@ -346,31 +345,31 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
           locationValidate =locationValidate && typeof($scope.sites[$scope.selectedSite].zipCode)!='undefined' && $scope.sites[$scope.selectedSite].zipCode.length>0;
           locationValidate =locationValidate && typeof($scope.sites[$scope.selectedSite].streetAddres)!='undefined' && $scope.sites[$scope.selectedSite].streetAddres.length>0;                    
           locationValidate =locationValidate && typeof($scope.sites[$scope.selectedSite].phoneNumber)!='undefined' && $scope.sites[$scope.selectedSite].phoneNumber.length>0;
-           $scope.wizard4IsValid=locationValidate;
+           $scope.wizard3IsValid=locationValidate;
         }
         else{
-          $scope.wizard4IsValid=false; 
+          $scope.wizard3IsValid=false; 
         } 
-        currentValid = $scope.wizard4IsValid;
+        currentValid = $scope.wizard3IsValid;
       }
-      if( eval($scope.wizardPosition)== 5 || validate)
+      if( eval($scope.wizardPosition)==4 || validate)
       {
         if($scope.sites[$scope.selectedSite]){
-         $scope.wizard5IsValid=$scope.sites[$scope.selectedSite].biins.length>1;
+         $scope.wizard4IsValid=$scope.sites[$scope.selectedSite].biins.length>1;
         }else{
-          $scope.wizard5IsValid=false; 
+          $scope.wizard4IsValid=false; 
         }        
       }
-      if(eval($scope.wizardPosition)== 6 || validate)
+      if(eval($scope.wizardPosition)== 5 || validate)
       {
         if($scope.sites[$scope.selectedSite]){
-         $scope.wizard6IsValid=$scope.sites[$scope.selectedSite].categories.length>0;
+         $scope.wizard5IsValid=$scope.sites[$scope.selectedSite].categories.length>0;
         }else{
-          $scope.wizard6IsValid=false; 
+          $scope.wizard5IsValid=false; 
         }
       }
 
-    $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid&& $scope.wizard3IsValid&& $scope.wizard4IsValid&& $scope.wizard5IsValid&& $scope.wizard6IsValid;
+    $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid&& $scope.wizard3IsValid&& $scope.wizard4IsValid&& $scope.wizard5IsValid;
     
     return currentValid;
     
@@ -383,7 +382,6 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.wizard3IsValid=false;
     $scope.wizard4IsValid=false;
     $scope.wizard5IsValid=false;
-    $scope.wizard6IsValid=false;
   }
 
   //Subscribe to a region
