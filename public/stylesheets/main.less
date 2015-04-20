@@ -225,6 +225,19 @@ input.ng-valid.ng-dirty{
 
 .gallery{
 	position: relative;
+
+	.moduleTitle{
+		position: absolute;
+		background-color: black;
+		color: white;
+		opacity: 0.5;
+		padding-left: 6px;
+		font-size: 12px;
+		width: 100%;
+		max-width: 100%;
+  		word-wrap: break-word;
+	}
+
 	.galleryImageWrapper	{
 		max-height: 200px;
 		max-width: 200px;
@@ -233,6 +246,8 @@ input.ng-valid.ng-dirty{
 		padding: 5px 5px 5px 5px;
 		.galleryImageWrapperContent{
 			background-color: #fff;	
+			position: relative;
+			overflow: hidden;
 		}		
 		margin: 5px 5px 5px 5px;
 		
