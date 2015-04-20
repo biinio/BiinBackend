@@ -2174,7 +2174,8 @@ input.ng-valid.ng-dirty{
 		background-color: black;
 		color: white;
 		opacity: 0.5;
-		padding-left: 6px;
+		width: 100%;
+		z-index: 100;
 	}
 	.imagegallery{
 		padding-top: 10%;
@@ -2198,10 +2199,10 @@ input.ng-valid.ng-dirty{
 		//Module Title
 		.moduleTitle{
 			top: @screenMdLeftContBoxImgMargin;
-			margin-left: @screenMdLeftContBoxImgMargin;
-			width: @screenMdLeftContBoxTitleWidth;
 			line-height: @screenMdLeftContBoxTitleLineHeight;
 			font-size: @screenMdLeftContBoxTitleFontSize;
+			overflow: hidden;
+			width: 100%;
 		}
 	}
 
@@ -2224,10 +2225,9 @@ input.ng-valid.ng-dirty{
         .moduleTitle{
 			line-height: 30px;
 			font-size: 15px;
-
+			overflow: hidden;
+			width: 100%;
 			top: @screenLgLeftContBoxImgMargin;
-			margin-left: @screenLgLeftContBoxImgMargin;
-			width: @screenLgLeftContBoxSizeImg;
       	}
     }
 }
