@@ -4,8 +4,7 @@ div
 		p(translate="CATEGORIES.SUB_TITLE")
 	.section
 		#categories
-			.row
-				//
+			.row				
 				a.col-md-2.catModule(ng-repeat="cat in categories" ng-click="switchCategoryState(cat)")
 					.catModuleWrapper(ng-class="containsCategory(cat)")
 						.catIcon(class="icon icon-{{cat.icon}}")
