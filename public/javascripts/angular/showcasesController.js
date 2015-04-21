@@ -439,10 +439,15 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
 
   //Toggle notifications state
   $scope.setNotificationActive=function(){
-    if($scope.showcases[$scope.selectedShowcase].activateNotification!=='1')
-      $scope.showcases[$scope.selectedShowcase].activateNotification=$scope.activeValue;
-    else
-      $scope.showcases[$scope.selectedShowcase].activateNotification='0';
+    if($scope.showcases[$scope.selectedShowcase].activateNotification!=='1'){
+        $scope.showcases[$scope.selectedShowcase].notifications[0].isActive=$scope.activeValue;
+        $scope.showcases[$scope.selectedShowcase].activateNotification=$scope.activeValue;
+    }
+    else{
+        $scope.showcases[$scope.selectedShowcase].activateNotification='0';
+        $scope.showcases[$scope.selectedShowcase].notifications[0].isActive='0';
+    }
+      
     $scope.validate();
   }
 

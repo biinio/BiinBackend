@@ -4,10 +4,10 @@
 .section
 	#wizardBiinsWrapper
 		.biinWrapperContainer.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
-			.siteModule(ng-repeat="site in biinSite")
+			.siteModule(ng-repeat="site in biinSite")				
 				.imgSite
 					p {{site.title1}}
-					img(ng-src="{{site.media[0].imgUrl}}")
+					//img(ng-src="{{site.media[0].imgUrl}}")
 				.biin.biinOnline(ng-class="getOnlineInSite(site)" ng-click="setOnlineSite(site)")
 					.biinWrapper
 						i.icon.icon-globe-1
@@ -21,7 +21,7 @@
 								.icon.icon-add-2   Add Showcase
 						div(ng-if="biin.showcases.length>0")
 							.moduleWrapperShowcaseBiin.alert.alert-success.contentHideButtons(ng-repeat="showcase in biin.showcases | orderBy : '-isDefault'| orderBy : '+startTime' | date:'HH:mm'" popover-placement="top" popover="{{showcase.showcaseIdentifier}}" popover-trigger="mouseenter")															
-								img(ng-src="{{getShowcaseByIdentifier(showcase.showcaseIdentifier).elements[0].media[0].url}}")
+								//img(ng-src="{{getShowcaseByIdentifier(showcase.showcaseIdentifier).elements[0].media[0].url}}")
 								span.row {{getShowcaseByIdentifier(showcase.showcaseIdentifier).name}}
 								span.row Start {{showcase.startTime | date:'HH:mm'}} 
 								span.row End {{showcase.endTime | date:'HH:mm'}}								
