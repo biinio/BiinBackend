@@ -38,14 +38,10 @@ block content
 								include wizardNutshell
 							#wizardOption2.wizard(ng-switch-when="2" )
 								include wizardGallery
-							//#wizardOption3.wizard(ng-switch-when="3" )
-								include wizardDesign
-							#wizardOption4.wizard(ng-switch-when="3" )
+							#wizardOption3.wizard(ng-switch-when="3" )
 								include wizardHighlights
-							#wizardOption5.wizard(ng-switch-when="4" )
-								include wizardDetails
-							#wizardOption6.wizard(ng-switch-when="5" )
-								include wizardCategories								
+							#wizardOption4.wizard(ng-switch-when="4" )
+								include wizardCategories
 						.wizard-options
 							.container-fluid
 								.row.wizard-options-wrapper
@@ -70,13 +66,6 @@ block content
 												.icon.icon-photo-1
 											.textCirle 
 												| 3. IMAGES												
-									//.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
-										.wizard-options-item(ng-click="changeWizardTab(3)")
-											.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid,'valid':wizard3IsValid}")
-												.icon.icon-palette
-											.textCirle 
-												| 4. Design
 									.col-md-1.col-sm-1.nopadding.option
 										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
 										.wizard-options-item(ng-click="changeWizardTab(3)")
@@ -84,20 +73,13 @@ block content
 												.icon.icon-crosshair-1
 											.textCirle 
 												| 4. Highlights
-									.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active' : wizardPosition ==4}")
+									.col-md-1.col-sm-1.nopadding.option												
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
 										.wizard-options-item(ng-click="changeWizardTab(4)")
 											.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
-												.icon.icon-list-1-1
-											.textCirle 
-												| 5. Details
-									.col-md-1.col-sm-1.nopadding.option												
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==5}")
-										.wizard-options-item(ng-click="changeWizardTab(5)")
-											.circle(ng-class="{'active':wizardPosition ==5,'disabled':!wizard4IsValid,'valid':wizard5IsValid}")
 												.icon.icon-tag-1
 											.textCirle 
-												| 7. CATEGORIES												
+												| 5. CATEGORIES												
 									.col-md-1.col-sm-1.nopadding.option																							
 										.wizard-options-item.completeOption
 											.circle(ng-class="{'complete':isValid}")
