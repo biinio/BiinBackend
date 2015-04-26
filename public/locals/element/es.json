@@ -1,3 +1,42 @@
 {
-	"MENU.PROFILE":"1. Profile"
+	"TYPE.TITLE":"Tipo de Elemento",
+	"TYPE.SUB_TITLE": "Seleccione el tipo apropiado para el elemento.",
+	"TYPE.INFO": "Informativo",
+	"TYPE.BENEFIT": "Beneficio",
+	"TYPE.SELECT": "Por favor seleccione el tipo de elemento para continuar",
+	"TYPE.INFO1": "Elemento informativo",
+	"TYPE.INFO_DESC": "Permite crear información relevante para los visitantes de su estableciemiento",
+	"TYPE.BENEFIT1": "Producto o promoción",
+	"TYPE.BENEFIT_DESC": "informa sobre productos, promociones o cupones",
+	"TYPE.IDENTIFIER": "Identificador",
+	"GALLERY.TITLE": "Galería de imagenes",
+    "GALLERY.SUB_TITLE": "Agregue y use las imagenes de su marca para darle identidad a su local",
+    "GALLERY.UPLOAD": "Subir",
+    "SUMMARY.TITLE": "Información del elemento",
+    "SUMMARY.SUB_TITLE": "Información básica y detalles  del elemento",
+    "SUMMARY.NAME": "Información Básica",
+    "SUMMARY.DESC": "Nombre y descripción breve, esta información se vera en la vista previa",
+    "SUMMARY.NAME1": "Nombre",
+    "SUMMARY.DESC1": "Descripción Breve",
+    "SUMMARY.DETAILS": "Detalles",
+    "SUMMARY.DETAILS1": "Agregue información detallada del producto o servicio",
+    "SUMMARY.DTITLE": "Un título",
+    "SUMMARY.PARAGRAPH": "Párrafo",
+    "SUMMARY.QUOTE": "Anotación",
+    "SUMMARY.LIST": "Lista",
+    "SUMMARY.LINK": "Enlace",
+    "GENERIC.SEARCH_TAGS": "Etiquetas para busqueda",
+    "GENERIC.SEARCH_TAGS_DESC": "Las etiquetas ayudan a que su información sea encontrada mas fácilmente.",
+    "GENERIC.ADD": "Añadir"
+
+
+
+
+
+
+
+
+
+
+
 }

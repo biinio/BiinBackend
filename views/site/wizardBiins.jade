@@ -8,7 +8,7 @@ div
 				.img-block(data-toggle="modal" href="#purchaseBeaconModal")					
 						#purchaseBiinButton.moduleWrapper
 							.biinPurchasElementWrapper
-								p PURCHASE A NEW BIIN
+								p
 				.img-block( ng-repeat="item in sites[selectedSite].biins" ng-click="editBiin(sites[selectedSite].biins.indexOf(item))")
 					.moduleWrapper(ng-class="{active: sites[selectedSite].biins.indexOf(item) == selectedBiin}")					 	
 						.biinElementWrapper
