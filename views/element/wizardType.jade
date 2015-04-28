@@ -1,6 +1,6 @@
 .section
-	h1 Element Type
-	p Select the element type for the element
+	h1(translate="TYPE.TITLE")
+	p(translate="TYPE.SUB_TITLE")
 .section
 	#elementType
 		.typeWrapper.scrollbar-inner(scrollbar="scrollbarOptionsStandard" )
@@ -8,19 +8,19 @@
 				.moduleType(ng-click="selectType(0)" ng-class="{'active':'0'===elements[selectedElement].elementType}")						
 					.circleInner
 						.icon.icon-book-7
-						span Information
+						span(translate="TYPE.INFO")
 			.type-block
 				.moduleType(ng-click="selectType(1)" ng-class="{'active':'1'===elements[selectedElement].elementType}")						
 					.circleInner
 						.icon.icon-piggy-bank
-						span Benefit
+						span(translate="TYPE.BENEFIT")
 .section(ng-if="elements[selectedElement].elementType==''")
-	p Please select an element type to continue.
+	p(translate="TYPE.SELECT")
 .section(ng-if="elements[selectedElement].elementType=='0'")
-	h2 Information Type
-	p The information type is an element that describe a product or service
+	h2(translate="TYPE.INFO1")
+	p(translate="TYPE.INFO_DESC")
 .section(ng-if="elements[selectedElement].elementType=='1'")		
-	h2 Benefit Type
-	p The benefit element lets you make a offert, coupon or soon. 
+	h2(translate="TYPE.BENEFIT1")
+	p(translate="TYPE.BENEFIT_DESC")
 .section
-	h4 Identifier: {{elements[selectedElement].elementIdentifier}}
+	h4(translate="TYPE.IDENTIFIER") :{{elements[selectedElement].elementIdentifier}}
