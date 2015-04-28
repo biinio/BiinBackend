@@ -41,7 +41,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
 
   //Boolean values 
-  $scope.hasListPriceBool=false;
+  //$scope.hasListPriceBool=false;
   $scope.hasDiscountBool=false;
   $scope.hasTimmingBool =false;
   $scope.hasQuantityBool=false;
@@ -81,7 +81,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.currentModelId = $scope.elements[index].elementIdentifier;
 
     //Set the Booleans Values
-    $scope.hasListPriceBool= $scope.elements[index].hasListPrice==='1';
+    //$scope.hasListPriceBool= $scope.elements[index].hasListPrice==='1';
     $scope.hasDiscountBool= $scope.elements[index].hasDiscount==='1';
     $scope.hasTimmingBool= $scope.elements[index].hasTimming==='1';
     $scope.hasQuantityBool= $scope.elements[index].hasQuantity==='1';
@@ -250,8 +250,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         if($scope.elements[$scope.selectedElement].elementType==='1')
         {
           var wizard3IsValid =true;
-          if(eval($scope.elements[$scope.selectedElement].hasListPrice))
-              wizard3IsValid=  wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
+          //if(eval($scope.elements[$scope.selectedElement].hasListPrice))
+          wizard3IsValid=  wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
 
           if(eval($scope.elements[$scope.selectedElement].hasDiscount))
             wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].discount)!='undefined' && $scope.elements[$scope.selectedElement].discount.length>0);
@@ -268,8 +268,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           if(eval($scope.elements[$scope.selectedElement].hasPriceBool))
             wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price>0); 
 
-          if(eval($scope.elements[$scope.selectedElement].hasFromPriceBool))
-            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].fromPrice)!='undefined' && $scope.elements[$scope.selectedElement].fromPrice>0);           
+          //if(eval($scope.elements[$scope.selectedElement].hasFromPriceBool))
+           // wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].fromPrice)!='undefined' && $scope.elements[$scope.selectedElement].fromPrice>0);           
           $scope.wizard3IsValid=wizard3IsValid;
         } 
         else

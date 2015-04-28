@@ -1241,7 +1241,7 @@ input.ng-valid.ng-dirty{
 						border-radius: initial!important;
 						-webkit-appearance: none;
 						-webkit-border-radius: 0px;
-						margin-bottom: 60px;
+						margin-bottom: 6px;
 						font-size: x-large;
 					}
 
@@ -1255,16 +1255,33 @@ input.ng-valid.ng-dirty{
 							}
 
 						}	
-
-						background-color: @colorGray;
-						margin-left: @standardPadding;
-  						margin-bottom: @standardPadding;
+						min-height: 110px;
+						padding-left: @standardPadding;
+  						padding-bottom: @standardPadding;
   						padding-top: @standardPadding;
-  						padding-right: @standardPadding;
+  						padding-right: @standardPadding;  						
 					}
-					.priceGroup.active{
-						background-color: @colorGreenSticker;
+					.formPrice{						
+						.priceGroup{
+							background-color:@colorGreenSticker;	
+						}
 					}
+					.discountForm{
+						.priceGroup{
+							background-color:@colorOrangeSticker;		
+						}
+					}
+					.timingForm{
+						.priceGroup{
+							background-color: @colorYellow;							
+						}
+					}
+					.qtyForm{
+						.priceGroup{
+							background-color: @colorYellowSticker;
+						}
+					}
+
 				}
 			}
 
