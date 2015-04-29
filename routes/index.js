@@ -35,15 +35,15 @@ module.exports = function () {
 				organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.user.defaultOrganization},{name:true, identifier:true},function (err, data) {
 					//set the first time for the data
 					req.session.defaultOrganization = data;					
-					res.render('homeDashboard',{title:'Welcome!',user:req.user,organization:data});						
+					res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:data});						
 				});
 			else{
 				req.user.defaultOrganization = null;
-				res.render('homeDashboard',{title:'Welcome!',user:req.user, organization:req.user.defaultOrganization});	
+				res.render('dashboard/index',{title:'Welcome!',user:req.user, organization:req.user.defaultOrganization});	
 			}
 		}				
 		else
-			res.render('homeDashboard',{title:'Welcome!',user:req.user,organization:req.session.defaultOrganization});	
+			res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:req.session.defaultOrganization});	
 	}
 
 	//Get the SingUp information of a client
@@ -60,7 +60,7 @@ module.exports = function () {
 			if(req.session.passport.user==undefined){
 				res.redirect('/login');
 			}else{
-				 res.render('homeDashboard',{title:'Welcome!',				
+				 res.render('dashboard/index',{title:'Welcome!',				
 				 user:req.user});
 			}
 		}else{

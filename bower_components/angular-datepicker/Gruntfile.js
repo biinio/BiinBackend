@@ -6,7 +6,7 @@ var mountFolder = function (connect, dir) {
 
 module.exports = function (grunt) {
   // load all grunt tasks
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  require('load-grunt-tasks')(grunt);
 
   // configurable paths
   var yeomanConfig = {
@@ -43,7 +43,7 @@ module.exports = function (grunt) {
         ]
       }
     },
-    recess: {
+    less: {
       options: {
         compile: true
       },
@@ -183,7 +183,7 @@ module.exports = function (grunt) {
         separator: '\n'
       },
       js: {
-        src: ['<%= yeoman.app %>/scripts/{datePicker,input,dateRange}.js', '<%= yeoman.tmp %>/templates.js'],
+        src: ['<%= yeoman.app %>/scripts/{datePicker,input,dateRange,datePickerUtils}.js', '<%= yeoman.tmp %>/templates.js'],
         dest: '<%= yeoman.dist %>/index.js',
         options: {
           banner:'\'use strict\';\n(function(angular){\n',
@@ -221,7 +221,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'jshint',
     'clean:dist',
-    'recess',
+    'less',
     'ngtemplates',
     'concat',
     'cssmin',

@@ -111,7 +111,7 @@
   <div class="span6">
     <h3>Input</h3>
     <h5>default</h5>
-    <input type="text" date-time ng-model="start" required="true" view="hours">
+    <input type="text" date-time ng-model="start" required="true" view="hours" partial="true">
 
     <h3>Input with append</h3>
     <h5>default</h5>
@@ -161,10 +161,11 @@
   </div>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
 <!-- build:js module.min.js -->
 <script src="scripts/datePicker.js"></script>
+<script src="scripts/datePickerUtils.js"></script>
 <script src="scripts/dateRange.js"></script>
 <script src="scripts/input.js"></script>
 <!-- endbuild -->

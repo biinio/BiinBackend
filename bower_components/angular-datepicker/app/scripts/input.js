@@ -12,9 +12,12 @@ Module.constant('dateTimeConfig', {
         'date-picker="' + attrs.ngModel + '" ' +
         (attrs.view ? 'view="' + attrs.view + '" ' : '') +
         (attrs.maxView ? 'max-view="' + attrs.maxView + '" ' : '') +
+        (attrs.autoClose ? 'auto-close="' + attrs.autoClose + '" ' : '') +
         (attrs.template ? 'template="' + attrs.template + '" ' : '') +
         (attrs.minView ? 'min-view="' + attrs.minView + '" ' : '') +
-        'class="dropdown-menu"></div>';
+        (attrs.partial ? 'partial="' + attrs.partial + '" ' : '') +
+        (attrs.step ? 'step="' + attrs.step + '" ' : '') +
+        'class="date-picker-date-time"></div>';
   },
   format: 'yyyy-MM-dd HH:mm',
   views: ['date', 'year', 'month', 'hours', 'minutes'],
@@ -32,7 +35,7 @@ Module.directive('dateTimeAppend', function () {
   };
 });
 
-Module.directive('dateTime', function ($compile, $document, $filter, dateTimeConfig, $parse) {
+Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfig', '$parse', function ($compile, $document, $filter, dateTimeConfig, $parse) {
   var body = $document.find('body');
   var dateFilter = $filter('date');
 
@@ -68,6 +71,32 @@ Module.directive('dateTime', function ($compile, $document, $filter, dateTimeCon
       ngModel.$formatters.push(formatter);
       ngModel.$parsers.unshift(parser);
 
+      function isValidDate(value) {
+          // Invalid Date: getTime() returns NaN
+          return value && !(value.getTime && value.getTime() !== value.getTime());
+        }
+
+      if (angular.isDefined(attrs.min) || attrs.ngMin) {
+        var minVal;
+        ngModel.$validators.min = function (value) {
+            return !isValidDate(value) || angular.isUndefined(minVal) || value >= minVal;
+          };
+        attrs.$observe('min', function (val) {
+            minVal = new Date(val);
+            ngModel.$validate();
+          });
+      }
+
+      if (angular.isDefined(attrs.max) || attrs.ngMax) {
+        var maxVal;
+        ngModel.$validators.max = function (value) {
+            return !isValidDate(value) || angular.isUndefined(maxVal) || value <= maxVal;
+          };
+        attrs.$observe('max', function (val) {
+            maxVal = new Date(val);
+            ngModel.$validate();
+          });
+      }
 
       var template = dateTimeConfig.template(attrs);
 
@@ -110,6 +139,10 @@ Module.directive('dateTime', function ($compile, $document, $filter, dateTimeCon
           }
         });
 
+        scope.$on('hidePicker', function () {
+          element.triggerHandler('blur');
+        });
+
         scope.$on('$destroy', clear);
 
         // move picker below input element
@@ -137,4 +170,4 @@ Module.directive('dateTime', function ($compile, $document, $filter, dateTimeCon
       element.bind('blur', clear);
     }
   };
-});
+}]);

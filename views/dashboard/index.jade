@@ -1,0 +1,15 @@
+extends ../layout_dashboard
+block head_scripts	
+	script(src="/javascripts/angular/dashboardController.js")
+	script(src="/d3/d3.js")
+	script(src="/nvd3/build/nv.d3.js")
+	//Css Style
+	link(rel="stylesheet" href="/nvd3/build/nv.d3.css")
+block content
+	#sectionContent(ng-app="biinAppDashboard" ng-controller="dashboardController" ngCloack)
+		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)			
+			h1= title
+			p='Modified There are goin to be the dashboard ' + user.displayName + '!'
+			#dashboardContent
+				#testGraph
+					svg
