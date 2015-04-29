@@ -30,7 +30,7 @@ module.exports = function(){
 			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1},function(err,userInfo){
 				organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
 					if(err)
-						res.json({data:{status:"7"}});	
+						res.json({data:{status:"7", result:'0'}});	
 					else
 						if(data!=null && "elements" in data && data.elements.length>0){
 							var elementObj = data.elements[0].toObject();
@@ -107,9 +107,9 @@ module.exports = function(){
 		        				"actualQuantity": "12",
 	        				*/
 
-							res.json({data:elementObj,status:0,result:1});
+							res.json({data:elementObj,status:"0",result:"1"});
 						}else{
-							res.json({data:{status:"9", result:0}});		
+							res.json({data:{status:"9", result:"0"}});		
 						}
 				});					
 
