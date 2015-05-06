@@ -215,11 +215,16 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
               //Validate each element
               for(var index=0;index <$scope.elements[$scope.selectedElement].details.length;index++){
 
-                if($scope.elements[$scope.selectedElement].details[index].elementDetailType=='4'){                        
+                if($scope.elements[$scope.selectedElement].details[index].elementDetailType=='4' || $scope.elements[$scope.selectedElement].details[index].elementDetailType=='6'){
                   if($scope.elements[$scope.selectedElement].details[index].body.length>0){
                     //Foreach line in body validate the text
                       for(var line=0; line<$scope.elements[$scope.selectedElement].details[index].body.length;line++){
-                        wizard1IsValid= wizard1IsValid & (typeof($scope.elements[$scope.selectedElement].details[index].body[line].line)!='undefined'&& $scope.elements[$scope.selectedElement].details[index].body[line].line.length>0);
+                          wizard1IsValid= wizard1IsValid & (typeof($scope.elements[$scope.selectedElement].details[index].body[line].line)!='undefined'&& $scope.elements[$scope.selectedElement].details[index].body[line].line.length>0);
+                          
+                          //Evaluate  other fielsd when is type 6
+                          if($scope.elements[$scope.selectedElement].details[index].elementDetailType=='6'){
+                            wizard1IsValid= wizard1IsValid & (typeof($scope.elements[$scope.selectedElement].details[index].body[line].description)!='undefined'&& $scope.elements[$scope.selectedElement].details[index].body[line].description.length>0);
+                          }
                       }
                   }
                 }else{
@@ -400,8 +405,14 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     var newDetail ={elementDetailType:elementType, text:"", body:[]};    
     $scope.elements[$scope.selectedElement].details.push(newDetail);
 
+
+    //Detail Type List
     if(elementType=='4')
        $scope.addListItem($scope.elements[$scope.selectedElement].details.indexOf(newDetail));
+
+    //Detail Type Price List
+    if(elementType =='6')
+      $scope.addListPriceItem($scope.elements[$scope.selectedElement].details.indexOf(newDetail));
   }
 
   //Category return if contains a specific categoru
@@ -442,11 +453,23 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       $scope.elements[$scope.selectedElement].details[detailIndex].body.splice(listItemIndex,1);
   }
 
+  //Remove the list price Item of an element
+  $scope.removeListPriceItemAt=function(detailIndex, listItemIndex){
+   if($scope.elements[$scope.selectedElement].details.length>=detailIndex)
+      $scope.elements[$scope.selectedElement].details[detailIndex].body.splice(listItemIndex,1); 
+  }
   //Add a list item of an element
   $scope.addListItem =function(detailIndex){
     $scope.elements[$scope.selectedElement].details[detailIndex].body.push({line:""});
     $scope.validate();
   }
+
+  //Add a Price List Item of an element
+ $scope.addListPriceItem =function(detailIndex){
+    $scope.elements[$scope.selectedElement].details[detailIndex].body.push({line:"",description:"",currencyType:"1"});
+    $scope.validate(); 
+ }
+
  
   //Toggle the changes 
   $scope.changeBoolStateHighlights=function(model,value){

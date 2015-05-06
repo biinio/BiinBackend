@@ -1,15 +1,41 @@
 extends ../layout_dashboard
-block head_scripts	
-	script(src="/javascripts/angular/dashboardController.js")
+block head_scripts
+	link(rel="stylesheet" href="/nvd3/build/nv.d3.css")
 	script(src="/d3/d3.js")
 	script(src="/nvd3/build/nv.d3.js")
-	//Css Style
-	link(rel="stylesheet" href="/nvd3/build/nv.d3.css")
+	script(src="/javascripts/angular/dashboardController.js")		
 block content
 	#sectionContent(ng-app="biinAppDashboard" ng-controller="dashboardController" ngCloack)
-		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)			
-			h1= title
-			p='Modified There are goin to be the dashboard ' + user.displayName + '!'
+		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name ng-if="true===false")			
 			#dashboardContent
-				#testGraph
-					svg
+				.section
+						.col-md-12				
+							.row
+								h1='Bienvenido ' + user.displayName + '!' 
+								p A continuaci&oacute;n podr&aacute; observar datos en tiempo real sobre sus campa&ntilde;as
+				.section				
+					.row
+						.col-md-2
+							.row
+								h5 Organization
+							.row
+								select.form-control.bootstrap-select( ng-model="selectedOrganization" ng-change='changeOrganization(selectedOrganization)' toggle-dropdown )
+									option(value="" default) Todas
+									option(ng-repeat="opt in organizations" value="{{$index}}" ng-click="") {{opt.name}}
+						.col-md-2
+							.row
+								h5 Locales
+							.row
+								select.form-control.bootstrap-select( ng-model="selectedSite" toggle-dropdown)
+									option(value="" default) Todas
+									option(ng-repeat="opt in sites" value="{{opt.identifier}}" ng-click="changeSite($index)") {{opt.title1}}
+				.section
+					.col-md-12
+						.rows
+							p Online sessions / Locals sessions									
+				.section
+					.col-md-1						
+					.col-md-10
+						.row
+							#testGraph
+								svg				

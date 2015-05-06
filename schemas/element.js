@@ -42,8 +42,10 @@ var elementSchema = new Schema({
 	details:[{
 			elementDetailType:{type:String, default:""},
 			text:{type:String,default:""},
-			body:[{
-				line:{type:String,default:""}
+			body:[{				
+				line:{type:String,default:""},
+				description:{type:String,default:""},//Use for type 6
+				currencyType:{type:String,default:""}//Use for type  6
 			}]
 		}],	
 	categories:[

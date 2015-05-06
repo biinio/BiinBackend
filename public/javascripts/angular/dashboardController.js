@@ -1,11 +1,25 @@
 var biinAppBlog = angular.module('biinAppDashboard',['ngRoute']);
 
 biinAppBlog.controller("dashboardController",['$scope', '$http',function($scope,$http){
-  /*
-    $http.get('/api/blog').success(function(data){
-    $scope.blogs = data.blogs;
+  $scope.selectedOrganization="";//{identifier:"",name:"Please select an option"};
+  $scope.selectedSite="";
+  $scope.countries={};
+    $http.get('/api/dashboard').success(function(data){
+      $scope.organizations = data.data.organizations;
+      $scope.showcases = data.data.showcases;
+
+      //if($scope.organizations && $scope.organizations.length>0)
+       // $scope.selectedOrganization= $scope.organizations[0].identifier;//{identifier:data.data.organizations[0].identifier, name:data.data.organizations[0].name};
+
   });
-*/
+
+
+  $scope.changeOrganization=function(indexSel){
+    var index = eval(indexSel);
+    $scope.sites = $scope.organizations[index].sites;
+    $scope.selectedSite=""
+  }
+
   var data= function() {
       var sin = [],
           cos = [];

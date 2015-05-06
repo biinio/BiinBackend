@@ -156,12 +156,14 @@ var orgSchema = new Schema({
 		quantity:{type:String,default:""},
 
 		details:[{
-				elementDetailType:{type:String, default:""},
-				text:{type:String,default:""},
-				body:[{
-					line:{type:String,default:""}
-				}]
-			}],
+			elementDetailType:{type:String, default:""},
+			text:{type:String,default:""},
+			body:[{				
+				line:{type:String,default:""},
+				description:{type:String,default:""},//Use for type 6
+				currencyType:{type:String,default:""}//Use for type  6
+			}]
+		}],
 		activateNotification:{type:String,default:"0"},
 		notifications:[{
 			isActive:{type:String, default:"0"},

@@ -2,6 +2,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
  
     //Others routes
     var routes = require('../routes')();
+    var dashboard = require('../routes/dashboard')();
     var accounts = require('../routes/accounts')();
     var clients = require('../routes/clients')();
     var organizations = require('../routes/organizations')();
@@ -42,6 +43,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
         successRedirect:'/dashboard'
     }));
     app.get('/mobileTest',routes.mobileTest);
+
+    //Dashboard 
+    app.get('/api/dashboard', dashboard.get);
+    app.get('/api/dashboard/set', dashboard.set);
 
     //Acounts Routes
     app.get('/accounts',accounts.index);    

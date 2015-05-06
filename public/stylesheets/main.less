@@ -1179,6 +1179,7 @@ input.ng-valid.ng-dirty{
 
 								padding-left: 2px;
 								padding-top: 2px;
+								cursor: pointer;
 
 							}
 							.btn-addListItem{
@@ -1188,11 +1189,53 @@ input.ng-valid.ng-dirty{
 								color: @colorBaseWhite;														
 								margin-top: @standardPadding/2;	
 								margin-right: @standardPadding;							
+								cursor: pointer;
 							}
 							.elementListControls{
 								position: relative;
 								width: 100%;
 								height: 40px;
+							}
+							.priceList{
+								height: 80px;
+								position: relative;
+								height: 100%;
+								.form-inline{
+									background-color: @colorWhite;
+									padding-left: @standardPadding;
+									margin-bottom: @standardPadding;
+									padding-right: @standardPadding;
+
+								}
+								.currencyControl{
+									width: 10%;
+									select{
+										margin-bottom: 0px;
+										height: 38px!important;
+										width: 100%;
+										display: inline;
+										border: none;												
+										border-radius: initial!important;
+										-webkit-appearance: none;
+										-webkit-border-radius: 0px;
+										font-size: x-large;			
+										text-align: center;						
+									}
+									margin-right: @standardPadding;
+								}
+								.descriptionControl{
+									width: 40%;
+									margin-right: @standardPadding;
+								}
+
+								.valueControl{
+									width: 45%;
+									padding-right: @standardPadding;
+								}
+
+								r.btn-emoveListItem{
+									top:35%;
+								}
 							}
 						}
 					}
@@ -2554,7 +2597,7 @@ input.ng-valid.ng-dirty{
 
 #dashboardContent{
 	#testGraph svg{
-		height: 400px;
+		height: 100%;
 	}
 }
 //Wizard animations Section
