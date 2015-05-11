@@ -30,7 +30,7 @@
 						.body
 							label(for="chkFromPrice") Utilizar precio Desde
 							checkbox#chkFromPrice.btn-checkbox( ng-model="hasFromPriceBool" ng-change="changeBoolStateHighlights('hasFromPrice', hasFromPriceBool)" large )
-							//input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].fromPrice" ng-disabled="!hasFromPriceBool" placeholder="From" ng-blur="validate()" required is-number)								
+							//input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].fromPrice" ng-disabled="!hasFromPriceBool" placeholder="From" ng-blur="validate()" required is-number)
 		.section.darkSection.col-md-12						
 			.row
 				i.price.icon.icon-timer-1
@@ -40,17 +40,17 @@
 			.row
 				form.form-inline.novalidate.discountForm
 					.form-group.priceGroup
-						.header								
-							checkbox#chkSaving.btn-checkbox( ng-model="hasSavingBool" ng-change="changeBoolStateHighlights('hasSaving', hasSavingBool)" large)
-							label(for="chkSaving") Porcentaje
-						.body
-							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="0 %" ng-blur="validate()"  ng-disabled="!hasSavingBool" required is-number )													
-					.form-group.priceGroup
 						.header
 							checkbox#chkDiscount.btn-checkbox( ng-model="hasDiscountBool" ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)" large)
-							label(for="chkDiscount") Monto del Descuento
+							label(for="chkDiscount") Porcentaje
 						.body						
 							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].discount" ng-disabled="!hasDiscountBool"  placeholder="Discount" ng-blur="validate()" required is-number)
+					.form-group.priceGroup
+						.header								
+							checkbox#chkSaving.btn-checkbox( ng-model="hasSavingBool" ng-change="changeBoolStateHighlights('hasSaving', hasSavingBool)" large)
+							label(for="chkSaving") Monto del descuento
+						.body
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="0 %" ng-blur="validate()"  ng-disabled="!hasSavingBool" required is-number )								
 					.form-group.priceGroup
 						.header
 							checkbox#chkPrice.btn-checkbox( ng-model="hasPriceBool" ng-change="changeBoolStateHighlights('hasPrice', hasPriceBool)" large)

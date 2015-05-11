@@ -47,6 +47,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Dashboard 
     app.get('/api/dashboard', dashboard.get);
     app.get('/api/dashboard/set', dashboard.set);
+    app.get('/api/dashboard/comparative', dashboard.getComparativeData);
 
     //Acounts Routes
     app.get('/accounts',accounts.index);    

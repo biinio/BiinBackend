@@ -20,6 +20,27 @@ biinAppBlog.controller("dashboardController",['$scope', '$http',function($scope,
     $scope.selectedSite=""
   }
 
+  var getCompariveBy =function(optNumber,compBy){
+    var model = {};
+    if($scope.selectedOrganization!=''){
+      if(!model.filters)
+        model.filters=[];
+      model.filters.push({organization:$scope.selectedOrganization});
+    }
+
+    if($scope.selectedSite!=''){
+      if(!model.filters)
+        model.filters=[];
+      model.filters.push({site:$scope.selectedSite});
+    }
+    
+    //Get the List of Showcases
+    $http.get('/api/dashboard/comparative',{model:model}).success(function(data){
+      $scope.filterData = data.data;
+    });
+
+  }
+
   var data= function() {
       var sin = [],
           cos = [];

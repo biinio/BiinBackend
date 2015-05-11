@@ -125,6 +125,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
   //Save detail model object
   $scope.save= function(){  
+    $scope.elements[$scope.selectedElement].hasListPrice=$scope.elements[$scope.selectedElement].listPrice.length>0?'1':'0';
     $http.put('api/organizations/'+$scope.organizationId+'/elements/'+$scope.currentModelId,{model:$scope.elements[$scope.selectedElement]}).success(function(data,status){
       if("replaceModel" in data){
         console.log("save")

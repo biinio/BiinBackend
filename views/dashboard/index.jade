@@ -6,7 +6,7 @@ block head_scripts
 	script(src="/javascripts/angular/dashboardController.js")		
 block content
 	#sectionContent(ng-app="biinAppDashboard" ng-controller="dashboardController" ngCloack)
-		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name ng-if="true===false")			
+		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)			
 			#dashboardContent
 				.section
 						.col-md-12				

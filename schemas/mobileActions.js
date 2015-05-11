@@ -10,7 +10,8 @@ var mobileActionsSchema = new Schema({
 	element:{type:String},
 	actionType:{type:String},
 	date:{type:String},
-	mobileUser:{type:String}
+	mobileUser:{type:String},
+	sessionType:{type:String}//'local' Local in site, 'biin' Biin Session
 })
 
 module.exports = mongoose.model('mobileActions',mobileActionsSchema);

@@ -20,34 +20,37 @@ module.exports = function(){
 	functions.set= function(req,res){
 		var dateNow = utils.getDateNow();
 		var data=[{
-					account:'24974199-011e-4371-914f-c89680e77051',
-					organization:'b89dff03-ae87-45bc-965f-c3aacf46c3ee',
+					account:'b7854392-1f7a-496f-bf36-caa2a050b7d6',
+					organization:'24974199-011e-4371-914f-c89680e77051',
 					showcase:'2067e997-c251-4e35-a4be-9e3a7cc3e204',
 					element:'54023aae-19e9-434c-ab10-c08e86e575e0',
 					biin:'',
 					action:'shared',
 					date: dateNow,
-					mobileUser:'12345'
+					mobileUser:'12345',
+					sessionType:'local'
 					},
 					{
-					account:'24974199-011e-4371-914f-c89680e77051',
-					organization:'b89dff03-ae87-45bc-965f-c3aacf46c3ee',
+					account:'b7854392-1f7a-496f-bf36-caa2a050b7d6',
+					organization:'24974199-011e-4371-914f-c89680e77051',
 					showcase:'2067e997-c251-4e35-a4be-9e3a7cc3e204',
 					element:'54023aae-19e9-434c-ab10-c08e86e575e0',
 					biin:'',
 					action:'biined',
 					date: dateNow,
-					mobileUser:'123453'
+					mobileUser:'123453',
+					sessionType:'local'
 					},
 					{
-					account:'24974199-011e-4371-914f-c89680e77051',
-					organization:'b89dff03-ae87-45bc-965f-c3aacf46c3ee',
+					account:'b7854392-1f7a-496f-bf36-caa2a050b7d6',
+					organization:'24974199-011e-4371-914f-c89680e77051',
 					showcase:'2067e997-c251-4e35-a4be-9e3a7cc3e204',
 					element:'54023aae-19e9-434c-ab10-c08e86e575e0',
 					biin:'',
 					action:'biined',
 					date: dateNow,
-					mobileUser:'123453'
+					mobileUser:'123453',
+					sessionType:'biin'
 					}					
 					];
 		mobileActions.create(data,function(err){
@@ -58,7 +61,7 @@ module.exports = function(){
 		})
 	}
 
-	//Get the informatio about a dashboard Data
+	//Get the information about a dashboard Data
 	functions.get=function(req,res){
 
 		var data={};
@@ -80,6 +83,33 @@ module.exports = function(){
 			}
 		})
 	}
+
+	//Get the comprative information data
+	functions.getComparativeData=function(req,res){
+		var model= req.body.model;
+		var filters = model.filters;
+
+		var query ={};
+		if(filters){
+			for(var i =0; i<filters.length;i++){
+				query[filters[i].name]= filters[i].value;
+			}
+		}
+
+		query.sessionType = model.compareBy;
+		query.accountIdentifier = req.user.accountIdentifier;
+		mobileActions.find(query,function(err,data){
+			if(err)
+				throw err;
+			else{
+				var result ={};
+				result[model.compareBy] = data;
+				res.json({data:result});
+			}
+		})
+
+	}
+
 
 	return functions;
 }
