@@ -12,9 +12,9 @@
 				form.form-inline.novalidate.formPrice			
 					.form-group.priceGroup
 						.header
-							label(for="chkListPrice") Precio
+							label(for="chkPrice") Precio
 						.body
-							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" placeholder="0" ng-blur="validate()" required is-number)
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="0" ng-blur="validate()" required is-number)
 					.form-group.priceGroup
 						.header					
 							label Moneda
@@ -53,8 +53,8 @@
 							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="0 %" ng-blur="validate()"  ng-disabled="!hasSavingBool" required is-number )								
 					.form-group.priceGroup
 						.header
-							checkbox#chkPrice.btn-checkbox( ng-model="hasPriceBool" ng-change="changeBoolStateHighlights('hasPrice', hasPriceBool)" large)
-							label(for="chkPrice") Nuevo Precio
+							checkbox#chkPrice.btn-checkbox( ng-model="hasListPriceBool" ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)" large)
+							label(for="chkListPrice") Nuevo Precio
 						.body								
 							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="Final Pricex" ng-blur="validate()" required is-number)
 		.section.col-md-6.darkSection
