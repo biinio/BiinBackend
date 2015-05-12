@@ -4,6 +4,7 @@ module.exports = function(){
 	var element = require('../schemas/element'), showcase = require('../schemas/showcase'), organization= require('../schemas/organization');
 	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')();
 	var _= require('underscore');
+
 	//Get the index view of the elements
 	functions.index = function(req,res){
 		var callback= function(organization,req, res){
@@ -63,13 +64,14 @@ module.exports = function(){
 							}
 
 							//elementObj.hasFromPrice=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
-							//xelementObj.hasQuantity=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
+							//elementObj.hasQuantity=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
 
 							elementObj.hasQuantity=eval(elementObj.hasQuantity)?"1":"0";
 							elementObj.hasSticker=elementObj.sticker && elementObj.sticker.type ? "1":"0"
 							elementObj.biinedCount =  elementObj.biinedCount?""+elementObj.biinedCount:"0";
 							elementObj.commentedCount =  elementObj.commentedCount?""+elementObj.commentedCount:"0";
-							elementObj.userBiined=isUserBiined?'1':'0';
+							elementObj.sharedCount=elementObj.sharedCoun?""+elementObj.sharedCount:"0";
+							elementObj.userBiined=isUserBiined?"1":"0";
 							elementObj.userShared="0";
 							elementObj.userCommented="0";
 							elementObj.isActive="1";
@@ -232,7 +234,6 @@ module.exports = function(){
     /**** 
     	Other methods
     	****/
-
     //Update elements in showcases
     function updateElementsInShowcases(model,elementId,callback){
 	    	showcase.find({"objects.elementIdentifier":elementId},"",function(err,data){

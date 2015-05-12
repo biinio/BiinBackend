@@ -41,7 +41,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
 
   //Boolean values 
-  //$scope.hasListPriceBool=false;
+  $scope.hasListPriceBool=false;
   $scope.hasDiscountBool=false;
   $scope.hasTimmingBool =false;
   $scope.hasQuantityBool=false;
@@ -81,7 +81,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.currentModelId = $scope.elements[index].elementIdentifier;
 
     //Set the Booleans Values
-    //$scope.hasListPriceBool= $scope.elements[index].hasListPrice==='1';
+    $scope.hasListPriceBool= $scope.elements[index].hasListPrice==='1';
     $scope.hasDiscountBool= $scope.elements[index].hasDiscount==='1';
     $scope.hasTimmingBool= $scope.elements[index].hasTimming==='1';
     $scope.hasQuantityBool= $scope.elements[index].hasQuantity==='1';
