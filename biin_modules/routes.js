@@ -20,6 +20,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var mobileOauthManager= require('./mobileOauthManager');
     var stickers = require('../routes/stickers')();
     var mobileRoutes = require('../routes/mobileRoutes')();
+    var sysGlobals = require('../routes/sysGlobals')();
+
+    //Sys routes
+    app.post('/enviroments', sysGlobals.set)
 
     //Application routes
     app.get('/sendEmail', routes.sendEmail)
