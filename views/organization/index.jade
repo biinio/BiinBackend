@@ -2,62 +2,75 @@ extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/organizationsController.js")
 block content	
-	#sectionContent.max-height(ng-app="biinAppOrganizations" ng-controller="organizationsController")
-		#wrapperHeader.row
-		#wrapperContent.row.max-height
-			.max-height
-				.row.max-height
-					.col-lg-4.col-md-3.col-sm-3.col-list.max-height
-						.row.max-height(ng-class="{'max-height':selectedOrganization==null}")
-							// ---------- Organizations  List ----------
-							div(slimscroll="" slimscroll-option="{height: 'auto'}" )
-								.col-md-1.max-width
-									input.form-control.search-box.center(ng-model="query" placeholder="Search" autofocus)
-								a.col-md-1.module(ng-click="create()")				
-									.moduleWrapper.remove-module
-										.btn-rounded.center.icon.icon-add-1							
-								a.col-md-1.module(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
-									.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
-										img.img-responsive(ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-										.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
-											.icon.icon-bin-2
-					.col-lg-8.col-md-9.col-sm-9.colOptions.max-height(ng-if="selectedOrganization!=null")
-						.animate-switch.max-height
-							ul.workAreaHeader.nav.nav-tabs
-								li(ng-class="{active:activeTab == 'details'}")
-									a(ng-click="changeTabTo('details')") Details
-								li(ng-class="{active:activeTab == 'gallery'}")
-									a(ng-click="changeTabTo('gallery')") Gallery									
-							.row.workArea.max-height(ng-switch="activeTab" drop-files)
-								.col-md-6.col-sm-6.colPreview.max-height.colAppend(drop)
-									.row.max-height
-										button.center.form-group.btn.btn-default.btn-save.form-control(ng-click="save()") SAVE
-										.div(slimscroll="" slimscroll-option="{height:'90%'}")
-											a.col-md-1.module(ng-repeat="item in organizations[selectedOrganization].media")
-												.moduleWrapper.moduleWrapper-inverse.contentHideButtons
-													img.img-responsive(ng-src="{{item.imgUrl}}" pending-indicator)
-													.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(organizations[selectedOrganization].media.indexOf(item))")
-														.icon.icon-bin-2
-								.col-md-6.col-sm-6.colPreview.max-height(ng-switch-when='details')
-									.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+	#sectionContent(ng-app="biinAppOrganizations" ng-controller="organizationsController" drop-files="" ngCloack)
+		#wrapperContent
+			.left-section-content
+				.container-fluid
+					.row
+						.col-md-12(style='padding:8px;')
+							button.btn.btn-default.btn-block(ng-click='create()') ADD NEW ORGANIZATION
+
+				.container-fluid(style='padding:5px;')
+					.row
+						.col-xs-4.col-sm-12.col-md-12.col-lg-6.nopadding(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
+							.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
+								.moduleTitle {{item.name}}
+								img(ng-src="{{item.media[0].imgUrl}}" pending-indicator)
+								//img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+								//img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+								.btnDelete.icon-round-control.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
+									.icon.icon-bin-2
+								.btnShowcasePreview.icon-round-control.btn-on-hover
+									.icon.icon-arrange-1
+					.boton-Controls
+						#organizationListGuide.user-guide-wrapper(guide)
+							.guide-header
+								span Adding organizations
+								.close-guide
+									.icon.icon-delete-1-1
+							.guide-body
+								p Click on the plus button to add a new organization to your account. You can also click on the organization button to edit.
+								p Remember to save your changes
+						input.form-control.search-box.max-width.center(ng-model="query" placeholder="Search" autofocus)
+			.right-section-content
+				div(ng-if="selectedOrganization!=null")
+					.animate-switch.max-height
+						ul.workAreaHeader.nav.nav-tabs
+							li(ng-class="{active:activeTab == 'details'}" class='first')
+								a(ng-click="changeTabTo('details')") Details
+						.row.workArea.max-height(ng-switch="activeTab")
+							//Workign Area
+							.col-md-7.col-sm-7.colPreview.max-height.colAppend(ng-if='!organizations[selectedOrganization].isNew')
+								.row.max-height
+									div(slimscroll="" slimscroll-option="{height:'auto'}")
+										a.col-md-1.moduleImage(ng-repeat="item in organizations[selectedOrganization].media" ng-if="organizations[selectedOrganization].media.length>0")
+											.moduleImageWrapper.contentHideButtons
+												img(ng-src="{{item.imgUrl}}" pending-indicator)
+												.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(organizations[selectedOrganization].media.indexOf(item))")
+													.icon.icon-bin-2
+										a.col-md-1.moduleImage.drop-images(ng-if="organizations[selectedOrganization].media.length<=0")
+											p Drop Images Here or Click to Upload...
+							.col-md-5.col-sm-5.max-height(ng-switch-when='details')
+								.mainWrapperShowcase(slimscroll="" slimscroll-option="{height: 'auto'}" slimscroll-obj="showCasePreviewScroll")
+									form(name="frmOrganizations " novalidate)
 										.row
-											label Name:
+											h1 Organization Information
 										.row
-											input.form-control( ng-model="organizations[selectedOrganization].name")
+											p Add all your organization information here. Information that will be shown on the mobile app is mark with **
 										.row
-											label Brand:
+											input.form-control(type="text" name="name" ng-model="organizations[selectedOrganization].name" placeholder='Name **' required)
+											span(class="error" ng-show="frmOrganizations.name.$error.required") The name field is required
 										.row
-											input.form-control( ng-model="organizations[selectedOrganization].brand")
+											input.form-control(type="text" name="brand" ng-model="organizations[selectedOrganization].brand"  placeholder='Brand name **' required)
+											span(class="error" ng-show="frmOrganizations.brand.$error.required") The brand field is required													
 										.row
-											label Description:
+											input.form-control(type="text" name="description" ng-model="organizations[selectedOrganization].description"  placeholder='Description **' required)
+											span(class="error" ng-show="frmOrganizations.description.$error.required") The description field is required																										
 										.row
-											input.form-control( ng-model="organizations[selectedOrganization].description")
+											input.form-control(type="text" ng-model="organizations[selectedOrganization].extraInfo"  placeholder='Extra Information')												
 										.row(ng-if="!organizations[selectedOrganization].isNew")
-											label UUIID
-										.row(ng-if="!organizations[selectedOrganization].isNew")
-											p {{organizations[selectedOrganization].identifier}}												
+											label Organization Id: {{organizations[selectedOrganization].identifier}}																	
 										.row
-											button.form-group.btn.btn-default.form-control(ng-click="save()") SAVE																	
-								//Gallery Tab
-								.col-md-6.col-sm-6.colPreview.max-height.col-splitter(ng-switch-when='gallery')
-									include ../_partials/galleryWidget							
+											button.btn.btn-default.btn-save(ng-click="save()" ng-disabled="frmOrganizations.$invalid") SAVE
+											button.btn.btn-default.btn-save(ng-click="removeOrganizationAt(organizations.indexOf(organizations[selectedOrganization]))")
+												span.icon-bin-2

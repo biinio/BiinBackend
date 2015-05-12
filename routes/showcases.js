@@ -17,7 +17,7 @@ module.exports = function () {
 		var organization = req.param("identifier");
 
 		var callback= function(organization,req, res){
-			res.render('showcase/index', { title: 'Organizations list' ,user:req.user, user:req.user, organization:organization, isSiteManteinance:true});
+			res.render('showcase/index', { title: 'Organizations list' ,user:req.user, organization:organization, isSiteManteinance:true});
 		}
 
 		//If the organization header is not in cache try to get it
@@ -49,57 +49,59 @@ module.exports = function () {
    		});
 	}
 
-	//PUT an update of the showcase
+	//POST/PUT an update of the showcase
 	functions.set=function(req,res){
-		var model =req.body.model;
+
 		//Perform an update
+		var organizationIdentifier= req.param('identifier');
 		var showcaseIdentifier=req.param("showcase");
-		var model = req.body.model;			
-		delete model._id;
 
-		//Set the account identifier for the model
-		model.accountIdentifier=req.user.accountIdentifier;
-		if(model)
+		//If is a new element
+		if(typeof(showcaseIdentifier)==="undefined"){
+
+	         var newModel  = new showcase();
+	         newModel.identifier=utils.getGUID();
+	         newModel.accountIdentifier = req.user.accountIdentifier;
+	         newModel.organizationIdentifier = organizationIdentifier;		      
+	         newModel.lastUpdate =  utils.getDateNow();
+	         newModel.notifications = [{isActive:"0",notificationType:'1',text:''}];
+	         newModel.startTime="2015-03-26T06:00:35.001Z";
+	         newModel.endTime="2015-03-26T06:00:35.001Z";
+	         newModel.save(function(err){
+	         	if(err)
+	         		res.send(err,500);
+	         	else
+					res.send(newModel,201);
+	         	});
+		}else
 		{
-			//If is pushing a new model
-			if('isNew' in model){
-				delete model.isNew;
+			var model = req.body.model;	
+			model.lastUpdate = utils.getDateNow();	
+			if(model)	
+				delete model._id;		
 
-				if(model.identifier=='')
-                	model.identifier=utils.getGUID();
-                var newModel = new showcase(model);
-				//Perform an create
-				newModel.save(function(err){
-					if(err)
-						throw err;
-					else{
-						//Return the state and the object
-						res.json({state:"success",replaceModel:model});
-					}
-				});
-			}else{
-				showcase.update(
-	                     {
-	                       identifier:showcaseIdentifier,
-	                     	organizationIdentifier:model.organizationIdentifier, 
-	                     	accountIdentifier:req.user.accountIdentifier
-	                     },
-	                     { $set :model },
-	                     { upsert : true },
-	                     function(err){
-	                     	
-	                     	if(err)
-								res.json(null);
-							else{
-								//Update the biins last update property asynchronous
-	                            updateBiinsLastUpdate(showcaseIdentifier);
-	                            //Return the state
-								res.json({state:'success'});							
-							}
-	                     }
-	                   );
-			}
-		}
+			//Update the showcase information
+			showcase.update(
+                     {
+                       identifier:showcaseIdentifier,
+                     	organizationIdentifier:model.organizationIdentifier, 
+                     	accountIdentifier:req.user.accountIdentifier
+                     },
+                     { $set :model },
+                     { upsert : true },
+                     function(err){
+                     	
+                     	if(err)
+							res.json(null);
+						else{
+							//Update the biins last update property asynchronous
+                            updateBiinsLastUpdate(showcaseIdentifier);
+                            //Return the state
+							res.json({state:'success'});							
+						}
+                     }
+             );
+		}						
 	}
 
 	//DELETE an specific showcase
@@ -158,6 +160,41 @@ module.exports = function () {
 		catch(err){
 		  	console.log(err);
 		}
+	}
+
+
+	/****
+	 Other methods
+	***/
+
+	//Get a specific showcase
+	functions.getMobileShowcase =function(req,res){
+		var identifier = req.param("identifier");
+		//biinie getShowcase
+		showcase.findOne({"identifier":identifier},{"identifier":1,"showcaseType":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"elements.elementIdentifier":1,"elements._id":1, "notifications":1, "webAvailable":1},function(err,data){
+			if(err)
+				res.json({data:{status:"7",data:{}}});	
+			else
+				if(typeof(data)==='undefined' || data===null || data.length===0)
+					res.json({data:{status:"9",data:{}}});	
+				else{
+					var showcaseObj = {}
+
+					showcaseObj.title = data.name?data.name:"";
+					showcaseObj.subTitle= data.description?data.description:"";
+					showcaseObj.titleColor=data.titleColor?data.titleColor.replace('rgb(','').replace(')',''):"0,0,0";
+					showcaseObj.lastUpdate = data.lastUpdate& data.lastUpdate!=""?data.lastUpdate:utils.getDateNow();
+					showcaseObj.identifier = data.identifier?data.identifier:"";
+					showcaseObj.notifications = data.notifications;
+					showcaseObj.activateNotification = data.activateNotification?data.activateNotification:"0";					
+					showcaseObj.webAvailable = data.webAvailable;
+					showcaseObj.showcaseType = data.showcaseType?data.showcaseType:"1";
+					showcaseObj.elements = data.elements;					
+
+					res.json({data:showcaseObj,status:"0"});
+				}
+		})
+
 	}
 
 	/****

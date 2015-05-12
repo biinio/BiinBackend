@@ -1,0 +1,57 @@
+{
+    "data": {
+        "identifier": "pumaSite01",
+        "proximityUUID": "825C23A6-CFC5-4A16-9968-7CF9E1AA3091",
+        "major": "1",
+        "title": "Puma",
+        "subTitle": "Multiplaza Escazu",
+        "color": "198,168,135",
+        "textColor": "255,255,255",
+        "country": "Costa Rica",
+        "state": "San Jose",
+        "city": "Escazu",
+        "zipCode": "1001",
+        "streetAddress1": "100 metros norte del cementerio local",
+        "streetAddress2": "Frente al Mall",
+        "imagesURL": [
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/puma1.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/puma2.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/puma3.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/puma4.jpg"
+            }
+        ],
+        "biins": [
+            {
+                "identifier": "pumaSite01WebBiin",
+                "minor": "-1",
+                "biinType": "1",
+                "showcaseIdentifier": "pumaShowcase01",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/pumaShowcase01"
+            },
+            {
+                "identifier": "pumaSite01Biin01",
+                "minor": "1",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase02",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase02"
+            },
+            {
+                "identifier": "pumaSite01Biin02",
+                "minor": "2",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase03",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase03"
+            }
+        ]
+    }
+}

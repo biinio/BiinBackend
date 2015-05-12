@@ -1,6 +1,6 @@
 {
   "name": "aterrien/jQuery-Knob",
-  "version": "1.2.8",
+  "version": "1.2.11",
   "main": "js/jquery.knob.js",
   "description": "Nice, downward compatible, touchable, jQuery dial.",
   "license": "MIT",
@@ -10,14 +10,13 @@
   },
   "devDependencies": {},
   "homepage": "https://github.com/aterrien/jQuery-Knob",
-  "_release": "1.2.8",
+  "_release": "1.2.11",
   "_resolution": {
     "type": "version",
-    "tag": "1.2.8",
-    "commit": "f06ac07020586b8307c9a1c08efb177c46a79d28"
+    "tag": "1.2.11",
+    "commit": "f0149509614763b3bc270c7cb70eae6602491711"
   },
   "_source": "git://github.com/aterrien/jQuery-Knob.git",
   "_target": "~1.2.8",
-  "_originalSource": "jquery-knob",
-  "_direct": true
+  "_originalSource": "jquery-knob"
 }

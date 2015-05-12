@@ -1,0 +1,5 @@
+Microlozalizacion
+=================
+
+iBeacon es un sistema de posicionamiento en interiores que Apple llama “una nueva clase de transmisores de baja potencia de bajo costo que pueden notificar a dispositivos iOS 7 cercanos “. Los  iBeacons también pueden ser utilizados por el Sistema Operativo Android. iBeacon en una sola frase es una tecnología de última generación y de corta proximidad que ya es compatible con los dispositivos móviles existentes, y que va más allá de la Tecnología  NFC. Con iBeacons su aplicación móvil puede interactuar con el mundo real.
+<embed id="flashObj" width="100%" height="270" type="application/x-shockwave-flash" src="http://c.brightcove.com/services/viewer/federated_f9?isVid=1&amp;isUI=1" flashvars="@videoPlayer=2809639159001&amp;playerID=2130172759001&amp;playerKey=AQ~~,AAABSUycFdE~,CCE4gg49qauuKMYRzYRtJzBTvcYcYOrd&amp;domain=embed&amp;dynamicStreaming=true" base="http://admin.brightcove.com" seamlesstabbing="false" allowfullscreen="true" swliveconnect="true" allowscriptaccess="always" wmode="transparent" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" bgcolor="#FFFFFF">

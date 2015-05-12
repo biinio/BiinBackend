@@ -1,0 +1,24 @@
+extends layout_landing_page_out
+block head_scripts
+	script(src="/landingPage/js/angular/landing.js")
+block content		
+	section#termsAndConditions
+		.container
+			//Section Tittle
+			.row
+				h1 Mobile Test
+			.row				
+				h2 Create a Binie				
+				input(type="text" ng-model="binnie.firstName" placeholder="first name")
+				input(type="text" ng-model="binnie.lastName" placeholder="last name")
+				input(type="text" ng-model="binnie.biinName" placeholder="e-mail/biinName")
+				input(type="password" ng-model="binnie.password" placeholder="password")			
+				input(type="text" ng-model="binnie.gender" placeholder="gender")
+				button(ng-click="submitBinnie()") Submit
+				label {{binnie.identifier}}
+				label {{binnie.message}}
+			.row
+				h1 Verify e-mail verification using the given ID
+				input(type="text" ng-model="binnie.identifier" placeholder="e-mail/biinName")
+				button(ng-click="verifyBinnie()") Submit
+				label {{binnie.emailVerificationStatus}}

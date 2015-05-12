@@ -1,0 +1,36 @@
+form.novalidate
+	.section
+		h1 Showcase Elements
+		p Add elements to your showcase
+	.section
+		#showcaseElements.colAppend
+			.showcaseElementsList
+				//.elementWrapper.scrollbar-inner.colAppend(scrollbar="scrollbarOptionsStandard" drop="shgicaseElement")
+				.elementWrapper.scrollbar-inner(scrollbar="scrollbarOptionsStandard" )
+					.elementDropContainerHelper(ng-if="showcases[selectedShowcase].elements.length<=0" drop-element)
+					.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding.moduleWrapper.contentHideButtons(id="{{el.elementIdentifier}}" ng-repeat="el in showcases[selectedShowcase].elements | orderBy:natural('position')")
+						.topDrop(drop-up="showcases[selectedShowcase].elements.indexOf(el)")
+						.botomDrop(drop-down="showcases[selectedShowcase].elements.indexOf(el)")
+						.moduleTitle
+							span {{el.title}}
+						img(ng-src= "{{el.media[0].url}}")
+						.btnDelete.icon-round-control.btn-on-hover(ng-click="removeElementAt(showcases[selectedShowcase].elements.indexOf(el))")
+							.icon.icon-bin-2
+						//(ng-if="eval(el.position)>1 && showcases[selectedShowcase].elements.length>1")
+						.btnArrowUp.btn-on-hover.icon-round-control(ng-click="moveElementUp(showcases[selectedShowcase].elements.indexOf(el))")
+							.icon.icon-arrow-3
+						//(ng-if="eval(el.position) < showcases[selectedShowcase].elements.length && showcases[selectedShowcase].elements.length>1")
+						.btnArrowDown.btn-on-hover.icon-round-control(ng-click="moveElementDown(showcases[selectedShowcase].elements.indexOf(el))")
+							.icon.icon-arrow-4
+			.elementsAvailableList.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+				.col-xs-4.col-sm-4.col-md-4.col-lg-4.nopadding( ng-repeat="avEl in elements| filter:query" drag="showcaseElement" element-index="{{elements.indexOf(avEl)}}" ng-class="elementInShowcase(elements.indexOf(avEl))")
+					.moduleWrapper.contentHideButtons
+						.moduleTitle
+							span {{avEl.title}}
+						img(ng-src="{{avEl.media[0].url}}" style="max-width: 250px;height: auto;" pending-indicator)
+				.container-fluid.searchBox
+					.searchBox-wrapper
+						input.form-control(type="text" placeholder="search" ng-model="query" autofocus )
+
+
+

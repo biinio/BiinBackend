@@ -1,78 +1,163 @@
 module.exports =function(){
 
 	var util = require('util'), fs= require('fs'), path = require("path"), moment=require("moment");
+	var gm = require("gm"),imageMagick = gm.subClass({ imageMagick: true });
 
 	//Custom Utils
 	var utils = require('../biin_modules/utils')();	
 
 	//Schemas
-	var gallery = require('../schemas/gallery');
+	var gallery = require('../schemas/gallery'), organization = require('../schemas/organization'), imageManager=require('../biin_modules/imageManager')();
 	var functions ={},
 		_quality = 100,
 	    _workingImagePath='./public/workingFiles/',
 	    _uploadImageDirectory = "/workingFiles/";
-
+	
+	var oauthMobileAPIGrants = require('../routes/oauthMobileAPIGrants')();	
 	//GET the index of Gallery
 	functions.index = function(req,res){
-		res.render('gallery/index', { title: 'Gallery list' ,user:req.user});
+		var organizationId = req.param("identifier");
+
+		var callback= function(organization,req, res){
+			res.render('gallery/index', { title: 'Gallery list' ,user:req.user, organization:organization, isSiteManteinance:true});
+		}
+
+		//If the organization header is not in cache try to get it
+		//if(!req.session.selectedOrganization || req.session.selectedOrganization.identifier!= organizationId){			
+			 getOganization(req, res, callback);
 	}	
 
 	//Return a list of gallery files
 	functions.list =function(req,res){
-		gallery.find({accountIdentifier:req.user.accountIdentifier},function(err,data){
-			res.json(data);
-		});
+
+		var organizationIdentifier = req.param("identifier");
+		var galleryProto = new gallery();
+		galleryProto.organizationIdentifier = organizationIdentifier;
+
+		organization.findOne({accountIdentifier:req.user.accountIdentifier, identifier:organizationIdentifier},{'gallery':1},function (err, data) {
+			  var gallery = null;
+			  	if(data && 'gallery' in data)
+			  		gallery = data.gallery;
+			  	
+			   res.json({data:gallery, prototypeObj : galleryProto});
+		});			
 	}	
 
 	//PUT Files
 	functions.upload=function(req,res){
-
+		var organizationId = req.param("identifier");
 		var userAccount = req.user.accountIdentifier;
 		var filesUploaded =[];
 
+		var imagesDirectory = path.join(userAccount,organizationId);
 		res.set("Content-Type","application/json");
-		console.log(util.inspect(req.files,{showHidden:false}))
 
-		var uploadFile = function(file){
+		var uploadFile = function(file,callback){
 			//Read the file
 	 		var name = file.originalFilename;	 		
 	 		var data = fs.readFileSync(file.path);
+	 		var systemImageName = userAccount+organizationId+ utils.getImageName(name,_workingImagePath); 
 
-	 		//Asign the new temporal paths
-	 		var systemImageName = utils.getImageName(name,_workingImagePath); 
-	 		var newPath = process.env.IMAGES_REPOSITORY+systemImageName;
-	 		var localPath = path.join(_workingImagePath,systemImageName);
+	 		var mainColor="";
+	 		imageManager.uploadFile(file.path,imagesDirectory,systemImageName,true,function(imgURL){
+		 		var tempId=utils.getUIDByLen(40)+".";
 
-	 		// write file to uploads/fullsize folder
-			var err=  fs.writeFileSync(localPath, data);
+				imageMagick(file.path).format(function(err,format){
+					var tempPath=_workingImagePath+tempId+format;
+			 		imageMagick(file.path).size(function(err,size){	 
+			 			var height=size.height*100/70;			
+			 			var width=size.width*100/70;		 			
+			 			imageMagick(file.path)
+			 					.gravity("Center")
+			 					.crop(height,width,0,0)
+			 					.scale(1,1)
+			 					.depth(8,function(err,data){
+			 						if(err)
+			 							console.log(err);
+			 					})
+			 					.write(tempPath,function(err,data){
+			 						imageMagick(tempPath).identify('%[pixel:s]',function(err,color){
+						 				console.log("Color of resized with Write: " +color);
+						 				mainColor=color.replace("srgb(","");
+						 				mainColor=mainColor.replace(")","");
 
-			if(err){
-		  		throw err;
-		  	}
-		  	else{
+							 			if(fs.existsSync(tempPath)){
+				 							fs.unlink(tempPath,function(err){
+				 								console.log("The image was removed succesfully");
+				 							});
+				 						}
 
-		  		var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
-		  		originalName:name, localUrl:localPath,  serverUrl: newPath, dateUploaded: moment().format('YYYY-MM-DD h:mm:ss')};
+								  		var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
+								  		originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
+								  		mainColor:mainColor
+								  		};
 
-		  		filesUploaded.push(galObj);
-		  	}
+								  		callback(galObj);	 		
+
+						 			});
+
+			 					})
+			 		})	 			
+		 		});
+	 		});	
+		}
+
+		//Update the organization
+		var organizationUpdate = function(){
+			organization.update({"accountIdentifier":userAccount,"identifier":organizationId},
+			 {$push:{gallery:{$each:filesUploaded}}},
+			 { upsert : false},
+	         function(err, cantAffected){
+	         	if(err){
+	         		throw err;
+	         		res.json(null);
+	         	}
+				else{
+	                //Return the state
+					if (err)
+		 				throw err;
+			 		else
+			 			res.json(filesUploaded);
+				}
+	         });	
 		}
 
 		//Upload of the files
-		if(util.isArray(req.files.file))
+		if(util.isArray(req.files.file)){
+			var cantUploaded=0;
+			var totalToupload=req.files.file.length;
 		 	for(var i=0; i< req.files.file.length; i++){
-		 		uploadFile(req.files.file[i])
-		 	}
-		else
-			uploadFile(req.files.file)	 		
+		 		uploadFile(req.files.file[i],function(galToUpload){
+		 			cantUploaded++;
+		 			filesUploaded.push(galToUpload);
+		 			if(cantUploaded===totalToupload){
+						//Lets update the buquet
+		 				setTimeout(organizationUpdate,60*60);		
+		 			}
+		 		});
+		 		
+		 	}		 		 	
+		}
 
-	 	//Regist the models
-	 	gallery.create(filesUploaded, function(err){
-	 		if (err)
-	 			throw err;
-	 		else
-	 			res.json(filesUploaded);
-	 	});
+		else{
+			uploadFile(req.files.file,function(galToUpload){
+		 			filesUploaded.push(galToUpload);
+		 			//Lets update the buquet
+					setTimeout(organizationUpdate,60*60);
+		 		});		
+		}
+	}
+
+	/****
+	 Other methods
+	***/
+	getOganization = function(req, res, callback){
+		var identifier=req.param("identifier");
+
+		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
+			req.session.selectedOrganization = data;
+			callback(data,req,res);
+		});
 	}
 
 	return functions;

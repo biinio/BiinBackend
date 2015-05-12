@@ -18,13 +18,48 @@ a.module:hover{
 	text-decoration:none; 
 }
 
+p{
+	font-size: 8px;
+	color: #b9babb;
+}
+
 .form-control {
 	height: 33px;
-	width: 95%;
+	width: 100%;
+	border-radius:initial!important;
+	margin-bottom: 5px;
 }
+
+.form-horizontal{
+	.control-label{
+		text-align:left;
+		margin-left:0px;
+	}	
+} 
 
 .search-box { 
 	height: 25px;
+}
+
+//Inputs to validate
+form[novalidate]{
+	input{
+		border-left-width: 8px;
+		border-color: #3498db;
+		border-style:solid;
+	}
+}
+
+input[require].ng-pristine{
+	border-color: #e74c3c;
+}
+
+input.ng-invalid.ng-dirty{
+	border-color:#e74c3c;
+}
+
+input.ng-valid.ng-dirty{
+	border-color: #2ecc71;
 }
 
 .search-control input{
@@ -36,9 +71,105 @@ a.module:hover{
 	padding-top: 15px;
 }
 
+.boton-Controls{
+	position: absolute;
+	bottom: 5px;
+	width: 85%;
+}
+
+.form-control{
+	height: 40px!important;
+	border-width: 2px;
+}
+
+::-webkit-input-placeholder {
+   padding-left: 15px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  padding-left: 15px;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   padding-left: 15px;
+}
+
+:-ms-input-placeholder {  
+   padding-left: 15px;
+}
+
+.scroll-vertical-container{
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 88vh;
+	max-height:  88vh;
+	width: 98%;
+	max-width: 100%;
+	overflow-x: scroll;
+	overflow-y: hidden!important;
+	white-space: nowrap;
+	padding-right: 8px;
+}
+
+.main-views-list{
+	 margin-left: 3px!important;
+
+	 .scroll-wrapper > .scroll-content {
+	 	width: inherit!important;
+	}
+	.scroll-vertical-container{
+		padding-bottom: 50px!important;
+	}
+}
+
+.container-list-scroll-fixed{
+	padding:5px;
+	position:relative; 
+	height: 95vh;
+	.row{
+		position:relative;
+		max-height: 90%; 
+		height: 100%;
+		padding-bottom: 10px;
+	}
+}
+
+/*------------------------------------------*/
+/*	Regions Content
+/*------------------------------------------*/
+
+.regionsContent{
+	h1{
+		font-size: 22px;
+	}
+	p{
+		font-size: 17px;
+	}
+	.panel-body{
+		margin-left: 30px;
+	}
+}
+
 /*------------------------------------------*/
 /*	Main Containers
 /*------------------------------------------*/
+
+#wrapperContent.loaded::before{
+	display: none;
+}
+
+#wrapperContent::before{
+	//background-image: 
+	content: url(../images/icons/loader.gif);
+	position: center;
+	background-repeat: no-repeat;
+	background-size: 125px 125px;
+	position: absolute;	
+	top: 40%;
+	left: 40%;	
+
+}
 
 .main-container {
 	height: 100%;
@@ -81,84 +212,135 @@ a.module:hover{
 .panel-body {
 	padding: 0px;
 	margin-left: -25px;
-}	
+}
 
-.moduleWrapper {
-	height: 125px;
-	width: 125px;
-	background-color: @secondColor;
-	border-radius: 7px;
-	margin-top: 5px;
-	margin-left: auto;
-	margin-right: auto;
+
+//Drop images style
+.drop-images{
+	border-style: dashed;
+	border-color: black;
+	text-align: center;
+    position: fixed;
+}
+
+.gallery{
 	position: relative;
 
-	//Wrapper Image
-	img {
-		height: auto;
-		max-height: 125px;
-		max-width: 125px;
-		margin-left: auto;
-		margin-right: auto;    
-		width: 100%;
-		padding-left: 7px;
-		padding-right: 7px;
-		padding-top: 7px;
-		padding-bottom: 7px;
-	}
-
-	//Module Title
 	.moduleTitle{
 		position: absolute;
-		top: 0px;
+		background-color: black;
+		color: white;
+		opacity: 0.5;
+		padding-left: 6px;
+		font-size: 12px;
+		width: 100%;
+		max-width: 100%;
+  		word-wrap: break-word;
 	}
 
+	.galleryImageWrapper	{
+		max-height: 200px;
+		max-width: 200px;
+		height: 120px;
+		width: 120px;
+		padding: 5px 5px 5px 5px;
+		.galleryImageWrapperContent{
+			background-color: #fff;	
+			position: relative;
+			overflow: hidden;
+		}		
+		margin: 5px 5px 5px 5px;
+		
+		
+	}
+
+	img{		
+		margin:5px 5px 5px 5px;				
+		max-width: 100px;
+		min-width: 100px;
+	}
 }
 
-.moduleWrapper.disabled{
-	background-color: red;
+/*------------------------------------------*/
+/*	Dragable Properties
+/*------------------------------------------*/
+
+.ui-draggable-helper{
+	position: relative;
+	z-index: 9999999999999;	
+	min-width: @elementWidth/2;
+	min-height: @elementHeight/2;
+	max-height: @elementHeight/2;
+	max-width: @elementWidth/2;
+
+	margin-top:  @standardPadding;
+	border:solid;
+	border-color: @colorGray;
+	background-color: @colorBaseWhite;
+
+	img{
+		position: relative;
+		width: 100%;
+	}
+	.galleryImageWrapperContent{
+		position: relative;
+		height: 100%;
+		width: 100%;
+	}
+	padding: 0px 0px 0px 0px;
 }
 
-.moduleWrapper.activeShowcase{
+.ui-state-highlight{
+	height: 100px; 
+	width: 100%;
+	line-height: 1.2em; 
+	color:green;
 	background-color: green;
 }
+//User guide main style
+.user-guide-wrapper{
+	.guide-header{
 
-.moduleWrapper-inverse{
-	.moduleWrapper;
-	background-color: @forthColor;
-}
+		padding-left: 5px;
+		padding-top: 5px;
+		position: relative;
+		background-color: @firstColor;
+		height: 30px;
+		border-top-left-radius: @controlsRadius;
+		border-top-right-radius: @controlsRadius;
+		color: @secondColor;
 
-.moduleWrapperShowcaseElement {
-	position: relative;
-	margin-left: 0px;
-	max-width: @elementWidth;
-}
+		.close-guide{
+			position: absolute;
+			top: 2px;
+			right: 5px;
+			background-color: @fifthColor;
+			height: 25px;
+			width: 25px;
+			opacity: initial;
+			border-radius: @controlsRadiusRounded;
+			cursor: pointer;
 
-.module {
-	margin-right: 7px;
-	min-height: 125px;
-	min-width: 125px;
-}
-
-//Remove Element of Grids
-.moduleWrapper.remove-module {
-	background-color:  @firstColor;
-	padding-top: 47.4px;
-
-	//Button Module
-	.btn-rounded {
-		background-color: @secondColor;
-		padding: initial;
-		text-align: center;
-		line-height: 36px;
-
-		//Rounded button icon of remove
-		.icon {
-			color: @firstColor;
+			.icon:before{
+				font-size: 10px;
+				font-weight: bolder!important;
+				position: absolute;
+				left: 7px;
+				top: 8px;
+			}
 		}
 	}
+	.guide-body{
+		border-bottom-right-radius: @controlsRadius;
+		border-bottom-left-radius: @controlsRadius;
+		background-color: @secondColor;
+		padding-top: @standardPadding;
+		padding-left: @standardPadding;
+		padding-right: @standardPadding;
+		padding-bottom: @standardPadding;
+	}
+	margin-bottom: @standardPadding;
 }
-
 
 .body-list {
 	margin-left: -0px;
@@ -168,7 +350,7 @@ a.module:hover{
 	background-color: @forthColor;
 }
 
-.colOptions {	
+.colOptions {
 	padding-right: 0px;
 	padding-left: 0px;
 }
@@ -205,7 +387,7 @@ a.module:hover{
 }
 
 .max-elementWidth-OverFlow{
-	max-width: @elementWidth+25px;	
+	max-width: @elementWidth+25px;
 }
 
 .center {
@@ -226,6 +408,10 @@ a.module:hover{
 
 .roundedOptionsForm {
 	margin-top: -28px
+}
+.btn{
+	border:initial!important;
+	border-radius:initial!important;
 }
 
 .btn-rounded {
@@ -248,11 +434,6 @@ a.module:hover{
 	}
 }
 
-.btn-default {
-	background-color: @firstColor;
-	color: @secondColor;
-	border-color: none;
-}
 
 .colPreview{
 
@@ -264,10 +445,11 @@ a.module:hover{
 	.preview-title-division{
 		height: 15%;
 		min-height: 20px;
+		max-height: 35px;
 		background-color: @firstColor;
 		color: @secondColor;
 		position: relative;
-		h5{			
+		h5{
 			position: absolute;
 			bottom:0px;
 			left: 20px;
@@ -279,6 +461,108 @@ a.module:hover{
 	}
 }
 
+#sitePreview{
+	position: relative;
+	height: 328px;
+	width: 328px;
+	border:solid;
+	border-color: @colorBlue;
+	border-width: 4px;
+	img{
+		height: 320px;
+		width: 320px;
+	}
+	.tittle{
+		position: absolute;
+		left: 10px;
+		top: 10px;
+		height: 65px;
+		width: 300px;
+		.title1{
+			position: absolute;
+			top:0px;
+			left: 10px;
+			height: 40px;
+			font-size: 35px;
+		}
+
+		.title2{
+			position: absolute;
+			left: 15px;
+			top:40px;
+			height: 25px;
+		}
+	}
+ }
+ 
+#elementPreview{
+	position: relative;
+	height: 328px;
+	width: 328px;
+	border:solid;
+	border-color: @colorBlue;
+	border-width: 4px;
+	img{
+		height: 320px;
+		width: 320px;
+	}
+	.tittle{
+		position: absolute;
+		left: 0px;
+		bottom: 10px;
+		height: 50px;
+		width: 320px;
+		.elementNumber{			
+			width: 50px;
+			position: absolute;
+			top:0px;
+			left: 0;
+			margin-left: 4px;
+			height: 50px;
+			font-size: 20px;
+			border-style: solid;
+			border-radius: 25px;
+	    	-moz-border-radius: 25px;
+			-webkit-border-radius: 25px;
+			border-radius: 25px;			
+			
+			span{
+				font-size: 30px;
+				font-weight: 800;
+				padding-left: 13px;
+				position: absolute;
+				margin: initial;
+				margin-top: 2px;
+				text-align: center;
+			}
+		}
+		.title1{
+			text-align: center;
+			position: absolute;			
+			top:19px;
+			left: 55px;
+			height: 40px;
+			font-size: 25px;
+		}
+		.socialButtons{
+			top:5px;
+			position: absolute;
+			left: 55px;
+			i{
+				border-style: solid;
+				width: 30px;
+				margin-right: 1px;
+				border-radius: 4px;
+		    	-moz-border-radius: 4px;
+				-webkit-border-radius:4px;
+				border-radius: 4px;				
+				border-width: 1px;
+				padding-top: 2px;
+				padding-right: 10px;
+			}
+		}
+	}	
+}
 .contentHideButtons .btn-on-hover {
 	display: none;
 }
@@ -287,35 +571,92 @@ a.module:hover{
 	display: block;
 }
 
-.btnShowcasePreview {
-	position: absolute;
-	top: 20px;
-	left: 10px;
+.moduleWrapper .btnShowcasePreview {
+    position: absolute;
+    bottom: 25px;
+    margin-left: 50px;
+    background-color: @colorYellow;
+}
+
+.moduleWrapper .btnDelete {
+    position: absolute;
+    bottom: 25px;
+    margin-left: 16px;
+    background-color: @colorRed;
+}
+
+.moduleWrapperList{
+	position: relative;
+	height: 70px;
+	max-height: 70px;
+	overflow: hidden;	
+	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: @standardPadding;
+	background-color: @colorBaseWhite;
+
+	.thumbListImage{
+		padding-left: @standardPadding/2;
+		padding-right: @standardPadding/2;
+		padding-top:  @standardPadding/2;
+		padding-bottom: @standardPadding/2;
+		position: relative;		
+        max-height:100%;
+        height: 100%;
+		 img{
+				width: auto;
+				max-height: 100%;
+		        height: 100%;
+			}
+	}
+	.moduleTitle{
+		margin-top: @standardPadding;
+		position: relative;
+		color: @colorBaseBlack;	
+		font-weight: 600;
+		word-wrap: break-word;
+		white-space: normal;
+	}
+
+	//Action Buttons
+	.btnShowcasePreview {
+	    position: absolute;
+	    top: 38px;
+	    right: @standardPadding;
+	    background-color: @colorYellow;
+	}
+
+	.btnDelete {
+	    position: absolute;
+	    top: 4px;
+	    right: @standardPadding;
+	    background-color: @colorRed;
+	}
+}
+
+.moduleWrapperShowcaseBiin .btnDelete {
+	position: relative;
+    background-color: @colorRed;
+    line-height: 35px;
 }
 
 .btnShowcasePreview.down {
 	top: initial;
 	bottom: 20px;
 	left: initial;
-	right: 10px;   
-}   
+	right: 10px;
+}
 
 .btnShowcasePreview.up {
 	top:20px;
 	left: @elementWidth - 40px;
 }
 
-.moduleWrapper .btnShowcasePreview.btnDelete {
-	position: absolute;
-	top: 20px;
-	left: 95px;	
-}
-
 .icon-round-control {
 	height: 30px;
 	width: 30px;
 	border-radius: @controlsRadiusRounded;
-	background-color: @firstColor;
 	opacity: 0.7;
 	border: none;
 	text-align: center;
@@ -329,15 +670,28 @@ a.module:hover{
 		margin-left: auto;
 		margin-right: auto;
 		cursor: pointer;
-	}	
+	}
+}
+.color-picker{
+	border:solid;
+	border-color: @colorWhite;
+	border-width: 2px;
+	width: 215px;
+	padding-top: 5px;
+	height: 40px;
+	input{
+		margin-left: 10px;
+		border:initial;
+
+	}
 }
 
 /*------------------------------------------*/
 /*	Modules
-/*------------------------------------------*/	
+/*------------------------------------------*/
 
-.moduleWrapper.active {
-	background-color: @firstColor;;
+.moduleWrapper.active, .moduleWrapperList.active {
+	background-color: @firstColor;
 }
 
 .moduleWrapperElement {
@@ -360,6 +714,1924 @@ a.module:hover{
 	margin-left: auto;
 	margin-right: auto;
 }
+.verticalScroll{
+	overflow-y: hidden;
+}
+/*------------------------------------------*/
+/*	Wizzard
+/*------------------------------------------*/
+.wizard-wrapper{
+	position: relative;
+	.wizard-body{
+		position: relative;
+		height: 85%;
+
+	    /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	    @media (min-width: 768px) {
+	        margin-bottom: 100px;
+	        max-height: 75vh;
+	        overflow-y: scroll;
+	    }
+
+	    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+	    @media (min-width: 1550px) {
+	        margin-bottom: 160px;
+	    }
+		.section{
+			h1
+			{
+				font-size: 38px;
+			}
+			h2
+			{
+				font-size: 20px;
+				color:@firstColor;
+			}
+			p{
+				font-size:12px;
+				color: @thirthColor;
+			}
+
+			//Color Control Style
+			.color-control input, .search-criteria-control input{
+				padding-right: 0px!important;
+				padding-left: 0px!important;
+			}
+			.color-control .title-value{
+				width: 100%;
+			}
+
+			//Search Criteria Control
+			.search-criteria-control{
+
+				position: relative;
+				width: 100%;
+				height: 130px;
+				background-color:@colorWhite!important;
+
+				.search-body{
+					height: 66px;
+					padding-left: 5px;
+					padding-right: 5px;
+
+					.tag{
+						margin-top: 5px;
+						margin-left:5px;
+						width: 96px;
+						height: 25px;
+						background-color: @ninthColor;
+
+						p{
+							margin-top: 4px;
+							vertical-align:middle;
+							font-size: 11px;
+							color:@secondColor;
+							height: 100%;
+							overflow: hidden;
+						}
+						.btn-close{
+							position: absolute;
+							right: 5px;
+							top:2px;
+							background-color: @eigththColor;
+							height: 15px;
+							width: 15px;
+							border-radius: 50%;
+							font-size: 12px;
+							color:white;
+							text-align: center;
+							cursor:pointer;
+						}
+					}
+				}
+				.search-add{
+					padding-left: 5px;
+					padding-right: 5px;
+					position: absolute;
+					bottom: 0px;
+					width: 100%;
+
+					input{
+						width: 100%;
+						border:none;
+					}
+
+					.btn{
+						height: 33px;
+						width: 100%;
+					}
+				}
+			}
+			.searchScroll{
+				overflow-x: hidden;
+				overflow-y:visible;
+				height: 66px;
+				max-height: 66px;
+			}
+			//Map Section
+			.mapWrapper{				
+				width: 100%;
+				.map{
+					height: 40vh;
+					width: 63vw;
+				}
+			}
+			//Gallery owned images section
+			.ownedGalleryWrapper{
+				height: 30vh;
+				max-height:  30vh;
+				margin-top: 5px;
+				width: 1000%;
+				max-width: 100%;
+				overflow-x: scroll;
+				overflow-y: hidden!important;
+				white-space: nowrap;
+				background-color: @colorWhite;
+
+				.img-block{
+					width: 28vh;
+					height: 28vh;
+					padding: 5px 5px 5px 5px;
+					display: inline-block;
+				    dsplay:inline;/* For IE7
+				    *zoom:1;/* For IE7*/
+				    white-space:normal;
+				    .moduleWrapper{
+				    	width: 100%;
+				    	height:100%;
+				    }
+				}
+
+				margin-bottom: 10px;
+				.scroll-y{
+					display: none;
+				}
+			}
+			.galleryWrapper{
+				background-color: @colorWhite;
+				position: relative;
+				margin-top: 5px;
+				height: 35vh;
+
+				.gallery{					
+					padding-top: 10px;
+					padding-bottom: 60px;
+					margin-left: auto;
+					margin-right: auto;					
+				}
+
+				.scroll-x{
+					display: none!important;
+				}
+
+			}
+
+			//Biins Section Wrapper
+			.biinsWrapper{
+				height: 20vh;
+				max-height:  16vh;
+				margin-top: 5px;
+				width: 1000%;
+				max-width: 100%;
+				border: solid;
+				border-color: @colorGrayLight;
+				overflow-x: scroll;
+				overflow-y: hidden!important;
+				white-space: nowrap;
+				background-color: @colorGrayLight;				
+
+				.img-block{
+					width: 15vw;
+					height:14vh;
+					padding: 5px 5px 5px 5px;
+					display: inline-block;
+				    dsplay:inline;/* For IE7
+				    *zoom:1;/* For IE7*/
+				    white-space:normal;
+				    .moduleWrapper{
+				    	position: relative;
+				    	width: 100%;
+				    	height:100%;
+				    	padding: 8px 8px 8px 8px;
+				    }
+				    .biinElementWrapper{
+				    	position: relative;
+				    	height: 100%;
+				    	padding-top: 25%;
+				    	overflow: hidden;
+				    	text-align: center;
+				    	background-color: @colorGray;
+
+				    	p{
+				    		color: #fff;
+				    		font-size: 15px;
+				    	}				    	
+				    }
+				    .biinPurchasElementWrapper{
+				    	position: relative;
+				    	height: 100%;
+				    	padding-top: 25%;				    	
+				    	overflow: hidden;
+				    	text-align: center;
+
+				    }
+				    #purchaseBiinButton{
+				    	background-color: @colorFocus;				    	
+				    	position: relative;
+				    	width: 100%;
+				    	height:100%;
+
+				    	p{
+				    		color: #fff;	
+				    	}
+
+				    }
+				}
+
+				margin-bottom: 10px;
+				.scroll-y{
+					display: none;
+				}				
+			}
+
+			.biinPropertie{
+				height: 40px;
+				background-color: @colorGrayDark;
+				width: 100%;
+				color: #fff;
+				padding-top: 10px;
+				padding-left: 15px;
+			}
+
+			#categories{
+				margin-top:10vh;
+				.catModule{
+					height: 100px;
+					width: 100px;
+					background-color:@colorWhite;
+					border-radius:50%;
+					boder:solid;			
+					margin: 5px 5px 5px 5px;		
+					color: #fff;
+					//padding: 1px 1px 1px 1px;
+					cursor: pointer;
+					padding: 0px 0px 0px 0px;
+				}
+				.catModule:hover{
+					background-color:@colorFocus;
+				}
+
+				.catModuleWrapper{
+					margin-top: 5%;
+					margin-left: 5%;
+					height: 90%;
+					width: 90%;
+					position: relative;
+					text-align: center;					
+					background-color:@colorGray;
+					border-radius:50%;
+					p{
+						color:#fff;
+					}
+				}
+				.separator{
+					margin-left:9vw;					
+				}
+				.catModuleWrapper.active{
+					background-color: @colorFocus;
+				}
+				//Categories Section
+				.catIcon{
+					padding-top: 10px;					
+					font-size: 30px;
+				}			
+			}
+
+			#elementSticker{
+
+				padding-top: 5px;
+				height: 330px;
+				background-color: @colorWhite;
+				padding-left: 10px;
+				padding-right: 10px;
+				//Sticker Section
+				.stickersWrapper{
+					height: 230px;
+					min-height: 230px;
+					max-height:  230px;
+					width: 1000%;
+					max-width: 100%;
+					overflow-x: scroll;
+					overflow-y: hidden!important;
+					white-space: nowrap;
+					background-color: @colorGray;
+
+					.img-block{
+						//padding: 5px 5px 5px 5px;
+						display: inline-flex;
+					    dsplay:inline;/* For IE7
+					    *zoom:1;/* For IE7*/
+					    white-space:normal;
+					    padding-left: 10px;
+					}
+
+					margin-bottom: 10px;
+					.scroll-y{
+						display: none;
+					}
+				}
+				.stickerModuleWrapper.active{
+					background-color: @colorFocus;					
+				}
+			}
+			
+			//Main parent of Elements Type Wizard		
+			#elementType{
+
+				.scroll-y{
+					display: none;
+				}				
+			}
+
+			//Elements Details Wizard Wrapper
+			#elementDetailsWrapper{
+				position: relative;
+				height: 70vh;
+				margin-bottom: 50px;
+				
+
+				#elementDetailsControls{
+					position: relative;
+					margin-left: auto;
+					margin-right: auto;
+					.btn{
+						width: 150px;
+						margin: @standardPadding 0px 0px @standardPadding;
+						background-color: @colorFocus;
+						color: @colorBaseWhite;
+
+						i{
+							float: left;
+							font-size: 20px;
+						}
+					}
+					.btn:hover{
+						background-color: @colorFocusHover;
+					}
+				}
+
+				#elementDetailsBody{
+					position: relative;
+					height: 60vh;
+					overflow-y: auto;
+					.element{
+						background-color: @colorGrayLight;
+						width: 100%-5px;
+						margin-left: @standardPadding;
+						margin-right:@standardPadding;
+						.header{
+							position: relative;
+							h3{
+								margin-top: @standardPadding;
+								margin-bottom: 0px;
+								padding-top: @standardPadding;
+								padding-left: @standardPadding;
+								position: relative;
+								color:@colorBaseWhite;
+								font-size: 18px;
+							}
+
+							.btn-remove{		
+								height: 25px;
+								width: 25px;						
+								border-style:solid;
+								border-color: @colorGrayDark;								
+								-moz-border-radius: 50%;
+								-webkit-border-radius: 50%;
+								border-radius: 50%;
+
+								line-height: 20px;
+								background-color: @colorGrayDark;
+								font-size: 15px;
+								position: absolute;
+								right: @standardPadding;
+								top:10px;
+								cursor: pointer;
+								color:@colorBaseWhite;
+
+								padding-top: 2px;
+								padding-left: 2px;
+
+								i{
+									position: relative;
+									margin-left: auto;
+									margin-right: auto;
+								}
+							}
+						}
+						.body{
+							position: relative;
+							padding-bottom: @standardPadding;
+							width: 100%;
+							min-height: 50px;
+							.controlContainer{
+								margin-top: @standardPadding;
+								position: relative;
+								margin-left: @standardPadding;
+								margin-right:@standardPadding;
+								width: 100% -@standardPadding*2;
+
+							}
+							.listItem{
+								position: relative;
+								height: 50px;
+								width: 100%;
+							}
+							textarea{
+								position: relative;
+								margin-left: auto;
+								margin-right: auto;
+								width: 100%;
+							}
+							input{
+								position: relative;
+								margin-left: auto;
+								margin-right: auto;								
+								width: 100%;
+								height: 40px;
+								z-index: 4;
+							}
+							.btn-removeListItem{
+								position: absolute;
+								top:8px;
+								right: @standardPadding;
+								z-index: 99999;
+								height: 25px;
+								width: 25px;						
+								border-style:solid;
+								border-color: @colorGrayDark;								
+								-moz-border-radius: 50%;
+								-webkit-border-radius: 50%;
+								border-radius: 50%;
+								line-height: 20px;
+								background-color: @colorGrayDark;
+								font-size: 15px;
+								color: @colorBaseWhite;
+
+								padding-left: 2px;
+								padding-top: 2px;
+								cursor: pointer;
+
+							}
+							.btn-addListItem{
+								position: relative;
+								float: right;
+								background-color: @colorFocus;
+								color: @colorBaseWhite;														
+								margin-top: @standardPadding/2;	
+								margin-right: @standardPadding;							
+								cursor: pointer;
+							}
+							.elementListControls{
+								position: relative;
+								width: 100%;
+								height: 40px;
+							}
+							.priceList{
+								height: 80px;
+								position: relative;
+								height: 100%;
+								.form-inline{
+									background-color: @colorWhite;
+									padding-left: @standardPadding;
+									margin-bottom: @standardPadding;
+									padding-right: @standardPadding;
+
+								}
+								.currencyControl{
+									width: 10%;
+									select{
+										margin-bottom: 0px;
+										height: 38px!important;
+										width: 100%;
+										display: inline;
+										border: none;												
+										border-radius: initial!important;
+										-webkit-appearance: none;
+										-webkit-border-radius: 0px;
+										font-size: x-large;			
+										text-align: center;						
+									}
+									margin-right: @standardPadding;
+								}
+								.descriptionControl{
+									width: 40%;
+									margin-right: @standardPadding;
+								}
+
+								.valueControl{
+									width: 45%;
+									padding-right: @standardPadding;
+								}
+
+								r.btn-emoveListItem{
+									top:35%;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			//Highlights Style
+			#highlightsSection{
+				.darkSection{
+					padding-bottom: 40px;
+					margin-bottom: 10px;
+					.icon{
+						color:@colorBlack;
+						font-size: 50px;
+						float: left;
+						margin-left: 20px;
+						margin-top: 10px;						
+					}
+					.highlightTitle{
+						float: left;
+						margin-left: 10px;
+					}
+					input.highlightInput{
+						width: 200px;
+						height: 35px;
+						margin-left: 10px;
+						margin-bottom: 10px;					
+					}
+					.btn-checkbox{
+						margin-left: 10px;
+						border:solid!important;				
+						border-color:@colorGray!important;
+						border-width: 2px!important;
+					}
+
+					[date-picker-wrapper] {					
+					  display: inline!important;					
+					}
+					.bootstrap-select{
+						margin-left: 10px;
+						margin-top: 0px;
+						height: 45px!important;
+						width: 100px;
+						display: inline;
+						border: none;												
+						border-radius: initial!important;
+						-webkit-appearance: none;
+						-webkit-border-radius: 0px;
+						margin-bottom: 6px;
+						font-size: x-large;
+					}
+
+					.priceGroup{
+						.header{
+							margin-top:  @standardPadding/2;
+							margin-bottom:  @standardPadding/2;
+
+							label{
+								margin-left: @standardPadding/2;
+							}
+
+						}	
+						min-height: 110px;
+						padding-left: @standardPadding;
+  						padding-bottom: @standardPadding;
+  						padding-top: @standardPadding;
+  						padding-right: @standardPadding;  						
+					}
+					.formPrice{						
+						.priceGroup{
+							background-color:@colorGreenSticker;	
+						}
+					}
+					.discountForm{
+						.priceGroup{
+							background-color:@colorOrangeSticker;		
+						}
+					}
+					.timingForm{
+						.priceGroup{
+							background-color: @colorYellow;							
+						}
+					}
+					.qtyForm{
+						.priceGroup{
+							background-color: @colorYellowSticker;
+						}
+					}
+
+				}
+			}
+
+			//Elements notifications Style
+			#elementNotifications{
+				position:relative;
+
+				.notificationWrapper{
+					//margin-right: @standardPadding!important;
+					padding-left: initial;
+					margin-right: initial;;
+					margin-left: initial;
+
+				}
+
+				.mainNotificationActivation{
+					padding-bottom: @standardPadding;
+					margin-bottom:  @standardPadding;
+				}
+
+				.darkSection{
+					padding-top:  @standardPadding/2;
+					padding-left: @standardPadding;
+				}
+
+				//Main active button notification
+				.circleButtonActiveNotifications{
+					margin-left: @standardPadding*3;
+					position: relative;
+					height: 90px;
+					width: 90px;
+					border-radius: 45px;
+			    	-moz-border-radius: 45px;
+					-webkit-border-radius: 45px;
+					border-radius: 45px;					
+					background-color:@colorBaseWhite;	
+					overflow: hidden;
+					cursor: pointer;
+					display: inline-block;
+					margin-left: 10px;
+  					margin-right: 20px;
+					.icon{
+						position: relative;
+						text-align: center;
+						margin-left: auto;
+						margin-right: auto;			
+						margin-top: 5px;									
+						width: 80px;
+						height:80px;
+						color:white;
+						font-size: 50px;
+						background-color: @colorGray;
+						border-radius: 40px;
+				    	-moz-border-radius: 40px;
+						-webkit-border-radius: 40px;
+						overflow: hidden;
+						p{
+							margin-top: -10px;
+							position: relative;
+							text-align: center;
+							color: @colorBaseWhite;
+							max-width: 120px;
+							padding-left: 10px;
+							padding-right: 10px;
+						}
+					}				
+				}
+
+				.circleButtonActiveNotifications:hover{
+					background-color:@colorFocus;
+				}
+
+				.circleButtonActiveNotifications.active{
+					background-color:@colorFocus;	
+				}
+
+				//Notification options 
+				.notificationOptions{
+					padding-bottom: @standardPadding;
+					margin-bottom: @standardPadding;
+				}
+
+				//Notifications seclect Buttons
+				.circleButtonNotification{
+					position: relative;
+					text-align: center;
+					height: 90px;
+					width: 90px;
+					background-color: @colorBaseWhite;					
+					font-size: 60px;
+					-moz-border-radius: 45px;
+					-webkit-border-radius: 45px;
+					border-radius: 45px;
+					display: inline-block;
+					cursor: pointer;
+
+					line-height: 100px;
+					margin-left: @standardPadding;
+					margin-right: @standardPadding*2;
+
+					.icon.stimulus{
+						color:@colorYellowSticker;
+					}
+					.icon.engage{
+						color:@colorGreenSticker;	
+					}
+					.icon.convert{
+						color:@colorOrangeSticker;	
+					}
+				}
+				.circleButtonNotification.disabled{
+					.icon.stimulus{
+						color: @colorGray!important;
+					}
+					.icon.engage{
+						color: @colorGray!important;
+					}
+					.icon.convert{
+						color: @colorGray!important;
+					}
+				}
+				.circleButtonNotification:hover:not(.disabled){
+					background-color: @colorFocus;
+				}
+
+				.circleButtonNotification.active{
+					background-color: @colorFocus;
+				}
+
+
+				.notifcationGroup{		
+					display: inline-block;		
+					width: 100%- 18px;
+
+					.form-control{
+						border-style: none;
+					}
+				}
+
+				.typeWrapper{
+					width: 100%;
+					overflow: initial;
+					height: auto;
+
+					.type-block	{
+						height: 130px;
+						width: 30%;
+						.moduleType{
+							height: 86px;
+							width: 86px;
+							-moz-border-radius: 50%;
+						    -webkit-border-radius: 50%;
+						    border-radius: 50%;							
+						}
+
+						.circleInner{
+							top: 5px;
+							margin-left: auto;
+							padding-top: 5px;
+							margin-right: auto;
+							height: 76px;
+							width: 76px;
+							-moz-border-radius: 50%;
+						    -webkit-border-radius: 50%;
+						    border-radius: 50%;
+
+						    .icon{
+						    	font-size: 25px;
+						    }
+						}
+
+					}
+				}
+			}
+
+			//Showcase Elements
+			#showcaseElements{
+				position: relative;
+		
+				/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+				@media (min-width: 768px) {	
+					height: 58vh;
+					width: 100vw;
+				}
+
+			    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+			    @media (min-width: 1200px) {
+			       	height: 70vh;
+					width: 100vw;
+			    }
+
+				.showcaseElementsList{					
+					position: relative;
+					float:left;
+					width: @elementWidth + (@standardPadding*2)+60px;
+					height: 100%;
+					background-color: @colorWhite;
+					padding-left: @standardPadding;
+					padding-right: @standardPadding;
+					padding-top: @standardPadding;
+					padding-bottom: @standardPadding;
+
+					.elementWrapper{
+						position: relative;
+						height: 100%;
+						width: 100%;
+						background-color: white;	
+						overflow-y: scroll;	
+
+						.topDrop{
+							height: 50%;
+							width: 100%;
+							bottom: 50%;
+							//background-color: red;
+							z-index: 1;
+							position: absolute;
+						}	
+
+						.botomDrop{
+							bottom: 0;
+							height: 50%;
+							width: 100%;
+							z-index: 1;
+							//background-color:black;
+							position: absolute;
+						}			
+						.btn-on-hover{
+							z-index: 2;
+						}
+
+						.btnArrowUp{
+							position: absolute;
+			    			bottom: 25px;
+			    			right: 20px;
+			    			background-color: @colorGreen;
+						}
+						.btnArrowDown{
+							position: absolute;
+			    			bottom: 25px;
+							right: 55px;
+			    			background-color: @colorGreen;							
+						}
+					}
+
+
+					//Test Higth Ligth
+					.elementHigthLight{
+						background-color: @colorFocus;
+						width: 100%;
+						height: 50px;
+
+						-webkit-animation:openAnimation 1s;
+						animation:openAnimation 1s;
+					}
+
+					.elementDropContainerHelper{
+						width: 100%;
+						height: 100%;
+					}
+
+					@-webkit-keyframes openAnimation{
+						from{height: 0px; opacity: 0;}
+						to{height: 50px; opacity: 0.4;}
+					}
+					@keyframes openAnimation{
+						from{height: 0px; opacity: 0;}
+						to{height: 50px; opacity: 0.4;}
+					}
+
+					.moduleWrapper{
+						min-height: @elementHeight;
+						min-width: @elementWidth;
+						img{
+							min-height: @elementHeight;
+							min-width: @elementWidth;
+						}
+					}
+
+					//Remove the X scroll
+					.scroll-x {
+						display: none;
+					}
+				}
+				.elementsAvailableList{
+					margin-left: @standardPadding;
+					background-color: @colorWhite;
+					position: relative;					
+					float:left;
+					width: 38vw;
+					height: 100%;	
+					max-height: 100%; 
+					overflow: scroll;
+
+					padding-top: @standardPadding;
+
+					//Remove the X scroll
+					.scroll-x {
+						display: none;
+					}
+
+					.searchBox{
+						width:35%;
+						position: fixed;
+						bottom: 110px;
+						.searchBox-wrapper{
+							width: 100%;
+							position: relative;
+							margin-left: 10px;
+							margin-right: 10px;
+
+						}						
+					}				
+					.dragDisabled{
+						opacity: 0.2;
+						filter: alpha(opacity=20); /* For IE8 and earlier */
+					}
+				}
+			}
+
+			//Type Style Buttons
+			.typeWrapper{
+				height: 170px;
+				max-height:  170px;
+				margin-top: 5px;
+				width: 1000%;
+				max-width: 100%;
+				overflow-x: scroll;
+				overflow-y: hidden!important;
+				white-space: nowrap;
+				background-color: @colorWhite;
+
+				.type-block{
+					width: 200px;
+					height: 200px;
+					padding: 5px 5px 5px 5px;
+					display: inline-block;
+				    dsplay:inline;/* For IE7
+				    *zoom:1;/* For IE7*/
+				    white-space:normal;
+
+				    .moduleType{
+				    	position: relative;
+				    	width: 150px;
+				    	height:150px;					    	
+				    	-moz-border-radius: 75px;
+						-webkit-border-radius: 75px;
+						border-radius: 75px;
+						text-align: center;
+						color:@colorBaseWhite;
+						cursor: pointer;
+						.circleInner{
+					    	width: 130px;
+					    	height:130px;																		
+							position: relative;
+							margin-left: auto;
+							margin-right: auto;
+							top:10px;
+							padding-top: 15px;
+							background-color: @colorGray;	
+					    	-moz-border-radius: 65px;
+							-webkit-border-radius: 65px;
+							border-radius: 65px;
+
+							.icon{
+								font-size: 50px;
+							}
+							span{
+								font-size: 15px;
+								display: block;
+							}
+						}
+				    }
+
+				    .moduleType.active{
+				    	background-color: @colorFocus;
+				    }
+				    .moduleType:hover{
+						background-color: @colorFocus;
+				    }
+				}
+			}
+
+			#wizardBiinsWrapper{
+				position: relative;				
+				background-color: @colorWhite;
+				max-width:70vw;							  
+
+				overflow-x: scroll;
+			    overflow-y: hidden;
+				/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+				@media (min-width: 768px) {	
+					max-height: 60vh;
+					width: auto;
+				}
+
+			    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+			    @media (min-width: 1200px) {
+			    	max-height: 64vh;
+			       	height: 80vh;
+					width: auto;
+			    }
+
+				.siteModule{
+					position: relative;
+					float: left;
+					display: inline-block;
+					min-width: 200px;
+					width: 200px;
+					height: 100%;
+					overflow: scroll;
+
+					padding-left: @standardPadding;
+					padding-right: @standardPadding;
+					padding-top: @standardPadding;
+					padding-bottom: @standardPadding*6;
+
+					background-color:@colorGray;
+					margin-left: @standardPadding;
+
+					.imgSite{
+						position:relative;
+						background-color: @colorBaseWhite;
+						padding: @standardPadding/2 @standardPadding/2 @standardPadding/2 @standardPadding/2;
+						img{
+							width: 100%;
+						}	
+
+						p{
+							position: absolute;
+						}	
+						height:30px; 				
+					}
+
+
+					.biin{
+					 	width: 100%;
+					 	min-height: 40px;
+					 	margin-top: @standardPadding;
+					 	background-color: @colorGrayDark;
+					 	padding: @standardPadding/2 @standardPadding/2 @standardPadding/2 @standardPadding/2;
+
+					 	img{
+					 		position:relative;					 		
+					 		clear: left;
+					 		height: 50px;
+					 		width: 50px;
+					 		display: block;
+							text-align: center;
+						  	margin-left: auto;
+						  	margin-right: auto;
+					 	}
+					 	.isDefault{
+					 		text-align: right;
+					 		margin-right: auto;
+					 		color: @colorYellow!important;
+					 		font-size: 30px;
+					 	}
+					}
+
+					.biin.active{
+						background-color: @colorGreen;
+
+						.icon{
+							color: @colorGreen;
+						}						
+					}
+
+					.biin.taken{
+						background-color: @colorRed;
+					}					
+
+					.biinWrapper{
+						height: 100%;
+						width: 100%;
+						background-color: @colorBaseWhite;
+						text-align: center;
+						cursor: pointer;
+						overflow-x: hidden;
+					}
+
+					.biinWrapper:hover{
+						background-color: @colorFocus;
+
+					}
+
+				}
+
+				.biinWrapperContainer{
+					margin-top: @standardPadding;
+					position: relative;			
+					height: 100% - @standardPadding/2;					
+					width: 1000%;
+					max-width:100%;
+
+					float: left;
+
+					display: inline-flex;
+					white-space: nowrap;		
+					overflow-x: scroll;
+					overflow-y: hidden;
+				}
+			}
+
+
+			//Organization List
+			#organizationListWrapper{				
+				height: 30vh;
+				max-height:  30vh;
+				margin-top: 5px;
+				width: 1000%;
+				max-width: 100%;
+				overflow-x: scroll;
+				overflow-y: hidden!important;
+				white-space: nowrap;
+				background-color: @colorWhite;				
+					.img-block{
+						width: 28vh;
+						height: 28vh;
+						padding: 5px 5px 5px 5px;
+						display: inline-block;
+					    dsplay:inline;/* For IE7
+					    *zoom:1;/* For IE7*/
+					    white-space:normal;
+					    .moduleWrapper{
+					    	position: relative;
+					    	width: 100%;
+					    	height:100%;
+					    	min-height: 100%;
+					    	min-width: 100%;
+					    	overflow: hidden;
+					    }
+					}
+					.active{
+						background-color: @colorFocus;
+					}				
+
+				.moduleTitle{
+					position: absolute;
+					background-color: black;
+					color: white;
+					opacity: 0.5;
+					padding-left: 6px;
+				}
+
+				.btnCreate{
+					.moduleWrapper{
+						position: relative;
+						color: @colorBaseWhite;
+						background-color: @colorFocus!important;
+						text-align: center;
+
+						span{
+							position: relative;
+							top:40%;
+						}
+					}
+				}
+			}
+			.organizationInformation{
+
+				margin-top: @standardPadding;
+				img{
+					height: 20vh;
+				}
+				.organizationId{
+					background-color: @colorGrayDark;
+					color:@colorBaseWhite;
+					padding: @standardPadding @standardPadding @standardPadding @standardPadding;
+					width: 100%;
+				}
+
+				.col-md-4, .col-md-8{
+					padding-left: 0px!important;
+					padding-right: 0px!important;
+				}
+			}
+			.defaultOrganization{
+				margin-top: @standardPadding;
+				height: 100px;
+				width: 100%;
+				background-color: @colorWhite;
+			}
+		}
+		.section.darkSection{
+			background-color: @colorWhite;
+		}
+		overflow: hidden;
+	}
+}
+
+.wizardProfile	{
+	padding-top: 15%;
+	a{
+
+		height: 150px;
+		margin-left: 10%;
+
+		.icon-wrapper{
+			position: relative;
+			overflow: hidden;
+			background-color: @colorBaseWhite;
+			height: 80px;
+			width: 80px;
+			display: inline-block;
+
+
+			border-radius: 50%;
+	    	-moz-border-radius: 50%;
+			-webkit-border-radius: 50%;
+			border-radius: 50%;
+
+		}
+
+		.icon-wrapper:hover, .icon-wrapper.active{
+			cursor: pointer;
+			background-color: @colorFocus;
+
+		}
+
+		i{	
+
+			position: relative;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top:20%;
+			display: block;
+			height: 40px;
+			width: 40px;
+			font-size: 40px;
+			color:@colorGray;
+		}
+
+		.text-wrapper{
+			position: absolute;
+			display: inline-block;			
+			height: 80px;
+			padding-top: 10%;
+			padding-left: 10px;
+
+			span{				
+				position: relative;
+				margin-top: 50px;
+				color:@colorBaseWhite;
+			}			
+		}
+
+
+	}
+}
+
+//Profile Section
+#profileSection{
+
+	img{
+
+		border: solid;
+		border-color: @colorGray;
+		border-width: 5px;
+		height: 127px;
+	}
+
+	.btn-default{
+		margin-top: @standardPadding;
+		display:table;
+	 	text-transform: uppercase;
+	}
+
+}
+
+//Beacon Modal
+#purchaseBeaconModal{
+	z-index: 9999999999;
+
+	.modal-header{
+		paddin:5px 5px 5px 5px;
+	}
+
+	.modal-body{
+		background-color:@colorYellowSticker;
+		margin-left: 15px;
+		margin-right: 15px;
+		p{
+			font-size: 14px;
+			color:@colorBlack;
+		}
+	}
+
+	.modal-header{
+		border-bottom:initial;
+	}
+
+	.modal-footer{
+		border-top:initial;
+		text-align: center;
+		margin-top: 0px;
+		padding: 15px 20px 20px;
+		button{
+			width: 200px;
+			height: 40px;
+		}
+		.btn.btn-primary{
+			background-color: @colorGreen;
+		}
+		.btn.btn-default{
+			background-color: @colorRed;	
+		}
+	}
+
+	.modal-title{		
+		background-color:@colorFocus;
+		height: 50px;
+		padding-left: 15px;
+		padding-top: 15px;
+		color: #fff;
+	}
+}
+
+.btn-biin{
+    border: 0px;
+    border-radius: 0px;
+    height: 50px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.biinLogo{
+	margin-left: 10px;
+
+	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	@media (min-width: 768px) {	
+		width: 40px;
+	}
+
+    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+    @media (min-width: 1550px) {
+        width: 80px;
+    }
+}
+
+.topHeader1{
+	background-color:@colorFocus;
+
+	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	@media (min-width: 768px) {
+		height:@screenMdHeader1Height;
+	}
+
+    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+    @media (min-width: 1550px) {
+        height:@screenLgHeader1Height;
+    }
+}
+
+.topHeader2{
+	background-color:@colorBlack;
+
+	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	@media (min-width: 768px) {	
+		height:@screenMdHeader2Height;
+	}
+
+    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+    @media (min-width: 1550px) {
+        height:@screenLgHeader2Height;
+    }
+
+    #organizationMenu{
+
+    	background-color: @colorBaseWhite;
+    	color:@colorBaseBlack!important;
+
+    	i{
+    		margin-right: @standardPadding;
+    		color:@colorGray;
+    	}
+
+    	a.isDefault{
+    		display: none;
+    	}
+    	a{
+    		cursor: pointer;
+    	}
+    	a.dropdown-toggle{
+    		color:@colorBaseBlack; 
+
+    	}
+
+		.dropdown-menu>li>a, .dropdown-menu>li>a{
+			color:@colorBaseBlack; 
+		}
+    }
+}
+
+.left-section-content {
+	position: relative;
+	float: left;
+	position: fixed;
+	bottom: 0;
+	z-index: 1;
+	width: @screenMdLeftContWidth;
+	display: none;
+
+	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	@media (min-width: 768px) {	
+		top: @screenMdBodyPaddingTop;
+		background-color: @colorBackground;
+	}
+
+    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+    @media (min-width: 1550px) {
+        top: @screenLgBodyPaddingTop;
+        background-color: @colorBackground;
+    }
+
+    .scroll-x{
+    	display:none;
+    }
+
+
+	.searchBoxList{
+		position: relative;
+		height: 40px;
+		padding-left: 0px;
+		padding-right: 0px;
+		margin-top: @standardPadding;
+		margin-bottom: @standardPadding;
+		.btnAdd{
+			height: 100%;
+			width: 100%;
+			font-size: 30px;
+			font-weight: 800;
+			background-color: @colorFocus;
+			color:@colorBaseWhite;
+			padding-top:0px;
+			line-height: initial;
+		}
+		.col-md-2{
+			height: 100%;
+			padding-left: 0px;
+			padding-right:@standardPadding/2;
+		}
+		.col-md-10{
+			height: 100%;
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+	}	
+
+	.searchBox{
+		position: fixed;
+		bottom: 5px;
+		width: 23%;
+		padding-left: 10px;
+		padding-right: 10px;
+		
+		.searchBox-wrapper{
+			position: relative;
+			width: 100%;
+			margin-left: auto;
+			margin-right: auto;			
+
+			input{
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				background-color: @colorWhite;
+			}			
+		}
+
+	}
+}
+
+.right-section-content {
+	float: left;
+	bottom: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: none;
+	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	@media (min-width: 768px) {	
+		width: @rightContWidth;
+		top: @screenMdBodyPaddingTop;
+		margin-left: @rightContMargingLeft;
+	}
+
+    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+    @media (min-width: 1550px) {
+        width: @rightContWidth;
+        top: @screenLgBodyPaddingTop;
+        margin-left: @rightContMargingLeft;
+    }
+}
+
+.right-section-content.account-section-content{
+	.wizard-body{
+		height: 100%!important;
+		max-height:100%!important;
+	}
+}
+
+
+.moduleWrapper {
+	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: @colorBaseWhite;
+	//Module Title
+	.moduleTitle{
+		position: absolute;
+		background-color: black;
+		color: white;
+		opacity: 0.5;
+		width: 100%;
+		z-index: 100;
+	}
+	.imagegallery{
+		padding-top: 10%;
+		height:90%!important;
+		width: 90%!important;
+		max-height: 90%;
+	}
+	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+	@media (min-width: 768px) {	
+		width: @screenMdLeftContBoxWidth;		
+		margin-bottom: @screenMdLeftContBoxImgMargin;
+
+		//Wrapper Image
+		img {
+			width: @screenMdLeftContBoxImgWidth;
+			min-height: @screenMdLeftContBoxImgHeight;
+            max-height: @screenMdLeftContBoxImgHeight;
+			margin: @screenMdLeftContBoxImgMargin;
+		}
+
+		//Module Title
+		.moduleTitle{
+			top: @screenMdLeftContBoxImgMargin;
+			line-height: @screenMdLeftContBoxTitleLineHeight;
+			font-size: @screenMdLeftContBoxTitleFontSize;
+			overflow: hidden;
+			width: 100%;
+		}
+	}
+
+    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+    @media (min-width: 1550px) {
+        height: @screenLgLeftContBoxSize;
+        width: @screenLgLeftContBoxSize;
+        background-color: @colorWhite;
+        margin-bottom: 10px;
+
+        //Wrapper Image
+        img {
+			width: @screenLgLeftContBoxSizeImg;
+			min-height: @screenLgLeftContBoxSizeImg;
+            max-height: @screenLgLeftContBoxSizeImg;
+			margin: @screenLgLeftContBoxImgMargin;
+        }
+
+        //Module Title
+        .moduleTitle{
+			line-height: 30px;
+			font-size: 15px;
+			overflow: hidden;
+			width: 100%;
+			top: @screenLgLeftContBoxImgMargin;
+      	}
+    }
+}
+
+.moduleWrapper:hover, .moduleWrapperList:hover{
+	background-color: @colorFocusHover;
+}
+
+.moduleWrapper.disabled, .moduleWrapperList.disabled{
+	background-color: red;
+}
+
+.moduleWrapper.activeShowcase, .moduleWrapperList.activeShowcase{
+	background-color: green;
+}
+
+.moduleWrapper-inverse{
+.moduleWrapper;
+	background-color: @forthColor;
+}
+
+.moduleWrapperShowcaseElement {
+	position: relative;
+	margin-left: 0px;
+	max-width: @elementWidth;
+}
+
+.module {
+	margin-right: 7px;
+	min-height: 125px;
+	min-width: 125px;
+}
+
+//Remove Element of Grids
+.moduleWrapper.remove-module {
+	background-color:  @firstColor;
+	padding-top: 47.4px;
+
+	//Button Module
+	.btn-rounded {
+		background-color: @secondColor;
+		padding: initial;
+		text-align: center;
+		line-height: 36px;
+
+		//Rounded button icon of remove
+		.icon {
+			color: @firstColor;
+		}
+	}
+}
+
+.moduleImage{
+	height: @elementWidth;
+	width: @elementWidth;
+	position: fixed;
+
+	.moduleImageWrapper{
+		height: @elementWidth;
+		width: @elementWidth;
+		
+		img{
+			width: 100%!important;
+			height: 100%!important;
+		}
+	}
+}
+
+.wizard-options{
+	width: 100%;
+	max-width: 90%;
+	position: fixed;
+	bottom: 0px;
+	min-height: 30px;
+	background-color: @colorGrayLight;
+
+	.wizard-options-item{
+
+		.circle{
+			background-color: @colorWhite;
+			color: @colorGrayLight2;
+			border-radius: 50%;
+			border: none;
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
+			cursor: pointer;
+		}
+
+		.circle.complete{
+			background-color: @colorGreen;		
+		}
+
+		.circle.disabled{
+			background-color:@colorGrayLight2 ;
+		}
+
+		.circle.active{
+			background-color: @colorFocus;		
+			color: @colorWhite;
+		} 
+
+		.circle.invalid{
+			background-color: @colorFocus;		
+			color: @colorWhite;
+		} 
+
+		.circle.valid{
+			background-color: @colorGrayDark;
+			color: #fff;
+			border:solid;
+			border-color: @colorFocus;
+		}
+
+		.circle.optionInvisible{
+			border-color: @colorGray!important;
+			opacity: 0.3;
+		}
+
+		.circle:hover{
+			background-color: @colorFocus;
+			color: @colorWhite;
+		}
+
+		.textCirle{
+			text-align: center;
+			font-size: 11px;
+			color: @colorWhite;
+		}
+
+	}
+
+
+	.wizard-options-wrapper{
+		position: relative;
+		z-index: 9999;
+		.option{
+			position: relative;
+		}
+	}
+
+	#guide-line-division{
+		position: absolute;
+		border-bottom: solid;
+		border-bottom-color: @colorWhite;
+		top:0px;
+		left: 5%;
+		height: 50%;
+		width: 50%;
+		z-index: 1;
+	}
+
+	#guide-line-division.elementsWizard{
+		width: 65%;
+	}
+
+	#guide-line-division.showcasesWizard{
+		width: 32%;
+	}
+
+	#guide-wizard-pointer{
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		height: 13px;
+		width: 10px;	
+		border-style: solid;
+		border-width: 18px 17.5px 0 17.5px;
+		border-color:transparent transparent transparent transparent;
+	}
+
+	#guide-wizard-pointer.active{
+		border-color: #fff transparent transparent transparent;
+	}
+
+
+    .wizard-options-item.completeOption{
+    	.circle{
+    		position: relative;
+    		margin-top: 18px;
+    		background-color: initial;
+    	}
+		.circle-inner{
+			position: absolute;
+			border-radius: 50%;
+			border: none;
+			
+			top:12px;
+			left:12px;
+			margin-left: auto;
+			margin-right: auto;
+
+			cursor: pointer;
+			height: 40px;
+			width: 40px;
+			font-size: 15px;
+			text-align: center;			
+			background-color: #fff;
+			.icon{
+				line-height: 45px;
+			}
+		}
+
+		.circle.complete{
+			color:@colorGreen;
+			background-color: @colorGreen;
+		}
+	}
+
+	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+    @media (min-width: 768px) {
+        height: 100px;
+
+        .wizard-options-item{
+
+			.circle{
+				width: 65px;
+				height: 65px;
+				margin-top: 0px;
+				font-size: 25px;
+				padding: 18px;
+			}
+
+			.textCirle{
+				font-size: 11px;
+			}
+        }
+    }
+
+    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+    @media (min-width: 1550px) {
+        height: 160px;    
+	    .wizard-options-item {
+
+	        .circle {
+	            width: 100px;
+	            height: 100px;
+	            margin-top: 30px;
+	            font-size: 40px;
+	            padding: 25px;
+	        }
+
+	        .textCirle {
+	            font-size: 14px;
+	        }
+	    }
+
+		.wizard-options-item.completeOption{
+			.circle {
+				height: 9px
+
+			}
+		}
+   }
+}
+
+.galleryImage{
+	heigth:175px;
+	width: 175px;
+}
+
+#gallery{	
+	position: relative;
+	.galleryControls{
+		position: absolute;
+		bottom: 15px;
+		width: 100%;
+		display: inline-block;
+		float: left;
+
+		button{
+			width: 15%;
+			margin-left: 2%;
+			margin-right: 5px;
+		}
+
+		input{
+			height: 33px;
+			width: 80%;
+			display: inline;
+		}
+	}
+
+	.scrollbar-inner{
+		height: 34vh;	
+	}
+}
+
+#galleryLoader{
+	padding-top: 7%;
+	img{
+		height: 300px;
+		width: auto;		
+		position: relative;
+		float: right;		
+	}
+	p{		
+		margin-top: 10%;
+		text-align: center;
+		color:@colorFocus;
+		font-size: 22px;
+	}
+}
+
+#dashboardContent{
+	display: none;
+	#testGraph svg{
+		height: 100%;
+	}
+}
+//Wizard animations Section
+.wizard{
+	height: 100%;
+	padding-left: 15px;
+	padding-right: 15px;
+
+}
+.wizard.ng-enter,
+.wizard.ng-leave
+{
+	-webkit-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+}
+
+.wizard.ng-enter {
+    left:0;
+}
+.wizard.ng-enter, .wizard.ng-enter.ng-enter-active {
+    left:0;
+}
+
+.wizard.ng-leave {
+    left: 0;
+}
+.wizard.ng-leave.ng-leave-active{
+    left: -100%;
+}
 
 /*------------------------------------------*/
 /*	Tabs
@@ -367,42 +2639,46 @@ a.module:hover{
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
 	color:@secondColor;
-	background-color: @thirthColor;
-	border: 1px solid @thirthColor;
+	background-color: @sixthColor!important;
+	border: 1px solid @sixthColor!important;
 	cursor:pointer;
 	border-radius: @controlsRadiusDisable;
-	min-width: 100px;
+	border-top-right-radius: @navItemRadius!important;
+	min-width: 132px;
 }
 
 .nav-tabs {
 	background-color: @firstColor;
+	position: relative;
 }
 
 .nav-tabs>li>a {
 	margin-right: 2px;
 	border-radius: 4px 4px 0 0;
+	border-top-right-radius: @navItemRadius!important;
 	color: @secondColor;
 	min-width: 100px;
+	height: 30px;
+	position: relative;
+	bottom: 0px;
+	text-align: center;
+
+	padding-left: 10px;
 }
 
 .nav-tabs>li {
+	border-top-color: black!important;
+	border-bottom-right-radius: 10px!important;
+	min-width: 132px!important;
 	float: left;
 	margin-bottom: 0px; 
+	height: 30px;
+	position: relative;
+	bottom: -9px;
 }
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
-	color: @secondColor;
-	background-color: @thirthColor;
-	border: 1px solid @thirthColor;
-	cursor: pointer;
-	border-radius: @controlsRadiusDisable;
-	min-width: 100px;
-} 
-
-.nav>li>a:hover, .nav>li>a:focus {
-	text-decoration: none;
-	background-color: @firstLigthColor;
-	cursor: pointer;
+.nav-tabs>li.first>a{
+	background-color: @seventhColor;
 }
 
 .nav-tabs>li>a:hover {
@@ -421,6 +2697,7 @@ li>.nav{
 .workAreaHeader.nav.nav-tabs{
 	position: absolute;
 	width: 100%;
+	height: 40px;
 }
 
 .workArea{
@@ -446,12 +2723,14 @@ li>.nav{
 .imgElementPreview {
 	height: @elementHeight;
 	min-width: @elementWidth;
+	max-width: @elementWidth;
 	max-height:@elementHeight;
 }
 
 .colPreview {
 	padding-left: 0px; 
 	padding-right: 0px; 
+	width: @colPreviewWidth!important;
 }
 
 .dropImageMedia{
@@ -475,6 +2754,16 @@ li>.nav{
 .row {
 	margin-left: 0px; 
 	margin-right: 0px; 
+}
+
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.left-nopadding{
+	padding-left: inherit;
+	margin-left: inherit;
 }
 
 /*------------------------------------------*/
@@ -511,4 +2800,398 @@ li>.nav{
 	height: 10px;
 }
 
+
+/*************** SCROLLBAR BASE CSS ***************/
+
+
+.scroll-wrapper {
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: relative;
+}
+
+.scroll-wrapper > .scroll-content {
+    border: none !important;
+    box-sizing: content-box !important;
+    left: 0;
+    margin: 0;
+    max-height: none !important;
+    max-width: none !important;
+    overflow: scroll !important;
+    padding: 0;
+    position: relative !important;
+    top: 0;
+
+    height: auto;
+    width: auto !important;
+}
+
+.scroll-wrapper > .scroll-content::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+}
+
+.scroll-element {
+    display: none;
+}
+.scroll-element, .scroll-element div {
+    box-sizing: content-box;
+}
+
+.scroll-element.scroll-x.scroll-scrollx_visible,
+.scroll-element.scroll-y.scroll-scrolly_visible {
+    display: block;
+}
+
+.scroll-element .scroll-bar,
+.scroll-element .scroll-arrow {
+    cursor: default;
+}
+
+.scroll-textarea {
+    border: 1px solid #cccccc;
+    border-top-color: #999999;
+}
+.scroll-textarea > .scroll-content {
+    overflow: hidden !important;
+}
+.scroll-textarea > .scroll-content > textarea {
+    border: none !important;
+    box-sizing: border-box;
+    height: 100% !important;
+    margin: 0;
+    max-height: none !important;
+    max-width: none !important;
+    overflow: scroll !important;
+    outline: none;
+    padding: 2px;
+    position: relative !important;
+    top: 0;
+    width: 100% !important;
+}
+.scroll-textarea > .scroll-content > textarea::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+}
+
+/*------------------------------------------*/
+/* Stickers Style
+/*------------------------------------------*/
+
+.stickerModuleWrapper {
+	margin-top:stickerModuleWrapper auto;
+	background-color: @colorGrayLight2;
+	height: 220px;
+	width: 200px;
+	min-height: 220px;
+	max-height: 220px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.stickerModuleWrapper:hover{
+	background-color: @colorFocusHover;
+}
+
+.stickerTitle{
+	color:#fff;
+	font-size: 20px;
+}
+.stickerContent{
+	padding-top: 10px;
+	padding-left: 10px;
+	background-color: @colorBaseWhite;
+	height: 180px;
+}
+
+
+
+//Sticker 01 Style
+.stick01{
+	position: relative;
+	.circleSelectedIn{
+			background-color: @colorRedSticker;
+		}
+
+	.circleOuter{
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+		
+		height: 130px;
+		width: 130px;
+		-moz-border-radius: 65px;
+		-webkit-border-radius: 65px;
+		border-radius: 65px;
+		text-align: center;
+		padding-top: 5px;
+
+		.circleIn{		
+			position: relative;
+			margin-left: auto;
+			margin-right: auto;			
+			height: 120px;
+			width: 120px;
+		 	-moz-border-radius: 60px;
+		    -webkit-border-radius: 60px;
+		    border-radius: 60px;	
+		    border: solid;
+		    border-color:@colorBaseWhite;	    
+
+		    overflow: hidden;
+
+		    .title1{
+		    	color:@colorBaseWhite;
+		    	position:absolute;
+		    	top: 20px;
+		    	left:30px;
+		    	display: block;
+		    	max-width: 40px;
+		    	font-variant: small-caps;
+		    	font-size: 35px;
+		    	line-height: 33px;
+		    }	    
+		}
+	}
+}
+
+//Sticker 02 Style
+.stick02{
+	position: relative;
+	overflow: hidden;
+
+	.rectangle{
+
+		position: absolute;
+		height: 70px;
+		left: 0px;
+		bottom: 0px;
+		width: 250px;		
+		 -ms-transform: rotate(-40deg); /* IE 9 */
+	    -webkit-transform: rotate(-40deg); /* Chrome, Safari, Opera */
+	    transform: rotate(-40deg);
+
+	    .rectangleIn{
+
+			position: absolute;
+			height: 60px;
+			left: 0px;
+			bottom: 5px;
+			width: 250px;		    
+		    border:solid;
+		    border-color: @colorBaseWhite;
+		    text-align: center;
+		    color: @colorBaseWhite;
+		    font-variant:  small-caps;
+		    line-height: 25px;
+	    }
+	    .title1{
+	    	padding-left: 20px;
+	    	font-size: 35px;
+	    	font-weight: 600;
+	    }
+	    .title2{
+	    	padding-left: 20px;
+	    	font-size: 30px;
+	    }
+	}
+}
+
+
+/*------------------------------------------*/
+/* Modal Style
+/*------------------------------------------*/
+.modal-content{
+	border-radius:initial;
+}
+
+/*------------------------------------------*/
+/*	Biin INNER SCROLLBAR 
+/*------------------------------------------*/
+
+.scrollbar-inner > .scroll-element,
+.scrollbar-inner > .scroll-element div
+{
+    border: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 10;
+}
+
+.scrollbar-inner > .scroll-element div {
+    display: block;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.scrollbar-inner > .scroll-element.scroll-x {
+    bottom: 2px;
+    height: 8px;
+    left: 0;
+    width: 100%;
+}
+
+.scrollbar-inner > .scroll-element.scroll-y {
+    height: 100%;
+    right: 6px;
+    top: 0;
+    width: 8px;
+}
+
+.scrollbar-inner > .scroll-element .scroll-element_outer {
+    overflow: hidden;
+}
+
+.scrollbar-inner > .scroll-element .scroll-element_outer,
+.scrollbar-inner > .scroll-element .scroll-element_track,
+.scrollbar-inner > .scroll-element .scroll-bar {
+    /*-webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;*/
+}
+
+.scrollbar-inner > .scroll-element .scroll-element_track,
+.scrollbar-inner > .scroll-element .scroll-bar {
+   /* -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+    filter: alpha(opacity=40);
+    opacity: 0.4;*/
+}
+
+.scrollbar-inner > .scroll-element .scroll-element_track { background-color:@colorWhite; }
+.scrollbar-inner > .scroll-element .scroll-bar { background-color:  @colorBlueLight; }
+.scrollbar-inner > .scroll-element:hover .scroll-bar { background-color: @colorBlue; }
+.scrollbar-inner > .scroll-element.scroll-draggable .scroll-bar { background-color: @colorBlueDark; }
+
+
+/* update scrollbar offset if both scrolls are visible */
+
+.scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_track { left: -12px; }
+.scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_track { top: -12px; }
+
+
+.scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -12px; }
+.scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -12px; }
+
+/*------------------------------------------*/
+/*	Color Picker Styles
+/*------------------------------------------*/
+.picker{
+
+	.sp-replacer{
+		background-color:initial;
+		border: solid 2px @colorWhite;
+		padding: 2px;
+	}
+	.sp-preview{
+		left:2px;
+		border:none;
+	}
+}
+
+/*------------------------------------------*/
+/*	Biin Slider
+/*------------------------------------------*/
+slider, [slider] {
+  display: inline-block;
+  position: relative;
+  height: 7px;
+  width: 100%;
+  margin: 25px 5px 25px 5px;
+  vertical-align: middle; }
+  slider div, [slider] div {
+    white-space: nowrap;
+    position: absolute; }
+    slider div.bar, [slider] div.bar {
+      width: 100%;
+      height: 100%;
+      border-radius: 7px;
+      background: #444;
+      overflow: hidden; }
+      slider div.bar .selection, [slider] div.bar .selection {
+        width: 0%;
+        height: 100%;
+        background: #13b6ff; }
+    slider div.handle, [slider] div.handle {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      top: -8px;
+      background-color: #fff;
+      border: 1px solid #000;
+      z-index: 2;
+      border-radius: 100%; }
+      slider div.handle:after, [slider] div.handle:after {
+        content: '';
+        background-color: #777;
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        border-radius: 100%; }
+        slider div.handle:after:hover, [slider] div.handle:after:hover {
+          background-color: #000; }
+      slider div.handle.active:after, [slider] div.handle.active:after {
+        background-color: #f00; }
+  slider div.bubble, [slider] div.bubble {
+  display: none;
+  cursor: default;
+  top: -22px;
+  padding: 1px 3px 1px 3px;
+  font-size: 0.7em;
+  font-family: sans-serif; }
+  slider div.bubble.active, [slider] div.bubble.active {
+    display: inline-block; }
+  slider div.bubble.limit, [slider] div.bubble.limit {
+    color: #777; 
+	}
+
+
+
+/*------------------------------------------*/
+/*	Biin Spinner
+/*------------------------------------------*/
+.spinner-cube
+{
+    margin: 0 auto;
+    width: 60px;
+    height: 60px;
+    position: relative;
+}
+.spinner-cube > div
+{
+    background-color: @colorFocus;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 10%;
+    left: 0;
+
+    -webkit-animation: cuberotate 1.8s infinite ease-in-out;
+    animation: cuberotate 1.8s infinite ease-in-out;
+}
+
+.spinner-cube div:nth-child(2)
+{
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+}
+
+@-webkit-keyframes cuberotate {
+    25% { -webkit-transform: translateX(22px) rotate(-90deg) scale(0.5) }
+    50% { -webkit-transform: translateX(22px) translateY(22px) rotate(-180deg) }
+    75% { -webkit-transform: translateX(0px) translateY(22px) rotate(-270deg) scale(0.5) }
+    100% { -webkit-transform: rotate(-360deg) }
+}
+
+@keyframes cuberotate {
+    25% { transform: translateX(42px) rotate(-90deg) scale(0.5); } 
+    50% { transform: translateX(42px) translateY(42px) rotate(-179deg); } 
+    50.1% { transform: translateX(42px) translateY(42px) rotate(-180deg); } 
+    75% { transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5); } 
+    100% { transform: rotate(-360deg); }
+}
 @import "controls";

@@ -1,0 +1,39 @@
+extends layout_landing_page_out
+block head_scripts
+	script(src="/landingPage/js/angular/landing.js")
+block content
+	#contentWrapper
+		.section#singupWrapper
+			.row
+				.col-md-6
+					h1 Create a Biin Account
+					img(src="/landingPage/img/thumbs/biinBeacon.png")
+				.col-md-4(ng-if="!succesSaveShow")
+					.row						
+						h2 Profile information
+						p Please fill the profile information
+						form( name="form" novalidate)
+							label First Name
+							input.form-control(placeholder="** First Name" ng-model="profile.displayName"  name="firstName" ng-minlength="5" required)
+							div(ng-show="form.firstName. && form.firstName.$error.required") Tell us your name.
+							label Last Name
+							input.form-control(placeholder="** Last Name" ng-model="profile.lastName" ng-minlength="5" required)
+							label Choose an user name
+							input.form-control(placeholder="** User Name" ng-model="profile.name" ng-minlength="5" required)
+							label Provide an e-mail
+							input.form-control(type="email" name="uEmail" placeholder="**  Email" ng-model="profile.emails[0]" ng-minlength="5" required)
+							div(ng-show="form.$submitted || form.uEmail.$touched")
+								span(ng-show="form.uEmail.$error.required") Tell us your email
+								span(ng-show="form.uEmail.$error.email")	This is not a valid email.
+							label Type your phone number
+							input.form-control(placeholder="**  Phone Number" ng-model="profile.phoneNumber" ng-minlength="5" required)
+							label Type a secure password
+							input.form-control(type="password" ng-model="profile.password" placeholder="** Password" ng-minlength="5" required)							
+							label Confirm the password
+							input.form-control(type="password" ng-model="profile.password2" placeholder="** Confirm Password" ng-minlength="5" required)								
+					.row
+						a.btn.btn-lg.btn-danger(ng-show="form.$valid" ng-click="submit()") Join BIIN
+				.col-md-6(ng-if="succesSaveShow")
+					.row.section
+						h1 Your account was successfully created
+						h2 Please confirm your e-mail to complete the process						

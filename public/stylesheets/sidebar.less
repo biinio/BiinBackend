@@ -1,13 +1,11 @@
-@firstColor:  #00adef;
+/* ------------------------------------------------------
+			Main CSS Style for Biin App CMS
+   ------------------------------------------------------*/
+@import "variables";
 
 /*
  * Base structure
  */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 40px;
-}
 
 /*
  * Global add-ons
@@ -25,10 +23,19 @@ body {
 .sidebar {
   display: none;
 }
+
+/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 @media (min-width: 768px) {
+
+  /* Move down content because we have a fixed navbar that is 50px tall */
+  body {
+    padding-top: @screenMdBodyPaddingTop;
+  }
+
   .sidebar {
+    top: @screenMdBodyPaddingTop;
     position: fixed;
-    top: 17px;
+    width: @screenMdSidebarWidth;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -36,34 +43,116 @@ body {
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: @firstColor;
+    background-color: @colorSidebar;
     border-right: none;
   }
-}
 
-/* Sidebar navigation */
+  .sidebar-margin {
+    margin-left: @screenMdSidebarWidth;
+  }
 
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
+  .nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+
+    .nav-item{
+      text-align: center;
+
+      a{
+        font-size: @screenMdSidebarFontSize;
+        padding: 3px;
+
+
+        div {
+          font-size: @screenMdSidebarIconSize;
+          color: @colorBackground;
+          text-shadow: 5px 2px 5px @colorBlack;
+        }
+
+        div:hover {
+          font-size: @screenMdSidebarIconSize;
+          color: @colorFocusHover;
+          text-shadow: 5px 2px 5px @colorBlack;
+        }
+      }
+    }
+  }
+
 }
+/*-* End Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+
+/*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+@media (min-width: 1550px) {
+
+  /* Move down content because we have a fixed navbar that is 50px tall */
+  body {
+    padding-top: @screenLgBodyPaddingTop;
+  }
+
+  .sidebar {
+    top: @screenLgBodyPaddingTop;
+    position: fixed;
+    width: @screenLgSidebarWidth;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: @colorSidebar;
+    border-right: none;
+  }
+
+  .sidebar-margin {
+    margin-left: @screenLgSidebarWidth;
+  }
+
+  .nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+
+    .nav-item{
+      text-align: center;
+
+      a{
+        font-size: @screenLgSidebarFontSize;
+        padding: 3px;
+
+
+        div {
+          font-size: @screenLgSidebarIconSize;
+          color: @colorBackground;
+          text-shadow: 5px 2px 5px @colorBlack;
+        }
+
+        div:hover {
+          font-size: @screenLgSidebarIconSize;
+          color: @colorFocusHover;
+          text-shadow: 5px 2px 5px @colorBlack;
+        }
+      }
+    }
+  }
+}
+/*-* End Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+
 
 .nav-sidebar > li > a {
   padding-right: 20px;
   padding-left: 20px;
   color: #fff;
 }
-.nav-sidebar > .active > a {
-  color: #fff;
-  background-color: #000;
+.nav-sidebar > .active > a > div{
+  color: @colorFocusHover;
 }
 
 .nav>li>a:hover, .nav>li>a:focus {
   text-decoration: none;
-  background-color: #999;
+  background-color: @colorSidebar;
 }
-
 
 /*
  * Main content
@@ -73,12 +162,6 @@ body {
   padding: 0px;
 }
 
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
 .main .page-header {
   margin-top: 0;
 }

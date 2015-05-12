@@ -3,9 +3,10 @@ var biinAppGallery = angular.module('biinAppGallery',['ngRoute','angularSpectrum
 biinAppGallery.controller("galleryController",['$scope', '$http',function($scope,$http){
   $scope.newObjects=[];
   $scope.allGallery=null;
+  $scope.organizationId = selectedOrganization();
 
-  $http.get('api/gallery/list').success(function(data){
-    $scope.allGallery = data;
+  $http.get('api/organizations/'+$scope.organizationId+'/gallery').success(function(data){
+    $scope.allGallery = data.data;
   });
 
   //on gallery change method                

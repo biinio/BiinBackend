@@ -2,12 +2,12 @@
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
- * Version: 1.3.1
+ * Version: 1.3.3
  *
  */
 (function($) {
 
-  jQuery.fn.extend({
+  $.fn.extend({
     slimScroll: function(options) {
 
       var defaults = {
@@ -116,6 +116,7 @@
                 me.parent().css('height', height);
                 me.css('height', height);
               }
+
               if ('scrollTo' in options)
               {
                 // jump to a static point
@@ -140,6 +141,13 @@
             }
 
             return;
+        }
+        else if ($.isPlainObject(options))
+        {
+            if ('destroy' in options)
+            {
+            	return;
+            }
         }
 
         // optionally set height to the parent's height
@@ -380,7 +388,6 @@
           {
             this.addEventListener('DOMMouseScroll', _onWheel, false );
             this.addEventListener('mousewheel', _onWheel, false );
-            this.addEventListener('MozMousePixelScroll', _onWheel, false );
           }
           else
           {
@@ -456,8 +463,8 @@
     }
   });
 
-  jQuery.fn.extend({
-    slimscroll: jQuery.fn.slimScroll
+  $.fn.extend({
+    slimscroll: $.fn.slimScroll
   });
 
 })(jQuery);

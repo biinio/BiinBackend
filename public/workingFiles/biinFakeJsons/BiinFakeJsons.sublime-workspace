@@ -1,0 +1,204 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 367.0,
+		"selected_items":
+		[
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/adidasElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/antoniosElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/fakeElement02.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/getCategories.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/chickenElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/chickenShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/joesElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/joesShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/joesSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/nikeElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/nikeShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/nikeSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/tastyChickenSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/pumaShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/samsungElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/pumaElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/pumaSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/playElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/playShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/playSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/samsungShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/samsungSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/nokiaElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/nokiaShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/adidasShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/flexiShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/matutesShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/spoonShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/antoniosSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/xboxElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/tonysElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/spoonElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/matutesElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/spoonSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/matutesSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/tonysShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/tonysSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/xboxShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/xboxSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/nokiaSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/flexySite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/flexiElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/flexiShowcase01",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/iconShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/antoniosShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/adidasSite01.json",
+		"/Users/Esteban/Downloads/nRF8001-20140509/Arduino/libraries/RBL_nRF8001/run_me_compile_xml_to_nRF8001_setup.bat",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/converseSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/converseElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/sites/iConSite01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/iconElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/converseShowcase01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/fakeElement04.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/fakeElement03.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/elements/fakeElement01.json",
+		"/Volumes/STORAGE/Developer/BiinFakeJsons/showcases/fakeShowcase01.json",
+		"/Users/Esteban/Desktop/BiinFakeJsons/fakeJsons.sublime-project",
+		"/Users/Esteban/Desktop/Biin fake jsons/connectibity.json",
+		"/Users/Esteban/Desktop/Biin fake jsons/connectibity",
+		"/Users/Esteban/Desktop/Biin fake jsons/fakeJsons.sublime-project"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 293.0,
+	"status_bar_visible": true
+}

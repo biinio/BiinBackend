@@ -1,0 +1,114 @@
+{
+    "data": {
+        "categories": [
+            {
+                "identifier": "MyBiins",
+                "sites": [
+                    {
+                        "identifier": "iConSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/iConSite01"
+                    },
+                    {
+                        "identifier": "converseSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/converseSite01"
+                    },
+                    {
+                        "identifier": "nokiaSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/nokiaSite01"
+                    },
+                    {
+                        "identifier": "xboxSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/xboxSite01"
+                    },
+                    {
+                        "identifier": "tonysSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/tonysSite01"
+                    },
+                    {
+                        "identifier": "matutesSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/matutesSite01"
+                    }
+                ]
+            },
+            {
+                "identifier": "Technology",
+                "sites": [
+                    {
+                        "identifier": "iConSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/iConSite01"
+                    },
+                    {
+                        "identifier": "samsungSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/samsungSite01"
+                    },
+                    {
+                        "identifier": "nokiaSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/nokiaSite01"
+                    },
+                    {
+                        "identifier": "playSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/playSite01"
+                    },
+                    {
+                        "identifier": "xboxSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/xboxSite01"
+                    }
+                ]
+            },
+            {
+                "identifier": "Shoes",
+                "sites": [
+                    {
+                        "identifier": "flexySite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/flexySite01"
+                    },
+                    {
+                        "identifier": "converseSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/converseSite01"
+                    },
+                    {
+                        "identifier": "adidasSite01",
+                        "jsonUrl": "https://biin-qa.herokuapp.com/mobile/sites/adidasSite01"
+                    },
+                    {
+                        "identifier": "nikeSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/nikeSite01"
+                    },
+                    {
+                        "identifier": "pumaSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/pumaSite01"
+                    }
+                ]
+            },
+            {
+                "identifier": "Food",
+                "sites": [
+                    {
+                        "identifier": "spoonSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/spoonSite01"
+                    },
+                    {
+                        "identifier": "antoniosSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/antoniosSite01"
+                    },
+                    {
+                        "identifier": "matutesSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/matutesSite01"
+                    },
+                    {
+                        "identifier": "tonysSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/tonysSite01"
+                    },
+                    {
+                        "identifier": "joesSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/joesSite01"
+                    },
+                    {
+                        "identifier": "tastyChickenSite01",
+                        "jsonUrl":"https://biin-qa.herokuapp.com/mobile/sites/tastyChickenSite01"
+                    }
+                ]
+            }
+        ]
+    }
+}

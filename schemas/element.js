@@ -1,27 +1,53 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var elementSchema = new Schema({
-    objectIdentifier:{type:String, default:"-1", index:true},
+
+    elementIdentifier:{type:String, default:"-1", index:true},
     organizationIdentifier:{type:String,default:""},
-    accountIdentifier:{type:String,default:""},
-    position:{type:String, default:""},
-	objectType:{type:String, default:""},
-	likes:{type:String, default:""},
-    title1:{type:String, default:""},
-	title2:{type:String, default:""},
-	title1Color:{type:String, default:""},
-	title2Color:{type:String, default:""},
-	title1Size:{type:String, default:""},
-	title2Size:{type:String, default:""},
-	objectDescription:{type:String, default:""},
+    accountIdentifier:{type:String,default:""},    
+    position:{type:String, default:"1"},
+	elementType:{type:String, default:""},
+
+    title:{type:String, default:""}, 
+    subTitle:{type:String, default:""}, 
+
+    searchTags:[],    
+    sticker:{identifier:{type:String, default:""}, color:{type:String,default:""}},
+
+    textColor:{type:String, default:""},
+    domainColor:{type:String, default:""},
+    
 	actionType:{type:String, default:""},
-	originalPrice:{type:String, default:""},
-	biinPrice:{type:String, default:""},
+	currencyType:{type:String, default:"0"},
+
+	hasFromPrice:{type:String, default:"0"},
+	//fromPrice:{type:String, default:""},
+	hasListPrice:{type:String, default:'0'},	
+	listPrice:{type:String, default:""},
+	hasPrice:{type:String, default:"0"},
+	price:{type:String, default:""},
+	
+	hasDiscount:{type:String, default:'0'},
 	discount:{type:String, default:""},
-	savings:{type:String, default:""},
-	biinSold:{type:String, default:""},
-	timeFrame:{type:String, default:""},
-	imageUrl:{type:String, default:""},
+	hasSaving:{type:String, default:'0'},
+	savings:{type:String, default:""},	
+
+	hasTimming:{type:String,default:"0"},
+	initialDate:{type:Date,default:""},
+	expirationDate:{type:Date,default:""},
+
+	hasQuantity:{type:Boolean,default:0},
+	quantity:{type:String,default:""},
+
+	details:[{
+			elementDetailType:{type:String, default:""},
+			text:{type:String,default:""},
+			body:[{				
+				line:{type:String,default:""},
+				description:{type:String,default:""},//Use for type 6
+				currencyType:{type:String,default:""}//Use for type  6
+			}]
+		}],	
 	categories:[
 		{
 			identifier:{type:String, index:true, default:"-1"},
@@ -30,14 +56,16 @@ var elementSchema = new Schema({
 			imgUrl:{type:String, default:""}
 		}
 	],
-	media:[
-		{
-			title1:{type:String, default:""},
-			title1:{type:String, default:""},
-			imgUrl:{type:String,default:""}
-		}
-	]
-
+	media:[{
+		identifier:{type:String, default:""},
+		title1:{type:String, default:""},
+		url:{type:String,default:""},
+		mediaType:{type:String,default:""},
+		mainColor:{type:String,default:""}
+	}],
+	biinedCount:{type:Number,default:0},
+	sharedCount:{type:Number,default:0},
+	commentedCount:{type:Number,default:0}
 });
 
 module.exports = mongoose.model('elements', elementSchema);

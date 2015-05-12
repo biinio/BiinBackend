@@ -1,10 +1,14 @@
-module.exports =function(db){
+module.exports =function (){
+
+	//Common Libraries
+	var util = require('util'), fs=require('fs');
 
 	//Custom Utils
-	var utils = require('../biin_modules/utils')();
-
-	//Schemas
+	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path'),imageManager=require('../biin_modules/imageManager')();
+	//Schemas	
 	var organization = require('../schemas/organization'), site = require('../schemas/site');
+
+
 	var functions ={};
 
 	//GET the Main view of an Organization
@@ -13,62 +17,98 @@ module.exports =function(db){
 	}	
 
 	//GET the list of organizations
-	functions.list = function(req,res){		
-		organization.find({"accountIdentifier":req.user.accountIdentifier},function (err, data) {
-			   res.json({data:data, prototypeObj : new organization()});
+	functions.list = function(req,res){	
+		res.setHeader('Content-Type', 'application/json');	
+		organization.find({"accountIdentifier":req.user.accountIdentifier},{_id:0,identifier:1,name:1,brand:1,description:1,extraInfo:1,media:1},function (err, data) {
+			   res.json({data:data});
 		});		
 	}
 
-	//PUT an update of the organization
-	functions.set=function(req,res){	 
-		var model =req.body.model;
-		//Perform an update
+	//PUT/POST an organization
+	functions.set=function(req,res){
+	//Perform an update
 		var organizationIdentifier=req.param("identifier");
-		var model = req.body.model;			
-		delete model._id;
+		res.setHeader('Content-Type', 'application/json');
 
-		if(model)
-		{			
-			//If is pushing a new model
-			if('isNew' in model){
+		//If is pushing a new model
+		if(typeof(organizationIdentifier)==="undefined"){
+	        var newModel = new organization();
+	        organizationIdentifier = utils.getGUID();
 
-				delete model.isNew;
-                
-                var newModel = new organization(model);
-				//Set the account and de user identifier
-                newModel.identifier=utils.getGUID();
-				newModel.accountIdentifier= req.user.accountIdentifier;
-
-				//Perform an create
-				newModel.save(function(err){
-					if(err)
-						throw err;
-					else{
-						//Return the state and the object
-						res.json({state:"success",replaceModel:newModel});
-					}
-				});
-				
-			}else{
-				organization.update(
-	                     { identifier:organizationIdentifier},
-	                     { $set :model },
-	                     { upsert : true },
-	                     function(err){
-	                     	if(err){
-	                     		throw err;
-	                     		res.json(null);
-	                     	}
-							else{
-	                            //Return the state
-								res.json({state:'success',replaceModel:model});							
-							}
-	                     }
-	                   );
-			}				
+			//Set the account and de user identifier
+	        newModel.identifier=organizationIdentifier
+			newModel.accountIdentifier= req.user.accountIdentifier;
 			
-		}
+			//Perform an create
+			newModel.save(function(err){
+				if(err)
+					res.send(err, 500);
+				else{
+					//Return the state and the object
+					res.send(newModel, 201);
+				}
+			});			
+		}else{
+			var model = req.body.model;			
+			delete model._id;
+
+			//Validate the Model
+			/*
+
+			var errors =utils.validate(new organization().validations(),req,'model');
+			if(errors)
+				res.send(errors,400);
+			else
+			*/
+			delete model.identifier;
+			organization.update(
+			                     { identifier:organizationIdentifier},
+			                     { $set :model },
+			                     { upsert : false },
+			                     function(err){
+			                     	if(err)
+										res.send(err, 500);
+									else
+			                            //Return the state
+										res.send(model,200);							
+			                     }
+			                   );					
+		}		
 	}
+
+	//Post the Image of the Organization
+	functions.uploadImage = function(req,res){
+		//Read the file
+		var userAccount = req.user.accountIdentifier;
+		var userIdentifier = req.user.name;
+		var organizationIdentifier =req.param("identifier");
+		res.setHeader('Content-Type', 'application/json');
+
+ 		if(!util.isArray(req.files.file)){
+
+ 			var file =req.files.file;
+
+	 		//var data = fs.readFileSync(file.path);
+	 		var imagesDirectory = userAccount;
+	 		var systemImageName = 'media/'+ userAccount+"/" +organizationIdentifier+"/media/img."+ utils.getExtension(file.originalFilename);	 			 			
+ 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(imgURL){
+				var mediaObj={imgUrl:imgURL};
+
+	 			organization.update({identifier:organizationIdentifier },{media:mediaObj},function(err){
+	 				if(err)
+	 					res.send(err, 500);
+	 				else
+	 				{
+	 					res.json({data:mediaObj});	
+	 				}
+	 			});
+ 			
+ 			});	
+
+ 		} else{
+ 			res.send(err, 500);
+ 		}
+	 }		
 
 	//DELETE an specific Organization
 	functions.delete= function(req,res){
@@ -83,20 +123,6 @@ module.exports =function(db){
 	}
 
 	//Minor and major Functions
-
-	//GET the major of the organization
-	functions.getMajor =  function(req,res){
-		var organizationIdentifier = req.param('identifier');
-		organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},'majorCounter',function(err, data){
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier}, {$inc:{majorCounter:utils.get.majorIncrement()}},function(err){
-				if(err)
-					throw err;
-				else
-					res.json({data: data.majorCounter});
-
-			});
-		});
-	}
 
 	//GET the minor of the organization context
 	functions.getMinor =  function(req,res){

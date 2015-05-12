@@ -6,5 +6,7 @@ module.exports = moongose.model('galleries',{
 			originalName:{type:String, default:""},
 			localUrl:{type:String, default:""},
 			serverUrl:{type:String, default:""},
-			dateUploaded:{type:String, default:""}
+			dateUploaded:{type:String, default:""},
+			url:{type:String,default:""},
+			mainColor:{type:String,default:""}
 });

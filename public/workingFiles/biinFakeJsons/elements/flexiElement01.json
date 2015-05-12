@@ -1,0 +1,94 @@
+{
+    "data": {
+        "identifier": "flexiElement01",
+        "elementType": "3",
+        "position": "1",
+        "title": "Flexi",
+        "subTitle": "Flexi en Terramall",
+        "elementDescription": "Lorem ipsum dolor sit amet, eum ut nemore bonorum legendos, ex pro utinam labitur. Mel integre officiis te, his ne audiam placerat maluisset. Vix nibh blandit luptatum ne, te sit simul vocibus suscipit. Vel no dicit forensibus.",
+        "titleColor": "255,255,255",
+        "titleBackgroundColor": "47,131,192",
+        "hasListPrice": "1",
+        "listPrice": "$400",
+        "hasDiscount": "1",
+        "discount": "25%",
+        "price": "$300",
+        "savings": "$100",
+        "hasTimming": "1",
+        "initialDate": "2015-01-01 12:00:00",
+        "expirationDate": "2015-01-02 12:00:00",
+        "hasQuantity": "1",
+        "quantity": "12",
+        "reservedQuantity": "34",
+        "claimedQuantity": "23",
+        "actualQuantity": "12",
+        "details": [
+            {
+                "elementDetailType": "1",
+                "text": "Lorem ipsum dolor sit amet"
+            },
+            {
+                "elementDetailType": "2",
+                "text": "Cu sale illud vocibus pri. Et illud scaevola definitionem eos, ne falli mentitum moderatius his. Eu tacimates percipitur efficiendi eum, cum modus falli ut, no vix impetus laboramus delicatissimi. Ex case adhuc signiferumque cum, te viderer conclusionemque ius, nostrud sententiae mel ei. Per ei minimum scribentur, an pri viderer electram conclusionemque, no tamquam virtute sea."
+            },
+            {
+                "elementDetailType": "3",
+                "text": "Aliquid vituperatoribus vis ad. Cu pro dolorem adipiscing delicatissimi, soleat graecis an cum. Primis nostrum eu eos, qui fabulas corrumpit dissentiunt ne. Duo at accusam molestie qualisque, eum no ullum erant."
+            },
+            {
+                "elementDetailType": "4",
+                "text": "Lorem ipsum dolor sit amet."
+            },
+            {
+                "elementDetailType": "4",
+                "text": "Lorem ipsum dolor sit amet."
+            },
+            {
+                "elementDetailType": "4",
+                "text": "Lorem ipsum dolor sit amet."
+            },
+            {
+                "elementDetailType": "5",
+                "text": "Lorem ipsum dolor sit amet."
+            },
+            {
+                "elementDetailType": "1",
+                "text": "Lorem ipsum dolor sit amet"
+            },
+            {
+                "elementDetailType": "2",
+                "text": "Cu sale illud vocibus pri. Et illud scaevola definitionem eos, ne falli mentitum moderatius his. Eu tacimates percipitur efficiendi eum, cum modus falli ut, no vix impetus laboramus delicatissimi. Ex case adhuc signiferumque cum, te viderer conclusionemque ius, nostrud sententiae mel ei. Per ei minimum scribentur, an pri viderer electram conclusionemque, no tamquam virtute sea."
+            },
+            {
+                "elementDetailType": "2",
+                "text": "Cu sale illud vocibus pri. Et illud scaevola definitionem eos, ne falli mentitum moderatius his. Eu tacimates percipitur efficiendi eum, cum modus falli ut, no vix impetus laboramus delicatissimi. Ex case adhuc signiferumque cum, te viderer conclusionemque ius, nostrud sententiae mel ei. Per ei minimum scribentur, an pri viderer electram conclusionemque, no tamquam virtute sea."
+            }
+        ],
+        "imagesURL": [
+            {
+
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/elementImages/flexiElement0101.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/elementImages/fakeElement0102.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/elementImages/fakeElement0103.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/elementImages/fakeElement0104.jpg"
+            }
+        ],
+        
+        "showNotification":"1",
+		"hasNotification":"1",
+		"notificationText":"First notification for testing.",
+        "biins": "12",
+        "likes": "34",
+        "comments": "23",
+        "userBiined": "0",
+        "userLiked": "1",
+        "userCommented": "0",
+        "userViewed": "0"
+    }
+}

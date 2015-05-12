@@ -1,0 +1,46 @@
+div
+	.section
+		h1(translate="BIINS.TITLE")
+		p(translate="BIINS.SUB_TITLE")
+	.section
+		.row
+			.biinsWrapper.scrollbar-inner(scrollbar="scrollbarOptionsOwnedGallery" )
+				.img-block(data-toggle="modal" href="#purchaseBeaconModal")					
+						#purchaseBiinButton.moduleWrapper
+							.biinPurchasElementWrapper
+								p
+				.img-block( ng-repeat="item in sites[selectedSite].biins" ng-click="editBiin(sites[selectedSite].biins.indexOf(item))")
+					.moduleWrapper(ng-class="{active: sites[selectedSite].biins.indexOf(item) == selectedBiin}")					 	
+						.biinElementWrapper
+							p(ng-if="!item.name.length") Biin# {{item.minor}}													
+							p(ng-if="item.name.length>0") {{item.name}}
+	.section(ng-if="selectedBiin!=null && sites[selectedSite].biins.length>0")
+		row
+			input.form-control(type="text" ng-model="sites[selectedSite].biins[selectedBiin].name" placeholder="Name")
+			input.form-control(type="text" ng-model="sites[selectedSite].biins[selectedBiin].location" placeholder="location")				
+			p.biinPropertie Identifier: {{sites[selectedSite].biins[selectedBiin].identifier}}			
+			p.biinPropertie Organization id: {{organizationId}}			
+			p.biinPropertie Site id: {{sites[selectedSite].major}}
+			p.biinPropertie Biin id: {{sites[selectedSite].biins[selectedBiin].minor}}
+			p(ng-if="sites[selectedSite].biins[selectedBiin].isRequiredBiin").biinPropertie This is a biin of Basic Package
+			.col-md-12.nopadding
+				.section.darkSection				
+					h2 Biin Type
+					p Please select the biin type
+					.typeWrapper
+						.type-block
+							.moduleType(ng-click="selectBiinType(1)" ng-class="{'active':'1'===sites[selectedSite].biins[selectedBiin].biinType}")
+								.circleInner
+									i.icon.icon-file-1
+									span Externo
+						.type-block
+							.moduleType(ng-click="selectBiinType(2)" ng-class="{'active':'2'===sites[selectedSite].biins[selectedBiin].biinType}")
+								.circleInner
+									i.icon.icon-files-1
+									span Interno
+						.type-block
+							.moduleType(ng-click="selectBiinType(3)" ng-class="{'active':'3'===sites[selectedSite].biins[selectedBiin].biinType}")
+								.circleInner
+									i.icon.icon-files-1
+									span Producto									
+include wizardBiinsPurchaseModal

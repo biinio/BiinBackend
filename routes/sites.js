@@ -6,6 +6,8 @@ module.exports = function () {
 	//Schemas
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
 					   biin = require('../schemas/biin');
+	var regionRoutes = require('./regions')();
+
 	var functions={};
 
 	//GET the main view of sites
@@ -50,30 +52,23 @@ module.exports = function () {
 	}
 
 	//PUT an update of an site
-	functions.set=function(req,res){	 
-		var model =req.body.model;
-		
+	functions.set=function(req,res){
 		//Perform an update
 		var organizationIdentifier=req.param("orgIdentifier");
-		var model = req.body.model;			
-		delete model._id;
-		
-		//Remove the id of the new biins
-		for(var b =0; b< model.biins.length; b++){
-			if('isNew' in model.biins[b]){
-				delete model.biins[b]._id;	
-			}
-		}
+		res.setHeader('Content-Type', 'application/json');
 
-		if(model)
-		{			
-			//If is pushing a new model
-			if('isNew' in model){
-				delete model.isNew;
+		//If is pushing a new model
+		if(typeof(req.param("siteIdentifier"))==="undefined"){
+			
+			//Set the account and the user identifier
+			var model = new site();
+            model.identifier=utils.getGUID();
+			model.accountIdentifier= req.user.accountIdentifier;
+			model.isValid = false;
 
-				//Set the account and de user identifier
-                model.identifier=utils.getGUID();
-				model.accountIdentifier= req.user.accountIdentifier;
+			//Get the Mayor and Update
+			getMajor(organizationIdentifier,req.user.accountIdentifier,function(major){
+				model.major =major;
 				organization.update(
 					{
 						identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier
@@ -82,41 +77,66 @@ module.exports = function () {
 						$push: {sites:model}
 					},
 					function(err,affectedRows){
-						if(err)
-							throw err;
+						if(err){
+							res.send(err, 500);
+						}
+							
 						else{
-
 							//Return the state and the object
-							res.json({state:"success",replaceModel:model});
+							res.send(model, 201);
 						}						
 					}
-				);
-
-			}else{
-
+				);				
+			});
+		}else{
+			var model = req.body.model;		
+			model.isValid = utils.validate(new site().validations(),req,'model')==null;
+			if(model)
+			{	
+				delete model._id;				
+				delete model.minorCounter;
+				delete model.major;
+				delete model.isDeleted;
+				delete model.commentedCount;
+				delete model.sharedCount;
+				delete model.biinedCount;
+				delete model.loyalty;
+				//Remove the id of the new biins
+				for(var b =0; b< model.biins.length; b++){
+					if('isNew' in model.biins[b]){
+						delete model.biins[b]._id;	
+					}
+				}				
 				var set = {};
 
-
 				for (var field in model) {
-				  set['sites.$.' + field] = model[field];
+					if(field!="biins")	//Add a filter for prevent insert other biins without purchase
+				  		set['sites.$.' + field] = model[field];
 				}
 				organization.update(
 	                     { identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier,'sites.identifier':model.identifier},
 	                     { $set :set },
-	                     { upsert : true },
+	                     { upsert : false },
 	                     function(err, cantAffected){
 	                     	if(err){
 	                     		throw err;
 	                     		res.json(null);
 	                     	}
 							else{
-	                            //Return the state
-								res.json({state:'success',replaceModel:model});							
+								if(model.region)
+									regionRoutes.updateRegionSiteCategories(model.region,model.identifier,model.categories,function(succes){
+										//Return the state
+										res.send(model,200);							
+									});
+								else
+									//Return the state
+									res.send(model,200);							
+	                            
 							}
 	                     }
 	                   );
-			}				
-		}
+			}
+		}				
 	}	
 
 	//DELETE an specific site
@@ -124,14 +144,171 @@ module.exports = function () {
 		//Perform an update
 		var organizationIdentifier=req.param("orgIdentifier");
 		var siteIdentifier=req.param("siteIdentifier");
-		organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
-			if(err)
-				throw err;
-			else
-				res.json({state:"success"});
-		});
+
+		regionRoutes.removeSiteToRegionBySite(siteIdentifier,function(){
+			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
+						if(err)
+							throw err;
+						else
+							res.json({state:"success"});
+					});			
+		})
+		
 	}
 
+	//PUT Purchase a Biin to a Site
+	functions.biinPurchase = function(req,res){
+		var organizationIdentifier=req.param("orgIdentifier");
+		var siteIdentifier=req.param("siteIdentifier");
+		var qty= eval(req.body['biinsQty']);
+		var isBasicPackage= eval(req.body['isBasicPackage']);
+		if(isBasicPackage)
+			qty=2;
+		res.setHeader('Content-Type', 'application/json');
+
+		if((qty || isBasicPackage) && organizationIdentifier && siteIdentifier){
+			var newMinorValue = utils.get.minorIncrement() *qty;
+			organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},{'_id':1,'sites.$':1},function(err, siteInfo){
+				if(err)
+					res.send(err,500)					
+				else
+				{
+					var minor = 0;
+					var major=0;
+					if(siteInfo.sites[0]){
+						minor =siteInfo.sites[0].minorCounter;
+						major= siteInfo.sites[0].major;
+					}
+
+					//Todo the process of the deduction of the Credit Card
+					var historyRecord ={} ;			
+					historyRecord.date=utils.getDateNow(); historyRecord.quantity=qty; historyRecord.site=siteIdentifier;
+
+					//Add an history record
+					organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,data){
+						if(err){
+							res.send(err,500)
+						}else{
+							newMinorValue += eval(minor);
+							var newBeacons =[];
+							var dateNow = utils.getDateNow();
+							var cantMinorToInc = utils.get.minorIncrement() ;							
+							var minorIncrement =minor;
+
+							//Create the new Beacons
+ 							for(var i=0; i<qty;i++){
+ 								var biinIdentifier = utils.getGUID();
+ 								minorIncrement+=cantMinorToInc; 								
+ 								var biintype=1; 								
+ 								if(isBasicPackage)
+ 									biintype=(i%2)+1;
+ 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype})); 								
+ 							}
+ 							//Organization Update
+							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
+								if(err)
+									res.send(err,500)
+								else{
+									res.send(newBeacons,201);
+								}
+							});
+						}
+
+					});					
+				}
+					
+			});
+
+		}
+	}
+
+	//Post add Site to a region
+	functions.addSiteToRegion =function(req,res){
+		var orgIdentifier = req.param('orgIdentifier');
+		var siteIdentifier= req.param('siteIdentifier')
+
+		var addSiteLogic = function(siteObj){
+			addSiteToRegion(siteObj,function(result,regionId){							
+				if(result){
+					organization.update({'identifier':orgIdentifier,'sites.identifier':siteObj.identifier},{$set:{'sites.$.region':regionId}},function(err,cantAffected){
+						if(!err && cantAffected>0)	
+							res.json({status:0, data: regionId})
+						else
+							res.json({status:5})
+					});
+
+					
+				}else{
+					res.json({status:5})
+				}
+
+			})
+		}
+
+		organization.findOne({identifier:orgIdentifier, "sites.identifier":siteIdentifier},{"sites.$":1},function(err,foundSite){
+			if(err)
+				throw err;
+			else{
+				if(foundSite && foundSite.sites){
+					if(foundSite.sites[0].region===''){
+						addSiteLogic(foundSite.sites[0])
+					}else{
+						console.log("Updating the site region");
+						//Unsubscribe the site to the region
+						regionRoutes.removeSiteToRegionBySite(siteIdentifier,function(){
+							addSiteLogic(foundSite.sites[0]);
+						})
+					}
+				}
+			}
+		})
+	}	
+
+	//Function to add a site inside a region.
+	addSiteToRegion =function(site,callback){
+
+		//Verify the  closest region
+		regionRoutes.getRegionByProximity(site.lat,site.lng,function(isInside,region){
+			//If is inside a region
+			if(isInside){
+				regionRoutes.addSiteToRegion(region.identifier,{identifier:site.identifier},function(wasAdded,regionId){
+					if(wasAdded){
+						callback(true,region.identifier);
+					}
+					else{
+						callback(false,null);
+					}
+				});
+			}else{
+				//If is not inside a region
+				regionRoutes.createRegion(site.lat,site.lng,{identifier:site.identifier},function(wasAdded,region){
+					if(wasAdded){
+						callback(true,region);
+					}else{
+						callback(false,null);
+					}
+				})
+			}
+
+
+		});
+	}
+	
+	//Minor and major Functions
+
+	//GET the major of the organization
+	getMajor =  function(organizationIdentifier,accountIdentifier, callback){
+		organization.findOne({identifier:organizationIdentifier, accountIdentifier:accountIdentifier},'majorCounter',function(err, data){
+			organization.update({identifier:organizationIdentifier, accountIdentifier:accountIdentifier}, {$inc:{majorCounter:utils.get.majorIncrement()}},function(err){
+				if(err)
+					throw err;
+				else
+					callback(data.majorCounter);
+
+			});
+		});
+	}
+	
 	//Other methods
 	getOganization = function(req, res, callback){
 		var identifier=req.param("identifier");
@@ -147,5 +324,34 @@ module.exports = function () {
 		});
 	}
 
+	//Test and other Utils
+	functions.setSitesValid= function(req,res){
+		var processed =0;
+		organization.find({'sites.isValid':{ $exists: false }},{"identifier":1,"sites":1},function(err,data){
+			var orgCant = data.length;
+			for(var o =0; o<data.length;o++){
+				var organization = data[o];
+				for(var s=0; s<data[o].sites.length;s++){
+					req.body.model = organization.sites[s];
+					var errors =  utils.validate(new site().validations(),req,'model');
+					console.log(errors);
+					data[o].sites.isValid = errors===null;	
+					console.log('Is site valid: '+ data[o].sites.isValid);
+				}
+
+				organization.save(function(err){
+					processed++;
+					if(err)
+						throw err;
+					else
+						console.log("save changes in org: " + organization.identifier)
+
+					if(processed ===orgCant)
+						res.json({status:0});
+				})
+			}
+
+		})    	
+    }
 	return functions;
 }

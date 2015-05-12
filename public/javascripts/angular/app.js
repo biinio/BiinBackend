@@ -1,13 +1,16 @@
 // Define the service of galleries
 var biinServicesModule= angular.module('biin.services',[]);
 
+//Propertie
+biinServicesModule.value('scrollbarOptionsStandard', {"type": "simple"});
+
 //Image Services
 biinServicesModule.factory('gallerySrv', ['$http', function (async) {
     return {
-      getList: function () {
-        var promise = async({method:'GET', url:'api/gallery/list'})
+      getList: function (organization) {
+        var promise = async({method:'GET', url:'api/organizations/'+organization+'/gallery'})
             .success(function (data, status, headers, config) {
-              return data;
+              return data.data;
             })
             .error(function (data, status, headers, config) {
               return {"status": false};
@@ -18,6 +21,25 @@ biinServicesModule.factory('gallerySrv', ['$http', function (async) {
   }
 }
 ]); 
+
+//Stickers Services
+biinServicesModule.factory('stickersSrv', ['$http', function (async) {
+    return {
+      getList: function () {
+              var promise = async({method:'GET', url:'api/stickers'})
+            .success(function (data, status, headers, config) {
+              return data.data;
+            })
+            .error(function (data, status, headers, config) {
+              return {"status": false};
+            });
+          
+          return promise; 
+      }
+    }
+  }
+  ]);
+
 
 //Image uploades pending indicator
 biinServicesModule.directive('pendingIndicator', function(){
@@ -31,6 +53,7 @@ biinServicesModule.directive('pendingIndicator', function(){
             // this directive on an individual image, you may consider using
             // it on the element that contains many images...
             scope.imagesLoaded = imagesLoaded(element);
+            
             // start your progress/loading animation here
             // (or whenever you attempt to load the images)
             scope.imagesLoaded.on('always', function() {
@@ -72,7 +95,7 @@ biinServicesModule.directive("dropFiles", function(){
         restrict:'A',
         link:function(scope,element,attrs){       
           var drop = element;
-          var autoInsert = attrs["drop-Files"] =='';
+          var autoInsert = typeof(attrs["drop-Files"])==='undefined' || attrs["drop-Files"] =='';
 
           //dragIcon.src="/images/headerBg.jpg";
           //Tells the browser that we *can* drop on this target
@@ -94,36 +117,18 @@ biinServicesModule.directive("dropFiles", function(){
             }
 
             var files = event.dataTransfer.files;
-            var formData = new FormData();
-            for (var i = 0; i < files.length; i++) {
-              formData.append('file', files[i]);
+            if(files.length){
+              var formData = new FormData();
+              for (var i = 0; i < files.length; i++) {
+                var mediaFile = files[i];
+                mediaFile.originalFilename=files[i].name;
+                formData.append('file', mediaFile);
+              }
+
+              //Upload The media information
+              uploadMedia(scope,formData);
             }
-
-            // now post a new XHR request
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'api/gallery/upload');
-            xhr.onload = function (data) {
-              if (xhr.status === 200) {
-                var obj= $.parseJSON(xhr.response);
-
-                //Do a callback logic by caller
-                if(scope.onGalleryChange)
-                  scope.onGalleryChange(obj,autoInsert);
-
-                console.log('all done: ' + xhr.status);
-              } else {
-                console.log('Something went terribly wrong...');
-              }
-            };
-
-            xhr.upload.onprogress = function (event) {
-              if (event.lengthComputable) {
-                var complete = (event.loaded / event.total * 100 | 0);
-                //progress.value = progress.innerHTML = complete;
-              }
-            };
-
-            xhr.send(formData);
+              
             return false;
           });
 
@@ -137,6 +142,35 @@ biinServicesModule.directive("dropFiles", function(){
     }
   });
 
+//Single upload files directive
+biinServicesModule.directive('uploadFiles',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+      var $inputFileElement=$(attrs['uploadFiles']);
+      var autoInsert=false;//Set to false default auto insert
+        //Change event when an image is selected
+        $inputFileElement.on('change',function(){
+          console.log("Change beginning the upload");
+
+            var files = $inputFileElement[0].files;
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+              var mediaFile = files[i];
+              mediaFile.originalFilename=files[i].name;
+              formData.append('file', mediaFile);
+            }
+            //Upload The media information
+            uploadMedia(scope,formData);
+        })
+        //Click event of the style button
+        $(element[0]).on('click touch',function(e){          
+          $inputFileElement.trigger('click');
+        });
+    }
+  }
+})
+
 //Define the directives of drag
 biinServicesModule.directive('drag',function(){
   return{
@@ -144,8 +178,9 @@ biinServicesModule.directive('drag',function(){
     link:function(scope,element, attrs){       
       $el = $(element);
     
-      $el.draggable({appendTo: '.colAppend',containment: '.workArea', cursor: "move", scroll: true, helper: 'clone',snap: true, snapTolerance: 5, 
-        start:function(){          
+      $el.draggable({appendTo: '.colAppend',containment: '.workArea', cursor: "move", scroll: false, helper: 'clone',snap: true, snapTolerance: 5, cancel: ".dragDisabled", 
+        start:function(e, ui){  
+          $(ui.helper).addClass("ui-draggable-helper");
             switch(attrs.drag)
             {
               case "categories":
@@ -154,7 +189,7 @@ biinServicesModule.directive('drag',function(){
               case "galleries":
                 scope.setDragGallery(scope.$eval(attrs.elementIndex));        
                 break;
-              case "showcaseElement":
+              case "showcaseElement":                
                 scope.setDragElement(scope.$eval(attrs.elementIndex));
                 break;             
 
@@ -186,11 +221,6 @@ biinServicesModule.directive('drop',function(){
             case "galleries":
               //Todo put the logic for add the gallery
               scope.insertGalleryItem(scope.dragGalleryIndex);            
-              break;
-            case "showcaseElement":
-              var dragPosition = scope.$eval(attrs.elementPosition);
-              scope.insertElementAfter(scope.dragElementIndex,dragPosition);
-              $(element).next(".dropColumn").addClass('hide');                          
               break;
           }
         },
@@ -224,6 +254,157 @@ biinServicesModule.factory('categorySrv', ['$http', function (async) {
 
     }
     }]);
+
+//Define the drop system
+biinServicesModule.directive('notification',function(){
+  return{
+    restrict:'E',
+    templateUrl:'partials/notificationWidget',
+    link:function(scope, element, attrs){
+       
+    }
+  }
+});
+
+//Define the guide window behaviour
+biinServicesModule.directive('guide',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+      $('.guide-header .close-guide',element).on('click touch',function(){
+        //Todo add the missing animation
+        $(element).toggle();
+      })
+    }
+  }
+});
+
+
+//Directive for numberFields
+biinServicesModule.directive('isNumber',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+      $(element).on('keypress',function(evt){            
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        return true;
+        });
+    }
+  }
+});
+
+
+//Define the map window behaviour
+biinServicesModule.directive('map',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+    var zoom = eval(attrs['zoom']);
+    var defPosition =new google.maps.LatLng(0 ,0);        
+    var defOptions = {
+      center: defPosition,
+      zoom: zoom
+    };
+    var map=new google.maps.Map(element[0],defOptions);
+    var marker;
+      //Get the Geolocation
+      function getLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition,errorCallback,{timeout:10000});
+          } else {
+              element[0].innerHTML = "Geolocation is not supported by this browser.";
+          }
+      }
+      //Show the position in the map
+      function showPosition(position,otherZoom) {              
+        if(typeof(otherZoom)!=='undefined'){
+          zoom=otherZoom;
+        }
+         var myPosition =new google.maps.LatLng( position.coords.latitude ,  position.coords.longitude);        
+           var mapOptions = {
+            center: myPosition,
+            zoom: zoom
+          };
+
+            map.setOptions(mapOptions);
+
+            marker = new google.maps.Marker({
+              map:map,
+              draggable:true,
+              animation: google.maps.Animation.DROP,
+              position: myPosition
+            });
+
+            //Change Location Event Refresh the model
+            google.maps.event.addListener(marker, 'position_changed', function(){
+              var newPosition = marker.getPosition();
+              scope.changeLocation(newPosition.lat(),newPosition.lng());
+            });
+        }      
+
+      function errorCallback(err){
+        var coords ={latitude:local_lat,longitude: local_lng};
+        showPosition({coords:coords},1);
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+      }
+      var local_lat =0;
+
+      var local_lng=0;
+
+      if(attrs['lat'] && attrs['lng']){
+        local_lat = eval(attrs['lat']);
+        local_lng = eval(attrs['lng']);        
+      }
+
+      //Call get location
+      if(local_lat==0&& local_lng==0)
+        getLocation();
+      else{
+        var coords ={latitude:local_lat,longitude: local_lng};
+         showPosition({coords:coords});
+      }        
+    }
+  }
+});
+
+
+//Scroll bar initialization
+biinServicesModule.directive('scrollbar', function(){
+    return {
+        "link": function(scope, element){
+            //scope.options
+            $(element[0]).scrollbar().on('$destroy', function(){
+                $(element[0]).scrollbar('destroy');
+            });
+        },
+        "restring": "AC",
+        "scope": {
+            "options": "=scrollbar"
+        }
+    };
+  });
+/*
+This directive allows us to pass a function in on an enter key to do what we want.
+ */
+biinServicesModule.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+ 
+                event.preventDefault();
+            }
+        });
+    };
+});
+
+
 //Custom Filters
 
 //Filter for get the intersection of two list of objects
@@ -235,3 +416,82 @@ biinServicesModule.filter("difference",function(){
     });
   }
 });
+
+//Filter for telephone format inputs
+biinServicesModule.filter('tel', function () {
+    return function (tel) {
+        if (!tel) { return ''; }
+
+        var value = tel.toString().trim().replace(/^\+/, '');
+
+        if (value.match(/[^0-9]/)) {
+            return tel;
+        }
+
+        var country, city, number;
+
+        switch (value.length) {
+            case 10: // +1PPP####### -> C (PPP) ###-####
+                country = 1;
+                city = value.slice(0, 3);
+                number = value.slice(3);
+                break;
+
+            case 11: // +CPPP####### -> CCC (PP) ###-####
+                country = value[0];
+                city = value.slice(1, 4);
+                number = value.slice(4);
+                break;
+
+            case 12: // +CCCPP####### -> CCC (PP) ###-####
+                country = value.slice(0, 3);
+                city = value.slice(3, 5);
+                number = value.slice(5);
+                break;
+
+            default:
+                return tel;
+        }
+
+        if (country == 1) {
+            country = "";
+        }
+
+        number = number.slice(0, 3) + '-' + number.slice(3);
+
+        return (country + " (" + city + ") " + number).trim();
+    };
+});
+
+
+//Custom Methods
+var uploadMedia = function(scope,formData, autoInsert){
+    scope.loadingImagesChange(true);
+    // now post a new XHR request
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'api/organizations/'+scope.organizationId+'/gallery');
+    xhr.onload = function (data) {
+      if (xhr.status === 200) {
+        var obj= $.parseJSON(xhr.response);
+
+        //Do a callback logic by caller
+        if(scope.onGalleryChange)
+          scope.onGalleryChange(obj,autoInsert);
+
+        console.log('all done: ' + xhr.status);
+        scope.loadingImagesChange(false);
+      } else {
+        console.log('Something went terribly wrong...');
+      }
+    };
+
+    xhr.upload.onprogress = function (event) {
+      if (event.lengthComputable) {
+        var complete = (event.loaded / event.total * 100 | 0);
+        //progress.value = progress.innerHTML = complete;
+      }
+    };
+
+    xhr.send(formData);
+}

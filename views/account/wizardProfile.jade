@@ -1,0 +1,32 @@
+.section
+	h1(translate="PROFILE.TITLE")
+	//p(translate="PROFILE.SUB_TITLE")
+#profileSection.section.form-horizontal(ng-mouseleave="save()")
+	.row
+		img(ng-if="account.profile.profilePhoto.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+		img(ng-if="account.profile.profilePhoto.length > 0" ng-src="{{account.profile.profilePhoto}}" pending-indicator)
+		a.btn.btn-default(upload-profile-image="#profileInput")(translate="PROFILE.UPLOAD_IMAGE")
+		input.hidden#profileInput(type="file")
+		h2(translate="PROFILE.CONTACT_INFO")
+		.form-horizontal
+			.form-group
+				label.col-sm-2.control-label(translate="PROFILE.FIRST_NAME" for="txtName")
+				.col-sm-10
+					input#txtName.form-control(ng-model="account.profile.displayName")
+			.form-group
+				label.col-sm-2.control-label(translate="PROFILE.LAST_NAME" for="txtlastName")
+				.col-sm-10
+					input#txtlastName.form-control(ng-model="account.profile.lastName")
+			.form-group
+				label.col-sm-2.control-label(translate="PROFILE.USER_NAME" for="txtusrName")
+				.col-sm-10
+					input#txtusrName.form-control(ng-model="account.profile.name")
+			.form-group
+				label.col-sm-2.control-label(translate="PROFILE.EMAIL" for="txtMail")
+				.col-sm-10
+					input#txtMail.form-control(ng-model="account.profile.emails[0]")
+			.form-group
+				label.col-sm-2.control-label(translate="PROFILE.PHONE" for="txtPhone")
+				.col-sm-10
+					input#txtPhone.form-control(ng-model="account.profile.phoneNumber")
+			label.organizationId Identificador: {{account.profile.accountIdentifier}}

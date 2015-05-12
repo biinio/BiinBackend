@@ -1,0 +1,31 @@
+<!-- Modal -->
+#purchaseBeaconModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="purchaseBeaconModalLabel" aria-hidden="true")
+	.modal-dialog
+		//Clasic Purchase
+		.modal-content(ng-if="sites[selectedSite].biins.length>0")
+			.modal-header
+				h4.modal-title(translate="BIINS.BUY_BIINS")
+			.modal-body
+				p(translate="BIINS.BUY_INFO")
+				p(translate="BIINS.BUY_INFO2")
+				h1(translate="BIINS.QTY")
+				form#purchaseBeaconForm
+					//slider(floor="1" ceiling="1000" step="1" precision="1" ng-model="biinsQty")					
+					input(type="number" name="biinsQty" ng-model="biinsQty" required)
+
+			.modal-footer
+				button.btn.btn-primary(type="button" ng-click="purchaseBiin(biinsQty,false)")(translate="BIINS.CONTINUE")
+				button.btn.btn-default(type="button" data-dismiss="modal")(translate="BIINS.CANCEL")			
+			//Purchase Basic Package
+		.modal-content(ng-if="sites[selectedSite].biins.length===0")
+			.modal-header
+				h4.modal-title Purchase the basic package
+			.modal-body
+				p If you continue there is going to be a charge in your credit card.
+				p If you are agree please click on Continue button if else press Cancel
+				h1 Please purchase the basic package for your site
+				form#purchaseBeaconForm
+					//slider(floor="1" ceiling="1000" step="1" precision="1" ng-model="biinsQty")					
+					button.btn.btn-lg.btn-primary(type="button" ng-click="purchaseBiin(0,true)") Purchase the Basic Package
+			.modal-footer			
+				button.btn.btn-default(type="button" data-dismiss="modal") Cancel							

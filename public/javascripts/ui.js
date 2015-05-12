@@ -29,6 +29,8 @@ var selectedOrganization=function(){
             }, opt.duration + (delay || 0));
         });
     };
+
+
 })(jQuery);
 
 //Jquery Controls
@@ -38,6 +40,7 @@ function controls(){
    var modal =  $('.modal').modal({
         "backdrop" : "static"
     });
+
 }
 
 jQuery(function ($) {
@@ -58,9 +61,57 @@ jQuery(function ($) {
       $(this).tab('show');
     });
 
+    //Side bar code for menu
+    /*var $sidebar =$(".sidebar");
+    if($sidebar.length>0){
+        $sidebar.scrollbar({"type": "simple"}).on('$destroy', function(){
+            $sidebar.scrollbar('destroy');
+        });        
+    }*/
+
     //Load Controls
     controls();
 
+});
+
+//Organizations Loader
+jQuery(function ($) {
+    //Get the organizations list
+    $.get( "/api/organizations", function(data) {
+      var dropDown = $('.dropdown-menu','#organizationMenu');
+      var defaultOrganization = selectedOrganization();
+      for(var i =0; i<data.data.length; i++){
+        dropDown.append('<li><a organization-name="'+data.data[i].name+'" organization-identifier="'+data.data[i].identifier+'">'+data.data[i].name+'</a></li>');
+      }
+      
+      //isDefault
+      $('a[organization-identifier="'+defaultOrganization+'"]').addClass('isDefault');
+
+      //Subscribe de click listener
+      $('a',dropDown).on('touch click',function(e){
+            e.preventDefault();
+            var orgName = $(this).attr('organization-name');
+            var orgIdentifier = $(this).attr('organization-identifier');
+            $('a.isDefault').removeClass('isDefault');
+            $('a[organization-identifier="'+orgIdentifier+'"]').addClass('isDefault');            
+            setOrganizationMenu(orgIdentifier,orgName,function(){
+              //$('a','organizationNav li.active').click();
+              $('a','#organizationNav li.active')[0].click();
+            })
+            
+      });
+    })
+      .done(function() {
+        //Second Done
+      })
+      .fail(function() {
+        //Fail Function
+      })
+      .always(function() {
+        //Finished Function
+      });
+
+     
 });
 
 //Cropper Controls
@@ -108,11 +159,11 @@ createOrganizationsCropper=function(id){
 }
 
 //Set the Organization Menu
-setOrganizationMenu = function(organizationId, organizationName){
+setOrganizationMenu = function(organizationId, organizationName,callback){
     if(organizationId){
       $("#organizationNav").removeClass("hide");
       $("#organizationNav").attr("data-organization",organizationId);
-      $("#organizationNav .name").text(organizationName);
+      $("#organizationMenu .name").text(organizationName);
 
       $('a[data-org-link]').each(function(i){
         var $el= $(this);
@@ -122,8 +173,28 @@ setOrganizationMenu = function(organizationId, organizationName){
       })
 
     }
+    callback();
   }
 
+//Display the validations Errors
+displayValidationErrors=function(errors){
+    for(var i =0; i<errors.length;i++){
+        errors[i].msg;  //The message description ** Could be a resource
+        errors[i].param; //The parameter
+        errors[i].value;
+
+    }
+}
+
+displayErrorMessage=function(error,section,status){
+        console.log(error)
+}
+
+turnLoaderOff= function(){
+    $('#wrapperContent').addClass('loaded');
+    $('.left-section-content').show();
+    $('.right-section-content').show();
+}
 //Angular Custom Directives
 /*
 angular.module('biin.alertManager', []).directive('alertManager', function() {

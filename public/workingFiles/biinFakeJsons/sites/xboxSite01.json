@@ -1,0 +1,57 @@
+{
+    "data": {
+        "identifier": "xboxSite01",
+        "proximityUUID": "36C14446-6848-4B02-AD73-7343E8A6A82B",
+        "major": "1",
+        "title": "Xbox",
+        "subTitle": "Multiplaza Escazu",
+        "color": "11,137,67",
+        "textColor": "255,255,255",
+        "country": "Costa Rica",
+        "state": "San Jose",
+        "city": "Escazu",
+        "zipCode": "1001",
+        "streetAddress1": "100 metros norte del cementerio local",
+        "streetAddress2": "Frente al Mall",
+        "imagesURL": [
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/xbox1.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/xbox2.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/xbox3.jpg"
+            },
+            {
+                "url": "http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/siteImages/xbox4.jpg"
+            }
+        ],
+        "biins": [
+            {
+                "identifier": "xboxSite01WebBiin",
+                "minor": "-1",
+                "biinType": "1",
+                "showcaseIdentifier": "xboxShowcase01",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"http://s3-us-west-2.amazonaws.com/biintest/BiinFakeJsons/showcases/xboxShowcase01"
+            },
+            {
+                "identifier": "xboxSite01Biin01",
+                "minor": "1",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase03",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase03"
+            },
+            {
+                "identifier": "xboxSite01Biin02",
+                "minor": "2",
+                "biinType": "2",
+                "showcaseIdentifier": "fakeShowcase01",
+				"lastUpdate": "2015-01-01 12:00:00",
+                "jsonUrl":"https://biin-qa.herokuapp.com/mobile/showcases/fakeShowcase01"
+            }
+        ]
+    }
+}

@@ -1,0 +1,86 @@
+.section
+	h1 Highlights
+	p Add the Highlights of the element
+	#highlightsSection
+		.section.darkSection
+			.row
+				i.icon.icon-cash-register
+				.highlightTitle
+					h2 Price
+					p Element Price
+			.row
+				form.form-inline.novalidate.formPrice			
+					.form-group.priceGroup
+						.header
+							label(for="chkPrice") Precio
+						.body
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="0" ng-blur="validate()" required is-number)
+					.form-group.priceGroup
+						.header					
+							label Moneda
+						.body
+							select.form-control.bootstrap-select(title='Currency' name="Currency"  ng-model="elements[selectedElement].currencyType"  data-size="4")
+								option(value='1') &#36;
+								option(value='2') &#162;
+								option(value='3') &#8359;
+								option(value='4') &#128;
+					.form-group.priceGroup
+						.header
+							label
+						.body
+							label(for="chkFromPrice") Utilizar precio Desde
+							checkbox#chkFromPrice.btn-checkbox( ng-model="hasFromPriceBool" ng-change="changeBoolStateHighlights('hasFromPrice', hasFromPriceBool)" large )
+							//input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].fromPrice" ng-disabled="!hasFromPriceBool" placeholder="From" ng-blur="validate()" required is-number)
+		.section.darkSection.col-md-12						
+			.row
+				i.price.icon.icon-timer-1
+				.highlightTitle
+					h2 Descuento
+					p Ingrese la informaci&oacute; de descuento
+			.row
+				form.form-inline.novalidate.discountForm
+					.form-group.priceGroup
+						.header
+							checkbox#chkDiscount.btn-checkbox( ng-model="hasDiscountBool" ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)" large)
+							label(for="chkDiscount") Porcentaje
+						.body						
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].discount" ng-disabled="!hasDiscountBool"  placeholder="Discount" ng-blur="validate()" required is-number)
+					.form-group.priceGroup
+						.header								
+							checkbox#chkSaving.btn-checkbox( ng-model="hasSavingBool" ng-change="changeBoolStateHighlights('hasSaving', hasSavingBool)" large)
+							label(for="chkSaving") Monto del descuento
+						.body
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="0 %" ng-blur="validate()"  ng-disabled="!hasSavingBool" required is-number )								
+					.form-group.priceGroup
+						.header
+							checkbox#chkPrice.btn-checkbox( ng-model="hasListPriceBool" ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)" large)
+							label(for="chkListPrice") Nuevo Precio
+						.body								
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="Final Pricex" ng-blur="validate()" required is-number)
+		.section.col-md-6.darkSection
+			.section
+				.row
+					i.price.icon.icon-timer-1
+					.highlightTitle
+						h2 Limit Time
+						p Limit Time
+				.row
+					.form.form-inline.timingForm.novalidate
+						.priceGroup
+							.body
+								checkbox.btn-checkbox( ng-model="hasTimmingBool" ng-change="changeBoolStateHighlights('hasTimming', hasTimmingBool)" large)
+								input.highlightInput(type="datetime" date-time ng-model="elements[selectedElement].initialDate" ng-disabled="!hasTimmingBool" placeholder="Initial Date**" ng-blur="validate()" required readonly)
+								input.highlightInput(type="datetime" date-time ng-model="elements[selectedElement].expirationDate" ng-disabled="!hasTimmingBool" placeholder="Expiration Date**" ng-blur="validate()" required readonly)
+		.section.col-md-6.darkSection
+			.section
+				.row
+					i.price.icon.icon-cube
+					.highlightTitle					
+						h2 Quantity
+						p Agrege la cantidad disponible del producto
+				.row
+					form.novalidate.qtyForm
+						.form-group.priceGroup
+							.body
+								checkbox.btn-checkbox( ng-model="hasQuantityBool" ng-change="changeBoolStateHighlights('hasQuantity', hasQuantityBool)" large)
+								input.highlightInput(type="text" ng-model="elements[selectedElement].quantity"  ng-disabled="!hasQuantityBool" placeholder="Quantity **" ng-blur="validate()" required is-number)
