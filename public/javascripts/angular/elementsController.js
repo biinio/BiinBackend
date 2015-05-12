@@ -442,6 +442,27 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         $scope.$digest();
     }
   }
+  //Move detail to one place down if it's able
+  $scope.moveDetailDown = function(index){
+    var details = $scope.elements[$scope.selectedElement].details;
+    var detailToMove = details[index];
+    if(index+1<details.length)
+    {
+        details.splice(index,1);
+        details.splice(index+1,0,detailToMove)
+    }
+  }
+  //Move detail to one place up if it's able
+  $scope.moveDetailUp = function(index){
+    var details = $scope.elements[$scope.selectedElement].details;
+    var detailToMove = details[index];
+    if(index>0)
+    {
+        details.splice(index,1);
+        details.splice(index-1,0,detailToMove)
+    }
+  }
+
   //Remove a element a specific index
   $scope.removeDetailAt=function(index){
     if($scope.elements[$scope.selectedElement].details.length>=index)

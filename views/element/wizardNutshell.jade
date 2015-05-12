@@ -39,36 +39,35 @@ form.novalidate
 					span(translate="SUMMARY.PRICE_LIST")
 			#elementDetailsBody.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 				.detail-wrapper(ng-repeat="item in elements[selectedElement].details")
+					.elementOptions
+						.btn-moveUp.btn-options(ng-click="moveDetailUp(elements[selectedElement].details.indexOf(item))")
+							i.icon.icon-arrow-3
+						.btn-moveDown.btn-options(ng-click="moveDetailDown(elements[selectedElement].details.indexOf(item))")
+							i.icon.icon-arrow-4
+						.btn-remove.btn-options(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")
+							i.icon.icon-delete-1-1
 					.element
 						.elementTitle(ng-if="item.elementDetailType=='1'")
 							.header
 								h3(translate="SUMMARY.DTITLE")
-								.btn-remove(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")
-									i.icon.icon-delete-1-1
 							.body
 								.controlContainer
 									input.title(type="text" ng-model="item.text" placeholder="Enter your title here" ng-blur="validate()" required)								
 						.elemenParagraph(ng-if="item.elementDetailType=='2'")
 							.header
 								h3(translate="SUMMARY.PARAGRAPH")
-								.btn-remove(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")								
-									i.icon.icon-delete-1-1
 							.body
 								.controlContainer
 									textarea.paragraph(ng-model="item.text" placeholder="Enter your paragraph here." ng-blur="validate()" required)
 						.elementQuote(ng-if="item.elementDetailType=='3'")
 							.header
 								h3(translate="SUMMARY.QUOTE")
-								.btn-remove(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")								
-									i.icon.icon-delete-1-1
 							.body
 								.controlContainer								
 									textarea.quote(type="text" ng-model="item.text" placeholder="Enter your quote here." ng-blur="validate()" required)
 						.elementList(ng-if="item.elementDetailType=='4'")
 							.header
 								h3(translate="SUMMARY.LIST")
-								.btn-remove(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")								
-									i.icon.icon-delete-1-1								
 							.body
 								.controlContainer
 										.listItem(ng-repeat="li in item.body")
@@ -80,17 +79,13 @@ form.novalidate
 											span(translate="GENERIC.ADD")																					
 						.elementTitle(ng-if="item.elementDetailType=='5'")
 							.header
-								h3(translate="SUMMARY.LINK")
-								.btn-remove(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")								
-									i.icon.icon-delete-1-1								
+								h3(translate="SUMMARY.LINK")								
 							.body
 								.controlContainer
 									input.link(type="text" ng-model="item.text" placeholder="Enter your link here." ng-blur="validate()" required)						
 						.elementList(ng-if="item.elementDetailType=='6'")
 							.header
-								h3(translate="SUMMARY.PRICE_LIST")
-								.btn-remove(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")
-									i.icon.icon-delete-1-1								
+								h3(translate="SUMMARY.PRICE_LIST")							
 							.body
 								.controlContainer
 										.priceList.listItem(ng-repeat="li in item.body")
