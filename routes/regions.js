@@ -101,21 +101,10 @@ module.exports = function () {
 				 	var resultLong = region.longitude -lon;
 
 				 	//Get the Radious in radians, = Radious in meters / kilometers * 360 / Earth Circunference
-				 	var radiousRadians = ((region.radious/1000)*360)/process.env.EARTH_CIRCUMFERENCE;
-
-				 	console.log('Region: '+ region.identifier);
-				 	console.log('Lat: '+ region.latitude);
-				 	console.log('Long: '+ region.longitude);
-					console.log('Radious: '+ region.radious);
-
-					console.log('Result Lat: '+ resultLat)
-					console.log('Result Long: '+ resultLong)
-
+				 	var radiousRadians = ((region.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE;
 				 	var distance= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));				 	
-				 	console.log('Distance: '+ distance);
 
 				 	if(distance< radiousRadians){
-				 		console.log('Inside region: ' + region.identifier)
 
 				 		if(lessDistance == 999999999999999999999999){
 				 			lessDistance = distance;
@@ -124,7 +113,6 @@ module.exports = function () {
 				 		}else{
 
 				 			if(distance< lessDistance){
-				 				console.log('This region ' +region.identifier+' is closest than: ' + insideRegion);
 				 				lessDistance = distance;
 				 				insideRegion =region;
 				 			}else{

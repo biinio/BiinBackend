@@ -14,5 +14,22 @@ module.exports = function () {
 		})
 	}
 
+	//Get a enviroment by identifier
+	functions.getEnviroment= function(identifier,callback){
+		sysGlobals.findOne({'identifier':identifier},function(err,data){
+			callback(data)
+		});
+	}
+
+	//Get and Update the Major of a Sys Global
+	functions.incrementMajor=function(identifier,callback){
+		sysGlobals.findOne({'identifier':identifier},function(err,enviroment){
+			enviroment.majorCount++;			
+			enviroment.save(function(err){
+				callback(enviroment.majorCount)	
+			})			
+		});	
+	}
+
 	return functions;
 };
