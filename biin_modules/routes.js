@@ -199,7 +199,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);*/
     
     app.get('/mobile/regions',regions.listJson);
-    app.get('/mobile/biinies/:identifier/:regionIdentifier/categories',mobileRoutes.getCategoriesByRegionId);
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    
