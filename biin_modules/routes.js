@@ -168,7 +168,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier/isactivate', mobileUser.isActivate);
     app.post('/mobile/biinies/:identifier/categories', mobileUser.setCategories);
     app.get('/mobile/biinies/auth/:user/:password', mobileUser.login);
-    app.get('/mobile/biinies/:identifier',mobileUser.getProfile);    
+    app.get('/mobile/biinies/:identifier',mobileUser.getProfile);
     app.put('/mobile/biinies',mobileUser.setMobile);
     app.post('/mobile/biinies/:identifier',mobileUser.updateMobile);
 
