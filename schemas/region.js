@@ -16,15 +16,5 @@ module.exports = mongoose.model('regions', {
 			}
 		]		
 	}],
-	sitesCount:String,
-	biins:[
-		{
-			identifier:String,
-			major:String,
-			minor:String,
-			proximityUUID:String,
-			lastUpdate:String,
-			showcaseIdentifier:String
-		}
-	]	
+	sitesCount:String	
 });
