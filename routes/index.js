@@ -4,6 +4,8 @@ module.exports = function () {
 	var organization= require('../schemas/organization');
 	var client = require('../schemas/client');
 	var utils = require('../biin_modules/utils')();
+	var sysGlobals= require('../schemas/sysGlobals');
+	
 	//Get the index page
 	functions.index = function(req, res){
 	  res.render('index', { title: 'Biin', enviroment : process.env.NODE_ENV });	  
@@ -224,17 +226,27 @@ module.exports = function () {
     //Get the mobile Test page
     functions.mobileTest =function(req,res){    	
     	//res.render('mobileTest', { title: 'Biin' });	
+    	var major = 1;
     	var cantProced=0;
     	var total=0;
     	var callBack =function(){
     		console.log("Processed one");
     		cantProced++;
 			 if(total===cantProced){
-    				res.send('done');
+				sysGlobals.update({'identifier':'99d803fb-3c4f-4276-9535-d17a1b0cf49d'},{$set:{'majorCount':major}},function(err,affected){
+					if(err)
+						throw err;
+					else
+						res.send('done');
+				})			 	
+    				
+
     		}    		
     	}
 
     	organization.find({},function(err,data){
+
+    		var uuid = process.env.DEFAULT_SYS_ENVIROMENT;
     		if(err)
     			throw err;
     		else{
@@ -242,22 +254,26 @@ module.exports = function () {
     			total = data.length;
     			for(var i=0;i<data.length;i++){
     				for(var j=0; j<data[i].sites.length;j++){
+    					var minor=1;
+    					data[i].sites[j].major  = major;
+    					data[i].sites[j].proximityUUID= uuid;
+    					major++;
+
     					for(var b=0; b<data[i].sites[j].biins.length;b++){
-    						if('showcasesAsigned' in data[i].sites[j].biins[b]){
-    							var showcases =[];
-    							for(var s=0;s<data[i].sites[j].biins[b].showcasesAsigned.length;s++){
-    								showcases.push({'isDefault':true,'showcaseIdentifier':data[i].sites[j].biins[b].showcasesAsigned[0].showcaseIdentifier,'startTime':'2000-01-01T06:00:00.000Z', 'endTime':'2000-01-01T06:00:00.000Z'});
-    							}
-    							data[i].sites[j].biins[b].showcases=showcases;
-    						}
+    						data[i].sites[j].biins[b].proximityUUID=uuid;
+    						data[i].sites[j].biins[b].major = major;    						
+    						data[i].sites[j].biins[b].minor = minor;
+    						minor++;
     					}
+    					data[i].sites[j].minorCounter = minor;
     				}
     				console.log('modified of '+ data[i].identifier +' | '+data.length+' of '+ i+1);
     				data[i].save(function(err){
     					if(err)
     						throw err
     					else{
-    						callBack()
+    					  console.log("Orgnization Changes Did");
+    					  callBack();
     					}    						
 
     				});
