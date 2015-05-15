@@ -8,10 +8,7 @@ module.exports = moongose.model('biins',{
 			proximityUUI:{type:String, default:""},
 			location:{type:String, default:""},
 			registerDate:{type:String, default:""},
-			lastUpdate:{type:String, default:""},			
-			showcasesAsigned:[{
-				showcaseIdentifier:{type:String, default:""}
-			}],
+			lastUpdate:{type:String, default:""},
 			showcases:[{
                 isDefault: {type:String,default:"0"},
                 showcaseIdentifier:{type:String,default:""},
