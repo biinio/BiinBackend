@@ -110,11 +110,45 @@ module.exports = function () {
 		//Perform a delete
 		var organizationIdentifier = req.param('identifier');
 		var showcaseIdentifier=req.param("showcase");
+
+		var updateLinkingReferences=function(callback){
+			//Update the showcases inside the biins references.
+			organization.findOne({identifier:organizationIdentifier,'sites.biins.showcases.showcaseIdentifier':showcaseIdentifier},function(err,orgData){
+				if(orgData && orgData.sites && orgData.sites.length){
+					for(var i=0; i<orgData.sites.length;i++){
+						for(var b = 0; orgData.sites[i].biins.length;b++){
+							if('showcases' in orgData.sites[i].biins[b] && orgData.sites[i].biins[b].showcases.length){
+								var toSpliceIndex=[];
+								for(var s =0; s<orgData.sites[i].biins[b].showcases.length;s++){
+									if(orgData.sites[i].biins[b].showcases[s].showcaseIdentifier===showcaseIdentifier){
+										toSpliceIndex.push(s);
+									}
+								}
+								//Remove the Index
+								if(toSpliceIndex.length>0){
+									for(var index=0;index<toSpliceIndex.length;index++)
+										orgData.sites[i].biins[b].showcases[index].splice(index,1);
+								}
+							}
+						}
+					}
+				}
+				orgData.save(function(err){
+					if(err)
+						throw err;
+					else{
+						callback();
+					}
+				})
+			});
+		}
+
 		showcase.remove({identifier:showcaseIdentifier,accountIdentifier: req.user.accountIdentifier, organizationIdentifier:organizationIdentifier},function(err){
 			if(err)
 				throw err;
 			else
 				res.json({state:"success"});
+
 		});
 	}
 
