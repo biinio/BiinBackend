@@ -20,6 +20,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var mobileOauthManager= require('./mobileOauthManager');
     var stickers = require('../routes/stickers')();
     var mobileRoutes = require('../routes/mobileRoutes')();
+    var maintenance = require('../routes/maintenance')();
 
     //Application routes
     app.get('/sendEmail', routes.sendEmail)
@@ -96,6 +97,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations/:identifier/sites',sites.index);    
     app.get('/api/organizations/:identifier/sites',sites.get);
     app.post('/api/organizations/:orgIdentifier/sites',sites.set);
+
+    //Maintenance
+    app.get('/maintenance',maintenance.index);
+    app.get('/maintenance/organizations',maintenance.getOrganizationInformation);
+
     //Biins Purchase
     app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/biins/',sites.biinPurchase);    
 
