@@ -7,6 +7,7 @@ module.exports = function () {
   	    utils = require('../biin_modules/utils')();
 
 	//Schemas
+	var organization = require('../schemas/organization');
 	var showcase = require('../schemas/showcase');
 	var region = require('../schemas/region');
 	var functions = {};
@@ -116,7 +117,7 @@ module.exports = function () {
 			organization.findOne({identifier:organizationIdentifier,'sites.biins.showcases.showcaseIdentifier':showcaseIdentifier},function(err,orgData){
 				if(orgData && orgData.sites && orgData.sites.length){
 					for(var i=0; i<orgData.sites.length;i++){
-						for(var b = 0; orgData.sites[i].biins.length;b++){
+						for(var b = 0; b < orgData.sites[i].biins.length;b++){
 							if('showcases' in orgData.sites[i].biins[b] && orgData.sites[i].biins[b].showcases.length){
 								var toSpliceIndex=[];
 								for(var s =0; s<orgData.sites[i].biins[b].showcases.length;s++){
@@ -127,7 +128,7 @@ module.exports = function () {
 								//Remove the Index
 								if(toSpliceIndex.length>0){
 									for(var index=0;index<toSpliceIndex.length;index++)
-										orgData.sites[i].biins[b].showcases[index].splice(index,1);
+										orgData.sites[i].biins[b].showcases.splice(toSpliceIndex[index],1);
 								}
 							}
 						}
@@ -136,7 +137,7 @@ module.exports = function () {
 				orgData.save(function(err){
 					if(err)
 						throw err;
-					else{
+					else{						
 						callback();
 					}
 				})
@@ -147,8 +148,9 @@ module.exports = function () {
 			if(err)
 				throw err;
 			else
-				res.json({state:"success"});
-
+				updateLinkingReferences(function(){
+					res.json({state:"success"});
+				});	
 		});
 	}
 
