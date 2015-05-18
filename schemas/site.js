@@ -63,7 +63,10 @@ var siteObj ={
                 endTime:{type:String,default:"00:00"}
             }],
             biinType:{type:String,default:"1"},
-            isRequiredBiin:{type:Boolean,default:'false'}
+            isRequiredBiin:{type:Boolean,default:'false'},
+            latitude:{type:Number,default:0},
+            longitude:{type:Number,default:0}
+
 		}
 	],
 	loyalty: {

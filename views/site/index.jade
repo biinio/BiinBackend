@@ -23,6 +23,8 @@ block content
 											img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" pending-indicator)													
 										.col-md-9
 											label.moduleTitle {{item.title1}}
+											br
+											label.moduleSubTitle {{item.title2}}
 											.btnDelete.icon-round-control.btn-on-hover(ng-click="openConfirmation('sm',sites.indexOf(item))")
 												.icon.icon-bin-2
 											.btnShowcasePreview.icon-round-control.btn-on-hover
