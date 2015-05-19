@@ -4,3 +4,33 @@ div
 		br
 		br
 		p {{organizations[selectedOrganization].name}}
+		.listBiinsInOrganization
+			table.tableListBiinsInOrganization
+				tbody
+					tr
+						th 
+							| Id
+						th 
+							| Alias
+						th 
+							| UU-ID
+						th 
+							| Site
+						th 
+							| Major
+						th 
+							| Minor
+						th 
+							| State
+					tr(ng-repeat="biin in biinsXOrganization")
+						td.biinInOrganizationId {{biin.identifier}}
+						td.biinInOrganizationAlias {{biin.name}}
+						td.biinInOrganizationUUID {{biin.proximityUUID}}
+						td.biinInOrganizationSite {{biin.siteName}}
+						td.biinInOrganizationMajor {{biin.major}}
+						td.biinInOrganizationMinor {{biin.minor}}
+						td.biinInOrganizationState {{biin.state}}
+
+
+		.addBiinToOrganization
+			.icon.icon-add-4
