@@ -6,7 +6,7 @@ module.exports = function () {
 	//Schemas
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
 					   biin = require('../schemas/biin');
-	var regionRoutes = require('./regions')();
+	               
 	var sysGlobalsRoutes = require('./sysGlobals')();
 
 	var functions={};
