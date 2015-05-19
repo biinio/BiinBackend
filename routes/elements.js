@@ -119,6 +119,106 @@ module.exports = function(){
 		}
 	}
 
+	//GET Mobile Highligh Elements
+	functions.getMobileHighligh=function(req,res){
+
+		//Get the user identifier
+		var userIdentifier= req.param('identifier');
+		
+		//Get the categories of the user
+		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
+			if(err){
+				res.json({data:{status:"5",data:{}}});
+			}else{
+				if(foundCategories && "categories" in foundCategories){
+
+					if(foundCategories.categories.length===0)
+						res.json({data:{status:"9",data:{}}});
+					else{
+						//var catArray = _.pluck(foundCategories.categories,'identifier')
+						var result = {data:{elements:[]}};
+
+						//Get The Elements by Each Category
+						var categoriesProcessed = 0;
+						var categoriesWithElements=0;
+
+						///Get the Sites By categories
+						var getElementsByCat = function(pcategory, index, total, callback){
+							//Return the Elements by Categories
+							//, "elements.isValid":true
+							var orgResult=organization.find({'elements.categories.identifier':pcategory.identifier,'elements.isHighlight':'1'},{'elements':'1'},function(err,elementsByCategories){
+								if(err)
+									res.json({data:{status:"5",data:{}, err:err}});
+								else
+								{
+									var elResult=[];
+									var cantElAdded =0;
+
+									//Remove the Organization
+									for(var orgIndex =0; orgIndex<elementsByCategories.length; orgIndex++){										
+										if('elements' in elementsByCategories[orgIndex] )
+											for(var elIndex=0; elIndex<elementsByCategories[orgIndex].elements.length ;elIndex++){
+
+													//TODO: Validate the isValid
+													if(elementsByCategories[orgIndex].elements[elIndex].isValid=true && 'categories' in elementsByCategories[orgIndex].elements[elIndex] && elementsByCategories[orgIndex].elements[elIndex].categories.length>0 && elementsByCategories[orgIndex].elements[elIndex].isHighlight==='1'){
+														//Get the categories of the Element
+														var elCat = _.pluck(elementsByCategories[orgIndex].elements[elIndex].categories,'identifier')
+
+														if(_.indexOf(elCat,pcategory.identifier)!=-1){
+															elResult.push(elementsByCategories[orgIndex].elements[elIndex]);
+															cantElAdded++;
+															//if(isSiteInRegion(xcord,ycord,eval(elementsByCategories[orgIndex].elements[elIndex].lat),eval(elementsByCategories[orgIndex].elements[elIndex].lng))){													
+															//}
+														}
+													}
+											}
+									}	
+
+									//Callback function
+									callback(index,total,elResult,cantElAdded);									
+								}
+
+							});		
+
+					}
+					
+				}
+
+					var finalCursor=function(index,total,data,cantElements){
+
+						if(cantElements>0){
+							result.data.elements=result.data.elements.concat(data)
+							categoriesWithElements++;
+						}
+						categoriesProcessed++;
+
+						//Return the categories if all is processed
+						if(categoriesProcessed===total){
+
+							if(categoriesWithElements==0){
+								res.json({data:{status:"9",data:{}}});
+
+							}
+							else{
+								result.status="0";
+								res.json(result);
+							}
+
+						}				
+					}
+
+					//Order the sites by Category Identifier
+					for(var i=0; i< foundCategories.categories.length;i++){						
+						getElementsByCat(foundCategories.categories[i],i,foundCategories.categories.length,finalCursor);						
+					}					
+				}
+				else{
+					res.json({status:"9",data:{}});	
+				}
+			}
+		});		
+	}
+
 	//PUT an update of the showcase
 	functions.set=function(req,res){
 		var model =req.body.model;
