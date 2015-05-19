@@ -14,7 +14,8 @@ var orgSchema = new Schema({
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
 	extraInfo:{type:String, default:""},
-	majorCounter:{type: Number, default:1},		
+	majorCounter:{type: Number, default:1},
+	biinsCounter:{type:Number,default:0},		
 	//Count off biins purchased
 	purchasedBiinsHist:[{
 				date:{type:String,default:""},
@@ -76,10 +77,7 @@ var orgSchema = new Schema({
 				proximityUUID:{type:String, default:""},
 				location:{type:String, default:""},
 				registerDate:{type:String, default:""},
-				lastUpdate:{type:String, default:""},			
-				showcasesAsigned:[{
-					showcaseIdentifier:{type:String, default:""}
-				}],
+				lastUpdate:{type:String, default:""},
 				showcases:[{
 	                isDefault: {type:String,default:"0"},
 	                showcaseIdentifier:{type:String,default:""},
@@ -87,7 +85,9 @@ var orgSchema = new Schema({
 	                endTime:{type:String,default:"00:00"}
 	            }],
 	            biinType:{type:String,default:"1"},
-	            isRequiredBiin:{type:Boolean,default:'false'}
+	            isRequiredBiin:{type:Boolean,default:'false'},
+	            latitude:{type:Number,default:0},
+            	longitude:{type:Number,default:0}
 			}
 		],
 		loyalty: {

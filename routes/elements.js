@@ -194,8 +194,9 @@ module.exports = function(){
 		//Perform an update
 		var organizationIdentifier = req.param('identifier');
 		var elementIdentifier=req.param("element");
-		removeElementsInShowcases(elementIdentifier,function(){
-			
+
+
+		removeElementsInShowcases(elementIdentifier,function(){			
 			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
 				if(err)
 					throw err;
@@ -205,6 +206,9 @@ module.exports = function(){
 
 		});		
 	}
+
+	//Delete elements references
+	functions.removeElementsInShowcases= removeElementsInShowcases;
 
 	//POST an image for a showcase
 	functions.imagePost=function(req,res,next){	  		
@@ -273,7 +277,7 @@ module.exports = function(){
 
     //Remove the elments in showcases associted
     function removeElementsInShowcases(elementId,callback){
-    	console.log("Remove elements in showcase: "+elementId );
+
     	//Update the showcases associated
     	showcase.find({"objects.elementIdentifier":elementId},"",function(err,data){
     		if(err)

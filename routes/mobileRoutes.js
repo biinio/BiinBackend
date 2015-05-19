@@ -241,7 +241,7 @@ module.exports =function(){
 			});
 		}
 
-		newModel.proximityUUID= orgId;
+		newModel.proximityUUID= model.proximityUUID;
 		newModel.identifier = model.identifier;
 		newModel.major =""+ model.major;
 		newModel.country = model.country;
