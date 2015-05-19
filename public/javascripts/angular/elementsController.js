@@ -48,6 +48,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.hasSavingBool=false;
   $scope.hasPriceBool=false;
   $scope.hasFromPriceBool=false;
+  $scope.isHighlightBool=false;
 
   //Get the List of Objects
   $http.get('api/organizations/'+$scope.organizationId+'/elements').success(function(data){
@@ -88,6 +89,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.hasSavingBool= $scope.elements[index].hasSaving==='1';
     $scope.hasFromPriceBool= $scope.elements[index].hasFromPrice==='1';
     $scope.hasPriceBool= $scope.elements[index].hasPrice==='1';
+    $scope.isHighlightBool= $scope.elements[index].isHighlight==='1';
 
     $scope.clearValidations();
     $scope.wizardPosition=0;
@@ -536,7 +538,12 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           if(value)
             $scope.elements[$scope.selectedElement].hasFromPrice='1'
           else
-            $scope.elements[$scope.selectedElement].hasFromPrice='0'          
+            $scope.elements[$scope.selectedElement].hasFromPrice='0'    
+        case 'isHighlight':
+          if(value)
+            $scope.elements[$scope.selectedElement].isHighlight='1'
+          else
+            $scope.elements[$scope.selectedElement].isHighlight='0'                      
           break;                              
     }
     $scope.validate();
