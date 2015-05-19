@@ -1,13 +1,13 @@
 module.exports =function(){
 	var fs=require('fs');
 	var _= require('underscore');
+	var math = require('mathjs');	
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
 		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory');
-
 	
 	
 	//GET Categories
@@ -47,13 +47,12 @@ module.exports =function(){
 		res.json(JSON.parse(jsonObj));
 	}*/
 
-	//GET Categories
+	//GET Sites information by Biinie Categories
 	functions.getCategories=function(req,res){
 		var userIdentifier = req.param("identifier");
-		var xcord = req.param("latitude");
-		var ycord = req.param("longitude");
-
-		//Todo Implements Coordinates routes
+		var xcord = eval(req.param("xcord"));
+		var ycord = eval(req.param("ycord"));
+		var enviromentId = process.env.DEFAULT_SYS_ENVIROMENT;
 
 		//Get the categories of the user
 		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
@@ -75,30 +74,30 @@ module.exports =function(){
 						///Get the Sites By categories
 						var getSitesByCat = function(pcategory, index, total, callback){
 							//Return the sites by Categories
-							var orgResult=organization.find({'sites.categories.identifier':pcategory.identifier, "sites.isValid":true},{"_id":0,"sites.identifier":1,"sites.categories.identifier":1,"sites.categories.identifier":1,"sites.isValid":1, "identifier":1,},function(err,sitesCategories){
+							var orgResult=organization.find({'sites.categories.identifier':pcategory.identifier, "sites.isValid":true},{"_id":0,"sites.identifier":1,"sites.major":1,'sites.lat':1,'sites.lng':1,"sites.categories.identifier":1,"sites.categories.identifier":1,"sites.isValid":1, "identifier":1,},function(err,sitesCategories){
 								if(err)
 									res.json({data:{status:"5",data:{}, err:err}});
 								else
 								{
 									var sitesResult=[];
-
 									var cantSitesAdded =0;
 
 									//Remove the Organization
 									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){										
 										if('sites' in sitesCategories[orgIndex] )
-											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){								
+											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){
 
 													if( sitesCategories[orgIndex].sites[siteIndex].isValid=true && 'categories' in sitesCategories[orgIndex].sites[siteIndex] && sitesCategories[orgIndex].sites[siteIndex].categories.length>0){
 														//Get the categories of the site
 														var sitesCat = _.pluck(sitesCategories[orgIndex].sites[siteIndex].categories,'identifier')
 
 														if(_.indexOf(sitesCat,pcategory.identifier)!=-1){
-															sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
-															cantSitesAdded++;
+															if(isSiteInRegion(xcord,ycord,eval(sitesCategories[orgIndex].sites[siteIndex].lat),eval(sitesCategories[orgIndex].sites[siteIndex].lng))){
+            													sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
+																cantSitesAdded++;																
+															}
 														}
 													}
-													
 											}
 									}	
 
@@ -148,69 +147,35 @@ module.exports =function(){
 		});
 	}
 
-	//Get Categories by Region Identifier
-	functions.getCategoriesByRegionId=function(req,res){
-		var userIdentifier = req.param("identifier");
-		var regionIdentifier = req.param('regionIdentifier');
+	//Verify if the coords of the user and the site are in the expected radio
+	function isSiteInRegion(mobX, mobY,siteX,siteY){
+		//Get the Radious in radians, = Radious in meters / kilometers * 360 / Earth Circunference
+		if(!eval(process.env.ALLOW_LOCATION_FILTER))
+			return true;
+		else{
+			var radiousRadians = ((eval(process.env.STANDARD_RADIOUS)/1000)*360)/eval(process.env.EARTH_CIRCUMFERENCE);
+		 	var resultLat = siteX -mobX;
+		 	var resultLong = siteY - mobY;
+			var distance= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
 
-		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){		
-			if(err)				
-				res.json({data:{},status:"5"});	
-			else{
-				if((!foundCategories) || foundCategories.categories.length===0)
-					res.json({data:{status:"9",data:{}}});
-				else{
-					region.findOne({identifier:regionIdentifier},function(err,foundRegion){
-						var categories =[];
-						if(err)
-							res.json({data:{},status:"5"});	
-						if(!foundRegion )
-							res.json({data:{},status:"9"});	
-						else{
-							if(!foundRegion.sites || foundRegion.sites.length==0)
-								res.json({data:{},status:"9"});	
-							else{
-
-								//Iterate over the categories
-								for(var i =0; i<foundCategories.categories.length;i++){
-									var category = foundCategories.categories[i];
-									var categoryResult ={identifier:category.identifier,name:category.name};
-									var categorySites =[];	
-									for(var j=0;j<foundRegion.sites.length;j++){
-										var categoryFound =_.findWhere(foundRegion.sites[j].categories,{identifier:category.identifier})
-										if(categoryFound)
-											categorySites.push({identifier:foundRegion.sites[j].identifier})
-									}
-									if(categorySites.length>0){
-										categoryResult.sites=categorySites;
-										categories.push(categoryResult)
-
-									}
-								}
-								//Result of categogry with sites
-								if(categories.length>0){
-									res.json({data:{categories:categories},status:0});
-								}else{
-									res.json({data:{},status:"9"});	
-								}
-							}
-						}
-					});
-				}			
-			}
-		});
-
+			return distance<= radiousRadians;			
+		}
+		
 	}
+
+	//
 	//GET Site
 	functions.getSite=function(req,res){
+
+		var identifier=req.param("identifier");		
 		var biinieIdentifier = req.param("biinieIdentifier");
-		var siteId = req.param("identifier");
+
 		var getSiteInformation = function(err,mobileUser){
+
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else{
-				organization.findOne({"sites.identifier":siteId},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
+				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
 					if(err)
 						res.json({data:{status:"7",data:{}}});	
 					else
@@ -219,7 +184,7 @@ module.exports =function(){
 						else
 							if(data.sites && data.sites.length){	
 
-								mapSiteMissingFields(biinieIdentifier,siteId,data.identifier,data.sites[0],mobileUser,function(siteResult){
+								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,function(siteResult){
 									res.json({data:siteResult,status:"0"});
 								});
 								
@@ -230,7 +195,7 @@ module.exports =function(){
 				});
 			}			
 		}
-		if(siteId && biinieIdentifier){
+		if(biinieIdentifier){
 			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1},getSiteInformation)
 		}else{
 			res.json({data:{status:"7",data:{}}});
@@ -276,7 +241,7 @@ module.exports =function(){
 			});
 		}
 
-		newModel.proximityUUID= orgId;
+		newModel.proximityUUID= model.proximityUUID;
 		newModel.identifier = model.identifier;
 		newModel.major =""+ model.major;
 		newModel.country = model.country;

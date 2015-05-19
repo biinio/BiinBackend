@@ -48,7 +48,7 @@ html(lang='es')
 
 		//HEADER=============================================
 		header#header
-			if(enviroment !== 'production')
+			if(enviroment !== 'production' || enviroment === 'production')
 				.nav.navbar-helper
 					ul.nav.navbar-nav.navbar-right
 						li(style='cursor: pointer;').dropdown
@@ -130,7 +130,7 @@ html(lang='es')
 					//End Footer Copy
 				//End container
 			//END FOOTER
-		if(enviroment !== 'production')
+		if(enviroment !== 'production' || enviroment === 'production')
 			include _partials/singUpModal
 		//END CONTENT WRAPPER 
 		//EXTERNAL SCRIPTS=============================================

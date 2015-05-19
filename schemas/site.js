@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var validations={
-	required :['title1','title2','mainColor','textColor','country','state','city','zipCode','streetAddres','phoneNumber','lat','lng','categories','media']
+	required :['title1','title2','country','state','city','zipCode','streetAddres','phoneNumber','lat','lng','categories','media']
 };
 
 
@@ -55,10 +55,7 @@ var siteObj ={
 			proximityUUID:{type:String, default:""},
 			location:{type:String, default:""},
 			registerDate:{type:String, default:""},
-			lastUpdate:{type:String, default:""},			
-			showcasesAsigned:[{
-				showcaseIdentifier:{type:String, default:""}
-			}],
+			lastUpdate:{type:String, default:""},
 			showcases:[{
                 isDefault: {type:String,default:"0"},
                 showcaseIdentifier:{type:String,default:""},

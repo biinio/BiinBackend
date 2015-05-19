@@ -7,6 +7,7 @@ module.exports = function () {
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
 					   biin = require('../schemas/biin');
 	var regionRoutes = require('./regions')();
+	var sysGlobalsRoutes = require('./sysGlobals')();
 
 	var functions={};
 
@@ -69,6 +70,7 @@ module.exports = function () {
 			//Get the Mayor and Update
 			getMajor(organizationIdentifier,req.user.accountIdentifier,function(major){
 				model.major =major;
+				model.proximityUUID= process.env.DEFAULT_SYS_ENVIROMENT;
 				organization.update(
 					{
 						identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier
@@ -202,7 +204,7 @@ module.exports = function () {
  								var biintype=1; 								
  								if(isBasicPackage)
  									biintype=(i%2)+1;
- 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype})); 								
+ 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype}));	
  							}
  							//Organization Update
 							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
@@ -296,17 +298,18 @@ module.exports = function () {
 	
 	//Minor and major Functions
 
-	//GET the major of the organization
+	//GET the major of the enviroment
 	getMajor =  function(organizationIdentifier,accountIdentifier, callback){
-		organization.findOne({identifier:organizationIdentifier, accountIdentifier:accountIdentifier},'majorCounter',function(err, data){
-			organization.update({identifier:organizationIdentifier, accountIdentifier:accountIdentifier}, {$inc:{majorCounter:utils.get.majorIncrement()}},function(err){
-				if(err)
-					throw err;
-				else
-					callback(data.majorCounter);
 
-			});
-		});
+		//Get the mayor from the enviroment	and return it
+		//TODO: Get enviroment by Site configuration
+		var enviroment = process.env.DEFAULT_SYS_ENVIROMENT;
+
+		sysGlobalsRoutes.incrementMajor(enviroment,function(major){
+			callback(major);
+		})
+		
+
 	}
 	
 	//Other methods

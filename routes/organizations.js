@@ -5,9 +5,12 @@ module.exports =function (){
 
 	//Custom Utils
 	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path'),imageManager=require('../biin_modules/imageManager')();
+	
 	//Schemas	
-	var organization = require('../schemas/organization'), site = require('../schemas/site');
+	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase');
 
+	//Other Routes
+	var regionRoutes = require('./regions')(),  elementRoutes = require('./elements')();
 
 	var functions ={};
 
@@ -112,14 +115,35 @@ module.exports =function (){
 
 	//DELETE an specific Organization
 	functions.delete= function(req,res){
-		//Perform an update
+		
+		//Get the organization identifier
 		var organizationIdentifier=req.param("identifier");
-		organization.remove({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},function(err){
-			if(err)
-				throw err;
-			else
-				res.json({state:"success"});
-		});
+
+		organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},function(err,data){
+			//Remove Sites and References
+			for(var s=0; s<data.sites.length;s++){
+				var removeSite = regionRoutes.removeSiteToRegionBySite(data.sites[s].identifier,function(){});
+			}
+
+
+			//Remove the showcases references
+			showcase.remove({'organizationIdentifier':organizationIdentifier},function(err,affected){
+				if(err)	
+					throw err;
+				else
+				{
+					//Remove the organization
+					organization.remove({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},function(err){
+						if(err)
+							throw err;
+						else
+							res.json({state:"success"});
+					});								
+				}
+			});
+
+			
+		});		
 	}
 
 	//Minor and major Functions

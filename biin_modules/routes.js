@@ -20,6 +20,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var mobileOauthManager= require('./mobileOauthManager');
     var stickers = require('../routes/stickers')();
     var mobileRoutes = require('../routes/mobileRoutes')();
+    var sysGlobals = require('../routes/sysGlobals')();
+
+    //Sys routes
+    app.post('/enviroments', sysGlobals.set)
     var maintenance = require('../routes/maintenance')();
 
     //Application routes
@@ -170,7 +174,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier/isactivate', mobileUser.isActivate);
     app.post('/mobile/biinies/:identifier/categories', mobileUser.setCategories);
     app.get('/mobile/biinies/auth/:user/:password', mobileUser.login);
-    app.get('/mobile/biinies/:identifier',mobileUser.getProfile);    
+    app.get('/mobile/biinies/:identifier',mobileUser.getProfile);
     app.put('/mobile/biinies',mobileUser.setMobile);
     app.post('/mobile/biinies/:identifier',mobileUser.updateMobile);
 
@@ -201,7 +205,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);*/
     
     app.get('/mobile/regions',regions.listJson);
-    app.get('/mobile/biinies/:identifier/:regionIdentifier/categories',mobileRoutes.getCategoriesByRegionId);
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    
