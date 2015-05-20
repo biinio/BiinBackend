@@ -22,7 +22,7 @@ div
 							| Minor
 						th 
 							| State
-					tr(ng-repeat="biin in biinsXOrganization")
+					tr(ng-repeat="biin in organizations[selectedOrganization].biins")
 						td.biinInOrganizationId {{biin.identifier}}
 						td.biinInOrganizationAlias {{biin.name}}
 						td.biinInOrganizationUUID {{biin.proximityUUID}}
@@ -33,4 +33,4 @@ div
 
 
 		.addBiinToOrganization
-			.icon.icon-add-4
+			.icon.icon-add-4(ng-click="showAddBiintoOrganizationModal()")

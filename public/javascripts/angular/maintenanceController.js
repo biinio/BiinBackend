@@ -1,6 +1,6 @@
-var biinAppMaintenance= angular.module('biinAppMaintenance',['ngRoute','ui.slimscroll','naturalSort','biin.services']);
+var biinAppMaintenance= angular.module('biinAppMaintenance',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap']);
 
-biinAppMaintenance.controller("maintenanceController",['$scope','$http','$location',function($scope,$http,$location){
+biinAppMaintenance.controller("maintenanceController",['$scope','$http','$location','$modal',function($scope,$http,$location,$modal){
   var defaultTab = 'details';
 
   $http.get('maintenance/organizations').success(function(data){
@@ -26,6 +26,13 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
     }
     
     $scope.showBiinsPerOrganization(0);
+
+    $scope.showAddBiintoOrganizationModal = function ()
+    {
+      var modalInstance = $modal.open({
+        templateUrl: 'maintenance/addBiinToOrganizationModal'
+      });
+    }
 
   }).error(function(err){
     console.log(err);

@@ -105,6 +105,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Maintenance
     app.get('/maintenance',maintenance.index);
     app.get('/maintenance/organizations',maintenance.getOrganizationInformation);
+    app.get('/maintenance/addBiinToOrganizationModal',maintenance.addBiinToOrganizationModal)
 
     //Biins Purchase
     app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/biins/',sites.biinPurchase);    
