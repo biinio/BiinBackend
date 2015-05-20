@@ -33,7 +33,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.loadingImages =false;
 
   //Wizard validations indicatos
-  $scope.wizard0IsValid = false;
   $scope.wizard1IsValid = false;
   $scope.wizard2IsValid =false;
   $scope.wizard3IsValid =false;
@@ -66,7 +65,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $http.post('api/organizations/'+$scope.organizationId+"/elements").success(function(element,status){
       if(status==201){
         $scope.elements.push(element);
-        $scope.wizardPosition=0;
+        $scope.wizardPosition=1;
         $scope.clearValidations();
         $scope.edit($scope.elements.indexOf(element));
       }else{
@@ -92,7 +91,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.isHighlightBool= $scope.elements[index].isHighlight==='1';
 
     $scope.clearValidations();
-    $scope.wizardPosition=0;
+    $scope.wizardPosition=1;
     $scope.validate(true); 
 
   }
@@ -143,15 +142,11 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.changeWizardTab=function(option){
     switch(option){
       case 1:
-        if($scope.wizard0IsValid)
-          $scope.wizardPosition =option;
-      break;
-      case 2:
         if($scope.wizard1IsValid)
           $scope.wizardPosition =option;        
       break      
-      case 3:
-        if($scope.wizard1IsValid&& $scope.wizard2IsValid)
+      case 2:
+        if($scope.wizard1IsValid)
           $scope.wizardPosition =option;
           $scope.wizard3IsValid=true;
       break  
@@ -159,12 +154,12 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.elements[$scope.selectedElement].elementType === '1')
           $scope.wizardPosition =option;
       break */
-      case 4:
-        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid)
+      case 3:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid)
           $scope.wizardPosition =option;
       break   
-      case 5:
-        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid)
+      case 4:
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid)
           $scope.wizardPosition =option;
       break  
       default:
@@ -206,10 +201,6 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   $scope.validate=function(validateAll){
     var validate=typeof(validateAll)!='undefined';
     var currentValid=false;
-
-      if(eval($scope.wizardPosition)==0 || validate){     
-         $scope.wizard0IsValid= $scope.elements[$scope.selectedElement].elementType!='';
-      }
 
       if(eval($scope.wizardPosition)==1 || validate){     
         if($scope.elements[$scope.selectedElement]){
@@ -254,12 +245,10 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       }*/
 
        if(eval($scope.wizardPosition)==3 || validate){
-        //If the element type is Benefit
-        if($scope.elements[$scope.selectedElement].elementType==='1')
-        {
+          //If the element type is Benefit
           var wizard3IsValid =true;
           //if(eval($scope.elements[$scope.selectedElement].hasListPrice))
-          wizard3IsValid=  wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice.length>0);
+          wizard3IsValid=  wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price.length>0);
 
           if(eval($scope.elements[$scope.selectedElement].hasDiscount))
             wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].discount)!='undefined' && $scope.elements[$scope.selectedElement].discount.length>0);
@@ -273,17 +262,12 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           if(eval($scope.elements[$scope.selectedElement].hasSavingBool))
             wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].savings)!='undefined' && $scope.elements[$scope.selectedElement].savings>0);
 
-          if(eval($scope.elements[$scope.selectedElement].hasPriceBool))
-            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price>0); 
+          if(eval($scope.elements[$scope.selectedElement].hasListPriceBool))
+            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice>0); 
 
           //if(eval($scope.elements[$scope.selectedElement].hasFromPriceBool))
            // wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].fromPrice)!='undefined' && $scope.elements[$scope.selectedElement].fromPrice>0);           
           $scope.wizard3IsValid=wizard3IsValid;
-        } 
-        else
-        {
-          $scope.wizard3IsValid=true;
-        }
 
        }
 
@@ -296,7 +280,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         }          
       }
 
-      $scope.isValid = $scope.wizard0IsValid && $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid;
+      $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid &&  $scope.wizard3IsValid &&  $scope.wizard4IsValid;
 
       return currentValid;
   }
