@@ -165,7 +165,7 @@ module.exports = function(){
 														var elCat = _.pluck(elementsByCategories[orgIndex].elements[elIndex].categories,'identifier')
 
 														if(_.indexOf(elCat,pcategory.identifier)!=-1){
-															elResult.push(elementsByCategories[orgIndex].elements[elIndex]);
+															elResult.push({'_id':elementsByCategories[orgIndex].elements[elIndex]._id,'elementIdentifier':elementsByCategories[orgIndex].elements[elIndex].elementIdentifier});
 															cantElAdded++;
 															//if(isSiteInRegion(xcord,ycord,eval(elementsByCategories[orgIndex].elements[elIndex].lat),eval(elementsByCategories[orgIndex].elements[elIndex].lng))){													
 															//}
