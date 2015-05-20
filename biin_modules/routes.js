@@ -188,6 +188,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/biinie/:identifier/activate',mobileUser.activate);    
 
     app.get('/mobile/elements/:identifier',elements.getMobile);
+    app.get('/mobile/biinies/:identifier/highligh',elements.getMobileHighligh);
 
     //Collections
     app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
