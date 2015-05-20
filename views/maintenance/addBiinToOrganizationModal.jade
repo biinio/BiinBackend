@@ -1,0 +1,37 @@
+.modal-header
+	button(type="button", class="close", data-dismiss="modal") x
+	h3 Crear o Modificar un Beacon
+.modal-body
+	table
+		tr
+			td
+				label Site
+				input.form-control
+			td
+				label Mayor
+				input.form-control
+		tr
+			td
+				label State
+				select.form-control.bootstrap-select
+					option(value='No Programmed') No Programmed
+					option(value='Programmed') Programmed
+					option(value='Installed') Installed 
+					option(value='Damaged') Damaged
+			td
+				label Minor
+				input.form-control
+		tr
+			td
+				label ID
+				input.form-control
+			td
+				label Alias
+				input.form-control
+		tr
+			td(colspan="2")
+				label UU-ID
+				input.form-control(value="f7826da6-4fa2-4e98-8024-bc5b71e0893en" disabled="true")
+.modal-footer
+	button.btn.btn-theme.btn-sm Apply
+	button.btn.btn-theme.btn-sm Cancel  
