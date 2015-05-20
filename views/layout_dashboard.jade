@@ -61,13 +61,18 @@ html
 									.icon.icon-shop
 									| SITES
 							li.nav-item
-								a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" ) 
+								a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" )
 									.icon.icon-bookmark-4-1
 									| ELEMENTS
 							li.nav-item
 								a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases" ) 
 									.icon.icon-book-1
 									| SHOWCASES
+							li.nav-item
+								a(href="/maintenance" data-org-link="/maintenance" )
+									.icon.icon-setting-gears-2
+									| MAINTENANCE
+
 							//li
 								a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") 
 									.icon.icon-coins-2
