@@ -5,7 +5,7 @@ module.exports = moongose.model('biins',{
 			name:{type:String, default:""},
 			major:{type:String, default:""},
 			minor:{type:String, default:""},
-			proximityUUI:{type:String, default:""},
+			proximityUUID:{type:String, default:""},
 			location:{type:String, default:""},
 			registerDate:{type:String, default:""},
 			lastUpdate:{type:String, default:""},
@@ -14,6 +14,14 @@ module.exports = moongose.model('biins',{
                 showcaseIdentifier:{type:String,default:""},
                 startTime:{type:String,default:"00:00"},
                 endTime:{type:String,default:"00:00"}
+            }],
+            objects:[{
+                isDefault: {type:String,default:"0"},
+                identifier:{type:String,default:""},
+                startTime:{type:String,default:"00:00"},
+                endTime:{type:String,default:"00:00"},
+                objectType:{type:String,default:"element"},
+                name:{type:String,default:"element"}
             }],
             biinType:{type:String,default:"1"},
             isRequiredBiin:{type:Boolean,default:false},
