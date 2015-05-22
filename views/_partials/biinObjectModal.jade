@@ -1,0 +1,22 @@
+.modal-header
+	button.close(data-dismiss="modal" ng-click="cancel()" aria-label="close")
+		span(aria-hidden="true") &times;
+	h1(ng-if="type=='create'") Create a new 
+	h1(ng-if="type!=='create'") Edit
+.modal-body
+	.row
+		h1 Asigne Contenido a su beacon
+		.row
+			.col-md-6
+				h4 El Type:
+				select.form-control(ng-value="objType" ng-change="changeObjectType()")
+					option(value="element") Element
+					option(value="showcase") Showcase
+			.col-md-6
+				h4 Element:
+				select.form-control(ng-model="obj.identifier")
+					option(ng-repeat="obj in objects" ng-value="obj.identifier" ) {{obj.title}}
+.modal-footer
+	button.btn.btn-theme.btn-sm(ng-click="saveCreate()" ng-if="type=='create'") Create
+	button.btn.btn-theme.btn-sm(ng-click="saveEdit()" ng-if="type=='edit'") Edit
+	button.btn.btn-theme.btn-sm(ng-click="cancel()") Cancelar

@@ -1,0 +1,35 @@
+form.novalidate
+	.section
+		h1 Details
+		p Add information about the element  body here.
+	.section
+		#biinsDetailsWrapper
+			h3 {{biins[selectedBiin].name}}
+	.section
+		table.table.table-condensed.table-hover
+			tr
+				th
+					p Number
+				th
+					p Tipo
+				th
+					p Name
+				th
+					p Actividad	
+				th						
+			tr(ng-repeat="obj in biins[selectedBiin].objects")
+				td
+					p {{$index+1}}
+				td
+					p {{obj.objectType}}
+				td
+					p {{obj.name}}
+				td
+					p {{obj.startTime}}
+					p {{obj.endTime}}
+				td(ng-click="biinObject('lg','edit',obj)")
+					.btn
+						p Edit
+		.row					
+			.btn.btn-success.pull-right(ng-click="biinObject('lg','create',0)")
+				strong Create

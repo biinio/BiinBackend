@@ -5,8 +5,8 @@ module.exports = function () {
 
 	//Schemas
 	var organization = require('../schemas/organization'); 
-	//var site = require('../schemas/site');
-	//var biin = require('../schemas/biin');
+	var site = require('../schemas/site');
+	var biins = require('../schemas/biin');
 	//var regionRoutes = require('./regions')();
 
 	var functions={};
@@ -24,17 +24,34 @@ module.exports = function () {
 			var organizations = data;
 			for (var i = 0; i < organizations.length ; i++)
 			{
-
-				if(organizations[i].purchasedBiinsHist == null)
-					organizations[i].purchasedBiinsHist = [];
-					
-				if(organizations[i].biinsCounter == null)
-					organizations[i].biinsCounter = 0;
+				var biinsInTheOrganization = [];
+				biins.find({organizationIdentifier:organizations[i].identifier}, {_id:0,identifier:1,name:1,major:1,minor:1,proximityUUI:1,location:1,state:1,isAssigned:1,organizationIdentifier:1,siteIdentifier:1}).lean().exec(function(err,data){
+					 biinsInTheOrganization = data
+				})
 				
-				organizations[i].unassignedBeacons = organizations[i].purchasedBiinsHist.length - organizations[i].biinsCounter;
+				var assignedBeaconsCounter = 0;
+				for(var j=0; j<biinsInTheOrganization.length;j++)
+				{
+					var siteData = null;
+					site.find({identifier:biinsInTheOrganization[j].identifier},{_id:0,identifier:1,title1:1,title2:1}).lean().exec(function(err,data){
+						siteData = data;
+					})
+					if(biinsInTheOrganization[j].isAssigned)
+						assignedBeaconsCounter++;
+
+					biinsInTheOrganization[j].siteData = siteData;
+				}
+
+				organizations[i].biins = biinsInTheOrganization;
+				organizations[i].unassignedBeacons = organizations[i].biins.length- assignedBeaconsCounter;
+				organizations[i].assignedBeacons = assignedBeaconsCounter;
 			}
 			res.json(organizations);
 		});
+	}
+
+	functions.addBiinToOrganizationModal = function(req,res){
+		res.render('maintenance/addBiinToOrganizationModal');
 	}
 
 	return functions;
