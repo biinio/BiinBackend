@@ -1933,10 +1933,6 @@ input.ng-valid.ng-dirty{
 				background-color: @colorWhite;
 			}
 		}
-		.section.darkSection{
-			background-color: @colorWhite;
-		}
-
 		//Element Nutshell custom style
 		.section.elementNutshellHightligh{
 			background-color: @colorOrange ;
@@ -1950,6 +1946,11 @@ input.ng-valid.ng-dirty{
 		overflow: hidden;
 	}
 }
+
+.section.darkSection{
+	background-color: @colorWhite;
+}
+
 
 .wizardProfile	{
 	padding-top: 15%;
@@ -2076,6 +2077,45 @@ input.ng-valid.ng-dirty{
 		padding-top: 15px;
 		color: #fff;
 	}
+}
+
+#biinObjectModal{
+
+	h1
+	{
+		font-size: 20px;
+	}
+	h2
+	{
+		font-size: 15px;
+		color:@firstColor;
+	}
+	p{
+		font-size:10px;
+		color: @thirthColor;
+	}
+
+	.btn-checkbox{
+		border: solid!important;
+		margin-right: @standardPadding;
+		margin-bottom: @standardPadding;
+	}
+	.modal-header	{
+		background-color: @colorFocus;
+		color:@colorBaseWhite;
+	}
+
+	.modal-footer{
+		border-top:initial;
+	}
+
+	[date-picker]{
+		z-index: 1;
+		table
+		{
+			background-color: @colorBaseWhite;	
+		}
+	} 
 }
 
 .btn-biin{
