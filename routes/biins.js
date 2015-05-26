@@ -29,6 +29,7 @@ module.exports = function () {
 		});		
 	}
 
+
 	//Deprecated
 	//GET the list of biisn by regions
 	functions.listJson = function(req,res){
@@ -92,6 +93,30 @@ module.exports = function () {
 					doc.save();
 			});
 		res.json({state:'success'});	
+	}
+
+	//Set the objects of a Biin
+	functions.setObjects=function(req,res){
+		var organizationIdentifier= req.param('identifier');
+		var biinIdentifier =req.param('biinIdentifier');
+		var model = req.body.model;
+
+		biins.findOne({identifier:biinIdentifier,organizationIdentifier:organizationIdentifier},function(err,biinData){
+			if(err)
+				res.send(err, 500);
+			else{
+
+				//If the biin data is correct
+				if(biinData){
+					biinData.objects = model.objects;
+					biinData.save(function(err,cantAffected){
+						res.send(err, 200);
+					});
+				}
+				else
+					res.send(err, 500);
+			}
+		});
 	}
 
 	return functions;
