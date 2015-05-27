@@ -15,7 +15,8 @@ var orgSchema = new Schema({
 	description: {type:String, default:""},
 	extraInfo:{type:String, default:""},
 	majorCounter:{type: Number, default:1},
-	biinsCounter:{type:Number,default:0},		
+	biinsCounter:{type:Number,default:0},
+	biinsAssignedCounter:{type:Number,default:0},		
 	//Count off biins purchased
 	purchasedBiinsHist:[{
 				date:{type:String,default:""},
@@ -88,7 +89,7 @@ var orgSchema = new Schema({
 	            isRequiredBiin:{type:Boolean,default:'false'},
 	            latitude:{type:Number,default:0},
             	longitude:{type:Number,default:0},
-            	state:{type:String,default:"Not Installed"}
+            	status:{type:String,default:"Not Installed"}
 			}
 		],
 		loyalty: {

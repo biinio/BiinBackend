@@ -1,37 +1,38 @@
 .modal-header
-	button(type="button", class="close", data-dismiss="modal") x
+	button(ng-click="cancel()" type="button" class="close") x
 	h3 Crear o Modificar un Beacon
 .modal-body
-	table
+	table.tableAddBeaconsToOrganization
 		tr
 			td
 				label Site
-				input.form-control
+				select.form-control(ng-model="selectedSite")
+					option(ng-repeat="site in sites" value="{{sites.indexOf(site)}}") {{site.title2}}
 			td
 				label Mayor
-				input.form-control
+				input.form-control(ng-value="sites[selectedSite].major")
 		tr
 			td
 				label State
-				select.form-control.bootstrap-select
+				select.form-control.bootstrap-select(ng-model="beacon.status")
 					option(value='No Programmed') No Programmed
 					option(value='Programmed') Programmed
 					option(value='Installed') Installed 
 					option(value='Damaged') Damaged
 			td
 				label Minor
-				input.form-control
+				input.form-control(ng-value="sites[selectedSite].minorCount + 1")
 		tr
 			td
 				label ID
-				input.form-control
+				input.form-control(ng-model="beacon.identifier")
 			td
 				label Alias
-				input.form-control
+				input.form-control(ng-model="beacon.name")
 		tr
 			td(colspan="2")
 				label UU-ID
-				input.form-control(value="f7826da6-4fa2-4e98-8024-bc5b71e0893en" disabled="true")
+				input.form-control(ng-model="beacon.proximityUUI" disabled="true")
 .modal-footer
-	button.btn.btn-theme.btn-sm Apply
-	button.btn.btn-theme.btn-sm Cancel  
+	button.btn.btn-theme.btn-sm(ng-click="save()") Apply
+	button.btn.btn-theme.btn-sm(ng-click="cancel()") Cancel
