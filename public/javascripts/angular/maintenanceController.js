@@ -1,39 +1,64 @@
-var biinAppMaintenance= angular.module('biinAppMaintenance',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap']);
+var biinAppMaintenance= angular.module('biinAppMaintenance',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap','ui.bootstrap.datepicker']);
 
 biinAppMaintenance.controller("maintenanceController",['$scope','$http','$location','$modal',function($scope,$http,$location,$modal){
-  var defaultTab = 'details';
 
   $http.get('maintenance/organizations').success(function(data){
     $scope.organizations = data;
+
+    for (var i = 0; i < $scope.organizations.length ; i++) {
+      $scope.organizations[i].unassignedBeacons = $scope.organizations[i].biinsCounter - $scope.organizations[i].biinsAssignedCounter;
+      $scope.organizations[i].assignedBeacons = $scope.organizations[i].biinsAssignedCounter;
+    }
+
     $scope.selectedOrganization = null;
     $scope.biinsXOrganization = null;
     
 
     $scope.showBiinsPerOrganization = function(index)
     {
-      $scope.selectedOrganization = index;
-      $scope.biinsXOrganization = [];
-      for(var i = 0; i< $scope.organizations[index].sites.length; i++)
-      {
-        var site = $scope.organizations[index].sites[i];
-        for(var j= 0; j< site.biins.length; j++)
+      $http.get('maintenance/getBiinsOrganizationInformation/'+$scope.organizations[index].identifier).success(function(data){
+        $scope.selectedOrganization = index;
+        $scope.organizations[index].biins = data;
+        $scope.biinsXOrganization = $scope.organizations[index].biins;
+        for(var i = 0; i < $scope.biinsXOrganization.length; i++)
         {
-          var biin = site.biins[j];
-          biin.siteName = site.title2;
-          $scope.biinsXOrganization.push(biin);
+          for(var j = 0; j < $scope.organizations[index].sites.length; j++)
+          {
+            if($scope.biinsXOrganization[i].siteIdentifier == $scope.organizations[index].sites[j].identifier)
+            {
+              $scope.biinsXOrganization[i].siteName = $scope.organizations[index].sites[j].title2;
+              break;
+            }
+          }
         }
-      }
-    }
-    
-    $scope.showBiinsPerOrganization(0);
-
-    $scope.showAddBiintoOrganizationModal = function ()
-    {
-      var modalInstance = $modal.open({
-        templateUrl: 'maintenance/addBiinToOrganizationModal'
       });
     }
+    $scope.showBiinsPerOrganization(0);
 
+    $scope.showAddBiintoOrganizationModal = function ( mode, beacon)
+    {
+      var modalInstance = $modal.open({
+        templateUrl: 'maintenance/addBiinToOrganizationModal',
+        controller: 'addOrEditBeaconController',
+        resolve:{
+          selectedElement : function()
+          {
+            return { sites: $scope.organizations[$scope.selectedOrganization].sites};
+          },
+          mode : function() { return mode },
+          beacon : function(){ return beacon},
+          selectedOrganization : function()
+          {
+            return { organization: $scope.organizations[$scope.selectedOrganization]};
+          }
+        }
+      });
+      modalInstance.result.then(function (selectedItem) {
+        $scope.showBiinsPerOrganization($scope.selectedOrganization);
+      }, function () {
+        $scope.showBiinsPerOrganization($scope.selectedOrganization);
+      });
+    }
   }).error(function(err){
     console.log(err);
   })
@@ -41,4 +66,77 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
   turnLoaderOff();
   }]);
 
+
+biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $modalInstance, $http, selectedElement, mode, beacon, selectedOrganization) {
+
+  $scope.sites = selectedElement.sites;
+  $scope.mode = mode;
+  $scope.beacon = null;
+  $scope.selectedOrganization = selectedOrganization.organization;
+
+  if(mode == "create")
+  {
+    if($scope.sites.length > 0)
+      $scope.selectedSite = 0;
+
+    $scope.beacon = { 
+      identifier:"",
+      name:"",
+      status:"No Programmed",
+      proximityUUI:"f7826da6-4fa2-4e98-8024-bc5b71e0893en",
+      registerDate:""
+    }
+  }
+  else
+  {
+    $scope.beacon = beacon;
+  }
+
+  $scope.save = function()
+  {
+
+    $scope.beacon.major = $scope.sites[$scope.selectedSite].major;
+    $scope.beacon.minor = $scope.sites[$scope.selectedSite].minorCounter+1;
+    $scope.beacon.siteIdentifier = $scope.sites[$scope.selectedSite].identifier;
+    $scope.beacon.siteIndex = $scope.selectedSite;
+    $scope.beacon.isAssigned = true;
+    $scope.beacon.organizationIdentifier = $scope.selectedOrganization.identifier;
+    $scope.beacon.accountIdentifier = $scope.selectedOrganization.accountIdentifier;
+    
+    if($scope.mode == "create"){
+      $scope.beacon.mode = "create";
+      $http.put('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
+          console.log("success");
+          $modalInstance.dismiss('cancel');
+        }).error(function(data,status){
+          console.log(data);
+          console.log(status);
+        });
+    }
+    else{
+      $scope.beacon.mode = "edit";
+      $http.post('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
+          console.log("success");
+          $modalInstance.dismiss('cancel');
+        }).error(function(data,status){
+          console.log(data);
+          console.log(status);
+        });
+      console.log("edit");
+    }
+  }
+
+  $scope.selectSite = function(index){
+    $scope.selectedSite = index;
+  }
+
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.objectIndex);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
 

@@ -1,37 +1,43 @@
-.modal-header
-	button(type="button", class="close", data-dismiss="modal") x
-	h3 Crear o Modificar un Beacon
-.modal-body
-	table
-		tr
-			td
-				label Site
-				input.form-control
-			td
-				label Mayor
-				input.form-control
-		tr
-			td
-				label State
-				select.form-control.bootstrap-select
-					option(value='No Programmed') No Programmed
-					option(value='Programmed') Programmed
-					option(value='Installed') Installed 
-					option(value='Damaged') Damaged
-			td
-				label Minor
-				input.form-control
-		tr
-			td
-				label ID
-				input.form-control
-			td
-				label Alias
-				input.form-control
-		tr
-			td(colspan="2")
-				label UU-ID
-				input.form-control(value="f7826da6-4fa2-4e98-8024-bc5b71e0893en" disabled="true")
-.modal-footer
-	button.btn.btn-theme.btn-sm Apply
-	button.btn.btn-theme.btn-sm Cancel  
+.maintenanceModal
+	.modal-header
+		button(ng-click="cancel()" type="button" class="close") x
+		h3 Crear o Modificar un Beacon
+	.modal-body
+		.section.tableAddBeaconsToOrganization
+			.col-md-12
+				.row
+					.col-md-6
+						label Site
+						select.form-control(ng-model="selectedSite")
+							option(ng-repeat="site in sites" value="{{sites.indexOf(site)}}") {{site.title2}}
+					.col-md-6
+						label Mayor
+						input.form-control(ng-value="sites[selectedSite].major")
+			.col-md-12
+				.row
+					.col-md-6
+						label State
+						select.form-control.bootstrap-select(ng-model="beacon.status")
+							option(value='No Programmed') No Programmed
+							option(value='Programmed') Programmed
+							option(value='Installed') Installed 
+							option(value='Damaged') Damaged
+					.col-md-6
+						label Minor
+						input.form-control(ng-value="sites[selectedSite].minorCount + 1")
+			.col-md-12
+				.row
+					.col-md-6
+						label ID
+						input.form-control(ng-model="beacon.identifier")
+					.col-md-6
+						label Alias
+						input.form-control(ng-model="beacon.name")
+			.col-md-12
+				.row
+					.col-md-12
+						label UU-ID
+						input.form-control(ng-model="beacon.proximityUUI" disabled="true")
+	.modal-footer
+		button.btn.btn-theme.btn-sm(ng-click="save()") Apply
+		button.btn.btn-theme.btn-sm(ng-click="cancel()") Cancel
