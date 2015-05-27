@@ -1,0 +1,107 @@
+doctype html
+html
+	head
+		title= title
+		<!-- Bootstrap -->
+		link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/main.css')
+		link(rel='stylesheet', href='/stylesheets/sidebar.css')
+		link(rel='stylesheet', href='/stylesheets/croppic.css')
+		link(rel="stylesheet" href="/spectrum/spectrum.css")
+		link(rel="stylesheet" href="/bootstrap-select/bootstrap-select.css")
+		<!-- Google Fonts --> 
+		<!--link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,700italic,800,800italic' rel='stylesheet' type='text/css')--> 
+		<!--link(href='http://fonts.googleapis.com/css?family=Lato:400,900italic,900,700italic,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css')--> 
+		<!-- Font font-streamline. -->
+		link(rel="stylesheet" href="/stylesheets/font-streamline.css")
+		script(src="/angular/angular.js")
+		script(src="/angular-route/angular-route.js")
+		script(src="/javascripts/angular/app.js")
+		script(src="/angular-translate/angular-translate.min.js")
+		script(src="/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js")			
+		block head_scripts
+		script(src="/javascripts/angular/naturalSortVersion.js")
+		base(href="/")
+		//block head
+	body
+		include layout_menu_maintenance
+		.main-container
+			.sidebar
+				ul.nav.nav-sidebar.menu(scrollbar)
+					li.nav-item
+						a(href="/home") 
+							.icon.icon-house-2
+							| HOME
+					li.nav-item
+						a(href="/accounts") 
+							.icon.icon-id-4
+							| ACCOUNT							
+					if organization == null
+						ul#organizationNav.nav.nav-sidebar.hide(data-organization='')
+							li.nav-item
+								a(href="" data-org-link="/organizations/{0}/sites") 
+									.icon.icon-shop
+									| SITES
+							li.nav-item
+								a(href="" data-org-link="/organizations/{0}/showcases") 
+									.icon.icon-book-1
+									| SHOWCASES
+							li.nav-item
+								a(href="" data-org-link="/organizations/{0}/elements") 
+									.icon.icon-bookmark-4-1
+									| ELEMENTS
+					else
+						ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
+							li.nav-item
+								a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites" ) 
+									.icon.icon-shop
+									| SITES
+							li.nav-item
+								a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" )
+									.icon.icon-bookmark-4-1
+									| ELEMENTS
+							li.nav-item
+								a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases" ) 
+									.icon.icon-book-1
+									| SHOWCASES
+							li.nav-item
+								a(href="/maintenance" data-org-link="/maintenance" )
+									.icon.icon-setting-gears-2
+									| MAINTENANCE
+					li.nav-item
+							a(href="#") 
+								.icon.icon-rss-1
+								| NEWS
+					//li.nav-item
+						a(href="/errors") ERRORS
+						i.fa.fa-angle-right.angle-icon-sidebar
+			.main.sidebar-margin
+				block content
+	script(src="/jquery/dist/jquery.min.js")
+	script(src="/spectrum/spectrum.js")						
+	script(src="/bootstrap/dist/js/bootstrap.min.js")
+	script(src="/imagesloaded/imagesloaded.pkgd.js")
+	script(src="/lodash/lodash.js")
+	script(src="/jquery-knob/js/jquery.knob.js")
+	script(src="/javascripts/h5utils.js")
+	script(src="/javascripts/ui.js")
+	script(src="/javascripts/croppic.js")
+	script(src="/angular-bootstrap/ui-bootstrap-tpls.js")		
+	script(src="/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js")
+	script(src="/bootstrap-select/dist/js/bootstrap-select.js")
+	script(src="/angular-bootstrap-select/build/angular-bootstrap-select.js")
+	script(src="/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js")		
+	//todo remove the slim scroll reference
+	script(src="/jquery.slimscroll/jquery.slimscroll.js")
+	script(src="/angular-slimscroll/angular-slimscroll.js")
+	script(src="/angular-animate/angular-animate.js")
+	script(src="/jquery-ui/ui/core.js")
+	script(src="/jquery-ui/ui/widget.js")
+	script(src="/jquery-ui/ui/mouse.js")
+	script(src="/jquery-ui/ui/draggable.js")
+	script(src="/jquery-ui/ui/droppable.js")
+	script(src="/jquery-ui/ui/sortable.js")
+	script(src="/jquery-ui-touch-punch/jquery.ui.touch-punch.js")
+	script(src="/underscore/underscore.js")
+	script(src="/javascripts/utilities.js")
+	script(src="/javascripts/jquery.scrollbar/jquery.scrollbar.js")
