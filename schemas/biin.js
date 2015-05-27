@@ -38,7 +38,7 @@ module.exports = moongose.model('biins',{
             isRequiredBiin:{type:Boolean,default:false},
             latitude:{type:Number,default:0},
             longitude:{type:Number,default:0},
-            state:{type:String,default:"Not Installed"},
+            status:{type:String,default:"Not Installed"},
             isAssigned:{type:Boolean, default:false},
             organizationIdentifier:{type:String, default:""},
             siteIdentifier:{type:String, default:""},

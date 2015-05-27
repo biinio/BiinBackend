@@ -66,7 +66,7 @@ var siteObj ={
             isRequiredBiin:{type:Boolean,default:'false'},
             latitude:{type:Number,default:0},
             longitude:{type:Number,default:0},
-            state:{type:String,default:"Not Installed"}
+            status:{type:String,default:"Not Installed"}
 
 		}
 	],

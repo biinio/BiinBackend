@@ -81,7 +81,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Showcase routes
     app.get('/organizations/:identifier/showcases',showcases.index);
     app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId)
-    
+
     //Showcases creation
     app.post('/api/organizations/:identifier/showcases',showcases.set);
 
@@ -103,7 +103,13 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Maintenance
     app.get('/maintenance',maintenance.index);
     app.get('/maintenance/organizations',maintenance.getOrganizationInformation);
-    app.get('/maintenance/addBiinToOrganizationModal',maintenance.addBiinToOrganizationModal)
+    app.get('/maintenance/addBiinToOrganizationModal',maintenance.addBiinToOrganizationModal);
+    app.get('/maintenance/getBiinsOrganizationInformation/:orgIdentifier',maintenance.getBiinsOrganizationInformation);
+    app.put('/maintenance/insertBiin',maintenance.biinPurchase);
+    app.post('/maintenance/insertBiin',maintenance.biinPurchase);
+
+    
+    
 
     //Biins Purchase
     app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/biins/',sites.biinPurchase);    
