@@ -44,7 +44,7 @@ module.exports = function () {
 		var beacon = req.body;
 		var orgID = beacon.organizationIdentifier;
 		var siteIndex = beacon.siteIndex;
-		var siteLocationToUpdate = "sites."+siteIndex+".minorCount";
+		var siteLocationToUpdate = "sites."+siteIndex+".minorCounter";
 		delete beacon.siteIndex;
 		var mode = beacon.mode;
 		delete beacon.mode;
