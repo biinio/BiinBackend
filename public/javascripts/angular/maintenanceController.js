@@ -56,8 +56,8 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
       modalInstance.result.then(function ( beacon ) {
         $scope.showBiinsPerOrganization($scope.selectedOrganization);
         if(mode == "create" ){
-          $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minor++;
-          $scope.organizations[$scope.selectedOrganization].biinsAssignedCounter++;
+          $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minorCounter = $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minorCounter ? $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minorCounter+1 : 1;
+          $scope.organizations[$scope.selectedOrganization].biinsAssignedCounter = $scope.organizations[$scope.selectedOrganization].biinsAssignedCounter ? $scope.organizations[$scope.selectedOrganization].biinsAssignedCounter+1 : 1;
         }
       }, function () {
         $scope.showBiinsPerOrganization($scope.selectedOrganization);
@@ -100,7 +100,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   {
 
     $scope.beacon.major = $scope.sites[$scope.selectedSite].major;
-    $scope.beacon.minor = $scope.sites[$scope.selectedSite].minorCounter+1;
+    $scope.beacon.minor = $scope.sites[$scope.selectedSite].minorCounter ? $scope.sites[$scope.selectedSite].minorCounter : 0;
     $scope.beacon.siteIdentifier = $scope.sites[$scope.selectedSite].identifier;
     $scope.beacon.siteIndex = $scope.selectedSite;
     $scope.beacon.isAssigned = true;
