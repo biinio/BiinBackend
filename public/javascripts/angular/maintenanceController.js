@@ -53,8 +53,12 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
           }
         }
       });
-      modalInstance.result.then(function (selectedItem) {
+      modalInstance.result.then(function ( beacon ) {
         $scope.showBiinsPerOrganization($scope.selectedOrganization);
+        if(mode == "create" ){
+          $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minor++;
+          $scope.organizations[$scope.selectedOrganization].biinsAssignedCounter++;
+        }
       }, function () {
         $scope.showBiinsPerOrganization($scope.selectedOrganization);
       });
@@ -83,7 +87,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       identifier:"",
       name:"",
       status:"No Programmed",
-      proximityUUI:"f7826da6-4fa2-4e98-8024-bc5b71e0893en",
+      proximityUUID:"f7826da6-4fa2-4e98-8024-bc5b71e0893en",
       registerDate:""
     }
   }
@@ -106,8 +110,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
     if($scope.mode == "create"){
       $scope.beacon.mode = "create";
       $http.put('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
-          console.log("success");
-          $modalInstance.dismiss('cancel');
+          $modalInstance.close($scope.beacon);
         }).error(function(data,status){
           console.log(data);
           console.log(status);
@@ -117,19 +120,17 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       $scope.beacon.mode = "edit";
       $http.post('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
           console.log("success");
-          $modalInstance.dismiss('cancel');
+          $modalInstance.close($scope.beacon);
         }).error(function(data,status){
           console.log(data);
           console.log(status);
         });
-      console.log("edit");
     }
   }
 
   $scope.selectSite = function(index){
     $scope.selectedSite = index;
   }
-
 
   $scope.ok = function () {
     $modalInstance.close($scope.objectIndex);
