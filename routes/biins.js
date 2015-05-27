@@ -9,14 +9,28 @@ module.exports = function () {
 	var _ = require('underscore');
 	var functions = {};
 	var utils = require('../biin_modules/utils')();
+
+    //GET the View of Biins
+	functions.index = function(req,res){
+		var orgIdentifier= req.param('identifier');
+		var identifier=req.param("identifier");
+
+		//Get the information of the organization
+		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
+			res.render('biins/index', { title: 'Biins list' , user:req.user, organization:data, isSiteManteinance:true});
+		});
+	}
     
     //GET the list of biins
 	functions.list = function(req,res){
-		biins.find({},function (err, data) {
+		var orgIdentifier= req.param('identifier');
+		biins.find({accountIdentifier:req.user.accountIdentifier,organizationIdentifier:orgIdentifier},function (err, data) {
 			   res.json({data:data});
 		});		
 	}
 
+
+	//Deprecated
 	//GET the list of biisn by regions
 	functions.listJson = function(req,res){
 		var regionParam = req.param('region');
@@ -30,17 +44,10 @@ module.exports = function () {
 		var organizationId = req.param('identifier');
 		var userAccount = req.user.accountIdentifier;
 		
-		organization.find({accountIdentifier:userAccount,identifier:organizationId,'sites.biins': { "$gt": {} }},{'_id':0, 'sites.identifier':1, 'sites.title1':1,'sites.title2':2, 'sites.media':1,'sites.biins':1},function(err,data){
-			if(err)
-				throw err;
-			else{
-					if(data[0])
-						res.json({data:data[0].sites})
-					else
-						res.json({})
-				}
-		});	
-
+		var orgIdentifier= req.param('identifier');
+		biins.find({accountIdentifier:req.user.accountIdentifier,organizationIdentifier:organizationId},function (err, data) {
+			   res.json({data:data});
+		});
 	}
 
 	//POST Update the biins of the specific sites
@@ -86,6 +93,30 @@ module.exports = function () {
 					doc.save();
 			});
 		res.json({state:'success'});	
+	}
+
+	//Set the objects of a Biin
+	functions.setObjects=function(req,res){
+		var organizationIdentifier= req.param('identifier');
+		var biinIdentifier =req.param('biinIdentifier');
+		var model = req.body.model;
+
+		biins.findOne({identifier:biinIdentifier,organizationIdentifier:organizationIdentifier},function(err,biinData){
+			if(err)
+				res.send(err, 500);
+			else{
+
+				//If the biin data is correct
+				if(biinData){
+					biinData.objects = model.objects;
+					biinData.save(function(err,cantAffected){
+						res.send(err, 200);
+					});
+				}
+				else
+					res.send(err, 500);
+			}
+		});
 	}
 
 	return functions;

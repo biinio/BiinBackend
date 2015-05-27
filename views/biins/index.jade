@@ -1,68 +1,39 @@
 extends ../layout_dashboard
 block head_scripts
-	script(src="/javascripts/angular/binniesController.js")
+	link(rel="stylesheet" href="/angular-datepicker/dist/index.css")
+	script(src="/angular-datepicker/dist/index.js")
+	script(src="/javascripts/angular/biinsController.js")
 block content	
-	#sectionContent(ng-app="biinAppBinnies" ng-controller="binniesController" ngCloack)
-		#wrapperContent
+	#sectionContent(ng-app="biinAppBiins" ng-controller="biinsController" ngCloack)
+		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
 			.left-section-content
-				.container-fluid
-					.row
-						.col-md-12
-							button.btn.btn-default.btn-block.btn-biin(ng-click='create()') ADD NEW BINNIE
 				.container-fluid.main-views-list
 					.row
 						.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
-							.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in binnies | filter: query" ng-click="edit(binnies.indexOf(item))")
-								.moduleWrapper.contentHideButtons(ng-class="{active: binnies.indexOf(item) == selectedBinnie}")
-									.moduleTitle {{item.biinName}}
-									img(ng-if="item.imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-									img(ng-if="item.imgUrl.length>0" ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
-									.btnDelete.icon-round-control.btn-on-hover(ng-click="removeAt(binnies.indexOf(item))")
-										.icon.icon-bin-2
-				.container-fluid.searchBox
-					.searchBox-wrapper
-						input.form-control(type="text" placeholder="search" ng-model="query" autofocus)
-			.right-section-content.wizard-wrapper
-				.wizard-body(ng-if="selectedBinnie>=0")
-					.container-fluid
-						.row.section
-							.col-md-6
-								h2 Binnie main Information
-							.col-md-6								
-								img(ng-if="binnies[selectedBinnie].imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-								img(ng-if="binnies[selectedBinnie].imgUrl.length>0" style="max-width:140px;" ng-src="{{binnies[selectedBinnie].imgUrl}}"  pending-indicator)
-								h3 {{binnies[selectedBinnie].imgUrl}}									
-								a.btn.btn-default(upload-binnie-image="#binnieInput") Upload Biinie Image
-								input.hidden#binnieInput(type="file")								
-							.col-md-4
-								label Identifier: {{binnies[selectedBinnie].identifier}}	
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].firstName" placeholder="First Name")
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].lastName" placeholder="Last Name")
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].biinName" placeholder="Biin Name")
-								input.form-control(type="password" ng-model="binnies[selectedBinnie].password" placeholder="Password" ng-if="binnies[selectedBinnie].isNew===true")
-								label Email verificado: {{binnies[selectedBinnie].accountState}}
-								br
-								label Password: {{binnies[selectedBinnie].tempPassword}}
-							.col-md-4							
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].birthDate" placeholder="Birth Date")
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].gender" placeholder="Gender")
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].comments" placeholder="Comments")
-							.col-md-4									
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].userBiined" placeholder="User Biined")
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].userCommented" placeholder="User Commented")
-								input.form-control(type="text" ng-model="binnies[selectedBinnie].userShared" placeholder="User Shared")
-					.container-fluid
-						.row
-							.col-md-12.section
-								h2 Categories
-									.container
-						.row.section
-							#categories
-								.container
-									.row
-										a.col-md-1.catModule(ng-class="{'separator':$index==5}" ng-repeat="cat in categories" ng-click="switchCategoryState(cat)")
-											.catModuleWrapper(ng-class="containsCategory(cat)")
-												.catIcon(class="icon icon-{{cat.icon}}")
-												p {{cat.displayName}}
-						.row
-							a.btn.btn-lg.btn-warning(ng-click="save()") Save
+							.col-xs-12.col-sm-12.col-md-12.col-lg-12.searchBoxList
+									.col-md-12
+										.searchBox-wrapper
+											input.form-control(type="text" placeholder="filter" ng-model="query" autofocus)
+							.col-xs-12.col-sm-12.col-md-12.col-lg-12.nopadding(ng-repeat="biin in biins | orderBy : '+name' | filter: query" ng-click="edit(biins.indexOf(biin))")
+									.moduleWrapperList.contentHideButtons(ng-class="{active: biins.indexOf(biin) == selectedBiin}")
+										.col-md-3.thumbListImage
+											label.moduleTitle {{getSiteName(biin.siteIdentifier)}}
+										.col-md-9
+											label.moduleTitle {{biin.name}}
+			.right-section-content
+				div(ng-if="selectedBiin!=null")
+					.animate-switch.wizard-wrapper
+						.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
+							#wizardOption1.wizard(ng-switch-when="1")
+								include wizardDetails								
+						.wizard-options
+							.container-fluid
+								.row.wizard-options-wrapper
+									.col-md-1.col-sm-1.nopadding.option
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==1}")
+										.wizard-options-item(ng-click="changeWizardTab(1)")
+											.circle(ng-class="{'active':wizardPosition ==1,'valid':wizard1IsValid}")
+												.icon.icon-network-1-1
+											.textCirle 
+												| 1. Details
+								#guide-line-division

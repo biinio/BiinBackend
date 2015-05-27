@@ -1,0 +1,44 @@
+form.novalidate
+	.section
+		h1 Detalles
+		p Administre el contenido que se mostrar&aacute; en su beacon
+	.section
+		#biinsDetailsWrapper
+			h3 {{biins[selectedBiin].name}}
+	.section
+		table.table.table-condensed.table-hover
+			tr
+				th
+					p N&uacute;mero
+				th
+					p Tipo
+				th
+					p Nombre
+				th
+					p Actividad	
+				th						
+			tr(ng-repeat="obj in biins[selectedBiin].objects")
+				td
+					p {{$index+1}}
+				td
+					p {{obj.objectType}}
+				td
+					p {{obj.name}}
+				td
+					p {{obj.startTime | date:'yyyy-MM-dd HH:mm'}} - {{obj.endTime | date:'yyyy-MM-dd HH:mm'}}
+					p
+						span(ng-if="obj.onMonday==='1'") L
+						span(ng-if="obj.onTuesday==='1'") K
+						span(ng-if="obj.onWednesday==='1'") M
+						span(ng-if="obj.onThursday==='1'") J
+						span(ng-if="obj.onFriday==='1'") V
+						span(ng-if="obj.onSaturday==='1'") S
+						span(ng-if="obj.onSunday==='1'") D
+				td
+					.btn(ng-click="biinObject('lg','edit',obj)")
+						p Editar
+					.btn(ng-click="removeObject(biins[selectedBiin].objects.indexOf(obj))")
+						p Eliminar
+		.row					
+			.btn.btn-success.pull-right(ng-click="biinObject('lg','create',0)")
+				strong Agregar

@@ -441,7 +441,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.$digest();
   }
 
-   //Confirmation Modal of Remove
+  //Confirmation Modal of Remove
   $scope.openConfirmation = function (size, selectedIndex) {
 
       var modalInstance = $modal.open({

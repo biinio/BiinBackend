@@ -1,25 +1,190 @@
-var biinAppMaintenance= angular.module('biinAppBiins',['ngRoute','ui.slimscroll','naturalSort','biin.services']);
+var biinAppBiins= angular.module('biinAppBiins',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap','ui.checkbox','datePicker']);
 
-biinAppMaintenance.controller("biinsController",['$scope','$http','$location',function($scope,$http,$location){
-  var defaultTab = 'details';
+biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal',function($scope,$http,$location,$modal){
+    var defaultTab = 'details';
+    $scope.organizationId=selectedOrganization();
+    $scope.selectedBiin = null;
+    $scope.wizardPosition="1";
 
-  $http.get('maintenance/organizations').success(function(data){
-    $scope.organizations = data;
-    $scope.selectedOrganization = null;
+    //Get the Sites Information
+    $http.get('api/organizations/'+$scope.organizationId+'/sites/').success(function(data){
+      $scope.sites = data.data.sites;  
+    }).error(function(err){
+      console.log(err);
+    })
+    
+    //Get the elements
+    $http.get('api/organizations/'+$scope.organizationId+'/elements/').success(function(data){
+      $scope.elements = data.data.elements;  
+    }).error(function(err){
+      console.log(err);
+    })
+
+    //Get the showcases
+    $http.get('api/organizations/'+$scope.organizationId+'/showcases/').success(function(data){
+      $scope.showcases = data.data;  
+    }).error(function(err){
+      console.log(err);
+    })
+
+    $http.get('api/organizations/'+$scope.organizationId+'/biins/').success(function(data){
+      $scope.biins = data.data;  
+    }).error(function(err){
+      console.log(err);
+    })
     
 
-    $scope.showBiinsPerOrganization = function(index)
-    {
-    	$scope.selectedOrganization = index;
+    //Edit a specific biin
+    $scope.edit=function(index){
+        $scope.selectedBiin = index;
     }
+
+    $scope.getSiteName=function(identifier){
+      var site =_.findWhere($scope.sites,{identifier:identifier});
+      if(site){
+        return site.title1;
+      }else{
+        return "";
+      }        
+    }
+
+    $scope.removeObject=function(index){
+      $scope.biins[$scope.selectedBiin].objects.splice(index,1);
+    }
+
+    //Save The Biin Objects Changes
+    $scope.save=function(){
+      //Get the showcases
+      $http.post('api/organizations/'+$scope.organizationId+'/biins/'+$scope.biins[$scope.selectedBiin].identifier+'/objects',{model:$scope.biins[$scope.selectedBiin]}).success(function(data){
+        $scope.showcases = data.data;  
+      }).error(function(err){
+        console.log(err);
+      })      
+    }
+
+    //Add an object to the objects collection
+    $scope.saveObject=function(obj){
+      if(obj)
+        if('isNew' in obj){
+          delete obj.isNew;
+          $scope.biins[$scope.selectedBiin].objects.push(obj);
+        }
+        else{}
+        //$scope.biins.push(obj);
+        //Todo Do the method to save the save the data
+    }
+
+    //Modal to edit or create an Object
+    $scope.biinObject = function (size, type, obj) {
+
+        var modalInstance = $modal.open({
+          templateUrl: 'partials/biinObjectModal',
+          controller: 'objectController',
+          size: size,
+          resolve: {
+            selectedObj: function () {            
+              if(type==='create')
+                return {type:type};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
+              else
+                return {type:type, obj:obj};//name:$scope.sites[selectedIndex].title1,index:selectedIndex};
+            },
+            elements: function(){
+              return $scope.elements;
+            },
+            showcases: function(){
+              return $scope.showcases;
+            },
+          }
+        });
+
+      modalInstance.result.then(function (objectToCreate) {      
+        $scope.saveObject(objectToCreate);
+      }, function () {        
+        //$log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
+
+    turnLoaderOff();
+}]);
+
+biinAppBiins.controller('objectController', function ($scope, $modalInstance, selectedObj,elements,showcases) {
+  $scope.type = selectedObj.type;
+  $scope.obj =selectedObj.obj;
+  $scope.elements=elements;
+  $scope.showcases=showcases;
+  $scope.hasNotificationBool=false;
+  $scope.hasTimeOptionsBool=false;
+
+  //Days Activation
+  $scope.mondayBool=false;
+  $scope.tuesdayBool=false;
+  $scope.wednesdayBool=false;
+  $scope.thursdayBool=false;
+  $scope.fridayBool=false;
+  $scope.saturdayBool=false;
+  $scope.sundayBool=false;
+
+  //Create the modal for the creation Model
+  if($scope.type==='create'){
+    var obj={objectType:'element',notification:'', hasNotification:'0', isNew:true};
+    obj.onMonday='0';
+    obj.onTuesday='0';
+    obj.onWednesday='0';
+    obj.onThursday='0';
+    obj.onFriday='0';
+    obj.onSaturday='0';
+    obj.onSunday='0';
+    $scope.obj= obj;
+  }
+
+  //Set the scope values
+  $scope.hasNotificationBool = $scope.obj.hasNotification==='1';
+  $scope.hasTimeOptionsBool = $scope.obj.hasTimeOptions==='1';
+
+  $scope.mondayBool =$scope.obj.onMonday==='1';
+  $scope.tuesdayBool =$scope.obj.onTuesday==='1';
+  $scope.wednesdayBool = $scope.obj.onWednesday==='1';
+  $scope.thursdayBool = $scope.obj.onThursday==='1';
+  $scope.fridayBool = $scope.obj.onFriday==='1';
+  $scope.saturdayBool = $scope.obj.onSaturday==='1';
+  $scope.sundayBool = $scope.obj.onSunday==='1';
     
-    $scope.showBiinsPerOrganization(0);
+  //Change the Object Type
+  $scope.changeObjectType=function(selected){
+    if($scope.obj.objectType==='element'){
+      $scope.objects=$scope.elements;
+    }
+    else{
+     $scope.objects=$scope.showcases;  
+    }
+    $scope.obj.identifier='';
+     
+  }
 
-  }).error(function(err){
-    console.log(err);
-  })
+  //Change the notification State
+  $scope.changeNotificationState=function(){
+   $scope.obj.hasNotification= $scope.hasNotificationBool?'1':'0';
+  }
+
+  //Change the notification State
+  $scope.changeTimeOptionsState=function(){
+   $scope.obj.hasTimeOptions= $scope.hasTimeOptionsBool?'1':'0';
+  } 
+
+  //Change the day State
+  $scope.changeDayState=function(varName, boolVarName){
+    $scope.obj[varName] =$scope[boolVarName]?'1':'0';
+  }
   
-  turnLoaderOff();
-  }]);
+  $scope.save = function () {
+    $modalInstance.close($scope.obj);
+  }
 
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+
+  $scope.changeObjectType();
+});
 

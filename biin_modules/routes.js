@@ -94,8 +94,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.delete);
     app.get('/api/organizations/:identifier/showcases',showcases.list);
 
-    //Biins routes
-    app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
 
     //Sites routes
     app.get('/organizations/:identifier/sites',sites.index);    
@@ -125,9 +123,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
 
     //Biins
+    app.get('/organizations/:identifier/biins',biins.index);
     app.get('/api/biins',biins.list);
     app.post('/api/organizations/:identifier/sites/biins',biins.updateSiteBiins);
-    
+    app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
+    app.post('/api/organizations/:identifier/biins/:biinIdentifier/objects',biins.setObjects);
+
     //Elements
     app.get('/organizations/:identifier/elements', elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
@@ -147,8 +148,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/regions/add',regions.createPost);
     app.get('/regions/:identifier',regions.edit);
     app.post('/regions/:identifier',regions.editPost);
-    app.get('/api/regions',regions.listJson);
-    app.get('/api/regions/:region/biins',biins.listJson);
+    
+    //app.get('/api/regions',regions.listJson);
+    //app.get('/api/regions/:region/biins',biins.listJson);
     app.post('/mobile/regions/:identifier/:latitude/:longitude',regions.setCoordsToRegion);//Update the Coords of a region
 
     //Gallery Routes

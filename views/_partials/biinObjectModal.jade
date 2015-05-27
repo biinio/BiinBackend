@@ -1,0 +1,78 @@
+.maintenanceModal
+	.modal-header
+		button.close(data-dismiss="modal" ng-click="cancel()" aria-label="close")
+			span(aria-hidden="true") &times;
+		h1(ng-if="type=='create'") Create a new 
+		h1(ng-if="type!=='create'") Edit
+	.modal-body
+		.row
+			h1 Asigne Contenido a su beacon
+		.section
+			.col-md-12				
+				.col-md-6
+					.row
+						h2 Tipo de objeto
+						select.form-control(ng-model="obj.objectType" ng-change="changeObjectType()")
+							option(value="element") Element
+							option(value="showcase") Showcase
+					.row
+						h2(ng-if="obj.objectType==='element'") Element:
+						h2(ng-if="obj.objectType==='showcase'") Showcase:
+						select.form-control(ng-model="obj.identifier")
+							option(value='') Select an option
+							option(ng-repeat="obj in objects" ng-value="obj.identifier" )
+								p(ng-if='obj.objectType==="element"') {{obj.title}}
+								p(ng-if='obj.objectType==="showcase"') {{obj.name}}						
+				.col-md-6
+					.row
+						h2 Notificaciones
+						p Este mensaje ser&aacute; mostrado a usuarios en las cercanias del Beacon
+					.row
+						checkbox.btn-checkbox(ng-model="hasNotificationBool" ng-change="changeNotificationState()" large )
+						strong Habilitar Notificaci&oacute;n
+					.row
+						h2 Mensaje
+						input.form-control(type='text' ng-model="obj.notification" ng-disabled="!hasNotificationBool")			
+		.section
+			.col-md-12
+				h2 Opciones de tiempo
+				p El contenido asignado tendr&aacute; prioridad para su beacon en los d&iacute;as y el horario seleccionado
+				.row
+					checkbox.btn-checkbox(ng-model="hasTimeOptionsBool" ng-change="changeTimeOptionsState()" large )
+					strong Habilitar Opciones de tiempo
+				.row
+					.col-md-6
+						h2 Desde
+						input.form-control(type="datetime" date-time ng-model="obj.startTime" view="hours"  ng-disabled='!hasTimeOptionsBool')						
+					.col-md-6
+						h2 Hasta
+						input.form-control(type="datetime" date-time ng-model="obj.endTime"  view="hours"  ng-disabled='!hasTimeOptionsBool')
+			.col-md-12						
+				.row
+					p D&iacute;as:
+					.col-md-12
+						.col-md-3
+							checkbox.btn-checkbox(ng-model="mondayBool"  ng-change="changeDayState('onMonday','mondayBool')"  large ng-disabled='!hasTimeOptionsBool')
+							strong Lunes
+						.col-md-3
+							checkbox.btn-checkbox(ng-model="tuesdayBool" ng-change="changeDayState('onTuesday','tuesdayBool')" large ng-disabled='!hasTimeOptionsBool')
+							strong Martes
+						.col-md-3
+							checkbox.btn-checkbox(ng-model="wednesdayBool" ng-change="changeDayState('onWednesday','wednesdayBool')" large ng-disabled='!hasTimeOptionsBool')
+							strong Mi&eacute;rcoles
+						.col-md-3
+							checkbox.btn-checkbox(ng-model="thursdayBool" ng-change="changeDayState('onThursday','thursdayBool')"  large ng-disabled='!hasTimeOptionsBool')
+							strong Jueves
+						.col-md-3
+							checkbox.btn-checkbox(ng-model="fridayBool" ng-change="changeDayState('onFriday','fridayBool')" large ng-disabled='!hasTimeOptionsBool')
+							strong Viernes
+						.col-md-3
+							checkbox.btn-checkbox(ng-model="saturdayBool" ng-change="changeDayState('onSaturday','saturdayBool')" large ng-disabled='!hasTimeOptionsBool')
+							strong Sabado
+						.col-md-3
+							checkbox.btn-checkbox(ng-model="sundayBool" ng-change="changeDayState('onSunday','sundayBool')" large ng-disabled='!hasTimeOptionsBool')
+							strong Domingo						
+	.modal-footer
+		button.btn.btn-danger.btn-md(ng-click="save()" ng-if="type=='create'") Salvar
+		button.btn.btn-theme.btn-md(ng-click="cancel()" ng-if="type=='create'") Cancelar
+		button.btn.btn-danger.btn-md(ng-click="save()" ng-if="type=='edit'") Listo
