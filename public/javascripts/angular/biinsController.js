@@ -1,4 +1,4 @@
-var biinAppBiins= angular.module('biinAppBiins',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap','ui.checkbox','datePicker']);
+var biinAppBiins= angular.module('biinAppBiins',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap','ui.checkbox']);
 
 biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal',function($scope,$http,$location,$modal){
     var defaultTab = 'details';
@@ -128,13 +128,13 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   //Create the modal for the creation Model
   if($scope.type==='create'){
     var obj={objectType:'element',notification:'', hasNotification:'0', isNew:true};
-    obj.onMonday='0';
-    obj.onTuesday='0';
-    obj.onWednesday='0';
-    obj.onThursday='0';
-    obj.onFriday='0';
-    obj.onSaturday='0';
-    obj.onSunday='0';
+    obj.onMonday='1';
+    obj.onTuesday='1';
+    obj.onWednesday='1';
+    obj.onThursday='1';
+    obj.onFriday='1';
+    obj.onSaturday='1';
+    obj.onSunday='1';
     $scope.obj= obj;
   }
 
