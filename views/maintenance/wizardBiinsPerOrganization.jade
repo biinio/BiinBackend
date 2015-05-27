@@ -1,11 +1,8 @@
 div
 	.section
-		br
-		br
-		br
-		p {{organizations[selectedOrganization].name}}
+		h2 {{organizations[selectedOrganization].name}}
 		.listBiinsInOrganization
-			table.tableListBiinsInOrganization
+			table.table.table-condensed.table-hover.tableListBiinsInOrganization
 				tbody
 					tr
 						th 
@@ -22,15 +19,18 @@ div
 							| Minor
 						th 
 							| State
+						th
+							| Edit
 					tr(ng-repeat="biin in organizations[selectedOrganization].biins")
 						td.biinInOrganizationId {{biin.identifier}}
 						td.biinInOrganizationAlias {{biin.name}}
-						td.biinInOrganizationUUID {{biin.proximityUUID}}
+						td.biinInOrganizationUUID {{biin.proximityUUI}}
 						td.biinInOrganizationSite {{biin.siteName}}
 						td.biinInOrganizationMajor {{biin.major}}
 						td.biinInOrganizationMinor {{biin.minor}}
-						td.biinInOrganizationState {{biin.state}}
-
+						td.biinInOrganizationState {{biin.status}}
+						td
+							.icon.icon-pencil-2(ng-click="showAddBiintoOrganizationModal('edit',biin)")
 
 		.addBiinToOrganization
-			.icon.icon-add-4(ng-click="showAddBiintoOrganizationModal()")
+			.icon.icon-add-4(ng-click="showAddBiintoOrganizationModal('create')")

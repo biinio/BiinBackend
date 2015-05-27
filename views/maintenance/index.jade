@@ -1,7 +1,6 @@
 extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/maintenanceController.js")
-	script(src="/angular-slider/slider.js")
 block content	
 	#sectionContent(ng-app="biinAppMaintenance" ng-controller="maintenanceController" ngCloack)
 		#wrapperContent
@@ -17,10 +16,8 @@ block content
 												.col-md-9
 													label.maintenanceOrgName {{org.name}}
 												.col-md-9
-													label.orgBeacons {{org.assignedBeacons}}
-													| Beacons
-													label.unassignBeacos {{org.unassignedBeacons}}
-													| Beacons Unassigned
+													label.orgBeacons {{org.biinsAssignedCounter}}
+													|  Beacons
 				.right-section-content
 					.container-fluid
 						div(ng-if="selectedOrganization!=null")
