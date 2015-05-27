@@ -64,9 +64,13 @@ module.exports = function () {
 							return res.send("{\"success\":\"true\"}",200);
 						}
 						else{
-							return res.send("{\"success\":\"false\", \"message\":\"Update organization info failed.\"}",500);
+							return res.send("{\"success\":\"false\"}",500);
 						}
 					});
+				}
+				else
+				{
+					return res.send("{\"success\":\"false\"}",500);
 				}
 			});
 		}
