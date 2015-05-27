@@ -56,7 +56,7 @@
 							checkbox#chkPrice.btn-checkbox(ng-model="hasListPriceBool" ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)" large)
 							label(for="chkListPrice") Nuevo Precio
 						.body								
-							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" placeholder="Final Price" ng-blur="validate()" required is-number)
+							input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" placeholder="Final Price" ng-blur="validate()"  ng-disabled="!hasListPriceBool" required is-number)
 		.section.col-md-6.darkSection
 			.section
 				.row

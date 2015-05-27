@@ -14,6 +14,11 @@ form.novalidate
 				label.col-sm-2.control-label(for='title2')(translate="SUMMARY.DESC1")
 				.col-sm-10					
 					input#title2.form-control.title-value(ng-model="elements[selectedElement].subTitle" name="subTitle" type="text" placeholder="Subtitle"  ng-blur="validate()"  required )
+	.section.elementNutshellHightligh
+		checkbox.btn-checkbox(ng-model="isHighlightBool" ng-change="changeBoolStateHighlights('isHighlight', isHighlightBool)" large )
+		span Hightligh
+		h3 Hightligh section
+		p Turn on Hightligh to presents this element in the Hightligh section of the mobile app
 	.section
 		h2(translate="SUMMARY.DETAILS")
 		p(translate="SUMMARY.DETAILS1")		
