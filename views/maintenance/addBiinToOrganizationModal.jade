@@ -8,31 +8,31 @@
 				.row
 					.col-md-6
 						label Site
-						select.form-control(ng-model="selectedSite" ng-change="selectSite(selectedSite)")
+						select.form-control(ng-model="selectedSite" ng-change="selectSite(selectedSite)" ng-disabled="{{lockValues}}")
 							option(ng-repeat="site in sites" value="{{sites.indexOf(site)}}") {{site.title2}}
 					.col-md-6
 						label Mayor
-						input.form-control(ng-value="sites[selectedSite].major")
+						input.form-control(ng-value="sites[selectedSite].major" disabled="true")
 			.col-md-12
 				.row
 					.col-md-6
-						label State
-						select.form-control.bootstrap-select(ng-model="beacon.status")
+						label Status
+						select.form-control.bootstrap-select(ng-model="beacon.status" ng-change="selectState(beacon.status)")
 							option(value='No Programmed') No Programmed
 							option(value='Programmed') Programmed
 							option(value='Installed') Installed 
 							option(value='Damaged') Damaged
 					.col-md-6
 						label Minor
-						input.form-control(ng-value="minor")
+						input.form-control(disabled="true" value="{{minor}}")
 			.col-md-12
 				.row
 					.col-md-6
-						label ID
-						input.form-control(ng-model="beacon.identifier")
+						label Biin ID
+						input.form-control(ng-model="beacon.identifier" ng-disabled="{{lockValues}}")
 					.col-md-6
 						label Alias
-						input.form-control(ng-model="beacon.name")
+						input.form-control(ng-model="beacon.name" ng-disabled="{{lockValues}}")
 			.col-md-12
 				.row
 					.col-md-12

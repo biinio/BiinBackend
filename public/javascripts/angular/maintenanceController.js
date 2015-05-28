@@ -80,13 +80,13 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   $scope.selectedOrganization = selectedOrganization.organization;
   $scope.minor = 0;
   $scope.siteIndexFromBeacon = 0;
+  $scope.lockValues = false;
 
   if(mode == "create")
   {
     if($scope.sites.length > 0){
         $scope.selectedSite = 0;
-        $scope.minor = $scope.sites[$scope.selectedSite].minorCounter;
-
+        $scope.minor = parseInt($scope.sites[$scope.selectedSite].minorCounter) + 1;
     }
 
     $scope.beacon = { 
@@ -100,7 +100,8 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   else
   {
     $scope.beacon = beacon;
-    $scope.minor = beacon.minor;
+    $scope.minor = parseInt(beacon.minor);
+    $scope.lockValues = $scope.beacon.status != "No Programmed";
     var end=false;
     var indiceSelect= -1;
     for(var i = 0; i < $scope.sites.length && !end; i++)
@@ -125,13 +126,13 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   {
 
     $scope.beacon.major = $scope.sites[$scope.selectedSite].major;
-    $scope.beacon.minor = $scope.minor;
     $scope.beacon.siteIdentifier = $scope.sites[$scope.selectedSite].identifier;
     $scope.beacon.siteIndex = $scope.selectedSite;
     $scope.beacon.isAssigned = true;
     $scope.beacon.organizationIdentifier = $scope.selectedOrganization.identifier;
     $scope.beacon.accountIdentifier = $scope.selectedOrganization.accountIdentifier;
-    
+    $scope.beacon.minor = $scope.minor;
+
     if($scope.mode == "create"){
       $scope.beacon.mode = "create";
       $http.put('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
@@ -156,15 +157,19 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   $scope.selectSite = function(index){
     if(mode=="create")
     {
-      $scope.minor = $scope.sites[index].minorCounter;
+      $scope.minor = parseInt($scope.sites[index].minorCounter) +1;
     }
     else
     {
       if($scope.siteIndexFromBeacon == index)
-        $scope.minor = $scope.beacon.minor;
+        $scope.minor = parseInt($scope.beacon.minor);
       else
-        $scope.minor = $scope.sites[index].minorCounter;
+        $scope.minor = parseInt($scope.sites[index].minorCounter)+1;
     }
+  }
+  $scope.selectStatus = function(status)
+  {
+      $scope.lockValues = status != "No Programmed"
   }
 
   $scope.ok = function () {
