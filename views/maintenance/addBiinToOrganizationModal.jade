@@ -8,7 +8,7 @@
 				.row
 					.col-md-6
 						label Site
-						select.form-control(ng-model="selectedSite")
+						select.form-control(ng-model="selectedSite" ng-change="selectSite(selectedSite)")
 							option(ng-repeat="site in sites" value="{{sites.indexOf(site)}}") {{site.title2}}
 					.col-md-6
 						label Mayor
@@ -24,7 +24,7 @@
 							option(value='Damaged') Damaged
 					.col-md-6
 						label Minor
-						input.form-control(ng-value="sites[selectedSite].minorCounter")
+						input.form-control(ng-value="minor")
 			.col-md-12
 				.row
 					.col-md-6

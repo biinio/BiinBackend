@@ -40,6 +40,7 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
       var modalInstance = $modal.open({
         templateUrl: 'maintenance/addBiinToOrganizationModal',
         controller: 'addOrEditBeaconController',
+        size:'lg',
         resolve:{
           selectedElement : function()
           {
@@ -77,11 +78,16 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   $scope.mode = mode;
   $scope.beacon = null;
   $scope.selectedOrganization = selectedOrganization.organization;
+  $scope.minor = 0;
+  $scope.siteIndexFromBeacon = 0;
 
   if(mode == "create")
   {
-    if($scope.sites.length > 0)
-      $scope.selectedSite = 0;
+    if($scope.sites.length > 0){
+        $scope.selectedSite = 0;
+        $scope.minor = $scope.sites[$scope.selectedSite].minorCounter;
+
+    }
 
     $scope.beacon = { 
       identifier:"",
@@ -94,13 +100,32 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   else
   {
     $scope.beacon = beacon;
+    $scope.minor = beacon.minor;
+    var end=false;
+    var indiceSelect= -1;
+    for(var i = 0; i < $scope.sites.length && !end; i++)
+    {
+       if($scope.sites[i].identifier == $scope.beacon.siteIdentifier)
+       {
+          indiceSelect=i;
+          end=true;
+
+          //Binding the value in the view
+          setTimeout(function(){
+            $scope.selectedSite = indiceSelect;
+            $scope.siteIndexFromBeacon = indiceSelect;
+            $scope.$apply(); //this triggers a $digest
+
+          },50);
+       }
+    }
   }
 
   $scope.save = function()
   {
 
     $scope.beacon.major = $scope.sites[$scope.selectedSite].major;
-    $scope.beacon.minor = $scope.sites[$scope.selectedSite].minorCounter ? $scope.sites[$scope.selectedSite].minorCounter : 0;
+    $scope.beacon.minor = $scope.minor;
     $scope.beacon.siteIdentifier = $scope.sites[$scope.selectedSite].identifier;
     $scope.beacon.siteIndex = $scope.selectedSite;
     $scope.beacon.isAssigned = true;
@@ -129,7 +154,17 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   }
 
   $scope.selectSite = function(index){
-    $scope.selectedSite = index;
+    if(mode=="create")
+    {
+      $scope.minor = $scope.sites[index].minorCounter;
+    }
+    else
+    {
+      if($scope.siteIndexFromBeacon == index)
+        $scope.minor = $scope.beacon.minor;
+      else
+        $scope.minor = $scope.sites[index].minorCounter;
+    }
   }
 
   $scope.ok = function () {

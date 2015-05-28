@@ -53,10 +53,10 @@ module.exports = function () {
 
 		var setQuery = {};
 		setQuery[siteLocationToUpdate] = 1;
-		setQuery["biinsAssignedCounter"] = 1;
-		setQuery["biinsCounter"]=1;
 		if(mode == "create")
 		{
+			setQuery["biinsAssignedCounter"] = 1;
+			setQuery["biinsCounter"]=1;
 			biins.create(beacon,function (error,data){
 				if(error == null){
 					organization.update({identifier:orgID},{ $inc: setQuery}, function(errorUpdate, data){
