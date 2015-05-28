@@ -40,6 +40,7 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
       var modalInstance = $modal.open({
         templateUrl: 'maintenance/addBiinToOrganizationModal',
         controller: 'addOrEditBeaconController',
+        size:'lg',
         resolve:{
           selectedElement : function()
           {
@@ -77,11 +78,16 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   $scope.mode = mode;
   $scope.beacon = null;
   $scope.selectedOrganization = selectedOrganization.organization;
+  $scope.minor = 0;
+  $scope.siteIndexFromBeacon = 0;
+  $scope.lockValues = false;
 
   if(mode == "create")
   {
-    if($scope.sites.length > 0)
-      $scope.selectedSite = 0;
+    if($scope.sites.length > 0){
+        $scope.selectedSite = 0;
+        $scope.minor = parseInt($scope.sites[$scope.selectedSite].minorCounter) + 1;
+    }
 
     $scope.beacon = { 
       identifier:"",
@@ -94,19 +100,39 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   else
   {
     $scope.beacon = beacon;
+    $scope.minor = parseInt(beacon.minor);
+    $scope.lockValues = $scope.beacon.status != "No Programmed";
+    var end=false;
+    var indiceSelect= -1;
+    for(var i = 0; i < $scope.sites.length && !end; i++)
+    {
+       if($scope.sites[i].identifier == $scope.beacon.siteIdentifier)
+       {
+          indiceSelect=i;
+          end=true;
+
+          //Binding the value in the view
+          setTimeout(function(){
+            $scope.selectedSite = indiceSelect;
+            $scope.siteIndexFromBeacon = indiceSelect;
+            $scope.$apply(); //this triggers a $digest
+
+          },50);
+       }
+    }
   }
 
   $scope.save = function()
   {
 
     $scope.beacon.major = $scope.sites[$scope.selectedSite].major;
-    $scope.beacon.minor = $scope.sites[$scope.selectedSite].minorCounter ? $scope.sites[$scope.selectedSite].minorCounter : 0;
     $scope.beacon.siteIdentifier = $scope.sites[$scope.selectedSite].identifier;
     $scope.beacon.siteIndex = $scope.selectedSite;
     $scope.beacon.isAssigned = true;
     $scope.beacon.organizationIdentifier = $scope.selectedOrganization.identifier;
     $scope.beacon.accountIdentifier = $scope.selectedOrganization.accountIdentifier;
-    
+    $scope.beacon.minor = $scope.minor;
+
     if($scope.mode == "create"){
       $scope.beacon.mode = "create";
       $http.put('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
@@ -129,7 +155,21 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   }
 
   $scope.selectSite = function(index){
-    $scope.selectedSite = index;
+    if(mode=="create")
+    {
+      $scope.minor = parseInt($scope.sites[index].minorCounter) +1;
+    }
+    else
+    {
+      if($scope.siteIndexFromBeacon == index)
+        $scope.minor = parseInt($scope.beacon.minor);
+      else
+        $scope.minor = parseInt($scope.sites[index].minorCounter)+1;
+    }
+  }
+  $scope.selectStatus = function(status)
+  {
+      $scope.lockValues = status != "No Programmed"
   }
 
   $scope.ok = function () {
