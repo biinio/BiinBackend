@@ -15,14 +15,18 @@
 						select.form-control(ng-model="obj.objectType" ng-change="changeObjectType()")
 							option(value="element") Element
 							option(value="showcase") Showcase
-					.row
-						h2(ng-if="obj.objectType==='element'") Element:
-						h2(ng-if="obj.objectType==='showcase'") Showcase:
+					.row(ng-if="obj.objectType==='element'")
+						h2 Element:
 						select.form-control(ng-model="obj.identifier")
 							option(value='') Select an option
-							option(ng-repeat="obj in objects" ng-value="obj.identifier" )
-								p(ng-if='obj.objectType==="element"') {{obj.title}}
-								p(ng-if='obj.objectType==="showcase"') {{obj.name}}						
+							option(ng-repeat="objEl in objects" value="{{objEl.elementIdentifier}}" ng-selected="objEl.elementIdentifier===obj.identifier")
+								{{objEl.title}}							
+					.row(ng-if="obj.objectType==='showcase'")
+						h2 Showcase:
+						select.form-control(ng-model="obj.identifier")
+							option(value='') Select an option			
+							option(ng-repeat="objSh in objects" value="{{objSh.identifier}}" ng-selected="objSh.identifier===obj.identifier")
+								{{objSh.name}}								
 				.col-md-6
 					.row
 						h2 Notificaciones
