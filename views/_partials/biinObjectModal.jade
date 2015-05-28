@@ -19,13 +19,13 @@
 						h2 Element:
 						select.form-control(ng-model="obj.identifier")
 							option(value='') Select an option
-							option(ng-repeat="objEl in objects" value="{{objEl.elementIdentifier}}" ng-selected="objEl.elementIdentifier===obj.identifier")
+							option(ng-repeat="objEl in elements" value="{{objEl.elementIdentifier}}" ng-selected="objEl.elementIdentifier === obj.identifier")
 								{{objEl.title}}							
 					.row(ng-if="obj.objectType==='showcase'")
 						h2 Showcase:
 						select.form-control(ng-model="obj.identifier")
 							option(value='') Select an option			
-							option(ng-repeat="objSh in objects" value="{{objSh.identifier}}" ng-selected="objSh.identifier===obj.identifier")
+							option(ng-repeat="objSh in showcases" value="{{objSh.identifier}}" ng-selected="objSh.identifier === obj.identifier")
 								{{objSh.name}}								
 				.col-md-6
 					.row
