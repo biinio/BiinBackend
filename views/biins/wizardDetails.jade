@@ -23,7 +23,7 @@ form.novalidate
 				td
 					p {{obj.objectType}}
 				td
-					p {{obj.name}}
+					p {{getObjectName(obj.identifier,obj.objectType)}}
 				td
 					p {{obj.startTime | date:'HH:mm'}} - {{obj.endTime | date:'HH:mm'}}
 					p
