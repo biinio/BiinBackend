@@ -7,7 +7,7 @@ module.exports =function(){
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
-		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory');
+		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin');
 	
 	
 	//GET Categories
@@ -232,12 +232,23 @@ module.exports =function(){
 	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,resultCallback){
 		var newModel={};
 
+		//Get the showcases available
 		var getShowcasesWebAvailable=function(siteIdentifier,callback){
 			showcase.find({'webAvailable':siteIdentifier},{'_id':0,'identifier':1},function(err,data){
 				if(err)
 					throw err;
 				var webAvailable= data;//_.pluck(data,'identifier');
 				callback(webAvailable)
+			});
+		}
+
+		//Get the biins available
+		var getSiteBiins =function(siteIdentifier,callback){
+			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed'},function(err,biinsData){
+				if(err)
+					throw err;
+				else
+					callback(biinsData);
 			});
 		}
 
@@ -302,6 +313,7 @@ module.exports =function(){
 			}
 		}
 
+		/*
 		if(typeof(model.biins)!=='undefined'){
 			newModel.biins=[];
 			var date = utils.getDateNow();// This because some biins are was not created with lastUpdate
@@ -340,18 +352,36 @@ module.exports =function(){
 					biinArray++;
 				}
 			}
-		}		
+		}*/		
 
+		//Get the asyc Information
+
+		var showcaseReady=false;
+		var biinsReady=false;
+
+		//Get showcase available
 		getShowcasesWebAvailable(siteId,function(webAvailable){
 
 			newModel.webAvailable = [];
 			if(webAvailable)
 				newModel.webAvailable =webAvailable;
-			
-			//Return the result callback
-			resultCallback(newModel)
-		})
-		
+			showcaseReady=true;
+
+			if(showcaseReady&&biinsReady){
+				//Return the result callback
+				resultCallback(newModel)
+			}
+		});
+
+		//Get the Biins available
+		getSiteBiins(siteId,function(biinsData){
+			newModel.biins=biinsData
+			biinsReady=true;
+			if(showcaseReady&&biinsReady){
+				//Return the result callback
+				resultCallback(newModel)
+			}
+		});
 	}
 
 
