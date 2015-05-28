@@ -49,7 +49,7 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
     }
     $scope.getObjectName=function(identifier,type){
       if(identifier&&type){
-        if(type="element"){
+        if(type==="element"){
           var el=_.findWhere($scope.elements,{elementIdentifier:identifier});
           if(el)
             return el.title;
@@ -138,7 +138,6 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
     obj.onSaturday='1';
     obj.onSunday='1';
 
-    $scope.objects=$scope.elements;
     $scope.obj= obj;
   }else
   {
@@ -177,12 +176,6 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   $scope.changeObjectType=function(selected){
       setTimeout(function () {
         $scope.$apply(function () {
-            if($scope.obj.objectType==='element'){
-              $scope.objects=$scope.elements;
-            }
-            else{
-             $scope.objects=$scope.showcases;  
-            }
             $scope.obj.identifier='';
         });
     }, 100);
