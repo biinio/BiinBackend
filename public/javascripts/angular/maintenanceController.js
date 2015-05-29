@@ -93,7 +93,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       identifier:"",
       name:"",
       status:"No Programmed",
-      proximityUUID:"f7826da6-4fa2-4e98-8024-bc5b71e0893en",
+      proximityUUID:process.env.DEFAULT_SYS_ENVIROMENT,
       registerDate:""
     }
   }
