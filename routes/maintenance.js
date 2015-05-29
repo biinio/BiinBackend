@@ -30,8 +30,10 @@ module.exports = function () {
 		res.setHeader('Content-Type', 'application/json');
 		var orgId = req.params['orgIdentifier'];	
 		biins.find({organizationIdentifier:orgId},{_id:0,identifier:1,name:1,major:1,minor:1,proximityUUID:1,status:1,isAssigned:1,organizationIdentifier:1,siteIdentifier:1}).lean().exec(function (err, data) {
-			var biins = data;
-			res.json(biins);
+			var response = {};
+			response.biins = data;
+			response.defaultUUID = process.env.DEFAULT_SYS_ENVIROMENT;
+			res.json(response);
 		});
 	}
 
