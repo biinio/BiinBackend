@@ -135,3 +135,5 @@ form.novalidate
 						input.form-control(ng-model="newTagField")
 					.col-md-3
 						button.btn.btn-default(ng-click="addElementTag(newTagField);newTagField=''" ng-enter="addElementTag(newTagField);newTagField=''") Add
+	.section
+		h4 {{ 'TYPE.IDENTIFIER' | translate }} : {{elements[selectedElement].elementIdentifier}}
