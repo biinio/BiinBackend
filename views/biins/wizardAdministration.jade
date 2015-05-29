@@ -1,0 +1,53 @@
+form.novalidate
+	.section
+		h1 Administre su biin Beacon
+		h2 Informaci&oacute;n  y Ubicaci&oacute;n
+	.section
+		.container-fluid
+			.col-md-12
+				.row
+					.col-md-6
+						label Local
+					.col-md-6
+						label {{biins[selectedBiin].title2}}
+			.col-md-12
+				.row
+					.col-md-6
+						label Nombre
+					.col-md-6
+						input.form-control(ng-value="{{biins[selectedBiin].alias}}")
+			.col-md-12
+				.row
+					.col-md-6
+						label Lugar
+					.col-md-6
+						input.form-control(ng-value="{{biins[selectedBiin].venue}}")
+			.col-md-12
+				.row
+					.col-md-6
+						label Tipo
+					.col-md-6
+						select.form-control.bootstrap-select
+							option(value='1') Exterior
+							option(value='2') Interior
+							option(value='3') Producto 
+	.section
+		.container-fluid
+			.col-md-12
+				.row
+					.col-md-2
+						label Identificador:
+					.col-md-2
+						label {{biins[selectedBiin].identifier}}
+			.col-md-12
+				.row
+					.col-md-2
+						label Major:
+					.col-md-2
+						label {{biins[selectedBiin].major}}
+			.col-md-12
+				.row
+					.col-md-2
+						label Minor:
+					.col-md-2
+						label {{biins[selectedBiin].minor}}

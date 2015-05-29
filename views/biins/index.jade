@@ -25,7 +25,9 @@ block content
 					.animate-switch.wizard-wrapper
 						.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
 							#wizardOption1.wizard(ng-switch-when="1")
-								include wizardDetails								
+								include wizardDetails
+							#wizardOption2.wizard(ng-switch-when="2")
+								include wizardAdministration							
 						.wizard-options
 							.container-fluid
 								.row.wizard-options-wrapper
@@ -36,4 +38,11 @@ block content
 												.icon.icon-network-1-1
 											.textCirle 
 												| 1. Details
+									.col-md-1.col-sm-1.nopadding.option
+										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==2}")
+										.wizard-options-item(ng-click="changeWizardTab(2)")
+											.circle(ng-class="{'active':wizardPosition ==2,'valid':wizard2IsValid}")
+												.icon.icon-network-1-1
+											.textCirle 
+												| 2. Administration
 								#guide-line-division
