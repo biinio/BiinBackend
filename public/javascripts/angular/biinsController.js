@@ -5,6 +5,11 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
     $scope.organizationId=selectedOrganization();
     $scope.selectedBiin = null;
     $scope.wizardPosition="1";
+    $scope.isValid =false;
+
+    //Wizard validations indicatos
+    $scope.wizard1IsValid = true;
+    $scope.wizard2IsValid = false;
 
     //Get the Sites Information
     $http.get('api/organizations/'+$scope.organizationId+'/sites/').success(function(data){
@@ -117,7 +122,43 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
         //$log.info('Modal dismissed at: ' + new Date());
       });
     };
+    
+    //Change Wizad tab manager
+    $scope.changeWizardTab=function(option){
+      switch(option){
+        case 1:
+          $scope.wizardPosition =option;
+        break;
+        case 2:
+          $scope.wizardPosition =option;        
+        break;         
+        default:
+          $scope.wizardPosition =option;
+        break;        
+      }
 
+    //Validate the current option
+    $scope.validate();
+  }
+
+  $scope.validate=function(validateAll){
+    var validate=typeof(validateAll)!='undefined';
+    //var validations =$scope.sitePrototype.validations();
+    var currentValid=true;
+
+      if(eval($scope.wizardPosition)==1 || validate){     
+          $scope.wizard1IsValid=true;       
+        currentValid = $scope.wizard1IsValid;
+      }
+      if(eval($scope.wizardPosition)==2 || validate){
+        $scope.wizard2IsValid = true;
+      }
+
+    $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid;
+    
+    return currentValid;
+    
+  }
 
     turnLoaderOff();
 }]);
