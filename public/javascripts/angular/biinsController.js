@@ -54,7 +54,7 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
     }
     $scope.getObjectName=function(identifier,type){
       if(identifier&&type){
-        if(type==="element"){
+        if(type==="1"){
           var el=_.findWhere($scope.elements,{elementIdentifier:identifier});
           if(el)
             return el.title;
@@ -170,7 +170,7 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   $scope.showcases=showcases;
   //Create the modal for the creation Model
   if($scope.type==='create'){
-    var obj={objectType:'element',notification:'', hasNotification:'0', isNew:true};
+    var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
     obj.onMonday='1';
     obj.onTuesday='1';
     obj.onWednesday='1';

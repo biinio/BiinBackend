@@ -21,7 +21,8 @@ form.novalidate
 				td
 					p {{$index+1}}
 				td
-					p {{obj.objectType}}
+					p(ng-if="obj.objectType=='1'") Element
+					p(ng-if="obj.objectType=='2'") Showcase					
 				td
 					p {{getObjectName(obj.identifier,obj.objectType)}}
 				td
