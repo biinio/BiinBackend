@@ -52,14 +52,15 @@ module.exports = function () {
 		var newMinor = beacon.minor;
 
 		var setQuery = {};
-		setQuery[siteLocationToUpdate] = 1;
-		setQuery["biinsAssignedCounter"] = 1;
-		setQuery["biinsCounter"]=1;
+		var incQuery = {};
+		setQuery[siteLocationToUpdate] = newMinor;
 		if(mode == "create")
 		{
+			incQuery["biinsAssignedCounter"] = 1;
+			incQuery["biinsCounter"]=1;
 			biins.create(beacon,function (error,data){
 				if(error == null){
-					organization.update({identifier:orgID},{ $inc: setQuery}, function(errorUpdate, data){
+					organization.update({identifier:orgID},{ $inc: incQuery, $set:setQuery}, function(errorUpdate, data){
 						if(errorUpdate == null){
 							return res.send("{\"success\":\"true\"}",200);
 						}
@@ -80,7 +81,7 @@ module.exports = function () {
 			{
 				if(error == null)
 				{
-					organization.update({identifier:orgID},{ $inc: setQuery}, function(errorUpdate, data)
+					organization.update({identifier:orgID},{ $set:setQuery}, function(errorUpdate, data)
 					{
 						if(errorUpdate == null){
 							return res.send("{\"success\":\"true\"}",200);
