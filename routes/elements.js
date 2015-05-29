@@ -87,8 +87,12 @@ module.exports = function(){
 							}								
 							if(!'hasPrice' in elementObj)
 								elementObj.hasPrice='0';
-							
-							
+
+							if(eval(elementObj.price)>0){
+								elementObj.hasPrice='1'
+							}else
+								elementObj.hasPrice='0'
+														
 							delete elementObj.elementIdentifier;
 
 							//Remove the old notifications object
