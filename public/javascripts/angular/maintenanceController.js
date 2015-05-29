@@ -12,13 +12,14 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
 
     $scope.selectedOrganization = null;
     $scope.biinsXOrganization = null;
-    
+    $scope.defaultUUID = "";
 
     $scope.showBiinsPerOrganization = function(index)
     {
       $http.get('maintenance/getBiinsOrganizationInformation/'+$scope.organizations[index].identifier).success(function(data){
         $scope.selectedOrganization = index;
-        $scope.organizations[index].biins = data;
+        $scope.organizations[index].biins = data.biins;
+        $scope.defaultUUID = data.defaultUUID;
         $scope.biinsXOrganization = $scope.organizations[index].biins;
         for(var i = 0; i < $scope.biinsXOrganization.length; i++)
         {
@@ -51,7 +52,8 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
           selectedOrganization : function()
           {
             return { organization: $scope.organizations[$scope.selectedOrganization]};
-          }
+          },
+          defaultUUID : function() { return $scope.defaultUUID; }
         }
       });
       modalInstance.result.then(function ( beacon ) {
@@ -72,7 +74,7 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
   }]);
 
 
-biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $modalInstance, $http, selectedElement, mode, beacon, selectedOrganization) {
+biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $modalInstance, $http, selectedElement, mode, beacon, selectedOrganization, defaultUUID) {
 
   $scope.sites = selectedElement.sites;
   $scope.mode = mode;
@@ -93,7 +95,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       identifier:"",
       name:"",
       status:"No Programmed",
-      proximityUUID:process.env.DEFAULT_SYS_ENVIROMENT,
+      proximityUUID:defaultUUID,
       registerDate:""
     }
   }
