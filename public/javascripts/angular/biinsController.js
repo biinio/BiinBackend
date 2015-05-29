@@ -141,11 +141,7 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
     $scope.obj= obj;
   }else
   {
-    if(selectedObj.obj.objectType==='element')
-        $scope.objects=$scope.elements;
-    else
-      $scope.objects=$scope.showcases;
-      $scope.obj =selectedObj.obj;  
+    $scope.obj =selectedObj.obj;  
   }
   //$scope.objects=[];
   $scope.hasNotificationBool=false;
