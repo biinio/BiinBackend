@@ -1,7 +1,7 @@
 module.exports =function(){
 	var fs=require('fs');
 	var _= require('underscore');
-	var math = require('mathjs');	
+	var math = require('mathjs'), moment = require('moment');	
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
@@ -244,11 +244,24 @@ module.exports =function(){
 
 		//Get the biins available
 		var getSiteBiins =function(siteIdentifier,callback){
-			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed'},function(err,biinsData){
+			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed'}).lean().exec(function(err,biinsData){
 				if(err)
 					throw err;
-				else
+				else{
+
+					for(var i =0; i<biinsData.length;i++){
+						for(var o =0; o<biinsData[i].objects.length;o++){
+							var startTime =moment(biinsData[i].objects[o].startTime);
+							var endtime = moment(biinsData[i].objects[o].endTime);
+
+							biinsData[i].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
+							biinsData[i].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
+						}
+					}
+					//format the biins
 					callback(biinsData);
+				}
+					
 			});
 		}
 
@@ -312,47 +325,6 @@ module.exports =function(){
 				newModel.media[i].imgUrl= model.media[i].imgUrl;
 			}
 		}
-
-		/*
-		if(typeof(model.biins)!=='undefined'){
-			newModel.biins=[];
-			var date = utils.getDateNow();// This because some biins are was not created with lastUpdate
-			var biinArray= 0;
-			for(var i=0; i<model.biins.length;i++){
-				if(typeof(model.biins[i].showcases)!='undefined' && model.biins[i].showcases.length>0){
-					newModel.biins[biinArray]={};				
-					newModel.biins[biinArray].identifier= model.biins[i].identifier;
-					newModel.biins[biinArray].minor= "" +model.biins[i].minor;
-					newModel.biins[biinArray].biinType= model.biins[i].biinType;
-					newModel.biins[biinArray].lastUpdate= model.biins[i].lastUpdate?model.biins[i].lastUpdate:date;
-
-
-					//Biins showcases
-					if( model.biins[i].showcases.length>0){
-						newModel.biins[biinArray].showcases=[];
-						for(var j =0;j<model.biins[i].showcases.length;j++){
-							 var biinShowcase = {};
-							 biinShowcase.showcaseIdentifier = model.biins[i].showcases[j].showcaseIdentifier;
-							 biinShowcase.isDefault=model.biins[i].showcases[j].isDefault;
-							 biinShowcase.startTime= utils.getDate(biinShowcase.startTime);
-							 biinShowcase.endTime= utils.getDate(biinShowcase.endTime);
-							 biinShowcase.isUserNotified='0';
-							 //Is showcase Notified
-							if(mobileUser && ('showcaseNotified' in mobileUser)){
-								var biinNot=_.findWhere(mobileUser.showcaseNotified,{siteIdentifier:siteId, showcaseIdentifier:biinShowcase.showcaseIdentifier});
-								biinShowcase.isUserNotified=typeof(biinNot)!='undefined'?'1':'0';
-							}
-
-							 newModel.biins[biinArray].showcases.push(biinShowcase);
-						}
-					}
-					//If is not there an identifier
-					if(!model.biins[i].identifier)
-						newModel.biins[biinArray].identifier= utils.getGUID();
-					biinArray++;
-				}
-			}
-		}*/		
 
 		//Get the asyc Information
 

@@ -171,6 +171,10 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   //Create the modal for the creation Model
   if($scope.type==='create'){
     var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
+    var time = moment();
+    time.minutes(0);
+    time.hours(0);
+
     obj.onMonday='1';
     obj.onTuesday='1';
     obj.onWednesday='1';
@@ -178,7 +182,8 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
     obj.onFriday='1';
     obj.onSaturday='1';
     obj.onSunday='1';
-
+    obj.startTime=time.format();
+    obj.endTime=time.format();
     $scope.obj= obj;
   }else
   {
