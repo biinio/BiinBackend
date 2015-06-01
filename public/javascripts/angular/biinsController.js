@@ -171,7 +171,7 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   //Create the modal for the creation Model
   if($scope.type==='create'){
     var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
-    var time = moment();
+    var time = moment.local();
     time.minutes(0);
     time.hours(0);
 
