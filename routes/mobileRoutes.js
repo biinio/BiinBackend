@@ -1,7 +1,7 @@
 module.exports =function(){
 	var fs=require('fs');
 	var _= require('underscore');
-	var math = require('mathjs'), moment = require('moment');	
+	var math = require('mathjs'), moment = require('moment-timezone');
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
@@ -251,8 +251,8 @@ module.exports =function(){
 
 					for(var i =0; i<biinsData.length;i++){
 						for(var o =0; o<biinsData[i].objects.length;o++){
-							var startTime =moment.utc(biinsData[i].objects[o].startTime);
-							var endtime = moment.utc(biinsData[i].objects[o].endTime);
+							var startTime =moment.tz(biinsData[i].objects[o].startTime,'America/Costa_Rica');
+							var endtime = moment.tz(biinsData[i].objects[o].endTime,'America/Costa_Rica');
 
 							biinsData[i].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
 							biinsData[i].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
