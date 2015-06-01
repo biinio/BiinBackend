@@ -251,11 +251,13 @@ module.exports =function(){
 
 					for(var i =0; i<biinsData.length;i++){
 						for(var o =0; o<biinsData[i].objects.length;o++){
-							var startTime =moment(biinsData[i].objects[o].startTime);
-							var endtime = moment(biinsData[i].objects[o].endTime);
+							var startTime =moment.utc(biinsData[i].objects[o].startTime);
+							var endtime = moment.utc(biinsData[i].objects[o].endTime);
 
 							biinsData[i].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
 							biinsData[i].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
+							biinsData[i].objects[o].isUserNotified='0';
+							biinsData[i].objects[o].isBiined='0';
 						}
 					}
 					//format the biins
