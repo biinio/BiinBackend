@@ -23,9 +23,9 @@ form.novalidate
 				td
 					p {{obj.objectType}}
 				td
-					p {{obj.name}}
+					p {{getObjectName(obj.identifier,obj.objectType)}}
 				td
-					p {{obj.startTime | date:'yyyy-MM-dd HH:mm'}} - {{obj.endTime | date:'yyyy-MM-dd HH:mm'}}
+					p {{obj.startTime | date:'HH:mm'}} - {{obj.endTime | date:'HH:mm'}}
 					p
 						span(ng-if="obj.onMonday==='1'") L
 						span(ng-if="obj.onTuesday==='1'") K

@@ -5,7 +5,7 @@ module.exports = function () {
 	
 	//Set Fiil the standards enviroments variables
 	functions.set=function(req,res){
-		var enviroments=[{identifier:'99d803fb-3c4f-4276-9535-d17a1b0cf49d',mayorCounter:0,description:'Indoors Enviroment'}];
+		var enviroments=[{identifier:'AABBCCDD-A101-B202-C303-AABBCCDDEEFF',mayorCounter:0,description:'Indoors Enviroment'}];
 		sysGlobals.create(enviroments,function(err){
 			if(err)
 				throw err;

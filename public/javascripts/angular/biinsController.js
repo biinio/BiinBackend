@@ -1,4 +1,4 @@
-var biinAppBiins= angular.module('biinAppBiins',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap','ui.checkbox','datePicker']);
+var biinAppBiins= angular.module('biinAppBiins',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap','ui.checkbox']);
 
 biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal',function($scope,$http,$location,$modal){
     var defaultTab = 'details';
@@ -52,7 +52,21 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
         return "";
       }        
     }
-
+    $scope.getObjectName=function(identifier,type){
+      if(identifier&&type){
+        if(type==="element"){
+          var el=_.findWhere($scope.elements,{elementIdentifier:identifier});
+          if(el)
+            return el.title;
+        }
+        else{
+          var sh=_.findWhere($scope.showcases,{identifier:identifier});
+          if(sh)
+            return sh.name;
+        }
+      }
+        return "name not available"
+    }
     $scope.removeObject=function(index){
       $scope.biins[$scope.selectedBiin].objects.splice(index,1);
     }
@@ -150,10 +164,27 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
 }]);
 
 biinAppBiins.controller('objectController', function ($scope, $modalInstance, selectedObj,elements,showcases) {
-  $scope.type = selectedObj.type;
-  $scope.obj =selectedObj.obj;
+
+  $scope.type = selectedObj.type;  
   $scope.elements=elements;
   $scope.showcases=showcases;
+  //Create the modal for the creation Model
+  if($scope.type==='create'){
+    var obj={objectType:'element',notification:'', hasNotification:'0', isNew:true};
+    obj.onMonday='1';
+    obj.onTuesday='1';
+    obj.onWednesday='1';
+    obj.onThursday='1';
+    obj.onFriday='1';
+    obj.onSaturday='1';
+    obj.onSunday='1';
+
+    $scope.obj= obj;
+  }else
+  {
+    $scope.obj =selectedObj.obj;  
+  }
+  //$scope.objects=[];
   $scope.hasNotificationBool=false;
   $scope.hasTimeOptionsBool=false;
 
@@ -164,21 +195,8 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   $scope.thursdayBool=false;
   $scope.fridayBool=false;
   $scope.saturdayBool=false;
-  $scope.sundayBool=false;
-
-  //Create the modal for the creation Model
-  if($scope.type==='create'){
-    var obj={objectType:'element',notification:'', hasNotification:'0', isNew:true};
-    obj.onMonday='0';
-    obj.onTuesday='0';
-    obj.onWednesday='0';
-    obj.onThursday='0';
-    obj.onFriday='0';
-    obj.onSaturday='0';
-    obj.onSunday='0';
-    $scope.obj= obj;
-  }
-
+  $scope.sundayBool=false;  
+  
   //Set the scope values
   $scope.hasNotificationBool = $scope.obj.hasNotification==='1';
   $scope.hasTimeOptionsBool = $scope.obj.hasTimeOptions==='1';
@@ -190,17 +208,14 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   $scope.fridayBool = $scope.obj.onFriday==='1';
   $scope.saturdayBool = $scope.obj.onSaturday==='1';
   $scope.sundayBool = $scope.obj.onSunday==='1';
-    
+  
   //Change the Object Type
   $scope.changeObjectType=function(selected){
-    if($scope.obj.objectType==='element'){
-      $scope.objects=$scope.elements;
-    }
-    else{
-     $scope.objects=$scope.showcases;  
-    }
-    $scope.obj.identifier='';
-     
+      setTimeout(function () {
+        $scope.$apply(function () {
+            $scope.obj.identifier='';
+        });
+    }, 100);
   }
 
   //Change the notification State
@@ -225,7 +240,5 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
-
-  $scope.changeObjectType();
 });
 

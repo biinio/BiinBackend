@@ -15,14 +15,18 @@
 						select.form-control(ng-model="obj.objectType" ng-change="changeObjectType()")
 							option(value="element") Element
 							option(value="showcase") Showcase
-					.row
-						h2(ng-if="obj.objectType==='element'") Element:
-						h2(ng-if="obj.objectType==='showcase'") Showcase:
+					.row(ng-if="obj.objectType==='element'")
+						h2 Element:
 						select.form-control(ng-model="obj.identifier")
 							option(value='') Select an option
-							option(ng-repeat="obj in objects" ng-value="obj.identifier" )
-								p(ng-if='obj.objectType==="element"') {{obj.title}}
-								p(ng-if='obj.objectType==="showcase"') {{obj.name}}						
+							option(ng-repeat="objEl in elements" value="{{objEl.elementIdentifier}}" ng-selected="objEl.elementIdentifier === obj.identifier")
+								{{objEl.title}}							
+					.row(ng-if="obj.objectType==='showcase'")
+						h2 Showcase:
+						select.form-control(ng-model="obj.identifier")
+							option(value='') Select an option			
+							option(ng-repeat="objSh in showcases" value="{{objSh.identifier}}" ng-selected="objSh.identifier === obj.identifier")
+								{{objSh.name}}								
 				.col-md-6
 					.row
 						h2 Notificaciones
@@ -34,7 +38,7 @@
 						h2 Mensaje
 						input.form-control(type='text' ng-model="obj.notification" ng-disabled="!hasNotificationBool")			
 		.section
-			.col-md-12
+			.col-md-6
 				h2 Opciones de tiempo
 				p El contenido asignado tendr&aacute; prioridad para su beacon en los d&iacute;as y el horario seleccionado
 				.row
@@ -43,13 +47,14 @@
 				.row
 					.col-md-6
 						h2 Desde
-						input.form-control(type="datetime" date-time ng-model="obj.startTime" view="hours"  ng-disabled='!hasTimeOptionsBool')						
+						timepicker(hour-step="1" minute-step="30" show-meridian='false' ng-model="obj.startTime"  ng-disabled='!hasTimeOptionsBool')						
 					.col-md-6
 						h2 Hasta
-						input.form-control(type="datetime" date-time ng-model="obj.endTime"  view="hours"  ng-disabled='!hasTimeOptionsBool')
-			.col-md-12						
+						timepicker(hour-step="1" minute-step="30" show-meridian='false' ng-model="obj.endTime"   ng-disabled='!hasTimeOptionsBool')
+			.col-md-6						
 				.row
-					p D&iacute;as:
+					h2 D&iacute;as
+					p Selecciona los d&iacute;as que el objecto va a estar activo
 					.col-md-12
 						.col-md-3
 							checkbox.btn-checkbox(ng-model="mondayBool"  ng-change="changeDayState('onMonday','mondayBool')"  large ng-disabled='!hasTimeOptionsBool')
@@ -73,6 +78,8 @@
 							checkbox.btn-checkbox(ng-model="sundayBool" ng-change="changeDayState('onSunday','sundayBool')" large ng-disabled='!hasTimeOptionsBool')
 							strong Domingo						
 	.modal-footer
-		button.btn.btn-danger.btn-md(ng-click="save()" ng-if="type=='create'") Salvar
-		button.btn.btn-theme.btn-md(ng-click="cancel()" ng-if="type=='create'") Cancelar
-		button.btn.btn-danger.btn-md(ng-click="save()" ng-if="type=='edit'") Listo
+		.col-md-12
+			.row
+				button.btn.btn-danger.btn-md(ng-click="save()" ng-if="type=='create'") Salvar
+				button.btn.btn-theme.btn-md(ng-click="cancel()" ng-if="type=='create'") Cancelar
+				button.btn.btn-danger.btn-md(ng-click="save()" ng-if="type=='edit'") Listo
