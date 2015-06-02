@@ -128,6 +128,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/organizations/:identifier/sites/biins',biins.updateSiteBiins);
     app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
     app.post('/api/organizations/:identifier/biins/:biinIdentifier/objects',biins.setObjects);
+    app.post('/api/biins/:biinIdentifier/update',biins.updateBiin);
+    
 
     //Elements
     app.get('/organizations/:identifier/elements', elements.index);

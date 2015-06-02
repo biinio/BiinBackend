@@ -9,27 +9,27 @@ form.novalidate
 					.col-md-6
 						label Local
 					.col-md-6
-						label {{biins[selectedBiin].title2}}
+						label {{getSiteName(biins[selectedBiin].siteIdentifier)}}
 			.col-md-12
 				.row
 					.col-md-6
 						label Nombre
 					.col-md-6
-						input.form-control(ng-value="{{biins[selectedBiin].alias}}")
+						input.form-control(ng-model="biins[selectedBiin].name" ng-value="biins[selectedBiin].name")
 			.col-md-12
 				.row
 					.col-md-6
 						label Lugar
 					.col-md-6
-						input.form-control(ng-value="{{biins[selectedBiin].venue}}")
+						input.form-control(ng-model="biins[selectedBiin].venue" ng-value="biins[selectedBiin].venue")
 			.col-md-12
 				.row
 					.col-md-6
 						label Tipo
 					.col-md-6
-						select.form-control.bootstrap-select
-							option(value='1') Exterior
+						select.form-control.bootstrap-select(ng-model="biins[selectedBiin].biinType" ng-value="biins[selectedBiin].biinType")
 							option(value='2') Interior
+							option(value='1') Exterior
 							option(value='3') Producto 
 	.section
 		.container-fluid
