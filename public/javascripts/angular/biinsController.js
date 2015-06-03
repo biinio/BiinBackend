@@ -52,6 +52,7 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
         return "";
       }        
     }
+
     $scope.getObjectName=function(identifier,type){
       if(identifier&&type){
         if(type==="1"){
@@ -67,6 +68,7 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
       }
         return "name not available"
     }
+    
     $scope.removeObject=function(index){
       $scope.biins[$scope.selectedBiin].objects.splice(index,1);
     }
@@ -75,7 +77,7 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
     $scope.save=function(){
       //Get the showcases
       $http.post('api/organizations/'+$scope.organizationId+'/biins/'+$scope.biins[$scope.selectedBiin].identifier+'/objects',{model:$scope.biins[$scope.selectedBiin]}).success(function(data){
-        $scope.showcases = data.data;  
+        //Save callback
       }).error(function(err){
         console.log(err);
       })      

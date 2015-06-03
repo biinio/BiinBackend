@@ -8,7 +8,7 @@ module.exports =function(){
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
 		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin');
-	
+	var biinBiinieObject =require('../schemas/biinBiinieObject');
 	
 	//GET Categories
 	/*
@@ -159,8 +159,7 @@ module.exports =function(){
 			var distance= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
 
 			return distance<= radiousRadians;			
-		}
-		
+		}		
 	}
 
 	//
@@ -196,11 +195,10 @@ module.exports =function(){
 			}			
 		}
 		if(biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1},getSiteInformation)
 		}else{
 			res.json({data:{status:"7",data:{}}});
-		}
-			
+		}		
 	}
 
  	//------------------  History Services  ------------------//
@@ -244,24 +242,54 @@ module.exports =function(){
 
 		//Get the biins available
 		var getSiteBiins =function(siteIdentifier,callback){
+			var defaultCollection = 0;
 			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed'}).lean().exec(function(err,biinsData){
 				if(err)
 					throw err;
 				else{
+					var processedBiins =0;
+					for(var iBiin =0; iBiin<biinsData.length;iBiin++){
+						var myIBiinIndex=iBiin;
+						biinBiinieObject.find({'biinieIdentifier':biinieId,'biinIdentifier':biinsData[0].identifier},function(err,biinsObjects){
+							if(err)
+								throw err;
+							else{
+								for(var o =0; o<biinsData[myIBiinIndex].objects.length;o++){								
 
-					for(var i =0; i<biinsData.length;i++){
-						for(var o =0; o<biinsData[i].objects.length;o++){
-							var startTime =moment.tz(biinsData[i].objects[o].startTime,'America/Costa_Rica');
-							var endtime = moment.tz(biinsData[i].objects[o].endTime,'America/Costa_Rica');
+									var startTime =moment.tz(biinsData[myIBiinIndex].objects[o].startTime,'America/Costa_Rica');
+									var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');									
 
-							biinsData[i].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
-							biinsData[i].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
-							biinsData[i].objects[o].isUserNotified='0';
-							biinsData[i].objects[o].isBiined='0';
-						}
+									var oData= null;									
+									if(biinsData[myIBiinIndex].objects)									
+										oData=_.findWhere(biinsData[myIBiinIndex].objects,{'identifier':biinsData[myIBiinIndex].objects[o].identifier});
+									var el =null;
+									if(mobileUser.biinieCollections && mobileUser.biinieCollections[defaultCollection] && mobileUser.biinieCollections[defaultCollection].elements)
+										el= _.findWhere(mobileUser.biinieCollectioncs[defaultCollection].elements,{identifier:biinsData[myIBiinIndex].objects[o].identifier})
+
+									biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';									
+
+									var isUserBiined='0';
+									var defaultCollection = 0;
+
+									if(el)
+										isUserBiined='1';
+									biinsData[myIBiinIndex].objects[o].isBiined=isUserBiined;
+									//Time options
+									biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
+									biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
+
+
+								}
+								processedBiins++;
+
+								//format the biins
+								if(processedBiins==biinsData.length)
+									callback(biinsData);
+							}							
+						});
+
 					}
-					//format the biins
-					callback(biinsData);
+
 				}
 					
 			});
@@ -296,7 +324,6 @@ module.exports =function(){
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
-
 		//If is not loyalty
 		if(!('loyalty' in newModel)){
 			newModel.loyalty ={
@@ -316,7 +343,6 @@ module.exports =function(){
 	                ]
 	        }
 		}
-
 
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
