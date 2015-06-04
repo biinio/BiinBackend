@@ -242,54 +242,58 @@ module.exports =function(){
 
 		//Get the biins available
 		var getSiteBiins =function(siteIdentifier,callback){
-			var defaultCollection = 0;
+
 			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed'}).lean().exec(function(err,biinsData){
 				if(err)
 					throw err;
 				else{
 					var processedBiins =0;
-					for(var iBiin =0; iBiin<biinsData.length;iBiin++){
-						var myIBiinIndex=iBiin;
-						biinBiinieObject.find({'biinieIdentifier':biinieId,'biinIdentifier':biinsData[0].identifier},function(err,biinsObjects){
-							if(err)
-								throw err;
-							else{
-								for(var o =0; o<biinsData[myIBiinIndex].objects.length;o++){								
 
-									var startTime =moment.tz(biinsData[myIBiinIndex].objects[o].startTime,'America/Costa_Rica');
-									var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');									
+					if(biinsData.length===0)
+						callback(biinsData);
+					else{
+						for(var iBiin =0; iBiin<biinsData.length;iBiin++){					
 
-									var oData= null;									
-									if(biinsData[myIBiinIndex].objects)									
-										oData=_.findWhere(biinsData[myIBiinIndex].objects,{'identifier':biinsData[myIBiinIndex].objects[o].identifier});
-									var el =null;
-									if(mobileUser.biinieCollections && mobileUser.biinieCollections[defaultCollection] && mobileUser.biinieCollections[defaultCollection].elements)
-										el= _.findWhere(mobileUser.biinieCollectioncs[defaultCollection].elements,{identifier:biinsData[myIBiinIndex].objects[o].identifier})
-
-									biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';									
-
-									var isUserBiined='0';
+							//Get the Biins Data
+							var getBiinsObjectsData=function(myIBiinIndex){
+								biinBiinieObject.find({'biinieIdentifier':biinieId,'biinIdentifier':biinsData[myIBiinIndex].identifier},function(err,biinsObjects){
 									var defaultCollection = 0;
+									if(err)
+										throw err;
+									else{
+										for(var o =0; o<biinsData[myIBiinIndex].objects.length;o++){								
 
-									if(el)
-										isUserBiined='1';
-									biinsData[myIBiinIndex].objects[o].isBiined=isUserBiined;
-									//Time options
-									biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
-									biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
+											var startTime =moment.tz(biinsData[myIBiinIndex].objects[o].startTime,'America/Costa_Rica');
+											var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');									
+
+											var oData= null;									
+											if(biinsData[myIBiinIndex].objects)									
+												oData=_.findWhere(biinsObjects,{'identifier':biinsData[myIBiinIndex].objects[o].identifier});
+											var el =null;
+											if(mobileUser.biinieCollections && mobileUser.biinieCollections[defaultCollection] && mobileUser.biinieCollections[defaultCollection].elements)
+												el= _.findWhere(mobileUser.biinieCollections[defaultCollection].elements,{identifier:biinsData[myIBiinIndex].objects[o].identifier})
+
+											biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';																			
+											biinsData[myIBiinIndex].objects[o].isBiined =	el?'1':'0';
+
+											//Time options
+											biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
+											biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
 
 
-								}
-								processedBiins++;
+										}
+										processedBiins++;
 
-								//format the biins
-								if(processedBiins==biinsData.length)
-									callback(biinsData);
-							}							
-						});
+										//format the biins
+										if(processedBiins==biinsData.length)
+											callback(biinsData);
+									}							
+								});
+							}
 
+							getBiinsObjectsData(iBiin);
+						}
 					}
-
 				}
 					
 			});
