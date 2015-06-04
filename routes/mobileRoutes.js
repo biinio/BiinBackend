@@ -81,29 +81,57 @@ module.exports =function(){
 								{
 									var sitesResult=[];
 									var cantSitesAdded =0;
-
+									var hasBiinsToProve=false;
+									var countHasBiins=0;
+									var hasBiinsProved=0;
 									//Remove the Organization
 									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){										
 										if('sites' in sitesCategories[orgIndex] )
-											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){
-
+											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){														
 													if( sitesCategories[orgIndex].sites[siteIndex].isValid=true && 'categories' in sitesCategories[orgIndex].sites[siteIndex] && sitesCategories[orgIndex].sites[siteIndex].categories.length>0){
 														//Get the categories of the site
 														var sitesCat = _.pluck(sitesCategories[orgIndex].sites[siteIndex].categories,'identifier')
 
 														if(_.indexOf(sitesCat,pcategory.identifier)!=-1){
 															if(isSiteInRegion(xcord,ycord,eval(sitesCategories[orgIndex].sites[siteIndex].lat),eval(sitesCategories[orgIndex].sites[siteIndex].lng))){
-            													sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
-																cantSitesAdded++;																
+																hasBiinsToProve =true;
+																var hasbiins =function(siteIdentifier){
+																	//TODO: Modify this
+																	biin.findOne({'siteIdentifier':siteIdentifier},function(err, biinForSite){
+																		if(err)
+																			throw err;
+																		else{
+																			hasBiinsProved++;;
+																			if(biinForSite)	{
+																				sitesResult.push({'identifier':siteIdentifier});
+																				cantSitesAdded++;
+																			}
+																			
+																			if(countHasBiins===hasBiinsProved){
+																				//Callback function
+																				var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
+																				callback(index,total,result,cantSitesAdded);																														
+																			}																			
+																		}
+																	})			
+
+																}
+
+																countHasBiins++;	
+																hasbiins(sitesCategories[orgIndex].sites[siteIndex].identifier);
+            													
 															}
 														}
 													}
 											}
 									}	
 
-									//Callback function
-									var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
-									callback(index,total,result,cantSitesAdded);									
+									if(!hasBiinsToProve){
+										//Callback function
+										var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
+										callback(index,total,result,cantSitesAdded);																			
+									}
+
 								}
 
 							});		
