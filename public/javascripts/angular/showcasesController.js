@@ -41,6 +41,10 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }    
   });
 
+  $http.get('api/organizations/'+$scope.organizationId+'/sites').success(function(data){
+    $scope.sites = data.data.sites;
+  });
+
   //Get the List of Elements
   elementSrv.getList($scope.organizationId).then(function(promise){
     $scope.elements = promise.data.data.elements;    
@@ -317,6 +321,27 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }
     return result;
   }
+
+  $scope.isShowcaseAssigned = function( site, showcase ){
+    if( site.showcases.indexOf(showcase.identifier) > -1)
+    {
+      return "active";
+    }
+    return "";
+  }
+
+  $scope.setShowcaseAssigned = function ( site, showcase ) {
+    var index = site.showcases.indexOf(showcase.identifier);
+    if( index > -1)
+    {
+      site.showcases.splice(index,1);
+    }
+    else
+    {
+      site.showcases.push(showcase.identifier);
+    }
+  }
+
 
 
   //Get the online status of showcase in a site

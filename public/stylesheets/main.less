@@ -1853,6 +1853,139 @@ input.ng-valid.ng-dirty{
 				}
 			}
 
+			#wizardShowcasePublishWrapper{
+				position: relative;				
+				background-color: @colorWhite;
+				max-width:70vw;							  
+
+				overflow-x: scroll;
+			    overflow-y: hidden;
+				/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
+				@media (min-width: 768px) {	
+					max-height: 60vh;
+					width: auto;
+				}
+
+			    /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
+			    @media (min-width: 1200px) {
+			    	max-height: 64vh;
+			       	height: 80vh;
+					width: auto;
+			    }
+
+				.siteModule{
+					position: relative;
+					float: left;
+					display: inline-block;
+					min-width: 200px;
+					width: 250px;
+					height: 100%;
+					overflow: scroll;
+
+					padding-left: @standardPadding;
+					padding-right: @standardPadding;
+					padding-top: @standardPadding;
+					padding-bottom: @standardPadding*6;
+
+					background-color:@colorGray;
+					margin-left: @standardPadding;
+
+					.imgSite{
+						position:relative;
+						background-color: @colorBaseWhite;
+						padding: @standardPadding/2 @standardPadding/2 @standardPadding/2 @standardPadding/2;
+						img{
+							width: 100%;
+						}	
+
+						p{
+							position: absolute;
+						}	
+						height:30px; 				
+					}
+
+
+					.showcase{
+					 	width: 100%;
+					 	min-height: 40px;
+					 	margin-top: @standardPadding;
+					 	background-color: @colorGrayDark;
+					 	padding: @standardPadding/2 @standardPadding/2 @standardPadding/2 @standardPadding/2;
+
+					 	img{
+					 		position:relative;					 		
+					 		clear: left;
+					 		height: 50px;
+					 		width: 50px;
+					 		display: block;
+							text-align: center;
+						  	margin-left: auto;
+						  	margin-right: auto;
+					 	}
+					 	.isDefault{
+					 		text-align: right;
+					 		margin-right: auto;
+					 		color: @colorYellow!important;
+					 		font-size: 30px;
+					 	}
+					 	.showcaseContainer{
+					 		background-color: @colorWhite;
+					 		padding: @standardPadding/2 @standardPadding/2 @standardPadding/2 @standardPadding/2;
+							overflow: hidden;
+
+					 		.showcaseLabel
+					 		{
+					 			float: left;
+					 		}
+					 	}
+					 	.showcaseOptions {
+  							float: right;
+  							overflow: hidden;
+  							.upButton{
+				 				width: 20px;
+					 		}
+					 		.downButton{
+					 			width: 20px;
+					 		}
+						}
+					 	.showcaseContainer:hover{
+							background-color: @colorFocus;
+					 	}
+					}
+
+					.showcase.active{
+						background-color: @colorGreen;
+
+						.icon{
+							color: @colorGreen;
+						}						
+					}				
+
+					.showcaseWrapper{
+						height: 100%;
+						width: 100%;
+						background-color: @colorBaseWhite;
+						text-align: center;
+						cursor: pointer;
+						overflow-x: hidden;
+					}
+				}
+
+				.showcaseWrapperContainer{
+					margin-top: @standardPadding;
+					position: relative;			
+					height: 100% - @standardPadding/2;					
+					width: 1000%;
+					max-width:100%;
+
+					float: left;
+
+					display: inline-flex;
+					white-space: nowrap;		
+					overflow-x: scroll;
+					overflow-y: hidden;
+				}
+			}
 
 			//Organization List
 			#organizationListWrapper{				
