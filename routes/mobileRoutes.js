@@ -249,48 +249,51 @@ module.exports =function(){
 				else{
 					var processedBiins =0;
 
-					for(var iBiin =0; iBiin<biinsData.length;iBiin++){					
+					if(biinsData.length===0)
+						callback(biinsData);
+					else{
+						for(var iBiin =0; iBiin<biinsData.length;iBiin++){					
 
-						//Get the Biins Data
-						var getBiinsObjectsData=function(myIBiinIndex){
-							biinBiinieObject.find({'biinieIdentifier':biinieId,'biinIdentifier':biinsData[myIBiinIndex].identifier},function(err,biinsObjects){
-								var defaultCollection = 0;
-								if(err)
-									throw err;
-								else{
-									for(var o =0; o<biinsData[myIBiinIndex].objects.length;o++){								
+							//Get the Biins Data
+							var getBiinsObjectsData=function(myIBiinIndex){
+								biinBiinieObject.find({'biinieIdentifier':biinieId,'biinIdentifier':biinsData[myIBiinIndex].identifier},function(err,biinsObjects){
+									var defaultCollection = 0;
+									if(err)
+										throw err;
+									else{
+										for(var o =0; o<biinsData[myIBiinIndex].objects.length;o++){								
 
-										var startTime =moment.tz(biinsData[myIBiinIndex].objects[o].startTime,'America/Costa_Rica');
-										var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');									
+											var startTime =moment.tz(biinsData[myIBiinIndex].objects[o].startTime,'America/Costa_Rica');
+											var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');									
 
-										var oData= null;									
-										if(biinsData[myIBiinIndex].objects)									
-											oData=_.findWhere(biinsObjects,{'identifier':biinsData[myIBiinIndex].objects[o].identifier});
-										var el =null;
-										if(mobileUser.biinieCollections && mobileUser.biinieCollections[defaultCollection] && mobileUser.biinieCollections[defaultCollection].elements)
-											el= _.findWhere(mobileUser.biinieCollections[defaultCollection].elements,{identifier:biinsData[myIBiinIndex].objects[o].identifier})
+											var oData= null;									
+											if(biinsData[myIBiinIndex].objects)									
+												oData=_.findWhere(biinsObjects,{'identifier':biinsData[myIBiinIndex].objects[o].identifier});
+											var el =null;
+											if(mobileUser.biinieCollections && mobileUser.biinieCollections[defaultCollection] && mobileUser.biinieCollections[defaultCollection].elements)
+												el= _.findWhere(mobileUser.biinieCollections[defaultCollection].elements,{identifier:biinsData[myIBiinIndex].objects[o].identifier})
 
-										biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';																			
-										biinsData[myIBiinIndex].objects[o].isBiined =	el?'1':'0';
+											biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';																			
+											biinsData[myIBiinIndex].objects[o].isBiined =	el?'1':'0';
 
-										//Time options
-										biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
-										biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
+											//Time options
+											biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
+											biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
 
 
-									}
-									processedBiins++;
+										}
+										processedBiins++;
 
-									//format the biins
-									if(processedBiins==biinsData.length)
-										callback(biinsData);
-								}							
-							});
+										//format the biins
+										if(processedBiins==biinsData.length)
+											callback(biinsData);
+									}							
+								});
+							}
+
+							getBiinsObjectsData(iBiin);
 						}
-
-						getBiinsObjectsData(iBiin);
 					}
-
 				}
 					
 			});
