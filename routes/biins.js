@@ -4,7 +4,8 @@
 	var util = require('util');
 	var region = require('../schemas/region'), 
 	    biins = require('../schemas/biin'),
-	    organization = require('../schemas/organization');
+	    organization = require('../schemas/organization'),
+	    routesUtils = require('../biin_modules/routesUtils')();
 
 	var _ = require('underscore');
 	var functions = {};
@@ -15,18 +16,22 @@
 		var orgIdentifier= req.param('identifier');
 		var identifier=req.param("identifier");
 
-		//Get the information of the organization
-		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
-			res.render('biins/index', { title: 'Biins list' , user:req.user, organization:data, isSiteManteinance:true});
-		});
+		var callback=function (org,req,res) {
+			res.render('biins/index', { title: 'Biins list' , user:req.user, organization:org, isSiteManteinance:true});
+		}
+
+		//getOganization
+		routesUtils.getOrganization(identifier,req,res,{name:true, identifier:true},callback)
 	}
     
     //GET the list of biins
 	functions.list = function(req,res){
+
 		var orgIdentifier= req.param('identifier');
 		biins.find({accountIdentifier:req.user.accountIdentifier,organizationIdentifier:orgIdentifier},function (err, data) {
 			   res.json({data:data});
-		});		
+		});
+
 	}
 
 	//Deprecated

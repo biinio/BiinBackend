@@ -3,8 +3,7 @@ module.exports = function () {
 	var fs = require('fs');
 	var organization= require('../schemas/organization'),biin= require('../schemas/biin');;
 	var client = require('../schemas/client');
-	var utils = require('../biin_modules/utils')();
-	var sysGlobals= require('../schemas/sysGlobals');
+	var utils = require('../biin_modules/utils')(), routesUtils = require('../biin_modules/routesUtils')(), sysGlobals= require('../schemas/sysGlobals');
 	
 	//Get the index page
 	functions.index = function(req, res){
@@ -33,19 +32,27 @@ module.exports = function () {
 	functions.home = function(req,res){
 		//var organization={};
 		if(typeof(req.session.defaultOrganization)==='undefined'){
-			if(typeof(req.user.defaultOrganization)!=='undefined' && req.user.defaultOrganization!=='')
-				organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.user.defaultOrganization},{name:true, identifier:true},function (err, data) {
+			if(typeof(req.user.defaultOrganization)!=='undefined' && req.user.defaultOrganization!==''){
+				routesUtils.getOrganization(req.user.defaultOrganization,req,res,{name:true, identifier:true},function (data,req,res) {
 					//set the first time for the data
 					req.session.defaultOrganization = data;					
 					res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:data});						
+
 				});
+			}				
 			else{
 				req.user.defaultOrganization = null;
 				res.render('dashboard/index',{title:'Welcome!',user:req.user, organization:req.user.defaultOrganization});	
 			}
 		}				
-		else
-			res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:req.session.defaultOrganization});	
+		else{
+			if(req.session.defaultOrganization===null){
+				res.redirect('/accounts');
+			}else{
+				res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:req.session.defaultOrganization});					
+			}			
+		}
+
 	}
 
 	//Get the SingUp information of a client

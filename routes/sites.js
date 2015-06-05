@@ -1,14 +1,14 @@
 module.exports = function () {
 	//Custom Utils
-	var utils = require('../biin_modules/utils')();
-	var util = require('util');
+	var utils = require('../biin_modules/utils')(),
+		util = require('util'), 
+		routesUtils = require('../biin_modules/routesUtils')();
 
 	//Schemas
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
 					   biin = require('../schemas/biin');
 	               
 	var sysGlobalsRoutes = require('./sysGlobals')();
-
 	var functions={};
 
 	//GET the main view of sites
@@ -20,12 +20,7 @@ module.exports = function () {
 			res.render('site/index', { title: 'Sites list' , user:req.user, organization:organization, isSiteManteinance:true});
 		}
 
-		//If the organization header is not in cache try to get it
-		//if(!req.session.selectedOrganization || req.session.selectedOrganization.identifier!= organizationId){			
-			 getOganization(req, res, callback);
-		/*}else{
-			callback(req.session.selectedOrganization,req,res);
-		}*/
+		routesUtils.getOrganization(req.param("identifier"),req,res,{name:true, identifier:true},callback)
 	}
 
 	//GET the list of sites by organization Identifier
@@ -311,21 +306,7 @@ module.exports = function () {
 		
 
 	}
-	
-	//Other methods
-	getOganization = function(req, res, callback){
-		var identifier=req.param("identifier");
 
-		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true, pointers:true},function (err, data) {
-
-			if(err){
-				throw err;
-			}
-
-			req.session.selectedOrganization = data;
-			callback(data,req,res);
-		});
-	}
 
 	//Test and other Utils
 	functions.setSitesValid= function(req,res){
