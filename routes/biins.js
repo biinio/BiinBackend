@@ -1,10 +1,11 @@
-module.exports = function () {
+ module.exports = function () {
 
+ 	//Custom Utils
 	var util = require('util');
 	var region = require('../schemas/region'), 
 	    biins = require('../schemas/biin'),
-	    organization = require('../schemas/organization');
-
+	    organization = require('../schemas/organization'),
+	    routesUtils = require('../biin_modules/routesUtils')();
 
 	var _ = require('underscore');
 	var functions = {};
@@ -15,20 +16,23 @@ module.exports = function () {
 		var orgIdentifier= req.param('identifier');
 		var identifier=req.param("identifier");
 
-		//Get the information of the organization
-		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
-			res.render('biins/index', { title: 'Biins list' , user:req.user, organization:data, isSiteManteinance:true});
-		});
+		var callback=function (org,req,res) {
+			res.render('biins/index', { title: 'Biins list' , user:req.user, organization:org, isSiteManteinance:true});
+		}
+
+		//getOganization
+		routesUtils.getOrganization(identifier,req,res,{name:true, identifier:true},callback)
 	}
     
     //GET the list of biins
 	functions.list = function(req,res){
+
 		var orgIdentifier= req.param('identifier');
 		biins.find({accountIdentifier:req.user.accountIdentifier,organizationIdentifier:orgIdentifier},function (err, data) {
 			   res.json({data:data});
-		});		
-	}
+		});
 
+	}
 
 	//Deprecated
 	//GET the list of biisn by regions
@@ -55,43 +59,41 @@ module.exports = function () {
 		var organizationId = req.param('identifier');
 		var userAccount = req.user.accountIdentifier;
 
+		//Update the sites biins inside the organization
+		organization.findOne({accountIdentifier:userAccount, identifier:organizationId},function(err,doc){
+			//Modify the site
+			var countOfChanges =0;
+			var date = utils.getDateNow();
+			for(var siteIndex=0; siteIndex< req.body.length; siteIndex++){
+				var siteToWorkDocument =_.find(doc.sites,function(siteDoc){
+								return siteDoc.identifier == req.body[siteIndex].identifier;
+							 });
 
+				//If the site to work is not null
+				if(siteToWorkDocument){
+					var biins = req.body[siteIndex].biins;						
+					for(var biinIndex=0; biinIndex< biins.length; biinIndex++){
 
-			//Update the sites biins inside the organization
-			organization.findOne({accountIdentifier:userAccount, identifier:organizationId},function(err,doc){
-				//Modify the site
-				var countOfChanges =0;
-				var date = utils.getDateNow();
-				for(var siteIndex=0; siteIndex< req.body.length; siteIndex++){
-					var siteToWorkDocument =_.find(doc.sites,function(siteDoc){
-									return siteDoc.identifier == req.body[siteIndex].identifier;
-								 });
+						var biinToUpdate = _.find(siteToWorkDocument.biins,function(biinDoc){
+							return biinDoc._id == biins[biinIndex]._id ;
+						})
 
-					//If the site to work is not null
-					if(siteToWorkDocument){
-						var biins = req.body[siteIndex].biins;						
-						for(var biinIndex=0; biinIndex< biins.length; biinIndex++){
+						if(biinToUpdate){
+							//var showcaseToAsign = '';
+						    //if('showcaseAsigned' in biins[biinIndex])
+						    //	showcaseToAsign = biins[biinIndex].showcasesAsigned;
 
-							var biinToUpdate = _.find(siteToWorkDocument.biins,function(biinDoc){
-								return biinDoc._id == biins[biinIndex]._id ;
-							})
-
-							if(biinToUpdate){
-								//var showcaseToAsign = '';
-							    //if('showcaseAsigned' in biins[biinIndex])
-							    //	showcaseToAsign = biins[biinIndex].showcasesAsigned;
-
-							   biinToUpdate.showcases= biins[biinIndex].showcases;
-							   biinToUpdate.lastUpdate=date;
-							   countOfChanges++;
-							}
+						   biinToUpdate.showcases= biins[biinIndex].showcases;
+						   biinToUpdate.lastUpdate=date;
+						   countOfChanges++;
 						}
 					}
-				}	
-				//Save the modifications
-				if(countOfChanges>0)
-					doc.save();
-			});
+				}
+			}	
+			//Save the modifications
+			if(countOfChanges>0)
+				doc.save();
+		});
 		res.json({state:'success'});	
 	}
 
@@ -110,7 +112,10 @@ module.exports = function () {
 				if(biinData){
 					biinData.objects = model.objects;
 					biinData.save(function(err,cantAffected){
-						res.send(err, 200);
+						if(err)								
+							res.send(err, 500);
+						else
+							res.json({data:biinData.objects});
 					});
 				}
 				else

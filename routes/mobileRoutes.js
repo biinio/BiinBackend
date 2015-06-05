@@ -1,14 +1,14 @@
 module.exports =function(){
 	var fs=require('fs');
 	var _= require('underscore');
-	var math = require('mathjs');	
+	var math = require('mathjs'), moment = require('moment-timezone');
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
 		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin');
-	
+	var biinBiinieObject =require('../schemas/biinBiinieObject');
 	
 	//GET Categories
 	/*
@@ -81,29 +81,57 @@ module.exports =function(){
 								{
 									var sitesResult=[];
 									var cantSitesAdded =0;
-
+									var hasBiinsToProve=false;
+									var countHasBiins=0;
+									var hasBiinsProved=0;
 									//Remove the Organization
 									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){										
 										if('sites' in sitesCategories[orgIndex] )
-											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){
-
+											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){														
 													if( sitesCategories[orgIndex].sites[siteIndex].isValid=true && 'categories' in sitesCategories[orgIndex].sites[siteIndex] && sitesCategories[orgIndex].sites[siteIndex].categories.length>0){
 														//Get the categories of the site
 														var sitesCat = _.pluck(sitesCategories[orgIndex].sites[siteIndex].categories,'identifier')
 
 														if(_.indexOf(sitesCat,pcategory.identifier)!=-1){
 															if(isSiteInRegion(xcord,ycord,eval(sitesCategories[orgIndex].sites[siteIndex].lat),eval(sitesCategories[orgIndex].sites[siteIndex].lng))){
-            													sitesResult.push({'identifier':sitesCategories[orgIndex].sites[siteIndex].identifier});
-																cantSitesAdded++;																
+																hasBiinsToProve =true;
+																var hasbiins =function(siteIdentifier){
+																	//TODO: Modify this
+																	biin.findOne({'siteIdentifier':siteIdentifier},function(err, biinForSite){
+																		if(err)
+																			throw err;
+																		else{
+																			hasBiinsProved++;;
+																			if(biinForSite)	{
+																				sitesResult.push({'identifier':siteIdentifier});
+																				cantSitesAdded++;
+																			}
+																			
+																			if(countHasBiins===hasBiinsProved){
+																				//Callback function
+																				var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
+																				callback(index,total,result,cantSitesAdded);																														
+																			}																			
+																		}
+																	})			
+
+																}
+
+																countHasBiins++;	
+																hasbiins(sitesCategories[orgIndex].sites[siteIndex].identifier);
+            													
 															}
 														}
 													}
 											}
 									}	
 
-									//Callback function
-									var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
-									callback(index,total,result,cantSitesAdded);									
+									if(!hasBiinsToProve){
+										//Callback function
+										var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
+										callback(index,total,result,cantSitesAdded);																			
+									}
+
 								}
 
 							});		
@@ -159,8 +187,7 @@ module.exports =function(){
 			var distance= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
 
 			return distance<= radiousRadians;			
-		}
-		
+		}		
 	}
 
 	//
@@ -196,11 +223,10 @@ module.exports =function(){
 			}			
 		}
 		if(biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1},getSiteInformation)
 		}else{
 			res.json({data:{status:"7",data:{}}});
-		}
-			
+		}		
 	}
 
  	//------------------  History Services  ------------------//
@@ -244,11 +270,60 @@ module.exports =function(){
 
 		//Get the biins available
 		var getSiteBiins =function(siteIdentifier,callback){
-			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed'},function(err,biinsData){
+
+			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed'}).lean().exec(function(err,biinsData){
 				if(err)
 					throw err;
-				else
-					callback(biinsData);
+				else{
+					var processedBiins =0;
+
+					if(biinsData.length===0)
+						callback(biinsData);
+					else{
+						for(var iBiin =0; iBiin<biinsData.length;iBiin++){					
+
+							//Get the Biins Data
+							var getBiinsObjectsData=function(myIBiinIndex){
+								biinBiinieObject.find({'biinieIdentifier':biinieId,'biinIdentifier':biinsData[myIBiinIndex].identifier},function(err,biinsObjects){
+									var defaultCollection = 0;
+									if(err)
+										throw err;
+									else{
+										for(var o =0; o<biinsData[myIBiinIndex].objects.length;o++){								
+
+											var startTime =moment.tz(biinsData[myIBiinIndex].objects[o].startTime,'America/Costa_Rica');
+											var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');									
+
+											var oData= null;									
+											if(biinsData[myIBiinIndex].objects)									
+												oData=_.findWhere(biinsObjects,{'identifier':biinsData[myIBiinIndex].objects[o].identifier});
+											var el =null;
+											if(mobileUser.biinieCollections && mobileUser.biinieCollections[defaultCollection] && mobileUser.biinieCollections[defaultCollection].elements)
+												el= _.findWhere(mobileUser.biinieCollections[defaultCollection].elements,{identifier:biinsData[myIBiinIndex].objects[o].identifier})
+
+											biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';																			
+											biinsData[myIBiinIndex].objects[o].isBiined =	el?'1':'0';
+
+											//Time options
+											biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
+											biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
+
+
+										}
+										processedBiins++;
+
+										//format the biins
+										if(processedBiins==biinsData.length)
+											callback(biinsData);
+									}							
+								});
+							}
+
+							getBiinsObjectsData(iBiin);
+						}
+					}
+				}
+					
 			});
 		}
 
@@ -281,7 +356,6 @@ module.exports =function(){
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
-
 		//If is not loyalty
 		if(!('loyalty' in newModel)){
 			newModel.loyalty ={
@@ -302,7 +376,6 @@ module.exports =function(){
 	        }
 		}
 
-
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
@@ -312,47 +385,6 @@ module.exports =function(){
 				newModel.media[i].imgUrl= model.media[i].imgUrl;
 			}
 		}
-
-		/*
-		if(typeof(model.biins)!=='undefined'){
-			newModel.biins=[];
-			var date = utils.getDateNow();// This because some biins are was not created with lastUpdate
-			var biinArray= 0;
-			for(var i=0; i<model.biins.length;i++){
-				if(typeof(model.biins[i].showcases)!='undefined' && model.biins[i].showcases.length>0){
-					newModel.biins[biinArray]={};				
-					newModel.biins[biinArray].identifier= model.biins[i].identifier;
-					newModel.biins[biinArray].minor= "" +model.biins[i].minor;
-					newModel.biins[biinArray].biinType= model.biins[i].biinType;
-					newModel.biins[biinArray].lastUpdate= model.biins[i].lastUpdate?model.biins[i].lastUpdate:date;
-
-
-					//Biins showcases
-					if( model.biins[i].showcases.length>0){
-						newModel.biins[biinArray].showcases=[];
-						for(var j =0;j<model.biins[i].showcases.length;j++){
-							 var biinShowcase = {};
-							 biinShowcase.showcaseIdentifier = model.biins[i].showcases[j].showcaseIdentifier;
-							 biinShowcase.isDefault=model.biins[i].showcases[j].isDefault;
-							 biinShowcase.startTime= utils.getDate(biinShowcase.startTime);
-							 biinShowcase.endTime= utils.getDate(biinShowcase.endTime);
-							 biinShowcase.isUserNotified='0';
-							 //Is showcase Notified
-							if(mobileUser && ('showcaseNotified' in mobileUser)){
-								var biinNot=_.findWhere(mobileUser.showcaseNotified,{siteIdentifier:siteId, showcaseIdentifier:biinShowcase.showcaseIdentifier});
-								biinShowcase.isUserNotified=typeof(biinNot)!='undefined'?'1':'0';
-							}
-
-							 newModel.biins[biinArray].showcases.push(biinShowcase);
-						}
-					}
-					//If is not there an identifier
-					if(!model.biins[i].identifier)
-						newModel.biins[biinArray].identifier= utils.getGUID();
-					biinArray++;
-				}
-			}
-		}*/		
 
 		//Get the asyc Information
 

@@ -13,15 +13,15 @@
 					.row
 						h2 Tipo de objeto
 						select.form-control(ng-model="obj.objectType" ng-change="changeObjectType()")
-							option(value="element") Element
-							option(value="showcase") Showcase
-					.row(ng-if="obj.objectType==='element'")
+							option(value="1") Element
+							option(value="2") Showcase
+					.row(ng-if="obj.objectType==='1'")
 						h2 Element:
 						select.form-control(ng-model="obj.identifier")
 							option(value='') Select an option
 							option(ng-repeat="objEl in elements" value="{{objEl.elementIdentifier}}" ng-selected="objEl.elementIdentifier === obj.identifier")
 								{{objEl.title}}							
-					.row(ng-if="obj.objectType==='showcase'")
+					.row(ng-if="obj.objectType==='2'")
 						h2 Showcase:
 						select.form-control(ng-model="obj.identifier")
 							option(value='') Select an option			
@@ -47,10 +47,10 @@
 				.row
 					.col-md-6
 						h2 Desde
-						timepicker(hour-step="1" minute-step="30" show-meridian='false' ng-model="obj.startTime"  ng-disabled='!hasTimeOptionsBool')						
+						timepicker( readonly-input="true" hour-step="1" minute-step="30" show-meridian='false' ng-model="obj.startTime"  ng-disabled='!hasTimeOptionsBool')						
 					.col-md-6
 						h2 Hasta
-						timepicker(hour-step="1" minute-step="30" show-meridian='false' ng-model="obj.endTime"   ng-disabled='!hasTimeOptionsBool')
+						timepicker(readonly-input="true" hour-step="1" minute-step="30" show-meridian='false' ng-model="obj.endTime"   ng-disabled='!hasTimeOptionsBool')
 			.col-md-6						
 				.row
 					h2 D&iacute;as

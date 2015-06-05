@@ -5,6 +5,11 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
     $scope.organizationId=selectedOrganization();
     $scope.selectedBiin = null;
     $scope.wizardPosition="1";
+    $scope.isValid =false;
+
+    //Wizard validations indicatos
+    $scope.wizard1IsValid = true;
+    $scope.wizard2IsValid = false;
 
     //Get the Sites Information
     $http.get('api/organizations/'+$scope.organizationId+'/sites/').success(function(data){
@@ -47,9 +52,10 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
         return "";
       }        
     }
+
     $scope.getObjectName=function(identifier,type){
       if(identifier&&type){
-        if(type==="element"){
+        if(type==="1"){
           var el=_.findWhere($scope.elements,{elementIdentifier:identifier});
           if(el)
             return el.title;
@@ -62,6 +68,7 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
       }
         return "name not available"
     }
+    
     $scope.removeObject=function(index){
       $scope.biins[$scope.selectedBiin].objects.splice(index,1);
     }
@@ -70,7 +77,7 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
     $scope.save=function(){
       //Get the showcases
       $http.post('api/organizations/'+$scope.organizationId+'/biins/'+$scope.biins[$scope.selectedBiin].identifier+'/objects',{model:$scope.biins[$scope.selectedBiin]}).success(function(data){
-        $scope.showcases = data.data;  
+        //Save callback
       }).error(function(err){
         console.log(err);
       })      
@@ -117,7 +124,43 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
         //$log.info('Modal dismissed at: ' + new Date());
       });
     };
+    
+    //Change Wizad tab manager
+    $scope.changeWizardTab=function(option){
+      switch(option){
+        case 1:
+          $scope.wizardPosition =option;
+        break;
+        case 2:
+          $scope.wizardPosition =option;        
+        break;         
+        default:
+          $scope.wizardPosition =option;
+        break;        
+      }
 
+    //Validate the current option
+    $scope.validate();
+  }
+
+  $scope.validate=function(validateAll){
+    var validate=typeof(validateAll)!='undefined';
+    //var validations =$scope.sitePrototype.validations();
+    var currentValid=true;
+
+      if(eval($scope.wizardPosition)==1 || validate){     
+          $scope.wizard1IsValid=true;       
+        currentValid = $scope.wizard1IsValid;
+      }
+      if(eval($scope.wizardPosition)==2 || validate){
+        $scope.wizard2IsValid = true;
+      }
+
+    $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid;
+    
+    return currentValid;
+    
+  }
 
     turnLoaderOff();
 }]);
@@ -129,7 +172,11 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   $scope.showcases=showcases;
   //Create the modal for the creation Model
   if($scope.type==='create'){
-    var obj={objectType:'element',notification:'', hasNotification:'0', isNew:true};
+    var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
+    var time = moment();
+    time.minutes(0);
+    time.hours(0);
+
     obj.onMonday='1';
     obj.onTuesday='1';
     obj.onWednesday='1';
@@ -137,11 +184,11 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
     obj.onFriday='1';
     obj.onSaturday='1';
     obj.onSunday='1';
-
+    obj.startTime=time.format();
+    obj.endTime=time.format();
     $scope.obj= obj;
   }else
-  {
-    $scope.obj =selectedObj.obj;  
+  {    $scope.obj =selectedObj.obj;  
   }
   //$scope.objects=[];
   $scope.hasNotificationBool=false;

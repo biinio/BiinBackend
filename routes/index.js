@@ -1,10 +1,9 @@
 module.exports = function () {
 	var functions = {};
 	var fs = require('fs');
-	var organization= require('../schemas/organization');
+	var organization= require('../schemas/organization'),biin= require('../schemas/biin');;
 	var client = require('../schemas/client');
-	var utils = require('../biin_modules/utils')();
-	var sysGlobals= require('../schemas/sysGlobals');
+	var utils = require('../biin_modules/utils')(), routesUtils = require('../biin_modules/routesUtils')(), sysGlobals= require('../schemas/sysGlobals');
 	
 	//Get the index page
 	functions.index = function(req, res){
@@ -33,19 +32,27 @@ module.exports = function () {
 	functions.home = function(req,res){
 		//var organization={};
 		if(typeof(req.session.defaultOrganization)==='undefined'){
-			if(typeof(req.user.defaultOrganization)!=='undefined' && req.user.defaultOrganization!=='')
-				organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.user.defaultOrganization},{name:true, identifier:true},function (err, data) {
+			if(typeof(req.user.defaultOrganization)!=='undefined' && req.user.defaultOrganization!==''){
+				routesUtils.getOrganization(req.user.defaultOrganization,req,res,{name:true, identifier:true},function (data,req,res) {
 					//set the first time for the data
 					req.session.defaultOrganization = data;					
 					res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:data});						
+
 				});
+			}				
 			else{
 				req.user.defaultOrganization = null;
 				res.render('dashboard/index',{title:'Welcome!',user:req.user, organization:req.user.defaultOrganization});	
 			}
 		}				
-		else
-			res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:req.session.defaultOrganization});	
+		else{
+			if(req.session.defaultOrganization===null){
+				res.redirect('/accounts');
+			}else{
+				res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:req.session.defaultOrganization});					
+			}			
+		}
+
 	}
 
 	//Get the SingUp information of a client
@@ -224,65 +231,32 @@ module.exports = function () {
     }
 
     //Get the mobile Test page
-    functions.mobileTest =function(req,res){    	
-    	//res.render('mobileTest', { title: 'Biin' });	
-    	var major = 1;
-    	var cantProced=0;
-    	var total=0;
-    	var callBack =function(){
-    		console.log("Processed one");
-    		cantProced++;
-			 if(total===cantProced){
-				sysGlobals.update({'identifier':'99d803fb-3c4f-4276-9535-d17a1b0cf49d'},{$set:{'majorCount':major}},function(err,affected){
-					if(err)
-						throw err;
-					else
-						res.send('done');
-				})			 	
-    				
+    functions.mobileTest =function(req,res){    
 
-    		}    		
-    	}
+    	biin.find({},function(err,data){
+    		for(var o=0; o<data.length;o++){
+	    		if(data[o].objects){
+		    		if(err)
+		    			throw err;
+		    		else{    		
+		    			for(var i=0; i<data[o].objects.length;i++){
+		    				if(data[o].objects[i].objectType=='element'){
+    							data[o].objects[i].objectType='1';
+    						}else{
+    							data[o].objects[i].objectType='2';
+    						}
+		    			}
+		    		}
 
-    	organization.find({},function(err,data){
-
-    		var uuid = process.env.DEFAULT_SYS_ENVIROMENT;
-    		if(err)
-    			throw err;
-    		else{
-    			//organization
-    			total = data.length;
-    			for(var i=0;i<data.length;i++){
-    				for(var j=0; j<data[i].sites.length;j++){
-    					var minor=1;
-    					data[i].sites[j].major  = major;
-    					data[i].sites[j].proximityUUID= uuid;
-    					major++;
-
-    					for(var b=0; b<data[i].sites[j].biins.length;b++){
-    						data[i].sites[j].biins[b].proximityUUID=uuid;
-    						data[i].sites[j].biins[b].major = major;    						
-    						data[i].sites[j].biins[b].minor = minor;
-    						minor++;
-    					}
-    					data[i].sites[j].minorCounter = minor;
-    				}
-    				console.log('modified of '+ data[i].identifier +' | '+data.length+' of '+ i+1);
-    				data[i].save(function(err){
-    					if(err)
-    						throw err
-    					else{
-    					  console.log("Orgnization Changes Did");
-    					  callBack();
-    					}    						
-
-    				});
-    				
-    			}
-
-
+		    		data[o].save(function(err,cantAffected){
+		    			console.log('Org Modified');
+		    		});    			
+	    		}else{
+	    			console.log('There are not sites');
+	    		}    			
     		}
-    	})
+
+    	});
 
     }
 
