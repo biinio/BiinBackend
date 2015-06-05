@@ -137,11 +137,15 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http','$
       $scope.currentModelId =null;
 
     }
+    var isDefaultOrganization = $scope.organizations[index].identifier === $scope.account.profile.defaultOrganization;
+
     var organizationId = $scope.organizations[index].identifier;      
       $scope.organizations.splice(index,1);
       $http.delete('api/organizations/'+organizationId).success(function(data){
           if(data.state=="success"){
             //Todo: implement a pull of messages
+              if(isDefaultOrganization)
+                clearSelectedOrganization();
           }
         }
       );
