@@ -1938,15 +1938,23 @@ input.ng-valid.ng-dirty{
 					 			float: left;
 					 		}
 					 	}
-					 	.showcaseOptions {
-  							float: right;
-  							overflow: hidden;
-  							.upButton{
-				 				width: 20px;
-					 		}
-					 		.downButton{
-					 			width: 20px;
-					 		}
+					 	.showcaseOptionsContainer{
+					 		position: absolute;
+							right: 4%;
+							display: block;
+							overflow:hidden;
+							z-index: 1;
+
+						 	.showcaseOptions {
+	  							float: right;
+	  							margin-right: @standardPadding;
+	  							.upButton{
+					 				width: 20px;
+						 		}
+						 		.downButton{
+						 			width: 20px;
+						 		}
+						 	}
 						}
 					 	.showcaseContainer:hover{
 							background-color: @colorFocus;

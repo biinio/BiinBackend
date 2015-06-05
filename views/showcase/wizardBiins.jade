@@ -11,11 +11,12 @@
 					.siteTitle2
 						label {{site.title2}}
 				.showcaseWrapper
-					.showcase(ng-repeat="showcase in showcases" ng-class="isShowcaseAssigned(site, showcase)")
-						.showcaseOptions
-							.upButton(ng-click="moveShowcaseUp(site,showcase)")
-								i.icon.icon-arrow-15
-							.downButton(ng-click="moveShowcaseDown(site,showcase)")
-								i.icon.icon-arrow-16
+					.showcase(ng-repeat="showcase in showcases | orderBy:sortShowcases(site)" ng-class="isShowcaseAssigned(site, showcase)")
+						.showcaseOptionsContainer
+							.showcaseOptions
+								.upButton(ng-click="moveShowcaseUp(site,showcase)")
+									i.icon.icon-arrow-15
+								.downButton(ng-click="moveShowcaseDown(site,showcase)")
+									i.icon.icon-arrow-16
 						.showcaseContainer(ng-click="setShowcaseAssigned(site, showcase)")
 							label.showcaseLabel {{showcase.name}}

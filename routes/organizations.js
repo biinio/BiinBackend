@@ -79,6 +79,27 @@ module.exports =function (){
 		}		
 	}
 
+	//Set showcases into sites in a organization
+	functions.setShowcasesPerSite = function(req, res){
+		var organizationIdentifier =req.param("identifier");
+		var model = req.body.model;	
+
+		organization.findOne({identifier:organizationIdentifier},{_id:true, 'sites._id':true,'sites.showcases':true}, function(err, data){
+			for (var i = 0; i < data.sites.length ; i++) {
+					data.sites[i].showcases = model.sites[i].showcases;
+			}
+			data.save(
+				function(err){
+					if(err)
+						res.send(err,500);
+					else
+						res.send(model,200);
+				})
+		});
+	}
+
+
+
 	//Post the Image of the Organization
 	functions.uploadImage = function(req,res){
 		//Read the file
