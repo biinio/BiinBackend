@@ -41,6 +41,10 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }    
   });
 
+  $http.get('api/organizations/'+$scope.organizationId+'/sites').success(function(data){
+    $scope.sites = data.data.sites;
+  });
+
   //Get the List of Elements
   elementSrv.getList($scope.organizationId).then(function(promise){
     $scope.elements = promise.data.data.elements;    
@@ -127,7 +131,10 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
         });
         $scope.succesSaveShow=true;
       }
-    });          
+    });
+    $http.post('/api/organizations/'+$scope.organizationId+'/site/showcases',{model:{identifier:$scope.organizationId, sites: $scope.sites}}).success(function(data,status){
+      
+      });
   } 
 
   //Change Wizad tab manager
@@ -317,6 +324,96 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }
     return result;
   }
+
+  $scope.isShowcaseAssigned = function( site, showcase ){
+    var index = -1;
+    for (var i = 0; i < site.showcases.length; i++) {
+      if(site.showcases[i].showcaseIdentifier == showcase.identifier)
+      {
+        index = i;
+        break;
+      }
+    };
+
+    if( index > -1)
+    {
+      return "active";
+    }
+    return "";
+  }
+
+  $scope.sortShowcases = function(site ,showcase){
+    return function(showcase){
+    var index = -1;
+    for (var i = 0; i < site.showcases.length; i++) {
+      if(site.showcases[i].showcaseIdentifier == showcase.identifier)
+      {
+        index = i;
+        break;
+      }
+    }
+    if(index > -1)
+    {
+       return index;
+    }
+    else
+    {
+       return site.showcases.length + $scope.showcases.indexOf(showcase);
+    }}
+  }
+
+  $scope.setShowcaseAssigned = function ( site, showcase ) {
+    var index = -1;
+    for (var i = 0; i < site.showcases.length; i++) {
+      if(site.showcases[i].showcaseIdentifier == showcase.identifier)
+      {
+        index = i;
+        break;
+      }
+    };
+    if( index > -1)
+    {
+      site.showcases.splice(index,1);
+    }
+    else
+    {
+      site.showcases.push({showcaseIdentifier:showcase.identifier});
+    }
+  }
+
+  $scope.moveShowcaseDown = function ( site, showcase ) {
+      for (var i = 0; i < site.showcases.length; i++) {
+        if(site.showcases[i].showcaseIdentifier == showcase.identifier)
+        {
+          index = i;
+          break;
+        }
+      }
+      if(index+1 < site.showcases.length){
+        site.showcases.splice(index,1);
+        site.showcases.splice(index+1,0,{showcaseIdentifier:showcase.identifier});
+      }
+  }
+  $scope.moveShowcaseUp = function ( site, showcase ) {
+      for (var i = 0; i < site.showcases.length; i++) {
+        if(site.showcases[i].showcaseIdentifier == showcase.identifier)
+        {
+          index = i;
+          break;
+        }
+      }
+      if(index >= 1){
+        site.showcases.splice(index,1);
+        site.showcases.splice(index-1,0,{showcaseIdentifier:showcase.identifier});
+      }
+  }
+
+  $scope.orderShowCases = function(showcase){
+
+  }
+
+  
+
 
 
   //Get the online status of showcase in a site

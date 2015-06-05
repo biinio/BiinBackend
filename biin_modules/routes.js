@@ -80,7 +80,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Showcase routes
     app.get('/organizations/:identifier/showcases',showcases.index);
-    app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId)
+    app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId);
+    app.post('/api/organizations/:identifier/site/showcases',organizations.setShowcasesPerSite);
 
     //Showcases creation
     app.post('/api/organizations/:identifier/showcases',showcases.set);
