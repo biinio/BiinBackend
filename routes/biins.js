@@ -124,5 +124,23 @@
 		});
 	}
 
+
+	//Set the objects of a Biin
+	functions.updateBiin=function(req,res){
+		var organizationIdentifier= req.param('identifier');
+		var biinIdentifier =req.param('biinIdentifier');
+		var biin = req.body;
+
+		biins.update({identifier:biinIdentifier},{$set:biin},function (error,data)
+		{
+			if(error == null){
+				return res.send("{\"success\":\"true\"}",200);
+			}else{
+				return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}",500);
+			}
+		});
+	}
+
+
 	return functions;
 }
