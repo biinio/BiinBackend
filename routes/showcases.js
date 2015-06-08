@@ -114,22 +114,20 @@ module.exports = function () {
 
 		var updateLinkingReferences=function(callback){
 			//Update the showcases inside the biins references.
-			organization.findOne({identifier:organizationIdentifier,'sites.biins.showcases.showcaseIdentifier':showcaseIdentifier},function(err,orgData){
+			organization.findOne({identifier:organizationIdentifier,'sites.showcases.showcaseIdentifier':showcaseIdentifier},function(err,orgData){
 				if(orgData && orgData.sites && orgData.sites.length){
 					for(var i=0; i<orgData.sites.length;i++){
-						for(var b = 0; b < orgData.sites[i].biins.length;b++){
-							if('showcases' in orgData.sites[i].biins[b] && orgData.sites[i].biins[b].showcases.length){
-								var toSpliceIndex=[];
-								for(var s =0; s<orgData.sites[i].biins[b].showcases.length;s++){
-									if(orgData.sites[i].biins[b].showcases[s].showcaseIdentifier===showcaseIdentifier){
-										toSpliceIndex.push(s);
-									}
+						if('showcases' in orgData.sites[i] && orgData.sites[i].showcases.length){
+							var toSpliceIndex=[];
+							for(var s =0; s<orgData.sites[i].showcases.length;s++){
+								if(orgData.sites[i].showcases[s].showcaseIdentifier===showcaseIdentifier){
+									toSpliceIndex.push(s);
 								}
-								//Remove the Index
-								if(toSpliceIndex.length>0){
-									for(var index=0;index<toSpliceIndex.length;index++)
-										orgData.sites[i].biins[b].showcases.splice(toSpliceIndex[index],1);
-								}
+							}
+							//Remove the Index
+							if(toSpliceIndex.length>0){
+								for(var index=0;index<toSpliceIndex.length;index++)
+									orgData.sites[i].showcases.splice(toSpliceIndex[index],1);
 							}
 						}
 					}
