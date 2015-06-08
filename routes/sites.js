@@ -201,6 +201,7 @@ module.exports = function () {
  									biintype=(i%2)+1;
  								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype}));	
  							}
+ 							newMinorValue=0;
  							//Organization Update
 							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
 								if(err)
