@@ -96,7 +96,8 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       name:"",
       status:"No Programmed",
       proximityUUID:defaultUUID,
-      registerDate:""
+      registerDate:"",
+      biinType:"3"
     }
   }
   else
@@ -104,6 +105,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
     $scope.beacon = beacon;
     $scope.minor = parseInt(beacon.minor);
     $scope.lockValues = $scope.beacon.status != "No Programmed";
+    $scope.initialBeaconType = $scope.beacon.biinType; 
     var end=false;
     var indiceSelect= -1;
     for(var i = 0; i < $scope.sites.length && !end; i++)
@@ -157,16 +159,31 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   }
 
   $scope.selectSite = function(index){
-    if(mode=="create")
-    {
-      $scope.minor = parseInt($scope.sites[index].minorCounter) +1;
+    if($scope.beacon.biinType == "1"){
+      $scope.minor = 1;
+    }else{
+      if(mode=="create"){
+        $scope.minor = parseInt($scope.sites[index].minorCounter) +1;
+      }else{
+        if($scope.siteIndexFromBeacon == index && $scope.initialBeaconType == $scope.beacon.biinType){
+          $scope.minor = parseInt($scope.beacon.minor);
+        }else{
+          $scope.minor = parseInt($scope.sites[index].minorCounter) +1;
+        }
+      }
     }
-    else
-    {
-      if($scope.siteIndexFromBeacon == index)
+    $scope.selectedSite = index;
+  }
+
+  $scope.onTypeChange = function(value){
+    if(value == "1"){
+      $scope.minor = 1;
+    }else{
+      if($scope.siteIndexFromBeacon == $scope.selectedSite && $scope.initialBeaconType == value){
         $scope.minor = parseInt($scope.beacon.minor);
-      else
-        $scope.minor = parseInt($scope.sites[index].minorCounter)+1;
+      }else{
+        $scope.minor = parseInt($scope.sites[$scope.selectedSite].minorCounter)+1;
+      }
     }
   }
   $scope.selectStatus = function(status)
