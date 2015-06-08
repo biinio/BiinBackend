@@ -70,6 +70,9 @@ var siteObj ={
 
 		}
 	],
+	assignedBiins:[
+		{identifier:{type:String}}
+	],
 	loyalty: {
        isSubscribed:{type:String, default:"0"},
        subscriptionDate:{type:String, default:"2014-01-01 12:00:00"},

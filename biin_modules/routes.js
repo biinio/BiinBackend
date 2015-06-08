@@ -21,6 +21,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var stickers = require('../routes/stickers')();
     var mobileRoutes = require('../routes/mobileRoutes')();
     var sysGlobals = require('../routes/sysGlobals')();
+    var biinBiinieObjects =require('../routes/biinBiinieObjects')();
 
     //Sys routes
     app.post('/enviroments', sysGlobals.set)
@@ -207,6 +208,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileBiinedElementToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
+
+    //Biin Biinie Object Relation setters
+    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/biined',biinBiinieObjects.setBiined)
+    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/notified',biinBiinieObjects.setNotified)
 
     //Biinie/ Site relation
     app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified',mobileUser.setShowcaseNotified);

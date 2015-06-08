@@ -173,7 +173,9 @@ setOrganizationMenu = function(organizationId, organizationName,callback){
       })
 
     }
-    callback();
+    
+    if(callback)
+      callback();
   }
 
 //Display the validations Errors

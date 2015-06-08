@@ -2,7 +2,7 @@ module.exports = function(){
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var element = require('../schemas/element'), showcase = require('../schemas/showcase'), organization= require('../schemas/organization');
-	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')();
+	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')() , routesUtils = require('../biin_modules/routesUtils')();
 	var _= require('underscore');
 
 	//Get the index view of the elements
@@ -10,12 +10,12 @@ module.exports = function(){
 		var callback= function(organization,req, res){
 			res.render('element/index', { title: 'Elements List' ,user:req.user, organization:organization, isSiteManteinance:true});
 		}
-		getOganization(req, res, callback);	
+		//getOganization
+		routesUtils.getOrganization(req.param("identifier"),req,res,{name:true, identifier:true},callback)
 	}
 
 	//GET the list of elements
 	functions.list = function(req,res){
-
 		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
 			req.session.selectedOrganization = data;
 			res.json({data:data});

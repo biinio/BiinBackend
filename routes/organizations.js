@@ -7,7 +7,7 @@ module.exports =function (){
 	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path'),imageManager=require('../biin_modules/imageManager')();
 	
 	//Schemas	
-	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase');
+	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'), client = require('../schemas/client');;
 
 	//Other Routes
 	var regionRoutes = require('./regions')(),  elementRoutes = require('./elements')();
@@ -139,6 +139,20 @@ module.exports =function (){
 		
 		//Get the organization identifier
 		var organizationIdentifier=req.param("identifier");
+
+		if(req.session.defaultOrganization.identifier === organizationIdentifier){
+			req.session.defaultOrganization={};
+
+			client.update({name:req.user.name},{defaultOrganization:''},function(err){
+				if(err)
+					res.send({status:500});
+				else{
+					req.session.defaultOrganization=null;
+					req.user.defaultOrganization =null;					
+				}
+			});	
+
+		}
 
 		organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},function(err,data){
 			//Remove Sites and References
