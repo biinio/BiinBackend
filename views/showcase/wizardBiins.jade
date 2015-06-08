@@ -1,33 +1,22 @@
 .section
-	h1 Wizard Biins
-	p Please select the Biins 
+	h1 Wizard Publish
+	p Please select the showcase 
 .section
-	#wizardBiinsWrapper
-		.biinWrapperContainer.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
-			.siteModule(ng-repeat="site in biinSite")				
-				.imgSite
-					p {{site.title1}}
-					//img(ng-src="{{site.media[0].imgUrl}}")
-				.biin.biinOnline(ng-class="getOnlineInSite(site)" ng-click="setOnlineSite(site)")
-					.biinWrapper
-						i.icon.icon-globe-1
-						p Web Available
-				.biin(ng-repeat="biin in site.biins" ng-class="getBiinStatus(biin)")
-					.biinWrapper.container
-						.row.contentHideButtons
-							p(ng-if="!biin.name.length") Biin# {{biin.minor}}													
-							p(ng-if="biin.name.length>0") {{biin.name}}
-							.btnShowcasePreview.icon-round-control.btn-on-hover(ng-click="setShowcaseInBiinActive(biinSite.indexOf(site),site.biins.indexOf(biin))" ng-if="!existSelectedShowcaseHere(biinSite.indexOf(site),site.biins.indexOf(biin))")
-								.icon.icon-add-2   Add Showcase
-						div(ng-if="biin.showcases.length>0")
-							.moduleWrapperShowcaseBiin.alert.alert-success.contentHideButtons(ng-repeat="showcase in biin.showcases | orderBy : '-isDefault'| orderBy : '+startTime' | date:'HH:mm'" popover-placement="top" popover="{{showcase.showcaseIdentifier}}" popover-trigger="mouseenter")															
-								//img(ng-src="{{getShowcaseByIdentifier(showcase.showcaseIdentifier).elements[0].media[0].url}}")
-								span.row {{getShowcaseByIdentifier(showcase.showcaseIdentifier).name}}
-								span.row Start {{showcase.startTime | date:'HH:mm'}} 
-								span.row End {{showcase.endTime | date:'HH:mm'}}								
-								i.isDefault.icon.icon-star-8(ng-if="showcase.isDefault==='1'")
-								.btnDelete.alert-warning.icon-round-control.btn-on-hover(ng-click="removeShowcaseInBiinAt(biinSite.indexOf(site),site.biins.indexOf(biin),biin.showcases.indexOf(showcase))")
-									.icon.icon-bin-2(ng-click="removeShowcaseInBiinAt(biinSite.indexOf(site),site.biins.indexOf(biin),biin.showcases.indexOf(showcase))")
-						.row(ng-if="biin.showcases.length>0")
-							.btnShowcasePreview.icon-round-control.btn-on-hover(ng-click="setShowcaseInBiinActive(biinSite.indexOf(site),site.biins.indexOf(biin))" ng-if="!existSelectedShowcaseHere(biinSite.indexOf(site),site.biins.indexOf(biin))")
-								.icon.icon-add-2   Add Showcase																
+	#wizardShowcasePublishWrapper
+		.showcaseWrapperContainer.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+			.siteModule(ng-repeat="site in sites")				
+				.site
+					.siteTitle1
+						label {{site.title1}}
+					.siteTitle2
+						label {{site.title2}}
+				.showcaseWrapper
+					.showcase(ng-repeat="showcase in showcases | orderBy:sortShowcases(site)" ng-class="isShowcaseAssigned(site, showcase)")
+						.showcaseOptionsContainer
+							.showcaseOptions
+								.upButton(ng-click="moveShowcaseUp(site,showcase)")
+									i.icon.icon-arrow-15
+								.downButton(ng-click="moveShowcaseDown(site,showcase)")
+									i.icon.icon-arrow-16
+						.showcaseContainer(ng-click="setShowcaseAssigned(site, showcase)")
+							label.showcaseLabel {{showcase.name}}
