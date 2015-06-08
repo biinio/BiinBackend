@@ -75,9 +75,15 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
 
     //Save The Biin Objects Changes
     $scope.save=function(){
+<<<<<<< HEAD
+      //Get the showcases
+      $http.post('api/organizations/'+$scope.organizationId+'/biins/'+$scope.biins[$scope.selectedBiin].identifier+'/objects',{model:$scope.biins[$scope.selectedBiin]}).success(function(data){
+        //Save callback
+=======
       console.log($scope.biins[$scope.selectedBiin].name);
       $http.post('/api/biins/'+$scope.biins[$scope.selectedBiin].identifier+'/update',$scope.biins[$scope.selectedBiin]).success(function(data){
         console.log("success")
+>>>>>>> origin/Development
       }).error(function(err){
         console.log(err);
       })     
