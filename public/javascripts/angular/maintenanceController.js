@@ -62,6 +62,12 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
           $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minorCounter = $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minorCounter ? $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minorCounter+1 : 1;
           $scope.organizations[$scope.selectedOrganization].biinsAssignedCounter = $scope.organizations[$scope.selectedOrganization].biinsAssignedCounter ? $scope.organizations[$scope.selectedOrganization].biinsAssignedCounter+1 : 1;
         }
+        else{
+          if(beacon.minorHasChanged && beacon.biinType != "1"){
+            $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minorCounter = $scope.organizations[$scope.selectedOrganization].sites[beacon.siteIndex].minorCounter+1;            
+            delete beacon.minorHasChanged;
+          }
+        }
       }, function () {
         $scope.showBiinsPerOrganization($scope.selectedOrganization);
       });
@@ -83,12 +89,16 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   $scope.minor = 0;
   $scope.siteIndexFromBeacon = 0;
   $scope.lockValues = false;
+  $scope.minorHasChanged = false;
+  $scope.siteMinor = 0;
 
   if(mode == "create")
   {
     if($scope.sites.length > 0){
         $scope.selectedSite = 0;
         $scope.minor = parseInt($scope.sites[$scope.selectedSite].minorCounter) + 1;
+        $scope.siteMinor = parseInt($scope.sites[$scope.selectedSite].minorCounter) + 1;
+
     }
 
     $scope.beacon = { 
@@ -105,7 +115,8 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
     $scope.beacon = beacon;
     $scope.minor = parseInt(beacon.minor);
     $scope.lockValues = $scope.beacon.status != "No Programmed";
-    $scope.initialBeaconType = $scope.beacon.biinType; 
+    $scope.initialBeaconType = $scope.beacon.biinType;
+    $scope.isExternalBeaconType = $scope.beacon.biinType=="1"; 
     var end=false;
     var indiceSelect= -1;
     for(var i = 0; i < $scope.sites.length && !end; i++)
@@ -119,6 +130,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
           setTimeout(function(){
             $scope.selectedSite = indiceSelect;
             $scope.siteIndexFromBeacon = indiceSelect;
+            $scope.siteMinor = parseInt($scope.sites[indiceSelect].minorCounter);
             $scope.$apply(); //this triggers a $digest
 
           },50);
@@ -128,7 +140,6 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
 
   $scope.save = function()
   {
-
     $scope.beacon.major = $scope.sites[$scope.selectedSite].major;
     $scope.beacon.siteIdentifier = $scope.sites[$scope.selectedSite].identifier;
     $scope.beacon.siteIndex = $scope.selectedSite;
@@ -136,6 +147,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
     $scope.beacon.organizationIdentifier = $scope.selectedOrganization.identifier;
     $scope.beacon.accountIdentifier = $scope.selectedOrganization.accountIdentifier;
     $scope.beacon.minor = $scope.minor;
+    $scope.beacon.siteMinor = $scope.siteMinor;
 
     if($scope.mode == "create"){
       $scope.beacon.mode = "create";
@@ -150,6 +162,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       $scope.beacon.mode = "edit";
       $http.post('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
           console.log("success");
+          $scope.beacon.minorHasChanged = $scope.minorHasChanged;
           $modalInstance.close($scope.beacon);
         }).error(function(data,status){
           console.log(data);
@@ -161,14 +174,20 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   $scope.selectSite = function(index){
     if($scope.beacon.biinType == "1"){
       $scope.minor = 1;
+      $scope.siteMinor = parseInt($scope.sites[index].minorCounter);
     }else{
       if(mode=="create"){
         $scope.minor = parseInt($scope.sites[index].minorCounter) +1;
+        $scope.siteMinor = parseInt($scope.sites[index].minorCounter) +1;
       }else{
-        if($scope.siteIndexFromBeacon == index && $scope.initialBeaconType == $scope.beacon.biinType){
+        if($scope.siteIndexFromBeacon == index && $scope.isExternalBeaconType == (value=="1")){
           $scope.minor = parseInt($scope.beacon.minor);
+          $scope.siteMinor = parseInt($scope.sites[index].minorCounter);
+          $scope.minorHasChanged = false;
         }else{
           $scope.minor = parseInt($scope.sites[index].minorCounter) +1;
+          $scope.siteMinor = parseInt($scope.sites[index].minorCounter) +1;
+          $scope.minorHasChanged = true;
         }
       }
     }
@@ -178,11 +197,17 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   $scope.onTypeChange = function(value){
     if(value == "1"){
       $scope.minor = 1;
+      $scope.minorHasChanged = !$scope.isExternalBeaconType;
+      $scope.siteMinor = parseInt($scope.sites[$scope.selectedSite].minorCounter);
     }else{
-      if($scope.siteIndexFromBeacon == $scope.selectedSite && $scope.initialBeaconType == value){
+      if($scope.siteIndexFromBeacon == $scope.selectedSite && $scope.isExternalBeaconType == (value=="1")){
         $scope.minor = parseInt($scope.beacon.minor);
+        $scope.siteMinor = parseInt($scope.sites[$scope.selectedSite].minorCounter);
+        $scope.minorHasChanged = false;
       }else{
+        $scope.minorHasChanged = true;
         $scope.minor = parseInt($scope.sites[$scope.selectedSite].minorCounter)+1;
+        $scope.siteMinor = parseInt($scope.sites[$scope.selectedSite].minorCounter) +1;
       }
     }
   }
