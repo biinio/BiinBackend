@@ -14,6 +14,22 @@ biinAppMaintenance.controller("maintenanceController",['$scope','$http','$locati
     $scope.biinsXOrganization = null;
     $scope.defaultUUID = "";
 
+    $scope.getTypeName = function(type)
+    {
+       if(type == "1")
+       {
+          return "External";
+       }
+       else if (type == "2")
+       {
+          return "Internal";
+       }
+       else
+       {
+          return "Product"
+       }
+    }
+
     $scope.showBiinsPerOrganization = function(index)
     {
       $http.get('maintenance/getBiinsOrganizationInformation/'+$scope.organizations[index].identifier).success(function(data){
