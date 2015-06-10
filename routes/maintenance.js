@@ -52,7 +52,8 @@ module.exports = function () {
 		var mode = beacon.mode;
 		delete beacon.mode;
 
-		var newMinor = beacon.minor;
+		var newMinor = beacon.siteMinor;
+		delete beacon.siteMinor;
 
 		var setQuery = {};
 		var incQuery = {};
