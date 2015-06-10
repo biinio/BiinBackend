@@ -1,4 +1,4 @@
-var biinAppBiins= angular.module('biinAppBiins',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap','ui.checkbox']);
+var biinAppBiins= angular.module('biinAppBiins',['ngRoute','ui.slimscroll','naturalSort','biin.services','ui.bootstrap','ui.checkbox','ui.bootstrap.typeahead']);
 
 biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal',function($scope,$http,$location,$modal){
     var defaultTab = 'details';
@@ -73,13 +73,28 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
 
     //Save The Biin Objects Changes
     $scope.save=function(){
-      console.log($scope.biins[$scope.selectedBiin].name);
-      $http.post('/api/biins/'+$scope.biins[$scope.selectedBiin].identifier+'/update',$scope.biins[$scope.selectedBiin]).success(function(data){
-        console.log("success")
-      }).error(function(err){
-        console.log(err);
-      })     
+      if($scope.wizardPosition=="1"){
+        $http.put( 'api/venues/create', null,{
+          headers: {
+            name: $scope.biins[$scope.selectedBiin].venue,
+            orgidentifier: $scope.organizationId
+          }
+        }).success(function(status,data){
+          $http.post('/api/biins/'+$scope.biins[$scope.selectedBiin].identifier+'/update',$scope.biins[$scope.selectedBiin]).success(function(data){
+            console.log("success")
+          }).error(function(err){
+            console.log(err);
+          });     
+        });
+      }else{
+        $http.post('/api/biins/'+$scope.biins[$scope.selectedBiin].identifier+'/update',$scope.biins[$scope.selectedBiin]).success(function(data){
+          console.log("success")
+        }).error(function(err){
+          console.log(err);
+        });
+      }
     }
+      
 
     //Add an object to the objects collection
     $scope.saveObject=function(obj){
@@ -92,6 +107,17 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
         //$scope.biins.push(obj);
         //Todo Do the method to save the save the data
     }
+
+    $scope.getVenues = function(val) {
+    return $http.get('api/venues/search', {
+      headers: {
+        regex: val,
+        orgidentifier: $scope.organizationId
+      }
+    }).then(function(response){
+      return response.data;
+    });
+  };
 
     //Modal to edit or create an Object
     $scope.biinObject = function (size, type, obj) {
