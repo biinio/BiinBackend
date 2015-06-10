@@ -2,6 +2,7 @@ var moongose = require('mongoose');
 
 module.exports = moongose.model('biins',{
 			identifier:{type:String, index:true, default:""},
+            brandIdentifier:{type:String, default:""},
 			name:{type:String, default:""},
 			major:{type:String, default:""},
 			minor:{type:String, default:""},

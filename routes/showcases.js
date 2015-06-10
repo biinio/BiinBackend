@@ -4,7 +4,8 @@ module.exports = function () {
 
     //Custom Utils
   	var imageManager = require("../biin_modules/imageManager")(),
-  	    utils = require('../biin_modules/utils')();
+  	    utils = require('../biin_modules/utils')(),
+  	    routesUtils = require('../biin_modules/routesUtils')();
 
 	//Schemas
 	var organization = require('../schemas/organization');
@@ -21,9 +22,7 @@ module.exports = function () {
 			res.render('showcase/index', { title: 'Organizations list' ,user:req.user, organization:organization, isSiteManteinance:true});
 		}
 
-		//If the organization header is not in cache try to get it
-		//if(!req.session.selectedOrganization || req.session.selectedOrganization.identifier!= organizationId){			
-			 getOganization(req, res, callback);
+		routesUtils.getOrganization(req.param("identifier"),req,res,{name:true, identifier:true},callback)			 
 	}
 
 	//GET the list of showcases
@@ -229,19 +228,6 @@ module.exports = function () {
 				}
 		})
 
-	}
-
-	/****
-	 Other methods
-	***/
-
-	getOganization = function(req, res, callback){
-		var identifier=req.param("identifier");
-
-		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
-			req.session.selectedOrganization = data;
-			callback(data,req,res);
-		});
 	}
 
 	//Update Biins Last Update in Regions

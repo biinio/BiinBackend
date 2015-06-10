@@ -2,7 +2,9 @@ extends ../layout_dashboard
 block head_scripts
 	link(rel="stylesheet" href="/angular-datepicker/dist/index.css")
 	script(src="/angular-datepicker/dist/index.js")
+	script(src="/angular-datepicker/dist/index.js")
 	script(src="/javascripts/angular/biinsController.js")
+	script(src="/moment/moment.js")
 block content	
 	#sectionContent(ng-app="biinAppBiins" ng-controller="biinsController" ngCloack)
 		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)

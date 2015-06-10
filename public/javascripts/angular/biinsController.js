@@ -52,9 +52,10 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
         return "";
       }        
     }
+
     $scope.getObjectName=function(identifier,type){
       if(identifier&&type){
-        if(type==="element"){
+        if(type==="1"){
           var el=_.findWhere($scope.elements,{elementIdentifier:identifier});
           if(el)
             return el.title;
@@ -67,6 +68,7 @@ biinAppBiins.controller("biinsController",['$scope','$http','$location','$modal'
       }
         return "name not available"
     }
+    
     $scope.removeObject=function(index){
       $scope.biins[$scope.selectedBiin].objects.splice(index,1);
     }
@@ -196,7 +198,11 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
   $scope.showcases=showcases;
   //Create the modal for the creation Model
   if($scope.type==='create'){
-    var obj={objectType:'element',notification:'', hasNotification:'0', isNew:true};
+    var obj={objectType:'1',notification:'', hasNotification:'0', isNew:true};
+    var time = moment();
+    time.minutes(0);
+    time.hours(0);
+
     obj.onMonday='1';
     obj.onTuesday='1';
     obj.onWednesday='1';
@@ -204,11 +210,11 @@ biinAppBiins.controller('objectController', function ($scope, $modalInstance, se
     obj.onFriday='1';
     obj.onSaturday='1';
     obj.onSunday='1';
-
+    obj.startTime=time.format();
+    obj.endTime=time.format();
     $scope.obj= obj;
   }else
-  {
-    $scope.obj =selectedObj.obj;  
+  {    $scope.obj =selectedObj.obj;  
   }
   //$scope.objects=[];
   $scope.hasNotificationBool=false;

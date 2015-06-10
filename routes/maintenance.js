@@ -28,8 +28,8 @@ module.exports = function () {
 	//GET the list of beacon per organization
 	functions.getBiinsOrganizationInformation = function(req,res){	
 		res.setHeader('Content-Type', 'application/json');
-		var orgId = req.params['orgIdentifier'];	
-		biins.find({organizationIdentifier:orgId},{_id:0,identifier:1,name:1,major:1,minor:1,proximityUUID:1,status:1,isAssigned:1,organizationIdentifier:1,siteIdentifier:1,biinType:1}).lean().exec(function (err, data) {
+		var orgId = req.params['orgIdentifier'];
+		biins.find({organizationIdentifier:orgId},{_id:0,identifier:1,name:1,major:1,minor:1,proximityUUID:1,status:1,isAssigned:1,brandIdentifier:1,organizationIdentifier:1,siteIdentifier:1,biinType:1}).lean().exec(function (err, data) {
 			var response = {};
 			response.biins = data;
 			response.defaultUUID = process.env.DEFAULT_SYS_ENVIROMENT;
@@ -43,7 +43,8 @@ module.exports = function () {
 
 	functions.biinPurchase = function(req,res){
 		res.setHeader('Content-Type', 'application/json');
-		var beacon = req.body;
+		var beacon = req.body;	
+
 		var orgID = beacon.organizationIdentifier;
 		var siteIndex = beacon.siteIndex;
 		var siteLocationToUpdate = "sites."+siteIndex+".minorCounter";
@@ -59,10 +60,12 @@ module.exports = function () {
 		setQuery[siteLocationToUpdate] = newMinor;
 		if(mode == "create")
 		{
+			beacon.identifier= utils.getGUID();
 			incQuery["biinsAssignedCounter"] = 1;
 			incQuery["biinsCounter"]=1;
 			biins.create(beacon,function (error,data){
 				if(error == null){
+
 					organization.update({identifier:orgID},{ $inc: incQuery, $set:setQuery}, function(errorUpdate, data){
 						if(errorUpdate == null){
 							return res.send("{\"success\":\"true\"}",200);
