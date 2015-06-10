@@ -21,7 +21,7 @@ form.novalidate
 					.col-md-6
 						label Venue
 					.col-md-6
-						input.form-control(ng-model="biins[selectedBiin].venue" ng-value="biins[selectedBiin].venue")
+						input.form-control( type="text" ng-model="biins[selectedBiin].venue" ng-value="biins[selectedBiin].venue" typeahead="venue.name for venue in getVenues($viewValue)" )
 			.col-md-12
 				.row
 					.col-md-6
