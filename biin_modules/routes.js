@@ -22,6 +22,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var mobileRoutes = require('../routes/mobileRoutes')();
     var sysGlobals = require('../routes/sysGlobals')();
     var biinBiinieObjects =require('../routes/biinBiinieObjects')();
+    var venues =require('../routes/venue')();
 
     //Sys routes
     app.post('/enviroments', sysGlobals.set)
@@ -216,6 +217,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Biinie/ Site relation
     app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified',mobileUser.setShowcaseNotified);
     
+    //Venues
+    app.get('/api/venues/search',venues.getVenueALike);
+    app.put('/api/venues/create',venues.createVenue);
+
+
     //Mobile routes    /:
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
     app.put('/mobile/client',passport.authenticate(['mobileClientBasic', 'mobileClientPassword']), mobileUser.set);
@@ -224,6 +230,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     
     app.get('/mobile/regions',regions.listJson);
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
+    app.get('/mobile/:identifier/:latitude/:longitude/categories2',sites.getMobileByCategories);
+    
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    
     app.get('/mobile/showcases/:identifier',showcases.getMobileShowcase);

@@ -35,7 +35,13 @@
 						input.form-control(ng-model="beacon.name" ng-disabled="{{lockValues}}")
 			.col-md-12
 				.row
-					.col-md-12
+					.col-md-6
+						label Tipo
+						select.form-control.bootstrap-select(ng-model="beacon.biinType" ng-disabled="{{lockValues}}" ng-change="onTypeChange(beacon.biinType)")
+							option(value='1') Exterior
+							option(value='2') Interior
+							option(value='3') Producto 
+					.col-md-6
 						label UU-ID
 						input.form-control(ng-model="beacon.proximityUUID" disabled="true")
 	.modal-footer
