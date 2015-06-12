@@ -19,18 +19,15 @@ form.novalidate
 			.col-md-12
 				.row
 					.col-md-6
-						label Lugar
+						label Venue
 					.col-md-6
-						input.form-control(ng-model="biins[selectedBiin].venue" ng-value="biins[selectedBiin].venue")
+						input.form-control( type="text" ng-model="biins[selectedBiin].venue" ng-value="biins[selectedBiin].venue" typeahead="venue.name for venue in getVenues($viewValue)" )
 			.col-md-12
 				.row
 					.col-md-6
-						label Tipo
+						label Posicion
 					.col-md-6
-						select.form-control.bootstrap-select(ng-model="biins[selectedBiin].biinType" ng-value="biins[selectedBiin].biinType")
-							option(value='2') Interior
-							option(value='1') Exterior
-							option(value='3') Producto 
+						input.form-control(ng-model="biins[selectedBiin].position" ng-value="biins[selectedBiin].position")
 	.section
 		.container-fluid
 			.col-md-12

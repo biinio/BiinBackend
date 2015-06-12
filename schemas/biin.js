@@ -7,7 +7,8 @@ module.exports = moongose.model('biins',{
 			major:{type:String, default:""},
 			minor:{type:String, default:""},
 			proximityUUID:{type:String, default:""},
-			venue:{type:String, default:""},//It's the place where is located the biinie (location/venue)
+			venue:{type:String, default:""},//It's the area where is located the biinie (location/venue)
+            position:{type:String, default:""},//It's the place where is located the biinie eg: at the entrance
 			registerDate:{type:String, default:""},
 			lastUpdate:{type:String, default:""},
 			showcases:[{

@@ -14,6 +14,8 @@ div
 						th 
 							| Site
 						th 
+							| Type
+						th 
 							| Major
 						th 
 							| Minor
@@ -26,6 +28,7 @@ div
 						td.biinInOrganizationAlias {{biin.name}}
 						td.biinInOrganizationUUID {{biin.proximityUUID}}
 						td.biinInOrganizationSite {{biin.siteName}}
+						td.biinInOrganizationType {{getTypeName(biin.biinType)}}
 						td.biinInOrganizationMajor {{biin.major}}
 						td.biinInOrganizationMinor {{biin.minor}}
 						td.biinInOrganizationState {{biin.status}}

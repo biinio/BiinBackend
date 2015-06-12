@@ -54,6 +54,7 @@ module.exports = function () {
 		var mode = beacon.mode;
 		delete beacon.mode;
 
+<<<<<<< HEAD
 		//Set site category model
 		var setSiteCategory = function(newBeaconModel,callback){
 			var updateOldModel =false;
@@ -91,6 +92,10 @@ module.exports = function () {
 			})
 		}
 		var newMinor = beacon.minor;
+=======
+		var newMinor = beacon.siteMinor;
+		delete beacon.siteMinor;
+>>>>>>> origin/Development
 
 		var setQuery = {};
 		var incQuery = {};
