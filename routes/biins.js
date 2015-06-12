@@ -31,7 +31,6 @@
 		biins.find({accountIdentifier:req.user.accountIdentifier,organizationIdentifier:orgIdentifier},function (err, data) {
 			   res.json({data:data});
 		});
-
 	}
 
 	//Deprecated
@@ -123,7 +122,6 @@
 			}
 		});
 	}
-
 
 	//Set the objects of a Biin
 	functions.updateBiin=function(req,res){
