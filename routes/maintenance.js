@@ -5,9 +5,10 @@ module.exports = function () {
 
 	//Schemas
 	var organization = require('../schemas/organization'); 
-	var biins = require('../schemas/biin');
+	var biins = require('../schemas/biin'), site = require('../schemas/site');
 	//var regionRoutes = require('./regions')();
 
+	var siteRoutes = require('./sites')();
 	var functions={};
 
 	//GET the main view of sites
@@ -44,6 +45,7 @@ module.exports = function () {
 	functions.biinPurchase = function(req,res){
 		res.setHeader('Content-Type', 'application/json');
 		var beacon = req.body;	
+		
 
 		var orgID = beacon.organizationIdentifier;
 		var siteIndex = beacon.siteIndex;
@@ -52,31 +54,91 @@ module.exports = function () {
 		var mode = beacon.mode;
 		delete beacon.mode;
 
+		//Set site category model
+		var setSiteCategory = function(newBeaconModel,callback){
+			var updateOldModel =false;
+			var updateNewModel = false;
+
+			var doneProcess =function(){
+				if(updateOldModel &&updateNewModel)
+					callback();
+			}
+			biins.findOne({identifier:newBeaconModel.identifier},function(err,oldBeaconModel){			
+					if(oldBeaconModel && oldBeaconModel.siteIdentifier!=='' && oldBeaconModel.status==='Installed' && newBeaconModel.siteIdentifier !==oldBeaconModel.siteIdentifier){
+						organization.findOne({'sites.identifier':oldBeaconModel.siteIdentifier},{'sites.$':1},function(err,siteModel){
+							siteRoutes.setSiteCategory(true,siteModel.sites[0],siteModel.sites[0].identifier,function(){
+								updateOldModel=true;
+								doneProcess();
+							})		
+						})
+					}else{
+						updateOldModel=true;
+						doneProcess();
+					}
+
+					if(newBeaconModel.siteIdentifier!=='' && newBeaconModel.status==='Installed'){
+						organization.findOne({'sites.identifier':newBeaconModel.siteIdentifier},{'sites.$':1},function(err,siteModel){
+							siteRoutes.setSiteCategory(true,siteModel.sites[0],siteModel.sites[0].identifier,function(){
+								updateNewModel=true;
+								doneProcess();
+							})		
+						})						
+					}else{
+						updateNewModel=true;
+						doneProcess();
+					}
+
+			})
+		}
 		var newMinor = beacon.minor;
 
 		var setQuery = {};
 		var incQuery = {};
 		setQuery[siteLocationToUpdate] = newMinor;
+
+		var hasError =false;
+		var doneFunction = function(){
+			if(hasError)
+				return res.send("{\"success\":\"false\"}",500);				
+			else
+				return res.send("{\"success\":\"true\"}",200);
+
+		}
+
+		var beaconReady=false;
+		var siteCategoryReady = false;
+		setSiteCategory(beacon,function(){
+			siteCategoryReady=true;
+			if(beaconReady&&siteCategoryReady){
+				doneFunction();
+			}
+		});		
+
 		if(mode == "create")
 		{
 			beacon.identifier= utils.getGUID();
 			incQuery["biinsAssignedCounter"] = 1;
 			incQuery["biinsCounter"]=1;
+
 			biins.create(beacon,function (error,data){
 				if(error == null){
 
 					organization.update({identifier:orgID},{ $inc: incQuery, $set:setQuery}, function(errorUpdate, data){
-						if(errorUpdate == null){
-							return res.send("{\"success\":\"true\"}",200);
-						}
-						else{
-							return res.send("{\"success\":\"false\"}",500);
+						if(errorUpdate !== null)
+							hasError =true;						
+						siteCategoryReady =true;
+						if(beaconReady&&siteCategoryReady){
+							doneFunction();
 						}
 					});
 				}
 				else
 				{
-					return res.send("{\"success\":\"false\"}",500);
+					hasError =true;
+					siteCategoryReady =true;
+					if(beaconReady&&siteCategoryReady){
+						doneFunction();
+					}
 				}
 			});
 		}
@@ -88,11 +150,11 @@ module.exports = function () {
 				{
 					organization.update({identifier:orgID},{ $set:setQuery}, function(errorUpdate, data)
 					{
-						if(errorUpdate == null){
-							return res.send("{\"success\":\"true\"}",200);
-						}
-						else{
-							return res.send("{\"success\":\"false\", \"message\":\"Update organization info failed.\"}",500);
+						if(errorUpdate !== null)
+							hasError =true;
+						siteCategoryReady =true;
+						if(beaconReady&&siteCategoryReady){
+							doneFunction();
 						}
 					});
 				}
