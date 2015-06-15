@@ -10,7 +10,8 @@ var siteCatObj = {
 	categoryIdentifier:{type:String,index:true},
 	sites:[{
 		identifier:{type:String, index:true},
-		proximity:{type:Number, index:true}
+		proximity:{type:Number, index:true},
+		neighbors: [{siteIdentifier:String}]
 	}],
 	sitesCount:String	
 }
@@ -18,5 +19,6 @@ var siteCatObj = {
 var siteCatSchema = new Schema(siteCatObj);
 siteCatSchema.index({ min_latitude: 1, min_logitude: 1,max_latitude:1,max_logitude:1,categoryIdentifier:1 }, { unique: true })
 siteCatSchema.index({ 'sites.proximity': 1, identifier: 1})
+siteCatSchema.index({ 'sites.identifier':1}, {unique: true})
 module.exports = mongoose.model('searchSiteCategories', siteCatSchema);
 
