@@ -54,7 +54,7 @@ module.exports = function () {
 
 		var searchSitesByCategory =function(userCategories,catArray,lat,lng,callback){
 			var locationFilter = [{min_latitude:{$lte:lat}},{min_longitude:{$lte:lng}},{max_latitude:{$gte:lat}},{max_longitude:{$gte:lng}}];
-			siteCategory.find({categoryIdentifier:{$in:catArray},$and:locationFilter},{_id:0,categoryIdentifier:1,"sites.identifier":1},function(err,foundSearchSites){
+			siteCategory.find({categoryIdentifier:{$in:catArray},$and:locationFilter},{_id:0,categoryIdentifier:1,"sites.identifier":1,"sites.neighbors.siteIdentifier":1},function(err,foundSearchSites){
 				for(var c=0;c< foundSearchSites.length; c++){
 					if(foundSearchSites[c].sites.length){
 						var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});					
@@ -216,8 +216,64 @@ module.exports = function () {
 	var setSiteCategory = function(isUpdate,model,siteIdentifier,callback){
 		var cantCategoriesAdded=0;
 
+		//Site neighbors process
+		var siteNeighborsProcess= function(siteIdentifier,callback){
+			siteCategory.find({'sites.identifier':siteIdentifier},function(err,siteCategoryFound){
+				if(err)
+					throw err;
+				else{
+					var maxNeighboards=4;
+					//Iterate over ther sitesCategorys and set the neighboards
+					for(var i =0;i<siteCategoryFound.length;i++){						
+						var sitesOrdered = _.sortBy(siteCategoryFound[i].sites, 'proximity');
+						//Iterate over the site of the siteCategory
+						for(var j=0;j<sitesOrdered.length;j++){							
+							var siteToUpdate = sitesOrdered[j];
+							var neighboards =[];
+							var cantAdded =0;
+
+							if(j>=2){
+								neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier});
+								neighboards.push({siteIdentifier:sitesOrdered[j-2].identifier});
+								cantAdded+=2;
+
+							}else{
+
+								if(j==1){
+									neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier});
+									cantAdded++;
+								}
+
+							}
+
+							var pointer = j+1;
+							//Refill spaces
+							if(sitesOrdered.length-1 > cantAdded){
+								while(cantAdded<maxNeighboards && pointer < sitesOrdered.length){
+									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier})
+									cantAdded++;
+									pointer++;
+								}
+							}
+							siteToUpdate.neighbors= neighboards;
+						}
+						siteCategoryFound[i].sites = sitesOrdered;
+						siteCategoryFound[i].save(function(err){
+							if(err)
+								throw err;
+						})
+					}	
+				}
+
+				callback();
+			});
+		}
+
+		//Call back of Push Sites By Categories
 		var endProcessPush=function(){
-			callback(cantCategoriesAdded);
+			siteNeighborsProcess(siteIdentifier,function(){
+				callback(cantCategoriesAdded);
+			})			
 		}
 
 		//Insert the Site Categories
@@ -225,7 +281,7 @@ module.exports = function () {
 			var totalCategories = categories.length-1;
 			for(var c =0; c< categories.length;c++){
 				siteCategoryConfig.categoryIdentifier = categories[c].identifier;
-				siteCategory.update(siteCategoryConfig,{$push:{'sites':{'identifier':siteIdentifier,'proximity':proximity}}},{upsert:true},function(err,cantAffected){
+				siteCategory.update(siteCategoryConfig,{$push:{'sites': {'identifier':siteIdentifier,'proximity':proximity}}},{upsert:true},function(err,cantAffected){
 					if(err)
 						throw err;
 					else{

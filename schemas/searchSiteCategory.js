@@ -10,7 +10,8 @@ var siteCatObj = {
 	categoryIdentifier:{type:String,index:true},
 	sites:[{
 		identifier:{type:String, index:true},
-		proximity:{type:Number, index:true}
+		proximity:{type:Number, index:true},
+		neighbors: [{siteIdentifier:String}]
 	}],
 	sitesCount:String	
 }
