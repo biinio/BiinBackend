@@ -29,7 +29,7 @@ module.exports = function () {
 	functions.getBiinsOrganizationInformation = function(req,res){	
 		res.setHeader('Content-Type', 'application/json');
 		var orgId = req.params['orgIdentifier'];
-		biins.find({organizationIdentifier:orgId},{_id:0,identifier:1,name:1,major:1,minor:1,proximityUUID:1,status:1,isAssigned:1,brandIdentifier:1,organizationIdentifier:1,siteIdentifier:1,biinType:1}).lean().exec(function (err, data) {
+		biins.find({organizationIdentifier:orgId},{_id:0,identifier:1,name:1,major:1,minor:1,proximityUUID:1,status:1,isAssigned:1,brandIdentifier:1,organizationIdentifier:1,siteIdentifier:1,biinType:1,venue:1}).lean().exec(function (err, data) {
 			var response = {};
 			response.biins = data;
 			response.defaultUUID = process.env.DEFAULT_SYS_ENVIROMENT;
@@ -39,6 +39,10 @@ module.exports = function () {
 
 	functions.addBiinToOrganizationModal = function(req,res){
 		res.render('maintenance/addBiinToOrganizationModal');
+	}
+
+	var biinCreate = function (req, res){
+
 	}
 
 	functions.biinPurchase = function(req,res){
@@ -58,47 +62,160 @@ module.exports = function () {
 		var setQuery = {};
 		var incQuery = {};
 		setQuery[siteLocationToUpdate] = newMinor;
+
 		if(mode == "create")
 		{
 			beacon.identifier= utils.getGUID();
 			incQuery["biinsAssignedCounter"] = 1;
 			incQuery["biinsCounter"]=1;
-			biins.create(beacon,function (error,data){
-				if(error == null){
-
-					organization.update({identifier:orgID},{ $inc: incQuery, $set:setQuery}, function(errorUpdate, data){
-						if(errorUpdate == null){
-							return res.send("{\"success\":\"true\"}",200);
+			if(beacon.biinType == "2")
+			{
+				biins.find({organizationIdentifier:orgID,venue:"",siteIdentifier:beacon.siteIdentifier,biinType:"3"},{_id:0,minor:1}).lean().exec(function (err, data) {
+					var children = [];
+					for (var i = 0; i < data.length; i++) {
+						children.push(data[i].minor)
+					};
+					beacon.children = children;
+					biins.create(beacon,function (error,data){
+						if(error == null){
+							organization.update({identifier:orgID},{ $inc: incQuery, $set:setQuery}, function(errorUpdate, data){
+								if(errorUpdate == null){
+									return res.send("{\"success\":\"true\"}",200);
+								}else{
+									return res.send("{\"success\":\"false\"}",500);
+								}
+							});
 						}
-						else{
+						else
+						{	
 							return res.send("{\"success\":\"false\"}",500);
 						}
 					});
-				}
-				else
-				{
-					return res.send("{\"success\":\"false\"}",500);
-				}
-			});
+					
+				});
+			}
+			else if(beacon.biinType == "3")
+			{
+				biins.update({organizationIdentifier:orgID,venue:"",siteIdentifier:beacon.siteIdentifier,biinType:"2"},{$push:{children:beacon.minor}},{multi:true}).exec(function (err, data) {
+					if(err)
+					{
+						res.send("{}",500);
+					}
+					else
+					{
+						biins.create(beacon,function (error,data){
+							if(error == null){
+								organization.update({identifier:orgID},{ $inc: incQuery, $set:setQuery}, function(errorUpdate, data){
+									if(errorUpdate == null){
+										return res.send("{\"success\":\"true\"}",200);
+									}else{
+										return res.send("{\"success\":\"false\"}",500);
+									}
+								});
+							}
+							else
+							{	
+								return res.send("{\"success\":\"false\"}",500);
+							}
+						});
+					}
+				});
+			}
 		}
 		else
 		{
-			biins.update({identifier:beacon.identifier},{$set:beacon},function (error,data)
-			{
-				if(error == null)
-				{
-					organization.update({identifier:orgID},{ $set:setQuery}, function(errorUpdate, data)
+			if(beacon.biinType == "2"){
+				//find beacons who will be children of the new beacon
+				biins.find({organizationIdentifier:orgID,venue:beacon.venue,siteIdentifier:beacon.siteIdentifier,biinType:"3"},{_id:0,minor:1}).exec(function (err, data) {
+					if(err)
 					{
-						if(errorUpdate == null){
-							return res.send("{\"success\":\"true\"}",200);
-						}
-						else{
-							return res.send("{\"success\":\"false\", \"message\":\"Update organization info failed.\"}",500);
-						}
-					});
-				}
-			});
+						res.send("{}",500);
+					}
+					else
+					{
+						var children = [];
+						for (var i = 0; i < data.length; i++) {
+							children.push(data[i].minor)
+						};
+						beacon.children = children;
+						//remove from existing children in other beacons
+						var beaconMinor = beacon.minor + "";
+						biins.update({organizationIdentifier:orgID,venue:beacon.venue,siteIdentifier:beacon.siteIdentifier,biinType:"2", children:{$in:[beaconMinor]}},{$pull:{children:beaconMinor}},{multi:true}).exec(function (err, data) {
+							if(err)
+							{
+								res.send("{}",500);
+							}
+							else
+							{
+								biins.update({identifier:beacon.identifier},{$set:beacon},function (error,data)
+								{
+									if(error == null)
+									{
+										organization.update({identifier:orgID},{ $set:setQuery}, function(errorUpdate, data)
+										{
+											if(errorUpdate == null){
+												return res.send("{\"success\":\"true\"}",200);
+											}
+											else{
+												return res.send("{\"success\":\"false\", \"message\":\"Update organization info failed.\"}",500);
+											}
+										});
+									}
+								});
+							}
+						});
+					}
+				});
+
+			}else if(beacon.biinType == "3"){
+				biins.update({organizationIdentifier:orgID,venue:beacon.venue,siteIdentifier:beacon.siteIdentifier,biinType:"2"},{$push:{children:beacon.minor}},{multi:true}).exec(function (err, data) {
+					if(err)
+					{
+						res.send("{}",500);
+					}
+					else
+					{
+						beacon.children = [];
+						biins.update({identifier:beacon.identifier},{$set:beacon},function (error,data)
+						{
+							if(error == null)
+							{
+								organization.update({identifier:orgID},{ $set:setQuery}, function(errorUpdate, data)
+								{
+									if(errorUpdate == null){
+										return res.send("{\"success\":\"true\"}",200);
+									}
+									else{
+										return res.send("{\"success\":\"false\", \"message\":\"Update organization info failed.\"}",500);
+									}
+								});
+							}
+						});
+					}
+				});
+
+			}
 		}
+	}
+
+	functions.getBeaconChildren = function(req,res){
+		res.setHeader('Content-Type', 'application/json');
+		biinType = req.headers['biintype'];
+		biinvenue = req.headers['biinvenue'];
+		siteId = req.headers['biinsite'];
+		orgId = req.headers['biinorganization'];
+		if(biinType == "2"){
+			biins.find({organizationIdentifier:orgId,venue:biinvenue,siteIdentifier:siteId,biinType:"3"},{_id:0,minor:1}).lean().exec(function (err, data) {
+				var response = [];
+				for (var i = 0; i < data.length; i++) {
+					response.push(data[i].minor)
+				};
+				res.json(response);
+			});
+		}else{
+			res.json([]);
+		}
+
 	}
 
 	return functions;
