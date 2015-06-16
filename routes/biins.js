@@ -125,18 +125,73 @@
 
 	//Set the objects of a Biin
 	functions.updateBiin=function(req,res){
-		var organizationIdentifier= req.param('identifier');
+		var orgID= req.param('identifier');
 		var biinIdentifier =req.param('biinIdentifier');
 		var biin = req.body;
-
-		biins.update({identifier:biinIdentifier},{$set:biin},function (error,data)
+		if(biin.biinType == "2")
 		{
-			if(error == null){
-				return res.send("{\"success\":\"true\"}",200);
-			}else{
-				return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}",500);
+			biins.find({ organizationIdentifier: biin.organizationIdentifier, venue: biin.venue, siteIdentifier: biin.siteIdentifier, biinType: "3"}, 
+			{_id: 0, minor: 1}).exec(function(err, data) {
+	        if (err) {
+	            return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}",500);
+	        } else {
+	            var children = [];
+	            for (var i = 0; i < data.length; i++) {
+	                children.push(data[i].minor)
+	            };
+	            biin.children = children;
+				biins.update({identifier:biin.identifier},{$set:biin},function (error,data)
+				{
+					if(error == null){
+						return res.send("{\"success\":\"true\"}",200);
+					}else{
+						return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}",500);
+					}
+				});
 			}
-		});
+			});
+		}
+		else if(biin.biinType == "3")
+		{
+			var beaconMinor = biin.minor + "";
+			biins.update({ organizationIdentifier: biin.organizationIdentifier, siteIdentifier: biin.siteIdentifier, biinType: "2", children: { $in: [beaconMinor]}},
+			 { $pull: { children: beaconMinor } }, { multi: true }).exec(
+			 function(err, data) {
+			 	if (err) {
+			 		return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}",500);
+			 	} else {
+			 		biins.update({ organizationIdentifier: biin.organizationIdentifier, venue: biin.venue, siteIdentifier: biin.siteIdentifier, biinType: "2"}, 
+					{ $push: { children: beaconMinor } }, { multi: true }).exec(
+					function(err, data) {
+				        if (err) {
+				            return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}",500);
+				        } else {
+				            var children = [];
+				            biin.children = children;
+							biins.update({identifier:biin.identifier},{$set:biin},function (error,data){
+								if(error == null){
+									return res.send("{\"success\":\"true\"}",200);
+								}else{
+									return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}",500);
+								}
+							})
+						}
+					});
+			 	} 
+			});        
+		}
+		else
+		{
+			biins.update({identifier:biin.identifier},{$set:biin},function (error,data)
+			{
+				if(error == null){
+					return res.send("{\"success\":\"true\"}",200);
+				}else{
+					return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}",500);
+				}
+			});
+		}
+		
 	}
 
 
