@@ -110,6 +110,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/maintenance/getBiinsOrganizationInformation/:orgIdentifier',maintenance.getBiinsOrganizationInformation);
     app.put('/maintenance/insertBiin',maintenance.biinPurchase);
     app.post('/maintenance/insertBiin',maintenance.biinPurchase);
+    app.get('/maintenance/beaconChildren',maintenance.getBeaconChildren);
 
     
     
