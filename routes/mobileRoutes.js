@@ -259,12 +259,21 @@ module.exports =function(){
 		var newModel={};
 
 		//Get the showcases available
-		var getShowcasesWebAvailable=function(siteIdentifier,callback){
-			showcase.find({'webAvailable':siteIdentifier},{'_id':0,'identifier':1},function(err,data){
+		var getShowcasesWebAvailable=function( orgIdentifier,siteIdentifier, callback){
+			organization.find({identifier:orgIdentifier},{'_id':0,'sites':1},function(err,data){
 				if(err)
 					throw err;
-				var webAvailable= data;//_.pluck(data,'identifier');
-				callback(webAvailable)
+				var showcases = [];
+				for (var i = 0; i < data[0].sites.length; i++) {
+					if(data[0].sites[i].identifier == siteIdentifier){
+						var site = data[0].sites[i];
+						for (var j = 0; j < site.showcases.length; j++) {
+							showcases.push({'identifier':site.showcases[j].showcaseIdentifier});
+						}
+						break;
+					}
+				}
+				callback(showcases)
 			});
 		}
 
@@ -392,11 +401,11 @@ module.exports =function(){
 		var biinsReady=false;
 
 		//Get showcase available
-		getShowcasesWebAvailable(siteId,function(webAvailable){
+		getShowcasesWebAvailable(orgId,siteId,function(showcases){
 
-			newModel.webAvailable = [];
-			if(webAvailable)
-				newModel.webAvailable =webAvailable;
+			newModel.showcases = [];
+			if(showcases)
+				newModel.showcases =showcases;
 			showcaseReady=true;
 
 			if(showcaseReady&&biinsReady){
