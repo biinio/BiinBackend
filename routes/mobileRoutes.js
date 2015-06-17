@@ -147,6 +147,7 @@ module.exports =function(){
 							result.data.categories.push(data)
 							categoriesWithSites++;
 						}
+
 						categoriesProcessed++;
 
 						//Return the categories if all is processed
@@ -165,9 +166,9 @@ module.exports =function(){
 					}
 
 					//Order the sites by Category Identifier
-					for(var i=0; i< foundCategories.categories.length;i++){						
+					for(var i=0; i< foundCategories.categories.length;i++){
 						getSitesByCat(foundCategories.categories[i],i,foundCategories.categories.length,finalCursor);						
-					}					
+					}
 				}
 				else{
 					res.json({status:"9",data:{}});	
@@ -318,7 +319,6 @@ module.exports =function(){
 											biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
 											biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
 
-
 										}
 										processedBiins++;
 
@@ -339,14 +339,25 @@ module.exports =function(){
 
 		//Get the Neibors fo the site
 		var getNeighbords =function(siteIdentifier,callback){
-			siteCategory.findOne({"sites.identifier":siteIdentifier},{'sites.identifier':1,'sites.neighbors':1},function(err,siteCategoryFound){
+			var neighbors = [];
+
+			siteCategory.find({"sites.identifier":siteIdentifier},{'sites.$':1},function(err,sitesCategoryFound){
 				if(err)
 					throw err;
 				else{
-					callback(siteCategoryFound.neighbors);
+					//For each site categoy found
+					for(var i=0; i<sitesCategoryFound.length;i++){
+						neighbors = _.union(neighbors, sitesCategoryFound[i].sites[0].neighbors);
+					}
+					var neighbors = _.uniq(neighbors, function(item, key, a) { 
+					    return item.siteIdentifier;
+					});
+					neighbors =  _.sortBy(neighbors, 'proximity');
+					callback(neighbors);
 				}
 			});
 		}
+
 		newModel.proximityUUID= model.proximityUUID;
 		newModel.identifier = model.identifier;
 		newModel.major =""+ model.major;
@@ -438,6 +449,7 @@ module.exports =function(){
 
 		getNeighbords(siteId,function(siteNeibors){
 			newModel.neighbors=siteNeibors;
+			neighborsReady=true;
 
 			if(showcaseReady&&biinsReady && neighborsReady){
 				//Return the result callback
