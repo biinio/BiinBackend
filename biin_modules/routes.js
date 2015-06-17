@@ -110,6 +110,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/maintenance/getBiinsOrganizationInformation/:orgIdentifier',maintenance.getBiinsOrganizationInformation);
     app.put('/maintenance/insertBiin',maintenance.biinPurchase);
     app.post('/maintenance/insertBiin',maintenance.biinPurchase);
+    app.get('/maintenance/beaconChildren',maintenance.getBeaconChildren);
 
     
     
@@ -230,7 +231,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     
     app.get('/mobile/regions',regions.listJson);
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
-    app.get('/mobile/:identifier/:latitude/:longitude/categories2',sites.getMobileByCategories);
+    app.get('/mobile/biinies/:identifier/:latitude/:longitude/categories',sites.getMobileByCategories);
     
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    

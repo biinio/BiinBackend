@@ -57,6 +57,7 @@ var siteObj ={
 			position:{type:String, default:""},//It's the place where is located the biinie eg: at the entrance
 			registerDate:{type:String, default:""},
 			lastUpdate:{type:String, default:""},
+			children:[],
 			showcases:[{
                 isDefault: {type:String,default:"0"},
                 showcaseIdentifier:{type:String,default:""},

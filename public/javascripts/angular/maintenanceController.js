@@ -123,7 +123,8 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       status:"No Programmed",
       proximityUUID:defaultUUID,
       registerDate:"",
-      biinType:"3"
+      biinType:"3",
+      venue:""
     }
   }
   else

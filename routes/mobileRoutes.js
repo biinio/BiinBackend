@@ -7,7 +7,8 @@ module.exports =function(){
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
-		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin');
+		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory');
+
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
 	
 	//GET Categories
@@ -259,12 +260,21 @@ module.exports =function(){
 		var newModel={};
 
 		//Get the showcases available
-		var getShowcasesWebAvailable=function(siteIdentifier,callback){
-			showcase.find({'webAvailable':siteIdentifier},{'_id':0,'identifier':1},function(err,data){
+		var getShowcasesWebAvailable=function( orgIdentifier,siteIdentifier, callback){
+			organization.find({identifier:orgIdentifier},{'_id':0,'sites':1},function(err,data){
 				if(err)
 					throw err;
-				var webAvailable= data;//_.pluck(data,'identifier');
-				callback(webAvailable)
+				var showcases = [];
+				for (var i = 0; i < data[0].sites.length; i++) {
+					if(data[0].sites[i].identifier == siteIdentifier){
+						var site = data[0].sites[i];
+						for (var j = 0; j < site.showcases.length; j++) {
+							showcases.push({'identifier':site.showcases[j].showcaseIdentifier});
+						}
+						break;
+					}
+				}
+				callback(showcases)
 			});
 		}
 
@@ -327,6 +337,16 @@ module.exports =function(){
 			});
 		}
 
+		//Get the Neibors fo the site
+		var getNeighbords =function(siteIdentifier,callback){
+			siteCategory.findOne({"sites.identifier":siteIdentifier},{'sites.identifier':1,'sites.neighbors':1},function(err,siteCategoryFound){
+				if(err)
+					throw err;
+				else{
+					callback(siteCategoryFound.neighbors);
+				}
+			});
+		}
 		newModel.proximityUUID= model.proximityUUID;
 		newModel.identifier = model.identifier;
 		newModel.major =""+ model.major;
@@ -390,16 +410,17 @@ module.exports =function(){
 
 		var showcaseReady=false;
 		var biinsReady=false;
+		var neighborsReady=false;
 
 		//Get showcase available
-		getShowcasesWebAvailable(siteId,function(webAvailable){
+		getShowcasesWebAvailable(orgId,siteId,function(showcases){
 
-			newModel.webAvailable = [];
-			if(webAvailable)
-				newModel.webAvailable =webAvailable;
+			newModel.showcases = [];
+			if(showcases)
+				newModel.showcases =showcases;
 			showcaseReady=true;
 
-			if(showcaseReady&&biinsReady){
+			if(showcaseReady&&biinsReady && neighborsReady){
 				//Return the result callback
 				resultCallback(newModel)
 			}
@@ -409,10 +430,19 @@ module.exports =function(){
 		getSiteBiins(siteId,function(biinsData){
 			newModel.biins=biinsData
 			biinsReady=true;
-			if(showcaseReady&&biinsReady){
+			if(showcaseReady&&biinsReady && neighborsReady){
 				//Return the result callback
 				resultCallback(newModel)
 			}
+		});
+
+		getNeighbords(siteId,function(siteNeibors){
+			newModel.neighbors=siteNeibors;
+
+			if(showcaseReady&&biinsReady && neighborsReady){
+				//Return the result callback
+				resultCallback(newModel)
+			}			
 		});
 	}
 
