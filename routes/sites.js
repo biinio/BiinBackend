@@ -100,15 +100,32 @@ module.exports = function () {
 						var catArray = _.pluck(foundCategories.categories,'identifier')
 						var result = {data:{categories:[]}};
 
-						//Search the sites by user categories and proximity						
-						searchSitesByCategory(foundCategories.categories,catArray,userLat,userLng,function(){
-							if(cantSites===0){
-								res.json({status:"9",data:{}});									
-							}else{
-								//Return the sites data
-								res.json({data:categorySitesResult,status:'0'});
-							}
-						});
+						var latInc = userLat;
+						var lngInc= userLng;
+						var searchAndReturn =function(lat,lng){
+							//Search the sites by user categories and proximity						
+							searchSitesByCategory(foundCategories.categories,catArray,lat,lng,function(){
+								if(cantSites===0){
+									var radiousRad = utils.metersToRadians(process.env.STANDARD_RADIOUS);
+									if(latInc>0)
+										latInc =latInc +radiousRad;
+									else
+										latInc + latInc - radiousRad;
+									if(lngInc>0)
+										lngInc+= lngInc +radiousRadians;
+									else
+										lngInc + lngInc - radiousRad;
+
+									searchAndReturn(latInc,lngInc);
+
+								}else{
+									//Return the sites data
+									res.json({data:categorySitesResult,status:'0'});
+								}
+							});								
+						}
+						searchAndReturn(userLat,userLng);
+						
 					}
 				}	
 				else{

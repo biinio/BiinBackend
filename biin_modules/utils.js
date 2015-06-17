@@ -139,6 +139,10 @@ module.exports = function(){
 
     return math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
   }
+  //Return a radious in meter to radians
+  functions.metersToRadians =function(radious){
+    return ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE;
+  }
   return functions;	
 }
 
