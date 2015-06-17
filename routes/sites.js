@@ -37,7 +37,6 @@ module.exports = function () {
 		}
 
 		getOganization(req, res, callback);				  
-
 	}
 
 	//GET Sites User categories and proximity
@@ -53,7 +52,23 @@ module.exports = function () {
 		var categorySitesResult={categories:[]};
 
 		var searchSitesByCategory =function(userCategories,catArray,lat,lng,callback){
-			var locationFilter = [{min_latitude:{$lte:lat}},{min_longitude:{$lte:lng}},{max_latitude:{$gte:lat}},{max_longitude:{$gte:lng}}];
+
+			var queryMinLat ={min_latitude:{$lte:lat}};
+			var queryMaxLat ={max_latitude:{$gte:lat}};
+			var queryMinLng = {min_longitude:{$lte:lng}};
+			var queryMaxLng = {max_longitude:{$gte:lng}};
+
+			if(lat<0){
+				queryMinLat ={min_latitude:{$gte:lat}};
+				queryMaxLat ={max_latitude:{$lte:lat}}
+			}
+			if(lng<0){
+				queryMinLng = {min_longitude:{$gte:lng}};
+				queryMaxLng = {max_longitude:{$lte:lng}}
+			}			
+
+			var locationFilter = [queryMinLat,queryMinLng,queryMaxLat,queryMaxLng];
+
 			siteCategory.find({categoryIdentifier:{$in:catArray},$and:locationFilter},{_id:0,categoryIdentifier:1,"sites.identifier":1,"sites.neighbors.siteIdentifier":1},function(err,foundSearchSites){
 				for(var c=0;c< foundSearchSites.length; c++){
 					if(foundSearchSites[c].sites.length){
@@ -306,10 +321,25 @@ module.exports = function () {
 			var lat = eval(model.lat);
 			var lng = eval(model.lng);
 
+			var queryMinLat ={min_latitude:{$lte:lat}};
+			var queryMaxLat ={max_latitude:{$gte:lat}};
+			var queryMinLng = {min_longitude:{$lte:lng}};
+			var queryMaxLng = {max_longitude:{$gte:lng}};
+
+			if(lat<0){
+				queryMinLat ={min_latitude:{$gte:lat}};
+				queryMaxLat ={max_latitude:{$lte:lat}};
+			}
+			if(lng<0){
+				queryMinLng = {min_longitude:{$gte:lng}};
+				queryMaxLng = {max_longitude:{$lte:lng}};
+			}
+
 			//Search if theres is a SiteCategory in the range			
-			siteCategory.findOne({$and:[{min_latitude:{$lte:lat}},{min_longitude:{$lte:lng}},{max_latitude:{$gte:lat}},{max_longitude:{$gte:lng}}]},function(err,data){
+			siteCategory.findOne({$and:[queryMinLat,queryMinLng,queryMaxLat,queryMaxLng]},function(err,data){
 				//If there is a configuration in range
 				if(data){
+
 					var defConfiguration = {min_latitude: data.min_latitude, min_longitude:data.min_longitude,max_latitude:data.max_latitude, max_longitude:data.max_longitude,radious:data.radious};
 				 	
 				 	var resultLat = model.lat -  data.min_latitude ;				 	
@@ -321,15 +351,19 @@ module.exports = function () {
 					pushSitesByCategories(defConfiguration,model.categories,metersProximity);
 				}else{
 					
-					var radiousRadians = ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE;
-					var maxLat = eval(model.lat)+radiousRadians;
-					var maxLng = eval(model.lng)+ radiousRadians;
-					var metersProximity =0;
-					var defConfiguration = {min_latitude: eval(model.lat), min_longitude:eval(model.lng),max_latitude:maxLat, max_longitude:maxLng,radious:radiousRadians};
+					var radiousRadians = ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE/2;
+					var minLat = model.lat>0?eval(model.lat)-radiousRadians:eval(model.lat)+radiousRadians;
+					var minLng = model.lng>0?eval(model.lng)-radiousRadians:eval(model.lng)+radiousRadians;
+					var maxLat = model.lat>0?eval(model.lat)+radiousRadians:eval(model.lat)-radiousRadians;
+					var maxLng = model.lng>0?eval(model.lng)+ radiousRadians:eval(model.lng)-radiousRadians;
+
+					var metersProximity =((radiousRadians*1000)/360)*process.env.EARTH_CIRCUMFERENCE;
+					var defConfiguration = {min_latitude: minLat, min_longitude:minLng,max_latitude:maxLat, max_longitude:maxLng,radious:radiousRadians};
 					
 					//Push the categories of the sites					
 					pushSitesByCategories(defConfiguration,model.categories,metersProximity);					
 				}
+
 			});
 		}
 

@@ -15,10 +15,10 @@ form.novalidate
 				.col-sm-10					
 					input#title2.form-control.title-value(ng-model="elements[selectedElement].subTitle" name="subTitle" type="text" placeholder="Subtitle"  ng-blur="validate()"  required )
 	.section.elementNutshellHightligh
-		checkbox.btn-checkbox(ng-model="isHighlightBool" ng-change="changeBoolStateHighlights('isHighlight', isHighlightBool)" large )
-		span Hightligh
-		h3 Hightligh section
-		p Turn on Hightligh to presents this element in the Hightligh section of the mobile app
+		checkbox.btn-checkbox(ng-model="elements[selectedElement].isHighlight" ng-true-value="'1'" ng-false-value="'0'" large )
+		span Hightlight
+		h3 Hightlight section
+		p Turn on Hightlight to presents this element in the Hightlight section of the mobile app
 	.section
 		h2(translate="SUMMARY.DETAILS")
 		p(translate="SUMMARY.DETAILS1")		
