@@ -88,8 +88,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     $scope.hasSavingBool= $scope.elements[index].hasSaving==='1';
     $scope.hasFromPriceBool= $scope.elements[index].hasFromPrice==='1';
     $scope.hasPriceBool= $scope.elements[index].hasPrice==='1';
-    $scope.isHighlightBool= $scope.elements[index].isHighlight==='1';
-
+    $scope.isHighlightBool= $scope.elements[index].isHighlight==="1";
     $scope.clearValidations();
     $scope.wizardPosition=1;
     $scope.validate(true); 
@@ -527,7 +526,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           if(value)
             $scope.elements[$scope.selectedElement].isHighlight='1'
           else
-            $scope.elements[$scope.selectedElement].isHighlight='0'                      
+            $scope.elements[$scope.selectedElement].isHighlight='0'
           break;                              
     }
     $scope.validate();
