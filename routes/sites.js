@@ -232,7 +232,7 @@ module.exports = function () {
 		var cantCategoriesAdded=0;
 
 		//Site neighbors process
-		var siteNeighborsProcess= function(siteIdentifier,callback){
+		var siteNeighborsProcess= function(siteIdentifier,lat,lng,callback){
 			siteCategory.find({'sites.identifier':siteIdentifier},function(err,siteCategoryFound){
 				if(err)
 					throw err;
@@ -248,14 +248,15 @@ module.exports = function () {
 							var cantAdded =0;
 
 							if(j>=2){
-								neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier});
-								neighboards.push({siteIdentifier:sitesOrdered[j-2].identifier});
-								cantAdded+=2;
+
+								neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-1].lat,sitesOrdered[j-1].lng)});
+								neighboards.push({siteIdentifier:sitesOrdered[j-2].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-2].lat,sitesOrdered[j-2].lng)});
+								cantAdded+=2;								
 
 							}else{
 
 								if(j==1){
-									neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier});
+									neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-1].lat,sitesOrdered[j-1].lng)});
 									cantAdded++;
 								}
 
@@ -265,7 +266,7 @@ module.exports = function () {
 							//Refill spaces
 							if(sitesOrdered.length-1 > cantAdded){
 								while(cantAdded<maxNeighboards && pointer < sitesOrdered.length){
-									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier})
+									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[pointer].lat,sitesOrdered[pointer].lng)})
 									cantAdded++;
 									pointer++;
 								}
@@ -286,17 +287,17 @@ module.exports = function () {
 
 		//Call back of Push Sites By Categories
 		var endProcessPush=function(){
-			siteNeighborsProcess(siteIdentifier,function(){
+			siteNeighborsProcess(siteIdentifier,model.lat,model.lng,function(){
 				callback(cantCategoriesAdded);
 			})			
 		}
 
 		//Insert the Site Categories
-		var pushSitesByCategories =function(siteCategoryConfig,categories, proximity){
+		var pushSitesByCategories =function(siteCategoryConfig,categories, proximity,lat,lng){
 			var totalCategories = categories.length-1;
 			for(var c =0; c< categories.length;c++){
 				siteCategoryConfig.categoryIdentifier = categories[c].identifier;
-				siteCategory.update(siteCategoryConfig,{$push:{'sites': {'identifier':siteIdentifier,'proximity':proximity}}},{upsert:true},function(err,cantAffected){
+				siteCategory.update(siteCategoryConfig,{$push:{'sites': {'identifier':siteIdentifier,'lat':lat,'lng':lng,'proximity':proximity}}},{upsert:true},function(err,cantAffected){
 					if(err)
 						throw err;
 					else{
@@ -345,10 +346,10 @@ module.exports = function () {
 				 	var resultLat = model.lat -  data.min_latitude ;				 	
 				 	var resultLong = model.lng - data.min_longitude;
 
-				 	var radiansProximity= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));	
+				 	var radiansProximity= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
 				 	var metersProximity=((radiansProximity*1000)/360)*process.env.EARTH_CIRCUMFERENCE;
 					//Push the categories of the sites					
-					pushSitesByCategories(defConfiguration,model.categories,metersProximity);
+					pushSitesByCategories(defConfiguration,model.categories,metersProximity,model.lat,model.lng);
 				}else{
 					
 					var radiousRadians = ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE/2;
@@ -361,7 +362,7 @@ module.exports = function () {
 					var defConfiguration = {min_latitude: minLat, min_longitude:minLng,max_latitude:maxLat, max_longitude:maxLng,radious:radiousRadians};
 					
 					//Push the categories of the sites					
-					pushSitesByCategories(defConfiguration,model.categories,metersProximity);					
+					pushSitesByCategories(defConfiguration,model.categories,metersProximity,model.lat,model.lng);
 				}
 
 			});
