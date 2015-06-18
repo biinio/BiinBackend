@@ -18,7 +18,7 @@ var elementSchema = new Schema({
     domainColor:{type:String, default:""},
     
 	actionType:{type:String, default:""},
-	currencyType:{type:String, default:"1"},
+	currencyType:{type:String, default:"2"},
 
 	hasFromPrice:{type:String, default:"0"},
 	//fromPrice:{type:String, default:""},
