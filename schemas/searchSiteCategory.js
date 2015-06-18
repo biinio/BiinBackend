@@ -11,9 +11,10 @@ var siteCatObj = {
 	sites:[{
 		identifier:{type:String, index:true},
 		proximity:{type:Number, index:true},
-		neighbors: [{siteIdentifier:String}]
-	}],
-	sitesCount:String	
+		lat:{type:Number},
+		lng:{type:Number},
+		neighbors: [{siteIdentifier:String,proximity:Number}]
+	}]
 }
 
 var siteCatSchema = new Schema(siteCatObj);

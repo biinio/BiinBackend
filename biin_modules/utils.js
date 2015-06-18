@@ -2,6 +2,7 @@
 var path = require("path"), uuid=require('node-uuid'),
   fs = require('fs'),
   util = require('util'),
+  math = require('mathjs'),  
   //FTP Package
   ftp = require("ftp")
   moment = require('moment');
@@ -131,7 +132,17 @@ module.exports = function(){
       return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  //Get Proximity of two points in radians
+  functions.getProximity= function(startLat,startLng,endLat,endLng){
+    var resultLat = startLat -  endLat ;          
+    var resultLong = startLng - endLng;
 
+    return math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
+  }
+  //Return a radious in meter to radians
+  functions.metersToRadians =function(radious){
+    return ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE;
+  }
   return functions;	
 }
 
