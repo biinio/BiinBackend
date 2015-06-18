@@ -44,8 +44,8 @@ block content
 									include wizardColors
 								#wizardOption3.wizard(ng-switch-when="3")
 									include wizardLocation
-								#wizardOption5.wizard(ng-switch-when="4" )
-									include wizardBiins				
+								//#wizardOption5.wizard(ng-switch-when="4" )
+								//	include wizardBiins				
 								#wizardOption6.wizard(ng-switch-when="5" )
 									include wizardCategories
 							.wizard-options
@@ -79,20 +79,20 @@ block content
 													.icon.icon-marker-2
 												.textCirle 
 													| 3. UBICACIÓN
-										.col-md-1.col-sm-1.nopadding.option												
-											#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
-											.wizard-options-item(ng-click="changeWizardTab(4)")
-												.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
-													.icon.icon-hotspot-2
-												.textCirle 
-													| 4. BEACONS
+										//.col-md-1.col-sm-1.nopadding.option												
+										//	#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
+										//	.wizard-options-item(ng-click="changeWizardTab(4)")
+										//		.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
+										//			.icon.icon-hotspot-2
+										//		.textCirle 
+										//			| 4. BEACONS
 										.col-md-1.col-sm-1.nopadding.option												
 											#guide-wizard-pointer(ng-class="{'active':wizardPosition == 5}")
 											.wizard-options-item(ng-click="changeWizardTab(5)")
 												.circle(ng-class="{'active':wizardPosition ==5,'disabled':!wizard4IsValid,'valid':wizard5IsValid}")
 													.icon.icon-tag-1
 												.textCirle 
-													| 5. CATEGORIAS
+													| 4. CATEGORIAS
 										.col-md-1.col-sm-1.nopadding.option																							
 											.wizard-options-item.completeOption
 												.circle(ng-class="{'complete':isValid}")
