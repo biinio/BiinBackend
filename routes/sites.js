@@ -71,9 +71,7 @@ module.exports = function () {
 			}
 
 			var locationFilter = [queryMinLat,queryMinLng,queryMaxLat,queryMaxLng];
-			console.log("Min Lat: " + lat +', Min Long: '+ lng);
-			console.log("Lat Modifier: " + maxLatModifiers +', Long Modifier'+ maxLngModifiers);
-			siteCategory.find({categoryIdentifier:{$in:catArray},$and:locationFilter},{_id:0,categoryIdentifier:1,"sites.identifier":1,"sites.neighbors.siteIdentifier":1},function(err,foundSearchSites){
+			siteCategory.find({categoryIdentifier:{$in:catArray},$and:locationFilter},{_id:0,categoryIdentifier:1,"sites.identifier":1},function(err,foundSearchSites){
 				for(var c=0;c< foundSearchSites.length; c++){
 					if(foundSearchSites[c].sites.length){
 						var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});					
