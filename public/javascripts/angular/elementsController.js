@@ -521,13 +521,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           if(value)
             $scope.elements[$scope.selectedElement].hasFromPrice='1'
           else
-            $scope.elements[$scope.selectedElement].hasFromPrice='0'    
-        case 'isHighlight':
-          if(value)
-            $scope.elements[$scope.selectedElement].isHighlight='1'
-          else
-            $scope.elements[$scope.selectedElement].isHighlight='0'
-          break;                              
+            $scope.elements[$scope.selectedElement].hasFromPrice='0'                                  
     }
     $scope.validate();
   }
