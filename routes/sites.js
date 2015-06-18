@@ -46,8 +46,11 @@ module.exports = function () {
 		var userLng = eval(req.param("longitude"));
 		var enviromentId = process.env.DEFAULT_SYS_ENVIROMENT;
 
+		var maxLatModifiers=0;
+		var maxLngModifiers=0
+		var invertSearch=false;
 		var cantSites =0;
-
+		
 
 		var categorySitesResult={categories:[]};
 
@@ -60,15 +63,16 @@ module.exports = function () {
 
 			if(lat<0){
 				queryMinLat ={min_latitude:{$gte:lat}};
-				queryMaxLat ={max_latitude:{$lte:lat}}
+				queryMaxLat ={max_latitude:{$lte:maxLngModifiers}}
 			}
 			if(lng<0){
 				queryMinLng = {min_longitude:{$gte:lng}};
-				queryMaxLng = {max_longitude:{$lte:lng}}
-			}			
+				queryMaxLng = {max_longitude:{$lte:maxLngModifiers}}
+			}
 
 			var locationFilter = [queryMinLat,queryMinLng,queryMaxLat,queryMaxLng];
-
+			console.log("Min Lat: " + lat +', Min Long: '+ lng);
+			console.log("Lat Modifier: " + maxLatModifiers +', Long Modifier'+ maxLngModifiers);
 			siteCategory.find({categoryIdentifier:{$in:catArray},$and:locationFilter},{_id:0,categoryIdentifier:1,"sites.identifier":1,"sites.neighbors.siteIdentifier":1},function(err,foundSearchSites){
 				for(var c=0;c< foundSearchSites.length; c++){
 					if(foundSearchSites[c].sites.length){
@@ -102,19 +106,29 @@ module.exports = function () {
 
 						var latInc = userLat;
 						var lngInc= userLng;
+						maxLatModifiers = userLat;
+						maxLngModifiers = userLng;
+						var radiousRad = utils.metersToRadians(process.env.STANDARD_RADIOUS);
 						var searchAndReturn =function(lat,lng){
 							//Search the sites by user categories and proximity						
 							searchSitesByCategory(foundCategories.categories,catArray,lat,lng,function(){
-								if(cantSites===0){
-									var radiousRad = utils.metersToRadians(process.env.STANDARD_RADIOUS);
-									if(latInc>0)
+								if(cantSites===0){									
+									if(lat>0){
 										latInc =latInc +radiousRad;
-									else
-										latInc + latInc - radiousRad;
-									if(lngInc>0)
-										lngInc+= lngInc +radiousRadians;
-									else
-										lngInc + lngInc - radiousRad;
+										maxLatModifiers = maxLatModifiers-radiousRad;
+									}										
+									else{
+										latInc = latInc - radiousRad;
+										maxLatModifiers = maxLatModifiers + radiousRad;
+									}
+									if(lng>0){
+										lngInc = lngInc +radiousRad;
+										maxLngModifiers = maxLngModifiers - radiousRad;
+									}										
+									else{
+										lngInc = lngInc - radiousRad;
+										maxLngModifiers= maxLngModifiers +radiousRad;
+									}
 
 									searchAndReturn(latInc,lngInc);
 
