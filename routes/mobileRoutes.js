@@ -47,7 +47,7 @@ module.exports =function(){
 		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/showcases/'+showcase+".json", "utf8");
 		res.json(JSON.parse(jsonObj));
 	}*/
-
+	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
 	functions.getCategories=function(req,res){
 		var userIdentifier = req.param("identifier");

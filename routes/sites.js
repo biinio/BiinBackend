@@ -276,10 +276,12 @@ module.exports = function () {
 							var neighboards =[];
 							var cantAdded =0;
 
+							var prevNeighAdded=0;
 							if(j>=2){
 
 								neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-1].lat,sitesOrdered[j-1].lng)});
 								neighboards.push({siteIdentifier:sitesOrdered[j-2].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-2].lat,sitesOrdered[j-2].lng)});
+								prevNeighAdded=2;
 								cantAdded+=2;								
 
 							}else{
@@ -287,26 +289,42 @@ module.exports = function () {
 								if(j==1){
 									neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-1].lat,sitesOrdered[j-1].lng)});
 									cantAdded++;
+									prevNeighAdded=1;
 								}
 
 							}
 
 							var pointer = j+1;
+
 							//Refill spaces
 							if(sitesOrdered.length-1 > cantAdded){
-								while(cantAdded<maxNeighboards && pointer < sitesOrdered.length){
+								while(cantAdded<maxNeighboards && pointer< sitesOrdered.length){
 									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[pointer].lat,sitesOrdered[pointer].lng)})
-									cantAdded++;
+									cantAdded++;										
 									pointer++;
 								}
 							}
+							//If the cant added is less than cant to add
+							if(cantAdded< maxNeighboards && j-prevNeighAdded>0){
+								var missingSpaces =maxNeighboards-cantAdded;
+								var cantCanAdd = j-prevNeighAdded;
+								if(j>missingSpaces)
+									cantCanAdd= missingSpaces;
+								
+								for(var backNeigh=0;backNeigh<cantCanAdd;backNeigh++){
+									pointer = j-backNeigh-prevNeighAdded-1;
+									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[pointer].lat,sitesOrdered[pointer].lng)})
+								}
+							}
+
 							siteToUpdate.neighbors= neighboards;
 						}
-						siteCategoryFound[i].sites = sitesOrdered;
+
+						siteCategoryFound[i].sites = sitesOrdered;						
 						siteCategoryFound[i].save(function(err){
 							if(err)
 								throw err;
-						})
+						});
 					}	
 				}
 
