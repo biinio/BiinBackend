@@ -26,7 +26,7 @@ var siteObj ={
 	streetAddres2:{type:String, default:""},
 	phoneNumber:{type:String, default:"1-800-888-8888"},
 	ubication:{type:String, default:""},
-	email:{type:String, default:"email@email.com"},
+	email:{type:String, default:""},
 	lat:{type:String,default:0},
 	lng:{type:String,default:0},
 	searchTags:[],

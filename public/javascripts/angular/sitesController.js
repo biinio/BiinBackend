@@ -164,7 +164,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
           $scope.wizardPosition =option;
       break   
       case 5:
-        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid)
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid)
           $scope.wizardPosition =option;
       break         
       default:
@@ -352,14 +352,14 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         } 
         currentValid = $scope.wizard3IsValid;
       }
-      if( eval($scope.wizardPosition)==4 || validate)
+      /*if( eval($scope.wizardPosition)==4 || validate)
       {
         if($scope.sites[$scope.selectedSite]){
          $scope.wizard4IsValid=$scope.sites[$scope.selectedSite].biins.length>1;
         }else{
           $scope.wizard4IsValid=false; 
         }        
-      }
+      }*/
       if(eval($scope.wizardPosition)== 5 || validate)
       {
         if($scope.sites[$scope.selectedSite]){
@@ -369,7 +369,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         }
       }
 
-    $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid&& $scope.wizard3IsValid&& $scope.wizard4IsValid&& $scope.wizard5IsValid;
+    $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid&& $scope.wizard3IsValid&& $scope.wizard5IsValid;
     
     return currentValid;
     

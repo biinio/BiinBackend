@@ -11,6 +11,7 @@ module.exports = function () {
 					   mobileUser = require('../schemas/mobileUser');	
 
 	var sysGlobalsRoutes = require('./sysGlobals')();
+	var regionRoutes = require('../routes/regions')();
 	var functions={};
 
 	//GET the main view of sites
