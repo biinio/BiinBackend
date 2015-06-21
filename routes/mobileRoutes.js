@@ -262,20 +262,37 @@ module.exports =function(){
 
 		//Get the showcases available
 		var getShowcasesWebAvailable=function( orgIdentifier,siteIdentifier, callback){
-			organization.find({identifier:orgIdentifier},{'_id':0,'sites':1},function(err,data){
+			var cantShowcasesAdded=0;
+			var cantSites=0;
+			organization.findOne({identifier:orgIdentifier,'sites.identifier':siteIdentifier},{'_id':0,'sites.$':1},function(err,data){
 				if(err)
 					throw err;
 				var showcases = [];
-				for (var i = 0; i < data[0].sites.length; i++) {
-					if(data[0].sites[i].identifier == siteIdentifier){
-						var site = data[0].sites[i];
-						for (var j = 0; j < site.showcases.length; j++) {
-							showcases.push({'identifier':site.showcases[j].showcaseIdentifier});
+				var site = data.sites[0];
+				var sitesIdentifier= _.pluck(site.showcases,'showcaseIdentifier');
+
+				if(site.showcases){
+					showcase.find({'identifier':{$in:sitesIdentifier}},{identifier:1,elements:1},function(err,foundShowcases){
+						if(err)
+							throw err;
+						else{
+							for(var showCaseInd=0;showCaseInd<foundShowcases.length;showCaseInd++){
+								var highLighEl =[];
+
+								for(var el =0 ;el<foundShowcases[showCaseInd].elements.length;el++){
+									if(foundShowcases[showCaseInd].elements[el].isHighlight=='1'){
+										highLighEl.push({elementIdentifier:foundShowcases[showCaseInd].elements[el].elementIdentifier});
+									}
+								}
+								showcases.push({'identifier':foundShowcases[showCaseInd].identifier,'highlightElements':highLighEl});	
+							}
+							callback(showcases)							
 						}
-						break;
-					}
-				}
-				callback(showcases)
+
+					});					
+				}else{
+					callback(showcases)
+				}				
 			});
 		}
 

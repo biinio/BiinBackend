@@ -46,6 +46,11 @@ var siteObj ={
 			mainColor:{type:String,default:""}
 		}
 	],
+	showcases:[
+		{
+            showcaseIdentifier:{type:String,default:""}
+        }
+    ],
 	biins:[
 		{
 			identifier:{type:String, index:true, default:""},
