@@ -168,16 +168,28 @@ module.exports = function() {
             beacon.identifier = utils.getGUID();
             incQuery["biinsAssignedCounter"] = 1;
             incQuery["biinsCounter"] = 1;
-            if (beacon.biinType == "2") {
-                biins.find({
-                    organizationIdentifier: orgID,
-                    venue: "",
-                    siteIdentifier: beacon.siteIdentifier,
-                    biinType: "3"
-                }, {
-                    _id: 0,
-                    minor: 1
-                }).lean().exec(function(err, data) {
+            if(beacon.biinType == "1"){
+                beacon.children = [];
+                biins.create(beacon, function(error, data) {
+                    if (error == null) {
+                        organization.update({ identifier: orgID }, { $inc: incQuery, $set: setQuery }, function(errorUpdate, data) {
+                            if (errorUpdate !== null)
+                                hasError = true;
+                            beaconReady = true;
+                            if (beaconReady && siteCategoryReady) {
+                                doneFunction();
+                            }
+                        });
+                    } else {
+                        hasError = true;
+                        beaconReady = true;
+                        if (beaconReady && siteCategoryReady) {
+                            doneFunction();
+                        }
+                    }
+                });
+            } else if (beacon.biinType == "2") {
+                biins.find({ organizationIdentifier: orgID, venue: "", siteIdentifier: beacon.siteIdentifier, biinType: "3"}, { _id: 0, minor: 1 }).lean().exec(function(err, data) {
                     var children = [];
                     for (var i = 0; i < data.length; i++) {
                         children.push(data[i].minor)
@@ -185,12 +197,7 @@ module.exports = function() {
                     beacon.children = children;
                     biins.create(beacon, function(error, data) {
                         if (error == null) {
-                            organization.update({
-                                identifier: orgID
-                            }, {
-                                $inc: incQuery,
-                                $set: setQuery
-                            }, function(errorUpdate, data) {
+                            organization.update({ identifier: orgID }, { $inc: incQuery, $set: setQuery }, function(errorUpdate, data) {
                                 if (errorUpdate !== null)
                                     hasError = true;
                                 beaconReady = true;
@@ -206,32 +213,15 @@ module.exports = function() {
                             }
                         }
                     });
-
                 });
             } else if (beacon.biinType == "3") {
-                biins.update({
-                    organizationIdentifier: orgID,
-                    venue: "",
-                    siteIdentifier: beacon.siteIdentifier,
-                    biinType: "2"
-                }, {
-                    $push: {
-                        children: beacon.minor
-                    }
-                }, {
-                    multi: true
-                }).exec(function(err, data) {
+                biins.update({ organizationIdentifier: orgID, venue: "", siteIdentifier: beacon.siteIdentifier, biinType: "2" }, { $push: { children: beacon.minor } }, { multi: true }).exec(function(err, data) {
                     if (err) {
                         res.send("{}", 500);
                     } else {
                         biins.create(beacon, function(error, data) {
                             if (error == null) {
-                                organization.update({
-                                    identifier: orgID
-                                }, {
-                                    $inc: incQuery,
-                                    $set: setQuery
-                                }, function(errorUpdate, data) {
+                                organization.update({ identifier: orgID }, { $inc: incQuery, $set: setQuery }, function(errorUpdate, data) {
                                     if (errorUpdate !== null)
                                         hasError = true;
                                     beaconReady = true;
@@ -251,7 +241,37 @@ module.exports = function() {
                 });
             }
         } else {
-            if (beacon.biinType == "2") {
+            if(beacon.biinType == "1"){
+                beacon.children = [];
+                //remove from existing children in other beacons
+                var beaconMinor = beacon.minor + "";
+                biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2", children: { $in: [beaconMinor] } }, { $pull: { children: beaconMinor } }, { multi: true }).exec(function(err, data) {
+                    if (err) {
+                        hasError = true;
+                        beaconReady = true;
+                        if (beaconReady && siteCategoryReady) {
+                            doneFunction();
+                        }
+                    } else {
+                        biins.update({ identifier: beacon.identifier }, { $set: beacon }, function(error, data) {
+                            if (error == null) {
+                                organization.update({
+                                    identifier: orgID
+                                }, {
+                                    $set: setQuery
+                                }, function(errorUpdate, data) {
+                                    if (errorUpdate !== null)
+                                        hasError = true;
+                                    beaconReady = true;
+                                    if (beaconReady && siteCategoryReady) {
+                                        doneFunction();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            } else if (beacon.biinType == "2") {
                 //find beacons who will be children of the new beacon
                 biins.find({
                     organizationIdentifier: orgID,
@@ -276,21 +296,7 @@ module.exports = function() {
                         beacon.children = children;
                         //remove from existing children in other beacons
                         var beaconMinor = beacon.minor + "";
-                        biins.update({
-                            organizationIdentifier: orgID,
-                            venue: beacon.venue,
-                            siteIdentifier: beacon.siteIdentifier,
-                            biinType: "2",
-                            children: {
-                                $in: [beaconMinor]
-                            }
-                        }, {
-                            $pull: {
-                                children: beaconMinor
-                            }
-                        }, {
-                            multi: true
-                        }).exec(function(err, data) {
+                        biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2", children: { $in: [beaconMinor] } }, { $pull: { children: beaconMinor } }, { multi: true }).exec(function(err, data) {
                             if (err) {
                                 hasError = true;
                                 beaconReady = true;
@@ -298,11 +304,7 @@ module.exports = function() {
                                     doneFunction();
                                 }
                             } else {
-                                biins.update({
-                                    identifier: beacon.identifier
-                                }, {
-                                    $set: beacon
-                                }, function(error, data) {
+                                biins.update({ identifier: beacon.identifier }, { $set: beacon }, function(error, data) {
                                     if (error == null) {
                                         organization.update({
                                             identifier: orgID
@@ -324,18 +326,7 @@ module.exports = function() {
                 });
 
             } else if (beacon.biinType == "3") {
-                biins.update({
-                    organizationIdentifier: orgID,
-                    venue: beacon.venue,
-                    siteIdentifier: beacon.siteIdentifier,
-                    biinType: "2"
-                }, {
-                    $push: {
-                        children: beacon.minor
-                    }
-                }, {
-                    multi: true
-                }).exec(function(err, data) {
+                biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2" }, { $push: { children: beacon.minor } }, { multi: true }).exec(function(err, data) {
                     if (err) {
                         hasError = true;
                         beaconReady = true;
@@ -344,17 +335,9 @@ module.exports = function() {
                         }
                     } else {
                         beacon.children = [];
-                        biins.update({
-                            identifier: beacon.identifier
-                        }, {
-                            $set: beacon
-                        }, function(error, data) {
+                        biins.update({ identifier: beacon.identifier }, { $set: beacon }, function(error, data) {
                             if (error == null) {
-                                organization.update({
-                                    identifier: orgID
-                                }, {
-                                    $set: setQuery
-                                }, function(errorUpdate, data) {
+                                organization.update({ identifier: orgID }, { $set: setQuery }, function(errorUpdate, data) {
                                     if (errorUpdate !== null)
                                         hasError = true;
                                     beaconReady = true;
