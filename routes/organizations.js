@@ -4,7 +4,7 @@ module.exports =function (){
 	var util = require('util'), fs=require('fs');
 
 	//Custom Utils
-	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path'),imageManager=require('../biin_modules/imageManager')();
+	var utils = require('../biin_modules/utils')(), path = require('path'),imageManager=require('../biin_modules/imageManager')();
 	
 	//Schemas	
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'), client = require('../schemas/client');;
