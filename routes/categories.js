@@ -17,7 +17,8 @@ module.exports = function () {
 						{identifier:"category12",name:"movies", displayName:"Movies", icon:"ticket-2"},
 						{identifier:"category13",name:"technology", displayName:"Technology", icon:"television"},
 						{identifier:"category14",name:"entertaiment", displayName:"Entertaiment", icon:"smileys"},
-						{identifier:"category15",name:"travel", displayName:"Travel", icon:"ship"}
+						{identifier:"category15",name:"travel", displayName:"Travel", icon:"ship"},
+						{identifier:"category16",name:"bars", displayName:"Bars", icon:"beer"}
 						];
 
 		//Insert of castegories				
