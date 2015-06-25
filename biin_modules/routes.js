@@ -112,9 +112,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/maintenance/insertBiin',maintenance.biinPurchase);
     app.get('/maintenance/beaconChildren',maintenance.getBeaconChildren);
 
-    
-    
-
     //Biins Purchase
     app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/biins/',sites.biinPurchase);    
 
@@ -134,7 +131,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/organizations/:identifier/biins/:biinIdentifier/objects',biins.setObjects);
     app.post('/api/biins/:biinIdentifier/update',biins.updateBiin);
     
-
     //Elements
     app.get('/organizations/:identifier/elements', elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
