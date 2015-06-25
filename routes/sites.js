@@ -54,7 +54,7 @@ module.exports = function () {
 		
 
 		var categorySitesResult={categories:[]};
-
+		var catAdded=[]
 		var searchSitesByCategory =function(userCategories,catArray,lat,lng,callback){
 
 			var queryMinLat ={min_latitude:{$lte:lat}};
@@ -80,12 +80,13 @@ module.exports = function () {
 							category.sites.push(foundSearchSites[c].sites)
 						else{
 							var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
-							categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites});
+							categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites, hasSites:'1'});
+							catAdded.push(foundSearchSites[c].categoryIdentifier);							
 						}						
 						cantSites += foundSearchSites[c].sites.length;
 					}
 					
-				}
+				}				
 				callback();
 			});
 		}
@@ -132,6 +133,12 @@ module.exports = function () {
 									searchAndReturn(latInc,lngInc);
 
 								}else{
+									//Fill not retrieve categories sites
+									var notFoundCatSites=_.difference(catArray,catAdded);
+									for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
+										var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
+										categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
+									}									
 									//Return the sites data
 									res.json({data:categorySitesResult,status:'0'});
 								}
