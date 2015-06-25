@@ -247,7 +247,7 @@ module.exports = function(){
          {
          	$push:{elements:newModel}
          },
-         function(err, affectedRows){
+         function(err, raw){
          	if(err){
          		res.send(err,500);
          	}
@@ -278,7 +278,7 @@ module.exports = function(){
 					{identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,"elements.elementIdentifier":elementIdentifier},
 					{$set:setModel},
 					{upsert:false},
-					function(err,cantAffected){
+					function(err,raw){
 						if(err){
 							throw err;
 							res.json(null);

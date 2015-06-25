@@ -140,7 +140,7 @@
 	                children.push(data[i].minor)
 	            };
 	            biin.children = children;
-				biins.update({identifier:biin.identifier},{$set:biin},function (error,data)
+				biins.update({identifier:biin.identifier},{$set:biin},function (error,raw)
 				{
 					if(error == null){
 						return res.send("{\"success\":\"true\"}",200);
@@ -168,7 +168,7 @@
 				        } else {
 				            var children = [];
 				            biin.children = children;
-							biins.update({identifier:biin.identifier},{$set:biin},function (error,data){
+							biins.update({identifier:biin.identifier},{$set:biin},function (error,raw){
 								if(error == null){
 									return res.send("{\"success\":\"true\"}",200);
 								}else{
@@ -182,7 +182,7 @@
 		}
 		else
 		{
-			biins.update({identifier:biin.identifier},{$set:biin},function (error,data)
+			biins.update({identifier:biin.identifier},{$set:biin},function (error,raw)
 			{
 				if(error == null){
 					return res.send("{\"success\":\"true\"}",200);
