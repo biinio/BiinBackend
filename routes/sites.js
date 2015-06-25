@@ -175,7 +175,7 @@ module.exports = function () {
 					{
 						$push: {sites:model}
 					},
-					function(err,affectedRows){
+					function(err,raw){
 						if(err){
 							res.send(err, 500);
 						}
@@ -232,7 +232,7 @@ module.exports = function () {
 	                     { identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier,'sites.identifier':model.identifier},
 	                     { $set :set },
 	                     { upsert : false },
-	                     function(err, cantAffected){
+	                     function(err, raw){
 	                     	if(err){
 	                     		throw err;
 	                     		res.json(null);
@@ -345,7 +345,7 @@ module.exports = function () {
 			var totalCategories = categories.length-1;
 			for(var c =0; c< categories.length;c++){
 				siteCategoryConfig.categoryIdentifier = categories[c].identifier;
-				siteCategory.update(siteCategoryConfig,{$push:{'sites': {'identifier':siteIdentifier,'lat':lat,'lng':lng,'proximity':proximity}}},{upsert:true},function(err,cantAffected){
+				siteCategory.update(siteCategoryConfig,{$push:{'sites': {'identifier':siteIdentifier,'lat':lat,'lng':lng,'proximity':proximity}}},{upsert:true},function(err,raw){
 					if(err)
 						throw err;
 					else{
@@ -429,7 +429,7 @@ module.exports = function () {
 
 		if(isUpdate){
 				//Remove the Site in the siteCategory Schema
-				siteCategory.update({"sites.identifier":siteIdentifier}, {$pull: {"sites":{'identifier':siteIdentifier}}},{multi: true},function(err,cantAffected){
+				siteCategory.update({"sites.identifier":siteIdentifier}, {$pull: {"sites":{'identifier':siteIdentifier}}},{multi: true},function(err,raw){
 				if(err)
 					throw err;
 				else{
@@ -501,7 +501,7 @@ module.exports = function () {
 					historyRecord.date=utils.getDateNow(); historyRecord.quantity=qty; historyRecord.site=siteIdentifier;
 
 					//Add an history record
-					organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,data){
+					organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,raw){
 						if(err){
 							res.send(err,500)
 						}else{
@@ -522,7 +522,7 @@ module.exports = function () {
  							}
  							newMinorValue=0;
  							//Organization Update
-							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
+							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,raw){
 								if(err)
 									res.send(err,500)
 								else{
@@ -547,8 +547,8 @@ module.exports = function () {
 		var addSiteLogic = function(siteObj){
 			addSiteToRegion(siteObj,function(result,regionId){							
 				if(result){
-					organization.update({'identifier':orgIdentifier,'sites.identifier':siteObj.identifier},{$set:{'sites.$.region':regionId}},function(err,cantAffected){
-						if(!err && cantAffected>0)	
+					organization.update({'identifier':orgIdentifier,'sites.identifier':siteObj.identifier},{$set:{'sites.$.region':regionId}},function(err,raw){
+						if(!err && raw.n>0)	
 							res.json({status:0, data: regionId})
 						else
 							res.json({status:5})
