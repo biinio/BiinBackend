@@ -77,15 +77,14 @@ module.exports = function () {
 					if(foundSearchSites[c].sites.length){
 						var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});					
 						if(category)
-							category.sites.push(foundSearchSites[c].sites)
+							category.sites = category.sites.concat(foundSearchSites[c].sites);
 						else{
 							var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
 							categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites, hasSites:'1'});
 							catAdded.push(foundSearchSites[c].categoryIdentifier);							
 						}						
 						cantSites += foundSearchSites[c].sites.length;
-					}
-					
+					}					
 				}				
 				callback();
 			});
