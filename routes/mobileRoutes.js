@@ -382,6 +382,7 @@ module.exports =function(){
 		newModel.state = model.state;
 		newModel.city = model.city;
 		newModel.zipCode = model.zipCode;		
+		newModel.ubication = model.ubication;
 		//Map fields;
 
 		newModel.title = model.title1;			
