@@ -7,6 +7,7 @@ module.exports = function(){
 	var im = require('imagemagick');
     var utils = require("./utils")(), util=require("util");
     var awsManager = require("./awsManager")();
+    var azureManager = require("./azureManager")();
 	var functions={},
 		_quality = 100,
 	    _workingImagePath='./public/workingFiles/',
@@ -16,7 +17,7 @@ module.exports = function(){
 
 	//Upload an image
 	functions.upload = function(originUrl,imagePath, imageName,callback){
-		this.uploadFile(originUrl,imagePath,imageName,function(err,succes){
+		this.uploadFileAzure(originUrl,imagePath,imageName,function(err,succes){
 			if(err){
 				callback(err);
 			}				
@@ -80,11 +81,14 @@ module.exports = function(){
 
 	//Uploads an imag
 	functions.uploadFile = function(imagePath,directory, imageName,callback){		
-		this.uploadFile(imagePath, directory, imageName,true,callback);
+		this.uploadFileAzure(imagePath, directory, imageName,true,callback);
 	}
 
+	functions.uploadFile = function(imagePath,directory, imageName,generateName,callback){		
+		this.uploadFileAzure(imagePath, directory, imageName,generateName,callback);
+	}
 	//Uploads an imag
-	functions.uploadFile = function(imagePath,directory, imageName, generateName,callback){		
+	functions.uploadFileAWS = function(imagePath,directory, imageName, generateName,callback){		
 		var mainBuquet =  process.env.S3_BUCKET;	
 
 
@@ -119,6 +123,34 @@ module.exports = function(){
 		//var buffer =fs.readFileSync(imagePath);		
 	}
      
+	//Uploads an imag
+	functions.uploadFileAzure = function(imagePath,directory, imageName, generateName,callback){		
+		var mainContainer=  process.env.AZURE_CONTAINER;	
+
+
+	   	var systemImageName ="";//path.join(directory,utils.getImageName(imageName,_workingImagePath));
+	   	var imageFormat =utils.getExtension(imageName);
+	   	if(generateName)
+	   		systemImageName =path.join(directory,utils.getImageName(imageName,_workingImagePath));
+	   	else
+	   		systemImageName =path.join(directory,imageName);
+
+		var newPath = process.env.IMAGES_REPOSITORY_AZURE+"/"+systemImageName;	
+		var sizeExtend =process.env.STANDARD_IMAGE_HEIGHT + "x"+process.env.STANDARD_IMAGE_WIDTH;
+
+		imageMagick(imagePath)		
+		.resize( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT)
+		.crop( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT,0,0)		
+		.geometry(process.env.STANDARD_IMAGE_WIDTH+'!', process.env.STANDARD_IMAGE_HEIGHT+"!")		
+		.gravity('Center')
+		.quality(process.env.STANDARD_IMAGE_QUALITY)
+		.toBuffer(function (err, buffer) {
+			azureManager.uploadObjectToContainer(mainContainer, systemImageName,buffer,imageFormat,function(data){
+					callback(newPath);
+			});
+		});
+	}
+
     //Copy a image to a FTP server
     functions.copyToFtp = function(localPath,ftpPath, systemImageName,callback){             
        var remotePath = ftpPath+systemImageName;

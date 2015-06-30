@@ -33,7 +33,7 @@ module.exports = function(){
 
 	//Get the profile of a biinnie
 	functions.getProfile = function(req,res){
-		var identifier= req.param('identifier');
+		var identifier= req.params.identifier;
 
 		//Find the mobile user
 		mobileUser.findOne({identifier:identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
@@ -56,7 +56,7 @@ module.exports = function(){
 	//Get The Biinie Biined Collections
 	functions.getCollections =function(req,res){
 		res.setHeader('Content-Type', 'application/json');
-		var identifier =req.param("identifier");
+		var identifier =req.params.identifier;
 		mobileUser.findOne({"identifier":identifier},{_id:0,biinieCollections:1},function(err,data){
 			if(err)
 				res.json({data:{status:"5", result:"0"}});	
@@ -148,7 +148,7 @@ module.exports = function(){
 
 	//POST the Categories of an Mobile User
 	functions.setCategories =function(req,res){
-		var identifier = req.param("identifier");
+		var identifier = req.params.identifier;
 		res.setHeader('Content-Type', 'application/json');
 
 		var categoriesModel = req.body['model'];
@@ -172,11 +172,11 @@ module.exports = function(){
 	//SET a new Mobile user Takin the params from the URL **To change **Deprecated 
 	functions.setMobileByURLParams =function(req,res){
 		var model ={};
-		model.firstName = req.param('firstName');
-		model.lastName = req.param('lastName');
-		model.biinName= req.param('biinName');
-		model.password= req.param('password');
-		model.gender= req.param('gender');
+		model.firstName = req.params.firstName;
+		model.lastName = req.params.lastName;
+		model.biinName= req.params.biinName;
+		model.password= req.params.password;
+		model.gender= req.params.gender;
 		model.birthDate = utils.getDateNow();
 		//** Set that the email is the same as biinName
 		model.email = model.biinName;
@@ -249,8 +249,8 @@ module.exports = function(){
 
 	//POST a new item to a collection
 	functions.setMobileBiinedToCollection=function(req,res){
-		var identifier= req.param('identifier');
-		var collectionIdentifier= req.param("collectionIdentifier");
+		var identifier= req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
 
 		var model = req.body.model;
 		
@@ -311,9 +311,9 @@ module.exports = function(){
 
 	//PUT Site Notified
 	functions.setShowcaseNotified=function(req,res){
-		var identifier=req.param("biinieIdentifier");
-		var siteIdentifier=req.param("siteIdentifier");
-		var showcaseIdentifier=req.param("showcaseIdentifier");
+		var identifier=req.params.biinieIdentifier;
+		var siteIdentifier=req.params.siteIdentifier;
+		var showcaseIdentifier=req.params.showcaseIdentifier;
 
 		mobileUser.findOne({identifier:identifier},{'showcaseNotified':1},function(err,user){
 			if(err)
@@ -341,7 +341,7 @@ module.exports = function(){
 
 	//PUT Share object
 	functions.setShare=function(req,res){
-		var identifier=req.param("identifier");
+		var identifier=req.params.identifier;
 		var model=req.body.model;
 		model.shareDate= utils.getDateNow();
 
@@ -359,7 +359,7 @@ module.exports = function(){
 
 	//GET the share informatin of a biinie
 	functions.getShare=function(req,res){
-		var identifier = req.param('identifier');
+		var identifier = req.params.identifier;
 		mobileUser.findOne({'identifier':identifier},{'_id':0,'shareObjects':1},function(err,mobUser){
 			if(err)
 				res.json({status:"5", result:"0",data:{}});	
@@ -375,9 +375,9 @@ module.exports = function(){
 
 	//DELETE a object to a Biined Collection
 	functions.deleteMobileBiinedElementToCollection=function(req,res){
-		var identifier=req.param("identifier");
-		var collectionIdentifier= req.param("collectionIdentifier");
-		var objIdentifier = req.param("objIdentifier")
+		var identifier=req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
+		var objIdentifier = req.params.objIdentifier;
 
 
 		//Update the collection
@@ -419,9 +419,9 @@ module.exports = function(){
 
 	//DELETE a object to a Biined Collection
 	functions.deleteMobileBiinedSiteToCollection=function(req,res){
-		var identifier=req.param("identifier");
-		var collectionIdentifier= req.param("collectionIdentifier");
-		var objIdentifier = req.param("objIdentifier")
+		var identifier=req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
+		var objIdentifier = req.params.objIdentifier;
 
 		mobileUser.findOne({identifier:identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
 			if(err)
@@ -446,7 +446,7 @@ module.exports = function(){
 	functions.updateMobile =function(req,res){
 
 		var model = req.body.model;
-		var identifier = req.param("identifier");
+		var identifier = req.params.identifier;
 
 		var updateModel = function(model){
 			var birthDate = utils.getDate(model.birthDate);
@@ -495,8 +495,8 @@ module.exports = function(){
 
 	//Get the authentication of the user **To change **Deprecated 
 	functions.login =function(req,res){
-		var user =req.param('user');
-		var password= req.param('password');
+		var user =req.params.user;
+		var password= req.params.password;
 
 		mobileUser.findOne({biinName:user},function(err,foundBinnie){
 			if(err)
@@ -521,7 +521,7 @@ module.exports = function(){
 
 	//GET/POST the activation of the user
 	functions.activate=function(req,res){
-		var identifier = req.param("identifier");
+		var identifier = req.params.identifier;
 		mobileUser.findOne({identifier:identifier, accountState:false},function(err, foundBinnie){
 			if(err)
 				res.send(500,"The user was not found")
@@ -544,7 +544,7 @@ module.exports = function(){
 
 	//Get if an Biinie is active
 	functions.isActivate=function(req,res){
-		var identifier = req.param("identifier");
+		var identifier = req.params.identifier;
 		res.setHeader('Content-Type', 'application/json');
 		mobileUser.findOne({identifier:identifier, accountState:true},function(err, foundBinnie){
 			if(err)
@@ -601,7 +601,7 @@ module.exports = function(){
 	//DELETE an specific showcase
 	functions.delete= function(req,res){
 		//Perform an update
-		var identifier = req.param('identifier');
+		var identifier = req.params.identifier;
 				
 		mobileUser.remove({identifier:identifier},function(err){
 			if(err)
@@ -614,7 +614,7 @@ module.exports = function(){
 	//Post the Image of the Organization
 	functions.uploadImage = function(req,res){
 		//Read the fileer.name;
-		var binnieIdentifier =req.param("identifier");
+		var binnieIdentifier =req.params.identifier;
 		res.setHeader('Content-Type', 'application/json');
 
  		if(!util.isArray(req.files.file)){

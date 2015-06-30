@@ -171,6 +171,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       $http.put('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
           $modalInstance.close($scope.beacon);
         }).error(function(data,status){
+          $scope.message = data.message;
           console.log(data);
           console.log(status);
         });
