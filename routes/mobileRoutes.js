@@ -237,7 +237,7 @@ module.exports =function(){
  		var identifier = req.param('identifier');
  		var model = req.body.model;
 
- 		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,affected){
+ 		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
 			if(err)
  				res.json({status:"7",data:{}, error:err});
  			else
@@ -382,6 +382,7 @@ module.exports =function(){
 		newModel.state = model.state;
 		newModel.city = model.city;
 		newModel.zipCode = model.zipCode;		
+		newModel.ubication = model.ubication;
 		//Map fields;
 
 		newModel.title = model.title1;			

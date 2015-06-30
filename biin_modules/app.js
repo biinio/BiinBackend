@@ -66,7 +66,7 @@ module.exports = function (db) {
     //app.use(express.static(path.join(process.env.PWD,'bower_components')));
     app.use(favicon());
     app.use(logger('dev'));
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
     app.use(session({
         secret: 'ludusy secret',

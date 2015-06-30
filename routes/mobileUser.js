@@ -34,9 +34,8 @@ module.exports = function(){
 	//Get the profile of a biinnie
 	functions.getProfile = function(req,res){
 		var identifier= req.params.identifier;
-
 		//Find the mobile user
-		mobileUser.findOne({identifier:identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
+		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
 			if(err)
 				res.json({data:{status:"5",result:""}});
 			else{
@@ -79,7 +78,7 @@ module.exports = function(){
 
 		if('isNew' in model){
 			 
-			mobileUser.findOne({biinName:model.biinName},function(err,mobileUserAccount){
+			mobileUser.findOne({'biinName':model.biinName},function(err,mobileUserAccount){
 				if(mobileUserAccount){
 					res.send('The Account Name is already taken');
 				}else{
@@ -116,7 +115,7 @@ module.exports = function(){
 			});
 		}else{//Update the Binnie information profile
 			mobileUser.update(
-				{identifier:model.identifier},
+				{'identifier':model.identifier},
 				{
 					firstName:model.firstName,
 					lastName:model.lastName,
@@ -129,7 +128,7 @@ module.exports = function(){
 					categories:model.categories? model.categories:[],
 					imgUrl:model.imgUrl?model.imgUrl:""
 				},
-				function(err,cantUpdate){
+				function(err,raw){
 					if(err)
 						res.send(err,500);
 					else
@@ -154,15 +153,15 @@ module.exports = function(){
 		var categoriesModel = req.body['model'];
 
 		var catArray = _.pluck(categoriesModel,'identifier')
-		category.find({identifier:{$in:catArray}},function(err,data){
+		category.find({'identifier':{$in:catArray}},function(err,data){
 			if(err)
 				res.json({data:{status:"5", result:"0"}});
 			else{
-				mobileUser.update({identifier:identifier},{categories:data},function(err,count){
+				mobileUser.update({'identifier':identifier},{categories:data},function(err,raw){
 						if(err)
 							res.json({data:{status:"7",result:""}})
 						else{
-							res.json({data:{status:"0", result: count?"1":"0"}});
+							res.json({data:{status:"0", result: raw.n?"1":"0"}});
 						}
 				})				
 			}
@@ -191,7 +190,7 @@ module.exports = function(){
 		res.setHeader('Content-Type', 'application/json');
 		var errors = utils.validate(new mobileUser().validations(),req,'model');
 		if(!errors){
-			mobileUser.findOne({biinName:model.biinName},function(err,mobileUserAccount){
+			mobileUser.findOne({'biinName':model.biinName},function(err,mobileUserAccount){
 					if(mobileUserAccount){
 						res.json({data:{status:"1",identifier:""}});
 					}else{
@@ -264,7 +263,7 @@ module.exports = function(){
 							throw err;
 						else{
 							if(el && el.elements && el.elements.length>0){
-								organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.biinedCount':1}},function(err,updCant){
+								organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.biinedCount':1}},function(err,raw){
 									if(err)
 										throw err;
 								});
@@ -276,13 +275,13 @@ module.exports = function(){
 
 				var obj={identifier:model.identifier,"_id":model._id};
 				updateCollectionCount(model.identifier);
-				mobileUser.update({identifier:identifier,
+				mobileUser.update({'identifier':identifier,
 					"biinieCollections.identifier":collectionIdentifier},
-					{$push:{"biinieCollections.$.elements":obj}},function(err, affectedDocs){
+					{$push:{"biinieCollections.$.elements":obj}},function(err, raw){
 						if(err){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
-							if(affectedDocs>0)
+							if(raw.n>0)
 								res.json({status:"0",result:"1"});	
 							else
 								res.json({status:"1",result:"0"});	
@@ -293,13 +292,13 @@ module.exports = function(){
 			if(identifier && model){
 
 				var obj={identifier:model.identifier};				
-				mobileUser.update({identifier:identifier,
+				mobileUser.update({'identifier':identifier,
 					"biinieCollections.identifier":collectionIdentifier},
-					{$push:{"biinieCollections.$.sites":obj}},function(err, affectedDocs){
+					{$push:{"biinieCollections.$.sites":obj}},function(err, raw){
 						if(err){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
-							if(affectedDocs>0)
+							if(raw.n>0)
 								res.json({status:"0",result:"1"});	
 							else
 								res.json({status:"1",result:"0"});	
@@ -315,7 +314,7 @@ module.exports = function(){
 		var siteIdentifier=req.params.siteIdentifier;
 		var showcaseIdentifier=req.params.showcaseIdentifier;
 
-		mobileUser.findOne({identifier:identifier},{'showcaseNotified':1},function(err,user){
+		mobileUser.findOne({'identifier':identifier},{'showcaseNotified':1},function(err,user){
 			if(err)
 				res.json({status:"5",data:{}});
 			else{
@@ -345,11 +344,11 @@ module.exports = function(){
 		var model=req.body.model;
 		model.shareDate= utils.getDateNow();
 
-		mobileUser.update({"identifier":identifier},{$push:{'shareObjects':model}},function(err,updatedCant){
+		mobileUser.update({"identifier":identifier},{$push:{'shareObjects':model}},function(err,raw){
 			if(err)
 				res.json({status:"5", result:"0",data:{}});	
 			else
-				if(updatedCant>0)
+				if(raw.n>0)
 					res.json({status:"0",result:"1"});	
 				else
 					res.json({status:"1",result:"0"});	
@@ -387,7 +386,7 @@ module.exports = function(){
 					throw err;
 				else{
 					if(el && el.elements && el.elements.length>0){
-						organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.biinedCount':-1}},function(err,updCant){
+						organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.biinedCount':-1}},function(err,raw){
 							if(err)
 								throw err;
 						});
@@ -398,7 +397,7 @@ module.exports = function(){
 		}
 
 		updateCollectionCount(objIdentifier);
-		mobileUser.findOne({identifier:identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
+		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
 			if(err)
 				res.json({status:"5", result:"0",err:err});	
 			else{				
@@ -423,7 +422,7 @@ module.exports = function(){
 		var collectionIdentifier= req.params.collectionIdentifier;
 		var objIdentifier = req.params.objIdentifier;
 
-		mobileUser.findOne({identifier:identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
+		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
 			if(err)
 				res.json({status:"5", result:"0",err:err});	
 			else{				
@@ -445,21 +444,23 @@ module.exports = function(){
 	//Update by mobile Id
 	functions.updateMobile =function(req,res){
 
+
 		var model = req.body.model;
 		var identifier = req.params.identifier;
 
 		var updateModel = function(model){
 			var birthDate = utils.getDate(model.birthDate);
-			mobileUser.update({identifier:identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false},function(err,count){
+			mobileUser.update({'identifier':identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false},function(err,raw){
 				if(err)
 					res.json({data:{status:"5", result:"0"}});	
 				else
 				{
-					var status = count>0?"0":"9";
-					var result = count>0?"1":"0";
+
+					var status = raw.n>0?"0":"9";
+					var result = raw.n>0?"1":"0";
 
 					//Send the email verification if all is ok.
-					if(count>0){
+					if(raw.n>0){
 						model.identifier = identifier;
 						model.biinName= model.email;
 						sendVerificationMail(req,model,function(){
@@ -475,7 +476,7 @@ module.exports = function(){
 		}
 		//Chek if the User exist and if the e-mail is available
 		if(model && identifier){
-			mobileUser.findOne({biinName:model.email},function(err,foundEmail){
+			mobileUser.findOne({'biinName':model.email},function(err,foundEmail){
 				if(err)
 					res.json({data:{status:"5", result:"0"}});	
 				else
@@ -498,7 +499,7 @@ module.exports = function(){
 		var user =req.params.user;
 		var password= req.params.password;
 
-		mobileUser.findOne({biinName:user},function(err,foundBinnie){
+		mobileUser.findOne({'biinName':user},function(err,foundBinnie){
 			if(err)
 				res.json({data:{status:"5",identifier:""}});	
 			else
@@ -522,7 +523,7 @@ module.exports = function(){
 	//GET/POST the activation of the user
 	functions.activate=function(req,res){
 		var identifier = req.params.identifier;
-		mobileUser.findOne({identifier:identifier, accountState:false},function(err, foundBinnie){
+		mobileUser.findOne({'identifier':identifier, accountState:false},function(err, foundBinnie){
 			if(err)
 				res.send(500,"The user was not found")
 			else{
@@ -546,7 +547,7 @@ module.exports = function(){
 	functions.isActivate=function(req,res){
 		var identifier = req.params.identifier;
 		res.setHeader('Content-Type', 'application/json');
-		mobileUser.findOne({identifier:identifier, accountState:true},function(err, foundBinnie){
+		mobileUser.findOne({'identifier':identifier, accountState:true},function(err, foundBinnie){
 			if(err)
 				res.json({data:{status:"7",result:""}})
 			else{
@@ -603,7 +604,7 @@ module.exports = function(){
 		//Perform an update
 		var identifier = req.params.identifier;
 				
-		mobileUser.remove({identifier:identifier},function(err){
+		mobileUser.remove({'identifier':identifier},function(err){
 			if(err)
 				res.send(err,500)
 			else

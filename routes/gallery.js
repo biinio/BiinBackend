@@ -107,7 +107,7 @@ module.exports =function(){
 			organization.update({"accountIdentifier":userAccount,"identifier":organizationId},
 			 {$push:{gallery:{$each:filesUploaded}}},
 			 { upsert : false},
-	         function(err, cantAffected){
+	         function(err, raw){
 	         	if(err){
 	         		throw err;
 	         		res.json(null);
