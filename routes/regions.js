@@ -192,11 +192,11 @@ module.exports = function () {
 	//Add sites to a region
 	functions.addSiteToRegion=function(regionIdentifier, site,callback){
 
-		region.update({identifier:regionIdentifier},{$push:{sites:{identifier:site.identifier}}},function(err,cantAffected){
+		region.update({identifier:regionIdentifier},{$push:{sites:{identifier:site.identifier}}},function(err,raw){
 			if(err)
 				throw err
 			else
-				callback(cantAffected>0,regionIdentifier);
+				callback(raw.n>0,regionIdentifier);
 		})
 	}	
 
