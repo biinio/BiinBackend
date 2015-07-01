@@ -180,7 +180,7 @@ module.exports = function () {
 					var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});		
 					for(var csF=0;csF<foundSearchSites[c].sites.length;csF++){
 						//cal Binnie prox
-						foundSearchSites[c].sites[csF].biinieProximity = utils.getProximity(userLat,userLng,foundSearchSites[c].sites[csF].lat,foundSearchSites[c].sites[csF].lng);
+						foundSearchSites[c].sites[csF].biinieProximity = ""+utils.getProximity(userLat,userLng,foundSearchSites[c].sites[csF].lat,foundSearchSites[c].sites[csF].lng);
 					}
 
 					if(category)
