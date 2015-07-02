@@ -241,7 +241,7 @@ module.exports =function(){
 			if(err)
  				res.json({status:"7",data:{}, error:err});
  			else
- 				res.json({status:"0",data:{}});	
+ 				res.json({status:"0",result:"1"});	
  		});
  	}
 
