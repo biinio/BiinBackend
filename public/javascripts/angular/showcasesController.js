@@ -341,7 +341,7 @@ biinAppShowCases.controller('showcasesController', ['$scope', '$http','$routePar
     }
     return "";
   }
-
+  
   $scope.sortShowcases = function(site ,showcase){
     return function(showcase){
     var index = -1;
