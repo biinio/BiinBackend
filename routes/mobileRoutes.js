@@ -276,6 +276,19 @@ module.exports =function(){
 						if(err)
 							throw err;
 						else{
+
+							for(var siteShowcase=0; siteShowcase < site.showcases.length;siteShowcase++){
+								var highLighEl =[];
+								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':site.showcases[siteShowcase].showcaseIdentifier})
+
+								for(var el =0 ;el<showcaseInfo.elements.length;el++){
+									if(showcaseInfo.elements[el].isHighlight=='1'){
+										highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier});
+									}
+								}
+								showcases.push({'identifier':showcaseInfo.identifier,'highlightElements':highLighEl});	
+							}
+							/*
 							for(var showCaseInd=0;showCaseInd<foundShowcases.length;showCaseInd++){
 								var highLighEl =[];
 
@@ -285,7 +298,7 @@ module.exports =function(){
 									}
 								}
 								showcases.push({'identifier':foundShowcases[showCaseInd].identifier,'highlightElements':highLighEl});	
-							}
+							}*/
 							callback(showcases)							
 						}
 
