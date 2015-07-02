@@ -32,7 +32,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/sendEmail', routes.sendEmail)
     app.get('/partials/:filename', routes.partials);
     app.get('/', routes.index);
-    app.get('/dashboard', routes.dashboard);    
+    //app.get('/dashboard', routes.dashboard);    
     app.get('/login',routes.login);
     app.get('/home',routes.home);
     app.get('/singup',routes.singup);
@@ -52,9 +52,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobileTest',routes.mobileTest);
 
     //Dashboard 
+    app.get('/dashboard', dashboard.index);
     app.get('/api/dashboard', dashboard.get);
     app.get('/api/dashboard/set', dashboard.set);
     app.get('/api/dashboard/comparative', dashboard.getComparativeData);
+    app.get('/api/dashboard/visits', dashboard.getVisitsReport);
+    
 
     //Acounts Routes
     app.get('/accounts',accounts.index);    

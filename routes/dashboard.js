@@ -7,13 +7,15 @@ module.exports = function(){
 	var utils = require('../biin_modules/utils')();	    
 
 	var client = require('../schemas/client'), imageManager=require('../biin_modules/imageManager')();
-	var organization = require('../schemas/organization'), showcase = require('../schemas/showcase'), mobileActions= require('../schemas/mobileActions');
+	var organization = require('../schemas/organization');
+	var showcase = require('../schemas/showcase')
+	var mobileActions= require('../schemas/mobileActions');
 	var functions ={}
 
 
 	//Get Client List
 	functions.index = function(req,res){
-		res.render('account/index', { title: 'Account' ,user:req.user, organization:req.session.defaultOrganization, isSiteManteinance:true});
+		res.render('dashboard/index', { title: 'Account' ,user:req.user, organization:req.session.defaultOrganization, isSiteManteinance:true});
 	}
 
 	//Set the information in data base of the user
@@ -107,6 +109,16 @@ module.exports = function(){
 				res.json({data:result});
 			}
 		})
+	}
+
+
+	/**GRAPHS AND CHARTS FUNCTIONS**/
+	functions.getVisitsReport =function(req, res){
+
+	}
+
+
+	function getBeaconsPerSite(){
 
 	}
 

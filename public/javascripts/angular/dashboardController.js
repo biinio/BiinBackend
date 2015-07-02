@@ -13,6 +13,17 @@ biinAppBlog.controller("dashboardController",['$scope', '$http',function($scope,
 
   });
 
+  var functions = {};
+
+    //GET the main view of sites
+    functions.index = function(req, res) {
+        res.render('dashboard/index', {
+            title: 'Dashboard',
+            user: req.user,
+            isSiteManteinance: false
+        });
+    }
+
 
   $scope.changeOrganization=function(indexSel){
     var index = eval(indexSel);
@@ -99,5 +110,6 @@ biinAppBlog.controller("dashboardController",['$scope', '$http',function($scope,
 
   //Turn off the Loader
   turnLoaderOff();
+  return functions;
 
 }]);
