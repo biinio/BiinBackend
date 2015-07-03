@@ -20,6 +20,11 @@ form.novalidate
 				.col-sm-10
 					input#email.form-control.title-value(ng-model="sites[selectedSite].email" name="email" type="text" placeholder="email@email.com **" ng-blur="validate()"  required )
 		.row
+			.form-group
+				label.col-sm-2.control-label(for='nutshell')(translate="SITES.NUTSHELL")
+				.col-sm-10
+					input#nutshell.form-control.title-value(ng-model="sites[selectedSite].nutshell" name="nutshell" type="text" placeholder="Mini Description **" ng-blur="validate()"  required )
+		.row
 			h4 {{'GENERIC.IDENTIFIER' | translate}} : {{sites[selectedSite].identifier }}
 	.section
 		h2(translate="GENERIC.SEARCH_TAGS")
