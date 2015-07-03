@@ -1,113 +1,117 @@
-var biinAppVisitsGraph = angular.module('biinAppVisitsGraph',['ngRoute','nvd3']);
+var biinAppVisitsGraph = angular.module('biinAppVisitsGraph', ['ngRoute', 'nvd3']);
 
-biinAppVisitsGraph.controller("biinAppVisitsGraphController",['$scope', '$http',function($scope,$http){
-    window.setTimeout(function(){
-        console.log($scope.selectedOrganization);
-        console.log($scope.selectedSite);      
-    }, 10000);
+biinAppVisitsGraph.controller("biinAppVisitsGraphController", ['$scope', '$http',
+    function($scope, $http) {
 
-    $http.get('/api/dashboard').success(function(data){
-      $scope.organizations = data.data.organizations;
+        $scope.organizationId = selectedOrganization();
 
-      for (var i = 0; i < $scope.organizations.length; i++) {
-          if($scope.organizations[i].identifier == $scope.organizations[0].identifier)
-      }
-      //if($scope.organizations && $scope.organizations.length>0)
-       // $scope.selectedOrganization= $scope.organizations[0].identifier;//{identifier:data.data.organizations[0].identifier, name:data.data.organizations[0].name};
 
-  });
-  
 
-  $scope.options = {
-    chart: {
-        type: 'lineChart',
-        height: 450,
-        margin : {
-            top: 20,
-            right: 20,
-            bottom: 40,
-            left: 55
-        },
-        x: function(d){ return d.x; },
-        y: function(d){ return d.y; },
-        useInteractiveGuideline: true,
-        dispatch: {
-            stateChange: function(e){ console.log("stateChange"); },
-            changeState: function(e){ console.log("changeState"); },
-            tooltipShow: function(e){ console.log("tooltipShow"); },
-            tooltipHide: function(e){ console.log("tooltipHide"); }
-        },
-        xAxis: {
-            axisLabel: 'Time (ms)'
-        },
-        yAxis: {
-            axisLabel: 'Voltage (v)',
-            tickFormat: function(d){
-                return d3.format('.02f')(d);
-            },
-            axisLabelDistance: 30
-        },
-        callback: function(chart){
-            console.log("!!! lineChart callback !!!");
-        }
-    },
-    title: {
-        enable: true,
-        text: 'Graph 1'
-    },
-    subtitle: {
-        enable: true,
-        text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
-        css: {
-            'text-align': 'center',
-            'margin': '10px 13px 0px 7px'
-        }
-    }
-  };
+        function getDateString(date) {
+            var dd = date.getDate();
+            var mm = date.getMonth() + 1; //January is 0!
+            var yyyy = date.getFullYear();
 
-  $scope.data = sinAndCos();
-
-  /*Random Data Generator */
-  function sinAndCos() {
-            var sin = [],sin2 = [],
-                cos = [],mine = [];
-
-            //Data is represented as an array of {x,y} pairs.
-            for (var i = 0; i < 100; i++) {
-                sin.push({x: i, y: Math.sin(i/10)});
-                sin2.push({x: i, y: i % 10 == 5 ? null : Math.sin(i/10) *0.25 + 0.5});
-                cos.push({x: i, y: .5 * Math.cos(i/10+ 2) + Math.random() / 10});
-                mine.push({x:i,y:Math.random()});
+            if (dd < 10) {
+                dd = '0' + dd
             }
 
-            //Line chart data should be sent as an array of series objects.
-            return [
-                {
-                    values: sin,      //values - represents the array of {x,y} data points
-                    key: 'Sine Wave', //key  - the name of the series.
-                    color: '#ff7f0e'  //color - optional: choose your own line color.
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+
+            var stringDate = yyyy + '-' + mm + '-' + dd;
+            return stringDate;
+        }
+
+        var today = new Date();
+        var monthAgo = new Date();
+        monthAgo.setTime(today.getTime() - 30 * 86400000);
+
+
+        $http.get('/api/dashboard/visits', {
+            headers: {
+                organizationid: $scope.organizationId,
+                endDate: getDateString(today),
+                startDate: getDateString(monthAgo)
+            }
+        }).success(function(data) {
+            var visits = [];
+            var keys = Object.keys(data.data);
+            var maxValue = 1;
+            for (var i = 0; i < keys.length; i++) {
+                var s = new Date(keys[i]); 
+                visits.push({
+                    x: s.getTime(),
+                    y: data.data[keys[i]]
+                });
+                if(data.data[keys[i]] > maxValue )
+                    maxValue = data.data[keys[i]];
+            }
+
+            $scope.data = [{
+                values: visits,
+                key: 'visits',
+                color: '#006699',
+                area: true
+            }];
+
+            $scope.options = {
+                chart: {
+                    type: 'lineChart',
+                    height: 450,
+                    margin: {
+                        top: 20,
+                        right: 20,
+                        bottom: 40,
+                        left: 55
+                    },
+                    x: function(d) {
+                        return d.x;
+                    },
+                    y: function(d) {
+                        return d.y;
+                    },
+                    useInteractiveGuideline: true,
+                    dispatch: {
+                        stateChange: function(e) {
+                            console.log("stateChange");
+                        },
+                        changeState: function(e) {
+                            console.log("changeState");
+                        },
+                        tooltipShow: function(e) {
+                            console.log("tooltipShow");
+                        },
+                        tooltipHide: function(e) {
+                            console.log("tooltipHide");
+                        }
+                    },
+                    xAxis: {
+                        axisLabel: 'Date',
+                        tickFormat: function(d) {
+                            return d3.time.format('%d-%m-%y')(new Date(d));
+                        },
+                        showMaxMin:false,
+                        axisLabelDistance: 30
+                    },
+                    yAxis: {
+                        axisLabel: 'Visits',
+                    },
+                    callback: function(chart) {
+                        console.log("!!! lineChart callback !!!");
+                    },
+                    forceY:[0,maxValue]
                 },
-                {
-                    values: cos,
-                    key: 'Cosine Wave',
-                    color: '#2ca02c'
-                },
-                {
-                    values: sin2,
-                    key: 'Another sine wave',
-                    color: '#7777ff',
-                    area: true      //area - set to true if you want this line to turn into a filled area chart.
-                },
-                {
-                    values: mine,
-                    key: 'Mine test',
-                    color: '#cd0a0a',
-                    area: true   
+                title: {
+                    enable: true,
+                    text: 'Graph 1'
                 }
-            ];
-  };
+            };
+        });
 
-  //Turn off the Loader
-  turnLoaderOff();
+        //Turn off the Loader
+        turnLoaderOff();
 
-}]);
+    }
+]);

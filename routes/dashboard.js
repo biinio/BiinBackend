@@ -10,6 +10,9 @@ module.exports = function(){
 	var organization = require('../schemas/organization');
 	var showcase = require('../schemas/showcase')
 	var mobileActions= require('../schemas/mobileActions');
+	var mobileHistory= require('../schemas/mobileHistory');
+	var biin= require('../schemas/biin');
+
 	var functions ={}
 
 
@@ -114,7 +117,72 @@ module.exports = function(){
 
 	/**GRAPHS AND CHARTS FUNCTIONS**/
 	functions.getVisitsReport =function(req, res){
+		var organizationId = req.headers["organizationid"];
+		var startDate = new Date(req.headers["startdate"]);
+		var endDate = new Date(req.headers["enddate"]);
+		biin.find({organizationIdentifier:organizationId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
+			if(err)
+				throw err
+			else
+			{
+				var biinsIdentifier = [];
+				for(var i = 0; i < data.length; i++)
+				{
+					biinsIdentifier.push({"actions.to":data[i].identifier});
+				}
+				var counterDates = {};
+				var currentDate = new Date();
+				currentDate.setTime(startDate.getTime())
+				for(var i = 0; currentDate.getTime() != endDate.getTime() ; i++)
+				{
+					counterDates[getDateString(currentDate)] = 0;
+					currentDate.setTime( startDate.getTime() + i * 86400000 );
+				}
+				if(biinsIdentifier.length == 0)
+				{
+					res.json({"data":counterDates});
+				}
+				else
+				{
+					mobileHistory.find({$or:biinsIdentifier,"actions.did":"3"},{},function(errMobile,data)
+					{
+						if(errMobile)
+							throw errMobile
+						else
+						{
+							for (i = 0; i < data.length; i++) 
+							{
+								for (var j = 0; j < data[i].actions.length; j++) 
+								{
+									var date = data[i].actions[j].at.split(" ")[0];
+									counterDates[date] += 1;
+								};
+							};
+							res.json({"data":counterDates});
+						}
+					});
+				}
+			}
 
+		});
+	}
+
+	function getDateString(date)
+	{
+		var dd = date.getDate();
+		var mm = date.getMonth()+1; //January is 0!
+		var yyyy = date.getFullYear();
+
+		if(dd<10) {
+    		dd='0'+dd
+		} 
+
+		if(mm<10) {
+    		mm='0'+mm
+		} 
+
+		var stringDate = yyyy+'-'+mm+'-'+dd;
+		return stringDate;
 	}
 
 
