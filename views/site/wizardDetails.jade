@@ -23,7 +23,7 @@ form.novalidate
 			.form-group
 				label.col-sm-2.control-label(for='nutshell')(translate="SITES.NUTSHELL")
 				.col-sm-10
-					input#nutshell.form-control.title-value(ng-model="sites[selectedSite].nutshell" name="nutshell" type="text" placeholder="Mini Description **" ng-blur="validate()"  required )
+					input#nutshell.form-control.title-value(ng-model="sites[selectedSite].nutshell" name="nutshell" type="text" placeholder="Mini Description **" ng-blur="validate()" ng-change="limitNutshell()"  required )
 		.row
 			h4 {{'GENERIC.IDENTIFIER' | translate}} : {{sites[selectedSite].identifier }}
 	.section
