@@ -100,50 +100,64 @@ module.exports = function () {
 					if(foundCategories.categories.length===0)
 						res.json({data:{status:"9",data:{}}});
 					else{
+
+
 						var catArray = _.pluck(foundCategories.categories,'identifier')
 						var result = {data:{categories:[]}};
 
-						var latInc = userLat;
-						var lngInc= userLng;
-						maxLatModifiers = userLat;
-						maxLngModifiers = userLng;
-						var radiousRad = utils.metersToRadians(process.env.STANDARD_RADIOUS);
-						var searchAndReturn =function(lat,lng){
-							//Search the sites by user categories and proximity						
-							searchSitesByCategory(foundCategories.categories,catArray,lat,lng,function(){
-								if(cantSites===0){									
-									if(lat>0){
-										latInc =latInc +radiousRad;
-										maxLatModifiers = maxLatModifiers-radiousRad;
-									}										
-									else{
-										latInc = latInc - radiousRad;
-										maxLatModifiers = maxLatModifiers + radiousRad;
-									}
-									if(lng>0){
-										lngInc = lngInc +radiousRad;
-										maxLngModifiers = maxLngModifiers - radiousRad;
-									}										
-									else{
-										lngInc = lngInc - radiousRad;
-										maxLngModifiers= maxLngModifiers +radiousRad;
-									}
+						if(eval(process.env.ALLOW_LOCATION_FILTER)===true){
+							var latInc = userLat;
+							var lngInc= userLng;
+							maxLatModifiers = userLat;
+							maxLngModifiers = userLng;
+							var radiousRad = utils.metersToRadians(process.env.STANDARD_RADIOUS);
+							var searchAndReturn =function(lat,lng){
+								//Search the sites by user categories and proximity						
+								searchSitesByCategory(foundCategories.categories,catArray,lat,lng,function(){
+									if(cantSites===0){									
+										if(lat>0){
+											latInc =latInc +radiousRad;
+											maxLatModifiers = maxLatModifiers-radiousRad;
+										}										
+										else{
+											latInc = latInc - radiousRad;
+											maxLatModifiers = maxLatModifiers + radiousRad;
+										}
+										if(lng>0){
+											lngInc = lngInc +radiousRad;
+											maxLngModifiers = maxLngModifiers - radiousRad;
+										}										
+										else{
+											lngInc = lngInc - radiousRad;
+											maxLngModifiers= maxLngModifiers +radiousRad;
+										}
 
-									searchAndReturn(latInc,lngInc);
+										searchAndReturn(latInc,lngInc);
 
-								}else{
-									//Fill not retrieve categories sites
-									var notFoundCatSites=_.difference(catArray,catAdded);
-									for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
-										var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
-										categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
-									}									
-									//Return the sites data
-									res.json({data:categorySitesResult,status:'0'});
-								}
-							});								
+									}else{
+										//Fill not retrieve categories sites
+										var notFoundCatSites=_.difference(catArray,catAdded);
+										for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
+											var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
+											categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
+										}									
+										//Return the sites data
+										res.json({data:categorySitesResult,status:'0'});
+									}
+								});								
+							}
+							searchAndReturn(userLat,userLng);
+						}else{
+							getAllSitesByCategories(userIdentifier,userLat,userLng,foundCategories.categories,catArray,function(categorySitesResult,cantSites,catAdded){
+							//Fill not retrieve categories sites
+								var notFoundCatSites=_.difference(catArray,catAdded);
+								for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
+									var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
+									categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
+								}										
+								res.json({data:categorySitesResult,status:'0'});
+							})
 						}
-						searchAndReturn(userLat,userLng);
 						
 					}
 				}	
@@ -152,6 +166,37 @@ module.exports = function () {
 				}
 			}
 		});		
+	}
+
+
+	var getAllSitesByCategories = function(userIdentifier, userLat, userLng, userCategories,catArray,callback){
+		console.log("All get categories");
+		var cantSites =0;
+		var categorySitesResult={categories:[]};
+		var catAdded=[]
+		siteCategory.find({categoryIdentifier:{$in:catArray}},{_id:0,categoryIdentifier:1,"sites.identifier":1,"sites.lng":1,"sites.lat":1}).lean().exec(function(err,foundSearchSites){
+			for(var c=0;c< foundSearchSites.length; c++){
+				if(foundSearchSites[c].sites.length){
+					var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});		
+					for(var csF=0;csF<foundSearchSites[c].sites.length;csF++){
+						//cal Binnie prox
+						foundSearchSites[c].sites[csF].biinieProximity = ""+utils.getProximity(userLat,userLng,foundSearchSites[c].sites[csF].lat,foundSearchSites[c].sites[csF].lng);
+					}
+
+					if(category)
+						category.sites = category.sites.concat(foundSearchSites[c].sites);
+					else{
+						var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
+						var category = {identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites, hasSites:'1'};						
+						categorySitesResult.categories.push(category);
+						catAdded.push(foundSearchSites[c].categoryIdentifier);							
+					}		
+					category.sites=_.sortBy(category.sites, 'biinieProximity');				
+					cantSites += foundSearchSites[c].sites.length;
+				}					
+			}				
+			callback(categorySitesResult,cantSites,catAdded);
+		});
 	}
 
 	//PUT an update of an site

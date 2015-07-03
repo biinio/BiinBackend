@@ -16,6 +16,7 @@ var siteObj ={
 	mainColor:{type:String,default:""},
 	textColor:{type:String,default:""},
 	description: {type:String, default:""},
+	nutshell:{type:String, default:""},
 	major:{type: Number, default:0},
 	minorCounter:{type: Number, default:0},
 	country:{type:String, default:""},
