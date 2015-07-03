@@ -165,13 +165,8 @@ module.exports = function() {
             }
         });
 
-        if (mode == "create") {
-            beacon.identifier = utils.getGUID();
-            incQuery["biinsAssignedCounter"] = 1;
-            incQuery["biinsCounter"] = 1;
-            if(beacon.biinType == "1"){
-                beacon.children = [];
-                biins.create(beacon, function(error, data) {
+        var createBeaconsFunction = function(beacon, incQuery, setQuery){
+            biins.create(beacon, function(error, data) {
                     if (error == null) {
                         organization.update({ identifier: orgID }, { $inc: incQuery, $set: setQuery }, function(errorUpdate, raw) {
                             if (errorUpdate !== null)
@@ -188,11 +183,24 @@ module.exports = function() {
                             errorMessage = "Can't add a beacon with same ID";
                         else
                             errorMessage = "An unexpected error has been occurred";
+                        
                         if (beaconReady && siteCategoryReady) {
                             doneFunction();
                         }
                     }
                 });
+        }
+
+        if (mode == "create") {
+            
+            beacon.identifier = utils.getGUID();
+            incQuery["biinsAssignedCounter"] = 1;
+            incQuery["biinsCounter"] = 1;
+
+            if(beacon.biinType == "1"){
+                beacon.children = [];
+                createBeaconsFunction(beacon,incQuery,setQuery);
+                
             } else if (beacon.biinType == "2") {
                 biins.find({ organizationIdentifier: orgID, venue: "", siteIdentifier: beacon.siteIdentifier, biinType: "3"}, { _id: 0, minor: 1 }).lean().exec(function(err, data) {
                     var children = [];
@@ -200,58 +208,14 @@ module.exports = function() {
                         children.push(data[i].minor)
                     };
                     beacon.children = children;
-                    biins.create(beacon, function(error, data) {
-                        if (error == null) {
-                            organization.update({ identifier: orgID }, { $inc: incQuery, $set: setQuery }, function(errorUpdate, raw) {
-                                if (errorUpdate !== null)
-                                    hasError = true;
-                                beaconReady = true;
-                                if (beaconReady && siteCategoryReady) {
-                                    doneFunction();
-                                }
-                            });
-                        } else {
-                            hasError = true;
-                            if(error.code == 11000)
-                                errorMessage = "Can't add a beacon with same ID";
-                            else
-                                errorMessage = "An unexpected error has been occurred";
-                            beaconReady = true;
-                            if (beaconReady && siteCategoryReady) {
-                                doneFunction();
-                            }
-                        }
-                    });
+                    createBeaconsFunction(beacon,incQuery,setQuery);
                 });
             } else if (beacon.biinType == "3") {
                 biins.update({ organizationIdentifier: orgID, venue: "", siteIdentifier: beacon.siteIdentifier, biinType: "2" }, { $push: { children: beacon.minor } }, { multi: true }).exec(function(err, raw) {
                     if (err) {
                         res.send("{}", 500);
                     } else {
-                        biins.create(beacon, function(error, data) {
-                            if (error == null) {
-                                organization.update({ identifier: orgID }, { $inc: incQuery, $set: setQuery }, function(errorUpdate, raw) {
-                                    if (errorUpdate !== null)
-                                        hasError = true;
-                                    beaconReady = true;
-                                    if (beaconReady && siteCategoryReady) {
-                                        doneFunction();
-                                    }
-                                });
-                            } else {
-                                hasError = true;
-                                
-                                if(error.code == 11000)
-                                    errorMessage = "Can't add a beacon with same ID";
-                                else
-                                    errorMessage = "An unexpected error has been occurred";
-
-                                beaconReady = true;
-                                if (beaconReady && siteCategoryReady) {
-                                    doneFunction();
-                                }
-                            }
-                        });
+                        createBeaconsFunction(beacon,incQuery,setQuery);
                     }
                 });
             }
