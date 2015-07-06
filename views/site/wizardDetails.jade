@@ -34,6 +34,6 @@ form.novalidate
 							p {{tag}}
 				.search-add
 					.col-md-9
-						input.form-control(ng-model="newTagField")
+						input.form-control(name="newTagField.tag" ng-model="newTagField.tag")
 					.col-md-3
-						button.btn.btn-default(ng-click="addSiteTag(newTagField);" ng-enter="addSiteTag(newTagField);")(translate="GENERIC.ADD")
+						button.btn.btn-default(ng-click="addSiteTag(newTagField.tag);" ng-enter="addSiteTag(newTagField.tag);")(translate="GENERIC.ADD")

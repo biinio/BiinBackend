@@ -147,9 +147,10 @@ module.exports = function() {
         setQuery[siteLocationToUpdate] = newMinor;
 
         var hasError = false;
+        var errorMessage = "";
         var doneFunction = function() {
             if (hasError)
-                return res.send("{\"success\":\"false\"}", 500);
+                return res.send('{"success":"false","message":"'+errorMessage+'"}', 500);
             else
                 return res.send("{\"success\":\"true\"}", 200);
 
@@ -183,6 +184,10 @@ module.exports = function() {
                     } else {
                         hasError = true;
                         beaconReady = true;
+                        if(error.code == 11000)
+                            errorMessage = "Can't add a beacon with same ID";
+                        else
+                            errorMessage = "An unexpected error has been occurred";
                         if (beaconReady && siteCategoryReady) {
                             doneFunction();
                         }
@@ -207,6 +212,10 @@ module.exports = function() {
                             });
                         } else {
                             hasError = true;
+                            if(error.code == 11000)
+                                errorMessage = "Can't add a beacon with same ID";
+                            else
+                                errorMessage = "An unexpected error has been occurred";
                             beaconReady = true;
                             if (beaconReady && siteCategoryReady) {
                                 doneFunction();
@@ -231,6 +240,12 @@ module.exports = function() {
                                 });
                             } else {
                                 hasError = true;
+                                
+                                if(error.code == 11000)
+                                    errorMessage = "Can't add a beacon with same ID";
+                                else
+                                    errorMessage = "An unexpected error has been occurred";
+
                                 beaconReady = true;
                                 if (beaconReady && siteCategoryReady) {
                                     doneFunction();

@@ -25,7 +25,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.currentModelId = null;
   $scope.organizationId = selectedOrganization();
   $scope.wizardPosition =1;
-  $scope.newTagField="";
+  $scope.newTagField={tag:""};
   $scope.isValid =false;
   //Wizard validations indicatos
   $scope.wizard1IsValid = false;
@@ -182,12 +182,13 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     if(!$scope.sites[$scope.selectedSite].searchTags)
       $scope.sites[$scope.selectedSite].searchTags=[];
     
+    
     if(value!=""){    
       //If the values is not in the array
       if($.inArray(value, $scope.sites[$scope.selectedSite].searchTags)==-1)
       {
         $scope.sites[$scope.selectedSite].searchTags.push(value);
-        $scope.newTagField=""; 
+        $scope.newTagField={tag:""};     
       }
 
     }
