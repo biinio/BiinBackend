@@ -81,7 +81,26 @@ var mobileUserSchema=new Schema({
 			type:{type:String},
 			shareDate:{type:String}
 		}
-	]
+	],
+	loyalty: [
+		{
+		   organizationIdentifier:{type:String, default:''},
+	       isSubscribed:{type:String, default:"0"},
+	       subscriptionDate:{type:String, default:"2014-01-01 12:00:00"},
+	       points:{type:String, default:"0"},
+	       level:{type:String,default:"0"},
+	       achievements: [
+	           {
+	               achievementIdentifier:{type:String, default:"0"}
+	           }
+	       ],
+	       badges: [
+	           {
+	               badgeIdentifier:{type:String, default:"0"}
+	           }
+	       ]
+		}
+	]	
 });
 
 //Methods

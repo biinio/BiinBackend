@@ -356,6 +356,47 @@ module.exports = function(){
 
 	}
 
+	//Put Mobile Point
+	functions.setMobileLoyaltyPoints =function(req,res){
+		var identifier= req.params.identifier;
+		var organizationIdentifier = req.params.organizationIdentifier;
+		var points = req.body.model.points;
+
+		var hasLoyalty=false;
+		var loyaltyModel = {
+		   organizationIdentifier:organizationIdentifier,
+	       isSubscribed:'1',
+	       subscriptionDate:utils.getDateNow(),
+	       points:""+points,
+	       level:'0'
+		}
+
+		mobileUser.findOne({"identifier":identifier},{'loyalty':1},function(err,foundModel){
+			if('loyalty' in foundModel){
+				var hasLoyalty=false;
+				var loyaltyModelSearch = _.findWhere(foundModel.loyalty,{organizationIdentifier:organizationIdentifier});
+				if(typeof(loyaltyModelSearch)!=='undefined'){
+					loyaltyModel = loyaltyModelSearch;
+					loyaltyModel.points = eval(loyaltyModel.points) +points
+					hasLoyalty =true;
+				}				
+			}else{
+				foundModel.loyalty=[];				
+			}
+
+			if(!hasLoyalty)
+				foundModel.loyalty.push(loyaltyModel);
+
+			foundModel.save(function(err){
+				if(err)
+					throw err;
+				else{
+					res.json({data:{status:'0',result:'1'}});
+				}
+			})
+		})
+	}
+	
 	//GET the share informatin of a biinie
 	functions.getShare=function(req,res){
 		var identifier = req.params.identifier;
