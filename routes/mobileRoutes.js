@@ -433,7 +433,7 @@ module.exports =function(){
 
 		var loyaltyModel ={
                 isSubscribed:"1",
-                subscriptionDate:"",
+                subscriptionDate:utils.getDateNow(),
                 points:"0",
                 level:"0",
                 achievements: [
