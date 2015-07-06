@@ -13,6 +13,7 @@ module.exports = function () {
 	var region = require('../schemas/region');
 	var functions = {};
 
+	var _ = require('underscore');
 
 	//GET the index view of a showcases
 	functions.index = function(req,res){
@@ -204,7 +205,7 @@ module.exports = function () {
 	functions.getMobileShowcase =function(req,res){
 		var identifier = req.param("identifier");
 		//biinie getShowcase
-		showcase.findOne({"identifier":identifier},{"identifier":1,"showcaseType":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"elements.elementIdentifier":1,"elements._id":1, "notifications":1, "webAvailable":1},function(err,data){
+		showcase.findOne({"identifier":identifier},{"identifier":1,"showcaseType":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"elements.elementIdentifier":1,"elements._id":1,"elements.position":1, "notifications":1, "webAvailable":1}).lean().exec(function(err,data){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else
@@ -222,11 +223,11 @@ module.exports = function () {
 					showcaseObj.activateNotification = data.activateNotification?data.activateNotification:"0";					
 					showcaseObj.webAvailable = data.webAvailable;
 					showcaseObj.showcaseType = data.showcaseType?data.showcaseType:"1";
-					showcaseObj.elements = data.elements;					
+					showcaseObj.elements = _.sortBy(data.elements, 'position');
 
 					res.json({data:showcaseObj,status:"0"});
 				}
-		})
+		});
 
 	}
 

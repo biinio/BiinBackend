@@ -227,7 +227,7 @@ module.exports =function(){
 			}			
 		}
 		if(biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1},getSiteInformation)
 		}else{
 			res.json({data:{status:"7",data:{}}});
 		}		
@@ -430,26 +430,20 @@ module.exports =function(){
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
-		//If is not loyalty
-		if(!('loyalty' in newModel)){
-			newModel.loyalty ={
-	                isSubscribed:"0",
-	                subscriptionDate:"2014-01-01 12:00:00",
-	                points:"0",
-	                level:"0",
-	                achievements: [
-	                    {
-	                        achievementIdentifier:"0"
-	                    }
-	                ],
-	                badges: [
-	                    {
-	                        badgeIdentifier:"0"
-	                    }
-	                ]
-	        }
+		var loyaltyModel ={
+                isSubscribed:"0",
+                subscriptionDate:"",
+                points:"0",
+                level:"0"
+        }
+
+		if('loyalty' in mobileUser){
+			var loyaltyToFind = _.findWhere(mobileUser.loyalty,{organizationIdentifier:orgId});
+			if(typeof(loyaltyToFind)!=='undefined')
+				loyaltyModel = loyaltyToFind;
 		}
 
+		newModel.loyalty =loyaltyModel;
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
