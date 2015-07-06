@@ -137,7 +137,23 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
           $scope.succesSaveShow=true;
       });            
     
-  } 
+  }
+
+  $scope.limitNutshell = function(){
+    var value = $scope.sites[$scope.selectedSite].nutshell ;
+    if(value == null)
+      value = "";
+    value = value.trim();
+    var words = value.split(" ");
+    if(words.length > 8)
+      words.splice(8, words.length-8);
+    var sentence = "";
+    for (var i = 0; i < words.length; i++) {
+      sentence += words[i] + " ";
+    };
+    sentence = sentence.trim();
+     $scope.sites[$scope.selectedSite].nutshell = sentence;   
+  }
 
   //Details
   //Change Wizad tab manager

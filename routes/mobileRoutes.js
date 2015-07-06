@@ -243,7 +243,7 @@ module.exports =function(){
 			if(err)
  				res.json({status:"7",data:{}, error:err});
  			else
- 				res.json({status:"0",data:{}});	
+ 				res.json({status:"0",result:"1"});	
  		});
  	}
 
@@ -419,6 +419,7 @@ module.exports =function(){
 		newModel.longitude =""+ model.lng;
 		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
 		newModel.email = model.email?model.email:"";
+		newModel.nutshell = model.nutshell?model.nutshell:"";
 		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
@@ -431,10 +432,14 @@ module.exports =function(){
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
 		var loyaltyModel ={
-                isSubscribed:"0",
+                isSubscribed:"1",
                 subscriptionDate:"",
                 points:"0",
-                level:"0"
+                level:"0",
+                achievements: [
+                ],
+                badges: [
+                ]
         }
 
 		if('loyalty' in mobileUser){

@@ -208,6 +208,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
 
     //Biinie Loyalty
+    //Biinie Loyalty
+    app.get('/mobile/biinies/:identifier/organizations/:organizationIdentifier', mobileUser.getOrganizationInformation);    
     app.put('/mobile/biinies/:identifier/organizations/:organizationIdentifier/loyalty/points', mobileUser.setMobileLoyaltyPoints);
     
     //Biin Biinie Object Relation setters
@@ -220,7 +222,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Venues
     app.get('/api/venues/search',venues.getVenueALike);
     app.put('/api/venues/create',venues.createVenue);
-
 
     //Mobile routes    /:
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
