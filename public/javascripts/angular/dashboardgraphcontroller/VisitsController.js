@@ -104,10 +104,6 @@ biinAppVisitsGraph.controller("biinAppVisitsGraphController", ['$scope', '$http'
                             console.log("!!! lineChart callback !!!");
                         },
                         forceY:[0,maxValue]
-                    },
-                    title: {
-                        enable: true,
-                        text: 'Graph 1'
                     }
                 };
             });
