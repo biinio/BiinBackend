@@ -66,3 +66,20 @@ block content
 												p {{cat.displayName}}
 						.row
 							a.btn.btn-lg.btn-warning(ng-click="save()") Save
+
+					.container-fluid
+						.row
+							.col-md-12.section
+								table.table.table-condensed.table-hover
+									tbody
+										tr
+											th 
+												| At
+											th 
+												| Did
+											th 
+												| To
+										tr(ng-repeat="log in biinieHistory")
+											td.biinInOrganizationId {{log.at}}
+											td.biinInOrganizationAlias {{log.did}}
+											td.biinInOrganizationUUID {{log.to}}

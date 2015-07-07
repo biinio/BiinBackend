@@ -11,6 +11,7 @@
     "azure-storage": "^0.4.5",
     "bcrypt": "^0.8.3",
     "body-parser": "~1.13.1",
+    "bootstrap-table": "^1.8.1",
     "bower": "^1.4.1",
     "connect-busboy": "0.0.2",
     "connect-mongo": "^0.8.1",
