@@ -6,6 +6,8 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
   $scope.selectedBinnie="-1";
   $scope.currentModelId="";
   var protoTypeObj = null;
+  $scope.biinieHistory = [];
+
   //Get the binnies list
   $http.get('api/biinies').success(function(data){
     $scope.binnies= data.data;
@@ -27,6 +29,15 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
   	if(typeof($scope.binnies[$scope.selectedBinnie].categories)==='undefined'){
   		$scope.binnies[$scope.selectedBinnie].categories=[];
   	}
+    $http.get("/mobile/biinies/"+$scope.currentModelId+"/history").success(function(data){
+      if(data == null || data.status == "7" ){
+        $scope.biinieHistory = [];
+      }else{
+        console.log(data.data);
+        $scope.biinieHistory = data.data;
+      }
+      
+    });
 
   }
 
