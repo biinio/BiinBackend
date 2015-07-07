@@ -68,6 +68,43 @@ module.exports = function(){
 		});
 	}
 
+	//GET the Organization information and biinie info
+	functions.getOrganizationInformation =function(req,res){
+		res.setHeader('Content-Type', 'application/json');
+		var identifier =req.params.identifier;
+		var organizationId = req.params.organizationIdentifier;
+		mobileUser.findOne({"identifier":identifier},{_id:0,loyalty:1},function(err,mobileUserFound){
+			if(err)
+				res.json({data:{status:"5", result:"0"}});	
+			else{
+				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1},function(err,org){
+					if(err)
+						throw err;
+					else{
+						var loyaltyModel ={
+				                isSubscribed:"1",
+				                subscriptionDate:utils.getDateNow(),
+				                points:"0",
+				                level:"0",
+				                achievements: [
+				                ],
+				                badges: [
+				                ]
+				        }
+						if('loyalty' in mobileUserFound){
+								var loyaltyToFind = _.findWhere(mobileUserFound.loyalty,{organizationIdentifier:organizationId});
+								if(typeof(loyaltyToFind)!=='undefined')
+									loyaltyModel = loyaltyToFind;
+						}				        
+						var loyalty = loyaltyModel;
+						res.json({data:{organization:org,loyalty:loyalty}, status:0});
+					}
+				})				
+			}
+		}); 		
+	}
+
+
 	//PUT a new Mobile User
 	functions.set = function(req,res){
 
@@ -356,6 +393,47 @@ module.exports = function(){
 
 	}
 
+	//Put Mobile Point
+	functions.setMobileLoyaltyPoints =function(req,res){
+		var identifier= req.params.identifier;
+		var organizationIdentifier = req.params.organizationIdentifier;
+		var points = req.body.model.points;
+
+		var hasLoyalty=false;
+		var loyaltyModel = {
+		   organizationIdentifier:organizationIdentifier,
+	       isSubscribed:'1',
+	       subscriptionDate:utils.getDateNow(),
+	       points:""+points,
+	       level:'0'
+		}
+
+		mobileUser.findOne({"identifier":identifier},{'loyalty':1},function(err,foundModel){
+			if('loyalty' in foundModel){
+				var hasLoyalty=false;
+				var loyaltyModelSearch = _.findWhere(foundModel.loyalty,{organizationIdentifier:organizationIdentifier});
+				if(typeof(loyaltyModelSearch)!=='undefined'){
+					loyaltyModel = loyaltyModelSearch;
+					loyaltyModel.points = eval(loyaltyModel.points) +points
+					hasLoyalty =true;
+				}				
+			}else{
+				foundModel.loyalty=[];				
+			}
+
+			if(!hasLoyalty)
+				foundModel.loyalty.push(loyaltyModel);
+
+			foundModel.save(function(err){
+				if(err)
+					throw err;
+				else{
+					res.json({data:{status:'0',result:'1'}});
+				}
+			})
+		})
+	}
+	
 	//GET the share informatin of a biinie
 	functions.getShare=function(req,res){
 		var identifier = req.params.identifier;

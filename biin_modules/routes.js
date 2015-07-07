@@ -210,6 +210,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileBiinedElementToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
 
+    //Biinie Loyalty
+    //Biinie Loyalty
+    app.get('/mobile/biinies/:identifier/organizations/:organizationIdentifier', mobileUser.getOrganizationInformation);    
+    app.put('/mobile/biinies/:identifier/organizations/:organizationIdentifier/loyalty/points', mobileUser.setMobileLoyaltyPoints);
+    
     //Biin Biinie Object Relation setters
     app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/biined',biinBiinieObjects.setBiined)
     app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/notified',biinBiinieObjects.setNotified)
@@ -220,7 +225,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Venues
     app.get('/api/venues/search',venues.getVenueALike);
     app.put('/api/venues/create',venues.createVenue);
-
 
     //Mobile routes    /:
     /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
