@@ -1,4 +1,4 @@
-var biinAppBinnies= angular.module('biinAppBinnies',['ngRoute','biin.services']);
+var biinAppBinnies= angular.module('biinAppBinnies',['ngRoute','biin.services','smart-table']);
 
 biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',function($scope,$http,categorySrv){
   $scope.newObjects=[];
@@ -7,6 +7,7 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
   $scope.currentModelId="";
   var protoTypeObj = null;
   $scope.biinieHistory = [];
+  $scope.biinieHistoryDisplayed = [];
 
   //Get the binnies list
   $http.get('api/biinies').success(function(data){

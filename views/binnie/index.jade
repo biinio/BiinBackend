@@ -70,16 +70,14 @@ block content
 					.container-fluid
 						.row
 							.col-md-12.section
-								table.table.table-condensed.table-hover
-									tbody
+								table.table.table-striped(st-table="biinieHistoryDisplayed" st-safe-src="biinieHistory")
+									thead
 										tr
-											th 
-												| At
-											th 
-												| Did
-											th 
-												| To
-										tr(ng-repeat="log in biinieHistory")
-											td.biinInOrganizationId {{log.at}}
-											td.biinInOrganizationAlias {{log.did}}
-											td.biinInOrganizationUUID {{log.to}}
+											th(st-sort="at" st-sort-default="true" st-skip-natural="true") At
+											th(st-sort="did" st-skip-natural="true") Did
+											th(st-sort="to" st-skip-natural="true") To
+									tbody
+										tr(ng-repeat="log in biinieHistoryDisplayed")
+											td {{log.at}}
+											td {{log.did}}
+											td {{log.to}}
