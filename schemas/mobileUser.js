@@ -100,6 +100,10 @@ var mobileUserSchema=new Schema({
 	           }
 	       ]
 		}
+	],
+	//Seen elements of an user
+	seenElements:[
+		{elementIdentifier:{type:String,index:{unique:true}}}
 	]	
 });
 
