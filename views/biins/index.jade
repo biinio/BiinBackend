@@ -18,10 +18,18 @@ block content
 											input.form-control(type="text" placeholder="filter" ng-model="query" autofocus)
 							.col-xs-12.col-sm-12.col-md-12.col-lg-12.nopadding(ng-repeat="biin in biins | orderBy : '+name' | filter: query" ng-click="edit(biins.indexOf(biin))")
 									.moduleWrapperList.contentHideButtons(ng-class="{active: biins.indexOf(biin) == selectedBiin}")
-										.col-md-3.thumbListImage
-											label.moduleTitle {{getSiteName(biin.siteIdentifier)}}
-										.col-md-9
-											label.moduleTitle {{biin.name}}
+										.row
+											.col-md-6
+												label {{getSiteName(biin.siteIdentifier)}}
+											.col-md-6
+												label {{biin.name}}
+										.row
+											.col-md-4
+												label Minor: {{biin.minor}}
+											.col-md-4
+												label Major: {{biin.major}}
+											.col-md-4
+												label Id: {{biin.brandIdentifier}}
 			.right-section-content
 				div(ng-if="selectedBiin!=null")
 					.animate-switch.wizard-wrapper
