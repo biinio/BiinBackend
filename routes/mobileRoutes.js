@@ -241,9 +241,9 @@ module.exports =function(){
 
  		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
 			if(err)
- 				res.json({status:"7",data:{}, error:err});
+ 				res.json({data:{status:"7", error:err}});
  			else
- 				res.json({status:"0",result:"1"});	
+ 				res.json({data:{status:"0",result:"1"}});	
  		});
  	}
 
