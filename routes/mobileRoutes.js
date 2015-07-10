@@ -239,7 +239,6 @@ module.exports =function(){
  		var identifier = req.param('identifier');
  		var model = req.body.model;
 
-<<<<<<< HEAD
  		var isSetElements =false;
  		var isSetHistory=false;
 
@@ -277,13 +276,6 @@ module.exports =function(){
  		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
  			isSetHistory=true;
  			finalCallback();
-=======
- 		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
-			if(err)
- 				res.json({data:{status:"7", error:err}});
- 			else
- 				res.json({data:{status:"0",result:"1"}});	
->>>>>>> origin/Development
  		});
  	}
 
