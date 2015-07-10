@@ -233,7 +233,7 @@ module.exports = function () {
 							throw err;
 						else{
 							for(var el=0; el<showcaseObj.elements.length;el++){
-								var found=_.findWhere(seenElementsFound.seenElements,{elementIdentifier: showcaseObj.elements[el].elementIdentifier});
+								var found=_.findWhere(seenElementsFound.seenElements,{elementIdentifier: showcaseObj.elements[el]._id});
 								if(typeof(found)!=='undefined')
 									showcaseObj.elements[el].hasBeenSeen='1';
 								else
