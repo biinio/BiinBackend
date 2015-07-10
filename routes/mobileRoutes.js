@@ -239,11 +239,43 @@ module.exports =function(){
  		var identifier = req.param('identifier');
  		var model = req.body.model;
 
+ 		var isSetElements =false;
+ 		var isSetHistory=false;
+
+ 		var finalCallback =function(){
+ 			if(isSetElements && isSetHistory)
+ 				res.json({status:"0",result:"1"});	
+ 		}
+
+ 		var setElementsViewed =function(actions, callback){
+ 			var elementsToInsert = _.where(actions,{did:'5'});
+			var elementsToInsert = _.uniq(elementsToInsert, function(item, key, a) { 
+			    return item.to;
+			});
+
+ 			var elementsStructured = [];
+
+ 			for(var e=0; e<elementsToInsert.length; e++){
+ 				elementsStructured.push({elementIdentifier:elementsToInsert[e].to})	;
+ 			}
+
+
+			mobileUser.update({identifier:identifier},{
+	         	$push:{seenElements:{ $each:elementsStructured}}
+	         },
+	         function(err, raw){
+	         	if(err)
+	         		throw err;
+	         	else
+	         		isSetElements=true;
+	         		callback();
+	         }); 			
+ 		}
+
+ 		setElementsViewed(model.actions,finalCallback);
  		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
-			if(err)
- 				res.json({data:{status:"7", error:err}});
- 			else
- 				res.json({data:{status:"0",result:"1"}});	
+ 			isSetHistory=true;
+ 			finalCallback();
  		});
  	}
 

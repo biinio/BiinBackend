@@ -238,7 +238,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    
-    app.get('/mobile/showcases/:identifier',showcases.getMobileShowcase);
+    app.get('/mobile/biinies/:biinieIdentifier/showcases/:identifier',showcases.getMobileShowcase);
 
 
     //Mobile History
