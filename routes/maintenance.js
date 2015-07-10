@@ -191,6 +191,21 @@ module.exports = function() {
                 });
         }
 
+        var updateBeaconFunction = function(beacon, incQuery, setQuery){
+            biins.update({ identifier: beacon.identifier }, { $set: beacon }, function(error, raw) {
+                if (error == null) {
+                    organization.update({ identifier: orgID }, { $set: setQuery }, function(errorUpdate, data) {
+                        if (errorUpdate !== null)
+                            hasError = true;
+                        beaconReady = true;
+                        if (beaconReady && siteCategoryReady) {
+                            doneFunction();
+                        }
+                    });
+                }
+            });
+        }
+
         if (mode == "create") {
             
             beacon.identifier = utils.getGUID();
@@ -213,7 +228,11 @@ module.exports = function() {
             } else if (beacon.biinType == "3") {
                 biins.update({ organizationIdentifier: orgID, venue: "", siteIdentifier: beacon.siteIdentifier, biinType: "2" }, { $push: { children: beacon.minor } }, { multi: true }).exec(function(err, raw) {
                     if (err) {
-                        res.send("{}", 500);
+                        hasError = true;
+                        beaconReady = true;
+                        if (beaconReady && siteCategoryReady) {
+                            doneFunction();
+                        }
                     } else {
                         createBeaconsFunction(beacon,incQuery,setQuery);
                     }
@@ -222,45 +241,33 @@ module.exports = function() {
         } else {
             if(beacon.biinType == "1"){
                 beacon.children = [];
-                //remove from existing children in other beacons
-                var beaconMinor = beacon.minor + "";
-                biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2", children: { $in: [beaconMinor] } }, { $pull: { children: beaconMinor } }, { multi: true }).exec(function(err, raw) {
-                    if (err) {
+                //finding the old value of minor
+                biins.findOne({identifier:beacon.identifier},{_id:0,minor:1},function(err,oldBeacon){
+                    if(err){
                         hasError = true;
                         beaconReady = true;
                         if (beaconReady && siteCategoryReady) {
                             doneFunction();
                         }
-                    } else {
-                        biins.update({ identifier: beacon.identifier }, { $set: beacon }, function(error, raw) {
-                            if (error == null) {
-                                organization.update({
-                                    identifier: orgID
-                                }, {
-                                    $set: setQuery
-                                }, function(errorUpdate, data) {
-                                    if (errorUpdate !== null)
-                                        hasError = true;
-                                    beaconReady = true;
-                                    if (beaconReady && siteCategoryReady) {
-                                        doneFunction();
-                                    }
-                                });
+                    }else{
+                        var beaconMinor = oldBeacon.minor;
+                        //remove from existing children in other beacons
+                        biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2", children: { $in: [beaconMinor] } }, { $pull: { children: beaconMinor } }, { multi: true }).exec(function(err, raw) {
+                            if (err) {
+                                hasError = true;
+                                beaconReady = true;
+                                if (beaconReady && siteCategoryReady) {
+                                    doneFunction();
+                                }
+                            } else {
+                                updateBeaconFunction(beacon,incQuery,setQuery);
                             }
                         });
                     }
                 });
             } else if (beacon.biinType == "2") {
                 //find beacons who will be children of the new beacon
-                biins.find({
-                    organizationIdentifier: orgID,
-                    venue: beacon.venue,
-                    siteIdentifier: beacon.siteIdentifier,
-                    biinType: "3"
-                }, {
-                    _id: 0,
-                    minor: 1
-                }).exec(function(err, data) {
+                biins.find({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "3", minor : {$ne: beacon.minor} }, { _id: 0, minor: 1 }).exec(function(err, data) {
                     if (err) {
                         hasError = true;
                         beaconReady = true;
@@ -283,29 +290,15 @@ module.exports = function() {
                                     doneFunction();
                                 }
                             } else {
-                                biins.update({ identifier: beacon.identifier }, { $set: beacon }, function(error, raw) {
-                                    if (error == null) {
-                                        organization.update({
-                                            identifier: orgID
-                                        }, {
-                                            $set: setQuery
-                                        }, function(errorUpdate, raw) {
-                                            if (errorUpdate !== null)
-                                                hasError = true;
-                                            beaconReady = true;
-                                            if (beaconReady && siteCategoryReady) {
-                                                doneFunction();
-                                            }
-                                        });
-                                    }
-                                });
+                                updateBeaconFunction(beacon,incQuery,setQuery);
                             }
                         });
                     }
                 });
 
             } else if (beacon.biinType == "3") {
-                biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2" }, { $push: { children: beacon.minor } }, { multi: true }).exec(function(err, raw) {
+                var beaconMinor = beacon.minor + "";
+                biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2", minor : {$ne: beacon.minor}, children:{$not:{$in:[beaconMinor]}} }, { $push: { children: beaconMinor } }, { multi: true }).exec(function(err, raw) {
                     if (err) {
                         hasError = true;
                         beaconReady = true;
@@ -314,18 +307,7 @@ module.exports = function() {
                         }
                     } else {
                         beacon.children = [];
-                        biins.update({ identifier: beacon.identifier }, { $set: beacon }, function(error, raw) {
-                            if (error == null) {
-                                organization.update({ identifier: orgID }, { $set: setQuery }, function(errorUpdate, raw) {
-                                    if (errorUpdate !== null)
-                                        hasError = true;
-                                    beaconReady = true;
-                                    if (beaconReady && siteCategoryReady) {
-                                        doneFunction();
-                                    }
-                                });
-                            }
-                        });
+                        updateBeaconFunction(beacon,incQuery,setQuery);
                     }
                 });
 

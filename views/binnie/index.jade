@@ -66,3 +66,18 @@ block content
 												p {{cat.displayName}}
 						.row
 							a.btn.btn-lg.btn-warning(ng-click="save()") Save
+
+					.container-fluid
+						.row
+							.col-md-12.section
+								table.table.table-striped(st-table="biinieHistoryDisplayed" st-safe-src="biinieHistory")
+									thead
+										tr
+											th(st-sort="at" st-sort-default="true" st-skip-natural="true") At
+											th(st-sort="did" st-skip-natural="true") Did
+											th(st-sort="to" st-skip-natural="true") To
+									tbody
+										tr(ng-repeat="log in biinieHistoryDisplayed")
+											td {{log.at}}
+											td {{log.did}}
+											td {{log.to}}

@@ -52,9 +52,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobileTest',routes.mobileTest);
 
     //Dashboard 
+    //app.get('/dashboard', dashboard.index);
     app.get('/api/dashboard', dashboard.get);
     app.get('/api/dashboard/set', dashboard.set);
     app.get('/api/dashboard/comparative', dashboard.getComparativeData);
+    app.get('/api/dashboard/visits', dashboard.getVisitsReport);
+    
 
     //Acounts Routes
     app.get('/accounts',accounts.index);    
@@ -235,7 +238,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    
-    app.get('/mobile/showcases/:identifier',showcases.getMobileShowcase);
+    app.get('/mobile/biinies/:biinieIdentifier/showcases/:identifier',showcases.getMobileShowcase);
 
 
     //Mobile History
