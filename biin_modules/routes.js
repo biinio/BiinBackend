@@ -23,6 +23,16 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var sysGlobals = require('../routes/sysGlobals')();
     var biinBiinieObjects =require('../routes/biinBiinieObjects')();
     var venues =require('../routes/venue')();
+    
+    //Restricted login pages function
+    var restrict =function(req, res, next) {
+      if (req.user) {
+        next();
+      } else {
+        req.session.error = 'Access denied!';
+        res.redirect('/');
+      }
+    }
 
     //Sys routes
     app.post('/enviroments', sysGlobals.set)
@@ -34,7 +44,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/', routes.index);
     app.get('/dashboard', routes.dashboard);    
     app.get('/login',routes.login);
-    app.get('/home',routes.home);
+    app.get('/home',restrict,routes.home);
     app.get('/singup',routes.singup);
     app.get('/mobileAPI',routes.mobileAPI);
     app.get('/preregister/:packageSlected/:accept',routes.preregister);
@@ -60,7 +70,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     
 
     //Acounts Routes
-    app.get('/accounts',accounts.index);    
+    app.get('/accounts',restrict,accounts.index);    
     app.put('/api/accounts',accounts.set);
     app.post('/api/accounts/:organizationIdentifier/default',accounts.setDefaultOrganization);
     app.get('/api/accounts',accounts.list);        
@@ -72,7 +82,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/categories/set', categories.set)
 
     //Organization Routes
-    app.get('/organizations',organizations.index);
+    app.get('/organizations',restrict,organizations.index);
     app.get('/api/organizations',organizations.list);
     app.put('/api/organizations/:identifier',organizations.set);
     app.post('/api/organizations',organizations.set);
@@ -84,7 +94,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/organizations/:identifier/:siteIdentifier/minor', organizations.getMinor);
 
     //Showcase routes
-    app.get('/organizations/:identifier/showcases',showcases.index);
+    app.get('/organizations/:identifier/showcases',restrict,showcases.index);
     app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId);
     app.post('/api/organizations/:identifier/site/showcases',organizations.setShowcasesPerSite);
 
@@ -102,12 +112,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
 
     //Sites routes
-    app.get('/organizations/:identifier/sites',sites.index);    
+    app.get('/organizations/:identifier/sites',restrict,sites.index);    
     app.get('/api/organizations/:identifier/sites',sites.get);
     app.post('/api/organizations/:orgIdentifier/sites',sites.set);
 
     //Maintenance
-    app.get('/maintenance',maintenance.index);
+    app.get('/maintenance',restrict,maintenance.index);
     app.get('/maintenance/organizations',maintenance.getOrganizationInformation);
     app.get('/maintenance/addBiinToOrganizationModal',maintenance.addBiinToOrganizationModal);
     app.get('/maintenance/getBiinsOrganizationInformation/:orgIdentifier',maintenance.getBiinsOrganizationInformation);
@@ -127,7 +137,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
 
     //Biins
-    app.get('/organizations/:identifier/biins',biins.index);
+    app.get('/organizations/:identifier/biins',restrict,biins.index);
     app.get('/api/biins',biins.list);
     app.post('/api/organizations/:identifier/sites/biins',biins.updateSiteBiins);
     app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
@@ -135,7 +145,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/biins/:biinIdentifier/update',biins.updateBiin);
     
     //Elements
-    app.get('/organizations/:identifier/elements', elements.index);
+    app.get('/organizations/:identifier/elements',restrict, elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
     
@@ -148,7 +158,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
 
     //Regions routes
-    app.get('/regions',regions.index)
+    app.get('/regions',restrict,regions.index)
     app.get('/regions/add',regions.create);
     app.post('/regions/add',regions.createPost);
     app.get('/regions/:identifier',regions.edit);
@@ -159,12 +169,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/mobile/regions/:identifier/:latitude/:longitude',regions.setCoordsToRegion);//Update the Coords of a region
 
     //Gallery Routes
-    app.get('/organizations/:identifier/gallery', gallery.index);
+    app.get('/organizations/:identifier/gallery', restrict,gallery.index);
     app.get('/api/organizations/:identifier/gallery',gallery.list);
     app.post('/api/organizations/:identifier/gallery', multipartMiddleware,gallery.upload);
 
     //Utilities Routes
-    app.get('/errors',errors.index);
+    app.get('/errors',restrict,errors.index);
     app.post('/api/errors/add',errors.create);
 
     //Client routes
@@ -177,7 +187,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/stickers/create',stickers.set);
 
     //Binnies Routes
-    app.get('/biinies',mobileUser.index);
+    app.get('/biinies',restrict,mobileUser.index);
     app.get('/api/biinies',mobileUser.get);
     app.put('/api/biinies',mobileUser.set);
     app.delete('/api/biinies/:identifier',mobileUser.delete); 
@@ -245,7 +255,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory)
     app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory)
 
-    app.get('/blog/', blog.index);
+    app.get('/blog/',restrict, blog.index);
     app.get('/api/blog', blog.list);
     app.get('/public/blog/:year/:month/:day/:title', blog.entry);
     //Blog routes
