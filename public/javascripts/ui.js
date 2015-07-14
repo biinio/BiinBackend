@@ -96,7 +96,16 @@ jQuery(function ($) {
             $('a[organization-identifier="'+orgIdentifier+'"]').addClass('isDefault');            
             setOrganizationMenu(orgIdentifier,orgName,function(){
               //$('a','organizationNav li.active').click();
-              $('a','#organizationNav li.active')[0].click();
+              if($('a','#organizationNav li.active')[0])
+                $('a','#organizationNav li.active')[0].click();
+              else{
+                var sectionContent = document.getElementById('sectionContentGraph');
+                var scope = angular.element(sectionContent).scope();
+                scope.$apply(function(){
+                  scope.organizationId = selectedOrganization();
+                  scope.$broadcast("organizationsChanged",{data:selectedOrganization()});
+                });
+              }
             })
             
       });

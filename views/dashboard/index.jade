@@ -7,4 +7,6 @@ block head_scripts
 	script(src="/javascripts/angular/dashboardController.js")
 	script(src="/javascripts/angular/dashboardgraphcontroller/visitsGraphController.js")		
 block content
-	include graphs/visitsGraph
+	#sectionContent //(ng-app="biinAppDashboard" ng-controller="dashboardController" ngCloack)
+		#wrapperContent
+			include graphs/visitsGraph

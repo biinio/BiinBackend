@@ -18,7 +18,7 @@ module.exports = function(){
 
 	//Get Client List
 	functions.index = function(req,res){
-		res.render('dashboard/index', { title: 'Account' ,user:req.user, organization:req.session.defaultOrganization, isSiteManteinance:true});
+		res.render('dashboard/index', { title: 'Dashboard' ,user:req.user, organization:req.session.defaultOrganization, isSiteManteinance:true});
 	}
 
 	//Set the information in data base of the user
@@ -120,51 +120,67 @@ module.exports = function(){
 		var organizationId = req.headers["organizationid"];
 		var startDate = new Date(req.headers["startdate"]);
 		var endDate = new Date(req.headers["enddate"]);
-		biin.find({organizationIdentifier:organizationId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
-			if(err)
-				throw err
-			else
-			{
-				var biinsIdentifier = [];
-				for(var i = 0; i < data.length; i++)
-				{
-					biinsIdentifier.push({"actions.to":data[i].identifier});
-				}
-				var counterDates = {};
-				var currentDate = new Date();
-				currentDate.setTime(startDate.getTime())
-				for(var i = 0; currentDate.getTime() != endDate.getTime() ; i++)
-				{
-					counterDates[getDateString(currentDate)] = 0;
-					currentDate.setTime( startDate.getTime() + i * 86400000 );
-				}
-				if(biinsIdentifier.length == 0)
-				{
-					res.json({"data":counterDates});
-				}
+		if(startDate.getTime()<endDate.getTime()){
+			biin.find({organizationIdentifier:organizationId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
+				if(err)
+					throw err
 				else
 				{
-					mobileHistory.find({$or:biinsIdentifier,"actions.did":"3"},{},function(errMobile,data)
+					var biinsIdentifier = [];
+					for(var i = 0; i < data.length; i++)
 					{
-						if(errMobile)
-							throw errMobile
-						else
+						biinsIdentifier.push({"actions.to":data[i].identifier});
+					}
+					var counterDates = {};
+					var currentDate = new Date();
+					currentDate.setTime(startDate.getTime())
+					for(var i = 0; currentDate.getTime() != endDate.getTime() ; i++)
+					{
+						counterDates[getDateString(currentDate)] = 0;
+						currentDate.setTime( startDate.getTime() + i * 86400000 );
+					}
+					if(biinsIdentifier.length == 0)
+					{
+						res.json({"data":counterDates});
+					}
+					else
+					{
+						mobileHistory.find({$or:biinsIdentifier,$or:[{"actions.did":"3"},{"actions.did":"1"}]},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
 						{
-							for (i = 0; i < data.length; i++) 
+							if(errMobile)
+								throw errMobile
+							else
 							{
-								for (var j = 0; j < data[i].actions.length; j++) 
-								{
-									var date = data[i].actions[j].at.split(" ")[0];
-									counterDates[date] += 1;
+								var actions = [];
+								var compressedActions = [];
+								for (var i = 0; i < data.length; i++) {
+									actions = actions.concat(data[i].actions);
+								}
+								for (var i = 0; i < actions.length; i++) {
+									actions[i].at = actions[i].at.split(" ")[0];
+									if(compressedActions.indexOf(actions[i]) == -1)
+										compressedActions.push(actions[i]);
 								};
-							};
-							res.json({"data":counterDates});
-						}
-					});
+								
+								//TODO: change date schema type from string to longInteger
+								var datesKeys = Object.keys(counterDates);
+								for (i = 0; i < compressedActions.length; i++) 
+								{
+									if(datesKeys.indexOf(compressedActions[i].at) > -1)
+										counterDates[compressedActions[i].at] += 1;
+								};
+								res.json({"data":counterDates});
+							}
+						});
+					}
 				}
-			}
 
-		});
+			});
+		}
+		else
+		{
+			res.json({"data":[]});
+		}
 	}
 
 	function getDateString(date)
