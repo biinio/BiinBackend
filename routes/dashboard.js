@@ -134,7 +134,7 @@ module.exports = function(){
 					var counterDates = {};
 					var currentDate = new Date();
 					currentDate.setTime(startDate.getTime())
-					for(var i = 0; currentDate.getTime() != endDate.getTime() ; i++)
+					for(var i = 0; currentDate.getTime() <= endDate.getTime() ; i++)
 					{
 						counterDates[getDateString(currentDate)] = 0;
 						currentDate.setTime( startDate.getTime() + i * 86400000 );
@@ -158,16 +158,17 @@ module.exports = function(){
 								}
 								for (var i = 0; i < actions.length; i++) {
 									actions[i].at = actions[i].at.split(" ")[0];
-									if(compressedActions.indexOf(actions[i]) == -1)
-										compressedActions.push(actions[i]);
+									if(compressedActions[actions[i].at+actions[i].whom] == null)
+										compressedActions[actions[i].at+actions[i].whom] = actions[i];
 								};
 								
 								//TODO: change date schema type from string to longInteger
 								var datesKeys = Object.keys(counterDates);
-								for (i = 0; i < compressedActions.length; i++) 
+								var compressedActionsKeys = Object.keys(compressedActions);
+								for (i = 0; i < compressedActionsKeys.length; i++) 
 								{
-									if(datesKeys.indexOf(compressedActions[i].at) > -1)
-										counterDates[compressedActions[i].at] += 1;
+									if(datesKeys.indexOf(compressedActions[compressedActionsKeys[i]].at) > -1)
+										counterDates[compressedActions[compressedActionsKeys[i]].at] += 1;
 								};
 								res.json({"data":counterDates});
 							}
