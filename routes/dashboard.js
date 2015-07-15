@@ -134,7 +134,7 @@ module.exports = function(){
 					var counterDates = {};
 					var currentDate = new Date();
 					currentDate.setTime(startDate.getTime())
-					for(var i = 0; currentDate.getTime() != endDate.getTime() ; i++)
+					for(var i = 0; currentDate.getTime() <= endDate.getTime() ; i++)
 					{
 						counterDates[getDateString(currentDate)] = 0;
 						currentDate.setTime( startDate.getTime() + i * 86400000 );

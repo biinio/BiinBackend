@@ -79,7 +79,7 @@ biinAppVisitsGraph.controller("biinAppVisitsGraphController", ['$scope', '$http'
                         y: function(d) {
                             return d.y;
                         },
-                        useInteractiveGuideline: true,
+                        //useInteractiveGuideline: true,
                         dispatch: {
                             stateChange: function(e) {
                                 console.log("stateChange");
@@ -103,7 +103,7 @@ biinAppVisitsGraph.controller("biinAppVisitsGraphController", ['$scope', '$http'
                             axisLabelDistance: 30
                         },
                         yAxis: {
-                            axisLabel: 'Visits',
+                            axisLabel: 'Visits'
                         },
                         callback: function(chart) {
                             console.log("!!! lineChart callback !!!");
