@@ -134,7 +134,7 @@ module.exports = function(){
 					var counterDates = {};
 					var currentDate = new Date();
 					currentDate.setTime(startDate.getTime())
-					for(var i = 0; currentDate.getTime() != endDate.getTime() ; i++)
+					for(var i = 0; currentDate.getTime() <= endDate.getTime() ; i++)
 					{
 						counterDates[getDateString(currentDate)] = 0;
 						currentDate.setTime( startDate.getTime() + i * 86400000 );
@@ -158,16 +158,85 @@ module.exports = function(){
 								}
 								for (var i = 0; i < actions.length; i++) {
 									actions[i].at = actions[i].at.split(" ")[0];
-									if(compressedActions.indexOf(actions[i]) == -1)
-										compressedActions.push(actions[i]);
+									if(compressedActions[actions[i].at+actions[i].whom] == null)
+										compressedActions[actions[i].at+actions[i].whom] = actions[i];
 								};
 								
 								//TODO: change date schema type from string to longInteger
 								var datesKeys = Object.keys(counterDates);
-								for (i = 0; i < compressedActions.length; i++) 
+								var compressedActionsKeys = Object.keys(compressedActions);
+								for (i = 0; i < compressedActionsKeys.length; i++) 
 								{
-									if(datesKeys.indexOf(compressedActions[i].at) > -1)
-										counterDates[compressedActions[i].at] += 1;
+									if(datesKeys.indexOf(compressedActions[compressedActionsKeys[i]].at) > -1)
+										counterDates[compressedActions[compressedActionsKeys[i]].at] += 1;
+								};
+								res.json({"data":counterDates});
+							}
+						});
+					}
+				}
+
+			});
+		}
+		else
+		{
+			res.json({"data":[]});
+		}
+	}
+
+	functions.getNotificationReport =function(req, res){
+		var organizationId = req.headers["organizationid"];
+		var startDate = new Date(req.headers["startdate"]);
+		var endDate = new Date(req.headers["enddate"]);
+		if(startDate.getTime()<endDate.getTime()){
+			biin.find({organizationIdentifier:organizationId, biinType:"1"},{identifier:1}).lean().exec(function(err,data){
+				if(err)
+					throw err
+				else
+				{
+					var biinsIdentifier = [];
+					for(var i = 0; i < data.length; i++)
+					{
+						biinsIdentifier.push({"actions.to":data[i].identifier});
+					}
+					var counterDates = {};
+					var currentDate = new Date();
+					currentDate.setTime(startDate.getTime())
+					for(var i = 0; currentDate.getTime() <= endDate.getTime() ; i++)
+					{
+						counterDates[getDateString(currentDate)] = 0;
+						currentDate.setTime( startDate.getTime() + i * 86400000 );
+					}
+					if(biinsIdentifier.length == 0)
+					{
+						res.json({"data":counterDates});
+					}
+					else
+					{
+						mobileHistory.find({$or:biinsIdentifier,"actions.did":"5"},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
+						{
+							if(errMobile)
+								throw errMobile
+							else
+							{
+								var actions = [];
+								var compressedActions = [];
+								for (var i = 0; i < data.length; i++) {
+									actions = actions.concat(data[i].actions);
+								}
+								for (var i = 0; i < actions.length; i++) {
+									actions[i].at = actions[i].at.split(" ")[0];
+									if(compressedActions[actions[i].at+actions[i].whom] == null)
+										compressedActions[actions[i].at+actions[i].whom] = actions[i];
+								};
+								
+								//TODO: change date schema type from string to longInteger
+								var datesKeys = Object.keys(counterDates);
+								var compressedActionsKeys = Object.keys(compressedActions);
+								for (i = 0; i < compressedActionsKeys.length; i++) 
+								{
+									if(datesKeys.indexOf(compressedActions[compressedActionsKeys[i]].at) > -1)
+										counterDates[compressedActions[compressedActionsKeys[i]].at] += 1;
 								};
 								res.json({"data":counterDates});
 							}
