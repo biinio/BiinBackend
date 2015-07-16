@@ -1,0 +1,364 @@
+/* ------------------------------------------------------
+			Main CSS Style for Biin App CMS
+   ------------------------------------------------------*/
+@import "variables";
+/*------------------------------------------*/
+/*	Body Principal Style
+/*------------------------------------------*/
+
+html,body {
+	height: 100%;
+}
+
+h1 {
+	font-size: 15px;
+}
+
+a.module:hover{ 
+	text-decoration:none; 
+}
+
+p{
+	font-size: 8px;
+	color: #b9babb;
+}
+
+.form-control {
+	height: 33px;
+	width: 100%;
+	border-radius:initial!important;
+	margin-bottom: 5px;
+}
+
+.form-horizontal{
+	.control-label{
+		text-align:left;
+		margin-left:0px;
+	}	
+} 
+
+.search-box { 
+	height: 25px;
+}
+
+//Inputs to validate
+form[novalidate]{
+	input{
+		border-left-width: 8px;
+		border-color: #3498db;
+		border-style:solid;
+	}
+}
+
+input[require].ng-pristine{
+	border-color: #e74c3c;
+}
+
+input.ng-invalid.ng-dirty{
+	border-color:#e74c3c;
+}
+
+input.ng-valid.ng-dirty{
+	border-color: #2ecc71;
+}
+
+.search-control input{
+	display: table-cell;
+}
+
+.search-control .icon{
+	margin-left: -20px;
+	padding-top: 15px;
+}
+
+.boton-Controls{
+	position: absolute;
+	bottom: 5px;
+	width: 85%;
+}
+
+.form-control{
+	height: 40px!important;
+	border-width: 2px;
+}
+
+::-webkit-input-placeholder {
+   padding-left: 15px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  padding-left: 15px;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   padding-left: 15px;
+}
+
+:-ms-input-placeholder {  
+   padding-left: 15px;
+}
+
+.scroll-vertical-container{
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 88vh;
+	max-height:  88vh;
+	width: 98%;
+	max-width: 100%;
+	overflow-x: scroll;
+	overflow-y: hidden!important;
+	white-space: nowrap;
+	padding-right: 8px;
+}
+
+.main-views-list{
+	 margin-left: 3px!important;
+
+	 .scroll-wrapper > .scroll-content {
+	 	width: inherit!important;
+	}
+	.scroll-vertical-container{
+		padding-bottom: 50px!important;
+	}
+}
+
+.container-list-scroll-fixed{
+	padding:5px;
+	position:relative; 
+	height: 95vh;
+	.row{
+		position:relative;
+		max-height: 90%; 
+		height: 100%;
+		padding-bottom: 10px;
+	}
+}
+
+/*------------------------------------------*/
+/*	Regions Content
+/*------------------------------------------*/
+
+.regionsContent{
+	h1{
+		font-size: 22px;
+	}
+	p{
+		font-size: 17px;
+	}
+	.panel-body{
+		margin-left: 30px;
+	}
+}
+
+/*------------------------------------------*/
+/*	Main Containers
+/*------------------------------------------*/
+
+#wrapperContent.loaded::before{
+	display: none;
+}
+
+#wrapperContent::before{
+	//background-image: 
+	content: url(../images/icons/loader.gif);
+	position: center;
+	background-repeat: no-repeat;
+	background-size: 125px 125px;
+	position: absolute;	
+	top: 40%;
+	left: 40%;	
+
+}
+
+
+.main {
+  padding: 0px;
+  z-index: 1;
+}
+
+.main .page-header {
+  margin-top: 0;
+}
+
+
+.main-container {
+	height: 100%;
+}
+
+.main-container-row {
+	height: 100%;
+}
+
+/*------------------------------------------*/
+/*	Panels and Navbar Custom Style
+/*------------------------------------------*/
+
+.navbar{
+	margin-bottom: 0px;
+}
+.panel-heading{
+	height: 4%;
+}
+
+.body-list{
+	height: 96%;
+}
+
+.panel-default {
+	border-style: none;
+}	
+
+.panel-default>.panel-heading {
+	background-color:initial;
+	border-color: initial;
+	border:none;
+	margin-top: 0px;
+}
+
+.panel-heading label {
+	margin-right: 10px;
+}
+
+.panel-body {
+	padding: 0px;
+	margin-left: -25px;
+}
+
+
+//Drop images style
+.drop-images{
+	border-style: dashed;
+	border-color: black;
+	text-align: center;
+    position: fixed;
+}
+
+.gallery{
+	position: relative;
+
+	.moduleTitle{
+		position: absolute;
+		background-color: black;
+		color: white;
+		opacity: 0.5;
+		padding-left: 6px;
+		font-size: 12px;
+		width: 100%;
+		max-width: 100%;
+  		word-wrap: break-word;
+	}
+
+	.galleryImageWrapper	{
+		max-height: 200px;
+		max-width: 200px;
+		height: 120px;
+		width: 120px;
+		padding: 5px 5px 5px 5px;
+		.galleryImageWrapperContent{
+			background-color: #fff;	
+			position: relative;
+			overflow: hidden;
+		}		
+		margin: 5px 5px 5px 5px;
+		
+		
+	}
+
+	img{		
+		margin:5px 5px 5px 5px;				
+		max-width: 100px;
+		min-width: 100px;
+	}
+}
+
+
+/*------------------------------------------*/
+/*	Layout Bars
+/*------------------------------------------*/
+  .nav-user{  	
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    top: @standardPadding;
+    right: @standardPadding;
+    background-color: @colorBaseBlack;
+    box-shadow: -1px 3px 2px grey;
+    opacity: 0.5;
+
+    padding-top: @standardPadding/2!important;
+    i.icon{
+    	margin-left:@standardPadding!important;
+    	margin-right:@standardPadding!important;    	
+    	line-height: 0px!important;
+    }
+    [class^="icon-"]:before, [class*=" icon-"]:before{
+		font-size: 25px!important;   
+    	font-weight: bolder!important;
+    }
+
+    i.icon:hover{
+    	color: @colorFocus ;
+    }
+  
+	a:link {
+	    text-decoration: none;
+	}
+
+	a:visited {
+	    text-decoration: none;
+	}
+
+	a:hover {
+	    text-decoration: none;
+	    cursor: pointer;
+	}
+
+	a:active {
+	    text-decoration: none;
+	}
+
+    ul
+	{
+		padding: 0 0 0 0;
+		margin-bottom: 0px;
+	    list-style-type: none;
+	}
+  }
+
+  	.brand{  		
+		font-size: 20px;	  	
+		padding: @standardPadding 0 @standardPadding  0;
+		color: @colorGrayDark;	
+  	}
+  	.nav-user:hover{ 
+		opacity: 1;
+		background-color: @colorGrayDark;
+	}
+
+	#organizationMenu{
+		.dropdown-menu{
+			margin: -30px 47px 0 !important;
+			background-color: @colorBlack2;
+		}
+		.dropdown-menu > li {
+		    display: inline-block;
+		    float:left;
+
+		}
+		.open > ul {
+		    display: inline-flex !important;
+		}
+
+		.dropdown-menu>li>a{
+			cursor: pointer;
+			white-space: normal;
+			color: white;
+		}
+	}
+	
+	#organizationNav{
+		 margin:0 0 0 0!important; 
+	}
+
