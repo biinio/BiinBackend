@@ -9,6 +9,9 @@ biinAppVisitsGraph.controller("biinAppVisitsGraphController", ['$scope', '$http'
         $scope.$on('organizationsChanged', function(orgId) {
             $scope.getChartData($scope.currentDays);
         });
+        
+        $scope.firstCriteria = "Visits";
+        $scope.secondCriteria = "Notifications";
 
 
 
