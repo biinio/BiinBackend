@@ -189,15 +189,17 @@ module.exports = function(){
 		var startDate = new Date(req.headers["startdate"]);
 		var endDate = new Date(req.headers["enddate"]);
 		if(startDate.getTime()<endDate.getTime()){
-			biin.find({organizationIdentifier:organizationId, biinType:"1"},{identifier:1}).lean().exec(function(err,data){
+			biin.find({organizationIdentifier:organizationId, biinType:"1"},{"objects._id":1}).lean().exec(function(err,data){
 				if(err)
 					throw err
 				else
 				{
-					var biinsIdentifier = [];
+					var objectsIdentifier = [];
 					for(var i = 0; i < data.length; i++)
 					{
-						biinsIdentifier.push({"actions.to":data[i].identifier});
+						for (var j = 0; j < data[i].objects.length; j++) {
+							objectsIdentifier.push({"actions.to":data[i].objects[j]._id});
+						};
 					}
 					var counterDates = {};
 					var currentDate = new Date();
@@ -207,13 +209,13 @@ module.exports = function(){
 						counterDates[getDateString(currentDate)] = 0;
 						currentDate.setTime( startDate.getTime() + i * 86400000 );
 					}
-					if(biinsIdentifier.length == 0)
+					if(objectsIdentifier.length == 0)
 					{
 						res.json({"data":counterDates});
 					}
 					else
 					{
-						mobileHistory.find({$or:biinsIdentifier,"actions.did":"5"},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
+						mobileHistory.find({$or:objectsIdentifier,"actions.did":"5"},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
 						{
 							if(errMobile)
 								throw errMobile
