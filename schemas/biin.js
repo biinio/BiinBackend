@@ -35,7 +35,6 @@ module.exports = moongose.model('biins',{
                 onThursday:{type:String,default:"0"},
                 onFriday:{type:String,default:"0"},
                 onSaturday:{type:String,default:"0"}
-
             }],
             biinType:{type:String,default:"1"},
             isRequiredBiin:{type:Boolean,default:false},
