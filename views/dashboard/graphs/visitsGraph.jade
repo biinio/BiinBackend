@@ -1,4 +1,4 @@
-#sectionContentGraph(ng-app="biinAppVisitsGraph" ng-controller="biinAppVisitsGraphController" ngCloack)
+div.graph.listenOrgChange(ng-controller="biinAppVisitsGraphController" ngCloack)
 	select.form-control.bootstrap-select.visitsCriteria(ng-model="firstCriteria" ng-change="firstCriteriaChange(firstCriteria)")
 		option(value='Visits') Visits
 	select.form-control.bootstrap-select.visitsCriteria(ng-model="secondCriteria" ng-change="secondCriteriaChange(secondCriteria)")
