@@ -4,10 +4,20 @@ block head_scripts
 	script(src="/d3/d3.js")
 	script(src="/nvd3/build/nv.d3.js")
 	script(src="/angular-nvd3/dist/angular-nvd3.js")
+	script(src="/ng-module/ng-module.js")
 	script(src="/javascripts/angular/dashboardController.js")
-	script(src="/javascripts/angular/dashboardgraphcontroller/visitsGraphController.js")		
+	script(src="/javascripts/angular/dashboardgraphcontroller/visitsGraphController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobilePieVisits.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileSessionsController.js")
 block content
-	#sectionContent
-		#wrapperContent
-			h2 Dashboard
-			include graphs/visitsGraph
+	div(ng-modules="mobilePieVisits, biinAppVisitsGraph, mobileSessions")
+		h2 Dashboard
+			visitsGraph
+				include graphs/visitsGraph
+			mobileGraph
+				include graphs/mobile/mobileSessions
+				include graphs/mobile/newVisitsPercentage
+				include graphs/mobile/averageVisitedElements
+				include graphs/mobile/totalBiined
+				include graphs/mobile/visitsPie
+			localGraph
