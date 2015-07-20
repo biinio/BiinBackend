@@ -9,15 +9,64 @@ block head_scripts
 	script(src="/javascripts/angular/dashboardgraphcontroller/visitsGraphController.js")
 	script(src="/javascripts/angular/dashboardgraphcontroller/mobilePieVisits.js")
 	script(src="/javascripts/angular/dashboardgraphcontroller/mobileSessionsController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileNewVisitsPercentageController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileTotalBiinedController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileNewVisitsPercentageController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileAverageVisitedElementsController.js")
 block content
-	div(ng-modules="mobilePieVisits, biinAppVisitsGraph, mobileSessions")
+	div(ng-modules="mobilePieVisits, biinAppVisitsGraph, mobileSessions, mobileNewVisitsPercentage, mobileTotalBiined")
 		h2 Dashboard
 			visitsGraph
 				include graphs/visitsGraph
 			mobileGraph
-				include graphs/mobile/mobileSessions
-				include graphs/mobile/newVisitsPercentage
-				include graphs/mobile/averageVisitedElements
-				include graphs/mobile/totalBiined
-				include graphs/mobile/visitsPie
+				.row
+					.col-md-6
+						.row
+							.col-md-2
+								text mobile
+								br
+								i.icon.icon-mobile-phone
+							.col-md-10
+								.row
+									.col-md-6
+										include graphs/mobile/mobileSessions
+									.col-md-6
+										include graphs/mobile/totalBiined
+								.row
+									.col-md-6
+										include graphs/mobile/newVisitsPercentage
+									.col-md-6
+										include graphs/mobile/averageVisitedElements
+					.col-md-6
+						include graphs/mobile/visitsPie
 			localGraph
+				.row
+					.col-md-6
+						.row
+							.col-md-2
+								text local
+								br
+								i.icon.icon-shop
+							.col-md-5
+								.row
+									.col-md-12
+										include graphs/mobile/mobileSessions
+								.row
+									.col-md-12
+										include graphs/mobile/newVisitsPercentage
+							.col-md-5
+								include graphs/mobile/visitsPie
+
+					.col-md-6
+						include graphs/mobile/visitsPie
+			localTable
+				.row
+					.col-md-12
+						table.table
+							tr
+								th Locales
+								th Visitas En Biin
+								th Visitas A Locales
+								th Biined
+								th Notificaciones
+

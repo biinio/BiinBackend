@@ -105,7 +105,7 @@ biinAppVisitsGraph.controller("biinAppVisitsGraphController", ['$scope', '$http'
                     $scope.options = {
                         chart: {
                             type: 'lineChart',
-                            height: 450,
+                            height: 250,
                             margin: {
                                 top: 20,
                                 right: 20,
