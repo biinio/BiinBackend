@@ -2335,15 +2335,63 @@ input.ng-valid.ng-dirty{
     }
 }
 
+.left-section-content.retracted{
+	.retracted{
+		display: block;;
+	}
+	.unretracted{
+		display: none;
+	}
+}
+
+.left-section-content.unretracted{
+	.retracted{
+		display: none;;
+	}
+	.unretracted{
+		display: block;
+	}
+}
+
+
 .left-section-content {
 	position: relative;
 	float: left;
-	position: fixed;
 	bottom: 0;
 	z-index: 1;
 	width: @screenMdLeftContWidth;
 	display: none;
+	height: 100vh;
 
+	.hideButton{
+		position: absolute;
+		bottom: 47%;
+		right:-17px;
+		background-color: @colorBackground;
+		border-color: @colorBackground;		
+		cursor: pointer;
+
+		-webkit-border-top-right-radius: 100px;
+		-webkit-border-bottom-right-radius: 100px;
+		-moz-border-radius-topright: 100px;
+		-moz-border-radius-bottomright: 100px;
+		border-top-right-radius: 100px;
+		border-bottom-right-radius: 100px;
+
+		padding-top: 7px;
+		padding-left: 8px;
+		width: 25px;
+		height: 30px;
+		color:@colorBaseWhite;
+		font-size: 13px;
+		font-weight: bolder;
+
+
+	}
+
+	.hideButton:hover{
+		background-color: @colorFocus;
+	}
 	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 	@media (min-width: 768px) {	
 		top: @screenMdBodyPaddingTop;
@@ -2415,6 +2463,7 @@ input.ng-valid.ng-dirty{
 }
 
 .right-section-content {
+	position: relative;
 	float: left;
 	bottom: 0;
 	overflow-x: hidden;
@@ -2424,14 +2473,13 @@ input.ng-valid.ng-dirty{
 	@media (min-width: 768px) {	
 		width: @rightContWidth;
 		top: @screenMdBodyPaddingTop;
-		margin-left: @rightContMargingLeft;
+		//margin-left: @rightContMargingLeft;
 	}
 
     /*-* Start Media style for "Large devices Desktops and Laptops (1650 x 1090)" with 1550px or UP *-*/
     @media (min-width: 1550px) {
         width: @rightContWidth;
         top: @screenLgBodyPaddingTop;
-        margin-left: @rightContMargingLeft;
     }
 }
 

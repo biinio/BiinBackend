@@ -1,4 +1,4 @@
-//Global variables
+     //Global variables
 var selectedOrganization=function(){
     return $("#organizationNav").attr("data-organization");
 };
@@ -123,6 +123,30 @@ jQuery(function ($) {
      
 });
 
+jQuery(function($){  
+
+    $('.hideButton','.left-section-content').click(function(){
+      var $parent = $('.left-section-content');
+      if($parent.hasClass('unretracted')){
+        $parent.removeClass('unretracted').addClass('retracted');
+        $parent.stop().animate({'width': '0px'},'300');
+      }else{
+        $parent.removeClass('retracted').addClass('unretracted');
+        $parent.stop().animate({'width': '250px'},'300');        
+      }
+      
+    });
+      
+    /*
+   $('.left-section-content').mouseover(function() {          
+      //$(this).stop().animate({'width': '250px'},'300');
+    });
+
+   $('.left-section-content').mouseout(function() {
+      //$(this).stop().animate({'width': '0px'},'300');
+    });*/
+
+})
 //Cropper Controls
 createElementCropper=function(id){
       Croppic.imgInitW=320;

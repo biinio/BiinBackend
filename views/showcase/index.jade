@@ -4,7 +4,7 @@ block head_scripts
 block content	
 	#sectionContent(ng-app="biinAppShowCases" ng-controller="showcasesController" ngCloack)
 		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
-			.left-section-content
+			.left-section-content(list-bar="")
 				.container-fluid.main-views-list
 					.row
 						.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
