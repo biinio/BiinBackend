@@ -8,4 +8,5 @@ div.graph.listenOrgChange.visitsGraphArea(ng-controller="biinAppVisitsGraphContr
 		button.btn-default(ng-click="changeChartRange(7)") 1 week
 		button.btn-default(ng-click="changeChartRange(30)") 30 Days	
 		button.btn-default(ng-click="changeChartRange(180)") 6 months
-	nvd3.visitsGraph.with-3d-shadow.with-transitions(options="options" data="data")
+	.visitsGraphContainer
+		nvd3.visitsGraph.with-3d-shadow.with-transitions(options="options" data="data")
