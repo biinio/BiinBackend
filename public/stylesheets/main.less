@@ -3215,15 +3215,12 @@ li>.nav{
 	margin-left: 20px;
 }
 .localGraph{
-	background-color: @colorGrayLight3;
 	margin: 10px 10px 10px 10px;
 }
 .mobileGraph{
-	background-color: @colorGrayLight3;
 	margin: 10px 10px 10px 10px;
 }
 .visitsGraph{
-	background-color: @colorGrayLight3;
 	margin: 10px 10px 10px 10px;
 }
 .visitsCriteria{
@@ -3258,6 +3255,13 @@ li>.nav{
 		}
 	}
 }
+.visitsGraphContainer{
+	position: relative;
+}
+
+
+
+
 
 .iconDashboard:before {
   content: '';
@@ -3267,7 +3271,8 @@ li>.nav{
   margin-right: -0.25em; /* Adjusts for spacing */
 }
 
-.visitsGraph{
+.visitsGraphArea{
+	position: relative;
 	buttons{
 		button{
 			font-weight: normal;
@@ -3276,6 +3281,20 @@ li>.nav{
 	}
 }
 
+.nvd3 g.nv-groups path.nv-line {
+  stroke-width: 4px;
+}
+
+.nvd3 .nv-group  {
+    fill-opacity: 0.15 !important; 
+}
+
+.visitsGraph .nv-point 
+{
+    fill-opacity: 1 !important;
+    stroke-opacity: 1 !important;
+    stroke-width: 4px;
+}
 
 
 
