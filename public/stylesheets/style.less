@@ -352,13 +352,37 @@ input.ng-valid.ng-dirty{
 		.dropdown-menu > li {
 		    display: inline-block;
 		    float:left;
+		    min-width: 90px;
+		    min-height: 40px;
+		    text-align: center;
 
+		    .circleOrganization{
+		    	position: relative;
+		    	margin-left: auto;
+		    	margin-right: auto;
+		    	background-color: @colorGreen;
+		    }
+
+		    .circleOrganization.isDefault{
+		    	background-color: @colorFocus;
+		    }
+		    span{
+		    	font-size: 11px;
+		    }
+		}
+
+		.dropdown-menu > li:hover{
+			background-color: @colorWhite;
+			a{
+				color: @colorBaseBlack;
+			}
 		}
 		.open > ul {
 		    display: inline-flex !important;
 		}
 
 		.dropdown-menu>li>a{
+			text-align: center;
 			cursor: pointer;
 			white-space: normal;
 			color: white;
@@ -368,6 +392,8 @@ input.ng-valid.ng-dirty{
 			position: relative;
 			height: @screenMdSidebarIconSize+10px;
 			width: @screenMdSidebarIconSize+10px;
+			max-width: @screenMdSidebarIconSize+10px;
+			max-height:  @screenMdSidebarIconSize+10px;			
 			background-color: @colorFocus;
 			border-radius: @controlsRadiusRounded;
 			text-align:center;
@@ -380,6 +406,7 @@ input.ng-valid.ng-dirty{
 
 		.circleOrganization:hover{
 			background-color: @colorBlack;
+			height: 100%;
 		}
 
 		a:link {

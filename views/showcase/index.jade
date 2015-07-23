@@ -4,8 +4,11 @@ block head_scripts
 block content	
 	#sectionContent(ng-app="biinAppShowCases" ng-controller="showcasesController" ngCloack)
 		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
-			.left-section-content(list-bar="")
+			.left-section-content.unretracted
 				.container-fluid.main-views-list
+					.hideButton
+						.unretracted.icon-pin-1
+						.retracted.icon-align-left
 					.row
 						.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 							.col-xs-12.col-sm-12.col-md-12.col-lg-12.searchBoxList
