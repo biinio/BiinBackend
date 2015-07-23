@@ -99,12 +99,15 @@ jQuery(function ($) {
               if($('a','#organizationNav li.active')[0])
                 $('a','#organizationNav li.active')[0].click();
               else{
-                var sectionContent = document.getElementById('sectionContentGraph');
-                var scope = angular.element(sectionContent).scope();
-                scope.$apply(function(){
-                  scope.organizationId = selectedOrganization();
-                  scope.$broadcast("organizationsChanged",{data:selectedOrganization()});
-                });
+                var graphs = document.getElementsByClassName('listenOrgChange');
+                for (var i = 0; i < graphs.length; i++) {
+                  var scope = angular.element(graphs[i]).scope();
+                  scope.$apply(function(){
+                    scope.organizationId = selectedOrganization();
+                    scope.$broadcast("organizationsChanged",{data:selectedOrganization()});
+                  });
+                  
+                };
               }
             })
             

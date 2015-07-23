@@ -1,25 +1,12 @@
-#sectionContentGraph(ng-app="biinAppVisitsGraph" ng-controller="biinAppVisitsGraphController" ngCloack)
-	.dropdown.visitsCriteria
-		button#visitsFirstDataType.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true")|First Criteria
-			span.caret
-		ul.dropdown-menu(aria-labelledby="visitsFirstDataType")
-			li
-				a|Visits
-			li
-				a|Notifications
-	label|vs
-	.dropdown.visitsCriteria
-		button#visitsSecondDataType.btn.btn-default.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true")|Second Criteria
-			span.caret
-		ul.dropdown-menu(aria-labelledby="visitsSecondDataType")
-			li
-				a|None
-			li
-				a|Visits
-			li
-				a|Notifications
+div.graph.listenOrgChange.visitsGraphArea(ng-controller="biinAppVisitsGraphController" ngCloack)
+	select.form-control.bootstrap-select.visitsCriteria(ng-model="firstCriteria" ng-change="firstCriteriaChange(firstCriteria)")
+		option(value='Visits') Visits
+	select.form-control.bootstrap-select.visitsCriteria(ng-model="secondCriteria" ng-change="secondCriteriaChange(secondCriteria)")
+		option(value='Notifications') Notifications
+		option(value='None') None
 	buttons.pull-right
 		button.btn-default(ng-click="changeChartRange(7)") 1 week
 		button.btn-default(ng-click="changeChartRange(30)") 30 Days	
 		button.btn-default(ng-click="changeChartRange(180)") 6 months
-	nvd3.with-3d-shadow.with-transitions(options="options" data="data")
+	.visitsGraphContainer
+		nvd3.visitsGraph.with-3d-shadow.with-transitions(options="options" data="data")

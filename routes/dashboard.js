@@ -152,23 +152,55 @@ module.exports = function(){
 							else
 							{
 								var actions = [];
-								var compressedActions = [];
+								var compressedVisits = [];
 								for (var i = 0; i < data.length; i++) {
 									actions = actions.concat(data[i].actions);
 								}
 								for (var i = 0; i < actions.length; i++) {
+
+									var date = actions[i].at.split(" ")[0];
+									var time = actions[i].at.split(" ")[1];
+									var hours = time.split(":")[0];
+									var minutes = time.split(":")[1];
+									var seconds = time.split(":")[2];
+
+									var totalSeconds = parseInt(hours) * 3600;
+									totalSeconds += parseInt(minutes) * 60;
+									totalSeconds += seconds;
+
+
+
 									actions[i].at = actions[i].at.split(" ")[0];
-									if(compressedActions[actions[i].at+actions[i].whom] == null)
-										compressedActions[actions[i].at+actions[i].whom] = actions[i];
-								};
+									actions[i].atTime = totalSeconds; 
+
+
+
+									if(compressedVisits[actions[i].at+actions[i].whom] == null)
+										compressedVisits[actions[i].at+actions[i].whom] = [actions[i]];
+									else
+									{
+										var lastActionIndex = compressedVisits[actions[i].at+actions[i].whom].length-1;
+										if(Math.abs(compressedVisits[actions[i].at+actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 900)
+										{
+											compressedVisits[actions[i].at+actions[i].whom].push(actions[i]);
+											compressedVisits.sort(function(a,b){
+												return a.atTime - b.atTime;
+											});
+										}
+									}
+								}
+								var visits = [];
+								var compressedVisitsKeys = Object.keys(compressedVisits);
+								for (var i = 0; i < compressedVisitsKeys.length; i++) {
+									visits = visits.concat(compressedVisits[compressedVisitsKeys[i]]);
+								}
 								
 								//TODO: change date schema type from string to longInteger
 								var datesKeys = Object.keys(counterDates);
-								var compressedActionsKeys = Object.keys(compressedActions);
-								for (i = 0; i < compressedActionsKeys.length; i++) 
+								for (i = 0; i < visits.length; i++) 
 								{
-									if(datesKeys.indexOf(compressedActions[compressedActionsKeys[i]].at) > -1)
-										counterDates[compressedActions[compressedActionsKeys[i]].at] += 1;
+									if(datesKeys.indexOf(visits[i].at) > -1)
+										counterDates[visits[i].at] += 1;
 								};
 								res.json({"data":counterDates});
 							}
@@ -189,15 +221,17 @@ module.exports = function(){
 		var startDate = new Date(req.headers["startdate"]);
 		var endDate = new Date(req.headers["enddate"]);
 		if(startDate.getTime()<endDate.getTime()){
-			biin.find({organizationIdentifier:organizationId, biinType:"1"},{identifier:1}).lean().exec(function(err,data){
+			biin.find({organizationIdentifier:organizationId, biinType:"1"},{"objects._id":1}).lean().exec(function(err,data){
 				if(err)
 					throw err
 				else
 				{
-					var biinsIdentifier = [];
+					var objectsIdentifier = [];
 					for(var i = 0; i < data.length; i++)
 					{
-						biinsIdentifier.push({"actions.to":data[i].identifier});
+						for (var j = 0; j < data[i].objects.length; j++) {
+							objectsIdentifier.push({"actions.to":data[i].objects[j]._id});
+						};
 					}
 					var counterDates = {};
 					var currentDate = new Date();
@@ -207,36 +241,68 @@ module.exports = function(){
 						counterDates[getDateString(currentDate)] = 0;
 						currentDate.setTime( startDate.getTime() + i * 86400000 );
 					}
-					if(biinsIdentifier.length == 0)
+					if(objectsIdentifier.length == 0)
 					{
 						res.json({"data":counterDates});
 					}
 					else
 					{
-						mobileHistory.find({$or:biinsIdentifier,"actions.did":"5"},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
+						mobileHistory.find({$or:objectsIdentifier,"actions.did":"5"},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
 						{
 							if(errMobile)
 								throw errMobile
 							else
 							{
 								var actions = [];
-								var compressedActions = [];
+								var compressedVisits = [];
 								for (var i = 0; i < data.length; i++) {
 									actions = actions.concat(data[i].actions);
 								}
 								for (var i = 0; i < actions.length; i++) {
+
+									var date = actions[i].at.split(" ")[0];
+									var time = actions[i].at.split(" ")[1];
+									var hours = time.split(":")[0];
+									var minutes = time.split(":")[1];
+									var seconds = time.split(":")[2];
+
+									var totalSeconds = parseInt(hours) * 3600;
+									totalSeconds += parseInt(minutes) * 60;
+									totalSeconds += seconds;
+
+
+
 									actions[i].at = actions[i].at.split(" ")[0];
-									if(compressedActions[actions[i].at+actions[i].whom] == null)
-										compressedActions[actions[i].at+actions[i].whom] = actions[i];
-								};
+									actions[i].atTime = totalSeconds; 
+
+
+
+									if(compressedVisits[actions[i].at+actions[i].whom] == null)
+										compressedVisits[actions[i].at+actions[i].whom] = [actions[i]];
+									else
+									{
+										var lastActionIndex = compressedVisits[actions[i].at+actions[i].whom].length-1;
+										if(Math.abs(compressedVisits[actions[i].at+actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 900)
+										{
+											compressedVisits[actions[i].at+actions[i].whom].push(actions[i]);
+											compressedVisits.sort(function(a,b){
+												return a.atTime - b.atTime;
+											});
+										}
+									}
+								}
+								var visits = [];
+								var compressedVisitsKeys = Object.keys(compressedVisits);
+								for (var i = 0; i < compressedVisitsKeys.length; i++) {
+									visits = visits.concat(compressedVisits[compressedVisitsKeys[i]]);
+								}
 								
 								//TODO: change date schema type from string to longInteger
 								var datesKeys = Object.keys(counterDates);
-								var compressedActionsKeys = Object.keys(compressedActions);
-								for (i = 0; i < compressedActionsKeys.length; i++) 
+								for (i = 0; i < visits.length; i++) 
 								{
-									if(datesKeys.indexOf(compressedActions[compressedActionsKeys[i]].at) > -1)
-										counterDates[compressedActions[compressedActionsKeys[i]].at] += 1;
+									if(datesKeys.indexOf(visits[i].at) > -1)
+										counterDates[visits[i].at] += 1;
 								};
 								res.json({"data":counterDates});
 							}

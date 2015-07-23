@@ -2860,12 +2860,6 @@ input.ng-valid.ng-dirty{
 	}
 }
 
-#dashboardContent{
-	display: none;
-	#testGraph svg{
-		height: 100%;
-	}
-}
 //Wizard animations Section
 .wizard{
 	height: 100%;
@@ -3261,12 +3255,95 @@ li>.nav{
 	}
 }
 
+// Dashboard
 /*------------------------------------------*/
 /* Visits Graph
 /*------------------------------------------*/
+.titleDashboard{
+	margin-left: 20px;
+}
+.localGraph{
+	margin: 10px 10px 10px 10px;
+}
+.mobileGraph{
+	margin: 10px 10px 10px 10px;
+}
+.visitsGraph{
+	margin: 10px 10px 10px 10px;
+}
 .visitsCriteria{
 	display: inline-block;
+	width: 25% !important;
 }
+.smallBox{
+	h5{
+		text-align: center;
+	}
+	.textValue{
+		text-align: center;
+	}
+}
+.iconDashboard{
+	text-align: center;
+  	white-space: nowrap;
+  	.iconDashboardContent{
+		i{
+			font-size: 60px;
+  			color: @colorGrayDark;
+  		}
+  	}
+}
+.dashboardTable{
+	thead{
+		tr{
+			th{
+				font-weight: normal;
+				font-size: 20px;
+			}
+		}
+	}
+}
+.visitsGraphContainer{
+	position: relative;
+}
+
+
+
+
+
+.iconDashboard:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em; /* Adjusts for spacing */
+}
+
+.visitsGraphArea{
+	position: relative;
+	buttons{
+		button{
+			font-weight: normal;
+			font-size: 15px;
+		}
+	}
+}
+
+.nvd3 g.nv-groups path.nv-line {
+  stroke-width: 4px;
+}
+
+.nvd3 .nv-group  {
+    fill-opacity: 0.15 !important; 
+}
+
+.visitsGraph .nv-point 
+{
+    fill-opacity: 1 !important;
+    stroke-opacity: 1 !important;
+    stroke-width: 4px;
+}
+
 
 
 /*------------------------------------------*/

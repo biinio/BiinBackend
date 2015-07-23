@@ -4,9 +4,73 @@ block head_scripts
 	script(src="/d3/d3.js")
 	script(src="/nvd3/build/nv.d3.js")
 	script(src="/angular-nvd3/dist/angular-nvd3.js")
+	script(src="/ng-module/ng-module.js")
 	script(src="/javascripts/angular/dashboardController.js")
-	script(src="/javascripts/angular/dashboardgraphcontroller/visitsGraphController.js")		
+	script(src="/javascripts/angular/dashboardgraphcontroller/visitsGraphController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobilePieVisits.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileSessionsController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileNewVisitsPercentageController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileTotalBiinedController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileNewVisitsPercentageController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileAverageVisitedElementsController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/localFromVisitsBarController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/localPieVisits.js")
 block content
-	#sectionContent
-		#wrapperContent
+	div(ng-modules="mobilePieVisits, biinAppVisitsGraph, mobileSessions, mobileNewVisitsPercentage, mobileTotalBiined, mobileAverageVisitedElements, mobileNewVisitsPercentage, localFromVisitsBar")
+		h2.titleDashboard Dashboard
+		.visitsGraph
 			include graphs/visitsGraph
+		.mobileGraph
+			.row
+				.col-md-6
+					.row
+						.col-md-2
+							.iconDashboard
+								.iconDashboardContent
+									h4 Mobile
+									i.icon.icon-mobile-phone
+						.col-md-10
+							.row
+								.col-md-6
+									include graphs/mobile/mobileSessions
+								.col-md-6
+									include graphs/mobile/totalBiined
+							.row
+								.col-md-6
+									include graphs/mobile/newVisitsPercentage
+								.col-md-6
+									include graphs/mobile/averageVisitedElements
+				.col-md-6
+					include graphs/mobile/visitsPie
+		.localGraph
+			.row
+				.col-md-6
+					.row
+						.col-md-2
+							.iconDashboard
+								.iconDashboardContent
+									h4 Local
+									i.icon.icon-shop
+						.col-md-5
+							.row
+								.col-md-12
+									include graphs/mobile/mobileSessions
+							.row
+								.col-md-12
+									include graphs/mobile/newVisitsPercentage
+						.col-md-5
+							include graphs/local/fromVisitsGraph
+				.col-md-6
+					include graphs/local/localVisitsPie
+		.localTable
+			.row
+				.col-md-12
+					table.table.dashboardTable
+						thead
+							tr
+								th Locales
+								th Visitas En Biin
+								th Visitas A Locales
+								th Biined
+								th Notificaciones
+

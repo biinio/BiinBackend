@@ -9,6 +9,19 @@ biinAppVisitsGraph.controller("biinAppVisitsGraphController", ['$scope', '$http'
         $scope.$on('organizationsChanged', function(orgId) {
             $scope.getChartData($scope.currentDays);
         });
+        
+        $scope.firstCriteria = "Visits";
+        $scope.secondCriteria = "Notifications";
+
+        $scope.secondCriteriaChange = function(value)
+        {
+            $scope.getChartData($scope.currentDays);
+        }
+
+        $scope.firstCriteriaChange = function(value)
+        {
+            $scope.getChartData($scope.currentDays);
+        }   
 
 
 
@@ -68,24 +81,31 @@ biinAppVisitsGraph.controller("biinAppVisitsGraphController", ['$scope', '$http'
                         if(data.data[keys[i]] > maxValue )
                             maxValue = data.data[keys[i]];
                     }
-
-                    $scope.data = [{
-                        values: visits,
-                        key: 'visits',
-                        color: '#006699',
-                        area: true
-                    },
-                    {
-                        values: notifications,
-                        key: 'Notifications',
-                        color: '#ffa500',
-                        area: true
-                    }];
+                    if($scope.secondCriteria == "Notifications")
+                        $scope.data = [{
+                            values: visits,
+                            key: 'visits',
+                            color: '#006699',
+                            area: true
+                        },
+                        {
+                            values: notifications,
+                            key: 'Notifications',
+                            color: '#ffa500',
+                            area: true
+                        }];
+                    else
+                        $scope.data = [{
+                            values: visits,
+                            key: 'visits',
+                            color: '#006699',
+                            area: true
+                        }];
 
                     $scope.options = {
                         chart: {
                             type: 'lineChart',
-                            height: 450,
+                            height: 250,
                             margin: {
                                 top: 20,
                                 right: 20,
