@@ -8,23 +8,55 @@
 
 html,body {
 	height: 100%;
+	font-family: @standarFont;
 }
 
 h1 {
-	font-size: 15px;
+	font-size: @standardHeaderSize!important;
+	font-weight: bold;
+}
+
+h2
+{
+	font-size: @standardHeader2Size!important;
+}
+
+h3{
+	font-size: @standardHeader3Size!important;
+}
+
+p{
+	font-family: "Open Sans",Verdana,Arial,Helvetica,sans-serif!important;
+	font-size: @standardParagrahSize!important;
+	//color: #b9babb;
+	line-height: 1.6875!important;
+	font-weight: normal!important;
+}
+
+label{
+	font-family: "Open Sans",Verdana,Arial,Helvetica,sans-serif!important;
+	font-size: @standardLabelSize!important;
+	//color: #b9babb;
+	line-height: 1.6875!important;
+	font-weight: bold!important;	
+}
+
+.btn{
+	font-size: standardButtonSize!important;
 }
 
 a.module:hover{ 
 	text-decoration:none; 
 }
 
-p{
-	font-size: 8px;
-	color: #b9babb;
+input, textarea, keygen, select, button{
+	font-family: "Open Sans",Verdana,Arial,Helvetica,sans-serif!important;
+	line-height: 1.6875!important;
+	font-size: @standardInputSize!important;
 }
 
 .form-control {
-	height: 33px;
+	height: 32px!important;
 	width: 100%;
 	border-radius:initial!important;
 	margin-bottom: 5px;
@@ -140,12 +172,6 @@ input.ng-valid.ng-dirty{
 /*------------------------------------------*/
 
 .regionsContent{
-	h1{
-		font-size: 22px;
-	}
-	p{
-		font-size: 17px;
-	}
 	.panel-body{
 		margin-left: 30px;
 	}
@@ -745,20 +771,6 @@ input.ng-valid.ng-dirty{
 	        margin-bottom: 160px;
 	    }
 		.section{
-			h1
-			{
-				font-size: 38px;
-			}
-			h2
-			{
-				font-size: 20px;
-				color:@firstColor;
-			}
-			p{
-				font-size:12px;
-				color: @thirthColor;
-			}
-
 			//Color Control Style
 			.color-control input, .search-criteria-control input{
 				padding-right: 0px!important;
@@ -2221,21 +2233,6 @@ input.ng-valid.ng-dirty{
 }
 
 .maintenanceModal{
-
-	h1
-	{
-		font-size: 20px;
-	}
-	h2
-	{
-		font-size: 15px;
-		color:@firstColor;
-	}
-	p{
-		font-size:10px;
-		color: @thirthColor;
-	}
-
 	.btn-checkbox{
 		border: solid!important;
 		margin-right: @standardPadding;
@@ -2365,7 +2362,7 @@ input.ng-valid.ng-dirty{
 
 	.hideButton{
 		position: absolute;
-		bottom: 47%;
+		top: 0%;
 		right:-17px;
 		background-color: @colorBackground;
 		border-color: @colorBackground;		

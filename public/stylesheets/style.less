@@ -10,18 +10,11 @@ html,body {
 	height: 100%;
 }
 
-h1 {
-	font-size: 15px;
-}
 
 a.module:hover{ 
 	text-decoration:none; 
 }
 
-p{
-	font-size: 8px;
-	color: #b9babb;
-}
 
 .form-control {
 	height: 33px;
@@ -276,13 +269,20 @@ input.ng-valid.ng-dirty{
 /*------------------------------------------*/
 /*	Layout Bars
 /*------------------------------------------*/
+  .navbar.navbar-fixed-top{
+	left:initial!important;
+	width: 100px;
+  }
+
   .nav-user{  	
     margin: 0;
     padding: 0;
     list-style: none;
-    position: absolute;
     top: 0;
     right:0;
+    position: fixed;
+  	right: 0;  	
+  	z-index: 1030;  	
     background-color: @colorBaseBlack;
     box-shadow: -1px 3px 2px grey;
     opacity: 0.5;
@@ -349,6 +349,7 @@ input.ng-valid.ng-dirty{
 			margin: -30px 47px 0 !important;
 			background-color: @colorBlack2;
 		}
+
 		.dropdown-menu > li {
 		    display: inline-block;
 		    float:left;
