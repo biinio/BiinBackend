@@ -22,6 +22,7 @@ biinServicesModule.factory('gallerySrv', ['$http', function (async) {
 }
 ]); 
 
+
 //Stickers Services
 biinServicesModule.factory('stickersSrv', ['$http', function (async) {
     return {

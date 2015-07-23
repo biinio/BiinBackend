@@ -2,12 +2,15 @@ module.exports =function(){
 	var fs=require('fs');
 	var _= require('underscore');
 	var math = require('mathjs'), moment = require('moment-timezone');
+	var util = require('util');
+
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
-		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin');
+		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory');
+
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
 	
 	//GET Categories
@@ -46,7 +49,7 @@ module.exports =function(){
 		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/showcases/'+showcase+".json", "utf8");
 		res.json(JSON.parse(jsonObj));
 	}*/
-
+	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
 	functions.getCategories=function(req,res){
 		var userIdentifier = req.param("identifier");
@@ -146,6 +149,7 @@ module.exports =function(){
 							result.data.categories.push(data)
 							categoriesWithSites++;
 						}
+
 						categoriesProcessed++;
 
 						//Return the categories if all is processed
@@ -164,9 +168,9 @@ module.exports =function(){
 					}
 
 					//Order the sites by Category Identifier
-					for(var i=0; i< foundCategories.categories.length;i++){						
+					for(var i=0; i< foundCategories.categories.length;i++){
 						getSitesByCat(foundCategories.categories[i],i,foundCategories.categories.length,finalCursor);						
-					}					
+					}
 				}
 				else{
 					res.json({status:"9",data:{}});	
@@ -223,7 +227,7 @@ module.exports =function(){
 			}			
 		}
 		if(biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1},getSiteInformation)
 		}else{
 			res.json({data:{status:"7",data:{}}});
 		}		
@@ -235,11 +239,43 @@ module.exports =function(){
  		var identifier = req.param('identifier');
  		var model = req.body.model;
 
- 		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,affected){
-			if(err)
- 				res.json({status:"7",data:{}, error:err});
- 			else
- 				res.json({status:"0",data:{}});	
+ 		var isSetElements =false;
+ 		var isSetHistory=false;
+
+ 		var finalCallback =function(){
+ 			if(isSetElements && isSetHistory)
+ 				res.json({data:{status:"0",result:"1"}});	
+ 		}
+
+ 		var setElementsViewed =function(actions, callback){
+ 			var elementsToInsert = _.where(actions,{did:'5'});
+			var elementsToInsert = _.uniq(elementsToInsert, function(item, key, a) { 
+			    return item.to;
+			});
+
+ 			var elementsStructured = [];
+
+ 			for(var e=0; e<elementsToInsert.length; e++){
+ 				elementsStructured.push({elementIdentifier:elementsToInsert[e].to})	;
+ 			}
+
+
+			mobileUser.update({identifier:identifier},{
+	         	$push:{seenElements:{ $each:elementsStructured}}
+	         },
+	         function(err, raw){
+	         	if(err)
+	         		throw err;
+	         	else
+	         		isSetElements=true;
+	         		callback();
+	         }); 			
+ 		}
+
+ 		setElementsViewed(model.actions,finalCallback);
+ 		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
+ 			isSetHistory=true;
+ 			finalCallback();
  		});
  	}
 
@@ -259,12 +295,61 @@ module.exports =function(){
 		var newModel={};
 
 		//Get the showcases available
-		var getShowcasesWebAvailable=function(siteIdentifier,callback){
-			showcase.find({'webAvailable':siteIdentifier},{'_id':0,'identifier':1},function(err,data){
+		var getShowcasesWebAvailable=function( orgIdentifier,siteIdentifier, callback){
+			var cantShowcasesAdded=0;
+			var cantSites=0;
+			organization.findOne({identifier:orgIdentifier,'sites.identifier':siteIdentifier},{'_id':0,'sites.$':1},function(err,data){
 				if(err)
 					throw err;
-				var webAvailable= data;//_.pluck(data,'identifier');
-				callback(webAvailable)
+				var showcases = [];
+				var site = data.sites[0];
+				var sitesIdentifier= _.pluck(site.showcases,'showcaseIdentifier');
+
+				if(site.showcases){
+					showcase.find({'identifier':{$in:sitesIdentifier}},{identifier:1,elements:1},function(err,foundShowcases){
+						if(err)
+							throw err;
+						else{
+
+							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
+								var highLighEl =[];
+								console.log("Site Identifier: "+sitesIdentifier[siteShowcase]);
+								console.log("Found Showcase: " +util.inspect(foundShowcases));						
+								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
+								 console.log("the showcase: " +util.inspect(showcaseInfo));
+								 
+								 if(showcaseInfo){
+									if(showcaseInfo && showcaseInfo.elements){
+										for(var el =0 ;el<showcaseInfo.elements.length;el++){
+											if(showcaseInfo.elements[el].isHighlight=='1'){
+												highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier});
+											}
+										}	
+									}
+									
+									showcases.push({'identifier':showcaseInfo.identifier,'highlightElements':highLighEl});	 	
+								 }
+								
+							}
+
+							/*
+							for(var showCaseInd=0;showCaseInd<foundShowcases.length;showCaseInd++){
+								var highLighEl =[];
+
+								for(var el =0 ;el<foundShowcases[showCaseInd].elements.length;el++){
+									if(foundShowcases[showCaseInd].elements[el].isHighlight=='1'){
+										highLighEl.push({elementIdentifier:foundShowcases[showCaseInd].elements[el].elementIdentifier});
+									}
+								}
+								showcases.push({'identifier':foundShowcases[showCaseInd].identifier,'highlightElements':highLighEl});	
+							}*/
+							callback(showcases)							
+						}
+
+					});					
+				}else{
+					callback(showcases)
+				}				
 			});
 		}
 
@@ -308,7 +393,6 @@ module.exports =function(){
 											biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
 											biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
 
-
 										}
 										processedBiins++;
 
@@ -327,6 +411,27 @@ module.exports =function(){
 			});
 		}
 
+		//Get the Neibors fo the site
+		var getNeighbords =function(siteIdentifier,callback){
+			var neighbors = [];
+
+			siteCategory.find({"sites.identifier":siteIdentifier},{'sites.$':1},function(err,sitesCategoryFound){
+				if(err)
+					throw err;
+				else{
+					//For each site categoy found
+					for(var i=0; i<sitesCategoryFound.length;i++){
+						neighbors = _.union(neighbors, sitesCategoryFound[i].sites[0].neighbors);
+					}
+					var neighbors = _.uniq(neighbors, function(item, key, a) { 
+					    return item.siteIdentifier;
+					});
+					neighbors =  _.sortBy(neighbors, 'proximity');
+					callback(neighbors);
+				}
+			});
+		}
+
 		newModel.proximityUUID= model.proximityUUID;
 		newModel.identifier = model.identifier;
 		newModel.major =""+ model.major;
@@ -334,6 +439,7 @@ module.exports =function(){
 		newModel.state = model.state;
 		newModel.city = model.city;
 		newModel.zipCode = model.zipCode;		
+		newModel.ubication = model.ubication;
 		//Map fields;
 
 		newModel.title = model.title1;			
@@ -345,6 +451,7 @@ module.exports =function(){
 		newModel.longitude =""+ model.lng;
 		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
 		newModel.email = model.email?model.email:"";
+		newModel.nutshell = model.nutshell?model.nutshell:"";
 		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
@@ -356,26 +463,24 @@ module.exports =function(){
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
-		//If is not loyalty
-		if(!('loyalty' in newModel)){
-			newModel.loyalty ={
-	                isSubscribed:"0",
-	                subscriptionDate:"2014-01-01 12:00:00",
-	                points:"0",
-	                level:"0",
-	                achievements: [
-	                    {
-	                        achievementIdentifier:"0"
-	                    }
-	                ],
-	                badges: [
-	                    {
-	                        badgeIdentifier:"0"
-	                    }
-	                ]
-	        }
+		var loyaltyModel ={
+                isSubscribed:"1",
+                subscriptionDate:utils.getDateNow(),
+                points:"0",
+                level:"0",
+                achievements: [
+                ],
+                badges: [
+                ]
+        }
+
+		if('loyalty' in mobileUser){
+			var loyaltyToFind = _.findWhere(mobileUser.loyalty,{organizationIdentifier:orgId});
+			if(typeof(loyaltyToFind)!=='undefined')
+				loyaltyModel = loyaltyToFind;
 		}
 
+		newModel.loyalty =loyaltyModel;
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
@@ -390,16 +495,17 @@ module.exports =function(){
 
 		var showcaseReady=false;
 		var biinsReady=false;
+		var neighborsReady=false;
 
 		//Get showcase available
-		getShowcasesWebAvailable(siteId,function(webAvailable){
+		getShowcasesWebAvailable(orgId,siteId,function(showcases){
 
-			newModel.webAvailable = [];
-			if(webAvailable)
-				newModel.webAvailable =webAvailable;
+			newModel.showcases = [];
+			if(showcases)
+				newModel.showcases =showcases;
 			showcaseReady=true;
 
-			if(showcaseReady&&biinsReady){
+			if(showcaseReady&&biinsReady && neighborsReady){
 				//Return the result callback
 				resultCallback(newModel)
 			}
@@ -409,10 +515,20 @@ module.exports =function(){
 		getSiteBiins(siteId,function(biinsData){
 			newModel.biins=biinsData
 			biinsReady=true;
-			if(showcaseReady&&biinsReady){
+			if(showcaseReady&&biinsReady && neighborsReady){
 				//Return the result callback
 				resultCallback(newModel)
 			}
+		});
+
+		getNeighbords(siteId,function(siteNeibors){
+			newModel.neighbors=siteNeibors;
+			neighborsReady=true;
+
+			if(showcaseReady&&biinsReady && neighborsReady){
+				//Return the result callback
+				resultCallback(newModel)
+			}			
 		});
 	}
 

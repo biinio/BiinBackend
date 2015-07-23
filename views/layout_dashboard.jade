@@ -3,8 +3,9 @@ html
 	head
 		title= title
 		<!-- Bootstrap -->
-		link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')		
 		link(rel='stylesheet', href='/stylesheets/main.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
 		link(rel='stylesheet', href='/stylesheets/sidebar.css')
 		link(rel='stylesheet', href='/stylesheets/croppic.css')
 		link(rel="stylesheet" href="/spectrum/spectrum.css")
@@ -16,9 +17,11 @@ html
 		link(rel="stylesheet" href="/stylesheets/font-streamline.css")
 		script(src="/angular/angular.js")
 		script(src="/angular-route/angular-route.js")
+		script(src="/angular-smart-table/dist/smart-table.js")
 		script(src="/javascripts/angular/app.js")
 		script(src="/angular-translate/angular-translate.min.js")
 		script(src="/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js")			
+		script(src="/javascripts/angular/layoutLeftMenuController.js")
 		block head_scripts
 		script(src="/javascripts/angular/naturalSortVersion.js")
 		base(href="/")
@@ -27,70 +30,81 @@ html
 		include layout_menu
 		.main-container
 			.sidebar
-				ul.nav.nav-sidebar.menu(scrollbar)
-					li.nav-item
-						a(href="/home") 
-							.icon.icon-house-2
-							| HOME
-					li.nav-item
-						a(href="/accounts") 
-							.icon.icon-id-4
-							| ACCOUNT							
-					if organization == null
-						ul#organizationNav.nav.nav-sidebar.hide(data-organization='')
-							li.nav-item
-								a(href="" data-org-link="/organizations/{0}/sites") 
-									.icon.icon-shop
-									| SITES
-							li.nav-item
-								a(href="" data-org-link="/organizations/{0}/showcases") 
-									.icon.icon-book-1
-									| SHOWCASES
-							li.nav-item
-								a(href="" data-org-link="/organizations/{0}/elements") 
-									.icon.icon-bookmark-4-1
-									| ELEMENTS
-							li.nav-item
-								a(href="" data-org-link="/organizations/{0}/biins")
-									.icon.icon-hotspot-1
-									| BIINS									
-							//li
-								a(href="" data-org-link="/organizations/{0}/gallery") 
-									.icon.icon-coins-2(style='font-size:30px;')
-									| GALLERY
-					else
-						ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
-							li.nav-item
-								a(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites" ) 
-									.icon.icon-shop
-									| SITES
-							li.nav-item
-								a(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" )
-									.icon.icon-bookmark-4-1
-									| ELEMENTS
-							li.nav-item
-								a(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases" ) 
-									.icon.icon-book-1
-									| SHOWCASES
-							li.nav-item
-								a(href="/organizations/"+organization.identifier+"/biins"  data-org-link="/organizations/{0}/biins" )
-									.icon.icon-hotspot-1
-									| BIINS									
-							li.nav-item
-								a(href="/maintenance" data-org-link="/maintenance" )
-									.icon.icon-setting-gears-2
-									| MAINTENANCE
-							//li
-								a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") 
-									.icon.icon-coins-2
-									| GALLERY
-					li.nav-item
-							a(href="#") 
-								.icon.icon-rss-1
-								| NEWS
-					//li.nav-item
-						a(href="/errors") ERRORS
-						i.fa.fa-angle-right.angle-icon-sidebar
+				.sidebarContent
+					.brand
+						img(src="/images/biinLogoSmall.png")
+						//| biin
+					#organizationMenu.navbar-organization
+						.dropdown
+							a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false")
+								//i.icon.icon-buildings-3
+								//	.caret
+								.circleOrganization
+									if organization == null								
+										span Select an Organization
+									else
+										span.name=organization.name									
+							ul.dropdown-menu(role="menu")					
+					ul.nav.nav-sidebar.menu(scrollbar)
+						li.nav-item-divider
+						li.nav-item
+							a.toolLeftMenu(href="/home" title="Home") 
+								.icon.icon-house-2
+						li.nav-item
+							a.toolLeftMenu(href="/accounts" title="Account") 
+								.icon.icon-id-4
+								//| ACCOUNT							
+						if organization == null
+							ul#organizationNav.nav.nav-sidebar.hide(data-organization='')
+								li.nav-item
+									a.toolLeftMenu(href="" data-org-link="/organizations/{0}/sites" title="Sites") 
+										.icon.icon-shop
+									//	| SITES
+								li.nav-item
+									a.toolLeftMenu(href="" data-org-link="/organizations/{0}/showcases" title="Showcases") 
+										.icon.icon-book-1
+									//	| SHOWCASES
+								li.nav-item
+									a.toolLeftMenu(href="" data-org-link="/organizations/{0}/elements" title="Elements") 
+										.icon.icon-bookmark-4-1
+									//	| ELEMENTS
+								li.nav-item
+									a.toolLeftMenu(href="" data-org-link="/organizations/{0}/biins" title="Biins")
+										.icon.icon-hotspot-1
+									//	| BIINS									
+								//li
+									a(href="" data-org-link="/organizations/{0}/gallery") 
+										.icon.icon-coins-2(style='font-size:30px;')
+										| GALLERY
+						else
+							ul#organizationNav.nav.nav-sidebar(data-organization=organization.identifier)
+								li.nav-item
+									a.toolLeftMenu(href="/organizations/"+organization.identifier+"/sites" data-org-link="/organizations/{0}/sites" title="Sites") 
+										.icon.icon-shop
+										//| SITES
+								li.nav-item
+									a.toolLeftMenu(href="/organizations/"+organization.identifier+"/elements" data-org-link="/organizations/{0}/elements" title="Elements" )
+										.icon.icon-bookmark-4-1
+										//| ELEMENTS
+								li.nav-item
+									a.toolLeftMenu(href="/organizations/"+organization.identifier+"/showcases" data-org-link="/organizations/{0}/showcases" title="Showcases" ) 
+										.icon.icon-book-1
+										//| SHOWCASES
+								li.nav-item
+									a.toolLeftMenu(href="/organizations/"+organization.identifier+"/biins"  data-org-link="/organizations/{0}/biins" title="Biins")
+										.icon.icon-hotspot-1
+										//| BIINS									
+								li.nav-item
+									a.toolLeftMenu(href="/maintenance" data-org-link="/maintenance" title="Maintenance" )
+										.icon.icon-setting-gears-2
+										//| MAINTENANCE
+								//li
+									a(href="/organizations/"+organization.identifier+"/gallery" data-org-link="/organizations/{0}/gallery") 
+										.icon.icon-coins-2
+										| GALLERY
+						//li.nav-item
+							a(href="/errors") ERRORS
+							i.fa.fa-angle-right.angle-icon-sidebar
 			.main.sidebar-margin
 				block content
 	script(src="/jquery/dist/jquery.min.js")

@@ -16,6 +16,7 @@ var siteObj ={
 	mainColor:{type:String,default:""},
 	textColor:{type:String,default:""},
 	description: {type:String, default:""},
+	nutshell:{type:String, default:""},
 	major:{type: Number, default:0},
 	minorCounter:{type: Number, default:0},
 	country:{type:String, default:""},
@@ -26,7 +27,7 @@ var siteObj ={
 	streetAddres2:{type:String, default:""},
 	phoneNumber:{type:String, default:"1-800-888-8888"},
 	ubication:{type:String, default:""},
-	email:{type:String, default:"email@email.com"},
+	email:{type:String, default:""},
 	lat:{type:String,default:0},
 	lng:{type:String,default:0},
 	searchTags:[],
@@ -46,6 +47,11 @@ var siteObj ={
 			mainColor:{type:String,default:""}
 		}
 	],
+	showcases:[
+		{
+            showcaseIdentifier:{type:String,default:""}
+        }
+    ],
 	biins:[
 		{
 			identifier:{type:String, index:true, default:""},
@@ -57,6 +63,7 @@ var siteObj ={
 			position:{type:String, default:""},//It's the place where is located the biinie eg: at the entrance
 			registerDate:{type:String, default:""},
 			lastUpdate:{type:String, default:""},
+			children:[],
 			showcases:[{
                 isDefault: {type:String,default:"0"},
                 showcaseIdentifier:{type:String,default:""},

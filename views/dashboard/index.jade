@@ -1,41 +1,76 @@
 extends ../layout_dashboard
 block head_scripts
-	link(rel="stylesheet" href="/nvd3/build/nv.d3.css")
+	link(rel="stylesheet" href="/nvd3/nv.d3.css")
 	script(src="/d3/d3.js")
 	script(src="/nvd3/build/nv.d3.js")
-	script(src="/javascripts/angular/dashboardController.js")		
+	script(src="/angular-nvd3/dist/angular-nvd3.js")
+	script(src="/ng-module/ng-module.js")
+	script(src="/javascripts/angular/dashboardController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/visitsGraphController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobilePieVisits.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileSessionsController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileNewVisitsPercentageController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileTotalBiinedController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileNewVisitsPercentageController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/mobileAverageVisitedElementsController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/localFromVisitsBarController.js")
+	script(src="/javascripts/angular/dashboardgraphcontroller/localPieVisits.js")
 block content
-	#sectionContent(ng-app="biinAppDashboard" ng-controller="dashboardController" ngCloack)
-		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)			
-			#dashboardContent
-				.section
-						.col-md-12				
-							.row
-								h1='Bienvenido ' + user.displayName + '!' 
-								p A continuaci&oacute;n podr&aacute; observar datos en tiempo real sobre sus campa&ntilde;as
-				.section				
+	div(ng-modules="mobilePieVisits, biinAppVisitsGraph, mobileSessions, mobileNewVisitsPercentage, mobileTotalBiined, mobileAverageVisitedElements, mobileNewVisitsPercentage, localFromVisitsBar")
+		h2.titleDashboard Dashboard
+		.visitsGraph
+			include graphs/visitsGraph
+		.mobileGraph
+			.row
+				.col-md-6
 					.row
 						.col-md-2
+							.iconDashboard
+								.iconDashboardContent
+									h4 Mobile
+									i.icon.icon-mobile-phone
+						.col-md-10
 							.row
-								h5 Organization
+								.col-md-6
+									include graphs/mobile/mobileSessions
+								.col-md-6
+									include graphs/mobile/totalBiined
 							.row
-								select.form-control.bootstrap-select( ng-model="selectedOrganization" ng-change='changeOrganization(selectedOrganization)' toggle-dropdown )
-									option(value="" default) Todas
-									option(ng-repeat="opt in organizations" value="{{$index}}" ng-click="") {{opt.name}}
+								.col-md-6
+									include graphs/mobile/newVisitsPercentage
+								.col-md-6
+									include graphs/mobile/averageVisitedElements
+				.col-md-6
+					include graphs/mobile/visitsPie
+		.localGraph
+			.row
+				.col-md-6
+					.row
 						.col-md-2
+							.iconDashboard
+								.iconDashboardContent
+									h4 Local
+									i.icon.icon-shop
+						.col-md-5
 							.row
-								h5 Locales
+								.col-md-12
+									include graphs/mobile/mobileSessions
 							.row
-								select.form-control.bootstrap-select( ng-model="selectedSite" toggle-dropdown)
-									option(value="" default) Todas
-									option(ng-repeat="opt in sites" value="{{opt.identifier}}" ng-click="changeSite($index)") {{opt.title1}}
-				.section
-					.col-md-12
-						.rows
-							p Online sessions / Locals sessions									
-				.section
-					.col-md-1						
-					.col-md-10
-						.row
-							#testGraph
-								svg				
+								.col-md-12
+									include graphs/mobile/newVisitsPercentage
+						.col-md-5
+							include graphs/local/fromVisitsGraph
+				.col-md-6
+					include graphs/local/localVisitsPie
+		.localTable
+			.row
+				.col-md-12
+					table.table.dashboardTable
+						thead
+							tr
+								th Locales
+								th Visitas En Biin
+								th Visitas A Locales
+								th Biined
+								th Notificaciones
+

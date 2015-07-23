@@ -111,6 +111,13 @@ module.exports = function () {
 		var backPage = req.params.backPage.replace('-','/');
 		res.render("termsAndConditions",{backPage:backPage});
 	}
+
+	functions.privacyPolicy=function(req,res){
+		res.render("privacyPolicy");
+	}
+	functions.support=function(req,res){
+		res.render("support");
+	}
 	
 	//Send emails
 	functions.sendEmail = function(req,res){

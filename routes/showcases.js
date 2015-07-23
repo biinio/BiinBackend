@@ -3,6 +3,7 @@ module.exports = function () {
     var moment = require('moment');
 
     //Custom Utils
+  	var _ = require('underscore');  
   	var imageManager = require("../biin_modules/imageManager")(),
   	    utils = require('../biin_modules/utils')(),
   	    routesUtils = require('../biin_modules/routesUtils')();
@@ -11,6 +12,8 @@ module.exports = function () {
 	var organization = require('../schemas/organization');
 	var showcase = require('../schemas/showcase');
 	var region = require('../schemas/region');
+	var mobileUser = require('../schemas/mobileUser');
+
 	var functions = {};
 
 
@@ -203,8 +206,9 @@ module.exports = function () {
 	//Get a specific showcase
 	functions.getMobileShowcase =function(req,res){
 		var identifier = req.param("identifier");
+		var biinieIdentifier =req.param("biinieIdentifier");
 		//biinie getShowcase
-		showcase.findOne({"identifier":identifier},{"identifier":1,"showcaseType":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"elements.elementIdentifier":1,"elements._id":1, "notifications":1, "webAvailable":1},function(err,data){
+		showcase.findOne({"identifier":identifier},{"identifier":1,"showcaseType":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"elements.elementIdentifier":1,"elements._id":1,"elements.position":1, "notifications":1, "webAvailable":1}).lean().exec(function(err,data){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else
@@ -213,6 +217,7 @@ module.exports = function () {
 				else{
 					var showcaseObj = {}
 
+					showcaseObj.elements = _.sortBy(data.elements, 'position');
 					showcaseObj.title = data.name?data.name:"";
 					showcaseObj.subTitle= data.description?data.description:"";
 					showcaseObj.titleColor=data.titleColor?data.titleColor.replace('rgb(','').replace(')',''):"0,0,0";
@@ -222,11 +227,25 @@ module.exports = function () {
 					showcaseObj.activateNotification = data.activateNotification?data.activateNotification:"0";					
 					showcaseObj.webAvailable = data.webAvailable;
 					showcaseObj.showcaseType = data.showcaseType?data.showcaseType:"1";
-					showcaseObj.elements = data.elements;					
+					
+					mobileUser.findOne({'identifier':biinieIdentifier},{seenElements:1},function(err,seenElementsFound){
+						if(err)
+							throw err;
+						else{
+							for(var el=0; el<showcaseObj.elements.length;el++){
+								var found=_.findWhere(seenElementsFound.seenElements,{elementIdentifier: showcaseObj.elements[el]._id});
+								if(typeof(found)!=='undefined')
+									showcaseObj.elements[el].hasBeenSeen='1';
+								else
+									showcaseObj.elements[el].hasBeenSeen='0';
+							}
 
-					res.json({data:showcaseObj,status:"0"});
+							res.json({data:showcaseObj,status:"0"});											
+						}
+						
+					});
 				}
-		})
+		});
 
 	}
 

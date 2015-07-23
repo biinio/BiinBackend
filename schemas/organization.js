@@ -41,6 +41,7 @@ var orgSchema = new Schema({
 		mainColor:{type:String,default:""},
 		textColor:{type:String,default:""},
 		description: {type:String, default:""},
+		nutshell:{type:String, default:""},
 		major:{type: Number, default:0},
 		minorCounter:{type: Number, default:0},
 		country:{type:String, default:""},
@@ -84,6 +85,7 @@ var orgSchema = new Schema({
 				proximityUUID:{type:String, default:""},
 				venue:{type:String, default:""},
 				position:{type:String, default:""},//It's the place where is located the biinie eg: at the entrance
+				children:[],
 				registerDate:{type:String, default:""},
 				lastUpdate:{type:String, default:""},
 	            biinType:{type:String,default:"1"},

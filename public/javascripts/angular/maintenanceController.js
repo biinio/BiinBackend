@@ -123,7 +123,8 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       status:"No Programmed",
       proximityUUID:defaultUUID,
       registerDate:"",
-      biinType:"3"
+      biinType:"3",
+      venue:""
     }
   }
   else
@@ -170,6 +171,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
       $http.put('/maintenance/insertBiin',$scope.beacon).success(function(data,status){
           $modalInstance.close($scope.beacon);
         }).error(function(data,status){
+          $scope.message = data.message;
           console.log(data);
           console.log(status);
         });
@@ -190,7 +192,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
   $scope.selectSite = function(index){
     if($scope.beacon.biinType == "1"){
       $scope.minor = 1;
-      $scope.siteMinor = parseInt($scope.sites[index].minorCounter);
+      $scope.siteMinor = mode=="create" ? parseInt($scope.sites[index].minorCounter) : parseInt($scope.sites[index].minorCounter) + 1;
     }else{
       if(mode=="create"){
         $scope.minor = parseInt($scope.sites[index].minorCounter) +1;
@@ -214,7 +216,7 @@ biinAppMaintenance.controller('addOrEditBeaconController', function ($scope, $mo
     if(value == "1"){
       $scope.minor = 1;
       $scope.minorHasChanged = !$scope.isExternalBeaconType;
-      $scope.siteMinor = parseInt($scope.sites[$scope.selectedSite].minorCounter);
+      $scope.siteMinor = pmode=="create" ? parseInt($scope.sites[index].minorCounter) : parseInt($scope.sites[index].minorCounter) + 1;
     }else{
       if($scope.siteIndexFromBeacon == $scope.selectedSite && $scope.isExternalBeaconType == (value=="1")){
         $scope.minor = parseInt($scope.beacon.minor);

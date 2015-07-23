@@ -15,6 +15,16 @@ form.novalidate
 				.col-sm-10
 					input#title2.form-control.title-value(ng-model="sites[selectedSite].title2" name="title1" type="text" placeholder="Subtittle **" ng-blur="validate()"  required )
 		.row
+			.form-group
+				label.col-sm-2.control-label(for='email')(translate="SITES.EMAIL")
+				.col-sm-10
+					input#email.form-control.title-value(ng-model="sites[selectedSite].email" name="email" type="text" placeholder="email@email.com **" ng-blur="validate()"  required )
+		.row
+			.form-group
+				label.col-sm-2.control-label(for='nutshell')(translate="SITES.NUTSHELL")
+				.col-sm-10
+					input#nutshell.form-control.title-value(ng-model="sites[selectedSite].nutshell" name="nutshell" type="text" placeholder="Mini Description **" ng-blur="validate()" ng-change="limitNutshell()"  required )
+		.row
 			h4 {{'GENERIC.IDENTIFIER' | translate}} : {{sites[selectedSite].identifier }}
 	.section
 		h2(translate="GENERIC.SEARCH_TAGS")
@@ -29,6 +39,6 @@ form.novalidate
 							p {{tag}}
 				.search-add
 					.col-md-9
-						input.form-control(ng-model="newTagField")
+						input.form-control(name="newTagField.tag" ng-model="newTagField.tag")
 					.col-md-3
-						button.btn.btn-default(ng-click="addSiteTag(newTagField);newTagField=''" ng-enter="addSiteTag(newTagField);newTagField=''")(translate="GENERIC.ADD")
+						button.btn.btn-default(ng-click="addSiteTag(newTagField.tag);" ng-enter="addSiteTag(newTagField.tag);")(translate="GENERIC.ADD")

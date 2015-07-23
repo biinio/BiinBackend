@@ -11,6 +11,7 @@ module.exports = function () {
 					   mobileUser = require('../schemas/mobileUser');	
 
 	var sysGlobalsRoutes = require('./sysGlobals')();
+	var regionRoutes = require('../routes/regions')();
 	var functions={};
 
 	//GET the main view of sites
@@ -37,7 +38,6 @@ module.exports = function () {
 		}
 
 		getOganization(req, res, callback);				  
-
 	}
 
 	//GET Sites User categories and proximity
@@ -47,27 +47,45 @@ module.exports = function () {
 		var userLng = eval(req.param("longitude"));
 		var enviromentId = process.env.DEFAULT_SYS_ENVIROMENT;
 
+		var maxLatModifiers=0;
+		var maxLngModifiers=0
+		var invertSearch=false;
 		var cantSites =0;
-
+		
 
 		var categorySitesResult={categories:[]};
-
+		var catAdded=[]
 		var searchSitesByCategory =function(userCategories,catArray,lat,lng,callback){
-			var locationFilter = [{min_latitude:{$lte:lat}},{min_longitude:{$lte:lng}},{max_latitude:{$gte:lat}},{max_longitude:{$gte:lng}}];
+
+			var queryMinLat ={min_latitude:{$lte:lat}};
+			var queryMaxLat ={max_latitude:{$gte:lat}};
+			var queryMinLng = {min_longitude:{$lte:lng}};
+			var queryMaxLng = {max_longitude:{$gte:lng}};
+
+			if(lat<0){
+				queryMinLat ={min_latitude:{$gte:lat}};
+				queryMaxLat ={max_latitude:{$lte:maxLngModifiers}}
+			}
+			if(lng<0){
+				queryMinLng = {min_longitude:{$gte:lng}};
+				queryMaxLng = {max_longitude:{$lte:maxLngModifiers}}
+			}
+
+			var locationFilter = [queryMinLat,queryMinLng,queryMaxLat,queryMaxLng];
 			siteCategory.find({categoryIdentifier:{$in:catArray},$and:locationFilter},{_id:0,categoryIdentifier:1,"sites.identifier":1},function(err,foundSearchSites){
 				for(var c=0;c< foundSearchSites.length; c++){
 					if(foundSearchSites[c].sites.length){
 						var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});					
 						if(category)
-							category.sites.push(foundSearchSites[c].sites)
+							category.sites = category.sites.concat(foundSearchSites[c].sites);
 						else{
 							var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
-							categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites});
+							categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites, hasSites:'1'});
+							catAdded.push(foundSearchSites[c].categoryIdentifier);							
 						}						
 						cantSites += foundSearchSites[c].sites.length;
-					}
-					
-				}
+					}					
+				}				
 				callback();
 			});
 		}
@@ -82,18 +100,65 @@ module.exports = function () {
 					if(foundCategories.categories.length===0)
 						res.json({data:{status:"9",data:{}}});
 					else{
+
+
 						var catArray = _.pluck(foundCategories.categories,'identifier')
 						var result = {data:{categories:[]}};
 
-						//Search the sites by user categories and proximity						
-						searchSitesByCategory(foundCategories.categories,catArray,userLat,userLng,function(){
-							if(cantSites===0){
-								res.json({status:"9",data:{}});									
-							}else{
-								//Return the sites data
-								res.json({data:categorySitesResult,status:'0'});
+						if(eval(process.env.ALLOW_LOCATION_FILTER)===true){
+							var latInc = userLat;
+							var lngInc= userLng;
+							maxLatModifiers = userLat;
+							maxLngModifiers = userLng;
+							var radiousRad = utils.metersToRadians(process.env.STANDARD_RADIOUS);
+							var searchAndReturn =function(lat,lng){
+								//Search the sites by user categories and proximity						
+								searchSitesByCategory(foundCategories.categories,catArray,lat,lng,function(){
+									if(cantSites===0){									
+										if(lat>0){
+											latInc =latInc +radiousRad;
+											maxLatModifiers = maxLatModifiers-radiousRad;
+										}										
+										else{
+											latInc = latInc - radiousRad;
+											maxLatModifiers = maxLatModifiers + radiousRad;
+										}
+										if(lng>0){
+											lngInc = lngInc +radiousRad;
+											maxLngModifiers = maxLngModifiers - radiousRad;
+										}										
+										else{
+											lngInc = lngInc - radiousRad;
+											maxLngModifiers= maxLngModifiers +radiousRad;
+										}
+
+										searchAndReturn(latInc,lngInc);
+
+									}else{
+										//Fill not retrieve categories sites
+										var notFoundCatSites=_.difference(catArray,catAdded);
+										for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
+											var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
+											categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
+										}									
+										//Return the sites data
+										res.json({data:categorySitesResult,status:'0'});
+									}
+								});								
 							}
-						});
+							searchAndReturn(userLat,userLng);
+						}else{
+							getAllSitesByCategories(userIdentifier,userLat,userLng,foundCategories.categories,catArray,function(categorySitesResult,cantSites,catAdded){
+							//Fill not retrieve categories sites
+								var notFoundCatSites=_.difference(catArray,catAdded);
+								for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
+									var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
+									categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
+								}										
+								res.json({data:categorySitesResult,status:'0'});
+							})
+						}
+						
 					}
 				}	
 				else{
@@ -101,6 +166,37 @@ module.exports = function () {
 				}
 			}
 		});		
+	}
+
+
+	var getAllSitesByCategories = function(userIdentifier, userLat, userLng, userCategories,catArray,callback){
+		console.log("All get categories");
+		var cantSites =0;
+		var categorySitesResult={categories:[]};
+		var catAdded=[]
+		siteCategory.find({categoryIdentifier:{$in:catArray}},{_id:0,categoryIdentifier:1,"sites.identifier":1,"sites.lng":1,"sites.lat":1}).lean().exec(function(err,foundSearchSites){
+			for(var c=0;c< foundSearchSites.length; c++){
+				if(foundSearchSites[c].sites.length){
+					var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});		
+					for(var csF=0;csF<foundSearchSites[c].sites.length;csF++){
+						//cal Binnie prox
+						foundSearchSites[c].sites[csF].biinieProximity = ""+utils.getProximity(userLat,userLng,foundSearchSites[c].sites[csF].lat,foundSearchSites[c].sites[csF].lng);
+					}
+
+					if(category)
+						category.sites = category.sites.concat(foundSearchSites[c].sites);
+					else{
+						var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
+						var category = {identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites, hasSites:'1'};						
+						categorySitesResult.categories.push(category);
+						catAdded.push(foundSearchSites[c].categoryIdentifier);							
+					}		
+					category.sites=_.sortBy(category.sites, 'biinieProximity');				
+					cantSites += foundSearchSites[c].sites.length;
+				}					
+			}				
+			callback(categorySitesResult,cantSites,catAdded);
+		});
 	}
 
 	//PUT an update of an site
@@ -130,7 +226,7 @@ module.exports = function () {
 					{
 						$push: {sites:model}
 					},
-					function(err,affectedRows){
+					function(err,raw){
 						if(err){
 							res.send(err, 500);
 						}
@@ -187,7 +283,7 @@ module.exports = function () {
 	                     { identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier,'sites.identifier':model.identifier},
 	                     { $set :set },
 	                     { upsert : false },
-	                     function(err, cantAffected){
+	                     function(err, raw){
 	                     	if(err){
 	                     		throw err;
 	                     		res.json(null);
@@ -216,16 +312,91 @@ module.exports = function () {
 	var setSiteCategory = function(isUpdate,model,siteIdentifier,callback){
 		var cantCategoriesAdded=0;
 
+		//Site neighbors process
+		var siteNeighborsProcess= function(siteIdentifier,lat,lng,callback){
+			siteCategory.find({'sites.identifier':siteIdentifier},function(err,siteCategoryFound){
+				if(err)
+					throw err;
+				else{
+					var maxNeighboards=4;
+					//Iterate over ther sitesCategorys and set the neighboards
+					for(var i =0;i<siteCategoryFound.length;i++){						
+						var sitesOrdered = _.sortBy(siteCategoryFound[i].sites, 'proximity');
+						//Iterate over the site of the siteCategory
+						for(var j=0;j<sitesOrdered.length;j++){							
+							var siteToUpdate = sitesOrdered[j];
+							var neighboards =[];
+							var cantAdded =0;
+
+							var prevNeighAdded=0;
+							if(j>=2){
+
+								neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-1].lat,sitesOrdered[j-1].lng)});
+								neighboards.push({siteIdentifier:sitesOrdered[j-2].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-2].lat,sitesOrdered[j-2].lng)});
+								prevNeighAdded=2;
+								cantAdded+=2;								
+
+							}else{
+
+								if(j==1){
+									neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-1].lat,sitesOrdered[j-1].lng)});
+									cantAdded++;
+									prevNeighAdded=1;
+								}
+
+							}
+
+							var pointer = j+1;
+
+							//Refill spaces
+							if(sitesOrdered.length-1 > cantAdded){
+								while(cantAdded<maxNeighboards && pointer< sitesOrdered.length){
+									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[pointer].lat,sitesOrdered[pointer].lng)})
+									cantAdded++;										
+									pointer++;
+								}
+							}
+							//If the cant added is less than cant to add
+							if(cantAdded< maxNeighboards && j-prevNeighAdded>0){
+								var missingSpaces =maxNeighboards-cantAdded;
+								var cantCanAdd = j-prevNeighAdded;
+								if(j>missingSpaces)
+									cantCanAdd= missingSpaces;
+								
+								for(var backNeigh=0;backNeigh<cantCanAdd;backNeigh++){
+									pointer = j-backNeigh-prevNeighAdded-1;
+									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[pointer].lat,sitesOrdered[pointer].lng)})
+								}
+							}
+
+							siteToUpdate.neighbors= neighboards;
+						}
+
+						siteCategoryFound[i].sites = sitesOrdered;						
+						siteCategoryFound[i].save(function(err){
+							if(err)
+								throw err;
+						});
+					}	
+				}
+
+				callback();
+			});
+		}
+
+		//Call back of Push Sites By Categories
 		var endProcessPush=function(){
-			callback(cantCategoriesAdded);
+			siteNeighborsProcess(siteIdentifier,model.lat,model.lng,function(){
+				callback(cantCategoriesAdded);
+			})			
 		}
 
 		//Insert the Site Categories
-		var pushSitesByCategories =function(siteCategoryConfig,categories, proximity){
+		var pushSitesByCategories =function(siteCategoryConfig,categories, proximity,lat,lng){
 			var totalCategories = categories.length-1;
 			for(var c =0; c< categories.length;c++){
 				siteCategoryConfig.categoryIdentifier = categories[c].identifier;
-				siteCategory.update(siteCategoryConfig,{$push:{'sites':{'identifier':siteIdentifier,'proximity':proximity}}},{upsert:true},function(err,cantAffected){
+				siteCategory.update(siteCategoryConfig,{$push:{'sites': {'identifier':siteIdentifier,'lat':lat,'lng':lng,'proximity':proximity}}},{upsert:true},function(err,raw){
 					if(err)
 						throw err;
 					else{
@@ -250,30 +421,49 @@ module.exports = function () {
 			var lat = eval(model.lat);
 			var lng = eval(model.lng);
 
+			var queryMinLat ={min_latitude:{$lte:lat}};
+			var queryMaxLat ={max_latitude:{$gte:lat}};
+			var queryMinLng = {min_longitude:{$lte:lng}};
+			var queryMaxLng = {max_longitude:{$gte:lng}};
+
+			if(lat<0){
+				queryMinLat ={min_latitude:{$gte:lat}};
+				queryMaxLat ={max_latitude:{$lte:lat}};
+			}
+			if(lng<0){
+				queryMinLng = {min_longitude:{$gte:lng}};
+				queryMaxLng = {max_longitude:{$lte:lng}};
+			}
+
 			//Search if theres is a SiteCategory in the range			
-			siteCategory.findOne({$and:[{min_latitude:{$lte:lat}},{min_longitude:{$lte:lng}},{max_latitude:{$gte:lat}},{max_longitude:{$gte:lng}}]},function(err,data){
+			siteCategory.findOne({$and:[queryMinLat,queryMinLng,queryMaxLat,queryMaxLng]},function(err,data){
 				//If there is a configuration in range
 				if(data){
+
 					var defConfiguration = {min_latitude: data.min_latitude, min_longitude:data.min_longitude,max_latitude:data.max_latitude, max_longitude:data.max_longitude,radious:data.radious};
 				 	
 				 	var resultLat = model.lat -  data.min_latitude ;				 	
 				 	var resultLong = model.lng - data.min_longitude;
 
-				 	var radiansProximity= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));	
+				 	var radiansProximity= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
 				 	var metersProximity=((radiansProximity*1000)/360)*process.env.EARTH_CIRCUMFERENCE;
 					//Push the categories of the sites					
-					pushSitesByCategories(defConfiguration,model.categories,metersProximity);
+					pushSitesByCategories(defConfiguration,model.categories,metersProximity,model.lat,model.lng);
 				}else{
 					
-					var radiousRadians = ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE;
-					var maxLat = eval(model.lat)+radiousRadians;
-					var maxLng = eval(model.lng)+ radiousRadians;
-					var metersProximity =0;
-					var defConfiguration = {min_latitude: eval(model.lat), min_longitude:eval(model.lng),max_latitude:maxLat, max_longitude:maxLng,radious:radiousRadians};
+					var radiousRadians = ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE/2;
+					var minLat = model.lat>0?eval(model.lat)-radiousRadians:eval(model.lat)+radiousRadians;
+					var minLng = model.lng>0?eval(model.lng)-radiousRadians:eval(model.lng)+radiousRadians;
+					var maxLat = model.lat>0?eval(model.lat)+radiousRadians:eval(model.lat)-radiousRadians;
+					var maxLng = model.lng>0?eval(model.lng)+ radiousRadians:eval(model.lng)-radiousRadians;
+
+					var metersProximity =((radiousRadians*1000)/360)*process.env.EARTH_CIRCUMFERENCE;
+					var defConfiguration = {min_latitude: minLat, min_longitude:minLng,max_latitude:maxLat, max_longitude:maxLng,radious:radiousRadians};
 					
 					//Push the categories of the sites					
-					pushSitesByCategories(defConfiguration,model.categories,metersProximity);					
+					pushSitesByCategories(defConfiguration,model.categories,metersProximity,model.lat,model.lng);
 				}
+
 			});
 		}
 
@@ -290,7 +480,7 @@ module.exports = function () {
 
 		if(isUpdate){
 				//Remove the Site in the siteCategory Schema
-				siteCategory.update({"sites.identifier":siteIdentifier}, {$pull: {"sites":{'identifier':siteIdentifier}}},{multi: true},function(err,cantAffected){
+				siteCategory.update({"sites.identifier":siteIdentifier}, {$pull: {"sites":{'identifier':siteIdentifier}}},{multi: true},function(err,raw){
 				if(err)
 					throw err;
 				else{
@@ -362,7 +552,7 @@ module.exports = function () {
 					historyRecord.date=utils.getDateNow(); historyRecord.quantity=qty; historyRecord.site=siteIdentifier;
 
 					//Add an history record
-					organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,data){
+					organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,raw){
 						if(err){
 							res.send(err,500)
 						}else{
@@ -383,7 +573,7 @@ module.exports = function () {
  							}
  							newMinorValue=0;
  							//Organization Update
-							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,data){
+							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,raw){
 								if(err)
 									res.send(err,500)
 								else{
@@ -408,8 +598,8 @@ module.exports = function () {
 		var addSiteLogic = function(siteObj){
 			addSiteToRegion(siteObj,function(result,regionId){							
 				if(result){
-					organization.update({'identifier':orgIdentifier,'sites.identifier':siteObj.identifier},{$set:{'sites.$.region':regionId}},function(err,cantAffected){
-						if(!err && cantAffected>0)	
+					organization.update({'identifier':orgIdentifier,'sites.identifier':siteObj.identifier},{$set:{'sites.$.region':regionId}},function(err,raw){
+						if(!err && raw.n>0)	
 							res.json({status:0, data: regionId})
 						else
 							res.json({status:5})

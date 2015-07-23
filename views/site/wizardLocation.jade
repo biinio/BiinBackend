@@ -36,9 +36,9 @@ div
 					label.col-sm-2.control-label(for='phoneNumText')(translate="LOCATION.PHONE")
 					.col-sm-10			
 						input#phoneNumText.form-control.title-value(ng-model="sites[selectedSite].phoneNumber" name="phoneNumber" type="text" placeholder="Phone number **" ng-blur="validate()" required )
-		.row
-			h4(ng-if="sites[selectedSite].region && sites[selectedSite].region!=='' && isValid") Region: {{sites[selectedSite].region}}
-			.btn.btn-lg.btn-warning(ng-click="subscribeToRegion()") Subscribe to a region
+		//.row
+		//	h4(ng-if="sites[selectedSite].region && sites[selectedSite].region!=='' && isValid") Region: {{sites[selectedSite].region}}
+		//	.btn.btn-lg.btn-warning(ng-click="subscribeToRegion()") Subscribe to a region
 	.section.form-horizontal
 		h2(translate="LOCATION.MAP_LOCATION")
 		p(translate="LOCATION.MAP_LOCATION_SUB")

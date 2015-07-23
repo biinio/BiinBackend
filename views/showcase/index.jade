@@ -4,8 +4,11 @@ block head_scripts
 block content	
 	#sectionContent(ng-app="biinAppShowCases" ng-controller="showcasesController" ngCloack)
 		#wrapperContent(data-organizationId=""+organization.identifier data-organizationName=""+organization.name)
-			.left-section-content
+			.left-section-content.unretracted
 				.container-fluid.main-views-list
+					.hideButton
+						.unretracted.icon-pin-1
+						.retracted.icon-align-left
 					.row
 						.scroll-vertical-container.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
 							.col-xs-12.col-sm-12.col-md-12.col-lg-12.searchBoxList
@@ -34,9 +37,7 @@ block content
 							#wizardOption2.wizard(ng-switch-when="2")
 								include wizardElements									
 							#wizardOption3.wizard(ng-switch-when="3")
-								include wizardBiins											
-							#wizardOption4.wizard(ng-switch-when="4" )
-								include wizardNotifications								
+								include wizardBiins																		
 						.wizard-options
 							.container-fluid
 								.row.wizard-options-wrapper
@@ -60,14 +61,7 @@ block content
 											.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid,'valid':wizard3IsValid}")
 												.icon.icon-palette
 											.textCirle 
-												| 3. Biins		
-									.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
-										.wizard-options-item(ng-click="changeWizardTab(4)")
-											.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
-												.icon.icon-message
-											.textCirle 
-												| 4. Notifications
+												| 3. Assignment		
 									.col-md-1.col-sm-1.nopadding.option																							
 										.wizard-options-item.completeOption
 											.circle(ng-class="{'complete':isValid}")

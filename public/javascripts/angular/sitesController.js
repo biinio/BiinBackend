@@ -25,7 +25,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
   $scope.currentModelId = null;
   $scope.organizationId = selectedOrganization();
   $scope.wizardPosition =1;
-  $scope.newTagField="";
+  $scope.newTagField={tag:""};
   $scope.isValid =false;
   //Wizard validations indicatos
   $scope.wizard1IsValid = false;
@@ -137,7 +137,23 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
           $scope.succesSaveShow=true;
       });            
     
-  } 
+  }
+
+  $scope.limitNutshell = function(){
+    var value = $scope.sites[$scope.selectedSite].nutshell ;
+    if(value == null)
+      value = "";
+    value = value.trim();
+    var words = value.split(" ");
+    if(words.length > 8)
+      words.splice(8, words.length-8);
+    var sentence = "";
+    for (var i = 0; i < words.length; i++) {
+      sentence += words[i] + " ";
+    };
+    sentence = sentence.trim();
+     $scope.sites[$scope.selectedSite].nutshell = sentence;   
+  }
 
   //Details
   //Change Wizad tab manager
@@ -164,7 +180,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
           $scope.wizardPosition =option;
       break   
       case 5:
-        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid && $scope.wizard4IsValid)
+        if($scope.wizard1IsValid&& $scope.wizard2IsValid && $scope.wizard3IsValid)
           $scope.wizardPosition =option;
       break         
       default:
@@ -182,12 +198,13 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     if(!$scope.sites[$scope.selectedSite].searchTags)
       $scope.sites[$scope.selectedSite].searchTags=[];
     
+    
     if(value!=""){    
       //If the values is not in the array
       if($.inArray(value, $scope.sites[$scope.selectedSite].searchTags)==-1)
       {
         $scope.sites[$scope.selectedSite].searchTags.push(value);
-        $scope.newTagField=""; 
+        $scope.newTagField={tag:""};     
       }
 
     }
@@ -352,14 +369,14 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         } 
         currentValid = $scope.wizard3IsValid;
       }
-      if( eval($scope.wizardPosition)==4 || validate)
+      /*if( eval($scope.wizardPosition)==4 || validate)
       {
         if($scope.sites[$scope.selectedSite]){
          $scope.wizard4IsValid=$scope.sites[$scope.selectedSite].biins.length>1;
         }else{
           $scope.wizard4IsValid=false; 
         }        
-      }
+      }*/
       if(eval($scope.wizardPosition)== 5 || validate)
       {
         if($scope.sites[$scope.selectedSite]){
@@ -369,7 +386,7 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         }
       }
 
-    $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid&& $scope.wizard3IsValid&& $scope.wizard4IsValid&& $scope.wizard5IsValid;
+    $scope.isValid = $scope.wizard1IsValid && $scope.wizard2IsValid&& $scope.wizard3IsValid&& $scope.wizard5IsValid;
     
     return currentValid;
     

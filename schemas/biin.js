@@ -2,7 +2,7 @@ var moongose = require('mongoose');
 
 module.exports = moongose.model('biins',{
 			identifier:{type:String, index:true, default:""},
-            brandIdentifier:{type:String, default:""},
+            brandIdentifier:{type:String, default:"",index:true},
 			name:{type:String, default:""},
 			major:{type:String, default:""},
 			minor:{type:String, default:""},
@@ -11,6 +11,7 @@ module.exports = moongose.model('biins',{
             position:{type:String, default:""},//It's the place where is located the biinie eg: at the entrance
 			registerDate:{type:String, default:""},
 			lastUpdate:{type:String, default:""},
+            children:[],
 			showcases:[{
                 isDefault: {type:String,default:"0"},
                 showcaseIdentifier:{type:String,default:""},
@@ -34,7 +35,6 @@ module.exports = moongose.model('biins',{
                 onThursday:{type:String,default:"0"},
                 onFriday:{type:String,default:"0"},
                 onSaturday:{type:String,default:"0"}
-
             }],
             biinType:{type:String,default:"1"},
             isRequiredBiin:{type:Boolean,default:false},

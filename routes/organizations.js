@@ -4,7 +4,7 @@ module.exports =function (){
 	var util = require('util'), fs=require('fs');
 
 	//Custom Utils
-	var utils = require('../biin_modules/utils')(), awsManager= require('../biin_modules/awsManager')(), path = require('path'),imageManager=require('../biin_modules/imageManager')();
+	var utils = require('../biin_modules/utils')(), path = require('path'),imageManager=require('../biin_modules/imageManager')();
 	
 	//Schemas	
 	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'), client = require('../schemas/client');;
@@ -190,7 +190,7 @@ module.exports =function (){
 		organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},'sites.$.minorCounter',function(err, data){
 			//If the site is not new
 			if(data){
-				organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier}, {$inc:{'sites.$.minorCounter':utils.get.minorIncrement()}},function(err, count){
+				organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier}, {$inc:{'sites.$.minorCounter':utils.get.minorIncrement()}},function(err, raw){
 					if(err)
 						throw err;
 					else{
