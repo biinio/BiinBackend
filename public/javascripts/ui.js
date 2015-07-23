@@ -1,4 +1,4 @@
-//Global variables
+     //Global variables
 var selectedOrganization=function(){
     return $("#organizationNav").attr("data-organization");
 };
@@ -78,22 +78,22 @@ jQuery(function ($) {
 jQuery(function ($) {
     //Get the organizations list
     $.get( "/api/organizations", function(data) {
-      var dropDown = $('.dropdown-menu','#organizationMenu');
+      var dropDown = $('.dropdown-menu','#organizationMenu');      
       var defaultOrganization = selectedOrganization();
       for(var i =0; i<data.data.length; i++){
-        dropDown.append('<li><a organization-name="'+data.data[i].name+'" organization-identifier="'+data.data[i].identifier+'">'+data.data[i].name+'</a></li>');
+        dropDown.append('<li><a organization-name="'+data.data[i].name+'" organization-identifier="'+data.data[i].identifier+'"><div class="circleOrganization">'+data.data[i].name+'</div><span>'+data.data[i].name+'</span></a></li>');
       }
       
       //isDefault
-      $('a[organization-identifier="'+defaultOrganization+'"]').addClass('isDefault');
+      $('.circleOrganization','a[organization-identifier="'+defaultOrganization+'"]').addClass('isDefault');
 
       //Subscribe de click listener
       $('a',dropDown).on('touch click',function(e){
             e.preventDefault();
             var orgName = $(this).attr('organization-name');
             var orgIdentifier = $(this).attr('organization-identifier');
-            $('a.isDefault').removeClass('isDefault');
-            $('a[organization-identifier="'+orgIdentifier+'"]').addClass('isDefault');            
+            $('.circleOrganization.isDefault').removeClass('isDefault');
+            $('.circleOrganization','a[organization-identifier="'+orgIdentifier+'"]').addClass('isDefault');            
             setOrganizationMenu(orgIdentifier,orgName,function(){
               //$('a','organizationNav li.active').click();
               if($('a','#organizationNav li.active')[0])
@@ -123,6 +123,30 @@ jQuery(function ($) {
      
 });
 
+jQuery(function($){  
+
+    $('.hideButton','.left-section-content').click(function(){
+      var $parent = $('.left-section-content');
+      if($parent.hasClass('unretracted')){
+        $parent.removeClass('unretracted').addClass('retracted');
+        $parent.stop().animate({'width': '0px'},'300');
+      }else{
+        $parent.removeClass('retracted').addClass('unretracted');
+        $parent.stop().animate({'width': '250px'},'300');        
+      }
+      
+    });
+      
+    /*
+   $('.left-section-content').mouseover(function() {          
+      //$(this).stop().animate({'width': '250px'},'300');
+    });
+
+   $('.left-section-content').mouseout(function() {
+      //$(this).stop().animate({'width': '0px'},'300');
+    });*/
+
+})
 //Cropper Controls
 createElementCropper=function(id){
       Croppic.imgInitW=320;

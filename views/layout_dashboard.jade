@@ -32,16 +32,18 @@ html
 			.sidebar
 				.sidebarContent
 					.brand
-						| biin
+						img(src="/images/biinLogoSmall.png")
+						//| biin
 					#organizationMenu.navbar-organization
 						.dropdown
 							a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false")
-								i.icon.icon-buildings-3
+								//i.icon.icon-buildings-3
 								//	.caret
-								//if organization == null								
-									span Select an Organization
-								//else
-									span.name=organization.name									
+								.circleOrganization
+									if organization == null								
+										span Select an Organization
+									else
+										span.name=organization.name									
 							ul.dropdown-menu(role="menu")					
 					ul.nav.nav-sidebar.menu(scrollbar)
 						li.nav-item-divider

@@ -45,6 +45,10 @@
     overflow-y: visible; /* Scrollable contents if viewport is shorter than content. */
     background-color: @colorSidebar;
     border-right: none;
+
+    -moz-box-shadow:    2px 3px 5px 2px @colorGrayDark;
+    -webkit-box-shadow: 2px 3px 5px 2px @colorGrayDark;
+    box-shadow:         2px 3px 5px 2px @colorGrayDark;
   }
 
   .sidebar-margin {
@@ -73,7 +77,7 @@
         div:hover {
           font-size: @screenMdSidebarIconSize;
           color: @colorFocusHover;
-          text-shadow: 5px 2px 5px;
+          
         }
       }
 

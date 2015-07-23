@@ -4,8 +4,11 @@ block head_scripts
 block content	
 	#sectionContent(ng-app="biinAppAccount" ng-controller="accountController" ngCloack)
 		#wrapperContent
-			.left-section-content
-				.container-fluid
+			.left-section-content.unretracted
+				.container-fluid.main-views-list
+					.hideButton
+						.unretracted.icon-pin-1
+						.retracted.icon-align-left
 					.row.wizardProfile			
 						a.col-md-12(ng-click="changeWizardTo(1)")
 							.icon-wrapper( ng-class="{'active':wizardPosition==1}")
