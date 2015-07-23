@@ -2414,3 +2414,11 @@ input.ng-valid.ng-dirty{
   border-color: #2ecc71;
 }
 
+/*------------------------------------------*/
+/* Support and Private Policy
+/*------------------------------------------*/
+.beginningSection{
+  margin-top: 10%;
+}
+
+
