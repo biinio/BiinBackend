@@ -52,6 +52,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/preregister/:packageSlected',routes.preregister);
     app.get('/preorder/:packageSlected',routes.preorder);
     app.get('/termsAndConditions/:backPage',routes.terms);
+    app.get('/privacypolicy',routes.privacyPolicy);
+    app.get('/support',routes.support);
     app.post('/api/singup',clients.set);    
     app.get('/client/:identifier/activate',clients.activate);
     app.post('/client/:identifier/activate',clients.activate);
