@@ -343,12 +343,11 @@ module.exports = function(){
 
 	functions.getNewVisitsLocal = function(req, res){
 		var organizationId = req.headers["organizationid"];
-		var siteId = req.headers["siteid"];
 		var dataVisits = {};
 		
 		dataVisits.newVisits = 0;
 		dataVisits.returningVisits = 0;
-		biin.find({organizationIdentifier:organizationId, siteIdentifier: siteId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
+		biin.find({organizationIdentifier:organizationId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
 			if(err)
 				throw err
 			else
