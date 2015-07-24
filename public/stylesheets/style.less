@@ -281,8 +281,8 @@ input.ng-valid.ng-dirty{
     padding: 0;
     list-style: none;
     position: absolute;
-    top: @standardPadding;
-    right: @standardPadding;
+    top: 0;
+    right:0;
     background-color: @colorBaseBlack;
     box-shadow: -1px 3px 2px grey;
     opacity: 0.5;
@@ -331,6 +331,13 @@ input.ng-valid.ng-dirty{
 		font-size: 20px;	  	
 		padding: @standardPadding 0 @standardPadding  0;
 		color: @colorGrayDark;	
+
+		img{
+			height: @screenMdSidebarIconSize ;			
+			width: auto;
+			margin-left: -@screenMdSidebarIconSize/2 ;
+		}
+
   	}
   	.nav-user:hover{ 
 		opacity: 1;
@@ -345,16 +352,78 @@ input.ng-valid.ng-dirty{
 		.dropdown-menu > li {
 		    display: inline-block;
 		    float:left;
+		    min-width: 90px;
+		    min-height: 40px;
+		    text-align: center;
 
+		    .circleOrganization{
+		    	position: relative;
+		    	margin-left: auto;
+		    	margin-right: auto;
+		    	background-color: @colorGreen;
+		    }
+
+		    .circleOrganization.isDefault{
+		    	background-color: @colorFocus;
+		    }
+		    span{
+		    	font-size: 11px;
+		    }
+		}
+
+		.dropdown-menu > li:hover{
+			background-color: @colorWhite;
+			a{
+				color: @colorBaseBlack;
+			}
 		}
 		.open > ul {
 		    display: inline-flex !important;
 		}
 
 		.dropdown-menu>li>a{
+			text-align: center;
 			cursor: pointer;
 			white-space: normal;
 			color: white;
+		}
+
+		.circleOrganization{
+			position: relative;
+			height: @screenMdSidebarIconSize+10px;
+			width: @screenMdSidebarIconSize+10px;
+			max-width: @screenMdSidebarIconSize+10px;
+			max-height:  @screenMdSidebarIconSize+10px;			
+			background-color: @colorFocus;
+			border-radius: @controlsRadiusRounded;
+			text-align:center;
+			color:@colorWhite;
+			font-size: 20px;
+			font-variant:small-caps;
+			line-height: 35px;
+			overflow: hidden;
+		}
+
+		.circleOrganization:hover{
+			background-color: @colorBlack;
+			height: 100%;
+		}
+
+		a:link {
+	    	text-decoration: none;
+		}
+
+		a:visited {
+		    text-decoration: none;
+		}
+
+		a:hover {
+		    text-decoration: none;
+		    cursor: pointer;
+		}
+
+		a:active {
+		    text-decoration: none;
 		}
 	}
 	
