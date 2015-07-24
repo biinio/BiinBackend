@@ -38,18 +38,18 @@ block content
 				.right-section-content
 					div(ng-if="selectedSite!=null")
 						.animate-switch.wizard-wrapper
-							.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
-								#wizardOption1.wizard(ng-switch-when="1" )
+							.wizard-body.wizard(ng-mouseleave="save()")
+								#wizardOption1.wizard
 									include wizardDetails
-								#wizardOption4.wizard(ng-switch-when="2" )
+								#wizardOption4.wizard
 									include wizardGallery									
 								//#wizardOption2.wizard(ng-switch-when="3")
 									include wizardColors
-								#wizardOption3.wizard(ng-switch-when="3")
+								#wizardOption3.wizard
 									include wizardLocation
 								//#wizardOption5.wizard(ng-switch-when="4" )
 								//	include wizardBiins				
-								#wizardOption6.wizard(ng-switch-when="5" )
+								#wizardOption6.wizard
 									include wizardCategories
 							.wizard-options
 								.container-fluid

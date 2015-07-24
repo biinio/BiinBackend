@@ -9,11 +9,13 @@
 html,body {
 	height: 100%;
 	font-family: @standarFont;
+	color:@colorText;
+
 }
 
 h1 {
 	font-size: @standardHeaderSize!important;
-	font-weight: bold;
+	font-weight: bold;	
 }
 
 h2
@@ -42,7 +44,8 @@ label{
 }
 
 .btn{
-	font-size: standardButtonSize!important;
+	font-size: @standardButtonSize!important;
+	color:@colorText;
 }
 
 a.module:hover{ 
@@ -53,6 +56,7 @@ input, textarea, keygen, select, button{
 	font-family: "Open Sans",Verdana,Arial,Helvetica,sans-serif!important;
 	line-height: 1.6875!important;
 	font-size: @standardInputSize!important;
+	color:@colorText;
 }
 
 .form-control {
@@ -181,6 +185,11 @@ input.ng-valid.ng-dirty{
 /*	Main Containers
 /*------------------------------------------*/
 
+#wrapperContent{
+	position: relative;
+	width: 100%;
+
+}
 #wrapperContent.loaded::before{
 	display: none;
 }
@@ -639,8 +648,8 @@ input.ng-valid.ng-dirty{
 	.moduleTitle{
 		margin-top: @standardPadding;
 		position: relative;
-		color: @colorBaseBlack;	
-		font-weight: 600;
+		//color: @colorBaseBlack;	
+		//font-weight: 600;
 		word-wrap: break-word;
 		white-space: normal;
 	}
@@ -757,12 +766,11 @@ input.ng-valid.ng-dirty{
 	position: relative;
 	.wizard-body{
 		position: relative;
-		height: 85%;
+		height: 100%;
 
 	    /*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
-	    @media (min-width: 768px) {
-	        margin-bottom: 100px;
-	        max-height: 75vh;
+	    @media (min-width: 768px) {	        
+	        max-height: 100vh;
 	        overflow-y: scroll;
 	    }
 
@@ -2622,10 +2630,12 @@ input.ng-valid.ng-dirty{
 }
 
 .wizard-options{
-	width: 100%;
-	max-width: 90%;
-	position: fixed;
-	bottom: 0px;
+  	height: 37px;
+  	position: fixed;
+  	bottom: initial;
+  	top: 0;
+  	right: 94px;
+  	width: 200px;		
 	min-height: 30px;
 	background-color: @colorGrayLight;
 
@@ -2746,13 +2756,13 @@ input.ng-valid.ng-dirty{
 			margin-right: auto;
 
 			cursor: pointer;
-			height: 40px;
-			width: 40px;
-			font-size: 15px;
+			height: 20px;
+			width: 20px;
+			font-size: 10px;
 			text-align: center;			
 			background-color: #fff;
 			.icon{
-				line-height: 45px;
+				line-height: 15px;
 			}
 		}
 
@@ -2769,11 +2779,10 @@ input.ng-valid.ng-dirty{
         .wizard-options-item{
 
 			.circle{
-				width: 65px;
-				height: 65px;
+				width: 20px;
+				height: 20px;
 				margin-top: 0px;
-				font-size: 25px;
-				padding: 18px;
+				font-size: 10px;;
 			}
 
 			.textCirle{
@@ -2787,17 +2796,16 @@ input.ng-valid.ng-dirty{
         height: 160px;    
 	    .wizard-options-item {
 
-	        .circle {
-	            width: 100px;
-	            height: 100px;
-	            margin-top: 30px;
-	            font-size: 40px;
-	            padding: 25px;
-	        }
+			.circle{
+				width: 20px;
+				height: 20px;
+				margin-top: 0px;
+				font-size: 10px;;
+			}
 
-	        .textCirle {
-	            font-size: 14px;
-	        }
+			.textCirle{
+				font-size: 11px;
+			}
 	    }
 
 		.wizard-options-item.completeOption{
