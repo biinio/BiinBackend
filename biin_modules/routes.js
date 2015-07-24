@@ -70,6 +70,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/dashboard/comparative', dashboard.getComparativeData);
     app.get('/api/dashboard/visits', dashboard.getVisitsReport);
     app.get('/api/dashboard/notifications', dashboard.getNotificationReport);
+    app.get('/api/dashboard/local/visits/newvsreturning', dashboard.getNewVisitsLocal);
     
 
     //Acounts Routes

@@ -183,7 +183,7 @@ module.exports = function(){
 										if(Math.abs(compressedVisits[actions[i].at+actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 900)
 										{
 											compressedVisits[actions[i].at+actions[i].whom].push(actions[i]);
-											compressedVisits.sort(function(a,b){
+											compressedVisits[actions[i].at+actions[i].whom].sort(function(a,b){
 												return a.atTime - b.atTime;
 											});
 										}
@@ -285,7 +285,7 @@ module.exports = function(){
 										if(Math.abs(compressedVisits[actions[i].at+actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 900)
 										{
 											compressedVisits[actions[i].at+actions[i].whom].push(actions[i]);
-											compressedVisits.sort(function(a,b){
+											compressedVisits[actions[i].at+actions[i].whom].sort(function(a,b){
 												return a.atTime - b.atTime;
 											});
 										}
@@ -343,95 +343,81 @@ module.exports = function(){
 
 	functions.getNewVisitsLocal = function(req, res){
 		var organizationId = req.headers["organizationid"];
-		var siteId = new Date(req.headers["siteid"]);
-		if(startDate.getTime()<endDate.getTime()){
-			biin.find({organizationIdentifier:organizationId, siteIdentifier: siteId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
-				if(err)
-					throw err
+		var siteId = req.headers["siteid"];
+		var dataVisits = {};
+		
+		dataVisits.newVisits = 0;
+		dataVisits.returningVisits = 0;
+		biin.find({organizationIdentifier:organizationId, siteIdentifier: siteId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
+			if(err)
+				throw err
+			else
+			{
+				var biinsIdentifier = [];
+				for(var i = 0; i < data.length; i++)
+				{
+					biinsIdentifier.push({"actions.to":data[i].identifier});
+				}
+				if(biinsIdentifier.length == 0)
+				{
+					res.json({"data":dataVisits});
+					return;
+				}
 				else
 				{
-					var biinsIdentifier = [];
-					for(var i = 0; i < data.length; i++)
+					mobileHistory.find({$or:biinsIdentifier,$or:[{"actions.did":"3"},{"actions.did":"1"}]},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
 					{
-						biinsIdentifier.push({"actions.to":data[i].identifier});
-					}
-					if(biinsIdentifier.length == 0)
-					{
-						res.json({"data":counterDates});
-						return;
-					}
-					else
-					{
-						mobileHistory.find({$or:biinsIdentifier,$or:[{"actions.did":"3"},{"actions.did":"1"}]},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
+						if(errMobile)
+							throw errMobile
+						else
 						{
-							if(errMobile)
-								throw errMobile
-							else
-							{
 
-								var actions = [];
-								var compressedVisits = [];
-								for (var i = 0; i < data.length; i++) {
-									actions = actions.concat(data[i].actions);
-								}
-								for (var i = 0; i < actions.length; i++) {
+							var actions = [];
+							var compressedVisits = [];
+							for (var i = 0; i < data.length; i++) {
+								actions = actions.concat(data[i].actions);
+							}
+							for (var i = 0; i < actions.length; i++) {
 
-									var date = actions[i].at.split(" ")[0];
-									var time = actions[i].at.split(" ")[1];
-									var hours = time.split(":")[0];
-									var minutes = time.split(":")[1];
-									var seconds = time.split(":")[2];
+								var date = actions[i].at.split(" ")[0];
+								var time = actions[i].at.split(" ")[1];
+								var hours = time.split(":")[0];
+								var minutes = time.split(":")[1];
+								var seconds = time.split(":")[2];
 
-									var totalSeconds = parseInt(hours) * 3600;
-									totalSeconds += parseInt(minutes) * 60;
-									totalSeconds += seconds;
+								var totalSeconds = parseInt(hours) * 3600;
+								totalSeconds += parseInt(minutes) * 60;
+								totalSeconds += seconds;
 
+								actions[i].at = actions[i].at.split(" ")[0];
+								actions[i].atTime = totalSeconds;
 
-
-									actions[i].at = actions[i].at.split(" ")[0];
-									actions[i].atTime = totalSeconds; 
-
-
-
-									if(compressedVisits[actions[i].at+actions[i].whom] == null)
-										compressedVisits[actions[i].at+actions[i].whom] = [actions[i]];
-									else
+								if(compressedVisits[actions[i].whom] == null)
+									compressedVisits[actions[i].whom] = [actions[i]];
+								else
+								{
+									var lastActionIndex = compressedVisits[actions[i].whom].length-1;
+									if(Math.abs(compressedVisits[actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 900)
 									{
-										var lastActionIndex = compressedVisits[actions[i].at+actions[i].whom].length-1;
-										if(Math.abs(compressedVisits[actions[i].at+actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 900)
-										{
-											compressedVisits[actions[i].at+actions[i].whom].push(actions[i]);
-											compressedVisits.sort(function(a,b){
-												return a.atTime - b.atTime;
-											});
-										}
+										compressedVisits[actions[i].whom].push(actions[i]);
 									}
 								}
-								var visits = [];
-								var compressedVisitsKeys = Object.keys(compressedVisits);
-								for (var i = 0; i < compressedVisitsKeys.length; i++) {
-									visits = visits.concat(compressedVisits[compressedVisitsKeys[i]]);
-								}
-								
-								//TODO: change date schema type from string to longInteger
-								var datesKeys = Object.keys(counterDates);
-								for (i = 0; i < visits.length; i++) 
-								{
-									if(datesKeys.indexOf(visits[i].at) > -1)
-										counterDates[visits[i].at] += 1;
-								};
-								res.json({"data":counterDates});
 							}
-						});
-					}
+							var compressedVisitorsKeys = Object.keys(compressedVisits);
+							for (var i = 0; i < compressedVisitorsKeys.length; i++) {
+								if(compressedVisits[compressedVisitorsKeys[i]].length == 1)
+									dataVisits.newVisits++;
+								else
+									dataVisits.returningVisits++;
+							};
+							
+							res.json({"data":dataVisits});
+						}
+					});
 				}
+			}
 
-			});
-		}
-		else
-		{
-			res.json({"data":[]});
-		}
+		});
 	}
 
 
