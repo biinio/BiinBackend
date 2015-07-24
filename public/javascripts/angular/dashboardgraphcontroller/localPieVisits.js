@@ -19,16 +19,32 @@ mobilePieVisits.controller("mobilePieVisitsController", ['$scope', '$http',
                     }
                 }).success(function(data) {
                     
-                    $scope.data = [
-                        {
-                            key: "New Visits",
-                            y: data.data.newVisits
-                        },
-                        {
-                            key: "Returning Visitor",
-                            y: data.data.returningVisits
-                        }
-                    ];
+                    if(data.data.newVisits == 0 && data.data.returningVisits == 0)
+                    {
+                        $scope.data = [
+                            {
+                                key: "New Visits",
+                                y: 1
+                            },
+                            {
+                                key: "Returning Visitor",
+                                y: 0
+                            }
+                        ];
+                    }
+                    else
+                    {
+                        $scope.data = [
+                            {
+                                key: "New Visits",
+                                y: data.data.newVisits
+                            },
+                            {
+                                key: "Returning Visitor",
+                                y: data.data.returningVisits
+                            }
+                        ];
+                    }
 
                     /*$scope.data = [
                         {
