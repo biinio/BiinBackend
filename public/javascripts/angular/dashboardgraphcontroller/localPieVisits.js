@@ -60,7 +60,6 @@ mobilePieVisits.controller("mobilePieVisitsController", ['$scope', '$http',
                     $scope.options = {
                         chart: {
                             type: 'pieChart',
-                            height: 250,
                             x: function(d){return d.key;},
                             y: function(d){return d.y;},
                             showLabels: true,
