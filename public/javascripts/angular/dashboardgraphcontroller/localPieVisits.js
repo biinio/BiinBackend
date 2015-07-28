@@ -10,45 +10,74 @@ mobilePieVisits.controller("mobilePieVisitsController", ['$scope', '$http',
             $scope.getChartData($scope.currentDays);
         });
         
-        $scope.getChartData = function ( days )
+        $scope.getChartData = function (  )
         {
-            $scope.options = {
-            chart: {
-                type: 'pieChart',
-                height: 250,
-                x: function(d){return d.key;},
-                y: function(d){return d.y;},
-                showLabels: true,
-                transitionDuration: 500,
-                labelThreshold: 0.01,
-                legend: {
-                    margin: {
-                        top: 5,
-                        right: 35,
-                        bottom: 5,
-                        left: 0
+            $http.get('/api/dashboard/local/visits/newvsreturning', {
+                    headers: {
+                        organizationid: $scope.organizationId,
+                        siteid: "e1532fca-97f3-4356-8048-537f5affe27a"
                     }
-                }
-            }
-        };
+                }).success(function(data) {
+                    
+                    if(data.data.newVisits == 0 && data.data.returningVisits == 0)
+                    {
+                        $scope.data = [
+                            {
+                                key: "New Visits",
+                                y: 1
+                            },
+                            {
+                                key: "Returning Visitor",
+                                y: 0
+                            }
+                        ];
+                    }
+                    else
+                    {
+                        $scope.data = [
+                            {
+                                key: "New Visits",
+                                y: data.data.newVisits
+                            },
+                            {
+                                key: "Returning Visitor",
+                                y: data.data.returningVisits
+                            }
+                        ];
+                    }
 
-        $scope.data = [
-            {
-                key: "New Visits",
-                y: 2
-            },
-            {
-                key: "Frecuent Client",
-                y: 6
-            }
-        ];
+                    /*$scope.data = [
+                        {
+                            key: "New Visits",
+                            y: 0
+                        },
+                        {
+                            key: "Returning Visitor",
+                            y: 0
+                        }
+                    ];*/
+
+                    $scope.options = {
+                        chart: {
+                            type: 'pieChart',
+                            x: function(d){return d.key;},
+                            y: function(d){return d.y;},
+                            showLabels: true,
+                            transitionDuration: 500,
+                            labelThreshold: 0.01,
+                            legend: {
+                                margin: {
+                                    top: 5,
+                                    right: 35,
+                                    bottom: 5,
+                                    left: 0
+                                }
+                            }
+                        }
+                    };
+                });
         }
-        
-        $scope.changeChartRange = function( days ){
-            $scope.getChartData(days);
-            $scope.currentDays = days;
-        }
-        $scope.changeChartRange(30);
+        $scope.getChartData();
         //Turn off the Loader
         turnLoaderOff();
 
