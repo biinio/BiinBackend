@@ -4,30 +4,7 @@ block head_scripts
 block content	
 	#sectionContent(ng-app="biinAppAccount" ng-controller="accountController" ngCloack)
 		#wrapperContent
-			.left-section-content.unretracted
-				.container-fluid.main-views-list
-					.hideButton
-						.unretracted.icon-arrow-37
-						.retracted.icon-arrow-38
-					.row.wizardProfile			
-						a.col-md-12(ng-click="changeWizardTo(1)")
-							.icon-wrapper( ng-class="{'active':wizardPosition==1}")
-								i.icon.icon-profile-1
-							.text-wrapper
-								span(translate="MENU.PROFILE")
-						a.col-md-12(ng-click="changeWizardTo(2)")
-							.icon-wrapper(ng-class="{'active':wizardPosition==2}")
-								i.icon.icon-hand-card
-							.text-wrapper									
-								span(translate="MENU.BILLING")
-						a.col-md-12(ng-click="changeWizardTo(3)")
-							.icon-wrapper( ng-class="{'active':wizardPosition==3}")
-								i.icon.icon-buildings-3
-							.text-wrapper									
-								span(translate="MENU.ORGANIZATION")
-						p.col-md-12 Finish.
-					.wizard-lin
-			.right-section-content.account-section-content
+			.account-section-content
 				.animate-switch.wizard-wrapper
 					.wizard-body.wizard(ng-switch="wizardPosition")
 						#wizardOption1.wizard(ng-switch-when="1")
