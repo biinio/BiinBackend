@@ -33,29 +33,11 @@ block content
 												label Major: {{biin.major}}
 											.col-md-4
 												label Id: {{biin.brandIdentifier}}
-			.right-section-content
+			.right-section-content.normalSize
 				div(ng-if="selectedBiin!=null")
 					.animate-switch.wizard-wrapper
 						.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
-							#wizardOption1.wizard(ng-switch-when="1")
+							#wizardOption1.wizard
 								include wizardAdministration		
-							#wizardOption2.wizard(ng-switch-when="2")
-								include wizardDetails					
-						.wizard-options
-							.container-fluid
-								.row.wizard-options-wrapper
-									.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==1}")
-										.wizard-options-item(ng-click="changeWizardTab(1)")
-											.circle(ng-class="{'active':wizardPosition ==1,'valid':wizard1IsValid}")
-												.icon.icon-setting-gears-2
-											.textCirle 
-												| 1. Administration
-									.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==2}")
-										.wizard-options-item(ng-click="changeWizardTab(2)")
-											.circle(ng-class="{'active':wizardPosition ==2,'valid':wizard2IsValid}")
-												.icon.icon-network-1-1
-											.textCirle 
-												| 2. Details
-								#guide-line-division
+							#wizardOption2.wizard
+								include wizardDetails

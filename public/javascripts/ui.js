@@ -132,10 +132,18 @@ jQuery(function($){
       var $parent = $('.left-section-content');
       if($parent.hasClass('unretracted')){
         $parent.removeClass('unretracted').addClass('retracted');
-        $parent.stop().animate({'width': '0px'},'300');
+        $parent.stop().animate({'width': '0%'},'300');
       }else{
         $parent.removeClass('retracted').addClass('unretracted');
-        $parent.stop().animate({'width': '250px'},'300');        
+        $parent.stop().animate({'width': '25%'},'300');        
+      }
+      var rightSection = $('.right-section-content');
+      if(rightSection.hasClass('normalSize')){
+        rightSection.removeClass('normalSize').addClass('fullSize');
+        rightSection.stop().animate({'width': '100%'},'300');
+      }else{
+        rightSection.removeClass('fullSize').addClass('normalSize');
+        rightSection.stop().animate({'width': '75%'},'300');        
       }
       
     });
