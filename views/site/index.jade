@@ -32,10 +32,7 @@ block content
 												.icon.icon-bin-2
 											.btnShowcasePreview.icon-round-control.btn-on-hover
 												.icon.icon-arrange-1
-					//.container-fluid.searchBox
-						.searchBox-wrapper
-							input.form-control(type="text" placeholder="search" ng-model="query" autofocus )
-				.right-section-content
+				.right-section-content.normalSize
 					div(ng-if="selectedSite!=null")
 						.animate-switch.wizard-wrapper
 							.wizard-body.wizard(ng-mouseleave="save()")
@@ -43,12 +40,8 @@ block content
 									include wizardDetails
 								#wizardOption4.wizard
 									include wizardGallery									
-								//#wizardOption2.wizard(ng-switch-when="3")
-									include wizardColors
 								#wizardOption3.wizard
 									include wizardLocation
-								//#wizardOption5.wizard(ng-switch-when="4" )
-								//	include wizardBiins				
 								#wizardOption6.wizard
 									include wizardCategories
 							.wizard-options
