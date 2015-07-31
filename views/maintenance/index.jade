@@ -21,9 +21,9 @@ block content
 											.col-md-9
 												label.orgBeacons {{org.biinsAssignedCounter}}
 												|  Beacons
-				.right-section-content
-					.container-fluid
-						div(ng-if="selectedOrganization!=null")
-							.animate-switch.wizard-wrapper
-								.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
-									include wizardBiinsPerOrganization
+			.right-section-content
+				.container-fluid
+					div(ng-if="selectedOrganization!=null")
+						.animate-switch.wizard-wrapper
+							.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
+								include wizardBiinsPerOrganization
