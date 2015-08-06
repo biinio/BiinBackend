@@ -553,7 +553,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         controller: 'mapCtrl',
         size:'lg',
         resolve:{
-          loadingImages : function(){ return $scope.loadingImages}
+          loadingImages : function(){ return $scope.loadingImages},
+          galleries : function(){ return $scope.galleries}
         }
       });
         mapInstance.result.then(function ( position ) {
@@ -605,9 +606,10 @@ biinAppObjects.controller('responseInstanceCtrl', function ($scope, $modalInstan
   };
 });
 
-biinAppObjects.controller('mapCtrl', function ($scope, $modalInstance,loadingImages ) {
+biinAppObjects.controller('mapCtrl', function ($scope, $modalInstance,loadingImages, galleries) {
   $scope.render = true;
   $scope.loadingImages =loadingImages;
+  $scope.galleries = galleries;
 
 
   $scope.loadingImagesChange=function(state){

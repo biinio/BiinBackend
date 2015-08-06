@@ -9,7 +9,7 @@
 					img.imagegallery.img-responsive(ng-src="{{item.url}}"  pending-indicator)
 					.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(elements[selectedElement].media.indexOf(item))")
 						.icon.icon-bin-2
-			.img-block
-				.moduleWrapper.contentHideButtons
-					.btnShowcasePreview.btn.btn-default(ng-click="showImageModal()") Browse
+			.img-add-block
+				.moduleWrapper
+					.btn-browse.btn-default(ng-click="showImageModal()") Browse
 			//include ../_partials/galleryWidget
