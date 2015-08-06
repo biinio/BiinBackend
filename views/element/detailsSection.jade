@@ -74,13 +74,10 @@
 								.elementListControls
 									.btn.btn-addListItem.btn-default(ng-click="addListPriceItem(elements[selectedElement].details.indexOf(item))")
 										span(translate="GENERIC.ADD")
-					.col-md-1
-						.row
-							.btn-moveUp.btn-options(ng-click="moveDetailUp(elements[selectedElement].details.indexOf(item))")
-								i.icon.icon-arrow-3.text-center
-						.row
-							.btn-moveDown.btn-options(ng-click="moveDetailDown(elements[selectedElement].details.indexOf(item))")
-								i.icon.icon-arrow-4.text-center
-					.col-md-1.center-block
+					.col-md-2.nopadding
+						.btn-moveUp.btn-options(ng-click="moveDetailUp(elements[selectedElement].details.indexOf(item))")
+							i.icon.icon-arrow-3.text-center
+						.btn-moveDown.btn-options(ng-click="moveDetailDown(elements[selectedElement].details.indexOf(item))")
+							i.icon.icon-arrow-4.text-center
 						.center-block.text-center.btn-remove.roundedBackground.grayBackGround(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")
 							i.icon.icon-delete-1-1.text-center
