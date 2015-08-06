@@ -1,6 +1,6 @@
 .section
-	h1(translate="GALLERY.TITLE")
-	p(translate="GALLERY.SUB_TITLE")
+	h2.col-md-12(translate="GALLERY.TITLE")
+	p.col-md-12(translate="GALLERY.SUB_TITLE")
 .section(drop)
 	.row
 		.ownedGalleryWrapper.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
@@ -9,7 +9,10 @@
 					img.imagegallery.img-responsive(ng-src="{{item.url}}"  pending-indicator)
 					.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(elements[selectedElement].media.indexOf(item))")
 						.icon.icon-bin-2
+			.img-block
+				.moduleWrapper.contentHideButtons
+					.btnShowcasePreview.btn.btn-default(ng-click="showImageModal()") Browse
 .section
 	.row
 		.galleryWrapper
-			include ../_partials/galleryWidget
+			//include ../_partials/galleryWidget

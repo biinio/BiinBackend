@@ -153,6 +153,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations/:identifier/elements',restrict, elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
+    app.get('/_partials/galleryWidget',elements.galleryWidget);
     
     //Element List
     app.get('/api/organizations/:identifier/elements',elements.list)

@@ -1,19 +1,26 @@
-#gallery(ng-if="loadingImages==false")
-	.row.scrollbar-inner(scrollbar="scrollbarOptionsStandard" )
-		.col-md-12.nopaddin.gallery
-			.col-md-1.galleryImageWrapper(ng-repeat="galleItem in galleries | filter: queryGallery | orderBy: +originalName " drag="galleries" element-index="galleries.indexOf(galleItem)" style="background-color:RGB({{galleItem.mainColor}})")
-				.galleryImageWrapperContent.contentHideButtons
-					.moduleTitle
-						span {{galleItem.originalName}}
-					img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
-	.galleryControls
-		button.btn.btn-default(upload-files="#uploadGallery") UPLOAD
-		input(type="text" ng-model="queryGallery" placeholder="Search" autofocus)
-		input#uploadGallery.hidden(type="file" name="mediaFiles" accept="image/*" multiple="true")
-#galleryLoader(ng-if="loadingImages==true")
-	.row
-		.col-md-12
-			.spinner-cube
-				div
-				div
-			p loading images please wait..
+.mapModal
+	.modal-header
+		button(ng-click="close()" type="button" class="close") x
+		h2 Gallery
+	.modal-body
+		#gallery(ng-if="loadingImages==false")
+			.row.scrollbar-inner(scrollbar="scrollbarOptionsStandard" )
+				.col-md-12.nopaddin.gallery
+					.col-md-1.galleryImageWrapper(ng-repeat="galleItem in galleries | filter: queryGallery | orderBy: +originalName " drag="galleries" element-index="galleries.indexOf(galleItem)" style="background-color:RGB({{galleItem.mainColor}})")
+						.galleryImageWrapperContent.contentHideButtons
+							.moduleTitle
+								span {{galleItem.originalName}}
+							img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
+			.galleryControls
+				button.btn.btn-default(upload-files="#uploadGallery") UPLOAD
+				input(type="text" ng-model="queryGallery" placeholder="Search" autofocus)
+				input#uploadGallery.hidden(type="file" name="mediaFiles" accept="image/*" multiple="true")
+		#galleryLoader(ng-if="loadingImages==true")
+			.row
+				.col-md-12
+					.spinner-cube
+						div
+						div
+					p loading images please wait..
+	.modal-footer
+		button.btn.btn-theme.btn-sm(ng-click="close()") Apply

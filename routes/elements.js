@@ -14,6 +14,11 @@ module.exports = function(){
 		routesUtils.getOrganization(req.param("identifier"),req,res,{name:true, identifier:true},callback)
 	}
 
+	functions.galleryWidget = function(req, res) {
+        res.render('_partials/galleryWidget');
+    }
+
+
 	//GET the list of elements
 	functions.list = function(req,res){
 		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
