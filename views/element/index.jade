@@ -2,6 +2,7 @@ extends ../layout_dashboard
 block head_scripts
 	//Css Style
 	link(rel="stylesheet" href="/angular-datepicker/dist/index.css")
+	link(rel="stylesheet" href="/stylesheets/elements.css")
 	script(src="/angular-datepicker/dist/index.js")
 	script(src="/javascripts/angular/elementsController.js")
 block content	
@@ -33,13 +34,17 @@ block content
 												.icon.icon-arrange-1
 			.right-section-content.normalSize
 				div(ng-if="selectedElement!=null")
-					.animate-switch.wizard-wrapper
-						.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
-							#wizardOption1.wizard
+				.right-section-padding
+						.right-section-body(ng-mouseleave="save()")
+							#sectionOption1.sectionBox
 								include wizardNutshell
-							#wizardOption2.wizard
+							#sectionOption2.sectionBox
 								include wizardGallery
-							#wizardOption3.wizard
-								include wizardHighlights
-							#wizardOption4.wizard
+							#sectionOption3.sectionBox
+								include detailsSection
+							#sectionOption4.sectionBox
+								include searchTagsSection
+							#sectionOption5.sectionBox
 								include wizardCategories
+							#sectionOption6.sectionBox
+								include wizardHighlights

@@ -343,9 +343,65 @@ biinServicesModule.directive('map',function(){
             //Change Location Event Refresh the model
             google.maps.event.addListener(marker, 'position_changed', function(){
               var newPosition = marker.getPosition();
-              scope.changeLocation(newPosition.lat(),newPosition.lng());
+              //scope.changeLocation(newPosition.lat(),newPosition.lng());
+            });
+
+            google.maps.event.addDomListener(window, 'resize', function(){
+              
+              //scope.changeLocation(newPosition.lat(),newPosition.lng());
             });
         }      
+
+      function errorCallback(err){
+        var coords ={latitude:local_lat,longitude: local_lng};
+        showPosition({coords:coords},1);
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+      }
+      var local_lat =0;
+
+      var local_lng=0;
+
+      if(attrs['lat'] && attrs['lng']){
+        local_lat = eval(attrs['lat']);
+        local_lng = eval(attrs['lng']);        
+      }
+
+      //Call get location
+      if(local_lat==0&& local_lng==0)
+        getLocation();
+      else{
+        var coords ={latitude:local_lat,longitude: local_lng};
+         showPosition({coords:coords});
+      }        
+    }
+  }
+});
+
+
+//Define the map window behaviour
+biinServicesModule.directive('staticmap',function(){
+  return{
+    restrict:'A',
+    link:function(scope, element, attrs){
+      var zoom = eval(attrs['zoom']);
+      var marker;
+      //Get the Geolocation
+      function getLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition,errorCallback,{timeout:10000});
+          } else {
+              element[0].innerHTML = "Geolocation is not supported by this browser.";
+          }
+      }
+      //Show the position in the map
+      function showPosition(position,otherZoom) {              
+        if(typeof(otherZoom)!=='undefined'){
+          zoom=otherZoom;
+        }
+        var imageElement = document.createElement("img");
+        imageElement.setAttribute("src","https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+"&zoom="+zoom+"&size=1024x512");
+        element[0].appendChild(imageElement);
+      }      
 
       function errorCallback(err){
         var coords ={latitude:local_lat,longitude: local_lng};
