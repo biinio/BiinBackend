@@ -10,9 +10,9 @@
 						.col-md-12.nopaddin.gallery
 							.col-md-1.galleryImageWrapper(ng-repeat="galleItem in galleries | filter: queryGallery | orderBy: +originalName " drag="galleries" element-index="galleries.indexOf(galleItem)" style="background-color:RGB({{galleItem.mainColor}})")
 								.galleryImageWrapperContent.contentHideButtons
+									img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
 									.moduleTitle
 										span {{galleItem.originalName}}
-									img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
 					.galleryControls
 						button.btn.btn-default(upload-files="#uploadGallery") UPLOAD
 						input(type="text" ng-model="queryGallery" placeholder="Search" autofocus)
