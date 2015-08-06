@@ -23,16 +23,16 @@ block content
 									.moduleWrapperList.contentHideButtons(ng-class="{active: biins.indexOf(biin) == selectedBiin}")
 										.row
 											.col-md-6
-												label {{getSiteName(biin.siteIdentifier)}}
+												h5 {{getSiteName(biin.siteIdentifier)}}
 											.col-md-6
-												label {{biin.name}}
+												h7 {{biin.name}}
 										.row
 											.col-md-4
-												label Minor: {{biin.minor}}
+												h6 Minor: {{biin.minor}}
 											.col-md-4
-												label Major: {{biin.major}}
+												h6 Major: {{biin.major}}
 											.col-md-4
-												label Id: {{biin.brandIdentifier}}
+												h7 Id: {{biin.brandIdentifier}}
 			.right-section-content.normalSize
 				div(ng-if="selectedBiin!=null")
 					.animate-switch.wizard-wrapper

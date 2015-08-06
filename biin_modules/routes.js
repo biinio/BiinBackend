@@ -116,7 +116,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
 
     //Sites routes
-    app.get('/organizations/:identifier/sites',restrict,sites.index);    
+    app.get('/organizations/:identifier/sites',restrict,sites.index); 
+    app.get('/site/mapComponent',sites.mapComponent);   
     app.get('/api/organizations/:identifier/sites',sites.get);
     app.post('/api/organizations/:orgIdentifier/sites',sites.set);
 

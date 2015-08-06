@@ -401,6 +401,19 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     $scope.wizard5IsValid=false;
   }
 
+  $scope.showMapModal = function ( )
+    {
+       var mapInstance = $modal.open({
+        templateUrl: 'site/mapComponent',
+        controller: 'mapCtrl',
+        size:'lg'
+      });
+        mapInstance.result.then(function ( position ) {
+      }, function () {
+      });
+    }
+
+
   //Subscribe to a region
   $scope.subscribeToRegion=function(){
 
@@ -494,6 +507,14 @@ biinAppSite.controller('responseInstanceCtrl', function ($scope, $modalInstance,
   };
 
   $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+biinAppSite.controller('mapCtrl', function ($scope, $modalInstance) {
+  $scope.render = true;
+
+  $scope.close = function () {
     $modalInstance.dismiss('cancel');
   };
 });
