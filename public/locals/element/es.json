@@ -18,8 +18,10 @@
     "SUMMARY.DESC": "Nombre y descripción breve, esta información se vera en la vista previa",
     "SUMMARY.NAME1": "Nombre",
     "SUMMARY.DESC1": "Descripción Breve",
+    "SUMMARY.DESC2": "Un poco más de detalle de tu producto u oferta",
+    "SUMMARY.NAMEDESCRIPTION": "El nombre o título de tu producto u oferta",
     "SUMMARY.DETAILS": "Detalles",
-    "SUMMARY.DETAILS1": "Agregue información detallada del producto o servicio",
+    "SUMMARY.DETAILS1": "Agrega mas detalles sobre el elemento por ejemplo, listas, Listas de Precios, acotaciones.",
     "SUMMARY.DTITLE": "Un título",
     "SUMMARY.PARAGRAPH": "Párrafo",
     "SUMMARY.QUOTE": "Anotación",
@@ -31,7 +33,9 @@
     "SUMMARY.PRICE_LIST_VALUE": "Valor",
     "SUMMARY.PRICE_LIST_VALUE_PLACEHOLDER": "Ej. 100",
     "SUMMARY.LINK": "Enlace",
-    "GENERIC.SEARCH_TAGS": "Etiquetas para busqueda",
+    "SUMMARY.HIGHTLIGHT": "Recomendados",
+    "SUMMARY.HIGHTLIGHTDESCRIPTION": "Selecciona esta opción para que el elemento aparezca en la pantalla de recomendados en Biin",
+    "GENERIC.SEARCH_TAGS": "Etiquetas de búsqueda",
     "GENERIC.SEARCH_TAGS_DESC": "Las etiquetas ayudan a que su información sea encontrada mas fácilmente.",
     "GENERIC.ADD": "Añadir"
 

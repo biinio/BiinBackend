@@ -546,6 +546,20 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       $log.info('Modal dismissed at: ' + new Date());
     });
   };
+  $scope.showImageModal = function ( )
+    {
+       var mapInstance = $modal.open({
+        templateUrl: '/_partials/galleryWidget',
+        controller: 'mapCtrl',
+        size:'lg',
+        resolve:{
+          loadingImages : function(){ return $scope.loadingImages}
+        }
+      });
+        mapInstance.result.then(function ( position ) {
+      }, function () {
+      });
+    }
   
   //Turn off the Loader
   turnLoaderOff();
@@ -587,6 +601,21 @@ biinAppObjects.controller('responseInstanceCtrl', function ($scope, $modalInstan
   };
 
   $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+biinAppObjects.controller('mapCtrl', function ($scope, $modalInstance,loadingImages ) {
+  $scope.render = true;
+  $scope.loadingImages =loadingImages;
+
+
+  $scope.loadingImagesChange=function(state){
+    $scope.loadingImages = state;
+    $scope.$digest();
+  }
+  
+  $scope.close = function () {
     $modalInstance.dismiss('cancel');
   };
 });
