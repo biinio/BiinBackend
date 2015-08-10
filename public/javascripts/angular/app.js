@@ -143,6 +143,19 @@ biinServicesModule.directive("dropFiles", function(){
     }
   });
 
+biinServicesModule.directive('imageCheckbox', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, el, attr) {
+      scope.isSelected = el.find('input').val() == 'false';
+      el.on('click', function() {
+        scope.isSelected = !scope.isSelected;
+        scope.$apply();
+      });
+    }
+  }
+})
+
 //Single upload files directive
 biinServicesModule.directive('uploadFiles',function(){
   return{

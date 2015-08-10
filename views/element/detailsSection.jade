@@ -1,83 +1,84 @@
-.section 
-	h2.col-md-12(translate="SUMMARY.DETAILS")
-	p.col-md-12(translate="SUMMARY.DETAILS1")		
+.section.padding
+	h2(translate="SUMMARY.DETAILS")
+	p(translate="SUMMARY.DETAILS1")		
 	#elementDetailsWrapper
-		#elementDetailsControls
-			.btn.btn-default(ng-click="insertDetail('1')")
-				i.icon.icon-text
-				span(translate="SUMMARY.DTITLE")					
-			.btn.btn-defaultng-click(ng-click="insertDetail('2')")
-				i.icon.icon-text-wrapping-2
-				span(translate="SUMMARY.PARAGRAPH")
-			.btn.btn-default(ng-click="insertDetail('3')")
-				i.icon.icon-quote
-				span(translate="SUMMARY.QUOTE")
-			.btn.btn-default(ng-click="insertDetail('4')")
-				i.icon.icon-list-1-1
-				span(translate="SUMMARY.LIST")
-			.btn.btn-default(ng-click="insertDetail('5')")
-				i.icon.icon-link-3
-				span(translate="SUMMARY.LINK")
-			.btn.btn-default(ng-click="insertDetail('6')")
-				i.icon.icon-list-1-1
-				span(translate="SUMMARY.PRICE_LIST")
-		#elementDetailsBody.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
-			.detail-wrapper(ng-repeat="item in elements[selectedElement].details")
-				.element.row
-					.col-md-10
-						.body
-							.elementTitle(ng-if="item.elementDetailType=='1'")
-								input.col-md-12.title(type="text" ng-model="item.text" placeholder="Enter your title here" ng-blur="validate()" required)								
-							.elementParagraph(ng-if="item.elementDetailType=='2'")
-								textarea.col-md-12.paragraph(ng-model="item.text" placeholder="Enter your paragraph here." ng-blur="validate()" required)
-							.elementQuote(ng-if="item.elementDetailType=='3'")							
-								textarea.col-md-12.quote(type="text" ng-model="item.text" placeholder="Enter your quote here." ng-blur="validate()" required)
-							.elementList(ng-if="item.elementDetailType=='4'")
-								.controlContainer
-									.listItem(ng-repeat="li in item.body")
-										.row
-											input.col-md-11(type="text" ng-model="li.line" placeholder="Enter your list item text here." ng-blur="validate()" required)
-											.btn-removeListItem.col-md-1(ng-click="removeListItemAt(elements[selectedElement].details.indexOf(item),item.body.indexOf(li))")
-												i.icon.icon-delete-1-1
+		.border
+			#elementDetailsControls
+				.btn.btn-default(ng-click="insertDetail('1')")
+					i.icon.icon-text
+					span(translate="SUMMARY.DTITLE")					
+				.btn.btn-defaultng-click(ng-click="insertDetail('2')")
+					i.icon.icon-text-wrapping-2
+					span(translate="SUMMARY.PARAGRAPH")
+				.btn.btn-default(ng-click="insertDetail('3')")
+					i.icon.icon-quote
+					span(translate="SUMMARY.QUOTE")
+				.btn.btn-default(ng-click="insertDetail('4')")
+					i.icon.icon-list-1-1
+					span(translate="SUMMARY.LIST")
+				.btn.btn-default(ng-click="insertDetail('5')")
+					i.icon.icon-link-3
+					span(translate="SUMMARY.LINK")
+				.btn.btn-default(ng-click="insertDetail('6')")
+					i.icon.icon-list-1-1
+					span(translate="SUMMARY.PRICE_LIST")
+			#elementDetailsBody.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
+				.detail-wrapper(ng-repeat="item in elements[selectedElement].details")
+					.element.row
+						.col-md-11
+							.body
+								.elementTitle(ng-if="item.elementDetailType=='1'")
+									input.col-md-12.title(type="text" ng-model="item.text" placeholder="Enter your title here" ng-blur="validate()" required)								
+								.elementParagraph(ng-if="item.elementDetailType=='2'")
+									textarea.col-md-12.paragraph(ng-model="item.text" placeholder="Enter your paragraph here." ng-blur="validate()" required)
+								.elementQuote(ng-if="item.elementDetailType=='3'")							
+									textarea.col-md-12.quote(type="text" ng-model="item.text" placeholder="Enter your quote here." ng-blur="validate()" required)
+								.elementList(ng-if="item.elementDetailType=='4'")
+									.controlContainer
+										.listItem(ng-repeat="li in item.body")
+											.row
+												input.col-md-11(type="text" ng-model="li.line" placeholder="Enter your list item text here." ng-blur="validate()" required)
+												.btn-removeListItem.col-md-1.font-16(ng-click="removeListItemAt(elements[selectedElement].details.indexOf(item),item.body.indexOf(li))")
+													i.icon.icon-delete-3
+										.elementListControls
+											.btn.btn-addListItem.btn-default(ng-click="addListItem(elements[selectedElement].details.indexOf(item))")
+												span(translate="GENERIC.ADD")																					
+								.elementTitle(ng-if="item.elementDetailType=='5'")							
+									.controlContainer
+										input.col-md-12.link(type="text" ng-model="item.text" placeholder="Enter your link here." ng-blur="validate()" required)						
+								.elementList(ng-if="item.elementDetailType=='6'")
+									.controlContainer
+										.priceList.listItem(ng-repeat="li in item.body")
+											.form-inline.row
+												.col-md-11
+													.form-group.currencyControl.col-md-2
+														.header
+															label(translate="SUMMARY.PRICE_LIST_CURRENCY")
+														.body
+															select.form-control.bootstrap-select.col-md-12(title='Currency' name="Currency"  ng-model="li.currencyType"  data-size="4")
+																option(value='1') &#36;
+																option(value='2') &#162;
+																option(value='3') &#8359;
+																option(value='4') &#128;
+													.form-group.descriptionControl.col-md-7
+														.header
+															label(translate="SUMMARY.PRICE_LIST_DESCRIPTION")
+														.body													
+															input.col-md-12(type="text" ng-model="li.description" placeholder="{{ 'SUMMARY.PRICE_LIST_DESCRIPTION_PLACEHOLDER' | translate }}" ng-blur="validate()" required)
+													.form-group.valueControl.col-md-3
+														.header
+															label(translate="SUMMARY.PRICE_LIST_VALUE")
+														.body													
+															input.col-md-12(type="text" ng-model="li.line" placeholder="{{ 'SUMMARY.PRICE_LIST_VALUE_PLACEHOLDER' | translate }}" is-number required)
+												.btn-removeListItem.col-md-1.font-16(ng-click="removeListPriceItemAt(elements[selectedElement].details.indexOf(item),item.body.indexOf(li))")
+													i.icon.icon-delete-3
 									.elementListControls
-										.btn.btn-addListItem.btn-default(ng-click="addListItem(elements[selectedElement].details.indexOf(item))")
-											span(translate="GENERIC.ADD")																					
-							.elementTitle(ng-if="item.elementDetailType=='5'")							
-								.controlContainer
-									input.col-md-12.link(type="text" ng-model="item.text" placeholder="Enter your link here." ng-blur="validate()" required)						
-							.elementList(ng-if="item.elementDetailType=='6'")
-								.controlContainer
-									.priceList.listItem(ng-repeat="li in item.body")
-										.form-inline.row
-											.col-md-11
-												.form-group.currencyControl.col-md-2
-													.header
-														label(translate="SUMMARY.PRICE_LIST_CURRENCY")
-													.body
-														select.form-control.bootstrap-select.col-md-12(title='Currency' name="Currency"  ng-model="li.currencyType"  data-size="4")
-															option(value='1') &#36;
-															option(value='2') &#162;
-															option(value='3') &#8359;
-															option(value='4') &#128;
-												.form-group.descriptionControl.col-md-7
-													.header
-														label(translate="SUMMARY.PRICE_LIST_DESCRIPTION")
-													.body													
-														input.col-md-12(type="text" ng-model="li.description" placeholder="{{ 'SUMMARY.PRICE_LIST_DESCRIPTION_PLACEHOLDER' | translate }}" ng-blur="validate()" required)
-												.form-group.valueControl.col-md-3
-													.header
-														label(translate="SUMMARY.PRICE_LIST_VALUE")
-													.body													
-														input.col-md-12(type="text" ng-model="li.line" placeholder="{{ 'SUMMARY.PRICE_LIST_VALUE_PLACEHOLDER' | translate }}" is-number required)
-											.btn-removeListItem.col-md-1(ng-click="removeListPriceItemAt(elements[selectedElement].details.indexOf(item),item.body.indexOf(li))")
-												i.icon.icon-delete-1-1
-								.elementListControls
-									.btn.btn-addListItem.btn-default(ng-click="addListPriceItem(elements[selectedElement].details.indexOf(item))")
-										span(translate="GENERIC.ADD")
-					.col-md-2.nopadding
-						.btn-moveUp.btn-options(ng-click="moveDetailUp(elements[selectedElement].details.indexOf(item))")
-							i.icon.icon-arrow-3.text-center
-						.btn-moveDown.btn-options(ng-click="moveDetailDown(elements[selectedElement].details.indexOf(item))")
-							i.icon.icon-arrow-4.text-center
-						.center-block.text-center.btn-remove.roundedBackground.grayBackGround(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")
-							i.icon.icon-delete-1-1.text-center
+										.btn.btn-addListItem.btn-default(ng-click="addListPriceItem(elements[selectedElement].details.indexOf(item))")
+											span(translate="GENERIC.ADD")
+						.col-md-1.nopadding
+							span.btn-moveUp.btn-options.margin-l-1.font-16(ng-click="moveDetailUp(elements[selectedElement].details.indexOf(item))")
+								i.icon.icon-arrow-3.text-center
+							span.btn-moveDown.btn-options.margin-l-1.font-16(ng-click="moveDetailDown(elements[selectedElement].details.indexOf(item))")
+								i.icon.icon-arrow-4.text-center
+							span.btn-remove.margin-l-1.font-16(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")
+								i.icon.icon-delete-3.text-center

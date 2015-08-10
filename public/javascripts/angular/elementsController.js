@@ -365,7 +365,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
   //On gallery change method                
   $scope.onGalleryChange= function(obj,autoInsert){
     //Do a callback logic by caller
-    $scope.galleries = $scope.galleries.concat(obj);;
+    $scope.galleries = $scope.galleries.concat(obj);
     $scope.$digest();
 
     if(autoInsert)
@@ -550,14 +550,22 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
     {
        var mapInstance = $modal.open({
         templateUrl: '/_partials/galleryWidget',
-        controller: 'mapCtrl',
+        controller: 'galleryCtrl',
         size:'lg',
         resolve:{
           loadingImages : function(){ return $scope.loadingImages},
           galleries : function(){ return $scope.galleries}
         }
       });
-        mapInstance.result.then(function ( position ) {
+        mapInstance.result.then(function ( selectedImages ) {
+
+          for (var i = 0; i < selectedImages.length; i++) {
+              var newObj = {};
+              newObj.identifier = selectedImages[i].identifier;
+              newObj.url = selectedImages[i].url;
+              newObj.mainColor = selectedImages[i].mainColor;
+              $scope.elements[$scope.selectedElement].media.push(newObj); 
+          };
       }, function () {
       });
     }
@@ -606,7 +614,7 @@ biinAppObjects.controller('responseInstanceCtrl', function ($scope, $modalInstan
   };
 });
 
-biinAppObjects.controller('mapCtrl', function ($scope, $modalInstance,loadingImages, galleries) {
+biinAppObjects.controller('galleryCtrl', function ($scope, $modalInstance,loadingImages, galleries) {
   $scope.render = true;
   $scope.loadingImages =loadingImages;
   $scope.galleries = galleries;
@@ -615,6 +623,17 @@ biinAppObjects.controller('mapCtrl', function ($scope, $modalInstance,loadingIma
   $scope.loadingImagesChange=function(state){
     $scope.loadingImages = state;
     $scope.$digest();
+  }
+
+  $scope.apply = function(){
+    var selectedImages = [];
+    $(".galleryImageWrapperContent").each(function(index, element){
+      if($(element).hasClass("selected"))
+      {
+        selectedImages.push($scope.galleries[index]);
+      }
+    })
+    $modalInstance.close(selectedImages);
   }
   
   $scope.close = function () {
