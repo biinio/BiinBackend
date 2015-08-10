@@ -276,9 +276,6 @@ input.ng-valid.ng-dirty{
 	position: relative;
 
 	.moduleTitle{
-		position: absolute;
-		background-color: black;
-		color: white;
 		opacity: 0.5;
 		padding-left: 6px;
 		font-size: 12px;
@@ -290,13 +287,10 @@ input.ng-valid.ng-dirty{
 	.galleryImageWrapper	{
 		max-height: 200px;
 		max-width: 200px;
-		height: 120px;
 		width: 120px;
 		padding: 5px 5px 5px 5px;
 		.galleryImageWrapperContent{
 			background-color: #fff;	
-			position: relative;
-			overflow: hidden;
 		}		
 		margin: 5px 5px 5px 5px;
 		
@@ -457,10 +451,6 @@ input.ng-valid.ng-dirty{
 
 .roundedOptionsForm {
 	margin-top: -28px
-}
-.btn{
-	border:initial!important;
-	border-radius:initial!important;
 }
 
 .btn-rounded {
@@ -2836,19 +2826,17 @@ input.ng-valid.ng-dirty{
 	width: 175px;
 }
 
+
 #gallery{	
 	position: relative;
 	.galleryControls{
-		position: absolute;
-		bottom: 15px;
+
 		width: 100%;
-		display: inline-block;
-		float: left;
+		margin-bottom: 2%;
 
 		button{
 			width: 15%;
 			margin-left: 2%;
-			margin-right: 5px;
 		}
 
 		input{
@@ -2856,6 +2844,12 @@ input.ng-valid.ng-dirty{
 			width: 80%;
 			display: inline;
 		}
+	}
+
+	.galleryContainer{
+		border-style: solid;
+		border-color: @colorWhite;
+		border-width: 2px;
 	}
 
 	.scrollbar-inner{
