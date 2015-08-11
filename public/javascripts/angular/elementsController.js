@@ -629,7 +629,7 @@ biinAppObjects.controller('galleryCtrl', function ($scope, $modalInstance,loadin
 
   $scope.apply = function(){
     var selectedImages = [];
-    $(".galleryImageWrapperContent").each(function(index, element){
+    $(".galleryImageWrapper").each(function(index, element){
       if($(element).hasClass("selected"))
       {
         selectedImages.push($scope.galleries[index]);
