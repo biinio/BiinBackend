@@ -558,16 +558,18 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           organizationId : function(){ return $scope.organizationId}
         }
       });
-        mapInstance.result.then(function ( selectedImages ) {
+        mapInstance.result.then(function ( modalInfo ) {
 
-          for (var i = 0; i < selectedImages.length; i++) {
+          for (var i = 0; i < modalInfo.selectedImages.length; i++) {
               var newObj = {};
-              newObj.identifier = selectedImages[i].identifier;
-              newObj.url = selectedImages[i].url;
-              newObj.mainColor = selectedImages[i].mainColor;
+              newObj.identifier = modalInfo.selectedImages[i].identifier;
+              newObj.url = modalInfo.selectedImages[i].url;
+              newObj.mainColor = modalInfo.selectedImages[i].mainColor;
               $scope.elements[$scope.selectedElement].media.push(newObj); 
           };
-      }, function () {
+          $scope.galleries=modalInfo.galleries;
+      }, function (modalInfo) {
+        $scope.galleries=modalInfo.galleries;
       });
     }
   
@@ -627,6 +629,24 @@ biinAppObjects.controller('galleryCtrl', function ($scope, $modalInstance,loadin
     $scope.$digest();
   }
 
+  $scope.onGalleryChange= function(obj,autoInsert){
+    
+    //Do a callback logic by caller
+    $scope.galleries = $scope.galleries.concat(obj);
+    $scope.$digest();
+
+    //Insert the images to the preview
+    if(autoInsert){
+      var cantToInsert= obj.length;
+      if(maxMedia>0)
+        cantToInsert=$scope.maxMedia- $scope.sites[$scope.selectedSite].media.length;
+
+      for(var i=0; i< cantToInsert; i++){
+        $scope.insertGalleryItem($scope.galleries.indexOf(obj[i]));
+      }
+    }
+  }
+
   $scope.apply = function(){
     var selectedImages = [];
     $(".galleryImageWrapper").each(function(index, element){
@@ -635,10 +655,15 @@ biinAppObjects.controller('galleryCtrl', function ($scope, $modalInstance,loadin
         selectedImages.push($scope.galleries[index]);
       }
     })
-    $modalInstance.close(selectedImages);
+    var modalInfo = {};
+    modalInfo.selectedImages = selectedImages;
+    modalInfo.galleries = $scope.galleries;
+    $modalInstance.close(modalInfo);
   }
   
   $scope.close = function () {
-    $modalInstance.dismiss('cancel');
+    var modalInfo = {};
+    modalInfo.galleries = $scope.galleries;
+    $modalInstance.dismiss(modalInfo);
   };
 });
