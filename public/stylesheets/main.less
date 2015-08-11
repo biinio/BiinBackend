@@ -21,10 +21,24 @@ h1 {
 h2
 {
 	font-size: @standardHeader2Size!important;
+    line-height: 1.44em;
+    margin-bottom: 1.92em;
+    letter-spacing: -0.024em;
+    font-weight: 600;
+    color: #484848;
+    font-family:  "Open Sans",Verdana,Arial,Helvetica,sans-serif!important;
+    outline: 0;
 }
 
 h3{
 	font-size: @standardHeader3Size!important;
+
+}
+
+h4{
+	font-size: @standardHeader4Size!important;
+	font-weight: 600;
+	color: @colorGrayLight2;
 }
 
 p{
@@ -38,9 +52,9 @@ p{
 label{
 	font-family: "Open Sans",Verdana,Arial,Helvetica,sans-serif!important;
 	font-size: @standardLabelSize!important;
-	//color: #b9babb;
-	line-height: 1.6875!important;
-	font-weight: bold!important;	
+	color: @colorGray2 !important;
+	line-height: 18px !important;
+	font-weight: 600!important;	
 }
 
 .btn{
@@ -262,9 +276,6 @@ input.ng-valid.ng-dirty{
 	position: relative;
 
 	.moduleTitle{
-		position: absolute;
-		background-color: black;
-		color: white;
 		opacity: 0.5;
 		padding-left: 6px;
 		font-size: 12px;
@@ -276,13 +287,10 @@ input.ng-valid.ng-dirty{
 	.galleryImageWrapper	{
 		max-height: 200px;
 		max-width: 200px;
-		height: 120px;
 		width: 120px;
 		padding: 5px 5px 5px 5px;
 		.galleryImageWrapperContent{
 			background-color: #fff;	
-			position: relative;
-			overflow: hidden;
 		}		
 		margin: 5px 5px 5px 5px;
 		
@@ -443,10 +451,6 @@ input.ng-valid.ng-dirty{
 
 .roundedOptionsForm {
 	margin-top: -28px
-}
-.btn{
-	border:initial!important;
-	border-radius:initial!important;
 }
 
 .btn-rounded {
@@ -991,7 +995,6 @@ input.ng-valid.ng-dirty{
 			}
 
 			#categories{
-				margin-top:10vh;
 				.catModule{
 					height: 100px;
 					width: 100px;
@@ -2474,6 +2477,7 @@ input.ng-valid.ng-dirty{
 	overflow-x: hidden;
 	overflow-y: auto;
 	display: none;
+	background-color: @colorGrayLight4;
 	/*-* Start Media style for "Medium devices Desktops and Laptops (1280 x 800)" with 768px or UP *-*/
 	@media (min-width: 768px) {	
 		width: @rightContWidth;
@@ -2822,19 +2826,17 @@ input.ng-valid.ng-dirty{
 	width: 175px;
 }
 
+
 #gallery{	
 	position: relative;
 	.galleryControls{
-		position: absolute;
-		bottom: 15px;
+
 		width: 100%;
-		display: inline-block;
-		float: left;
+		margin-bottom: 2%;
 
 		button{
 			width: 15%;
 			margin-left: 2%;
-			margin-right: 5px;
 		}
 
 		input{
@@ -2842,6 +2844,12 @@ input.ng-valid.ng-dirty{
 			width: 80%;
 			display: inline;
 		}
+	}
+
+	.galleryContainer{
+		border-style: solid;
+		border-color: @colorWhite;
+		border-width: 2px;
 	}
 
 	.scrollbar-inner{
@@ -3028,6 +3036,7 @@ li>.nav{
 	padding-left: inherit;
 	margin-left: inherit;
 }
+
 
 /*------------------------------------------*/
 /*	Preview style

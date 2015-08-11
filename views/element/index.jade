@@ -2,6 +2,7 @@ extends ../layout_dashboard
 block head_scripts
 	//Css Style
 	link(rel="stylesheet" href="/angular-datepicker/dist/index.css")
+	link(rel="stylesheet" href="/stylesheets/elements.css")
 	script(src="/angular-datepicker/dist/index.js")
 	script(src="/javascripts/angular/elementsController.js")
 block content	
@@ -31,53 +32,19 @@ block content
 												.icon.icon-bin-2
 											.btnShowcasePreview.icon-round-control.btn-on-hover
 												.icon.icon-arrange-1
-			.right-section-content
+			.right-section-content.normalSize
 				div(ng-if="selectedElement!=null")
-					.animate-switch.wizard-wrapper
-						.wizard-body.wizard(ng-switch="wizardPosition" ng-mouseleave="save()")
-							#wizardOption1.wizard(ng-switch-when="1" )
+				.right-section-padding
+						.right-section-body(ng-mouseleave="save()")
+							#sectionOption1.sectionBox
 								include wizardNutshell
-							#wizardOption2.wizard(ng-switch-when="2" )
+							#sectionOption2.sectionBox
 								include wizardGallery
-							#wizardOption3.wizard(ng-switch-when="3" )
-								include wizardHighlights
-							#wizardOption4.wizard(ng-switch-when="4" )
+							#sectionOption3.sectionBox
+								include detailsSection
+							#sectionOption4.sectionBox
+								include searchTagsSection
+							#sectionOption5.sectionBox
 								include wizardCategories
-						.wizard-options
-							.container-fluid
-								.row.wizard-options-wrapper
-									.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==1}")
-										.wizard-options-item(ng-click="changeWizardTab(1)")
-											.circle(ng-class="{'active':wizardPosition ==1,'valid':wizard1IsValid}")
-												.icon.icon-book-1
-											.textCirle 
-												| 1. Nutshell
-									.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==2}")
-										.wizard-options-item(ng-click="changeWizardTab(2)")
-											.circle(ng-class="{'active':wizardPosition ==2,'disabled':!wizard1IsValid,'valid':wizard2IsValid}")
-												.icon.icon-photo-1
-											.textCirle 
-												| 2. IMAGES												
-									.col-md-1.col-sm-1.nopadding.option
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
-										.wizard-options-item(ng-click="changeWizardTab(3)")
-											.circle(ng-class="{'active':wizardPosition ==3, 'disabled':!wizard2IsValid, 'valid':wizard3IsValid}")
-												.icon.icon-crosshair-1
-											.textCirle 
-												| 3. Highlights
-									.col-md-1.col-sm-1.nopadding.option												
-										#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
-										.wizard-options-item(ng-click="changeWizardTab(4)")
-											.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
-												.icon.icon-tag-1
-											.textCirle 
-												| 4. CATEGORIES												
-									.col-md-1.col-sm-1.nopadding.option																							
-										.wizard-options-item.completeOption
-											.circle(ng-class="{'complete':isValid}")
-												.circle-inner
-													.icon.icon-check-1
-											.textCirle 
-								#guide-line-division.elementsWizard
+							#sectionOption6.sectionBox
+								include wizardHighlights

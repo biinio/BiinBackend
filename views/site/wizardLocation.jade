@@ -51,4 +51,4 @@ div
 			.col-sm-10							
 				input#lngText.form-control.title-value(type="text" ng-model="sites[selectedSite].lng" placeholder="Longitude" required)
 		.mapWrapper
-			.map(zoom='17' lat="{{sites[selectedSite].lat}}" lng="{{sites[selectedSite].lng}}" map)
+			.staticmap(zoom='17' lat="{{sites[selectedSite].lat}}" lng="{{sites[selectedSite].lng}}" staticmap ng-click="showMapModal()" style="width: 10em;")

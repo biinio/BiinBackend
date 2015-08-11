@@ -32,10 +32,7 @@ block content
 												.icon.icon-bin-2
 											.btnShowcasePreview.icon-round-control.btn-on-hover
 												.icon.icon-arrange-1
-					//.container-fluid.searchBox
-						.searchBox-wrapper
-							input.form-control(type="text" placeholder="search" ng-model="query" autofocus )
-				.right-section-content
+				.right-section-content.normalSize
 					div(ng-if="selectedSite!=null")
 						.animate-switch.wizard-wrapper
 							.wizard-body.wizard(ng-mouseleave="save()")
@@ -43,63 +40,7 @@ block content
 									include wizardDetails
 								#wizardOption4.wizard
 									include wizardGallery									
-								//#wizardOption2.wizard(ng-switch-when="3")
-									include wizardColors
 								#wizardOption3.wizard
 									include wizardLocation
-								//#wizardOption5.wizard(ng-switch-when="4" )
-								//	include wizardBiins				
 								#wizardOption6.wizard
 									include wizardCategories
-							.wizard-options
-								.container-fluid
-									.row.wizard-options-wrapper
-										.col-md-1.col-sm-1.nopadding.option
-											#guide-wizard-pointer(ng-class="{'active':wizardPosition ==1}")
-											.wizard-options-item(ng-click="changeWizardTab(1)")
-												.circle(ng-class="{'active':wizardPosition ==1,'valid':wizard1IsValid}")
-													.icon.icon-list-1-1
-												.textCirle 
-													| 1. DETALLES
-										.col-md-1.col-sm-1.nopadding.option
-											#guide-wizard-pointer(ng-class="{'active':wizardPosition ==2}")
-											.wizard-options-item(ng-click="changeWizardTab(2)")
-												.circle(ng-class="{'active':wizardPosition ==2,'disabled':!wizard1IsValid,'valid':wizard2IsValid}")
-													.icon.icon-photo-1
-												.textCirle 
-													| 2. IMAGENES													
-										//.col-md-1.col-sm-1.nopadding.option												
-											#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
-											.wizard-options-item(ng-click="changeWizardTab(3)")
-												.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid,'valid':wizard3IsValid}")
-													.icon.icon-palette
-												.textCirle 
-													| 3. DISEÑO
-										.col-md-1.col-sm-1.nopadding.option												
-											#guide-wizard-pointer(ng-class="{'active':wizardPosition ==3}")
-											.wizard-options-item(ng-click="changeWizardTab(3)")
-												.circle(ng-class="{'active':wizardPosition ==3,'disabled':!wizard2IsValid,'valid':wizard3IsValid}")
-													.icon.icon-marker-2
-												.textCirle 
-													| 3. UBICACIÓN
-										//.col-md-1.col-sm-1.nopadding.option												
-										//	#guide-wizard-pointer(ng-class="{'active':wizardPosition ==4}")
-										//	.wizard-options-item(ng-click="changeWizardTab(4)")
-										//		.circle(ng-class="{'active':wizardPosition ==4,'disabled':!wizard3IsValid,'valid':wizard4IsValid}")
-										//			.icon.icon-hotspot-2
-										//		.textCirle 
-										//			| 4. BEACONS
-										.col-md-1.col-sm-1.nopadding.option												
-											#guide-wizard-pointer(ng-class="{'active':wizardPosition == 5}")
-											.wizard-options-item(ng-click="changeWizardTab(5)")
-												.circle(ng-class="{'active':wizardPosition ==5,'disabled':!wizard4IsValid,'valid':wizard5IsValid}")
-													.icon.icon-tag-1
-												.textCirle 
-													| 4. CATEGORIAS
-										.col-md-1.col-sm-1.nopadding.option																							
-											.wizard-options-item.completeOption
-												.circle(ng-class="{'complete':isValid}")
-													.circle-inner
-														.icon.icon-check-1
-												.textCirle 
-									#guide-line-division

@@ -1,19 +1,27 @@
-#gallery(ng-if="loadingImages==false")
-	.row.scrollbar-inner(scrollbar="scrollbarOptionsStandard" )
-		.col-md-12.nopaddin.gallery
-			.col-md-1.galleryImageWrapper(ng-repeat="galleItem in galleries | filter: queryGallery | orderBy: +originalName " drag="galleries" element-index="galleries.indexOf(galleItem)" style="background-color:RGB({{galleItem.mainColor}})")
-				.galleryImageWrapperContent.contentHideButtons
-					.moduleTitle
-						span {{galleItem.originalName}}
-					img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
-	.galleryControls
-		button.btn.btn-default(upload-files="#uploadGallery") UPLOAD
-		input(type="text" ng-model="queryGallery" placeholder="Search" autofocus)
-		input#uploadGallery.hidden(type="file" name="mediaFiles" accept="image/*" multiple="true")
-#galleryLoader(ng-if="loadingImages==true")
-	.row
-		.col-md-12
-			.spinner-cube
-				div
-				div
-			p loading images please wait..
+.mapModal
+	.modal-body
+		.row
+			.galleryWrapper
+				#gallery(ng-if="loadingImages==false")
+					.galleryControls.row
+						input(type="text" ng-model="queryGallery" placeholder="Search" autofocus)
+						button.btn.btn-default(upload-files="#uploadGallery") UPLOAD
+						input#uploadGallery.hidden(type="file" name="mediaFiles" accept="image/*" multiple="true")
+					.galleryContainer.row
+						.scrollbar-inner(scrollbar="scrollbarOptionsStandard" )
+							.col-md-12.nopadding.gallery
+								.col-md-1.galleryImageWrapper(ng-repeat="galleItem in galleries | filter: queryGallery | orderBy: +originalName " drag="galleries" element-index="galleries.indexOf(galleItem)" style="background-color:RGB({{galleItem.mainColor}})" image-checkbox ng-class="{selected: isSelected}")
+									.galleryImageWrapperContent.contentHideButtons()
+										img.galleryImage(ng-src="{{galleItem.url}}" pending-indicator)
+										.moduleTitle
+											span {{galleItem.originalName}}
+				#galleryLoader(ng-if="loadingImages==true")
+					.row
+						.col-md-12
+							.spinner-cube
+								div
+								div
+							p loading images please wait..
+	.modal-footer
+		button.btn.btn-theme.btn-sm(ng-click="close()") Close
+		button.btn.btn-theme.btn-sm(ng-click="apply()") Apply

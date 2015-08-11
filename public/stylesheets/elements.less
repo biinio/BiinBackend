@@ -1,0 +1,329 @@
+/* ------------------------------------------------------
+			Main CSS Style for Biin App CMS
+   ------------------------------------------------------*/
+@import "variables";
+
+.right-section-padding{
+	padding-left: 10%;
+	padding-right: 10%;
+	max-height: 100vh;
+	overflow-y: scroll;
+}
+
+.right-section-body{
+	position: relative;
+	height: 100%;
+	padding-left: 1%;
+	padding-right: 1%;
+	padding-top: 1%;
+	padding-down: 1%;
+}
+
+.sectionBox{
+	margin-bottom: 1%;
+	background-color: @colorBaseWhite;
+	border-color: @colorGray;
+	border-style: solid;
+	border-width: 2px;
+	padding-bottom: 15px;
+}
+
+#elementDetailsControls{
+	.btn{
+		background-color: @colorGray3;
+		color: @colorWhite;
+
+	}
+
+}
+.elementTitle{
+	input{
+		border-width: 0px;
+		font-size: 25px !important;
+    	color: black;
+    	font-weight: 600;
+	}
+}
+
+.elementParagraph{
+	textarea{
+		border-width: 0px;
+	}
+}
+
+.elementQuote{
+	textarea{
+		border-width: 0px;
+	}
+}
+
+.element{
+	border-style: solid;
+	border-color: @colorGrayLight4;
+}
+
+.roundedBackground{
+	border-radius: 50%;
+}
+
+.grayBackGround{
+	background-color: @colorGray;
+}
+.lightBlueBackGround{
+	background-color: @colorBlueLight1;
+}
+
+#categories{
+	margin-top:10vh;
+	.catModule{
+		height: 100px;
+		width: 100px;
+		background-color:@colorWhite;
+		border-radius:50%;
+		boder:solid;			
+		margin: 5px 5px 5px 5px;		
+		color: #fff;
+		//padding: 1px 1px 1px 1px;
+		cursor: pointer;
+		padding: 0px 0px 0px 0px;
+	}
+	.catModule:hover{
+		background-color:@colorFocus;
+	}
+
+	.catModuleWrapper{
+		margin-top: 5%;
+		margin-left: 5%;
+		height: 90%;
+		width: 90%;
+		position: relative;
+		text-align: center;					
+		background-color:@colorGray;
+		border-radius:50%;
+		p{
+			color:#fff;
+			font-size: 1rem !important;
+		}
+	}
+	.separator{
+		margin-left:9vw;					
+	}
+	.catModuleWrapper.active{
+		background-color: @colorFocus;
+	}
+	//Categories Section
+	.catIcon{
+		padding-top: 10px;					
+		font-size: 30px;
+	}			
+}
+
+#isHighlightCheckbox{
+	background-color: #FFF;
+    margin-top: 50%;
+    border-radius: 1px !important;
+    border-style: solid !important;
+    border-color: @colorGray;
+    border-width: 2px !important;
+}
+
+#isHighlightCheckbox:hover{
+    background-color: @colorBlueLight1;
+}
+
+.searchTagContainerBox{
+	margin-bottom: 1%;
+	background-color: @colorBaseWhite;
+	border-color: @colorGray;
+	border-style: solid;
+	border-width: 2px;
+	min-height: 5rem;
+}
+
+.tagContainer{
+	margin-left: 1%;
+	margin-right: 1%;
+	background-color: @colorBlueLight1;	
+}
+.btn-addTag{
+	background-color: @colorGrayLight3;
+	width: 100%;
+}
+.btn-close{
+	font-size: 1.6rem;
+}
+.breakwords{
+	word-break:break-all;
+}
+.paragraph{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.checkBoxBlueBackground{
+	background-color: @colorBlueLight1;
+}
+
+.btn-addListItem{
+	background-color: @colorGrayLight3;
+}
+
+
+.ownedGalleryWrapper{
+	height: 30vh;
+	max-height:  30vh;
+	margin-top: 5px;
+	width: 1000%;
+	max-width: 100%;
+	overflow-x: scroll;
+	overflow-y: hidden!important;
+	white-space: nowrap;
+	background-color: @colorWhite;
+
+	.img-block{
+		width: 28vh;
+		height: 28vh;
+		padding: 5px 5px 5px 5px;
+		display: inline-block;
+	    dsplay:inline;/* For IE7
+	    *zoom:1;/* For IE7*/
+	    white-space:normal;
+	    .moduleWrapper{
+	    	width: 100%;
+	    	height:100%;
+	    }
+	}
+
+	.img-add-block{
+		width: 28vh;
+		height: 28vh;
+		padding: 5px 5px 5px 5px;
+		display: inline-block;
+	    dsplay:inline;/* For IE7
+	    *zoom:1;/* For IE7*/
+	    white-space:normal;
+	    .moduleWrapper{
+	    	width: 100%;
+	    	height:100%;
+	    }
+	}
+
+	margin-bottom: 10px;
+	.scroll-y{
+		display: none;
+	}
+}
+.galleryWrapper{
+
+	//position: relative;
+	margin-top: 5px;
+	//height: 35vh;
+
+	.scroll-x{
+		display: none!important;
+	}
+}
+
+.moduleWrapper .btn-browse {
+	display: table;
+    background-color: @colorYellow;
+}
+
+
+
+.moduleWrapperList{
+	position: relative;
+	height: 70px;
+	max-height: 70px;
+	overflow: hidden;	
+	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: @standardPadding;
+	background-color: @colorBaseWhite;
+
+	.thumbListImage{
+		padding-left: @standardPadding/2;
+		padding-right: @standardPadding/2;
+		padding-top:  @standardPadding/2;
+		padding-bottom: @standardPadding/2;
+		position: relative;		
+        max-height:100%;
+        height: 100%;
+		 img{
+				width: auto;
+				max-height: 100%;
+		        height: 100%;
+			}
+	}
+	.moduleTitle{
+		margin-top: @standardPadding;
+		position: relative;
+		//color: @colorBaseBlack;	
+		//font-weight: 600;
+		word-wrap: break-word;
+		white-space: normal;
+	}
+	.moduleSubTitle{
+		position: relative;
+		color: @colorGrayDark;	
+		font-weight: 500;
+		word-wrap: break-word;
+		white-space: normal;
+	}
+
+	//Action Buttons
+	.btnShowcasePreview {
+	    position: absolute;
+	    top: 38px;
+	    right: @standardPadding;
+	    background-color: @colorYellow;
+	}
+
+	.moduleWrapper .btn-browse {
+    	position: absolute;
+	    top: 25%;
+	    right: @standardPadding;
+	    background-color: @colorYellow;
+	}
+
+	.btnDelete {
+	    position: absolute;
+	    top: 4px;
+	    right: @standardPadding;
+	    background-color: @colorRed;
+	}
+}
+
+#elementDetailsWrapper{
+
+}
+
+.padding{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.border{
+	border-style: solid;
+	border-width: 2px;
+	border-color: @colorGrayLight3;
+	padding: 15px 15px 15px 15px;
+}
+
+
+#highlightsSection{
+	padding-top: 3%;
+}
+
+.margin-l-1{
+	margin-left: 1px;
+}
+
+.font-16{
+	font-size: 16px;
+}
+
+.selected {
+  border: 2px solid @colorBlue;
+} 

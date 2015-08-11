@@ -1,107 +1,34 @@
-.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
-	.container-fluid.topHeader1
+.navbar.navbar-fixed-top(role='navigation')
+	.container-fluid
 		.row
-			.col-md-2
-				a(href="#")
-					img.biinLogo(src="images/icons/biinCMSLogoIcon.png")
-			.col-md-10.text-right
-				ul.list-inline(style='vertical-align: middle;')
-					li
-						button.btn.btn-link.small(type='button', style='color:white;font-size:12px;')
-							| HOME
-					li
-						button.btn.btn-link.small(type='button', style='color:white;font-size:12px;')
-							| FEATURES
-					li
-						button.btn.btn-link.small(type='button', style='color:white;font-size:12px;')
-							| PRICING
-					li
-						button.btn.btn-link.small(type='button', style='color:white;font-size:12px;')
-							| BLOG
-					li
-						button.btn.btn-link.small(type='button', style='color:white;font-size:12px;')
-							| NEWSLETTER
-					li
-						button.btn.btn-link.small(type='button', style='color:white;font-size:12px;')
-							| CONTACT
-					li
-						button.btn.btn-link.small(type='button', style='color:white;font-size:12px;')
-							| LOGOUT
-	.container-fluid.topHeader2
-		.row
-			.col-md-12
-				.navbar-header
-					ul.nav.navbar-nav.navbar-left.notifications(style='right: 250px !important; position: absolute !important;')
-						// Begin nav message
-						li.dropdown
-							a.dropdown-toggle.notificationIcon(href='#fakelink', data-toggle='dropdown')
-								.icon.icon-mail-2
-									span.badge.message.icon-count 9
-							ul.dropdown-menu.square.margin-list-rounded.with-triangle
-								li
-									.nav-dropdown-heading
-										| Messages
-									// /.nav-dropdown-heading
-									.slimScrollDiv(style='position: relative; overflow: hidden; width: auto; height: 350px;')
-										.nav-dropdown-content.scroll-nav-dropdown(style='overflow: hidden; width: auto; height: 350px;')
-											ul
-												li.unread
-													a(href='#fakelink')
-														img.absolute-left-content.img-circle(src2='assets/img/avatar/avatar-25.jpg', alt='Avatar')
-														| Lorem ipsum dolor sit amet, consectetuer adipiscing elit
-														span.small-caps 17 seconds ago
-										.slimScrollBar(style='width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background: rgb(0, 0, 0);')
-										.slimScrollRail(style='width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.3; z-index: 90; right: 1px; background: rgb(51, 51, 51);')
-									// /.nav-dropdown-content scroll-nav-dropdown
-									button.btn.btn-primary.btn-square.btn-block See all message
-						// End nav message                
-						// Begin nav chat
-						li.dropdown
-							a.dropdown-toggle.notificationIcon(href='#fakelink', data-toggle='dropdown')
-								.icon.icon-baloon
-									span.badge.chat.icon-count 5
-							ul.dropdown-menu.square.with-triangle
-								li
-									.nav-dropdown-heading
-										| Notifications
-									// /.nav-dropdown-heading
-									.slimScrollDiv(style='position: relative; overflow: hidden; width: auto; height: 350px;')
-										.nav-dropdown-content.scroll-nav-dropdown(style='overflow: hidden; width: auto; height: 350px;')
-											ul
-												li.unread
-													a(href='#fakelink')
-														img.absolute-left-content.img-circle(src3='assets/img/avatar/avatar-2.jpg', alt='Avatar')
-														strong Thomas White
-														| posted on your profile page
-														span.small-caps 17 seconds ago
-										.slimScrollBar(style='width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background: rgb(0, 0, 0);')
-										.slimScrollRail(style='width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.3; z-index: 90; right: 1px; background: rgb(51, 51, 51);')
-									// /.nav-dropdown-content scroll-nav-dropdown
-									button.btn.btn-primary.btn-square.btn-block See all notifications
-						//End nav chat
-					ul.nav-user.navbar-right
-						li.dropdown
-							a.dropdown-toggle(href='#fakelink', data-toggle='dropdown')
-								img.avatar.img-circle(src=user.profilePhoto, alt='Avatar')
-								| Hi, 
-								strong=user.displayName
-								img.avatarSettings(src='images/icons/bnSettingsIcon.png', alt='Avatar')
-							ul.dropdown-menu.square.primary.margin-list-rounded.with-triangle
-								li
-									a(href='/biinies') Binnies
-								li
-									a(href='/regions') Regions																	
-								li.divider								
-								li
-									a(href='#fakelink') Account setting
-								li
-									a(href='#fakelink') Payment setting
-								li
-									a(href='#fakelink') Change password
-								li
-									a(href='#fakelink') My public profile
-								li.divider
-								li
-									a(href='lock-screen.html') Lock screen
-								li
-									a(href='/logout') Log out
+			.nav-user.navbar-right
+				ul
+					li.dropdown
+						a
+							i.icon.icon-stationery-1
+						a.dropdown-toggle(href='#fakelink', data-toggle='dropdown')						
+							i.icon.icon-setting-gear
+						ul.dropdown-menu.square.primary.margin-list-rounded.with-triangle
+							li
+								a
+									img.avatar.img-circle(src=user.profilePhoto, alt='Avatar')
+									| Hi, 
+									strong=user.displayName
+							li
+								a(href='/biinies') Binnies
+							li
+								a(href='/regions') Regions																	
+							li.divider								
+							li
+								a(href='#fakelink') Account setting
+							li
+								a(href='#fakelink') Payment setting
+							li
+								a(href='#fakelink') Change password
+							li
+								a(href='#fakelink') My public profile
+							li.divider
+							li
+								a(href='lock-screen.html') Lock screen
+							li
+								a(href='/logout') Log out
