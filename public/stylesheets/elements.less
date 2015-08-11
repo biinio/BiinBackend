@@ -25,17 +25,23 @@
 	border-color: @colorGray;
 	border-style: solid;
 	border-width: 2px;
+	padding-bottom: 15px;
 }
 
 #elementDetailsControls{
 	.btn{
-		background-color: @colorGray;
+		background-color: @colorGray3;
+		color: @colorWhite;
+
 	}
 
 }
 .elementTitle{
 	input{
 		border-width: 0px;
+		font-size: 25px !important;
+    	color: black;
+    	font-weight: 600;
 	}
 }
 
@@ -62,6 +68,9 @@
 
 .grayBackGround{
 	background-color: @colorGray;
+}
+.lightBlueBackGround{
+	background-color: @colorBlueLight1;
 }
 
 #categories{
@@ -110,7 +119,16 @@
 }
 
 #isHighlightCheckbox{
-	background-color: @colorBlueLight1;
+	background-color: #FFF;
+    margin-top: 50%;
+    border-radius: 1px !important;
+    border-style: solid !important;
+    border-color: @colorGray;
+    border-width: 2px !important;
+}
+
+#isHighlightCheckbox:hover{
+    background-color: @colorBlueLight1;
 }
 
 .searchTagContainerBox{
@@ -196,17 +214,10 @@
 	}
 }
 .galleryWrapper{
-	background-color: @colorWhite;
-	position: relative;
-	margin-top: 5px;
-	height: 35vh;
 
-	.gallery{					
-		padding-top: 10px;
-		padding-bottom: 60px;
-		margin-left: auto;
-		margin-right: auto;					
-	}
+	//position: relative;
+	margin-top: 5px;
+	//height: 35vh;
 
 	.scroll-x{
 		display: none!important;
@@ -285,10 +296,34 @@
 }
 
 #elementDetailsWrapper{
+
+}
+
+.padding{
 	padding-left: 15px;
 	padding-right: 15px;
 }
 
+.border{
+	border-style: solid;
+	border-width: 2px;
+	border-color: @colorGrayLight3;
+	padding: 15px 15px 15px 15px;
+}
+
+
 #highlightsSection{
 	padding-top: 3%;
 }
+
+.margin-l-1{
+	margin-left: 1px;
+}
+
+.font-16{
+	font-size: 16px;
+}
+
+.selected {
+  border: 2px solid @colorBlue;
+} 

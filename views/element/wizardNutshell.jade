@@ -2,7 +2,7 @@ form.novalidate
 	.section
 		.row
 			.col-md-12
-				h1(translate="SUMMARY.TITLE")
+				h2(translate="SUMMARY.TITLE")
 	.section.form-horizontal
 		.row
 			.col-md-6
@@ -18,9 +18,9 @@ form.novalidate
 						checkbox#isHighlightCheckbox(ng-model="elements[selectedElement].isHighlight" ng-true-value="1" ng-false-value="0" large )
 					.col-sm-11
 						.row
-							span(translate="SUMMARY.HIGHTLIGHT") Hightlight
+							label(translate="SUMMARY.HIGHTLIGHT") Hightlight
 						.row
-							p(translate="SUMMARY.HIGHTLIGHTDESCRIPTION") Turn on Hightlight to presents this element in the Hightlight section of the mobile app
+							h4(translate="SUMMARY.HIGHTLIGHTDESCRIPTION") Turn on Hightlight to presents this element in the Hightlight section of the mobile app
 		.row
 			.row
 				.col-md-12
@@ -30,4 +30,4 @@ form.novalidate
 					input#title2.form-control.title-value(ng-model="elements[selectedElement].subTitle" name="subTitle" type="text" placeholder="Subtitle"  ng-blur="validate()"  required )
 			.row
 				.col-md-12 
-					p(translate="SUMMARY.DESC2")
+					h4(translate="SUMMARY.DESC2")
