@@ -554,7 +554,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
         size:'lg',
         resolve:{
           loadingImages : function(){ return $scope.loadingImages},
-          galleries : function(){ return $scope.galleries}
+          galleries : function(){ return $scope.galleries},
+          organizationId : function(){ return $scope.organizationId}
         }
       });
         mapInstance.result.then(function ( selectedImages ) {
@@ -614,10 +615,11 @@ biinAppObjects.controller('responseInstanceCtrl', function ($scope, $modalInstan
   };
 });
 
-biinAppObjects.controller('galleryCtrl', function ($scope, $modalInstance,loadingImages, galleries) {
+biinAppObjects.controller('galleryCtrl', function ($scope, $modalInstance,loadingImages, galleries,organizationId) {
   $scope.render = true;
   $scope.loadingImages =loadingImages;
   $scope.galleries = galleries;
+  $scope.organizationId = organizationId;
 
 
   $scope.loadingImagesChange=function(state){
