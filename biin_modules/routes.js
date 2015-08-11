@@ -116,7 +116,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
 
     //Sites routes
-    app.get('/organizations/:identifier/sites',restrict,sites.index);    
+    app.get('/organizations/:identifier/sites',restrict,sites.index); 
+    app.get('/site/mapComponent',sites.mapComponent);   
     app.get('/api/organizations/:identifier/sites',sites.get);
     app.post('/api/organizations/:orgIdentifier/sites',sites.set);
 
@@ -152,6 +153,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations/:identifier/elements',restrict, elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
+    app.get('/_partials/galleryWidget',elements.galleryWidget);
     
     //Element List
     app.get('/api/organizations/:identifier/elements',elements.list)

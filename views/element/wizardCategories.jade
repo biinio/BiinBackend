@@ -1,13 +1,15 @@
-div
-	.section
-		h1 Element Categories
+.section
+	.col-md-12
+		h2 Categories
+.section
+	#categories
+		.container-fluid
+			.row
+				.col-md-12
+					a.col-md-1.catModule(ng-repeat="cat in categories" ng-click="switchCategoryState(cat)")
+						.catModuleWrapper(ng-class="containsCategory(cat)")
+							.catIcon(class="icon icon-{{cat.icon}}")
+							p {{cat.displayName}}
+.section
+	.paragraph
 		p Categories allow your site and products to be visible on searches, select the ones you think need to asociate with your site and products form the list below.
-	.section
-		#categories
-			.container
-				.row
-					.col-md-9
-						a.col-md-1.catModule(ng-repeat="cat in categories" ng-click="switchCategoryState(cat)")
-							.catModuleWrapper(ng-class="containsCategory(cat)")
-								.catIcon(class="icon icon-{{cat.icon}}")
-								p {{cat.displayName}}

@@ -1,139 +1,33 @@
 form.novalidate
 	.section
-		h1(translate="SUMMARY.TITLE")
-		p(translate="SUMMARY.SUB_TITLE")
-	.section.form-horizontal
-		h2(translate="SUMMARY.NAME")
-		p(translate="SUMMARY.DESC")
 		.row
-			.form-group
-				label.col-sm-2.control-label(for='title1')(translate="SUMMARY.NAME1")
-				.col-sm-10
-					input#title1.form-control.title-value(ng-model="elements[selectedElement].title" name="title" type="text" placeholder="Title **"  ng-blur="validate()"  required )		
-			.form-group
-				label.col-sm-2.control-label(for='title2')(translate="SUMMARY.DESC1")
-				.col-sm-10					
+			.col-md-12
+				h2(translate="SUMMARY.TITLE")
+	.section.form-horizontal
+		.row
+			.col-md-6
+				.row
+					label.control-label(for='title1')(translate="SUMMARY.NAME1")
+				.row
+					input#title1.form-control.title-value(ng-model="elements[selectedElement].title" name="title" type="text" placeholder="Title **"  ng-blur="validate()"  required )
+				.row
+					h4(translate="SUMMARY.NAMEDESCRIPTION")
+			.col-md-6
+				.row
+					.nopadding.col-sm-1
+						checkbox#isHighlightCheckbox(ng-model="elements[selectedElement].isHighlight" ng-true-value="1" ng-false-value="0" large )
+					.col-sm-11
+						.row
+							label(translate="SUMMARY.HIGHTLIGHT") Hightlight
+						.row
+							h4(translate="SUMMARY.HIGHTLIGHTDESCRIPTION") Turn on Hightlight to presents this element in the Hightlight section of the mobile app
+		.row
+			.row
+				.col-md-12
+					label.control-label(for='title2')(translate="SUMMARY.DESC1")
+			.row
+				.col-md-12
 					input#title2.form-control.title-value(ng-model="elements[selectedElement].subTitle" name="subTitle" type="text" placeholder="Subtitle"  ng-blur="validate()"  required )
-	.section.elementNutshellHightligh
-		checkbox.btn-checkbox(ng-model="elements[selectedElement].isHighlight" ng-true-value="1" ng-false-value="0" large )
-		span Hightlight
-		h3 Hightlight section
-		p Turn on Hightlight to presents this element in the Hightlight section of the mobile app
-	.section
-		h2(translate="SUMMARY.DETAILS")
-		p(translate="SUMMARY.DETAILS1")		
-		#elementDetailsWrapper
-			#elementDetailsControls
-				.btn.btn-default(ng-click="insertDetail('1')")
-					i.icon.icon-text
-					span(translate="SUMMARY.DTITLE")					
-				.btn.btn-defaultng-click(ng-click="insertDetail('2')")
-					i.icon.icon-text-wrapping-2
-					span(translate="SUMMARY.PARAGRAPH")
-				.btn.btn-default(ng-click="insertDetail('3')")
-					i.icon.icon-quote
-					span(translate="SUMMARY.QUOTE")
-				.btn.btn-default(ng-click="insertDetail('4')")
-					i.icon.icon-list-1-1
-					span(translate="SUMMARY.LIST")
-				.btn.btn-default(ng-click="insertDetail('5')")
-					i.icon.icon-link-3
-					span(translate="SUMMARY.LINK")
-				.btn.btn-default(ng-click="insertDetail('6')")
-					i.icon.icon-list-1-1
-					span(translate="SUMMARY.PRICE_LIST")
-			#elementDetailsBody.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
-				.detail-wrapper(ng-repeat="item in elements[selectedElement].details")
-					.elementOptions
-						.btn-moveUp.btn-options(ng-click="moveDetailUp(elements[selectedElement].details.indexOf(item))")
-							i.icon.icon-arrow-3
-						.btn-moveDown.btn-options(ng-click="moveDetailDown(elements[selectedElement].details.indexOf(item))")
-							i.icon.icon-arrow-4
-						.btn-remove.btn-options(ng-click="removeDetailAt(elements[selectedElement].details.indexOf(item))")
-							i.icon.icon-delete-1-1
-					.element
-						.elementTitle(ng-if="item.elementDetailType=='1'")
-							.header
-								h3(translate="SUMMARY.DTITLE")
-							.body
-								.controlContainer
-									input.title(type="text" ng-model="item.text" placeholder="Enter your title here" ng-blur="validate()" required)								
-						.elemenParagraph(ng-if="item.elementDetailType=='2'")
-							.header
-								h3(translate="SUMMARY.PARAGRAPH")
-							.body
-								.controlContainer
-									textarea.paragraph(ng-model="item.text" placeholder="Enter your paragraph here." ng-blur="validate()" required)
-						.elementQuote(ng-if="item.elementDetailType=='3'")
-							.header
-								h3(translate="SUMMARY.QUOTE")
-							.body
-								.controlContainer								
-									textarea.quote(type="text" ng-model="item.text" placeholder="Enter your quote here." ng-blur="validate()" required)
-						.elementList(ng-if="item.elementDetailType=='4'")
-							.header
-								h3(translate="SUMMARY.LIST")
-							.body
-								.controlContainer
-										.listItem(ng-repeat="li in item.body")
-											input(type="text" ng-model="li.line" placeholder="Enter your list item text here." ng-blur="validate()" required)
-											.btn-removeListItem(ng-click="removeListItemAt(elements[selectedElement].details.indexOf(item),item.body.indexOf(li))")
-												i.icon.icon-delete-1-1
-									.elementListControls
-										.btn.btn-addListItem.btn-default(ng-click="addListItem(elements[selectedElement].details.indexOf(item))")
-											span(translate="GENERIC.ADD")																					
-						.elementTitle(ng-if="item.elementDetailType=='5'")
-							.header
-								h3(translate="SUMMARY.LINK")								
-							.body
-								.controlContainer
-									input.link(type="text" ng-model="item.text" placeholder="Enter your link here." ng-blur="validate()" required)						
-						.elementList(ng-if="item.elementDetailType=='6'")
-							.header
-								h3(translate="SUMMARY.PRICE_LIST")							
-							.body
-								.controlContainer
-										.priceList.listItem(ng-repeat="li in item.body")
-											.form-inline
-												.form-group.currencyControl
-													.header
-														label(translate="SUMMARY.PRICE_LIST_CURRENCY")
-													.body
-														select.form-control.bootstrap-select(title='Currency' name="Currency"  ng-model="li.currencyType"  data-size="4")
-															option(value='1') &#36;
-															option(value='2') &#162;
-															option(value='3') &#8359;
-															option(value='4') &#128;
-												.form-group.descriptionControl
-													.header
-														label(translate="SUMMARY.PRICE_LIST_DESCRIPTION")
-													.body													
-														input(type="text" ng-model="li.description" placeholder="{{ 'SUMMARY.PRICE_LIST_DESCRIPTION_PLACEHOLDER' | translate }}" ng-blur="validate()" required)
-												.form-group.valueControl
-													.header
-														label(translate="SUMMARY.PRICE_LIST_VALUE")
-													.body													
-														input(type="text" ng-model="li.line" placeholder="{{ 'SUMMARY.PRICE_LIST_VALUE_PLACEHOLDER' | translate }}" is-number required)
-											.btn-removeListItem(ng-click="removeListPriceItemAt(elements[selectedElement].details.indexOf(item),item.body.indexOf(li))")
-												i.icon.icon-delete-1-1
-									.elementListControls
-										.btn.btn-addListItem.btn-default(ng-click="addListPriceItem(elements[selectedElement].details.indexOf(item))")
-											span(translate="GENERIC.ADD")																														
-	.section
-		h2(translate="GENERIC.SEARCH_TAGS")
-		p(translate="GENERIC.SEARCH_TAGS_DESC")
-		row
-			.search-criteria-control
-				.search-body
-					.searchScroll.scrollbar-inner(scrollbar="scrollbarOptionsStandard")
-						.col-md-1.tag(ng-repeat="tag in elements[selectedElement].searchTags")
-							.btn-close(ng-click="removeElementTag($index)")
-								span X
-							p {{tag}}
-				.search-add
-					.col-md-9
-						input.form-control(ng-model="newTagField")
-					.col-md-3
-						button.btn.btn-default(ng-click="addElementTag(newTagField);newTagField=''" ng-enter="addElementTag(newTagField);newTagField=''") Add
-	.section
-		h4 {{ 'TYPE.IDENTIFIER' | translate }} : {{elements[selectedElement].elementIdentifier}}
+			.row
+				.col-md-12 
+					h4(translate="SUMMARY.DESC2")

@@ -1,0 +1,24 @@
+.section
+	.col-md-12
+		h2(translate="GENERIC.SEARCH_TAGS")
+	.row
+		.search-criteria-control
+			.row
+				.col-md-12
+					.searchScroll.searchTagContainerBox
+						.col-sm-2.tag.nopadding(ng-repeat="tag in elements[selectedElement].searchTags")
+							.row.tagContainer
+								.col-sm-10.nopadding
+									span {{tag}}
+								.col-sm-2.nopadding
+									.pull-right.btn-close(ng-click="removeElementTag($index)")
+										.icon.icon-delete-4
+			.row
+				.search-add
+					.col-md-10
+						input.form-control.novalidate(ng-model="newTagField")
+					.col-md-2.left-nopadding
+						button.btn.btn-default.btn-addTag(ng-click="addElementTag(newTagField);newTagField=''" ng-enter="addElementTag(newTagField);newTagField=''") Add
+	.row
+		.col-md-12
+			p(translate="GENERIC.SEARCH_TAGS_DESC")
