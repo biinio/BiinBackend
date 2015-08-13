@@ -363,6 +363,7 @@ biinServicesModule.directive('map',function(){
               
               //scope.changeLocation(newPosition.lat(),newPosition.lng());
             });
+            google.maps.event.trigger(map, 'resize');
         }      
 
       function errorCallback(err){
@@ -411,18 +412,14 @@ biinServicesModule.directive('staticmap',function(){
         if(typeof(otherZoom)!=='undefined'){
           zoom=otherZoom;
         }
-        if($(element).children("img").length == 0){
-          var imageElement = document.createElement("img");
-          imageElement.setAttribute("src","https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+
-          "&zoom="+zoom+"&size=1024x512&markers="+scope.sites[scope.selectedSite].lat+","+scope.sites[scope.selectedSite].lng);
-          element[0].appendChild(imageElement);
+        if($(element).children("img").length != 0){
+            $(element).children("img")[0].remove();
         }
-        else
-        {
-          var imageChild = $(element).children("img")[0];
-          imageChild.setAttribute("src","https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+
-          "&zoom="+zoom+"&size=1024x512&markers="+scope.sites[scope.selectedSite].lat+","+scope.sites[scope.selectedSite].lng);
-        }
+        
+        var imageElement = document.createElement("img");
+        imageElement.setAttribute("src","https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+
+        "&zoom="+zoom+"&size=1024x512&markers="+scope.sites[scope.selectedSite].lat+","+scope.sites[scope.selectedSite].lng);
+        element[0].appendChild(imageElement);
       }      
 
       function errorCallback(err){
@@ -451,10 +448,10 @@ biinServicesModule.directive('staticmap',function(){
 
       showMap();
 
-      scope.$watch("attrs.lat",function(newValue,oldValue) {
+      attrs.$observe('lat',function(newValue,oldValue) {
           showMap();
       });
-      scope.$watch("attrs.lng",function(newValue,oldValue) {
+      attrs.$observe('lng',function(newValue,oldValue) {
         showMap();
       });
     }
