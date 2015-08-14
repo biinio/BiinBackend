@@ -1,11 +1,9 @@
 .mapModal
-	.modal-header
-		button(ng-click="close()" type="button" class="close") x
-		h2 Map
 	.modal-body
 		.section
 			.mapWrapper.row
 				.col-md-12
 					.map(zoom='17' map style="height: 400px")
 	.modal-footer
-		button.btn.btn-theme.btn-sm(ng-click="close()") Apply
+		button.btn.btn-theme.btn-sm(ng-click="close()") Cancel
+		button.btn.btn-theme.btn-sm(ng-click="apply()") Apply

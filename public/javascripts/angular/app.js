@@ -356,13 +356,14 @@ biinServicesModule.directive('map',function(){
             //Change Location Event Refresh the model
             google.maps.event.addListener(marker, 'position_changed', function(){
               var newPosition = marker.getPosition();
-              //scope.changeLocation(newPosition.lat(),newPosition.lng());
+              scope.changeLocation(newPosition.lat(),newPosition.lng());
             });
 
             google.maps.event.addDomListener(window, 'resize', function(){
               
               //scope.changeLocation(newPosition.lat(),newPosition.lng());
             });
+            google.maps.event.trigger(map, 'resize');
         }      
 
       function errorCallback(err){
@@ -411,8 +412,13 @@ biinServicesModule.directive('staticmap',function(){
         if(typeof(otherZoom)!=='undefined'){
           zoom=otherZoom;
         }
+        if($(element).children("img").length != 0){
+            $(element).children("img")[0].remove();
+        }
+        
         var imageElement = document.createElement("img");
-        imageElement.setAttribute("src","https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+"&zoom="+zoom+"&size=1024x512");
+        imageElement.setAttribute("src","https://maps.googleapis.com/maps/api/staticmap?center="+position.coords.latitude+","+position.coords.longitude+
+        "&zoom="+zoom+"&size=1024x512&markers="+scope.sites[scope.selectedSite].lat+","+scope.sites[scope.selectedSite].lng);
         element[0].appendChild(imageElement);
       }      
 
@@ -421,22 +427,33 @@ biinServicesModule.directive('staticmap',function(){
         showPosition({coords:coords},1);
         console.warn('ERROR(' + err.code + '): ' + err.message);
       }
-      var local_lat =0;
 
+      var local_lat =0;
       var local_lng=0;
 
-      if(attrs['lat'] && attrs['lng']){
-        local_lat = eval(attrs['lat']);
-        local_lng = eval(attrs['lng']);        
+      function showMap(){
+        if(attrs['lat'] && attrs['lng']){
+          local_lat = eval(attrs['lat']);
+          local_lng = eval(attrs['lng']);        
+        }
+
+        //Call get location
+        if(local_lat==0&& local_lng==0)
+          getLocation();
+        else{
+          var coords ={latitude:local_lat,longitude: local_lng};
+           showPosition({coords:coords});
+        }
       }
 
-      //Call get location
-      if(local_lat==0&& local_lng==0)
-        getLocation();
-      else{
-        var coords ={latitude:local_lat,longitude: local_lng};
-         showPosition({coords:coords});
-      }        
+      showMap();
+
+      attrs.$observe('lat',function(newValue,oldValue) {
+          showMap();
+      });
+      attrs.$observe('lng',function(newValue,oldValue) {
+        showMap();
+      });
     }
   }
 });

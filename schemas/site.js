@@ -18,7 +18,7 @@ var siteObj ={
 	description: {type:String, default:""},
 	nutshell:{type:String, default:""},
 	major:{type: Number, default:0},
-	minorCounter:{type: Number, default:0},
+	minorCounter:{type: Number, default:1},
 	country:{type:String, default:""},
 	state:{type:String, default:""},
 	city:{type:String, default:""},
