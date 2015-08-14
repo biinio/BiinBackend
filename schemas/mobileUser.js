@@ -75,6 +75,7 @@ var mobileUserSchema=new Schema({
 			showcaseIdentifier:{type:String,index:true}
 		}
 	],
+
 	shareObjects:[
 		{			
 			identifier:{type:String},
@@ -103,7 +104,7 @@ var mobileUserSchema=new Schema({
 	],
 	//Seen elements of an user
 	seenElements:[
-		{elementIdentifier:{type:String,index:{unique:true}}}
+		{elementIdentifier:{type:String,index:{sparse:true}}}
 	]	
 });
 
