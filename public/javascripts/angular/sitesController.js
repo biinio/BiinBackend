@@ -409,6 +409,10 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
         size:'lg'
       });
         mapInstance.result.then(function ( position ) {
+          if(position){
+            $scope.sites[$scope.selectedSite].lng = position.lng;
+            $scope.sites[$scope.selectedSite].lat = position.lat;
+          }
       }, function () {
       });
     }
@@ -513,8 +517,20 @@ biinAppSite.controller('responseInstanceCtrl', function ($scope, $modalInstance,
 
 biinAppSite.controller('mapCtrl', function ($scope, $modalInstance) {
   $scope.render = true;
+  $scope.lat = 0;
+  $scope.lng = 0;
+  $scope.changeLocation = function(lat,lng){
+    $scope.lat = lat;
+    $scope.lng = lng;
+  };
 
   $scope.close = function () {
     $modalInstance.dismiss('cancel');
   };
+  $scope.apply = function () {
+    var newPos = {};
+    newPos.lat = $scope.lat;
+    newPos.lng = $scope.lng;
+    $modalInstance.close(newPos);
+  }
 });
