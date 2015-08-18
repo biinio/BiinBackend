@@ -13,7 +13,7 @@ app.set('port',httpPort);
 
 //Https credentials
 var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8').toString();;
-var certificate = fs.readFileSync('sslcert/combined.crt', 'utf8').toString();;
+var certificate = fs.readFileSync('sslcert/bundle.crt', 'utf8').toString();;
 var credentials = {key: privateKey, cert: certificate};
 
 //Http Server instance
