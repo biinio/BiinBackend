@@ -210,7 +210,7 @@ module.exports = function () {
 		//biinie getShowcase
 		showcase.findOne({"identifier":identifier},{"identifier":1,"showcaseType":1,"name":1,"description":1,"titleColor":1,"lastUpdate":1,"elements.elementIdentifier":1,"elements._id":1,"elements.position":1, "notifications":1, "webAvailable":1}).lean().exec(function(err,data){
 			if(err)
-				res.json({data:{status:"7",data:{}}});	
+				res.json({data:{},status:"7",result:"0"});	
 			else
 				if(typeof(data)==='undefined' || data===null || data.length===0)
 					res.json({data:{status:"9",data:{}}});	
@@ -240,7 +240,7 @@ module.exports = function () {
 									showcaseObj.elements[el].hasBeenSeen='0';
 							}
 
-							res.json({data:showcaseObj,status:"0"});											
+							res.json({data:showcaseObj,status:"0",result:"1"});											
 						}
 						
 					});

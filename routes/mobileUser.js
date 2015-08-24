@@ -37,16 +37,16 @@ module.exports = function(){
 		//Find the mobile user
 		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
 			if(err)
-				res.json({data:{status:"5",result:""}});
+				res.json({data:{},status:"5",result:"0"});
 			else{
 				var isFound = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
 				if(!isFound)
-					res.json({data:{status:"7"}});
+					res.json({data:{},status:"7",result:"0"});
 				else{
 					var result = foundBinnie.toObject();
 					result.isEmailVerified = foundBinnie.accountState?"1":"0";
 					delete result.accountState;
-					res.json({data:result,status:"0"});
+					res.json({data:result,status:"0",result:"1"});
 				}
 			}
 		});
@@ -58,12 +58,12 @@ module.exports = function(){
 		var identifier =req.params.identifier;
 		mobileUser.findOne({"identifier":identifier},{_id:0,biinieCollections:1},function(err,data){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});	
+				res.json({data:{},status:"5", result:"0"});	
 			else
 				if(data!=null && data.biinieCollections!=null && data.biinieCollections.length>0){
-					res.json({data:{biinieCollections:data.biinieCollections},status:"1"});						
+					res.json({data:{biinieCollections:data.biinieCollections},status:"1", result:"1"});						
 				}else{
-					res.json({data:{status:"9", result:"0"}});	
+					res.json({data:{},status:"9", result:"0"});	
 				}
 		});
 	}
@@ -319,9 +319,9 @@ module.exports = function(){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
 							if(raw.n>0)
-								res.json({status:"0",result:"1"});	
+								res.json({status:"0",result:"1",data:{}});	
 							else
-								res.json({status:"1",result:"0"});	
+								res.json({status:"1",result:"0",data:{}});	
 						}
 					});
 				}	
@@ -336,9 +336,9 @@ module.exports = function(){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
 							if(raw.n>0)
-								res.json({status:"0",result:"1"});	
+								res.json({status:"0",result:"1",data:{}});	
 							else
-								res.json({status:"1",result:"0"});	
+								res.json({status:"1",result:"0",data:{}});	
 						}
 					});
 				}	
@@ -386,9 +386,9 @@ module.exports = function(){
 				res.json({status:"5", result:"0",data:{}});	
 			else
 				if(raw.n>0)
-					res.json({status:"0",result:"1"});	
+					res.json({status:"0",result:"1",data:{}});	
 				else
-					res.json({status:"1",result:"0"});	
+					res.json({status:"1",result:"0",data:{}});	
 		});
 
 	}
@@ -477,16 +477,16 @@ module.exports = function(){
 		updateCollectionCount(objIdentifier);
 		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
 			if(err)
-				res.json({status:"5", result:"0",err:err});	
+				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
 				var el = _.findWhere(data.biinieCollections[0].elements,{identifier:objIdentifier});
 				data.biinieCollections[0].elements.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
-						res.json({status:"5", err:err});	
+						res.json({status:"5",data:{err:err}, result:"1"});	
 					else{
 						//Return the state and the object
-						res.json({status:"0", result:"1"});	
+						res.json({status:"0", result:"1", data:{}});	
 					}
 				});		
 				
@@ -502,16 +502,16 @@ module.exports = function(){
 
 		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
 			if(err)
-				res.json({status:"5", result:"0",err:err});	
+				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
 				var el = _.findWhere(data.biinieCollections[0].sites,{identifier:objIdentifier});
 				data.biinieCollections[0].sites.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
-						res.json({status:"5", err:err});	
+						res.json({status:"5", result:"0", data:{err:err}});	
 					else{
 						//Return the state and the object
-						res.json({status:"0", result:"1"});	
+						res.json({status:"0", result:"1", data:{}});	
 					}
 				});		
 				
