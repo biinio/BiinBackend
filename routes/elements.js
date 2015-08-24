@@ -37,7 +37,7 @@ module.exports = function(){
 			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1},function(err,userInfo){
 				organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
 					if(err)
-						res.json({data:{status:"7", result:'0'}});	
+						res.json({data:{},status:"7", result:'0'});	
 					else
 						if(data!=null && "elements" in data && data.elements.length>0){
 							var elementObj = data.elements[0].toObject();
@@ -121,7 +121,7 @@ module.exports = function(){
 
 							res.json({data:elementObj,status:"0",result:"1"});
 						}else{
-							res.json({data:{status:"9", result:"0"}});		
+							res.json({data:{},status:"9", result:"0"});		
 						}
 				});					
 
@@ -138,7 +138,7 @@ module.exports = function(){
 			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1},function(err,userInfo){
 				organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
 					if(err)
-						res.json({data:{status:"7", result:'0'}});	
+						res.json({data:{},status:"7", result:'0'});	
 					else
 						if(data!=null && "elements" in data && data.elements.length>0){
 							var elementObj = data.elements[0].toObject();
@@ -227,7 +227,7 @@ module.exports = function(){
 							});
 							//res.json({data:elementObj,status:"0",result:"1"});
 						}else{
-							res.json({data:{status:"9", result:"0"}});		
+							res.json({data:{},status:"9", result:"0"});		
 						}
 				});					
 
@@ -244,12 +244,12 @@ module.exports = function(){
 		//Get the categories of the user
 		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
 			if(err){
-				res.json({data:{status:"5",data:{}}});
+				res.json({data:{},status:"5",result:"0"});
 			}else{
 				if(foundCategories && "categories" in foundCategories){
 
 					if(foundCategories.categories.length===0)
-						res.json({data:{status:"9",data:{}}});
+						res.json({data:{},status:"9",result:"0"});
 					else{
 						//var catArray = _.pluck(foundCategories.categories,'identifier')
 						var result = {data:{elements:[]}};
@@ -264,7 +264,7 @@ module.exports = function(){
 							//, "elements.isValid":true
 							var orgResult=organization.find({'elements.categories.identifier':pcategory.identifier,'elements.isHighlight':'1'},{'elements':'1'},function(err,elementsByCategories){
 								if(err)
-									res.json({data:{status:"5",data:{}, err:err}});
+									res.json({data:{err:err},status:"5",result:"0"});
 								else
 								{
 									var elResult=[];
@@ -312,11 +312,12 @@ module.exports = function(){
 						if(categoriesProcessed===total){
 
 							if(categoriesWithElements==0){
-								res.json({data:{status:"9",data:{}}});
+								res.json({data:{},status:"9",result:"0"});
 
 							}
 							else{
 								result.status="0";
+								result.result="1";
 								res.json(result);
 							}
 
@@ -329,7 +330,7 @@ module.exports = function(){
 					}					
 				}
 				else{
-					res.json({status:"9",data:{}});	
+					res.json({status:"9",data:{},result:"0"});	
 				}
 			}
 		});		
