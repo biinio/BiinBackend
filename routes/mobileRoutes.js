@@ -208,20 +208,20 @@ module.exports =function(){
 			else{
 				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
 					if(err)
-						res.json({data:{status:"7",data:{}}});	
+						res.json({data:{},status:"7",result:"0"});	
 					else
 						if(data==null)
-							res.json({data:{status:"9",data:{}}});	
+							res.json({data:{},status:"9",result:"0"});	
 						else
 							if(data.sites && data.sites.length){	
 
 								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,function(siteResult){
-									res.json({data:siteResult,status:"0"});
+									res.json({data:siteResult,status:"0",result:"1"});
 								});
 								
 							}
 							else{
-								res.json({data:data.sites[0],status:"0"});
+								res.json({data:data.sites[0],status:"0",result:"1"});
 							}
 				});
 			}			
@@ -229,7 +229,7 @@ module.exports =function(){
 		if(biinieIdentifier){
 			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1},getSiteInformation)
 		}else{
-			res.json({data:{status:"7",data:{}}});
+			res.json({status:"7",data:{},result:"0"});
 		}		
 	}
 
