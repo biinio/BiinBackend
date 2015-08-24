@@ -530,7 +530,7 @@ module.exports = function(){
 			var birthDate = utils.getDate(model.birthDate);
 			mobileUser.update({'identifier':identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false},function(err,raw){
 				if(err)
-					res.json({data:{status:"5", result:"0"}});	
+					res.json({data:{},status:"5", result:"0"});	
 				else
 				{
 
@@ -542,11 +542,11 @@ module.exports = function(){
 						model.identifier = identifier;
 						model.biinName= model.email;
 						sendVerificationMail(req,model,function(){
-							res.json({data:{status:status, result:result}});		
+							res.json({data:{},status:status, result:result});		
 						})
 					}else
 					{
-						res.json({data:{status:status, result:result}});		
+						res.json({data:{},status:status, result:result});		
 					}
 					
 				}
@@ -556,7 +556,7 @@ module.exports = function(){
 		if(model && identifier){
 			mobileUser.findOne({'biinName':model.email},function(err,foundEmail){
 				if(err)
-					res.json({data:{status:"5", result:"0"}});	
+					res.json({data:{},status:"5", result:"0"});	
 				else
 					if(typeof(foundEmail)==="undefined" || foundEmail===null){
 						updateModel(model);
@@ -564,7 +564,7 @@ module.exports = function(){
 						if(foundEmail.identifier === identifier)
 							updateModel(model);
 						else{
-							res.json({data:{status:"1", result:"0"}});		
+							res.json({data:{},status:"1", result:"0"});		
 						}
 					}
 			})
