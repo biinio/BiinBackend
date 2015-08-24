@@ -97,7 +97,7 @@ module.exports = function () {
 		//Get the categories of the user
 		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
 			if(err){
-				res.json({data:{},status:"5",result:"");
+				res.json({data:{},status:"5",result:""});
 			}else{
 				if(foundCategories && "categories" in foundCategories){
 
