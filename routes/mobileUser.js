@@ -627,10 +627,10 @@ module.exports = function(){
 		res.setHeader('Content-Type', 'application/json');
 		mobileUser.findOne({'identifier':identifier, accountState:true},function(err, foundBinnie){
 			if(err)
-				res.json({data:{status:"7",result:""}})
+				res.json({data:{},status:"7",result:"0"})
 			else{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
-				res.json({data:{status:"0", result:result}});
+				res.json({data:{},status:"0", result:result});
 			}
 		});
 	}
