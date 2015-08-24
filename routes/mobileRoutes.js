@@ -244,7 +244,7 @@ module.exports =function(){
 
  		var finalCallback =function(){
  			if(isSetElements && isSetHistory)
- 				res.json({data:{status:"0",result:"1"}});	
+ 				res.json({data:{},status:"0",result:"1"});	
  		}
 
  		var setElementsViewed =function(actions, callback){
