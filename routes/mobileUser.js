@@ -192,13 +192,13 @@ module.exports = function(){
 		var catArray = _.pluck(categoriesModel,'identifier')
 		category.find({'identifier':{$in:catArray}},function(err,data){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});
+				res.json({data:{},status:"5", result:"0"});
 			else{
 				mobileUser.update({'identifier':identifier},{categories:data},function(err,raw){
 						if(err)
-							res.json({data:{status:"7",result:""}})
+							res.json({data:{},status:"7",result:""})
 						else{
-							res.json({data:{status:"0", result: raw.n?"1":"0"}});
+							res.json({data:{},status:"0", result: raw.n?"1":"0"});
 						}
 				})				
 			}
