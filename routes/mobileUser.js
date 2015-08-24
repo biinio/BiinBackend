@@ -579,7 +579,7 @@ module.exports = function(){
 
 		mobileUser.findOne({'biinName':user},function(err,foundBinnie){
 			if(err)
-				res.json({data:{status:"5",identifier:""}});	
+				res.json({data:{identifier:""},status:"5",result:"0"});	
 			else
 			{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
@@ -589,10 +589,10 @@ module.exports = function(){
 						identifier = foundBinnie.identifier;
 						var isMathToString = isMath? "1":"0";
 						var code = isMath ? "0" :"8";
-						res.json({data:{status: code, result:isMathToString, identifier:identifier}});
+						res.json({data:{identifier:identifier},status: code, result:isMathToString});
 					});
 				}else{
-					res.json({data:{status:"7", result:"0", identifier:identifier}});					
+					res.json({data:{identifier:identifier},status:"7", result:"0"});					
 				}				
 			}			
 		});
