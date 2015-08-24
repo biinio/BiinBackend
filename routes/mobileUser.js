@@ -75,7 +75,7 @@ module.exports = function(){
 		var organizationId = req.params.organizationIdentifier;
 		mobileUser.findOne({"identifier":identifier},{_id:0,loyalty:1},function(err,mobileUserFound){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});	
+				res.json({data:{},status:"5", result:"0"});	
 			else{
 				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1},function(err,org){
 					if(err)
@@ -97,7 +97,7 @@ module.exports = function(){
 									loyaltyModel = loyaltyToFind;
 						}				        
 						var loyalty = loyaltyModel;
-						res.json({data:{organization:org,loyalty:loyalty}, status:0});
+						res.json({data:{organization:org,loyalty:loyalty}, status:"0", result:"1"});
 					}
 				})				
 			}
