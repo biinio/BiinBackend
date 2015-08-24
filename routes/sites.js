@@ -97,12 +97,12 @@ module.exports = function () {
 		//Get the categories of the user
 		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
 			if(err){
-				res.json({data:{status:"5",data:{}}});
+				res.json({data:{},status:"5",result:"");
 			}else{
 				if(foundCategories && "categories" in foundCategories){
 
 					if(foundCategories.categories.length===0)
-						res.json({data:{status:"9",data:{}}});
+						res.json({data:{},status:"9",response:"0"});
 					else{
 
 
@@ -146,7 +146,7 @@ module.exports = function () {
 											categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
 										}									
 										//Return the sites data
-										res.json({data:categorySitesResult,status:'0'});
+										res.json({data:categorySitesResult,status:'0',result:"1"});
 									}
 								});								
 							}
@@ -159,14 +159,14 @@ module.exports = function () {
 									var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
 									categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
 								}										
-								res.json({data:categorySitesResult,status:'0'});
+								res.json({data:categorySitesResult,status:'0',result:"1"});
 							})
 						}
 						
 					}
 				}	
 				else{
-					res.json({status:"9",data:{}});	
+					res.json({status:"9",data:{},result:"0"});	
 				}
 			}
 		});		
