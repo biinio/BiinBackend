@@ -25,7 +25,7 @@ var elementSchema = new Schema({
 	hasListPrice:{type:String, default:'0'},	
 	listPrice:{type:String, default:""},
 	hasPrice:{type:String, default:"0"},
-	price:{type:String, default:""},
+	price:{type:Number, default:0},
 	
 	//Is highlight element
 	isHighlight:{type:String, default:'0'},
