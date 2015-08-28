@@ -6,7 +6,7 @@
 					.header
 						label(for="chkPrice") Precio
 					.body
-						input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].price" placeholder="0" ng-blur="validate()" required is-number)
+						input.title-value.highlightInput(type="number" ng-model="elements[selectedElement].price" placeholder="0.00" ng-blur="validate()" required ng-paste="validate()" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/")
 						p Precio de lista
 				.form-group.priceGroup.col-md-4
 					.header					
@@ -33,21 +33,21 @@
 						checkbox#chkDiscount.btn-checkbox.checkBoxBlueBackground( ng-model="hasDiscountBool" ng-change="changeBoolStateHighlights('hasDiscount', hasDiscountBool)" large)
 						label(for="chkDiscount") Porcentaje
 					.body						
-						input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].discount" ng-disabled="!hasDiscountBool"  placeholder="Discount" ng-blur="validate()" required is-number)
+						input.title-value.highlightInput(type="number" ng-model="elements[selectedElement].discount" ng-disabled="!hasDiscountBool"  placeholder="Discount" ng-blur="validate()" required step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/")
 						p Digite el porcentaje de descuento 
 				.form-group.priceGroup.col-md-4
 					.header								
 						checkbox#chkSaving.btn-checkbox.checkBoxBlueBackground( ng-model="hasSavingBool" ng-change="changeBoolStateHighlights('hasSaving', hasSavingBool)" large)
 						label(for="chkSaving") Monto del descuento
 					.body
-						input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].savings" placeholder="0 %" ng-blur="validate()"  ng-disabled="!hasSavingBool" required is-number )								
+						input.title-value.highlightInput(type="number" ng-model="elements[selectedElement].savings" placeholder="0 %" ng-blur="validate()"  ng-disabled="!hasSavingBool" required step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" )								
 						p Digite manualmente el monto
 				.form-group.priceGroup.col-md-4
 					.header
 						checkbox#chkPrice.btn-checkbox.checkBoxBlueBackground(ng-model="hasListPriceBool" ng-change="changeBoolStateHighlights('hasListPrice', hasListPriceBool)" large)
 						label(for="chkListPrice") Precio Final
 					.body								
-						input.title-value.highlightInput(type="text" ng-model="elements[selectedElement].listPrice" placeholder="Final Price" ng-blur="validate()"  ng-disabled="!hasListPriceBool" required is-number)
+						input.title-value.highlightInput(type="number" ng-model="elements[selectedElement].listPrice" placeholder="Final Price" ng-blur="validate()"  ng-disabled="!hasListPriceBool" required step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/")
 						p El precio final de la promoción
 	.section
 		.row
@@ -71,5 +71,5 @@
 						checkbox.btn-checkbox.checkBoxBlueBackground( ng-model="hasQuantityBool" ng-change="changeBoolStateHighlights('hasQuantity', hasQuantityBool)" large)
 						label(for="chkListPrice") Cantidad Limitada
 					.body
-						input.highlightInput(type="text" ng-model="elements[selectedElement].quantity"  ng-disabled="!hasQuantityBool" placeholder="Quantity **" ng-blur="validate()" required is-number)
+						input.highlightInput(type="number" ng-model="elements[selectedElement].quantity"  ng-disabled="!hasQuantityBool" placeholder="Quantity **" ng-blur="validate()" required step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/")
 						p Permita hacer promociones con cantidades limitadas 
