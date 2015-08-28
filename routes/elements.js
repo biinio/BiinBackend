@@ -84,6 +84,8 @@ module.exports = function(){
 							elementObj.position=elementObj.position?elementObj.position:"1";
 							elementObj.identifier= elementObj.elementIdentifier;
 
+							elementObj.price = typeof(elementObj.price) === "number"? elementObj.price + "" : elementObj.price; 
+
 							elementObj.initialDate = elementObj.initialDate? utils.getDate(elementObj.initialDate):utils.getDateNow();
 							elementObj.expirationDate = elementObj.expirationDate? utils.getDate(elementObj.expirationDate):utils.getDateNow();
 
