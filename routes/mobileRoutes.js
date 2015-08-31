@@ -282,16 +282,7 @@ module.exports =function(){
  		var newModel = {};
  		newModel.identifier = newTempID;
  		newModel.actions = model.actions;
- 		var promise  = tempHistory.create(newModel).exec();
- 		promise.then(function(){
- 			tempHistory.findOne()
- 		}).then(function(){
-
- 		}).then(function(){
-
- 		}).then(function(){
-
- 		})
+ 		
 
 
 
