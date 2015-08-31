@@ -8,8 +8,14 @@ module.exports =function(){
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
-	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
-		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory');
+	var organization = require('../schemas/organization'), 
+		site = require('../schemas/site'), 
+		showcase = require('../schemas/showcase'),
+		region= require('../schemas/region'),
+		mobileHistory=require('../schemas/mobileHistory'),  
+		biin = require('../schemas/biin'), 
+		mobileHistory=require('../schemas/tempHistory'),  
+		siteCategory = require('../schemas/searchSiteCategory');
 
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
 	
@@ -272,6 +278,15 @@ module.exports =function(){
 	         }); 			
  		}
 
+ 		var newTempID = utils.getGUID();
+ 		var newModel = {};
+ 		newModel.identifier = newTempID;
+ 		newModel.actions = model.actions;
+ 		
+
+
+
+
  		setElementsViewed(model.actions,finalCallback);
  		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
  			isSetHistory=true;
@@ -356,7 +371,7 @@ module.exports =function(){
 		//Get the biins available
 		var getSiteBiins =function(siteIdentifier,callback){
 
-			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed', 'objects.1': {$exists: true}}).lean().exec(function(err,biinsData){
+			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed', 'objects.0': {$exists: true}}).lean().exec(function(err,biinsData){
 				if(err)
 					throw err;
 				else{

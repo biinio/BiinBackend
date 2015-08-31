@@ -12,6 +12,7 @@ module.exports = function(){
 	var mobileActions= require('../schemas/mobileActions');
 	var mobileHistory= require('../schemas/mobileHistory');
 	var biin= require('../schemas/biin');
+	var visits = require('../schemas/visits');
 
 	var functions ={}
 
