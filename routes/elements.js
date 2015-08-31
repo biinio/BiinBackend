@@ -543,10 +543,10 @@ module.exports = function(){
 
     //Return the Color
     function getColor(pcolor){
-    	if(pcolor && pcolor.indexOf('rgb(') > -1) {
+    	if(pcolor && pcolor.split(',').length == 3) {
     		return pcolor.replace('rgb(','').replace(')','');
     	}else{
-    		return '0,0,0'
+    		return '255,255,255'
     	}
     }
 
