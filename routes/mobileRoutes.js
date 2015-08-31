@@ -380,7 +380,7 @@ module.exports =function(){
 		//Get the biins available
 		var getSiteBiins =function(siteIdentifier,callback){
 
-			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed', 'objects.1': {$exists: true}}).lean().exec(function(err,biinsData){
+			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed', 'objects.0': {$exists: true}}).lean().exec(function(err,biinsData){
 				if(err)
 					throw err;
 				else{
