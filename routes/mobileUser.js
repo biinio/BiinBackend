@@ -37,16 +37,16 @@ module.exports = function(){
 		//Find the mobile user
 		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
 			if(err)
-				res.json({data:{status:"5",result:""}});
+				res.json({data:{},status:"5",result:"0"});
 			else{
 				var isFound = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
 				if(!isFound)
-					res.json({data:{status:"7"}});
+					res.json({data:{},status:"7",result:"0"});
 				else{
 					var result = foundBinnie.toObject();
 					result.isEmailVerified = foundBinnie.accountState?"1":"0";
 					delete result.accountState;
-					res.json({data:result,status:"0"});
+					res.json({data:result,status:"0",result:"1"});
 				}
 			}
 		});
@@ -58,12 +58,12 @@ module.exports = function(){
 		var identifier =req.params.identifier;
 		mobileUser.findOne({"identifier":identifier},{_id:0,biinieCollections:1},function(err,data){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});	
+				res.json({data:{},status:"5", result:"0"});	
 			else
 				if(data!=null && data.biinieCollections!=null && data.biinieCollections.length>0){
-					res.json({data:{biinieCollections:data.biinieCollections},status:"1"});						
+					res.json({data:{biinieCollections:data.biinieCollections},status:"1", result:"1"});						
 				}else{
-					res.json({data:{status:"9", result:"0"}});	
+					res.json({data:{},status:"9", result:"0"});	
 				}
 		});
 	}
@@ -75,7 +75,7 @@ module.exports = function(){
 		var organizationId = req.params.organizationIdentifier;
 		mobileUser.findOne({"identifier":identifier},{_id:0,loyalty:1},function(err,mobileUserFound){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});	
+				res.json({data:{},status:"5", result:"0"});	
 			else{
 				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1},function(err,org){
 					if(err)
@@ -97,7 +97,7 @@ module.exports = function(){
 									loyaltyModel = loyaltyToFind;
 						}				        
 						var loyalty = loyaltyModel;
-						res.json({data:{organization:org,loyalty:loyalty}, status:0});
+						res.json({data:{organization:org,loyalty:loyalty}, status:"0", result:"1"});
 					}
 				})				
 			}
@@ -192,13 +192,13 @@ module.exports = function(){
 		var catArray = _.pluck(categoriesModel,'identifier')
 		category.find({'identifier':{$in:catArray}},function(err,data){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});
+				res.json({data:{},status:"5", result:"0"});
 			else{
 				mobileUser.update({'identifier':identifier},{categories:data},function(err,raw){
 						if(err)
-							res.json({data:{status:"7",result:""}})
+							res.json({data:{},status:"7",result:""})
 						else{
-							res.json({data:{status:"0", result: raw.n?"1":"0"}});
+							res.json({data:{},status:"0", result: raw.n?"1":"0"});
 						}
 				})				
 			}
@@ -229,7 +229,7 @@ module.exports = function(){
 		if(!errors){
 			mobileUser.findOne({'biinName':model.biinName},function(err,mobileUserAccount){
 					if(mobileUserAccount){
-						res.json({data:{status:"1",identifier:""}});
+						res.json({data:{identifier:""},status:"1",result:"0"});
 					}else{
 						bcrypt.hash(model.password, 11, function (err, hash) {
 							var joinDate = utils.getDateNow();
@@ -263,13 +263,13 @@ module.exports = function(){
 							//Save The Model
 							newModel.save(function(err){
 								if(err)
-									res.json({data:{status:"5", result:"0",identifier:""}});	
+									res.json({data:{identifier:""},status:"5", result:"0"});	
 								else{
 
 									//Send the verification of the e-mail
 									sendVerificationMail(req,newModel,function(){
 										//callback of mail verification
-										res.json({data:{status:"0", result:"1",identifier:identifier}});	
+										res.json({data:{identifier:identifier},status:"0", result:"1"});	
 									});
 								}
 																	
@@ -279,7 +279,7 @@ module.exports = function(){
 				});			
 		}
 		else{
-			res.send({data:{status:"6",errors:errors}});
+			res.send({data:{errors:errors},status:"6",result:"0"});
 		}
 	}
 
@@ -319,9 +319,9 @@ module.exports = function(){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
 							if(raw.n>0)
-								res.json({status:"0",result:"1"});	
+								res.json({status:"0",result:"1",data:{}});	
 							else
-								res.json({status:"1",result:"0"});	
+								res.json({status:"1",result:"0",data:{}});	
 						}
 					});
 				}	
@@ -336,9 +336,9 @@ module.exports = function(){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
 							if(raw.n>0)
-								res.json({status:"0",result:"1"});	
+								res.json({status:"0",result:"1",data:{}});	
 							else
-								res.json({status:"1",result:"0"});	
+								res.json({status:"1",result:"0",data:{}});	
 						}
 					});
 				}	
@@ -386,9 +386,9 @@ module.exports = function(){
 				res.json({status:"5", result:"0",data:{}});	
 			else
 				if(raw.n>0)
-					res.json({status:"0",result:"1"});	
+					res.json({status:"0",result:"1",data:{}});	
 				else
-					res.json({status:"1",result:"0"});	
+					res.json({status:"1",result:"0",data:{}});	
 		});
 
 	}
@@ -428,7 +428,7 @@ module.exports = function(){
 				if(err)
 					throw err;
 				else{
-					res.json({data:{status:'0',result:'1'}});
+					res.json({data:{},status:'0',result:'1'});
 				}
 			})
 		})
@@ -477,16 +477,16 @@ module.exports = function(){
 		updateCollectionCount(objIdentifier);
 		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
 			if(err)
-				res.json({status:"5", result:"0",err:err});	
+				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
 				var el = _.findWhere(data.biinieCollections[0].elements,{identifier:objIdentifier});
 				data.biinieCollections[0].elements.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
-						res.json({status:"5", err:err});	
+						res.json({status:"5",data:{err:err}, result:"1"});	
 					else{
 						//Return the state and the object
-						res.json({status:"0", result:"1"});	
+						res.json({status:"0", result:"1", data:{}});	
 					}
 				});		
 				
@@ -502,16 +502,16 @@ module.exports = function(){
 
 		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
 			if(err)
-				res.json({status:"5", result:"0",err:err});	
+				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
 				var el = _.findWhere(data.biinieCollections[0].sites,{identifier:objIdentifier});
 				data.biinieCollections[0].sites.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
-						res.json({status:"5", err:err});	
+						res.json({status:"5", result:"0", data:{err:err}});	
 					else{
 						//Return the state and the object
-						res.json({status:"0", result:"1"});	
+						res.json({status:"0", result:"1", data:{}});	
 					}
 				});		
 				
@@ -530,7 +530,7 @@ module.exports = function(){
 			var birthDate = utils.getDate(model.birthDate);
 			mobileUser.update({'identifier':identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false},function(err,raw){
 				if(err)
-					res.json({data:{status:"5", result:"0"}});	
+					res.json({data:{},status:"5", result:"0"});	
 				else
 				{
 
@@ -542,11 +542,11 @@ module.exports = function(){
 						model.identifier = identifier;
 						model.biinName= model.email;
 						sendVerificationMail(req,model,function(){
-							res.json({data:{status:status, result:result}});		
+							res.json({data:{},status:status, result:result});		
 						})
 					}else
 					{
-						res.json({data:{status:status, result:result}});		
+						res.json({data:{},status:status, result:result});		
 					}
 					
 				}
@@ -556,7 +556,7 @@ module.exports = function(){
 		if(model && identifier){
 			mobileUser.findOne({'biinName':model.email},function(err,foundEmail){
 				if(err)
-					res.json({data:{status:"5", result:"0"}});	
+					res.json({data:{},status:"5", result:"0"});	
 				else
 					if(typeof(foundEmail)==="undefined" || foundEmail===null){
 						updateModel(model);
@@ -564,7 +564,7 @@ module.exports = function(){
 						if(foundEmail.identifier === identifier)
 							updateModel(model);
 						else{
-							res.json({data:{status:"1", result:"0"}});		
+							res.json({data:{},status:"1", result:"0"});		
 						}
 					}
 			})
@@ -579,7 +579,7 @@ module.exports = function(){
 
 		mobileUser.findOne({'biinName':user},function(err,foundBinnie){
 			if(err)
-				res.json({data:{status:"5",identifier:""}});	
+				res.json({data:{identifier:""},status:"5",result:"0"});	
 			else
 			{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
@@ -589,10 +589,10 @@ module.exports = function(){
 						identifier = foundBinnie.identifier;
 						var isMathToString = isMath? "1":"0";
 						var code = isMath ? "0" :"8";
-						res.json({data:{status: code, result:isMathToString, identifier:identifier}});
+						res.json({data:{identifier:identifier},status: code, result:isMathToString});
 					});
 				}else{
-					res.json({data:{status:"7", result:"0", identifier:identifier}});					
+					res.json({data:{identifier:identifier},status:"7", result:"0"});					
 				}				
 			}			
 		});
@@ -627,10 +627,10 @@ module.exports = function(){
 		res.setHeader('Content-Type', 'application/json');
 		mobileUser.findOne({'identifier':identifier, accountState:true},function(err, foundBinnie){
 			if(err)
-				res.json({data:{status:"7",result:""}})
+				res.json({data:{},status:"7",result:"0"})
 			else{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
-				res.json({data:{status:"0", result:result}});
+				res.json({data:{},status:"0", result:result});
 			}
 		});
 	}
