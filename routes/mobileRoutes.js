@@ -446,7 +446,8 @@ module.exports =function(){
 				}
 			});
 		}
-
+		
+		newModel.organizationIdentifier= orgId;
 		newModel.proximityUUID= model.proximityUUID;
 		newModel.identifier = model.identifier;
 		newModel.major =""+ model.major;
