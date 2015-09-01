@@ -260,7 +260,8 @@ module.exports = function(){
 					}
 					else
 					{
-						mobileHistory.find({$and:[{$or:objectsIdentifier},{"actions.did":"5"}]},{ actions:{ $elemMatch :{$and:[{$or:projectionbiinsIdentifier},{$or:[{"did":"5"}]}]}},_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
+						mobileHistory.find({$and:[{$or:objectsIdentifier},{"actions.did":"5"}]},
+							{ actions:{ $elemMatch :{$and:[{$or:projectionbiinsIdentifier},{$or:[{"did":"5"}]}]}},_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
 						{
 							if(errMobile)
 								throw errMobile
@@ -311,7 +312,7 @@ module.exports = function(){
 									visits = visits.concat(compressedVisits[compressedVisitsKeys[i]]);
 								}*/
 								
-								for (i = 0; i < actions.length; i++) 
+								/*for (i = 0; i < actions.length; i++) 
 								{
 									actions[i].at = actions[i].at.indexOf("T") == -1 ?  actions[i].at.split(" ")[0] : actions[i].at.split("T")[0];
 								};
@@ -323,7 +324,7 @@ module.exports = function(){
 								{
 									if(datesKeys.indexOf(actions[i].at) > -1)
 										counterDates[actions[i].at] += 1;
-								};
+								};*/
 								res.json({"data":counterDates});
 							}
 						});
