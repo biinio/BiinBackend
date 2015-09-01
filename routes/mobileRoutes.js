@@ -278,13 +278,24 @@ module.exports =function(){
 	         }); 			
  		}
 
- 		var newTempID = utils.getGUID();
+ 		
+
+ 		/*var newTempID = utils.getGUID();
  		var newModel = {};
  		newModel.identifier = newTempID;
  		newModel.actions = model.actions;
+ 		var createTemporalObject = tempHistory.create(newModel).exec();
+ 		var deleteTemporalObject = tempHistory.delete({identifier:newModel.identifier}).exec();
+ 		var selectRelevantInformationVisits = tempHistory.findOne({identifier:newTempID},{_id:0,actions:1}).exec();
  		
+ 		promise.then(preFillVisits).then(finalCallback);//.then other tables
 
+ 		var preFillVisits = function(){
+ 			var promise = tempHistory.findOne({"identifier":newModel.identifier},{}).exec();
+ 			promise.then(function(){
 
+ 			});
+ 		}*/
 
 
  		setElementsViewed(model.actions,finalCallback);
