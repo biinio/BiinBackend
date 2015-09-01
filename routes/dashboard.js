@@ -273,58 +273,19 @@ module.exports = function(){
 								for (var i = 0; i < data.length; i++) {
 									actions = actions.concat(data[i].actions);
 								}
-								/*for (var i = 0; i < actions.length; i++) {
-
-									var date = actions[i].at.split(" ")[0];
-									var time = actions[i].at.split(" ")[1];
-									var hours = time.split(":")[0];
-									var minutes = time.split(":")[1];
-									var seconds = time.split(":")[2];
-
-									var totalSeconds = parseInt(hours) * 3600;
-									totalSeconds += parseInt(minutes) * 60;
-									totalSeconds += seconds;
-
-
-
-									actions[i].at = actions[i].at.split(" ")[0];
-									actions[i].atTime = totalSeconds; 
-
-
-
-									if(compressedVisits[actions[i].at+actions[i].whom] == null)
-										compressedVisits[actions[i].at+actions[i].whom] = [actions[i]];
-									else
-									{
-										var lastActionIndex = compressedVisits[actions[i].at+actions[i].whom].length-1;
-										if(Math.abs(compressedVisits[actions[i].at+actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 3600)
-										{
-											compressedVisits[actions[i].at+actions[i].whom].push(actions[i]);
-											compressedVisits[actions[i].at+actions[i].whom].sort(function(a,b){
-												return a.atTime - b.atTime;
-											});
-										}
-									}
-								}*/
 								var visits = [];
-								/*var compressedVisitsKeys = Object.keys(compressedVisits);
-								for (var i = 0; i < compressedVisitsKeys.length; i++) {
-									visits = visits.concat(compressedVisits[compressedVisitsKeys[i]]);
-								}*/
-								
 								for (i = 0; i < actions.length; i++) 
 								{
+									console.log(actions[i]);
 									actions[i].at = actions[i].at.indexOf("T") == -1 ?  actions[i].at.split(" ")[0] : actions[i].at.split("T")[0];
-								};
-
-								
+								};								
 								//TODO: change date schema type from string to longInteger
-								/*var datesKeys = Object.keys(counterDates);
+								var datesKeys = Object.keys(counterDates);
 								for (i = 0; i < actions.length; i++) 
 								{
 									if(datesKeys.indexOf(actions[i].at) > -1)
 										counterDates[actions[i].at] += 1;
-								};*/
+								};
 								res.json({"data":counterDates});
 							}
 						});
