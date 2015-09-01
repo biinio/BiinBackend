@@ -243,7 +243,7 @@ module.exports = function(){
 					{
 						for (var j = 0; j < data[i].objects.length; j++) {
 							objectsIdentifier.push({"actions.to":data[i].objects[j]._id});
-							projectionbiinsIdentifier.push({"to":data[i].identifier});
+							projectionbiinsIdentifier.push({"to":data[i].objects[j]._id});
 						};
 					}
 					var counterDates = {};
