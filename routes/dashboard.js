@@ -274,11 +274,12 @@ module.exports = function(){
 									actions = actions.concat(data[i].actions);
 								}
 								var visits = [];
+								console.log(actions);
 								for (i = 0; i < actions.length; i++) 
 								{
 									console.log(actions[i]);
 									actions[i].at = actions[i].at.indexOf("T") == -1 ?  actions[i].at.split(" ")[0] : actions[i].at.split("T")[0];
-								};								
+								}							
 								//TODO: change date schema type from string to longInteger
 								var datesKeys = Object.keys(counterDates);
 								for (i = 0; i < actions.length; i++) 
