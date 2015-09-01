@@ -312,14 +312,14 @@ module.exports = function(){
 									visits = visits.concat(compressedVisits[compressedVisitsKeys[i]]);
 								}*/
 								
-								/*for (i = 0; i < actions.length; i++) 
+								for (i = 0; i < actions.length; i++) 
 								{
 									actions[i].at = actions[i].at.indexOf("T") == -1 ?  actions[i].at.split(" ")[0] : actions[i].at.split("T")[0];
 								};
 
 								
 								//TODO: change date schema type from string to longInteger
-								var datesKeys = Object.keys(counterDates);
+								/*var datesKeys = Object.keys(counterDates);
 								for (i = 0; i < actions.length; i++) 
 								{
 									if(datesKeys.indexOf(actions[i].at) > -1)
