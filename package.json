@@ -38,7 +38,7 @@
     "method-override": "^2.3.3",
     "moment": "^2.10.3",
     "moment-timezone": "^0.4.0",
-    "mongodb": "^2.0.34",
+    "mongodb": "^3.0.2",
     "mongoose": "^4.0",
     "morgan": "~1.6.0",
     "node-markdown": "^0.1.1",
