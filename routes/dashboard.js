@@ -159,7 +159,8 @@ module.exports = function(){
 								var actions = [];
 								var compressedVisits = [];
 								for (var i = 0; i < data.length; i++) {
-									actions = actions.concat(data[i].actions);
+									if(data[i].actions)
+										actions = actions.concat(data[i].actions);
 								}
 								/*for (var i = 0; i < actions.length; i++) {
 
@@ -271,7 +272,8 @@ module.exports = function(){
 								var compressedVisits = [];
 
 								for (var i = 0; i < data.length; i++) {
-									actions = actions.concat(data[i].actions);
+									if(data[i].actions)
+										actions = actions.concat(data[i].actions);
 								}
 								var visits = [];
 								console.log(actions);
