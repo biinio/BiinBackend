@@ -17,11 +17,13 @@ module.exports = function (db) {
     , multipartMiddleware = multipart()
     , lessMiddleware = require('less-middleware')
     , methodOverride = require('method-override')
+    , cors = require('cors')
     , expressValidator = require('express-validator');
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     schemasValidations = {};
     
+    app.use(cors());
     // At the top of your web.js
     process.env.PWD = process.cwd();
 
@@ -56,6 +58,7 @@ module.exports = function (db) {
         app.enable('trust proxy');
         app.use(forceSsl);
     }
+    
 
     // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
