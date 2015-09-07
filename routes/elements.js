@@ -22,7 +22,7 @@ module.exports = function(){
 
 	//GET the list of elements
 	functions.list = function(req,res){
-		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
+		organization.findOne({"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
 			req.session.selectedOrganization = data;
 			res.json({data:data});
 		});
