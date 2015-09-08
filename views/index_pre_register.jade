@@ -23,18 +23,6 @@ block content
 							input#email.form-control(type='text', name='email', placeholder='Email', required)
 							input#phone.form-control(type='text', name='phone', placeholder='Phone number', required)
 							input#plan.hidden(type="tex" name="plan" value=packageSlected)													
-							#packGroup.input-group
-									select#pack.selectpicker(title='Seleccione un paquete de Biin Beacons' name="pack" multiple data-max-options="1" required)
-										option UNUM
-										option TRIBUS
-										option DECEM					
-									.input-group.spinner
-										input#qty.form-control(type="text" value="0" name="qty" isNumber)
-										.input-group-btn-vertical
-											button.btn.btn-default
-												i.fa.fa-caret-up
-											button.btn.btn-default
-												i.fa.fa-caret-down
 							.row.text-center
 								input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" )
 								label.sent-message
