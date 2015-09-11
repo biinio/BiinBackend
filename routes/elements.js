@@ -389,7 +389,7 @@ module.exports = function(){
 				}
 
 				organization.update(
-					{identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,"elements.elementIdentifier":elementIdentifier},
+					{identifier:organizationIdentifier,"elements.elementIdentifier":elementIdentifier},
 					{$set:setModel},
 					{upsert:false},
 					function(err,raw){
