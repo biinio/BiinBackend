@@ -353,11 +353,10 @@ module.exports = function(){
          var newModel  = new element();
 
          newModel.elementIdentifier=utils.getGUID();
-         newModel.accountIdentifier = req.user.accountIdentifier;
          newModel.organizationIdentifier = organizationIdentifier;
 
          organization.update({
-         	identifier:organizationIdentifier,accountIdentifier:req.user.accountIdentifier
+         	identifier:organizationIdentifier
          },
          {
          	$push:{elements:newModel}
