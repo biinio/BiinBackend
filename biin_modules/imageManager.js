@@ -8,6 +8,7 @@ module.exports = function(){
     var utils = require("./utils")(), util=require("util");
     var awsManager = require("./awsManager")();
     var azureManager = require("./azureManager")();
+    var vibrant = require('node-vibrant');
 	var functions={},
 		_quality = 100,
 	    _workingImagePath='./public/workingFiles/',

@@ -253,7 +253,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier/:latitude/:longitude/categories',sites.getMobileByCategories);
     
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
-    app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier/gzip',elements.getMobileZLIB);
 
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    
     app.get('/mobile/biinies/:biinieIdentifier/showcases/:identifier',showcases.getMobileShowcase);
