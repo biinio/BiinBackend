@@ -2,6 +2,7 @@ module.exports =function(){
 
 	var util = require('util'), fs= require('fs'), path = require("path"), moment=require("moment");
 	var gm = require("gm"),imageMagick = gm.subClass({ imageMagick: true });
+	var Vibrant = require('node-vibrant');
 
 	//Custom Utils
 	var utils = require('../biin_modules/utils')();	
@@ -68,14 +69,31 @@ module.exports =function(){
 			 			var height=size.height*100/70;			
 			 			var width=size.width*100/70;		 			
 			 			imageMagick(file.path)
-			 					.gravity("Center")
-			 					.crop(height,width,0,0)
-			 					.scale(1,1)
 			 					.depth(8,function(err,data){
 			 						if(err)
 			 							console.log(err);
 			 					})
 			 					.write(tempPath,function(err,data){
+			 						var vibrant = new Vibrant(tempPath);
+			 						vibrant.getSwatches(function(error,swatches){
+		 								var mainColorRGB =  swatches.Vibrant.rgb;
+		 								mainColor = "" + mainColorRGB[0] + "," +mainColorRGB[1] + "," + mainColorRGB[2];
+
+		 								if(fs.existsSync(tempPath)){
+			 								fs.unlink(tempPath,function(err){
+			 									console.log("The image was removed succesfully");
+			 								});
+			 							}
+
+							  			var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
+							  			originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
+							  			mainColor:mainColor
+							  			};
+
+							  			callback(galObj);	 		
+			 						});
+
+			 						/*
 			 						imageMagick(tempPath).identify('%[pixel:s]',function(err,color){
 						 				console.log("Color of resized with Write: " +color);
 						 				mainColor=color.replace("srgb(","");
@@ -95,7 +113,7 @@ module.exports =function(){
 								  		callback(galObj);	 		
 
 						 			});
-
+									*/
 			 					})
 			 		})	 			
 		 		});
