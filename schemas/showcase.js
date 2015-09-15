@@ -77,7 +77,10 @@ var showcaseObj={
 			title1:{type:String, default:""},
 			url:{type:String,default:""},
 			mediaType:{type:String,default:""},
-			mainColor:{type:String,default:""}
+			mainColor:{type:String,default:""},
+			vibrantColor:{type:String,default:""},
+			vibrantDarkColor:{type:String,default:""},
+			vibrantLightColor:{type:String,default:""}
 		}],
 		biinedCount:{type:Number,default:0},
 		sharedCount:{type:Number,default:0},

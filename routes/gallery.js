@@ -77,7 +77,13 @@ module.exports =function(){
 			 						var vibrant = new Vibrant(tempPath);
 			 						vibrant.getSwatches(function(error,swatches){
 		 								var mainColorRGB =  swatches.Vibrant.rgb;
+		 								var darkVibrantRGB =  swatches.DarkVibrant.rgb;
+		 								var lightVibrantRGB =  swatches.LightVibrant.rgb;
 		 								mainColor = "" + mainColorRGB[0] + "," +mainColorRGB[1] + "," + mainColorRGB[2];
+		 								var vibrantColor = mainColor;
+		 								var darkVibrantColor = "" + darkVibrantRGB[0] + "," +darkVibrantRGB[1] + "," + darkVibrantRGB[2];
+		 								var lightVibrantColor = "" + lightVibrantRGB[0] + "," +lightVibrantRGB[1] + "," + lightVibrantRGB[2];
+
 
 		 								if(fs.existsSync(tempPath)){
 			 								fs.unlink(tempPath,function(err){
@@ -87,7 +93,10 @@ module.exports =function(){
 
 							  			var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
 							  			originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
-							  			mainColor:mainColor
+							  			mainColor:mainColor,
+							  			vibrantColor:vibrantColor,
+							  			vibrantDarkColor:darkVibrantColor,
+							  			vibrantLightColor:lightVibrantColor
 							  			};
 
 							  			callback(galObj);	 		

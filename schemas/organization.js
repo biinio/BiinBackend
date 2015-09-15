@@ -68,7 +68,10 @@ var orgSchema = new Schema({
 				identifier:{type:String, default:""},
 				title1:{type:String, default:""},
 				imgUrl:{type:String,default:""},
-				mainColor:{type:String,default:""}
+				mainColor:{type:String,default:""},
+				vibrantColor:{type:String,default:""},
+				vibrantDarkColor:{type:String,default:""},
+				vibrantLightColor:{type:String,default:""}
 			}
 		],
 		showcases:[
@@ -185,7 +188,10 @@ var orgSchema = new Schema({
 				title1:{type:String, default:""},
 				url:{type:String,default:""},
 				mediaType:{type:String,default:""},
-				mainColor:{type:String,default:""}
+				mainColor:{type:String,default:""},
+				vibrantColor:{type:String,default:""},
+			    vibrantDarkColor:{type:String,default:""},
+				vibrantLightColor:{type:String,default:""}
 			}],
 			biinedCount:{type:Number,default:0},
 			sharedCount:{type:Number,default:0},
@@ -200,7 +206,10 @@ var orgSchema = new Schema({
 				serverUrl:{type:String, default:""},
 				dateUploaded:{type:String, default:""},
 				url:{type:String,default:""},
-				mainColor:{type:String,default:""}
+				mainColor:{type:String,default:""},
+				vibrantColor:{type:String,default:""},
+				vibrantDarkColor:{type:String,default:""},
+				vibrantLightColor:{type:String,default:""}
 			}]
 });
 

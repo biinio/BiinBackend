@@ -44,7 +44,10 @@ var siteObj ={
 			identifier:{type:String, default:""},
 			title1:{type:String, default:""},
 			imgUrl:{type:String,default:""},
-			mainColor:{type:String,default:""}
+			mainColor:{type:String,default:""},
+			vibrantColor:{type:String,default:""},
+			vibrantDarkColor:{type:String,default:""},
+			vibrantLightColor:{type:String,default:""}
 		}
 	],
 	showcases:[
@@ -102,6 +105,9 @@ var siteObj ={
 	commentedCount:{type:Number,default:0},
 	biinedUsers:[{biinieIdentifier:String}],
 	userShared:[{biinieIdentifier:String,sharedTo:String}],
+	userFollowed:[{biinieIdentifier:String}],
+   	userCollected:[{biinieIdentifier:String}],
+   	userLiked:[{biinieIdentifier:String}],
 	usercomments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],
 	isValid:{type:Boolean,default:false},
 	isDeleted:{type:Boolean,default:false},

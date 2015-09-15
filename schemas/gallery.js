@@ -8,5 +8,8 @@ module.exports = moongose.model('galleries',{
 			serverUrl:{type:String, default:""},
 			dateUploaded:{type:String, default:""},
 			url:{type:String,default:""},
-			mainColor:{type:String,default:""}
+			mainColor:{type:String,default:""},
+			vibrantColor:{type:String,default:""},
+			vibrantDarkColor:{type:String,default:""},
+			vibrantLightColor:{type:String,default:""}
 });
