@@ -336,6 +336,9 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       newObj.identifier = $scope.galleries[index].identifier;
       newObj.url = $scope.galleries[index].url;
       newObj.mainColor = $scope.galleries[index].mainColor;
+      newObj.vibrantColor = $scope.galleries[index].vibrantColor;
+      newObj.vibrantDarkColor = $scope.galleries[index].vibrantDarkColor;
+      newObj.vibrantLightColor = $scope.galleries[index].vibrantLightColor;
       
       $scope.elements[$scope.selectedElement].media.push(newObj);  
 
