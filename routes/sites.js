@@ -174,7 +174,6 @@ module.exports = function () {
 
 
 	var getAllSitesByCategories = function(userIdentifier, userLat, userLng, userCategories,catArray,callback){
-		console.log("All get categories");
 		var cantSites =0;
 		var categorySitesResult={categories:[]};
 		var catAdded=[]
@@ -182,21 +181,22 @@ module.exports = function () {
 			for(var c=0;c< foundSearchSites.length; c++){
 				if(foundSearchSites[c].sites.length){
 					var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});		
-					for(var csF=0;csF<foundSearchSites[c].sites.length;csF++){
+					var filteredsites = _.filter(foundSearchSites[c].sites, function(site){ return site.lat && site.lng });
+					for(var csF=0;csF<filteredsites.length;csF++){
 						//cal Binnie prox
-						foundSearchSites[c].sites[csF].biinieProximity = ""+utils.getProximity(userLat,userLng,foundSearchSites[c].sites[csF].lat,foundSearchSites[c].sites[csF].lng);
+						filteredsites[csF].biinieProximity = ""+utils.getProximity(userLat,userLng,filteredsites[csF].lat,filteredsites[csF].lng);
 					}
 
 					if(category)
-						category.sites = category.sites.concat(foundSearchSites[c].sites);
+						category.sites = category.sites.concat(filteredsites);
 					else{
 						var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
-						var category = {identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites, hasSites:'1'};						
+						var category = {identifier:catInfo.identifier, name:catInfo.name, sites: filteredsites, hasSites:'1'};						
 						categorySitesResult.categories.push(category);
 						catAdded.push(foundSearchSites[c].categoryIdentifier);							
 					}		
 					category.sites=_.sortBy(category.sites, 'biinieProximity');				
-					cantSites += foundSearchSites[c].sites.length;
+					cantSites += filteredsites.length;
 				}					
 			}				
 			callback(categorySitesResult,cantSites,catAdded);
@@ -243,7 +243,6 @@ module.exports = function () {
 				);				
 			});
 		}else{
-			console.log("Trigger process of: " + model.identifier);
 			var updateSiteCategory=false;
 			var updateSite=false;
 

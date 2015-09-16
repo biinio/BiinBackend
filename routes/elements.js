@@ -34,7 +34,7 @@ module.exports = function(){
 		var identifier=req.param("identifier");
 
 		if(identifier){
-			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1},function(err,userInfo){
+			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1, "likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},function(err,userInfo){
 				organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
 					if(err)
 						res.json({data:{},status:"7", result:'0'});	
@@ -64,10 +64,36 @@ module.exports = function(){
 
 							var isUserBiined = false;
 							for(var i=0; i<userInfo.biinieCollections.length & !isUserBiined;i++){
-								var el =_.findWhere(userInfo.biinieCollections[i].elements,{identifier:identifier})
-								if(el)
+								var elUserBiined =_.findWhere(userInfo.biinieCollections[i].elements,{identifier:identifier})
+								if(elUserBiined)
 									isUserBiined=true;
 							}
+
+							var isUserCollect = false;
+							for(var i=0; i<userInfo.biinieCollect.length & !isUserCollect;i++){
+								var elUserCollect =_.findWhere(userInfo.biinieCollect[i].elements,{identifier:identifier})
+								if(elUserCollect)
+									isUserCollect=true;
+							}
+				
+							var isUserShared = false;
+							var userShareElements = _.filter( userInfo.shareObjects, function(like){ return like.type === "element"});
+							var elUserShared =_.findWhere(userShareElements,{identifier:identifier})
+							if(elUserShared)
+								isUserShared=true;
+
+
+							var isUserLike = false;
+							var userLikeElements = _.filter( userInfo.likeObjects, function(like){ return like.type === "element"});
+							var elUserLike =_.findWhere(userLikeElements,{identifier:identifier})
+							if(elUserLike)
+								isUserLike=true;
+
+							var isUserFollow = false;
+							var userFollowElements = _.filter( userInfo.followObjects, function(like){ return like.type === "element"});
+							var elUserFollow =_.findWhere(userFollowElements,{identifier:identifier})
+							if(elUserFollow)
+								isUserFollow=true;
 
 							//elementObj.hasFromPrice=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
 							//elementObj.hasQuantity=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
@@ -78,7 +104,10 @@ module.exports = function(){
 							elementObj.commentedCount =  elementObj.commentedCount?""+elementObj.commentedCount:"0";
 							elementObj.sharedCount=elementObj.sharedCoun?""+elementObj.sharedCount:"0";
 							elementObj.userBiined=isUserBiined?"1":"0";
-							elementObj.userShared="0";
+							elementObj.userShared=isUserShared?"1":"0";
+							elementObj.userFollow=isUserFollow?"1":"0";
+							elementObj.userLike=isUserLike?"1":"0";
+							elementObj.userCollect=isUserCollect?"1":"0";
 							elementObj.userCommented="0";
 							elementObj.isActive="1";
 							elementObj.position=elementObj.position?elementObj.position:"1";

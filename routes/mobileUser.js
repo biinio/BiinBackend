@@ -344,6 +344,69 @@ module.exports = function(){
 				}	
 		}		
 	}
+	
+	//POST User Collect some object
+	functions.setMobileCollect=function(req,res){
+		var identifier= req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
+
+		var model = req.body.model;
+		
+		var objType= model.type;
+		if(objType!=='site'){
+			if(identifier && model){
+				//Update the collection
+				var updateCollectionCount= function(elId){
+					organization.findOne({'elements.elementIdentifier':elId},{'elements.$':1},function(err,el){
+						if(err)
+							throw err;
+						else{
+							if(el && el.elements && el.elements.length>0){
+								organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.collectCount':1}},function(err,raw){
+									if(err)
+										throw err;
+								});
+							}
+						}
+
+					})
+				}
+
+				var obj={identifier:model.identifier,"_id":model._id};
+				updateCollectionCount(model.identifier);
+				mobileUser.update({'identifier':identifier,
+					"biinieCollections.identifier":collectionIdentifier},
+					{$push:{"biinieCollections.$.elements":obj}},function(err, raw){
+						if(err){
+							res.json({status:"5", result:"0",data:{}});	
+						}else{
+							if(raw.n>0)
+								res.json({status:"0",result:"1",data:{}});	
+							else
+								res.json({status:"1",result:"0",data:{}});	
+						}
+					});
+				}	
+		}else{
+			if(identifier && model){
+
+				var obj={identifier:model.identifier};				
+				mobileUser.update({'identifier':identifier,
+					"biinieCollections.identifier":collectionIdentifier},
+					{$push:{"biinieCollections.$.sites":obj}},function(err, raw){
+						if(err){
+							res.json({status:"5", result:"0",data:{}});	
+						}else{
+							if(raw.n>0)
+								res.json({status:"0",result:"1",data:{}});	
+							else
+								res.json({status:"1",result:"0",data:{}});	
+						}
+					});
+				}	
+		}		
+	}
+
 
 	//PUT Site Notified
 	functions.setShowcaseNotified=function(req,res){
@@ -390,7 +453,40 @@ module.exports = function(){
 				else
 					res.json({status:"1",result:"0",data:{}});	
 		});
+	}
 
+	//PUT Share object
+	functions.setFollow=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.followDate= utils.getDateNow();
+
+		mobileUser.update({"identifier":identifier},{$push:{'followObjects':model}},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
+	}
+
+	//PUT Share object
+	functions.setLiked=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.likeDate= utils.getDateNow();
+
+		mobileUser.update({"identifier":identifier},{$push:{'likeObjects':model}},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
 	}
 
 	//Put Mobile Point

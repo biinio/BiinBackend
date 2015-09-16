@@ -220,9 +220,18 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:identifier/highlights',elements.getMobileHighligh);
 
-    //Collections
+    //Colections
     app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
     app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedToCollection);
+
+    //collect
+    app.put('/mobile/biinies/:identifier/collect/:collectionIdentifier', mobileUser.setMobileCollect);
+    
+    //follow
+    app.put('/mobile/biinies/:identifier/follow', mobileUser.setFollow);
+    //like
+    app.put('/mobile/biinies/:identifier/like', mobileUser.setLiked);
+
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileBiinedElementToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
 

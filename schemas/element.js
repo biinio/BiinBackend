@@ -70,6 +70,7 @@ var elementSchema = new Schema({
 		vibrantLightColor:{type:String,default:""}
 	}],
 	biinedCount:{type:Number,default:0},
+	collectCount:{type:Number,default:0},
 	sharedCount:{type:Number,default:0},
 	commentedCount:{type:Number,default:0}
 });

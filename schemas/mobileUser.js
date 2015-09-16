@@ -69,6 +69,20 @@ var mobileUserSchema=new Schema({
 			}]
 		}
 	],
+	biinieCollect:[
+		{
+			identifier:{type:String, index:true, default:"-1"},
+			subTitle:{type:String, default:""},
+			title:{type:String, default:""},
+			elements:[{
+				identifier:{type:String, index:true, default:"-1"},
+				_id:{type:String, index:true, default:"-1"}
+			}],
+			sites:[{
+				identifier:{type:String, index:true, default:"-1"}
+			}]
+		}
+	],
 	showcaseNotified:[
 		{
 			siteIdentifier:{type:String,index:true},
@@ -81,6 +95,20 @@ var mobileUserSchema=new Schema({
 			identifier:{type:String},
 			type:{type:String},
 			shareDate:{type:String}
+		}
+	],
+	likeObjects:[
+		{			
+			identifier:{type:String},
+			type:{type:String},
+			likeDate:{type:String}
+		}
+	],
+	followObjects:[
+		{			
+			identifier:{type:String},
+			type:{type:String},
+			followDate:{type:String}
 		}
 	],
 	loyalty: [
