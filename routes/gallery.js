@@ -79,10 +79,10 @@ module.exports =function(){
 		 								var mainColorRGB =  swatches.Vibrant.rgb;
 		 								var darkVibrantRGB =  swatches.DarkVibrant.rgb;
 		 								var lightVibrantRGB =  swatches.LightVibrant.rgb;
-		 								mainColor = "" + mainColorRGB[0] + "," +mainColorRGB[1] + "," + mainColorRGB[2];
+		 								mainColor = "" + parseInt(mainColorRGB[0]) + "," + parseInt(mainColorRGB[1]) + "," + parseInt(mainColorRGB[2]);
 		 								var vibrantColor = mainColor;
-		 								var darkVibrantColor = "" + darkVibrantRGB[0] + "," +darkVibrantRGB[1] + "," + darkVibrantRGB[2];
-		 								var lightVibrantColor = "" + lightVibrantRGB[0] + "," +lightVibrantRGB[1] + "," + lightVibrantRGB[2];
+		 								var darkVibrantColor = "" + parseInt(darkVibrantRGB[0]) + "," + parseInt(darkVibrantRGB[1]) + "," + parseInt(darkVibrantRGB[2]);
+		 								var lightVibrantColor = "" + parseInt(lightVibrantRGB[0]) + "," +parseInt(lightVibrantRGB[1]) + "," + parseInt(lightVibrantRGB[2]);
 
 
 		 								if(fs.existsSync(tempPath)){
