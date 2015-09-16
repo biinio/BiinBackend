@@ -22,7 +22,7 @@ module.exports =function (){
 	//GET the list of organizations
 	functions.list = function(req,res){	
 		res.setHeader('Content-Type', 'application/json');	
-		organization.find({"accountIdentifier":req.user.accountIdentifier},{_id:0,identifier:1,name:1,brand:1,description:1,extraInfo:1,media:1},function (err, data) {
+		organization.find({"accountIdentifier":req.user.accountIdentifier},{_id:0,identifier:1,name:1,brand:1,description:1,extraInfo:1,media:1, loyaltyEnabled: 1},function (err, data) {
 			   res.json({data:data});
 		});		
 	}

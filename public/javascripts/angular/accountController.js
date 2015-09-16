@@ -238,7 +238,7 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http','$
   //Indicate if an organization data is changed
   isOrganizationDirty =function(){
     $scope.isAnalazingOrg=true;
-    var propertiesToCheck= ["name","brand","description","extraInfo"];
+    var propertiesToCheck= ["name","brand","description","extraInfo","loyaltyEnabled"];
 
     if($scope.prevSaveOrganization != null){
       var foundChange= false;//$scope.organizations[$scope.selectedOrganization].media[0].imgUrl!==$scope.prevSaveOrganization.media[0].imgUrl;
