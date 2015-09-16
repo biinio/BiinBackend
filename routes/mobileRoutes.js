@@ -233,7 +233,7 @@ module.exports =function(){
 			}			
 		}
 		if(biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},getSiteInformation)
 		}else{
 			res.json({status:"7",data:{},result:"0"});
 		}		
@@ -482,11 +482,21 @@ module.exports =function(){
 		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
-		var userShare =_.findWhere(model.userShared,{biinieIdentifier:biinieId});
+		
+		var userShare =_.findWhere(mobileUser.shareObjects,{identifier:siteId,type:"site"});
+
+
+		var userCollected =_.findWhere(mobileUser.biinieCollect.sites,{identifier:siteId});
+		var userFollowed =_.findWhere(mobileUser.userFollowed,{identifier:siteId,type:"site"});
+		var userLiked =_.findWhere(mobileUser.userLiked,{identifier:siteId,type:"site"});
+
 		var userComment =_.findWhere(model.userComments,{biinieIdentifier:biinieId});
 
 		newModel.userBiined = typeof(userbiined)!=="undefined"?"1":"0";
 		newModel.userShared = typeof(userShare)!=="undefined"?"1":"0";
+		newModel.userFollowed = typeof(userFollowed)!=="undefined"?"1":"0";
+		newModel.userCollected = typeof(userCollected)!=="undefined"?"1":"0";
+		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 

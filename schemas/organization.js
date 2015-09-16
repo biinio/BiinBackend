@@ -115,10 +115,14 @@ var orgSchema = new Schema({
 	       ]
 		},
 		biinedCount:{type:Number,default:0},
+		collectCount:{type:Number,default:0},
 		sharedCount:{type:Number,default:0},
 		commentedCount:{type:Number,default:0},
 		biinedUsers:[{biinieIdentifier:String}],
 		userShared:[{biinieIdentifier:String,sharedTo:String}],
+		userFollowed:[{biinieIdentifier:String}],
+   		userCollected:[{biinieIdentifier:String}],
+   		userLiked:[{biinieIdentifier:String}],
 		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],	
 		isValid:{type:Boolean,default:false},
 		isDeleted:{type:Boolean,default:false},
@@ -194,6 +198,7 @@ var orgSchema = new Schema({
 				vibrantLightColor:{type:String,default:""}
 			}],
 			biinedCount:{type:Number,default:0},
+			collectCount:{type:Number,default:0},
 			sharedCount:{type:Number,default:0},
 			commentedCount:{type:Number,default:0}
 		}
