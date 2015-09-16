@@ -15,6 +15,7 @@ var orgSchema = new Schema({
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
 	extraInfo:{type:String, default:""},
+	loyaltyEnabled:{type:String, default:"0"},
 	majorCounter:{type: Number, default:1},
 	biinsCounter:{type:Number,default:0},
 	biinsAssignedCounter:{type:Number,default:0},		
