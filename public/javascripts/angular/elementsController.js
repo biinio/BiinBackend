@@ -568,6 +568,9 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
               newObj.identifier = modalInfo.selectedImages[i].identifier;
               newObj.url = modalInfo.selectedImages[i].url;
               newObj.mainColor = modalInfo.selectedImages[i].mainColor;
+              newObj.vibrantColor = modalInfo.selectedImages[i].vibrantColor;
+              newObj.vibrantDarkColor = modalInfo.selectedImages[i].vibrantDarkColor;
+              newObj.vibrantLightColor = modalInfo.selectedImages[i].vibrantLightColor;
               $scope.elements[$scope.selectedElement].media.push(newObj); 
           };
           $scope.galleries=modalInfo.galleries;
