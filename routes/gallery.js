@@ -60,7 +60,9 @@ module.exports =function(){
 	 		var systemImageName = userAccount+organizationId+ utils.getImageName(name,_workingImagePath); 
 
 	 		var mainColor="";
+	 		
 	 		imageManager.uploadFile(file.path,imagesDirectory,systemImageName,true,function(imgURL){
+
 		 		var tempId=utils.getUIDByLen(40)+".";
 
 				imageMagick(file.path).format(function(err,format){
