@@ -59,6 +59,9 @@ module.exports = function(){
 								media.mediaType=1;
 								media.domainColor=  getColor(data.elements[0].media[i].mainColor);
 								media.url = data.elements[0].media[i].url;
+								media.vibrantColor= data.elements[0].media[i].vibrantColor ? data.elements[0].media[i].vibrantColor : "0,0,0";
+								media.vibrantDarkColor= data.elements[0].media[i].vibrantDarkColor ? data.elements[0].media[i].vibrantDarkColor : "0,0,0";
+								media.vibrantLightColor= data.elements[0].media[i].vibrantLightColor ? data.elements[0].media[i].vibrantLightColor : "0,0,0";
 								elementObj.media.push(media);
 							}
 
