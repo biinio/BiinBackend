@@ -77,7 +77,7 @@ module.exports = function(){
 			if(err)
 				res.json({data:{},status:"5", result:"0"});	
 			else{
-				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1},function(err,org){
+				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1}).lean().exec(function(err,org){
 					if(err)
 						throw err;
 					else{
@@ -95,8 +95,35 @@ module.exports = function(){
 								var loyaltyToFind = _.findWhere(mobileUserFound.loyalty,{organizationIdentifier:organizationId});
 								if(typeof(loyaltyToFind)!=='undefined')
 									loyaltyModel = loyaltyToFind;
-						}				        
+						}
 						var loyalty = loyaltyModel;
+
+						if(typeof(org.media)!='undefined'){
+							if(typeof(org.media == "object")){
+								var newMedia={};				
+								newMedia.domainColor= org.media.mainColor ? org.media.mainColor.replace("rgb(","").replace(")") : "0,0,0";
+								newMedia.mediaType="1";
+								newMedia.title1="";
+								newMedia.imgUrl= org.media.imgUrl;
+								newMedia.vibrantColor= org.media.vibrantColor ? org.media.vibrantColor : "0,0,0";
+								newMedia.vibrantDarkColor= org.media.vibrantDarkColor ? org.media.vibrantDarkColor : "0,0,0";
+								newMedia.vibrantLightColor= org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
+							}
+							else if( Array.isArray(org.media)) {
+								var newMedia=[];
+								for(var i=0; i<org.media.length;i++){
+									newMedia[i]={};				
+									newMedia[i].domainColor= org.media[i].mainColor ? org.media[i].mainColor.replace("rgb(","").replace(")") : "0,0,0";
+									newMedia[i].mediaType="1";
+									newMedia[i].title1="";
+									newMedia[i].imgUrl= org.media[i].imgUrl;
+									newMedia[i].vibrantColor= org.media[i].vibrantColor ? org.media[i].vibrantColor : "0,0,0";
+									newMedia[i].vibrantDarkColor= org.media[i].vibrantDarkColor ? org.media[i].vibrantDarkColor : "0,0,0";
+									newMedia[i].vibrantLightColor= org.media[i].vibrantLightColor ? org.media[i].vibrantLightColor : "0,0,0";
+								}
+							}
+							org.media = newMedia;
+						}				        
 						res.json({data:{organization:org,loyalty:loyalty}, status:"0", result:"1"});
 					}
 				})				

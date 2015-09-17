@@ -29,7 +29,11 @@ var orgSchema = new Schema({
 		{
 			title1:{type:String, default:""},
 			title1:{type:String, default:""},
-			imgUrl:{type:String,default:""}
+			imgUrl:{type:String,default:""},
+			mainColor:{type:String,default:""},
+			vibrantColor:{type:String,default:""},
+			vibrantDarkColor:{type:String,default:""},
+			vibrantLightColor:{type:String,default:""}
 		}
 	],		
 	sites:[{
