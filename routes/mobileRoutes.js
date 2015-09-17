@@ -212,7 +212,7 @@ module.exports =function(){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else{
-				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
+				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1,"loyaltyEnabled":1},function(err, data){
 					if(err)
 						res.json({data:{},status:"7",result:"0"});	
 					else
@@ -221,7 +221,7 @@ module.exports =function(){
 						else
 							if(data.sites && data.sites.length){	
 
-								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,function(siteResult){
+								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,data,function(siteResult){
 									res.json({data:siteResult,status:"0",result:"1"});
 								});
 								
@@ -317,7 +317,7 @@ module.exports =function(){
  		}) 			
  	}
 	//Map the Site information
-	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,resultCallback){
+	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,orgData,resultCallback){
 		var newModel={};
 
 		//Get the showcases available
@@ -499,6 +499,7 @@ module.exports =function(){
 		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
+		newModel.isLoyaltyEnabled = orgData.loyaltyEnabled == null ? "0" : orgData.loyaltyEnabled;
 
 		var loyaltyModel ={
                 isSubscribed:"1",
