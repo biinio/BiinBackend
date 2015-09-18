@@ -99,7 +99,7 @@ module.exports = function(){
 						var loyalty = loyaltyModel;
 
 						if(typeof(org.media)!='undefined'){
-							if(typeof(org.media == "object")){
+							if(typeof(org.media) == "object" && !Array.isArray(org.media)){
 								var newMedia=[];
 								newMedia[0]={};				
 								newMedia[0].domainColor= org.media.mainColor ? org.media.mainColor.replace("rgb(","").replace(")") : "0,0,0";
