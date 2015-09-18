@@ -109,6 +109,7 @@ module.exports = function(){
 							elementObj.hasQuantity=eval(elementObj.hasQuantity)?"1":"0";
 							elementObj.hasSticker=elementObj.sticker && elementObj.sticker.type ? "1":"0"
 							elementObj.biinedCount =  elementObj.biinedCount?""+elementObj.biinedCount:"0";
+							elementObj.collectCount = elementObj.collectCount?""+elementObj.collectCount:"0";
 							elementObj.commentedCount =  elementObj.commentedCount?""+elementObj.commentedCount:"0";
 							elementObj.sharedCount=elementObj.sharedCoun?""+elementObj.sharedCount:"0";
 							elementObj.userBiined=isUserBiined?"1":"0";
