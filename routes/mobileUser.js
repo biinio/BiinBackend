@@ -77,7 +77,7 @@ module.exports = function(){
 			if(err)
 				res.json({data:{},status:"5", result:"0"});	
 			else{
-				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1}).lean().exec(function(err,org){
+				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1,'loyaltyEnabled': 1}).lean().exec(function(err,org){
 					if(err)
 						throw err;
 					else{
@@ -96,7 +96,11 @@ module.exports = function(){
 								if(typeof(loyaltyToFind)!=='undefined')
 									loyaltyModel = loyaltyToFind;
 						}
-						var loyalty = loyaltyModel;
+						org.isLoyaltyEnabled = org.loyaltyEnabled? org.loyaltyEnabled : "0";
+						if(org.loyaltyEnabled)
+							delete org.loyaltyEnabled;
+						org.loyalty = loyaltyModel;
+						//var loyalty = loyaltyModel;
 
 						if(typeof(org.media)!='undefined'){
 							if(typeof(org.media) == "object" && !Array.isArray(org.media)){
@@ -125,7 +129,7 @@ module.exports = function(){
 							}
 							org.media = newMedia;
 						}				        
-						res.json({data:{organization:org,loyalty:loyalty}, status:"0", result:"1"});
+						res.json({data:{organization:org}, status:"0", result:"1"});
 					}
 				})				
 			}
