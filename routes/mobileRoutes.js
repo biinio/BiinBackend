@@ -477,6 +477,7 @@ module.exports =function(){
 		newModel.latitude =""+ model.lat;
 		newModel.longitude =""+ model.lng;
 		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
+		newModel.collectCount =  "0";//model.biinedCount?""+model.biinedCount:"0";
 		newModel.email = model.email?model.email:"";
 		newModel.nutshell = model.nutshell?model.nutshell:"";
 		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
