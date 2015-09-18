@@ -36,5 +36,9 @@
 				label.col-sm-2.control-label(for='extraInfo')(translate="ORGANIZATION.MORE_INFO")
 				.col-sm-10										
 					input#extraInfo.form-control(type="text" placeholder="Extra Information **" ng-model="organizations[selectedOrganization].extraInfo")			
+			.form-group
+				.col-sm-1			
+					checkbox.btn-checkbox(ng-model="organizations[selectedOrganization].loyaltyEnabled" ng-true-value="1" ng-false-value="0" large) Programa de Lealtad
+				label.col-sm-11.control-label(for='extraInfo')(translate="ORGANIZATION.LOYALTY_ENABLED")
 			label.organizationId(translate="ORGANIZATION.ORG_ID"): {{organizations[selectedOrganization].identifier}}
 			

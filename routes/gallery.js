@@ -60,7 +60,9 @@ module.exports =function(){
 	 		var systemImageName = userAccount+organizationId+ utils.getImageName(name,_workingImagePath); 
 
 	 		var mainColor="";
+	 		
 	 		imageManager.uploadFile(file.path,imagesDirectory,systemImageName,true,function(imgURL){
+
 		 		var tempId=utils.getUIDByLen(40)+".";
 
 				imageMagick(file.path).format(function(err,format){
@@ -77,7 +79,13 @@ module.exports =function(){
 			 						var vibrant = new Vibrant(tempPath);
 			 						vibrant.getSwatches(function(error,swatches){
 		 								var mainColorRGB =  swatches.Vibrant.rgb;
-		 								mainColor = "" + mainColorRGB[0] + "," +mainColorRGB[1] + "," + mainColorRGB[2];
+		 								var darkVibrantRGB =  swatches.DarkVibrant.rgb;
+		 								var lightVibrantRGB =  swatches.LightVibrant.rgb;
+		 								mainColor = "" + parseInt(mainColorRGB[0]) + "," + parseInt(mainColorRGB[1]) + "," + parseInt(mainColorRGB[2]);
+		 								var vibrantColor = mainColor;
+		 								var darkVibrantColor = "" + parseInt(darkVibrantRGB[0]) + "," + parseInt(darkVibrantRGB[1]) + "," + parseInt(darkVibrantRGB[2]);
+		 								var lightVibrantColor = "" + parseInt(lightVibrantRGB[0]) + "," +parseInt(lightVibrantRGB[1]) + "," + parseInt(lightVibrantRGB[2]);
+
 
 		 								if(fs.existsSync(tempPath)){
 			 								fs.unlink(tempPath,function(err){
@@ -87,7 +95,10 @@ module.exports =function(){
 
 							  			var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
 							  			originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
-							  			mainColor:mainColor
+							  			mainColor:mainColor,
+							  			vibrantColor:vibrantColor,
+							  			vibrantDarkColor:darkVibrantColor,
+							  			vibrantLightColor:lightVibrantColor
 							  			};
 
 							  			callback(galObj);	 		

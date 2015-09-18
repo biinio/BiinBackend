@@ -212,7 +212,7 @@ module.exports =function(){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else{
-				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
+				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1,"loyaltyEnabled":1},function(err, data){
 					if(err)
 						res.json({data:{},status:"7",result:"0"});	
 					else
@@ -221,7 +221,7 @@ module.exports =function(){
 						else
 							if(data.sites && data.sites.length){	
 
-								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,function(siteResult){
+								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,data,function(siteResult){
 									res.json({data:siteResult,status:"0",result:"1"});
 								});
 								
@@ -233,7 +233,7 @@ module.exports =function(){
 			}			
 		}
 		if(biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},getSiteInformation)
 		}else{
 			res.json({status:"7",data:{},result:"0"});
 		}		
@@ -317,7 +317,7 @@ module.exports =function(){
  		}) 			
  	}
 	//Map the Site information
-	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,resultCallback){
+	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,orgData,resultCallback){
 		var newModel={};
 
 		//Get the showcases available
@@ -477,44 +477,40 @@ module.exports =function(){
 		newModel.latitude =""+ model.lat;
 		newModel.longitude =""+ model.lng;
 		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
+		newModel.collectCount =  "0";//model.biinedCount?""+model.biinedCount:"0";
 		newModel.email = model.email?model.email:"";
 		newModel.nutshell = model.nutshell?model.nutshell:"";
 		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
-		var userShare =_.findWhere(model.userShared,{biinieIdentifier:biinieId});
+		
+		var userShare =_.findWhere(mobileUser.shareObjects,{identifier:siteId,type:"site"});
+
+
+		var userCollected =_.findWhere(mobileUser.biinieCollect.sites,{identifier:siteId});
+		var userFollowed =_.findWhere(mobileUser.followObjects,{identifier:siteId,type:"site"});
+		var userLiked =_.findWhere(mobileUser.likeObjects,{identifier:siteId,type:"site"});
+
 		var userComment =_.findWhere(model.userComments,{biinieIdentifier:biinieId});
 
 		newModel.userBiined = typeof(userbiined)!=="undefined"?"1":"0";
 		newModel.userShared = typeof(userShare)!=="undefined"?"1":"0";
+		newModel.userFollowed = typeof(userFollowed)!=="undefined"?"1":"0";
+		newModel.userCollected = typeof(userCollected)!=="undefined"?"1":"0";
+		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
-
-		var loyaltyModel ={
-                isSubscribed:"1",
-                subscriptionDate:utils.getDateNow(),
-                points:"0",
-                level:"0",
-                achievements: [
-                ],
-                badges: [
-                ]
-        }
-
-		if('loyalty' in mobileUser){
-			var loyaltyToFind = _.findWhere(mobileUser.loyalty,{organizationIdentifier:orgId});
-			if(typeof(loyaltyToFind)!=='undefined')
-				loyaltyModel = loyaltyToFind;
-		}
-
-		newModel.loyalty =loyaltyModel;
+		
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
 				newModel.media[i]={};				
 				newModel.media[i].domainColor= model.media[i].mainColor.replace("rgb(","").replace(")");
 				newModel.media[i].mediaType="1";
-				newModel.media[i].imgUrl= model.media[i].imgUrl;
+				newModel.media[i].url= model.media[i].imgUrl;
+				newModel.media[i].vibrantColor= model.media[i].vibrantColor ? model.media[i].vibrantColor : "0,0,0";
+				newModel.media[i].vibrantDarkColor= model.media[i].vibrantDarkColor ? model.media[i].vibrantDarkColor : "0,0,0";
+				newModel.media[i].vibrantLightColor= model.media[i].vibrantLightColor ? model.media[i].vibrantLightColor : "0,0,0";
 			}
 		}
 

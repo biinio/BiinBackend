@@ -220,9 +220,23 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:identifier/highlights',elements.getMobileHighligh);
 
-    //Collections
+    //Colections
     app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
     app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedToCollection);
+
+    //collect
+    app.put('/mobile/biinies/:identifier/collect/:collectionIdentifier', mobileUser.setMobileCollect);
+    //uncollect
+    app.delete('/mobile/biinies/:identifier/collect/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileCollectElementToCollection);
+    app.delete('/mobile/biinies/:identifier/collect/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileCollectSiteToCollection);
+    
+    //follow
+    app.put('/mobile/biinies/:identifier/follow', mobileUser.setFollow);
+    app.put('/mobile/biinies/:identifier/unfollow', mobileUser.setUnfollow);
+    //like
+    app.put('/mobile/biinies/:identifier/like', mobileUser.setLiked);
+    app.put('/mobile/biinies/:identifier/unlike', mobileUser.setUnliked);
+
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileBiinedElementToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
 
