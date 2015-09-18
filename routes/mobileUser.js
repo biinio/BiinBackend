@@ -403,8 +403,8 @@ module.exports = function(){
 				var obj={identifier:model.identifier,"_id":model._id};
 				updateCollectionCount(model.identifier);
 				mobileUser.update({'identifier':identifier,
-					"biinieCollections.identifier":collectionIdentifier},
-					{$push:{"biinieCollections.$.elements":obj}},function(err, raw){
+					"biinieCollect.identifier":collectionIdentifier},
+					{$push:{"biinieCollect.$.elements":obj}},function(err, raw){
 						if(err){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
@@ -418,10 +418,28 @@ module.exports = function(){
 		}else{
 			if(identifier && model){
 
-				var obj={identifier:model.identifier};				
+				//Update the collection
+				var updateCollectionCount= function(siteId){
+					organization.findOne({'sites.identifier':siteId},{'sites.$':1},function(err,site){
+						if(err)
+							throw err;
+						else{
+							if(site && site.sites && site.sites.length>0){
+								organization.update({'sites._id':site.sites[0]._id},{$inc:{'sites.$.collectCount':1}},function(err,raw){
+									if(err)
+										throw err;
+								});
+							}
+						}
+
+					})
+				}
+
+				var obj={identifier:model.identifier};
+				updateCollectionCount(model.identifier);				
 				mobileUser.update({'identifier':identifier,
-					"biinieCollections.identifier":collectionIdentifier},
-					{$push:{"biinieCollections.$.sites":obj}},function(err, raw){
+					"biinieCollect.identifier":collectionIdentifier},
+					{$push:{"biinieCollect.$.sites":obj}},function(err, raw){
 						if(err){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
@@ -731,6 +749,25 @@ module.exports = function(){
 		var identifier=req.params.identifier;
 		var collectionIdentifier= req.params.collectionIdentifier;
 		var objIdentifier = req.params.objIdentifier;
+
+		//Update the collection
+		var updateCollectionCount= function(siteId){
+			organization.findOne({'sites.identifier':siteId},{'sites.$':1},function(err,sites){
+				if(err)
+					throw err;
+				else{
+					if(sites && sites.sites && sites.sites.length>0){
+						organization.update({'sites._id':sites.sites[0]._id},{$inc:{'sites.$.collectCount':-1}},function(err,raw){
+							if(err)
+								throw err;
+						});
+					}
+				}
+
+			})
+		}
+
+		updateCollectionCount(objIdentifier);
 
 		mobileUser.findOne({'identifier':identifier,'biinieCollect.identifier':collectionIdentifier},{'biinieCollect.$.sites':1},function(err,data){
 			if(err)
