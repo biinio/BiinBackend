@@ -500,26 +500,7 @@ module.exports =function(){
 		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
-		newModel.isLoyaltyEnabled = orgData.loyaltyEnabled == null ? "0" : orgData.loyaltyEnabled;
-
-		var loyaltyModel ={
-                isSubscribed:"1",
-                subscriptionDate:utils.getDateNow(),
-                points:"0",
-                level:"0",
-                achievements: [
-                ],
-                badges: [
-                ]
-        }
-
-		if('loyalty' in mobileUser){
-			var loyaltyToFind = _.findWhere(mobileUser.loyalty,{organizationIdentifier:orgId});
-			if(typeof(loyaltyToFind)!=='undefined')
-				loyaltyModel = loyaltyToFind;
-		}
-
-		newModel.loyalty =loyaltyModel;
+		
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
