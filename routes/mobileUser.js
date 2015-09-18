@@ -100,14 +100,15 @@ module.exports = function(){
 
 						if(typeof(org.media)!='undefined'){
 							if(typeof(org.media == "object")){
-								var newMedia={};				
-								newMedia.domainColor= org.media.mainColor ? org.media.mainColor.replace("rgb(","").replace(")") : "0,0,0";
-								newMedia.mediaType="1";
-								newMedia.title1="";
-								newMedia.imgUrl= org.media.imgUrl;
-								newMedia.vibrantColor= org.media.vibrantColor ? org.media.vibrantColor : "0,0,0";
-								newMedia.vibrantDarkColor= org.media.vibrantDarkColor ? org.media.vibrantDarkColor : "0,0,0";
-								newMedia.vibrantLightColor= org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
+								var newMedia=[];
+								newMedia[0]={};				
+								newMedia[0].domainColor= org.media.mainColor ? org.media.mainColor.replace("rgb(","").replace(")") : "0,0,0";
+								newMedia[0].mediaType="1";
+								newMedia[0].title1="";
+								newMedia[0].imgUrl= org.media.imgUrl;
+								newMedia[0].vibrantColor= org.media.vibrantColor ? org.media.vibrantColor : "0,0,0";
+								newMedia[0].vibrantDarkColor= org.media.vibrantDarkColor ? org.media.vibrantDarkColor : "0,0,0";
+								newMedia[0].vibrantLightColor= org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
 							}
 							else if( Array.isArray(org.media)) {
 								var newMedia=[];
