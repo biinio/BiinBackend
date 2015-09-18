@@ -488,8 +488,8 @@ module.exports =function(){
 
 
 		var userCollected =_.findWhere(mobileUser.biinieCollect.sites,{identifier:siteId});
-		var userFollowed =_.findWhere(mobileUser.userFollowed,{identifier:siteId,type:"site"});
-		var userLiked =_.findWhere(mobileUser.userLiked,{identifier:siteId,type:"site"});
+		var userFollowed =_.findWhere(mobileUser.followObjects,{identifier:siteId,type:"site"});
+		var userLiked =_.findWhere(mobileUser.likeObjects,{identifier:siteId,type:"site"});
 
 		var userComment =_.findWhere(model.userComments,{biinieIdentifier:biinieId});
 
