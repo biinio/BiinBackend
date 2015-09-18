@@ -34,7 +34,7 @@ module.exports = function(){
 		var identifier=req.param("identifier");
 
 		if(identifier){
-			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1, "likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},function(err,userInfo){
+			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1, "likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1, "seenElements":1},function(err,userInfo){
 				organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
 					if(err)
 						res.json({data:{},status:"7", result:'0'});	
@@ -92,12 +92,17 @@ module.exports = function(){
 							if(elUserLike)
 								isUserLike=true;
 
+
 							var isUserFollow = false;
 							var userFollowElements = _.filter( userInfo.followObjects, function(like){ return like.type === "element"});
 							var elUserFollow =_.findWhere(userFollowElements,{identifier:identifier})
 							if(elUserFollow)
 								isUserFollow=true;
 
+							var isUserViewedElement = false;
+							var elUserViewed =_.findWhere(userInfo.seenElements,{elementIdentifier:identifier})
+							if(elUserViewed)
+								isUserViewedElement=true;
 							//elementObj.hasFromPrice=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
 							//elementObj.hasQuantity=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
 
@@ -111,6 +116,7 @@ module.exports = function(){
 							elementObj.userFollow=isUserFollow?"1":"0";
 							elementObj.userLike=isUserLike?"1":"0";
 							elementObj.userCollect=isUserCollect?"1":"0";
+							elementObj.userViewed= isUserViewedElement?"1":"0";
 							elementObj.userCommented="0";
 							elementObj.isActive="1";
 							elementObj.position=elementObj.position?elementObj.position:"1";
