@@ -514,6 +514,42 @@ module.exports = function(){
 				else
 					res.json({status:"1",result:"0",data:{}});	
 		});
+	
+	}
+
+	//PUT Share object
+	functions.setUnfollow=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.followDate= utils.getDateNow();
+
+		mobileUser.update({"identifier":identifier},{$pull:{ "followObjects": { "identifier":model.identifier} }},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
+	}
+
+	//PUT Share object
+	functions.setUnliked=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.likeDate= utils.getDateNow();
+
+		
+		mobileUser.update({"identifier":identifier},{$pull:{ "likeObjects": { "identifier":model.identifier} }},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
 	}
 
 	//Put Mobile Point
@@ -641,6 +677,79 @@ module.exports = function(){
 			}
 		})
 	}
+
+
+
+
+	//DELETE a object to a Collect Collection
+	functions.deleteMobileCollectElementToCollection=function(req,res){
+		var identifier=req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
+		var objIdentifier = req.params.objIdentifier;
+
+
+		//Update the collection
+		var updateCollectionCount= function(elId){
+			organization.findOne({'elements.elementIdentifier':elId},{'elements.$':1},function(err,el){
+				if(err)
+					throw err;
+				else{
+					if(el && el.elements && el.elements.length>0){
+						organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.collectCount':-1}},function(err,raw){
+							if(err)
+								throw err;
+						});
+					}
+				}
+
+			})
+		}
+
+		updateCollectionCount(objIdentifier);
+		mobileUser.findOne({'identifier':identifier,'biinieCollect.identifier':collectionIdentifier},{'biinieCollect.$.elements':1},function(err,data){
+			if(err)
+				res.json({status:"5", result:"0", data:{err:err}});	
+			else{				
+				var el = _.findWhere(data.biinieCollect[0].elements,{identifier:objIdentifier});
+				data.biinieCollect[0].elements.pull({_id:el._id});
+				data.save(function(err){
+				if(err)
+						res.json({status:"5",data:{err:err}, result:"1"});	
+					else{
+						//Return the state and the object
+						res.json({status:"0", result:"1", data:{}});	
+					}
+				});		
+				
+			}
+		})
+	}
+
+	//DELETE a object to a collect Collection
+	functions.deleteMobileCollectSiteToCollection=function(req,res){
+		var identifier=req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
+		var objIdentifier = req.params.objIdentifier;
+
+		mobileUser.findOne({'identifier':identifier,'biinieCollect.identifier':collectionIdentifier},{'biinieCollect.$.sites':1},function(err,data){
+			if(err)
+				res.json({status:"5", result:"0", data:{err:err}});	
+			else{				
+				var el = _.findWhere(data.biinieCollect[0].sites,{identifier:objIdentifier});
+				data.biinieCollect[0].sites.pull({_id:el._id});
+				data.save(function(err){
+				if(err)
+						res.json({status:"5", result:"0", data:{err:err}});	
+					else{
+						//Return the state and the object
+						res.json({status:"0", result:"1", data:{}});	
+					}
+				});		
+				
+			}
+		})
+	}
+
 	
 	//Update by mobile Id
 	functions.updateMobile =function(req,res){
