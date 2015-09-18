@@ -514,6 +514,42 @@ module.exports = function(){
 				else
 					res.json({status:"1",result:"0",data:{}});	
 		});
+	
+	}
+
+	//PUT Share object
+	functions.setUnfollow=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.followDate= utils.getDateNow();
+
+		mobileUser.update({"identifier":identifier},{$pull:{ "followObjects": { "identifier":model.identifier} }},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
+	}
+
+	//PUT Share object
+	functions.setUnliked=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.likeDate= utils.getDateNow();
+
+		
+		mobileUser.update({"identifier":identifier},{$pull:{ "likeObjects": { "identifier":model.identifier} }},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
 	}
 
 	//Put Mobile Point

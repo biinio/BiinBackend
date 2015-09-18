@@ -229,8 +229,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     
     //follow
     app.put('/mobile/biinies/:identifier/follow', mobileUser.setFollow);
+    app.put('/mobile/biinies/:identifier/unfollow', mobileUser.setUnfollow);
     //like
     app.put('/mobile/biinies/:identifier/like', mobileUser.setLiked);
+    app.put('/mobile/biinies/:identifier/unlike', mobileUser.setUnliked);
 
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileBiinedElementToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
