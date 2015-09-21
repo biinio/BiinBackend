@@ -322,12 +322,16 @@ module.exports =function(){
 		var biinieIdentifier = req.param("biinieIdentifier");
 		var body = req.body.model;
 
+		var newRating = {};
+		/*newRating.biinieIdentifier = biinIdentifier;
+		newRating.
+
 		organization.update({"sites.identifier":identifier},{$push: {sites.rating:}},{upsert:true},function(err, data){
 			if(err)
 				res.json({data:{},status:"7",result:"0"});	
 			else
 				res.json({data:{},status:"0",result:"1"});
-		});
+		});*/
 
 
  	}
