@@ -318,26 +318,49 @@ module.exports =function(){
  	}
 
  	functions.setSiteRating = function(req, res){
- 		var identifier=req.param("identifier");		
+ 		var identifier=req.param("siteIdentifier");		
 		var biinieIdentifier = req.param("biinieIdentifier");
-		var body = req.body.model;
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
 
-		var newRating = {};
-		/*newRating.biinieIdentifier = biinIdentifier;
-		newRating.
-
-		organization.update({"sites.identifier":identifier},{$push: {sites.rating:}},{upsert:true},function(err, data){
-			if(err)
-				res.json({data:{},status:"7",result:"0"});	
-			else
-				res.json({data:{},status:"0",result:"1"});
-		});*/
-
-
+			organization.update({"sites.identifier":identifier},{$push: {"sites.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
  	}
 
  	functions.setElementRating = function (req, res){
+		var identifier=req.param("elementIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
 
+			organization.update({"elements.elementIdentifier":identifier},{$push: {"elements.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
  	}
 
 	//Map the Site information
