@@ -122,6 +122,7 @@ module.exports = function(){
 							elementObj.isActive="1";
 							elementObj.position=elementObj.position?elementObj.position:"1";
 							elementObj.identifier= elementObj.elementIdentifier;
+							elementObj.stars = "0";
 
 							elementObj.price = typeof(elementObj.price) === "number"? elementObj.price + "" : elementObj.price; 
 

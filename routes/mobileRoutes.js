@@ -316,6 +316,26 @@ module.exports =function(){
 
  		}) 			
  	}
+
+ 	functions.setSiteRating = function(req, res){
+ 		var identifier=req.param("identifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var body = req.body.model;
+
+		organization.update({"sites.identifier":identifier},{$push: {sites.rating:}},{upsert:true},function(err, data){
+			if(err)
+				res.json({data:{},status:"7",result:"0"});	
+			else
+				res.json({data:{},status:"0",result:"1"});
+		});
+
+
+ 	}
+
+ 	functions.setElementRating = function (req, res){
+
+ 	}
+
 	//Map the Site information
 	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,orgData,resultCallback){
 		var newModel={};
@@ -500,6 +520,8 @@ module.exports =function(){
 		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
+
+		newModel.stars = "0";
 		
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
@@ -515,7 +537,6 @@ module.exports =function(){
 		}
 
 		//Get the asyc Information
-
 		var showcaseReady=false;
 		var biinsReady=false;
 		var neighborsReady=false;
