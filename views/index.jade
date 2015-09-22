@@ -227,9 +227,6 @@ block content
 						p(translate="MANAGECONTENTFORBIIN.TEXT3")
 					.col-md-6.crm_banner_image
 						img(src="/landingPage/img/thumbs/biinCMS.png")
-					.col-md-12.text-center
-						.col-md-6
-							a#btnRegistrarme.btn-contact.btn.btn-black.btn-lg(href="#pricing" translate="MANAGECONTENTFORBIIN.BUTTON.SIGNUP")
 				//End row
 			//End container
 		//END CMS		
@@ -270,91 +267,13 @@ block content
 									| {{ "BIINBEACONS.LIST.ITEM4" | translate }}
 					.col-md-6.banner_2_image
 						img(src="/landingPage/img/thumbs/biinBeacon.png")
-					.col-md-12.text-center
-						.col-md-6
-							a#GoToPricing2.btn-beacons.btn.btn-black.btn-lg(href="#beaconsPackages" translate="BIINBEACONS.BUTTON.BUY")
 						//End Banner List
 					//End Banner Description
 				//End row
 			//End container
 		//END BANNER_2
-		//PRICING============================================= 
-		section#pricing
-			.container
-				//Section Tittle
-				.row
-					.col-sm-12.titlebar
-						h2 Suscr&iacute;base a Biin
-						h3 Biin estará disponible próximamente y su empresa o negocio  puede ser parte del grupo de innovadores que formarán parte de la era del contexto. 
-						p
-							| En Biin queremos poner a disposición diferentes esquemas de suscripción que se adapten sus necesidades.
-							| Si tiene un requerimiento distinto no dude en contactar a nuestro equipo de ventas.
-				//Pricing Section Content
-				#pricing-table-holder.row
-					//PRICE PLAN STANDARD
-					#price_1.col-xs-12.col-sm-4.col-md-4
-						.pricing-table.text-center
-							//Table Header & Plan Price
-							.price-header
-								h4.plan-title LITE
-								.plan-price.silver
-									h2 $40
-									span Mensuales
-							//Plan Features
-							ul.features
-								li Gestor web de contenido y clientes
-								li Vitrina digital en el app m&oacute;vil 
-								li Programa comercial
-								li Programa de lealtad BiinCard
-								li Hasta 3 locaciones
-								li 1 usuario
-							//Table Button
-							.price-footer
-								a.btn.btn-black(href='/preregister/lite') Pre-reg&iacute;strate ahora! 
-					//END PRICE PLAN STANDARD
-					//PRICE PLAN ADVANCED
-					#price_2.col-xs-12.col-sm-4.col-md-4
-						.pricing-table.featured.text-center
-							
-							//Table Header & Plan Price
-							.price-header
-								h4.plan-title STANDARD
-								.plan-price.gold
-									h2 $149
-									span Mensuales
-							//Plan Features
-							ul.features
-								li Silver +
-								li Hasta 15 locaciones
-								li Contenido ilimitado
-								li Hasta 5 usuarios
-							//Table Button
-							.price-footer
-								a.btn.btn-theme(href='/preregister/standard') Pre-reg&iacute;strate ahora! 					
-					//END PRICE PLAN ADVANCED
-					//PRICE PLAN ULTIMATE
-					#price_3.col-xs-12.col-sm-4.col-md-4
-						.pricing-table.text-center
-							
-							//Table Header & Plan Price
-							.price-header
-								h4.plan-title PREMIUM
-								.plan-price.diamond
-									h2 $399
-									span Mensuales
-							//Plan Features
-							ul.features
-								li Gold +
-								li Programa multimedia
-								li Hasta 50 locaciones
-								li Usuarios ilimitados 
-							//Table Button
-							.price-footer
-								a.btn.btn-black(href='/preregister/premiun') Pre-reg&iacute;strate ahora!
-					//END PRICE PLAN ULTIMATE
-				//End Pricing Section Content		
-		//CONTACTS============================================= 
-		section#contact.banner-container
+		//NEWSLETTER============================================= 
+		#newsletter.parallax
 			.container
 				//Section Tittle
 				.row
@@ -362,7 +281,7 @@ block content
 						h2 Contacta a Biin!
 						h3 Nos encantar&iacute;a conversar sobre como Biin puede ayudar a su empresa o instituci&oacute;n.
 						p
-							| Llena el formulario y te estaremos contactando lo antes posible o si prefieres hablar con alguien puedes llamar al n&uacute;mero 506-8701-1518.
+							| Llena el formulario y te estaremos contactando lo antes posible.
 					//Contact form
 					.col-sm-12
 						form#contact-form.row(action='#', name='contactform', method='post')
@@ -371,7 +290,7 @@ block content
 							#input_email.col-md-6
 								input#email.form-control(type='text', name='email', placeholder='Email', required)
 							#input_subject.col-md-12
-								input#subject.form-control(type='text', name='subject', placeholder='Título', required)
+								input#subject.form-control(type='text', name='compania', placeholder='Compañia', required)
 							#input_message.col-md-12
 								textarea#comments.form-control(name='message', rows='6', placeholder='Tu mensaje...', required)
 								.sent-message
@@ -380,24 +299,6 @@ block content
 								.text-center
 									input#submit.btn-contact.btn.btn-black.btn-lg(type='submit', value='Enviar mensaje')
 					//END Contact form
-				//End row
-			//End container
-		//END CONTACTS
-		//NEWSLETTER============================================= 
-		#newsletter.parallax
-			#subscribe.container
-				.row
-					//Newsletter Title
-					#newsletter_title.col-md-6.text-center
-						h1.newsletterFirstText Inscr&iacute;base a nuestro bolet&iacute;n
-						p.newsletterSecondText
-							| Si quieres recibir el bolet&iacute;n con noticias importantes de Biin ingrese su correo electr&oacute;nico.
-					//Newsletter Form
-					#newsletter_form.col-md-6.text-center
-						.clearfix
-							form#subscribe-form.subscribe-form(action='newsletter.php', method='post')
-								input.subscribe-input(type='email', name='email', placeholder='Tu correo electrónico...')
-								input.subscribe-submit.btn.btn-black.btn-lg(type='submit' value='Suscribir')
 				//End row
 			//End container
 		//END NEWSLETTER	

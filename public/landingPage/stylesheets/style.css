@@ -63,6 +63,8 @@ Tags: responsive, html5 template, one page, landing, mobile app, company, creati
 }
 #newsletter {
   background-image: url(../img/parallax_bg/newsletter_bkg.jpg);
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 #testimonials-rotator {
   background-image: url(../img/parallax_bg/testimonials_bkg.jpg);
@@ -1065,8 +1067,6 @@ ul {
    ========================================================================== */
 #banner_2 {
   background-color: #71D7FF;
-  padding-top: 100px;
-  padding-bottom: 100px;
 }
 
 .banner_2_content h2 {
@@ -1136,7 +1136,7 @@ ul {
 #subscribe {
   padding-top: 80px;
   padding-bottom: 80px;
-  color: #fff;
+  color: #000;
 }
 /*------------------------------------------*/
 /*	  Newsletter Title
@@ -1153,66 +1153,6 @@ ul {
   font-family: 'Lato', sans-serif;
   font-weight: 300;
   padding: 0 8%;
-}
-/*------------------------------------------*/
-/*	  Newsletter Form
-/*------------------------------------------*/
-.subscribe-form {
-  margin: 25px auto 14px;
-  position: relative;
-  z-index: 10;
-  width: 90%;
-}
-.subscribe-form input {
-  width: 100%;
-  border: none!important;
-  border-radius: initial!important;
-}
-.subscribe-input {
-  width: 75%;
-  height: 54px;
-  color: #222;
-  font-size: 16px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  padding-left: 20px;
-  border: none!important;
-  border-radius: initial!important;
-}
-.subscribe-submit {
-  width: 35% !important;
-  height: 54px;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  background-color: #71D7FF;
-  /*border: 1px solid #71D7FF;*/
-  color: #fff;
-  font-size: 18px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 500;
-  text-decoration: none;
-  text-align: center;
-  display: block;
-  cursor: pointer;
-  outline: 0;
-}
-.subscribe-submit:active {
-  outline: 0;
-}
-.subscribe-submit:hover {
-  /*opacity:0.9;*/
-  background-color: #069FCE;
-}
-/*------------------------------------------*/
-/*	  Newsletter Form Error Message 
-/*------------------------------------------*/
-.error {
-  color: #F50000;
-  font-size: 16px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 400;
-  padding: 5px;
 }
 /* ==========================================================================
    08. SCREENS 
@@ -1347,306 +1287,21 @@ ul {
   top: inherit !important;
   left: inherit !important;
 }
-/* ==========================================================================
-   09. BANNER_3
-   ========================================================================== */
-#banner_3 {
-  padding-top: 80px;
-}
-.banner_3_content h3 {
-  color: #71D7FF;
-  margin-bottom: 20px;
-}
-.banner_3_content p {
-  color: #444;
-  font-size: 18px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  margin-bottom: 30px;
-}
-.stores a {
-  margin-right: 5px;
-}
 
-.stores img {
-  width: auto;
-  height: 70px !important;
-}
-.stores a:last-child {
-  margin-right: 0;
-}
-/*------------------------------------------*/
-/*	  Banner_3 Image
-/*------------------------------------------*/
-#banner_3 .img-responsive {
-  display: inline-block;
-}
-/* ==========================================================================
-   10. TESTIMONIALS ROTATOR
-   ========================================================================== */
-.testimonials {
-  margin: 50px 8%;
-  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
-}
-.slides {
-  margin: 10px 0 50px;
-}
-/*------------------------------------------*/
-/*	 Author Avatar
-/*------------------------------------------*/
-.flexslider .slides img {
-  width: 80px;
-  height: 80px;
-  display: inline-block;
-  text-align: center;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-}
-/*------------------------------------------*/
-/*	 Message Author
-/*------------------------------------------*/
-.testimonials p.author {
-  color: #FFFFFF;
-  font-size: 16px;
-  font-family: 'Lato', sans-serif;
-  font-style: normal;
-  margin-bottom: 0;
-  padding-top: 10px;
-}
-.testimonials p.author span {
-  color: #71D7FF;
-  font-weight: 900;
-}
-/*------------------------------------------*/
-/*	 Testimonial Message Text
-/*------------------------------------------*/
-.testimonials p {
-  color: #fff;
-  font-size: 24px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 600;
-  font-style: italic;
-  line-height: 30px;
-  margin-bottom: 60px;
-  padding-top: 10px;
-}
-/* ==========================================================================
-   11. PRICING 
-   ========================================================================== */
-#pricing,#beaconsPackages {
-  padding-top: 100px;
-  padding-bottom: 100px;
-}
-
-
-#beaconsPackages{
-  background-image: url(../img/thumbs/buyiBeaconBiin.jpg);
-  background-repeat: no-repeat;
-  background-position: right top;
-  background-size: cover;
-}
-
-#pricing-table-holder {
-  padding: 30px 0px;
-}
-#price_1,
-#price_2 {
-  margin-bottom: 50px;
-}
-.pricing-table {
-  background-color: #fafafa;
-}
-
-.pricing-table .plan-price {
-  background-color: #C3C3C3;
-  margin: 0;
-  line-height: normal;
-  padding: 20px;
-  border-top: 1px solid #e7e7e7;
-  -webkit-transition: all 250ms ease-in-out;
-  -moz-transition: all 250ms ease-in-out;
-  -o-transition: all 250ms ease-in-out;
-  -ms-transition: all 250ms ease-in-out;
-  transition: all 250ms ease-in-out;
-}
-
-.pricing-table .plan-price span {
-  color: #FFFFFF;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.plan-icons i{
-  font-size: 40px;
-  padding-left: 10px;
-  color: #fff;
-}
-
-#beaconsPackages #price_1 .price-header{
-  background-color: #71D7FF;
-}
-#beaconsPackages #price_1 .price-header h4{
-  color: #000;
-
-}
-
-#beaconsPackages #price_2 .plan-icons i{
-  color:#FFFFFF!important;
-}
-
-/*------------------------------------------*/
-/*	  Pricing Table Header
-/*------------------------------------------*/
-
-.pricing-table .price-header {
-  border-bottom: 1px solid #c7c7c7;
-  position: relative;
-}
-
-.pricing-table .plan-title {
-  color: #000;
-  font-size: 23px;
-  font-weight: 300;
-  text-transform: uppercase;
-  padding: 30px 15px;
-  margin: 0;
-  /*-webkit-border-radius: 4px 4px 0 0;
-  -moz-border-radius: 4px 4px 0 0;
-  border-radius: 4px 4px 0 0;*/
-  -webkit-transition: all 250ms ease-in-out;
-  -moz-transition: all 250ms ease-in-out;
-  -o-transition: all 250ms ease-in-out;
-  -ms-transition: all 250ms ease-in-out;
-  transition: all 250ms ease-in-out;
-}
-
-/*------------------------------------------*/
-/*	  Pricing Table Body
-/*------------------------------------------*/
-.pricing-table ul.features {
-  font-size: 20px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  padding: 5px 20px;
-  -webkit-transition: all 200ms ease-in-out;
-  -moz-transition: all 200ms ease-in-out;
-  -o-transition: all 200ms ease-in-out;
-  -ms-transition: all 200ms ease-in-out;
-  transition: all 200ms ease-in-out;
-}
-.pricing-table ul.features li {
-  border-top: 1px solid #e7e7e7;
-  padding: 10px 25px;
-}
-.pricing-table ul.features li:nth-child(1),
-.pricing-table.featured ul.features li:nth-child(1) {
-  border: none;
-}
-/*------------------------------------------*/
-/*	  Pricing Table Footer
-/*------------------------------------------*/
-.pricing-table .price-footer {
-  padding-top: 25px;
-  padding-bottom: 25px;
-  border-top: 1px solid #e7e7e7;
-  -webkit-border-radius: 0 0 4px 4px;
-  -moz-border-radius: 0 0 4px 4px;
-  border-radius: 0 0 4px 4px;
-  -webkit-transition: all 250ms ease-in-out;
-  -moz-transition: all 250ms ease-in-out;
-  -o-transition: all 250ms ease-in-out;
-  -ms-transition: all 250ms ease-in-out;
-  transition: all 250ms ease-in-out;
-}
-/*------------------------------------------*/
-/*    Background colors
-/*------------------------------------------*/
-
- .gold {
-
-  background: #3399FF!important;
- }
-
- .gold  h2{
-  margin-bottom: 10px !important;
-  color: white;
-}
-
-.silver {
-  background: #B8E62E!important;
-}
-
-.silver  h2{
-  margin-bottom: 10px !important;
-  color: white;
-}
-
-.diamond{
-  background: #FF3300!important;
-}
-
-.diamond  h2{
-  margin-bottom: 10px !important;
-  color: white;
-}
-
-.unum{
-  background: #B8E62E!important;
-}
-
-.unum  h2{
-  margin-bottom: 10px !important;
-}
-
-.tribus{
-  background: #3399FF!important;
-}
-
-.decem{
-  background: #FF3300!important;
-}
-/*------------------------------------------*/
-/*	  Featured Table
-/*------------------------------------------*/
-.pricing-table.featured .plan-title {
-  /*background-color: #71D7FF;*/
-  color: #333;
-}
-.pricing-table.featured .plan-price {
-  background-color: #71D7FF;
-  color: #f7f7f7;
-  border-top: 1px solid #C3C3C3;
-}
-.pricing-table.featured .plan-price h2,
-.pricing-table.featured .plan-price span {
-  color: #FFFFFF;
-}
-#beaconsPackages .titlebar h2,#beaconsPackages .titlebar p{
-  color:#fff;
-}
-.pricingIndividual p, .pricingIndividual h4{
-  color: #fff!important;
-}
-.pricingIndividual p{
-  opacity: 0.6;
-}
 
 /* ==========================================================================
    12. CONTACTS 
    ========================================================================== */
-#contact {
-  padding-top: 80px;
-  padding-bottom: 80px;
-  border-top: 1px solid #ddd;
-  background-color: #71D7FF;
-  background-repeat: repeat;
-  background-position: center center;
-  overflow: hidden;
+#newsletter .titlebar h2{
+  color: #FFF
 }
-#contact .titlebar h3{
-    color:#fff;
 
+#newsletter .titlebar h3{
+    color:#FFF;
+}
+
+#newsletter .titlebar p{
+    color:#FFF;
 }
 /*------------------------------------------*/
 /*	  Contact Form Input
@@ -1655,8 +1310,8 @@ ul {
   height: 50px;
   font-size: 16px;
   margin-bottom: 10px;
-  border: none;
-  /*border: 1px solid #ccc;*/
+  /*border: none;*/
+  border: 1px solid #ccc;
   border-radius: 0px;
   padding: 6px 20px;
 }
