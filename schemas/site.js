@@ -112,7 +112,14 @@ var siteObj ={
 	usercomments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],
 	isValid:{type:Boolean,default:false},
 	isDeleted:{type:Boolean,default:false},
-	region:{type:String,default:""}
+	region:{type:String,default:""},
+	rating:[
+		{
+			biinieIdentifier : {type:String, default:""},
+			rating : {type:Number, default :0}
+		}
+	]
+
 }
 var siteSchema = new Schema(siteObj);
 

@@ -131,7 +131,13 @@ var orgSchema = new Schema({
 		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],	
 		isValid:{type:Boolean,default:false},
 		isDeleted:{type:Boolean,default:false},
-		region:{type:String,default:""}		
+		region:{type:String,default:""},
+		rating:[
+			{
+				biinieIdentifier : {type:String, default:""},
+				rating : {type:Number, default :0}
+			}
+		]		
 	}],
 	elements:[
 		{
@@ -205,7 +211,13 @@ var orgSchema = new Schema({
 			biinedCount:{type:Number,default:0},
 			collectCount:{type:Number,default:0},
 			sharedCount:{type:Number,default:0},
-			commentedCount:{type:Number,default:0}
+			commentedCount:{type:Number,default:0},
+			rating:[
+				{
+					biinieIdentifier : {type:String, default:""},
+					rating : {type:Number, default: 0}
+				}
+			]
 		}
 	],
 	gallery:[{

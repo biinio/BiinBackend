@@ -251,6 +251,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Biinie/ Site relation
     app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified',mobileUser.setShowcaseNotified);
+
+    //Stars/Rating
+    app.post('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/rating/:rating',mobileRoutes.setSiteRating);
+    app.post('/mobile/biinies/:biinieIdentifier/elements/:elementIdentifier/rating/:rating',mobileRoutes.setElementRating)
     
     //Venues
     app.get('/api/venues/search',venues.getVenueALike);

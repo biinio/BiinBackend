@@ -123,6 +123,20 @@ module.exports = function(){
 							elementObj.position=elementObj.position?elementObj.position:"1";
 							elementObj.identifier= elementObj.elementIdentifier;
 
+							var userRating = _.findWhere(elementObj.rating,{biinieIdentifier:biinieIdentifier});
+							elementObj.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
+							var rating = 0;
+
+							if(elementObj.rating && elementObj.rating.length >0){
+								for (var i = elementObj.rating.length - 1; i >= 0; i--) {
+									rating += elementObj.rating[i].rating;
+								};
+								rating = rating/elementObj.rating.length;
+							}
+							elementObj.stars = ""+rating;
+
+							elementObj.stars = "0";
+
 							elementObj.price = typeof(elementObj.price) === "number"? elementObj.price + "" : elementObj.price; 
 
 							elementObj.initialDate = elementObj.initialDate? utils.getDate(elementObj.initialDate):utils.getDateNow();
@@ -348,7 +362,7 @@ module.exports = function(){
 
 
 		removeElementsInShowcases(elementIdentifier,function(){			
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
+			organization.update({identifier:organizationIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
 				if(err)
 					throw err;
 				else

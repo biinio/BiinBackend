@@ -316,6 +316,53 @@ module.exports =function(){
 
  		}) 			
  	}
+
+ 	functions.setSiteRating = function(req, res){
+ 		var identifier=req.param("siteIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
+
+			organization.update({"sites.identifier":identifier},{$push: {"sites.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
+ 	}
+
+ 	functions.setElementRating = function (req, res){
+		var identifier=req.param("elementIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
+
+			organization.update({"elements.elementIdentifier":identifier},{$push: {"elements.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
+ 	}
+
 	//Map the Site information
 	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,orgData,resultCallback){
 		var newModel={};
@@ -339,10 +386,7 @@ module.exports =function(){
 
 							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
 								var highLighEl =[];
-								console.log("Site Identifier: "+sitesIdentifier[siteShowcase]);
-								console.log("Found Showcase: " +util.inspect(foundShowcases));						
 								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
-								 console.log("the showcase: " +util.inspect(showcaseInfo));
 								 
 								 if(showcaseInfo){
 									if(showcaseInfo && showcaseInfo.elements){
@@ -500,6 +544,17 @@ module.exports =function(){
 		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
+
+		var userRating = _.findWhere(model.rating,{biinieIdentifier:biinieId});
+		newModel.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
+		var rating = 0;
+		if(model.rating && model.rating.length >0){
+			for (var i = model.rating.length - 1; i >= 0; i--) {
+				rating += model.rating[i].rating;
+			};
+			rating = rating/model.rating.length;
+		}
+		newModel.stars = ""+rating;
 		
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
@@ -515,7 +570,6 @@ module.exports =function(){
 		}
 
 		//Get the asyc Information
-
 		var showcaseReady=false;
 		var biinsReady=false;
 		var neighborsReady=false;
