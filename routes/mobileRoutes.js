@@ -386,10 +386,7 @@ module.exports =function(){
 
 							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
 								var highLighEl =[];
-								console.log("Site Identifier: "+sitesIdentifier[siteShowcase]);
-								console.log("Found Showcase: " +util.inspect(foundShowcases));						
 								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
-								 console.log("the showcase: " +util.inspect(showcaseInfo));
 								 
 								 if(showcaseInfo){
 									if(showcaseInfo && showcaseInfo.elements){
@@ -548,7 +545,16 @@ module.exports =function(){
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
-		newModel.stars = "0";
+		var userRating = _.findWhere(model.rating,{biinieIdentifier:biinieId});
+		newModel.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
+		var rating = 0;
+		if(model.rating && model.rating.length >0){
+			for (var i = model.rating.length - 1; i >= 0; i--) {
+				rating += model.rating[i].rating;
+			};
+			rating = rating/model.rating.length;
+		}
+		newModel.stars = ""+rating;
 		
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
