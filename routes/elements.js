@@ -362,7 +362,7 @@ module.exports = function(){
 
 
 		removeElementsInShowcases(elementIdentifier,function(){			
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
+			organization.update({identifier:organizationIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
 				if(err)
 					throw err;
 				else
