@@ -35,7 +35,7 @@ module.exports =function(){
 		var galleryProto = new gallery();
 		galleryProto.organizationIdentifier = organizationIdentifier;
 
-		organization.findOne({accountIdentifier:req.user.accountIdentifier, identifier:organizationIdentifier},{'gallery':1},function (err, data) {
+		organization.findOne({identifier:organizationIdentifier},{'gallery':1},function (err, data) {
 			  var gallery = null;
 			  	if(data && 'gallery' in data)
 			  		gallery = data.gallery;
