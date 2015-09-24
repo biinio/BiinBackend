@@ -95,7 +95,7 @@ module.exports = function () {
 		}
 
 		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
+		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1,"categories.priority":1},function(err,foundCategories){			
 			if(err){
 				res.json({data:{},status:"5",result:""});
 			}else{
@@ -194,7 +194,7 @@ module.exports = function () {
 						category.sites = category.sites.concat(filteredsites);
 					else{
 						var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
-						var category = {identifier:catInfo.identifier, name:catInfo.name, sites: filteredsites, hasSites:'1'};						
+						var category = {identifier:catInfo.identifier, name:catInfo.name,priority: catInfo.priority, sites: filteredsites, hasSites:'1'};						
 						categorySitesResult.categories.push(category);
 						catAdded.push(foundSearchSites[c].categoryIdentifier);							
 					}		
