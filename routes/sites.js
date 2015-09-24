@@ -158,6 +158,9 @@ module.exports = function () {
 								for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
 									var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
 									categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
+								}
+								for(var i = 0; i < categorySitesResult.categories.length; i++){
+									categorySitesResult.categories[i].priority = categorySitesResult.categories[i].priority? categorySitesResult.categories[i].priority : "1";
 								}										
 								res.json({data:categorySitesResult,status:'0',result:"1"});
 							})
