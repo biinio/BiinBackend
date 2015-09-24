@@ -531,7 +531,7 @@ module.exports =function(){
 		var userShare =_.findWhere(mobileUser.shareObjects,{identifier:siteId,type:"site"});
 
 
-		var userCollected =_.findWhere(mobileUser.biinieCollect.sites,{identifier:siteId});
+		var userCollected =_.findWhere(mobileUser.biinieCollections.sites,{identifier:siteId});
 		var userFollowed =_.findWhere(mobileUser.followObjects,{identifier:siteId,type:"site"});
 		var userLiked =_.findWhere(mobileUser.likeObjects,{identifier:siteId,type:"site"});
 
