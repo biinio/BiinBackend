@@ -407,8 +407,8 @@ module.exports = function(){
 				var obj={identifier:model.identifier,"_id":model._id};
 				updateCollectionCount(model.identifier);
 				mobileUser.update({'identifier':identifier,
-					"biinieCollect.identifier":collectionIdentifier},
-					{$push:{"biinieCollect.$.elements":obj}},function(err, raw){
+					"biinieCollections.identifier":collectionIdentifier},
+					{$push:{"biinieCollections.$.elements":obj}},function(err, raw){
 						if(err){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
@@ -442,8 +442,8 @@ module.exports = function(){
 				var obj={identifier:model.identifier};
 				updateCollectionCount(model.identifier);				
 				mobileUser.update({'identifier':identifier,
-					"biinieCollect.identifier":collectionIdentifier},
-					{$push:{"biinieCollect.$.sites":obj}},function(err, raw){
+					"biinieCollections.identifier":collectionIdentifier},
+					{$push:{"biinieCollections.$.sites":obj}},function(err, raw){
 						if(err){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
@@ -729,12 +729,12 @@ module.exports = function(){
 		}
 
 		updateCollectionCount(objIdentifier);
-		mobileUser.findOne({'identifier':identifier,'biinieCollect.identifier':collectionIdentifier},{'biinieCollect.$.elements':1},function(err,data){
+		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
 			if(err)
 				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
-				var el = _.findWhere(data.biinieCollect[0].elements,{identifier:objIdentifier});
-				data.biinieCollect[0].elements.pull({_id:el._id});
+				var el = _.findWhere(data.biinieCollections[0].elements,{identifier:objIdentifier});
+				data.biinieCollections[0].elements.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
 						res.json({status:"5",data:{err:err}, result:"1"});	
@@ -773,12 +773,12 @@ module.exports = function(){
 
 		updateCollectionCount(objIdentifier);
 
-		mobileUser.findOne({'identifier':identifier,'biinieCollect.identifier':collectionIdentifier},{'biinieCollect.$.sites':1},function(err,data){
+		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
 			if(err)
 				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
-				var el = _.findWhere(data.biinieCollect[0].sites,{identifier:objIdentifier});
-				data.biinieCollect[0].sites.pull({_id:el._id});
+				var el = _.findWhere(data.biinieCollections[0].sites,{identifier:objIdentifier});
+				data.biinieCollections[0].sites.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
 						res.json({status:"5", result:"0", data:{err:err}});	

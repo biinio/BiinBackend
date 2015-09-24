@@ -73,8 +73,8 @@ module.exports = function(){
 							}
 
 							var isUserCollect = false;
-							for(var i=0; i<userInfo.biinieCollect.length & !isUserCollect;i++){
-								var elUserCollect =_.findWhere(userInfo.biinieCollect[i].elements,{identifier:identifier})
+							for(var i=0; i<userInfo.biinieCollections.length & !isUserCollect;i++){
+								var elUserCollect =_.findWhere(userInfo.biinieCollections[i].elements,{identifier:identifier})
 								if(elUserCollect)
 									isUserCollect=true;
 							}
