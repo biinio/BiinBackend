@@ -150,7 +150,7 @@ module.exports = function() {
 
             //var data = fs.readFileSync(file.path);
             var imagesDirectory = userAccount;
-            var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + organizationIdentifier + "." + utils.getExtension(file.originalFilename);
+            var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
             imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(imgURL) {
                 var mediaObj = {
                     imgUrl: imgURL
