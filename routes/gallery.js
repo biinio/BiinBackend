@@ -47,17 +47,16 @@ module.exports =function(){
 	//PUT Files
 	functions.upload=function(req,res){
 		var organizationId = req.param("identifier");
-		var userAccount = req.user.accountIdentifier;
 		var filesUploaded =[];
 
-		var imagesDirectory = path.join(userAccount,organizationId);
+		var imagesDirectory = organizationId;
 		res.set("Content-Type","application/json");
 
 		var uploadFile = function(file,callback){
 			//Read the file
 	 		var name = file.originalFilename;	 		
 	 		var data = fs.readFileSync(file.path);
-	 		var systemImageName = userAccount+organizationId+ utils.getImageName(name,_workingImagePath); 
+	 		var systemImageName = organizationId+ utils.getImageName(name,_workingImagePath); 
 
 	 		var mainColor="";
 	 		
@@ -93,7 +92,7 @@ module.exports =function(){
 			 								});
 			 							}
 
-							  			var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
+							  			var galObj = {identifier:systemImageName,
 							  			originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
 							  			mainColor:mainColor,
 							  			vibrantColor:vibrantColor,
@@ -103,28 +102,6 @@ module.exports =function(){
 
 							  			callback(galObj);	 		
 			 						});
-
-			 						/*
-			 						imageMagick(tempPath).identify('%[pixel:s]',function(err,color){
-						 				console.log("Color of resized with Write: " +color);
-						 				mainColor=color.replace("srgb(","");
-						 				mainColor=mainColor.replace(")","");
-
-							 			if(fs.existsSync(tempPath)){
-				 							fs.unlink(tempPath,function(err){
-				 								console.log("The image was removed succesfully");
-				 							});
-				 						}
-
-								  		var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
-								  		originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
-								  		mainColor:mainColor
-								  		};
-
-								  		callback(galObj);	 		
-
-						 			});
-									*/
 			 					})
 			 		})	 			
 		 		});
@@ -133,7 +110,7 @@ module.exports =function(){
 
 		//Update the organization
 		var organizationUpdate = function(){
-			organization.update({"accountIdentifier":userAccount,"identifier":organizationId},
+			organization.update({"identifier":organizationId},
 			 {$push:{gallery:{$each:filesUploaded}}},
 			 { upsert : false},
 	         function(err, raw){
@@ -183,7 +160,7 @@ module.exports =function(){
 	getOganization = function(req, res, callback){
 		var identifier=req.param("identifier");
 
-		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
+		organization.findOne({"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
 			req.session.selectedOrganization = data;
 			callback(data,req,res);
 		});

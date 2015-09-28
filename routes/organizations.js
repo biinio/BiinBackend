@@ -66,8 +66,7 @@ module.exports = function() {
             organizationIdentifier = utils.getGUID();
 
             //Set the account and de user identifier
-            newModel.identifier = organizationIdentifier
-            newModel.accountIdentifier = req.user.accountIdentifier;
+            newModel.identifier = organizationIdentifier;
 
             //Perform an create
             newModel.save(function(err) {
@@ -242,8 +241,7 @@ module.exports = function() {
         }
 
         organization.findOne({
-            identifier: organizationIdentifier,
-            accountIdentifier: req.user.accountIdentifier
+            identifier: organizationIdentifier
         }, function(err, data) {
             //Remove Sites and References
             for (var s = 0; s < data.sites.length; s++) {
@@ -260,8 +258,7 @@ module.exports = function() {
                 else {
                     //Remove the organization
                     organization.remove({
-                        identifier: organizationIdentifier,
-                        accountIdentifier: req.user.accountIdentifier
+                        identifier: organizationIdentifier
                     }, function(err) {
                         if (err)
                             throw err;
@@ -285,14 +282,12 @@ module.exports = function() {
         var siteIdentifier = req.param('siteIdentifier');
         organization.findOne({
             identifier: organizationIdentifier,
-            accountIdentifier: req.user.accountIdentifier,
             'sites.identifier': siteIdentifier
         }, 'sites.$.minorCounter', function(err, data) {
             //If the site is not new
             if (data) {
                 organization.update({
                     identifier: organizationIdentifier,
-                    accountIdentifier: req.user.accountIdentifier,
                     'sites.identifier': siteIdentifier
                 }, {
                     $inc: {
