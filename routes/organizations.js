@@ -139,18 +139,14 @@ module.exports = function() {
     //Post the Image of the Organization
     functions.uploadImage = function(req, res) {
         //Read the file
-        var userAccount = req.user.accountIdentifier;
-        var userIdentifier = req.user.name;
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
 
         if (!util.isArray(req.files.file)) {
 
             var file = req.files.file;
-
-            //var data = fs.readFileSync(file.path);
             var imagesDirectory = userAccount;
-            var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + organizationIdentifier + "." + utils.getExtension(file.originalFilename);
+            var systemImageName = organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
             imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(imgURL) {
                 var mediaObj = {
                     imgUrl: imgURL
