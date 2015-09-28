@@ -146,11 +146,12 @@ module.exports = function () {
 						category.sites = category.sites.concat(filteredsites);
 					else{
 						var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
-						var hasSites = filteredsites.length == 0 ? "0" : "1";
-						var category = {identifier:catInfo.identifier, name:catInfo.name,priority: catInfo.priority, sites: filteredsites, hasSites:hasSites};						
+						var category = {identifier:catInfo.identifier, name:catInfo.name,priority: catInfo.priority, sites: filteredsites, hasSites:"1"};						
 						categorySitesResult.categories.push(category);
 						catAdded.push(foundSearchSites[c].categoryIdentifier);							
-					}		
+					}
+
+					category.hasSites = category.sites.length == 0 ? "0": "1";
 					category.sites=_.sortBy(category.sites, 'biinieProximity');				
 					cantSites += filteredsites.length;
 				}					
