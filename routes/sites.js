@@ -474,13 +474,18 @@ module.exports = function () {
 
 		regionRoutes.removeSiteToRegionBySite(siteIdentifier,function(){
 			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
+				if(err)
+					throw err;
+				else
+					siteCategory.update({"sites.identifier":siteIdentifier}, {$pull: {"sites":{'identifier':siteIdentifier}}},{multi: true},function(err,raw){
 						if(err)
 							throw err;
-						else
+						else{
 							res.json({state:"success"});
-					});			
-		})
-		
+						}
+					});		
+			});			
+		});
 	}
 
 	//PUT Purchase a Biin to a Site
