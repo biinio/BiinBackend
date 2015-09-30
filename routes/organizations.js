@@ -145,7 +145,7 @@ module.exports = function() {
 
             var file = req.files.file;
             var imagesDirectory = userAccount;
-            var systemImageName = organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
+            var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
             imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(imgURL) {
                 var mediaObj = {
                     imgUrl: imgURL

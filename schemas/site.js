@@ -43,7 +43,7 @@ var siteObj ={
 		{
 			identifier:{type:String, default:""},
 			title1:{type:String, default:""},
-			imgUrl:{type:String,default:""},
+			url:{type:String,default:""},
 			mainColor:{type:String,default:""},
 			vibrantColor:{type:String,default:""},
 			vibrantDarkColor:{type:String,default:""},

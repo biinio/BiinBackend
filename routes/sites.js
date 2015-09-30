@@ -95,7 +95,7 @@ module.exports = function () {
 		}
 
 		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
+		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1,"categories.priority":1},function(err,foundCategories){			
 			if(err){
 				res.json({data:{},status:"5",result:""});
 			}else{
@@ -104,65 +104,20 @@ module.exports = function () {
 					if(foundCategories.categories.length===0)
 						res.json({data:{},status:"9",response:"0"});
 					else{
-
-
 						var catArray = _.pluck(foundCategories.categories,'identifier')
 						var result = {data:{categories:[]}};
-
-						if(eval(process.env.ALLOW_LOCATION_FILTER)===true){
-							var latInc = userLat;
-							var lngInc= userLng;
-							maxLatModifiers = userLat;
-							maxLngModifiers = userLng;
-							var radiousRad = utils.metersToRadians(process.env.STANDARD_RADIOUS);
-							var searchAndReturn =function(lat,lng){
-								//Search the sites by user categories and proximity						
-								searchSitesByCategory(foundCategories.categories,catArray,lat,lng,function(){
-									if(cantSites===0){									
-										if(lat>0){
-											latInc =latInc +radiousRad;
-											maxLatModifiers = maxLatModifiers-radiousRad;
-										}										
-										else{
-											latInc = latInc - radiousRad;
-											maxLatModifiers = maxLatModifiers + radiousRad;
-										}
-										if(lng>0){
-											lngInc = lngInc +radiousRad;
-											maxLngModifiers = maxLngModifiers - radiousRad;
-										}										
-										else{
-											lngInc = lngInc - radiousRad;
-											maxLngModifiers= maxLngModifiers +radiousRad;
-										}
-
-										searchAndReturn(latInc,lngInc);
-
-									}else{
-										//Fill not retrieve categories sites
-										var notFoundCatSites=_.difference(catArray,catAdded);
-										for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
-											var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
-											categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
-										}									
-										//Return the sites data
-										res.json({data:categorySitesResult,status:'0',result:"1"});
-									}
-								});								
+						getAllSitesByCategories(userIdentifier,userLat,userLng,foundCategories.categories,catArray,function(categorySitesResult,cantSites,catAdded){
+						//Fill not retrieve categories sites
+							var notFoundCatSites=_.difference(catArray,catAdded);
+							for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
+								var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
+								categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
 							}
-							searchAndReturn(userLat,userLng);
-						}else{
-							getAllSitesByCategories(userIdentifier,userLat,userLng,foundCategories.categories,catArray,function(categorySitesResult,cantSites,catAdded){
-							//Fill not retrieve categories sites
-								var notFoundCatSites=_.difference(catArray,catAdded);
-								for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
-									var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
-									categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
-								}										
-								res.json({data:categorySitesResult,status:'0',result:"1"});
-							})
-						}
-						
+							for(var i = 0; i < categorySitesResult.categories.length; i++){
+								categorySitesResult.categories[i].priority = categorySitesResult.categories[i].priority? categorySitesResult.categories[i].priority : "1";
+							}										
+							res.json({data:categorySitesResult,status:'0',result:"1"});
+						})
 					}
 				}	
 				else{
@@ -191,10 +146,12 @@ module.exports = function () {
 						category.sites = category.sites.concat(filteredsites);
 					else{
 						var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
-						var category = {identifier:catInfo.identifier, name:catInfo.name, sites: filteredsites, hasSites:'1'};						
+						var category = {identifier:catInfo.identifier, name:catInfo.name,priority: catInfo.priority, sites: filteredsites, hasSites:"1"};						
 						categorySitesResult.categories.push(category);
 						catAdded.push(foundSearchSites[c].categoryIdentifier);							
-					}		
+					}
+
+					category.hasSites = category.sites.length == 0 ? "0": "1";
 					category.sites=_.sortBy(category.sites, 'biinieProximity');				
 					cantSites += filteredsites.length;
 				}					
@@ -517,13 +474,18 @@ module.exports = function () {
 
 		regionRoutes.removeSiteToRegionBySite(siteIdentifier,function(){
 			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
+				if(err)
+					throw err;
+				else
+					siteCategory.update({"sites.identifier":siteIdentifier}, {$pull: {"sites":{'identifier':siteIdentifier}}},{multi: true},function(err,raw){
 						if(err)
 							throw err;
-						else
+						else{
 							res.json({state:"success"});
-					});			
-		})
-		
+						}
+					});		
+			});			
+		});
 	}
 
 	//PUT Purchase a Biin to a Site
