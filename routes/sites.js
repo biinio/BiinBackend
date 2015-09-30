@@ -165,7 +165,7 @@ module.exports = function () {
 		var model = req.body.model;		
 		//Perform an update
 		var organizationIdentifier=req.param("orgIdentifier");
-		res.setHeader('Content-Type', 'application/json');
+		res.setHeader('Content-Type','application/json');
 
 		//If is pushing a new model
 		if(typeof(req.param("siteIdentifier"))==="undefined"){
@@ -173,16 +173,15 @@ module.exports = function () {
 			//Set the account and the user identifier
 			var model = new site();
             model.identifier=utils.getGUID();
-			model.accountIdentifier= req.user.accountIdentifier;
 			model.isValid = false;
 
 			//Get the Mayor and Update
-			getMajor(organizationIdentifier,req.user.accountIdentifier,function(major){
+			getMajor(organizationIdentifier,function(major){
 				model.major =major;
 				model.proximityUUID= process.env.DEFAULT_SYS_ENVIROMENT;
 				organization.update(
 					{
-						identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier
+						identifier:organizationIdentifier
 					},
 					{
 						$push: {sites:model}
@@ -240,7 +239,7 @@ module.exports = function () {
 					doneFunction();
 				})									
 				organization.update(
-	                     { identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier,'sites.identifier':model.identifier},
+	                     { identifier:organizationIdentifier, 'sites.identifier':model.identifier},
 	                     { $set :set },
 	                     { upsert : false },
 	                     function(err, raw){
@@ -473,7 +472,7 @@ module.exports = function () {
 		var siteIdentifier=req.param("siteIdentifier");
 
 		regionRoutes.removeSiteToRegionBySite(siteIdentifier,function(){
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
+			organization.update({identifier:organizationIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
 				if(err)
 					throw err;
 				else
@@ -500,7 +499,7 @@ module.exports = function () {
 
 		if((qty || isBasicPackage) && organizationIdentifier && siteIdentifier){
 			var newMinorValue = utils.get.minorIncrement() *qty;
-			organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},{'_id':1,'sites.$':1},function(err, siteInfo){
+			organization.findOne({identifier:organizationIdentifier,'sites.identifier': siteIdentifier},{'_id':1,'sites.$':1},function(err, siteInfo){
 				if(err)
 					res.send(err,500)					
 				else
@@ -517,7 +516,7 @@ module.exports = function () {
 					historyRecord.date=utils.getDateNow(); historyRecord.quantity=qty; historyRecord.site=siteIdentifier;
 
 					//Add an history record
-					organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,raw){
+					organization.update({identifier:organizationIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,raw){
 						if(err){
 							res.send(err,500)
 						}else{
@@ -630,7 +629,7 @@ module.exports = function () {
 	//Minor and major Functions
 
 	//GET the major of the enviroment
-	getMajor =  function(organizationIdentifier,accountIdentifier, callback){
+	getMajor =  function(organizationIdentifier, callback){
 
 		//Get the mayor from the enviroment	and return it
 		//TODO: Get enviroment by Site configuration
