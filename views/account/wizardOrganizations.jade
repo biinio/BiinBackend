@@ -10,13 +10,13 @@
 			.img-block(ng-repeat="item in organizations" ng-click="editOrganization(organizations.indexOf(item))" ng-class="{'active':item.identifier===currentModelId}")
 				.moduleWrapper.contentHideButtons
 					.moduleTitle {{item.name}}
-					img.imagegallery.img-responsive(ng-src="{{item.media[0].imgUrl}}" pending-indicator)				
+					img.imagegallery.img-responsive(ng-src="{{item.media[0].url}}" pending-indicator)				
 					.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="openConfirmation('sm',organizations.indexOf(item))")
 						.icon.icon-bin-2
 	.row.organizationInformation(ng-if="selectedOrganization!==''" ng-mouseleave="saveOrganization()" )
 		.col-md-4
-			img(ng-if="organizations[selectedOrganization].media.length===0 || organizations[selectedOrganization].media[0].imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-			img(ng-if="typeof(organizations[selectedOrganization].media)!=='undefined' && organizations[selectedOrganization].media.length>0 && organizations[selectedOrganization].media[0].imgUrl.length > 0" ng-src="{{organizations[selectedOrganization].media[0].imgUrl}}"  pending-indicator)
+			img(ng-if="organizations[selectedOrganization].media.length===0 || organizations[selectedOrganization].media[0].url.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+			img(ng-if="typeof(organizations[selectedOrganization].media)!=='undefined' && organizations[selectedOrganization].media.length>0 && organizations[selectedOrganization].media[0].url.length > 0" ng-src="{{organizations[selectedOrganization].media[0].url}}"  pending-indicator)
 			a.btn.btn-default(upload-organization-image="#organizationInput")(translate="GENERIC.UPLOAD_IMAGE")
 			input.hidden#organizationInput(type="file")				
 		.col-md-8
