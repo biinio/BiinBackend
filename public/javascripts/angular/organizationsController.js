@@ -118,7 +118,7 @@ biinAppOrganization.controller("organizationsController",['$scope','$http','$loc
 
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
-      newObj.imgUrl = $scope.galleries[index].url;
+      newObj.url = $scope.galleries[index].url;
       $scope.organizations[$scope.selectedOrganization].media.push(newObj);  
 
       //Apply the changes

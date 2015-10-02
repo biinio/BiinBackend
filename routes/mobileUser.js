@@ -35,7 +35,7 @@ module.exports = function(){
 	functions.getProfile = function(req,res){
 		var identifier= req.params.identifier;
 		//Find the mobile user
-		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
+		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"url":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
 			if(err)
 				res.json({data:{},status:"5",result:"0"});
 			else{
@@ -109,7 +109,7 @@ module.exports = function(){
 								newMedia[0].domainColor= org.media.mainColor ? org.media.mainColor.replace("rgb(","").replace(")") : "0,0,0";
 								newMedia[0].mediaType="1";
 								newMedia[0].title1="";
-								newMedia[0].url= org.media.imgUrl;
+								newMedia[0].url= org.media.url;
 								newMedia[0].vibrantColor= org.media.vibrantColor ? org.media.vibrantColor : "0,0,0";
 								newMedia[0].vibrantDarkColor= org.media.vibrantDarkColor ? org.media.vibrantDarkColor : "0,0,0";
 								newMedia[0].vibrantLightColor= org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
@@ -121,7 +121,7 @@ module.exports = function(){
 									newMedia[i].domainColor= org.media[i].mainColor ? org.media[i].mainColor.replace("rgb(","").replace(")") : "0,0,0";
 									newMedia[i].mediaType="1";
 									newMedia[i].title1="";
-									newMedia[i].url= org.media[i].imgUrl;
+									newMedia[i].url= org.media[i].url;
 									newMedia[i].vibrantColor= org.media[i].vibrantColor ? org.media[i].vibrantColor : "0,0,0";
 									newMedia[i].vibrantDarkColor= org.media[i].vibrantDarkColor ? org.media[i].vibrantDarkColor : "0,0,0";
 									newMedia[i].vibrantLightColor= org.media[i].vibrantLightColor ? org.media[i].vibrantLightColor : "0,0,0";
@@ -169,7 +169,7 @@ module.exports = function(){
 							userCommented:model.userCommented?model.userCommented:"",
 							userShared:model.userShared?model.userShared:"",
 							categories:model.categories?model.categories:[],
-							imgUrl:model.imgUrl?model.imgUrl:""
+							url:model.url?model.url:""
 						});
 
 						//Save The Model
@@ -195,7 +195,7 @@ module.exports = function(){
 					userCommented:model.userCommented? model.userCommented:"",
 					userShared:model.userShared? model.userShared:"",
 					categories:model.categories? model.categories:[],
-					imgUrl:model.imgUrl?model.imgUrl:""
+					url:model.url?model.url:""
 				},
 				function(err,raw){
 					if(err)
@@ -977,8 +977,8 @@ module.exports = function(){
 	 		//var data = fs.readFileSync(file.path);
 	 		var imagesDirectory = 'binnies';
 	 		var systemImageName = '/media/'+ binnieIdentifier+"/"+utils.getGUID()+"."+ utils.getExtension(file.originalFilename);
- 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(imgURL){
-	 			var mediaObj={imgUrl:imgURL}; 			
+ 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(url){
+	 			var mediaObj={url:url}; 			
 				res.json({data:mediaObj}); 				
  			});	
 

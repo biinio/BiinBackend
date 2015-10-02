@@ -60,7 +60,7 @@ module.exports =function(){
 
 	 		var mainColor="";
 	 		
-	 		imageManager.uploadFile(file.path,imagesDirectory,systemImageName,true,function(imgURL){
+	 		imageManager.uploadFile(file.path,imagesDirectory,systemImageName,true,function(url){
 
 		 		var tempId=utils.getUIDByLen(40)+".";
 
@@ -93,7 +93,7 @@ module.exports =function(){
 			 							}
 
 							  			var galObj = {identifier:systemImageName,
-							  			originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
+							  			originalName:name,url:url,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
 							  			mainColor:mainColor,
 							  			vibrantColor:vibrantColor,
 							  			vibrantDarkColor:darkVibrantColor,

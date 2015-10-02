@@ -146,9 +146,9 @@ module.exports = function() {
             var file = req.files.file;
             var imagesDirectory = userAccount;
             var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
-            imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(imgURL) {
+            imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(url) {
                 var mediaObj = {
-                    imgUrl: imgURL
+                    url: url
                 };
 
                 var tempId = utils.getUIDByLen(40) + ".";

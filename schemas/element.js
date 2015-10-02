@@ -56,7 +56,7 @@ var elementSchema = new Schema({
 			identifier:{type:String, index:true, default:"-1"},
 			name:{type:String, default:""},
 			displayName:{type:String, default:""},
-			imgUrl:{type:String, default:""}
+			url:{type:String, default:""}
 		}
 	],
 	media:[{

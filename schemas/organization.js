@@ -29,7 +29,7 @@ var orgSchema = new Schema({
 		{
 			title1:{type:String, default:""},
 			title1:{type:String, default:""},
-			imgUrl:{type:String,default:""},
+			url:{type:String,default:""},
 			mainColor:{type:String,default:""},
 			vibrantColor:{type:String,default:""},
 			vibrantDarkColor:{type:String,default:""},
@@ -65,7 +65,7 @@ var orgSchema = new Schema({
 				identifier:{type:String, index:true, default:"-1"},
 				name:{t1ype:String, default:""},
 				displayName:{type:String, default:""},
-				imgUrl:{type:String, default:""}
+				url:{type:String, default:""}
 			}
 		],
 		media:[
@@ -195,7 +195,7 @@ var orgSchema = new Schema({
 					identifier:{type:String, index:true, default:"-1"},
 					name:{type:String, default:""},
 					displayName:{type:String, default:""},
-					imgUrl:{type:String, default:""}
+					url:{type:String, default:""}
 				}
 			],
 			media:[{

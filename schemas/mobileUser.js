@@ -36,7 +36,7 @@ var mobileUserSchema=new Schema({
 		expireDate:String
 	}],	
 	email:{type:String, default:""},
-	imgUrl:{type:String, default:""},
+	url:{type:String, default:""},
 	comments:String,
 	userBiined:String,
 	userCommented:String,
