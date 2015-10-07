@@ -164,7 +164,7 @@ module.exports = function(){
 							delete elementObj.domainColor;
 							delete elementObj.actionType;
 							delete elementObj.textColor;
-							delete elementObj.categories;
+							//delete elementObj.categories;
 							delete elementObj.activateNotification;
 
 							//To implement
