@@ -212,7 +212,7 @@ module.exports =function(){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else{
-				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
+				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1,"loyaltyEnabled":1},function(err, data){
 					if(err)
 						res.json({data:{},status:"7",result:"0"});	
 					else
@@ -221,7 +221,7 @@ module.exports =function(){
 						else
 							if(data.sites && data.sites.length){	
 
-								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,function(siteResult){
+								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,data,function(siteResult){
 									res.json({data:siteResult,status:"0",result:"1"});
 								});
 								
@@ -233,7 +233,7 @@ module.exports =function(){
 			}			
 		}
 		if(biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},getSiteInformation)
 		}else{
 			res.json({status:"7",data:{},result:"0"});
 		}		
@@ -278,13 +278,24 @@ module.exports =function(){
 	         }); 			
  		}
 
- 		var newTempID = utils.getGUID();
+ 		
+
+ 		/*var newTempID = utils.getGUID();
  		var newModel = {};
  		newModel.identifier = newTempID;
  		newModel.actions = model.actions;
+ 		var createTemporalObject = tempHistory.create(newModel).exec();
+ 		var deleteTemporalObject = tempHistory.delete({identifier:newModel.identifier}).exec();
+ 		var selectRelevantInformationVisits = tempHistory.findOne({identifier:newTempID},{_id:0,actions:1}).exec();
  		
+ 		promise.then(preFillVisits).then(finalCallback);//.then other tables
 
+ 		var preFillVisits = function(){
+ 			var promise = tempHistory.findOne({"identifier":newModel.identifier},{}).exec();
+ 			promise.then(function(){
 
+ 			});
+ 		}*/
 
 
  		setElementsViewed(model.actions,finalCallback);
@@ -305,8 +316,55 @@ module.exports =function(){
 
  		}) 			
  	}
+
+ 	functions.setSiteRating = function(req, res){
+ 		var identifier=req.param("siteIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
+
+			organization.update({"sites.identifier":identifier},{$push: {"sites.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
+ 	}
+
+ 	functions.setElementRating = function (req, res){
+		var identifier=req.param("elementIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
+
+			organization.update({"elements.elementIdentifier":identifier},{$push: {"elements.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
+ 	}
+
 	//Map the Site information
-	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,resultCallback){
+	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,orgData,resultCallback){
 		var newModel={};
 
 		//Get the showcases available
@@ -328,10 +386,7 @@ module.exports =function(){
 
 							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
 								var highLighEl =[];
-								console.log("Site Identifier: "+sitesIdentifier[siteShowcase]);
-								console.log("Found Showcase: " +util.inspect(foundShowcases));						
 								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
-								 console.log("the showcase: " +util.inspect(showcaseInfo));
 								 
 								 if(showcaseInfo){
 									if(showcaseInfo && showcaseInfo.elements){
@@ -466,49 +521,55 @@ module.exports =function(){
 		newModel.latitude =""+ model.lat;
 		newModel.longitude =""+ model.lng;
 		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
+		newModel.collectCount =  "0";//model.biinedCount?""+model.biinedCount:"0";
 		newModel.email = model.email?model.email:"";
 		newModel.nutshell = model.nutshell?model.nutshell:"";
 		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
-		var userShare =_.findWhere(model.userShared,{biinieIdentifier:biinieId});
+		
+		var userShare =_.findWhere(mobileUser.shareObjects,{identifier:siteId,type:"site"});
+
+
+		var userCollected =_.findWhere(mobileUser.biinieCollections.sites,{identifier:siteId});
+		var userFollowed =_.findWhere(mobileUser.followObjects,{identifier:siteId,type:"site"});
+		var userLiked =_.findWhere(mobileUser.likeObjects,{identifier:siteId,type:"site"});
+
 		var userComment =_.findWhere(model.userComments,{biinieIdentifier:biinieId});
 
 		newModel.userBiined = typeof(userbiined)!=="undefined"?"1":"0";
 		newModel.userShared = typeof(userShare)!=="undefined"?"1":"0";
+		newModel.userFollowed = typeof(userFollowed)!=="undefined"?"1":"0";
+		newModel.userCollected = typeof(userCollected)!=="undefined"?"1":"0";
+		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
-		var loyaltyModel ={
-                isSubscribed:"1",
-                subscriptionDate:utils.getDateNow(),
-                points:"0",
-                level:"0",
-                achievements: [
-                ],
-                badges: [
-                ]
-        }
-
-		if('loyalty' in mobileUser){
-			var loyaltyToFind = _.findWhere(mobileUser.loyalty,{organizationIdentifier:orgId});
-			if(typeof(loyaltyToFind)!=='undefined')
-				loyaltyModel = loyaltyToFind;
+		var userRating = _.findWhere(model.rating,{biinieIdentifier:biinieId});
+		newModel.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
+		var rating = 0;
+		if(model.rating && model.rating.length >0){
+			for (var i = model.rating.length - 1; i >= 0; i--) {
+				rating += model.rating[i].rating;
+			};
+			rating = rating/model.rating.length;
 		}
-
-		newModel.loyalty =loyaltyModel;
+		newModel.stars = ""+rating;
+		
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
 				newModel.media[i]={};				
 				newModel.media[i].domainColor= model.media[i].mainColor.replace("rgb(","").replace(")");
 				newModel.media[i].mediaType="1";
-				newModel.media[i].imgUrl= model.media[i].imgUrl;
+				newModel.media[i].url= model.media[i].url;
+				newModel.media[i].vibrantColor= model.media[i].vibrantColor ? model.media[i].vibrantColor : "0,0,0";
+				newModel.media[i].vibrantDarkColor= model.media[i].vibrantDarkColor ? model.media[i].vibrantDarkColor : "0,0,0";
+				newModel.media[i].vibrantLightColor= model.media[i].vibrantLightColor ? model.media[i].vibrantLightColor : "0,0,0";
 			}
 		}
 
 		//Get the asyc Information
-
 		var showcaseReady=false;
 		var biinsReady=false;
 		var neighborsReady=false;
