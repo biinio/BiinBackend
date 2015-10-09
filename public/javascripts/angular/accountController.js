@@ -281,6 +281,7 @@ biinAppAccount.directive('uploadProfileImage',function(){
             var xhr = new XMLHttpRequest();
 
             xhr.open('POST', 'api/imageProfile');
+            xhr.setRequestHeader('accountidentifier',scope.account.profile.accountIdentifier)
             xhr.onload = function (data) {
               if (xhr.status === 200) {
                 var obj= $.parseJSON(xhr.response);

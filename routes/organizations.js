@@ -142,12 +142,12 @@ module.exports = function() {
         //Read the file
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
-
+        var userAccount = req.headers["accountidentifier"];
         if (!util.isArray(req.files.file)) {
 
             var file = req.files.file;
             var imagesDirectory = userAccount;
-            var systemImageName = organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
+            var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
             imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(url) {
                 var mediaObj = {
                     url: url
