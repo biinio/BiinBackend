@@ -59,10 +59,11 @@ module.exports = function() {
         //Perform an update
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
-
+        var accountIdentifier = req.body.accountIdentifier;
         //If is pushing a new model
         if (typeof(organizationIdentifier) === "undefined") {
             var newModel = new organization();
+            newModel.accountIdentifier = accountIdentifier;
             organizationIdentifier = utils.getGUID();
 
             //Set the account and de user identifier
@@ -79,6 +80,7 @@ module.exports = function() {
             });
         } else {
             var model = req.body.model;
+            model.accountIdentifier = accountIdentifier;
             delete model._id;
 
             //Validate the Model

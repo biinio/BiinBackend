@@ -178,7 +178,7 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http','$
           $scope.prevSaveOrganization=jQuery.extend({}, $scope.organizations[$scope.selectedOrganization]);
           $scope.isAnalazingOrg=false;          
 
-          $http.put('api/organizations/'+$scope.currentModelId,{model:$scope.organizations[$scope.selectedOrganization]}).success(function(data,status){
+          $http.put('api/organizations/'+$scope.currentModelId,{model:$scope.organizations[$scope.selectedOrganization], accountIdentifier:$scope.account.profile.accountIdentifier}).success(function(data,status){
             if(status===200){
               $scope.succesSaveShow=true;
             }else
