@@ -281,7 +281,7 @@ biinAppAccount.directive('uploadProfileImage',function(){
             var xhr = new XMLHttpRequest();
 
             xhr.open('POST', 'api/imageProfile');
-            xhr.setRequestHeader('accountidentifier',scope.account.profile.accountIdentifier)
+            xhr.setRequestHeader('accountidentifier',scope.account.profile.accountIdentifier);
             xhr.onload = function (data) {
               if (xhr.status === 200) {
                 var obj= $.parseJSON(xhr.response);
@@ -341,6 +341,7 @@ biinAppAccount.directive('uploadOrganizationImage',function(){
             var organization=scope.currentModelId;
 
             xhr.open('POST', 'api/organizations/'+organization+"/image");
+            xhr.setRequestHeader('accountidentifier',scope.account.profile.accountIdentifier);
             xhr.onload = function (data) {
               if (xhr.status === 200) {
                 var obj= $.parseJSON(xhr.response);
