@@ -245,7 +245,7 @@ module.exports = function(){
 		model.biinName= req.params.biinName;
 		model.password= req.params.password;
 		model.gender= req.params.gender;
-		model.birthDate = utils.getDateNow();
+		model.birthDate = req.params.birthdate;
 		//** Set that the email is the same as biinName
 		model.email = model.biinName;
 		req.body.model = model;
