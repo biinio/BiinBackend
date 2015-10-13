@@ -1,0 +1,128 @@
+{
+  "priorities": {
+    "men": [
+      {
+        "identifier": "category1",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category2",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category3",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category4",
+        "priority`": 0.2
+      },
+      {
+        "identifier": "category5",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category6",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category7",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category8",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category9",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category10",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category11",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category12",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category13",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category14",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category15",
+        "priority": 0.2
+      }
+    ],
+    "women": [
+      {
+        "identifier": "category1",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category2",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category3",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category4",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category5",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category6",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category7",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category8",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category9",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category10",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category11",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category12",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category13",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category14",
+        "priority": 0.2
+      },
+      {
+        "identifier": "category15",
+        "priority": 0.2
+      }
+    ]
+  }
+}

@@ -5,6 +5,8 @@ module.exports = function () {
 		routesUtils = require('../biin_modules/routesUtils')(),
 		math = require('mathjs'),
 		_= require('underscore');
+	var configPriorities = require('../config/priorities/priorities.json');
+
 	//Schemas
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
 					   biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory'),
@@ -12,6 +14,7 @@ module.exports = function () {
 
 	var sysGlobalsRoutes = require('./sysGlobals')();
 	var regionRoutes = require('../routes/regions')();
+
 	var functions={};
 
 	//GET the main view of sites
@@ -46,6 +49,8 @@ module.exports = function () {
 
 	//GET Sites User categories and proximity
 	functions.getMobileByCategories=function(req,res){
+		console.log(configPriorities);
+		console.log(configPriorities.priorities);
 		var userIdentifier = req.param("identifier");
 		var userLat = eval(req.param("latitude"));
 		var userLng = eval(req.param("longitude"));
@@ -95,7 +100,7 @@ module.exports = function () {
 		}
 
 		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1,"categories.priority":1},function(err,foundCategories){			
+		mobileUser.findOne({identifier:userIdentifier},{"gender":1,"categories.identifier":1,"categories.name":1,"categories.priority":1},function(err,foundCategories){			
 			if(err){
 				res.json({data:{},status:"5",result:""});
 			}else{
@@ -113,8 +118,11 @@ module.exports = function () {
 								var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
 								categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
 							}
+							var arrayOfPriorities = foundCategories.gender == "male"? configPriorities.priorities.men : configPriorities.priorities.women;
+							//HERE GOES THE PRIORITY
 							for(var i = 0; i < categorySitesResult.categories.length; i++){
-								categorySitesResult.categories[i].priority = categorySitesResult.categories[i].priority? categorySitesResult.categories[i].priority : "1";
+								var configCategory = _.findWhere(arrayOfPriorities,{identifier:categorySitesResult.categories[i].identifier});
+								categorySitesResult.categories[i].priority = configCategory.priority + "";
 							}										
 							res.json({data:categorySitesResult,status:'0',result:"1"});
 						})
