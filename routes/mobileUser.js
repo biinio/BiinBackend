@@ -44,6 +44,7 @@ module.exports = function(){
 					res.json({data:{},status:"7",result:"0"});
 				else{
 					var result = foundBinnie.toObject();
+					result.birthDate = foundBinnie.birthDate.replace("T", " ").replace("Z","");
 					result.isEmailVerified = foundBinnie.accountState?"1":"0";
 					delete result.accountState;
 					res.json({data:result,status:"0",result:"1"});
