@@ -49,8 +49,6 @@ module.exports = function () {
 
 	//GET Sites User categories and proximity
 	functions.getMobileByCategories=function(req,res){
-		console.log(configPriorities);
-		console.log(configPriorities.priorities);
 		var userIdentifier = req.param("identifier");
 		var userLat = eval(req.param("latitude"));
 		var userLng = eval(req.param("longitude"));
@@ -122,9 +120,10 @@ module.exports = function () {
 							//HERE GOES THE PRIORITY
 							for(var i = 0; i < categorySitesResult.categories.length; i++){
 								var configCategory = _.findWhere(arrayOfPriorities,{identifier:categorySitesResult.categories[i].identifier});
-								categorySitesResult.categories[i].priority = configCategory.priority + "";
+								categorySitesResult.categories[i].priority = configCategory.priority;
 							}
-							_.sortBy(categorySitesResult.categories,'priority');
+							categorySitesResult.categories  = _.sortBy(categorySitesResult.categories,function(category){return category.priority;});
+							categorySitesResult.categories.reverse();
 							res.json({data:categorySitesResult,status:'0',result:"1"});
 						})
 					}
