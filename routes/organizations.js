@@ -170,10 +170,11 @@ module.exports = function() {
                             })
                             .write(tempPath, function(err, data) {
                                 var vibrant = new Vibrant(tempPath);
-                                vibrant.getSwatches(function(error, swatches) {
-                                    var mainColorRGB = swatches.Vibrant.rgb;
-                                    var darkVibrantRGB = swatches.DarkVibrant.rgb;
-                                    var lightVibrantRGB = swatches.LightVibrant.rgb;
+                                vibrant.getSwatches(function(error, swatches) {   
+                                    var mainColorRGB =  swatches.Vibrant? swatches.Vibrant.rgb : [0,0,0];
+                                    var darkVibrantRGB =  swatches.DarkVibrant? swatches.DarkVibrant.rgb : [0,0,0];
+                                    var lightVibrantRGB =  swatches.LightVibrant? swatches.LightVibrant.rgb : [255,255,255];
+                                    
                                     mainColor = "" + parseInt(mainColorRGB[0]) + "," + parseInt(mainColorRGB[1]) + "," + parseInt(mainColorRGB[2]);
                                     var vibrantColor = mainColor;
                                     var darkVibrantColor = "" + parseInt(darkVibrantRGB[0]) + "," + parseInt(darkVibrantRGB[1]) + "," + parseInt(darkVibrantRGB[2]);
