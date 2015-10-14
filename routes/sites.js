@@ -123,7 +123,8 @@ module.exports = function () {
 							for(var i = 0; i < categorySitesResult.categories.length; i++){
 								var configCategory = _.findWhere(arrayOfPriorities,{identifier:categorySitesResult.categories[i].identifier});
 								categorySitesResult.categories[i].priority = configCategory.priority + "";
-							}										
+							}
+							_.sortBy(categorySitesResult.categories,'priority');
 							res.json({data:categorySitesResult,status:'0',result:"1"});
 						})
 					}

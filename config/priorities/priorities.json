@@ -7,11 +7,11 @@
       },
       {
         "identifier": "category2",
-        "priority": 0.2
+        "priority": 0.1
       },
       {
         "identifier": "category3",
-        "priority": 0.2
+        "priority": 0.3
       },
       {
         "identifier": "category4",
@@ -19,19 +19,19 @@
       },
       {
         "identifier": "category5",
-        "priority": 0.2
+        "priority": 0.5
       },
       {
         "identifier": "category6",
-        "priority": 0.2
+        "priority": 0.7
       },
       {
         "identifier": "category7",
-        "priority": 0.2
+        "priority": 0.8
       },
       {
         "identifier": "category8",
-        "priority": 0.2
+        "priority": 0.9
       },
       {
         "identifier": "category9",
@@ -43,7 +43,7 @@
       },
       {
         "identifier": "category11",
-        "priority": 0.2
+        "priority": 0.5
       },
       {
         "identifier": "category12",
@@ -51,7 +51,7 @@
       },
       {
         "identifier": "category13",
-        "priority": 0.2
+        "priority": 0.7
       },
       {
         "identifier": "category14",
