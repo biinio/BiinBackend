@@ -33,7 +33,7 @@ module.exports = function () {
 		var organizationIdentifier = req.param("identifier");
 		var showcaseProto = new showcase();
 		showcaseProto.organizationIdentifier = organizationIdentifier;
-		showcase.find({accountIdentifier:req.user.accountIdentifier, organizationIdentifier:organizationIdentifier},function (err, data) {
+		showcase.find({organizationIdentifier:organizationIdentifier},function (err, data) {
 			   res.json({data:data, prototypeObj : showcaseProto});
 		});		
 	}
@@ -64,7 +64,6 @@ module.exports = function () {
 
 	         var newModel  = new showcase();
 	         newModel.identifier=utils.getGUID();
-	         newModel.accountIdentifier = req.user.accountIdentifier;
 	         newModel.organizationIdentifier = organizationIdentifier;		      
 	         newModel.lastUpdate =  utils.getDateNow();
 	         newModel.notifications = [{isActive:"0",notificationType:'1',text:''}];
@@ -87,8 +86,7 @@ module.exports = function () {
 			showcase.update(
                      {
                        identifier:showcaseIdentifier,
-                     	organizationIdentifier:model.organizationIdentifier, 
-                     	accountIdentifier:req.user.accountIdentifier
+                     	organizationIdentifier:model.organizationIdentifier
                      },
                      { $set :model },
                      { upsert : true },
@@ -144,7 +142,7 @@ module.exports = function () {
 			});
 		}
 
-		showcase.remove({identifier:showcaseIdentifier,accountIdentifier: req.user.accountIdentifier, organizationIdentifier:organizationIdentifier},function(err){
+		showcase.remove({identifier:showcaseIdentifier, organizationIdentifier:organizationIdentifier},function(err){
 			if(err)
 				throw err;
 			else
