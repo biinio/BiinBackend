@@ -89,6 +89,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations',restrict,organizations.index);
     app.get('/api/organizations',organizations.list);
     app.put('/api/organizations/:identifier',organizations.set);
+    app.put('/api/organizations',organizations.set);
     app.post('/api/organizations',organizations.set);
     app.post('/api/organizations/:identifier/image',multipartMiddleware,organizations.uploadImage); 
 
@@ -200,7 +201,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/biinies/:identifier/image',multipartMiddleware,mobileUser.uploadImage); 
 
     //Mobile Binnies services
-    app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender',mobileUser.setMobileByURLParams);
+    app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender/:birthdate',mobileUser.setMobileByURLParams);
     app.get('/mobile/biinies/:identifier/isactivate', mobileUser.isActivate);
     app.post('/mobile/biinies/:identifier/categories', mobileUser.setCategories);
     app.get('/mobile/biinies/auth/:user/:password', mobileUser.login);
