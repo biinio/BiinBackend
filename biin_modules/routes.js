@@ -89,6 +89,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations',restrict,organizations.index);
     app.get('/api/organizations',organizations.list);
     app.put('/api/organizations/:identifier',organizations.set);
+    app.put('/api/organizations',organizations.set);
     app.post('/api/organizations',organizations.set);
     app.post('/api/organizations/:identifier/image',multipartMiddleware,organizations.uploadImage); 
 
@@ -200,7 +201,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/biinies/:identifier/image',multipartMiddleware,mobileUser.uploadImage); 
 
     //Mobile Binnies services
-    app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender',mobileUser.setMobileByURLParams);
+    app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender/:birthdate',mobileUser.setMobileByURLParams);
     app.get('/mobile/biinies/:identifier/isactivate', mobileUser.isActivate);
     app.post('/mobile/biinies/:identifier/categories', mobileUser.setCategories);
     app.get('/mobile/biinies/auth/:user/:password', mobileUser.login);
@@ -220,9 +221,23 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/elements/:identifier',elements.getMobile);
     app.get('/mobile/biinies/:identifier/highlights',elements.getMobileHighligh);
 
-    //Collections
+    //Colections
     app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
     app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedToCollection);
+
+    //collect
+    app.put('/mobile/biinies/:identifier/collect/:collectionIdentifier', mobileUser.setMobileCollect);
+    //uncollect
+    app.delete('/mobile/biinies/:identifier/collect/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileCollectElementToCollection);
+    app.delete('/mobile/biinies/:identifier/collect/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileCollectSiteToCollection);
+    
+    //follow
+    app.put('/mobile/biinies/:identifier/follow', mobileUser.setFollow);
+    app.put('/mobile/biinies/:identifier/unfollow', mobileUser.setUnfollow);
+    //like
+    app.put('/mobile/biinies/:identifier/like', mobileUser.setLiked);
+    app.put('/mobile/biinies/:identifier/unlike', mobileUser.setUnliked);
+
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/element/:objIdentifier', mobileUser.deleteMobileBiinedElementToCollection);
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
 
@@ -237,6 +252,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Biinie/ Site relation
     app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified',mobileUser.setShowcaseNotified);
+
+    //Stars/Rating
+    app.post('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/rating/:rating',mobileRoutes.setSiteRating);
+    app.post('/mobile/biinies/:biinieIdentifier/elements/:elementIdentifier/rating/:rating',mobileRoutes.setElementRating)
     
     //Venues
     app.get('/api/venues/search',venues.getVenueALike);
@@ -253,6 +272,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier/:latitude/:longitude/categories',sites.getMobileByCategories);
     
     app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
+
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);    
     app.get('/mobile/biinies/:biinieIdentifier/showcases/:identifier',showcases.getMobileShowcase);
 

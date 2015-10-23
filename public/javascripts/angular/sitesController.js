@@ -308,8 +308,11 @@ biinAppSite.controller("siteController",['$scope','$http','$location','$routePar
     if(($scope.sites[$scope.selectedSite].media.length < $scope.maxMedia &&  index < $scope.galleries.length && $scope.galleries[index])||$scope.maxMedia==0){
       var newObj = {};
       newObj.identifier = $scope.galleries[index].identifier;
-      newObj.imgUrl = $scope.galleries[index].url;
+      newObj.url = $scope.galleries[index].url;
       newObj.mainColor = $scope.galleries[index].mainColor;
+      newObj.vibrantColor = $scope.galleries[index].vibrantColor;
+      newObj.vibrantDarkColor = $scope.galleries[index].vibrantDarkColor;
+      newObj.vibrantLightColor = $scope.galleries[index].vibrantLightColor;
 
       $scope.sites[$scope.selectedSite].media.push(newObj);  
 

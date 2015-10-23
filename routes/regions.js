@@ -77,7 +77,7 @@ module.exports = function () {
 	//GET the list of regions
 	functions.listJson = function(req,res){
 		region.find({},{"identifier":1,"radious":1,"latitude":1,"longitude":1},function (err, data) {
-			   res.json({"data":{"regions":data}});
+			res.json({"data":{"regions":data}, status:"0", result:"1"});
 		});		
 	}
 	

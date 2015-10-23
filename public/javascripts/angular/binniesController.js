@@ -79,7 +79,7 @@ biinAppBinnies.controller("binniesController",['$scope', '$http','categorySrv',f
 
   //Change the image of a binnie
   $scope.binnieImage=function(imageObj){
-  	$scope.binnies[$scope.selectedBinnie].imgUrl= imageObj.imgUrl;
+  	$scope.binnies[$scope.selectedBinnie].url= imageObj.url;
     
      if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
         $scope.$apply();

@@ -15,6 +15,7 @@ var orgSchema = new Schema({
 	brand: {type:String, default:""},
 	description: {type:String, default:""},
 	extraInfo:{type:String, default:""},
+	loyaltyEnabled:{type:String, default:"0"},
 	majorCounter:{type: Number, default:1},
 	biinsCounter:{type:Number,default:0},
 	biinsAssignedCounter:{type:Number,default:0},		
@@ -28,7 +29,11 @@ var orgSchema = new Schema({
 		{
 			title1:{type:String, default:""},
 			title1:{type:String, default:""},
-			imgUrl:{type:String,default:""}
+			url:{type:String,default:""},
+			mainColor:{type:String,default:""},
+			vibrantColor:{type:String,default:""},
+			vibrantDarkColor:{type:String,default:""},
+			vibrantLightColor:{type:String,default:""}
 		}
 	],		
 	sites:[{
@@ -60,15 +65,18 @@ var orgSchema = new Schema({
 				identifier:{type:String, index:true, default:"-1"},
 				name:{t1ype:String, default:""},
 				displayName:{type:String, default:""},
-				imgUrl:{type:String, default:""}
+				url:{type:String, default:""}
 			}
 		],
 		media:[
 			{
 				identifier:{type:String, default:""},
 				title1:{type:String, default:""},
-				imgUrl:{type:String,default:""},
-				mainColor:{type:String,default:""}
+				url:{type:String,default:""},
+				mainColor:{type:String,default:""},
+				vibrantColor:{type:String,default:""},
+				vibrantDarkColor:{type:String,default:""},
+				vibrantLightColor:{type:String,default:""}
 			}
 		],
 		showcases:[
@@ -112,14 +120,24 @@ var orgSchema = new Schema({
 	       ]
 		},
 		biinedCount:{type:Number,default:0},
+		collectCount:{type:Number,default:0},
 		sharedCount:{type:Number,default:0},
 		commentedCount:{type:Number,default:0},
 		biinedUsers:[{biinieIdentifier:String}],
 		userShared:[{biinieIdentifier:String,sharedTo:String}],
+		userFollowed:[{biinieIdentifier:String}],
+   		userCollected:[{biinieIdentifier:String}],
+   		userLiked:[{biinieIdentifier:String}],
 		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],	
 		isValid:{type:Boolean,default:false},
 		isDeleted:{type:Boolean,default:false},
-		region:{type:String,default:""}		
+		region:{type:String,default:""},
+		rating:[
+			{
+				biinieIdentifier : {type:String, default:""},
+				rating : {type:Number, default :0}
+			}
+		]		
 	}],
 	elements:[
 		{
@@ -146,7 +164,7 @@ var orgSchema = new Schema({
 			hasListPrice:{type:String, default:'0'},	
 			listPrice:{type:String, default:""},
 			hasPrice:{type:String, default:"0"},
-			price:{type:String, default:""},
+			price:{type:Number, default:0},
 			
 			//Is highlight element
 			isHighlight:{type:String, default:'0'},
@@ -162,6 +180,7 @@ var orgSchema = new Schema({
 
 			hasQuantity:{type:Boolean,default:0},
 			quantity:{type:String,default:""},
+			detailsHtml:{type:String, default:""},
 
 			details:[{
 					elementDetailType:{type:String, default:""},
@@ -177,7 +196,7 @@ var orgSchema = new Schema({
 					identifier:{type:String, index:true, default:"-1"},
 					name:{type:String, default:""},
 					displayName:{type:String, default:""},
-					imgUrl:{type:String, default:""}
+					url:{type:String, default:""}
 				}
 			],
 			media:[{
@@ -185,11 +204,21 @@ var orgSchema = new Schema({
 				title1:{type:String, default:""},
 				url:{type:String,default:""},
 				mediaType:{type:String,default:""},
-				mainColor:{type:String,default:""}
+				mainColor:{type:String,default:""},
+				vibrantColor:{type:String,default:""},
+			    vibrantDarkColor:{type:String,default:""},
+				vibrantLightColor:{type:String,default:""}
 			}],
 			biinedCount:{type:Number,default:0},
+			collectCount:{type:Number,default:0},
 			sharedCount:{type:Number,default:0},
-			commentedCount:{type:Number,default:0}
+			commentedCount:{type:Number,default:0},
+			rating:[
+				{
+					biinieIdentifier : {type:String, default:""},
+					rating : {type:Number, default: 0}
+				}
+			]
 		}
 	],
 	gallery:[{
@@ -200,7 +229,10 @@ var orgSchema = new Schema({
 				serverUrl:{type:String, default:""},
 				dateUploaded:{type:String, default:""},
 				url:{type:String,default:""},
-				mainColor:{type:String,default:""}
+				mainColor:{type:String,default:""},
+				vibrantColor:{type:String,default:""},
+				vibrantDarkColor:{type:String,default:""},
+				vibrantLightColor:{type:String,default:""}
 			}]
 });
 

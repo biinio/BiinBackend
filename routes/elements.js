@@ -4,6 +4,7 @@ module.exports = function(){
 	var element = require('../schemas/element'), showcase = require('../schemas/showcase'), organization= require('../schemas/organization');
 	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')() , routesUtils = require('../biin_modules/routesUtils')();
 	var _= require('underscore');
+	var zlib = require('zlib');
 
 	//Get the index view of the elements
 	functions.index = function(req,res){
@@ -21,7 +22,7 @@ module.exports = function(){
 
 	//GET the list of elements
 	functions.list = function(req,res){
-		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
+		organization.findOne({"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
 			req.session.selectedOrganization = data;
 			res.json({data:data});
 		});
@@ -33,10 +34,10 @@ module.exports = function(){
 		var identifier=req.param("identifier");
 
 		if(identifier){
-			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1},function(err,userInfo){
+			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1, "likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1, "seenElements":1},function(err,userInfo){
 				organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
 					if(err)
-						res.json({data:{status:"7", result:'0'}});	
+						res.json({data:{},status:"7", result:'0'});	
 					else
 						if(data!=null && "elements" in data && data.elements.length>0){
 							var elementObj = data.elements[0].toObject();
@@ -55,33 +56,89 @@ module.exports = function(){
 							elementObj.media=[];
 							for(var i=0; i< data.elements[0].media.length; i++){
 								var media ={};
-								media.mediaType=1;
+								media.mediaType="1";
 								media.domainColor=  getColor(data.elements[0].media[i].mainColor);
 								media.url = data.elements[0].media[i].url;
+								media.vibrantColor= data.elements[0].media[i].vibrantColor ? data.elements[0].media[i].vibrantColor : "0,0,0";
+								media.vibrantDarkColor= data.elements[0].media[i].vibrantDarkColor ? data.elements[0].media[i].vibrantDarkColor : "0,0,0";
+								media.vibrantLightColor= data.elements[0].media[i].vibrantLightColor ? data.elements[0].media[i].vibrantLightColor : "0,0,0";
 								elementObj.media.push(media);
 							}
 
 							var isUserBiined = false;
 							for(var i=0; i<userInfo.biinieCollections.length & !isUserBiined;i++){
-								var el =_.findWhere(userInfo.biinieCollections[i].elements,{identifier:identifier})
-								if(el)
+								var elUserBiined =_.findWhere(userInfo.biinieCollections[i].elements,{identifier:identifier})
+								if(elUserBiined)
 									isUserBiined=true;
 							}
 
+							var isUserCollect = false;
+							for(var i=0; i<userInfo.biinieCollections.length & !isUserCollect;i++){
+								var elUserCollect =_.findWhere(userInfo.biinieCollections[i].elements,{identifier:identifier})
+								if(elUserCollect)
+									isUserCollect=true;
+							}
+				
+							var isUserShared = false;
+							var userShareElements = _.filter( userInfo.shareObjects, function(like){ return like.type === "element"});
+							var elUserShared =_.findWhere(userShareElements,{identifier:identifier})
+							if(elUserShared)
+								isUserShared=true;
+
+
+							var isUserLike = false;
+							var userLikeElements = _.filter( userInfo.likeObjects, function(like){ return like.type === "element"});
+							var elUserLike =_.findWhere(userLikeElements,{identifier:identifier})
+							if(elUserLike)
+								isUserLike=true;
+
+
+							var isUserFollow = false;
+							var userFollowElements = _.filter( userInfo.followObjects, function(like){ return like.type === "element"});
+							var elUserFollow =_.findWhere(userFollowElements,{identifier:identifier})
+							if(elUserFollow)
+								isUserFollow=true;
+
+							var isUserViewedElement = false;
+							var elUserViewed =_.findWhere(userInfo.seenElements,{elementIdentifier:identifier})
+							if(elUserViewed)
+								isUserViewedElement=true;
 							//elementObj.hasFromPrice=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
 							//elementObj.hasQuantity=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
 
 							elementObj.hasQuantity=eval(elementObj.hasQuantity)?"1":"0";
 							elementObj.hasSticker=elementObj.sticker && elementObj.sticker.type ? "1":"0"
 							elementObj.biinedCount =  elementObj.biinedCount?""+elementObj.biinedCount:"0";
+							elementObj.collectCount = elementObj.collectCount?""+elementObj.collectCount:"0";
 							elementObj.commentedCount =  elementObj.commentedCount?""+elementObj.commentedCount:"0";
 							elementObj.sharedCount=elementObj.sharedCoun?""+elementObj.sharedCount:"0";
 							elementObj.userBiined=isUserBiined?"1":"0";
-							elementObj.userShared="0";
+							elementObj.userShared=isUserShared?"1":"0";
+							elementObj.userFollowed=isUserFollow?"1":"0";
+							elementObj.userLiked=isUserLike?"1":"0";
+							elementObj.userCollected=isUserCollect?"1":"0";
+							elementObj.userViewed= isUserViewedElement?"1":"0";
 							elementObj.userCommented="0";
 							elementObj.isActive="1";
 							elementObj.position=elementObj.position?elementObj.position:"1";
 							elementObj.identifier= elementObj.elementIdentifier;
+							elementObj.detailsHtml=elementObj.detailsHtml?elementObj.detailsHtml:"";
+							
+							var userRating = _.findWhere(elementObj.rating,{biinieIdentifier:biinieIdentifier});
+							elementObj.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
+							var rating = 0;
+
+							if(elementObj.rating && elementObj.rating.length >0){
+								for (var i = elementObj.rating.length - 1; i >= 0; i--) {
+									rating += elementObj.rating[i].rating;
+								};
+								rating = rating/elementObj.rating.length;
+							}
+							elementObj.stars = ""+rating;
+
+							elementObj.stars = "0";
+
+							elementObj.price = typeof(elementObj.price) === "number"? elementObj.price + "" : elementObj.price; 
 
 							elementObj.initialDate = elementObj.initialDate? utils.getDate(elementObj.initialDate):utils.getDateNow();
 							elementObj.expirationDate = elementObj.expirationDate? utils.getDate(elementObj.expirationDate):utils.getDateNow();
@@ -108,7 +165,7 @@ module.exports = function(){
 							delete elementObj.domainColor;
 							delete elementObj.actionType;
 							delete elementObj.textColor;
-							delete elementObj.categories;
+							//delete elementObj.categories;
 							delete elementObj.activateNotification;
 
 							//To implement
@@ -120,7 +177,7 @@ module.exports = function(){
 
 							res.json({data:elementObj,status:"0",result:"1"});
 						}else{
-							res.json({data:{status:"9", result:"0"}});		
+							res.json({data:{},status:"9", result:"0"});		
 						}
 				});					
 
@@ -137,12 +194,12 @@ module.exports = function(){
 		//Get the categories of the user
 		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
 			if(err){
-				res.json({data:{status:"5",data:{}}});
+				res.json({data:{},status:"5",result:"0"});
 			}else{
 				if(foundCategories && "categories" in foundCategories){
 
 					if(foundCategories.categories.length===0)
-						res.json({data:{status:"9",data:{}}});
+						res.json({data:{},status:"9",result:"0"});
 					else{
 						//var catArray = _.pluck(foundCategories.categories,'identifier')
 						var result = {data:{elements:[]}};
@@ -157,7 +214,7 @@ module.exports = function(){
 							//, "elements.isValid":true
 							var orgResult=organization.find({'elements.categories.identifier':pcategory.identifier,'elements.isHighlight':'1'},{'elements':'1'},function(err,elementsByCategories){
 								if(err)
-									res.json({data:{status:"5",data:{}, err:err}});
+									res.json({data:{err:err},status:"5",result:"0"});
 								else
 								{
 									var elResult=[];
@@ -205,11 +262,12 @@ module.exports = function(){
 						if(categoriesProcessed===total){
 
 							if(categoriesWithElements==0){
-								res.json({data:{status:"9",data:{}}});
+								res.json({data:{},status:"9",result:"0"});
 
 							}
 							else{
 								result.status="0";
+								result.result="1";
 								res.json(result);
 							}
 
@@ -222,7 +280,7 @@ module.exports = function(){
 					}					
 				}
 				else{
-					res.json({status:"9",data:{}});	
+					res.json({status:"9",data:{},result:"0"});	
 				}
 			}
 		});		
@@ -243,11 +301,10 @@ module.exports = function(){
          var newModel  = new element();
 
          newModel.elementIdentifier=utils.getGUID();
-         newModel.accountIdentifier = req.user.accountIdentifier;
          newModel.organizationIdentifier = organizationIdentifier;
 
          organization.update({
-         	identifier:organizationIdentifier,accountIdentifier:req.user.accountIdentifier
+         	identifier:organizationIdentifier
          },
          {
          	$push:{elements:newModel}
@@ -280,7 +337,7 @@ module.exports = function(){
 				}
 
 				organization.update(
-					{identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,"elements.elementIdentifier":elementIdentifier},
+					{identifier:organizationIdentifier,"elements.elementIdentifier":elementIdentifier},
 					{$set:setModel},
 					{upsert:false},
 					function(err,raw){
@@ -306,7 +363,7 @@ module.exports = function(){
 
 
 		removeElementsInShowcases(elementIdentifier,function(){			
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
+			organization.update({identifier:organizationIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
 				if(err)
 					throw err;
 				else
@@ -333,7 +390,7 @@ module.exports = function(){
 	functions.imageCrop=function(req,res,next){
 		try
 		{		
-			imageManager.cropImage("element",req.body.imgUrl,req.body.imgW,req.body.imgH,req.body.cropW,req.body.cropH,req.body.imgX1,req.body.imgY1,function(err,data){
+			imageManager.cropImage("element",req.body.url,req.body.imgW,req.body.imgH,req.body.cropW,req.body.cropH,req.body.imgX1,req.body.imgY1,function(err,data){
 				if (err) throw err;
 				else					
 					res.json(JSON.stringify(data));	
@@ -433,10 +490,10 @@ module.exports = function(){
 
     //Return the Color
     function getColor(pcolor){
-    	if(pcolor && pcolor.indexOf('rgb(') > -1) {
+    	if(pcolor && pcolor.split(',').length == 3) {
     		return pcolor.replace('rgb(','').replace(')','');
     	}else{
-    		return '0,0,0'
+    		return '255,255,255'
     	}
     }
 

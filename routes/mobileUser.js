@@ -35,18 +35,19 @@ module.exports = function(){
 	functions.getProfile = function(req,res){
 		var identifier= req.params.identifier;
 		//Find the mobile user
-		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
+		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"url":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
 			if(err)
-				res.json({data:{status:"5",result:""}});
+				res.json({data:{},status:"5",result:"0"});
 			else{
 				var isFound = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
 				if(!isFound)
-					res.json({data:{status:"7"}});
+					res.json({data:{},status:"7",result:"0"});
 				else{
 					var result = foundBinnie.toObject();
+					result.birthDate = foundBinnie.birthDate.replace("T", " ").replace("Z","");
 					result.isEmailVerified = foundBinnie.accountState?"1":"0";
 					delete result.accountState;
-					res.json({data:result,status:"0"});
+					res.json({data:result,status:"0",result:"1"});
 				}
 			}
 		});
@@ -58,12 +59,12 @@ module.exports = function(){
 		var identifier =req.params.identifier;
 		mobileUser.findOne({"identifier":identifier},{_id:0,biinieCollections:1},function(err,data){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});	
+				res.json({data:{},status:"5", result:"0"});	
 			else
 				if(data!=null && data.biinieCollections!=null && data.biinieCollections.length>0){
-					res.json({data:{biinieCollections:data.biinieCollections},status:"1"});						
+					res.json({data:{biinieCollections:data.biinieCollections},status:"1", result:"1"});						
 				}else{
-					res.json({data:{status:"9", result:"0"}});	
+					res.json({data:{},status:"9", result:"0"});	
 				}
 		});
 	}
@@ -75,9 +76,9 @@ module.exports = function(){
 		var organizationId = req.params.organizationIdentifier;
 		mobileUser.findOne({"identifier":identifier},{_id:0,loyalty:1},function(err,mobileUserFound){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});	
+				res.json({data:{},status:"5", result:"0"});	
 			else{
-				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1},function(err,org){
+				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1,'loyaltyEnabled': 1}).lean().exec(function(err,org){
 					if(err)
 						throw err;
 					else{
@@ -95,9 +96,41 @@ module.exports = function(){
 								var loyaltyToFind = _.findWhere(mobileUserFound.loyalty,{organizationIdentifier:organizationId});
 								if(typeof(loyaltyToFind)!=='undefined')
 									loyaltyModel = loyaltyToFind;
+						}
+						org.isLoyaltyEnabled = org.loyaltyEnabled? org.loyaltyEnabled : "0";
+						if(org.loyaltyEnabled)
+							delete org.loyaltyEnabled;
+						org.loyalty = loyaltyModel;
+						//var loyalty = loyaltyModel;
+
+						if(typeof(org.media)!='undefined'){
+							if(typeof(org.media) == "object" && !Array.isArray(org.media)){
+								var newMedia=[];
+								newMedia[0]={};				
+								newMedia[0].domainColor= org.media.mainColor ? org.media.mainColor.replace("rgb(","").replace(")") : "0,0,0";
+								newMedia[0].mediaType="1";
+								newMedia[0].title1="";
+								newMedia[0].url= org.media.url;
+								newMedia[0].vibrantColor= org.media.vibrantColor ? org.media.vibrantColor : "0,0,0";
+								newMedia[0].vibrantDarkColor= org.media.vibrantDarkColor ? org.media.vibrantDarkColor : "0,0,0";
+								newMedia[0].vibrantLightColor= org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
+							}
+							else if( Array.isArray(org.media)) {
+								var newMedia=[];
+								for(var i=0; i<org.media.length;i++){
+									newMedia[i]={};				
+									newMedia[i].domainColor= org.media[i].mainColor ? org.media[i].mainColor.replace("rgb(","").replace(")") : "0,0,0";
+									newMedia[i].mediaType="1";
+									newMedia[i].title1="";
+									newMedia[i].url= org.media[i].url;
+									newMedia[i].vibrantColor= org.media[i].vibrantColor ? org.media[i].vibrantColor : "0,0,0";
+									newMedia[i].vibrantDarkColor= org.media[i].vibrantDarkColor ? org.media[i].vibrantDarkColor : "0,0,0";
+									newMedia[i].vibrantLightColor= org.media[i].vibrantLightColor ? org.media[i].vibrantLightColor : "0,0,0";
+								}
+							}
+							org.media = newMedia;
 						}				        
-						var loyalty = loyaltyModel;
-						res.json({data:{organization:org,loyalty:loyalty}, status:0});
+						res.json({data:{organization:org}, status:"0", result:"1"});
 					}
 				})				
 			}
@@ -137,7 +170,7 @@ module.exports = function(){
 							userCommented:model.userCommented?model.userCommented:"",
 							userShared:model.userShared?model.userShared:"",
 							categories:model.categories?model.categories:[],
-							imgUrl:model.imgUrl?model.imgUrl:""
+							url:model.url?model.url:""
 						});
 
 						//Save The Model
@@ -163,7 +196,7 @@ module.exports = function(){
 					userCommented:model.userCommented? model.userCommented:"",
 					userShared:model.userShared? model.userShared:"",
 					categories:model.categories? model.categories:[],
-					imgUrl:model.imgUrl?model.imgUrl:""
+					url:model.url?model.url:""
 				},
 				function(err,raw){
 					if(err)
@@ -192,13 +225,13 @@ module.exports = function(){
 		var catArray = _.pluck(categoriesModel,'identifier')
 		category.find({'identifier':{$in:catArray}},function(err,data){
 			if(err)
-				res.json({data:{status:"5", result:"0"}});
+				res.json({data:{},status:"5", result:"0"});
 			else{
 				mobileUser.update({'identifier':identifier},{categories:data},function(err,raw){
 						if(err)
-							res.json({data:{status:"7",result:""}})
+							res.json({data:{},status:"7",result:""})
 						else{
-							res.json({data:{status:"0", result: raw.n?"1":"0"}});
+							res.json({data:{},status:"0", result: raw.n?"1":"0"});
 						}
 				})				
 			}
@@ -213,7 +246,7 @@ module.exports = function(){
 		model.biinName= req.params.biinName;
 		model.password= req.params.password;
 		model.gender= req.params.gender;
-		model.birthDate = utils.getDateNow();
+		model.birthDate = req.params.birthdate;
 		//** Set that the email is the same as biinName
 		model.email = model.biinName;
 		req.body.model = model;
@@ -229,7 +262,7 @@ module.exports = function(){
 		if(!errors){
 			mobileUser.findOne({'biinName':model.biinName},function(err,mobileUserAccount){
 					if(mobileUserAccount){
-						res.json({data:{status:"1",identifier:""}});
+						res.json({data:{identifier:""},status:"1",result:"0"});
 					}else{
 						bcrypt.hash(model.password, 11, function (err, hash) {
 							var joinDate = utils.getDateNow();
@@ -263,13 +296,13 @@ module.exports = function(){
 							//Save The Model
 							newModel.save(function(err){
 								if(err)
-									res.json({data:{status:"5", result:"0",identifier:""}});	
+									res.json({data:{identifier:""},status:"5", result:"0"});	
 								else{
 
 									//Send the verification of the e-mail
 									sendVerificationMail(req,newModel,function(){
 										//callback of mail verification
-										res.json({data:{status:"0", result:"1",identifier:identifier}});	
+										res.json({data:{identifier:identifier},status:"0", result:"1"});	
 									});
 								}
 																	
@@ -279,7 +312,7 @@ module.exports = function(){
 				});			
 		}
 		else{
-			res.send({data:{status:"6",errors:errors}});
+			res.send({data:{errors:errors},status:"6",result:"0"});
 		}
 	}
 
@@ -319,9 +352,9 @@ module.exports = function(){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
 							if(raw.n>0)
-								res.json({status:"0",result:"1"});	
+								res.json({status:"0",result:"1",data:{}});	
 							else
-								res.json({status:"1",result:"0"});	
+								res.json({status:"1",result:"0",data:{}});	
 						}
 					});
 				}	
@@ -336,14 +369,95 @@ module.exports = function(){
 							res.json({status:"5", result:"0",data:{}});	
 						}else{
 							if(raw.n>0)
-								res.json({status:"0",result:"1"});	
+								res.json({status:"0",result:"1",data:{}});	
 							else
-								res.json({status:"1",result:"0"});	
+								res.json({status:"1",result:"0",data:{}});	
 						}
 					});
 				}	
 		}		
 	}
+	
+	//POST User Collect some object
+	functions.setMobileCollect=function(req,res){
+		var identifier= req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
+
+		var model = req.body.model;
+		
+		var objType= model.type;
+		if(objType!=='site'){
+			if(identifier && model){
+				//Update the collection
+				var updateCollectionCount= function(elId){
+					organization.findOne({'elements.elementIdentifier':elId},{'elements.$':1},function(err,el){
+						if(err)
+							throw err;
+						else{
+							if(el && el.elements && el.elements.length>0){
+								organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.collectCount':1}},function(err,raw){
+									if(err)
+										throw err;
+								});
+							}
+						}
+
+					})
+				}
+
+				var obj={identifier:model.identifier,"_id":model._id};
+				updateCollectionCount(model.identifier);
+				mobileUser.update({'identifier':identifier,
+					"biinieCollections.identifier":collectionIdentifier},
+					{$push:{"biinieCollections.$.elements":obj}},function(err, raw){
+						if(err){
+							res.json({status:"5", result:"0",data:{}});	
+						}else{
+							if(raw.n>0)
+								res.json({status:"0",result:"1",data:{}});	
+							else
+								res.json({status:"1",result:"0",data:{}});	
+						}
+					});
+				}	
+		}else{
+			if(identifier && model){
+
+				//Update the collection
+				var updateCollectionCount= function(siteId){
+					organization.findOne({'sites.identifier':siteId},{'sites.$':1},function(err,site){
+						if(err)
+							throw err;
+						else{
+							if(site && site.sites && site.sites.length>0){
+								organization.update({'sites._id':site.sites[0]._id},{$inc:{'sites.$.collectCount':1}},function(err,raw){
+									if(err)
+										throw err;
+								});
+							}
+						}
+
+					})
+				}
+
+				var obj={identifier:model.identifier};
+				updateCollectionCount(model.identifier);				
+				mobileUser.update({'identifier':identifier,
+					"biinieCollections.identifier":collectionIdentifier},
+					{$push:{"biinieCollections.$.sites":obj}},function(err, raw){
+						if(err){
+							res.json({status:"5", result:"0",data:{}});	
+						}else{
+							if(raw.n>0)
+								res.json({status:"0",result:"1",data:{}});	
+							else
+								res.json({status:"1",result:"0",data:{}});	
+						}
+					});
+				}	
+		}		
+	}
+
 
 	//PUT Site Notified
 	functions.setShowcaseNotified=function(req,res){
@@ -386,11 +500,80 @@ module.exports = function(){
 				res.json({status:"5", result:"0",data:{}});	
 			else
 				if(raw.n>0)
-					res.json({status:"0",result:"1"});	
+					res.json({status:"0",result:"1",data:{}});	
 				else
-					res.json({status:"1",result:"0"});	
+					res.json({status:"1",result:"0",data:{}});	
 		});
+	}
 
+	//PUT Share object
+	functions.setFollow=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.followDate= utils.getDateNow();
+
+		mobileUser.update({"identifier":identifier},{$push:{'followObjects':model}},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
+	}
+
+	//PUT Share object
+	functions.setLiked=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.likeDate= utils.getDateNow();
+
+		mobileUser.update({"identifier":identifier},{$push:{'likeObjects':model}},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
+	
+	}
+
+	//PUT Share object
+	functions.setUnfollow=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.followDate= utils.getDateNow();
+
+		mobileUser.update({"identifier":identifier},{$pull:{ "followObjects": { "identifier":model.identifier} }},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
+	}
+
+	//PUT Share object
+	functions.setUnliked=function(req,res){
+		var identifier=req.params.identifier;
+		var model=req.body.model;
+		model.likeDate= utils.getDateNow();
+
+		
+		mobileUser.update({"identifier":identifier},{$pull:{ "likeObjects": { "identifier":model.identifier} }},function(err,raw){
+			if(err)
+				res.json({status:"5", result:"0",data:{}});	
+			else
+				if(raw.n>0)
+					res.json({status:"0",result:"1",data:{}});	
+				else
+					res.json({status:"1",result:"0",data:{}});	
+		});
 	}
 
 	//Put Mobile Point
@@ -428,7 +611,7 @@ module.exports = function(){
 				if(err)
 					throw err;
 				else{
-					res.json({data:{status:'0',result:'1'}});
+					res.json({data:{},status:'0',result:'1'});
 				}
 			})
 		})
@@ -477,16 +660,16 @@ module.exports = function(){
 		updateCollectionCount(objIdentifier);
 		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
 			if(err)
-				res.json({status:"5", result:"0",err:err});	
+				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
 				var el = _.findWhere(data.biinieCollections[0].elements,{identifier:objIdentifier});
 				data.biinieCollections[0].elements.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
-						res.json({status:"5", err:err});	
+						res.json({status:"5",data:{err:err}, result:"1"});	
 					else{
 						//Return the state and the object
-						res.json({status:"0", result:"1"});	
+						res.json({status:"0", result:"1", data:{}});	
 					}
 				});		
 				
@@ -502,22 +685,114 @@ module.exports = function(){
 
 		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
 			if(err)
-				res.json({status:"5", result:"0",err:err});	
+				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
 				var el = _.findWhere(data.biinieCollections[0].sites,{identifier:objIdentifier});
 				data.biinieCollections[0].sites.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
-						res.json({status:"5", err:err});	
+						res.json({status:"5", result:"0", data:{err:err}});	
 					else{
 						//Return the state and the object
-						res.json({status:"0", result:"1"});	
+						res.json({status:"0", result:"1", data:{}});	
 					}
 				});		
 				
 			}
 		})
 	}
+
+
+
+
+	//DELETE a object to a Collect Collection
+	functions.deleteMobileCollectElementToCollection=function(req,res){
+		var identifier=req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
+		var objIdentifier = req.params.objIdentifier;
+
+
+		//Update the collection
+		var updateCollectionCount= function(elId){
+			organization.findOne({'elements.elementIdentifier':elId},{'elements.$':1},function(err,el){
+				if(err)
+					throw err;
+				else{
+					if(el && el.elements && el.elements.length>0){
+						organization.update({'elements._id':el.elements[0]._id},{$inc:{'elements.$.collectCount':-1}},function(err,raw){
+							if(err)
+								throw err;
+						});
+					}
+				}
+
+			})
+		}
+
+		updateCollectionCount(objIdentifier);
+		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
+			if(err)
+				res.json({status:"5", result:"0", data:{err:err}});	
+			else{				
+				var el = _.findWhere(data.biinieCollections[0].elements,{identifier:objIdentifier});
+				data.biinieCollections[0].elements.pull({_id:el._id});
+				data.save(function(err){
+				if(err)
+						res.json({status:"5",data:{err:err}, result:"1"});	
+					else{
+						//Return the state and the object
+						res.json({status:"0", result:"1", data:{}});	
+					}
+				});		
+				
+			}
+		})
+	}
+
+	//DELETE a object to a collect Collection
+	functions.deleteMobileCollectSiteToCollection=function(req,res){
+		var identifier=req.params.identifier;
+		var collectionIdentifier= req.params.collectionIdentifier;
+		var objIdentifier = req.params.objIdentifier;
+
+		//Update the collection
+		var updateCollectionCount= function(siteId){
+			organization.findOne({'sites.identifier':siteId},{'sites.$':1},function(err,sites){
+				if(err)
+					throw err;
+				else{
+					if(sites && sites.sites && sites.sites.length>0){
+						organization.update({'sites._id':sites.sites[0]._id},{$inc:{'sites.$.collectCount':-1}},function(err,raw){
+							if(err)
+								throw err;
+						});
+					}
+				}
+
+			})
+		}
+
+		updateCollectionCount(objIdentifier);
+
+		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
+			if(err)
+				res.json({status:"5", result:"0", data:{err:err}});	
+			else{				
+				var el = _.findWhere(data.biinieCollections[0].sites,{identifier:objIdentifier});
+				data.biinieCollections[0].sites.pull({_id:el._id});
+				data.save(function(err){
+				if(err)
+						res.json({status:"5", result:"0", data:{err:err}});	
+					else{
+						//Return the state and the object
+						res.json({status:"0", result:"1", data:{}});	
+					}
+				});		
+				
+			}
+		})
+	}
+
 	
 	//Update by mobile Id
 	functions.updateMobile =function(req,res){
@@ -530,7 +805,7 @@ module.exports = function(){
 			var birthDate = utils.getDate(model.birthDate);
 			mobileUser.update({'identifier':identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false},function(err,raw){
 				if(err)
-					res.json({data:{status:"5", result:"0"}});	
+					res.json({data:{},status:"5", result:"0"});	
 				else
 				{
 
@@ -542,11 +817,11 @@ module.exports = function(){
 						model.identifier = identifier;
 						model.biinName= model.email;
 						sendVerificationMail(req,model,function(){
-							res.json({data:{status:status, result:result}});		
+							res.json({data:{},status:status, result:result});		
 						})
 					}else
 					{
-						res.json({data:{status:status, result:result}});		
+						res.json({data:{},status:status, result:result});		
 					}
 					
 				}
@@ -556,7 +831,7 @@ module.exports = function(){
 		if(model && identifier){
 			mobileUser.findOne({'biinName':model.email},function(err,foundEmail){
 				if(err)
-					res.json({data:{status:"5", result:"0"}});	
+					res.json({data:{},status:"5", result:"0"});	
 				else
 					if(typeof(foundEmail)==="undefined" || foundEmail===null){
 						updateModel(model);
@@ -564,7 +839,7 @@ module.exports = function(){
 						if(foundEmail.identifier === identifier)
 							updateModel(model);
 						else{
-							res.json({data:{status:"1", result:"0"}});		
+							res.json({data:{},status:"1", result:"0"});		
 						}
 					}
 			})
@@ -579,7 +854,7 @@ module.exports = function(){
 
 		mobileUser.findOne({'biinName':user},function(err,foundBinnie){
 			if(err)
-				res.json({data:{status:"5",identifier:""}});	
+				res.json({data:{identifier:""},status:"5",result:"0"});	
 			else
 			{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
@@ -589,10 +864,10 @@ module.exports = function(){
 						identifier = foundBinnie.identifier;
 						var isMathToString = isMath? "1":"0";
 						var code = isMath ? "0" :"8";
-						res.json({data:{status: code, result:isMathToString, identifier:identifier}});
+						res.json({data:{identifier:identifier},status: code, result:isMathToString});
 					});
 				}else{
-					res.json({data:{status:"7", result:"0", identifier:identifier}});					
+					res.json({data:{identifier:identifier},status:"7", result:"0"});					
 				}				
 			}			
 		});
@@ -627,10 +902,10 @@ module.exports = function(){
 		res.setHeader('Content-Type', 'application/json');
 		mobileUser.findOne({'identifier':identifier, accountState:true},function(err, foundBinnie){
 			if(err)
-				res.json({data:{status:"7",result:""}})
+				res.json({data:{},status:"7",result:"0"})
 			else{
 				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
-				res.json({data:{status:"0", result:result}});
+				res.json({data:{},status:"0", result:result});
 			}
 		});
 	}
@@ -703,8 +978,8 @@ module.exports = function(){
 	 		//var data = fs.readFileSync(file.path);
 	 		var imagesDirectory = 'binnies';
 	 		var systemImageName = '/media/'+ binnieIdentifier+"/"+utils.getGUID()+"."+ utils.getExtension(file.originalFilename);
- 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(imgURL){
-	 			var mediaObj={imgUrl:imgURL}; 			
+ 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(url){
+	 			var mediaObj={url:url}; 			
 				res.json({data:mediaObj}); 				
  			});	
 

@@ -28,7 +28,7 @@
 	functions.list = function(req,res){
 
 		var orgIdentifier= req.param('identifier');
-		biins.find({accountIdentifier:req.user.accountIdentifier,organizationIdentifier:orgIdentifier},function (err, data) {
+		biins.find({organizationIdentifier:orgIdentifier},function (err, data) {
 			   res.json({data:data});
 		});
 	}
@@ -45,10 +45,9 @@
 	//GET the biins by organization Identifier
 	functions.getByOrganization=function(req,res){
 		var organizationId = req.param('identifier');
-		var userAccount = req.user.accountIdentifier;
 		
 		var orgIdentifier= req.param('identifier');
-		biins.find({accountIdentifier:req.user.accountIdentifier,organizationIdentifier:organizationId},function (err, data) {
+		biins.find({organizationIdentifier:organizationId},function (err, data) {
 			   res.json({data:data});
 		});
 	}
@@ -56,10 +55,9 @@
 	//POST Update the biins of the specific sites
 	functions.updateSiteBiins=function(req,res){
 		var organizationId = req.param('identifier');
-		var userAccount = req.user.accountIdentifier;
 
 		//Update the sites biins inside the organization
-		organization.findOne({accountIdentifier:userAccount, identifier:organizationId},function(err,doc){
+		organization.findOne({identifier:organizationId},function(err,doc){
 			//Modify the site
 			var countOfChanges =0;
 			var date = utils.getDateNow();

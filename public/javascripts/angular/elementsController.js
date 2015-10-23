@@ -125,7 +125,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
 
   //Save detail model object
   $scope.save= function(){  
-    $scope.elements[$scope.selectedElement].hasPrice=$scope.elements[$scope.selectedElement].price.length>0?'1':'0';
+    $scope.elements[$scope.selectedElement].hasPrice=$scope.elements[$scope.selectedElement].price > 0?'1':'0';
     $http.put('api/organizations/'+$scope.organizationId+'/elements/'+$scope.currentModelId,{model:$scope.elements[$scope.selectedElement]}).success(function(data,status){
       if("replaceModel" in data){
         console.log("save")
@@ -134,7 +134,7 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       }
       if(data.state=="success")
         $scope.succesSaveShow=true;
-    });          
+    });
   } 
 
   //Change Wizad tab manager
@@ -246,8 +246,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
        if(eval($scope.wizardPosition)==3 || validate){
           //If the element type is Benefit
           var wizard3IsValid =true;
-          //if(eval($scope.elements[$scope.selectedElement].hasListPrice))
-          /*wizard3IsValid=  wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price.length>0);
+          if(eval($scope.elements[$scope.selectedElement].hasListPrice))
+            wizard3IsValid=  wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].price)!='undefined' && $scope.elements[$scope.selectedElement].price.length>0);
 
           if(eval($scope.elements[$scope.selectedElement].hasDiscount))
             wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].discount)!='undefined' && $scope.elements[$scope.selectedElement].discount.length>0);
@@ -264,8 +264,8 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
           if(eval($scope.elements[$scope.selectedElement].hasListPriceBool))
             wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].listPrice)!='undefined' && $scope.elements[$scope.selectedElement].listPrice>0); 
 
-          //if(eval($scope.elements[$scope.selectedElement].hasFromPriceBool))
-           // wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].fromPrice)!='undefined' && $scope.elements[$scope.selectedElement].fromPrice>0);           */
+          if(eval($scope.elements[$scope.selectedElement].hasFromPriceBool))
+            wizard3IsValid=wizard3IsValid && (typeof($scope.elements[$scope.selectedElement].fromPrice)!='undefined' && $scope.elements[$scope.selectedElement].fromPrice>0);           
           $scope.wizard3IsValid=wizard3IsValid;
 
        }
@@ -336,6 +336,9 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
       newObj.identifier = $scope.galleries[index].identifier;
       newObj.url = $scope.galleries[index].url;
       newObj.mainColor = $scope.galleries[index].mainColor;
+      newObj.vibrantColor = $scope.galleries[index].vibrantColor;
+      newObj.vibrantDarkColor = $scope.galleries[index].vibrantDarkColor;
+      newObj.vibrantLightColor = $scope.galleries[index].vibrantLightColor;
       
       $scope.elements[$scope.selectedElement].media.push(newObj);  
 
@@ -565,6 +568,9 @@ biinAppObjects.controller("elementsController",['$scope', '$http','categorySrv',
               newObj.identifier = modalInfo.selectedImages[i].identifier;
               newObj.url = modalInfo.selectedImages[i].url;
               newObj.mainColor = modalInfo.selectedImages[i].mainColor;
+              newObj.vibrantColor = modalInfo.selectedImages[i].vibrantColor;
+              newObj.vibrantDarkColor = modalInfo.selectedImages[i].vibrantDarkColor;
+              newObj.vibrantLightColor = modalInfo.selectedImages[i].vibrantLightColor;
               $scope.elements[$scope.selectedElement].media.push(newObj); 
           };
           $scope.galleries=modalInfo.galleries;

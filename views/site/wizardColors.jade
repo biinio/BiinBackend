@@ -10,7 +10,7 @@ div(ng-click="validate()")
 			.title2
 				span(ng-if="sites[selectedSite].title2.length>0") {{sites[selectedSite].title2}}
 				span(ng-if="!sites[selectedSite].title2.length") [YOUR SITE SUB TITLE]
-		img(ng-src="{{sites[selectedSite].media[0].imgUrl}}" ng-if="sites[selectedSite].media.length>0" pendingIndicator)
+		img(ng-src="{{sites[selectedSite].media[0].url}}" ng-if="sites[selectedSite].media.length>0" pendingIndicator)
 		img(ng-src="images/warning_not_found.png" ng-if="!sites[selectedSite].media.length" )
 	.section(ng-mouseleave="validate()")
 		h2 Main Color

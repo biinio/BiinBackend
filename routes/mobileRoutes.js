@@ -8,47 +8,17 @@ module.exports =function(){
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
-	var organization = require('../schemas/organization'), site = require('../schemas/site'), showcase = require('../schemas/showcase'),
-		region= require('../schemas/region'), mobileHistory=require('../schemas/mobileHistory'),  biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory');
+	var organization = require('../schemas/organization'), 
+		site = require('../schemas/site'), 
+		showcase = require('../schemas/showcase'),
+		region= require('../schemas/region'),
+		mobileHistory=require('../schemas/mobileHistory'),  
+		biin = require('../schemas/biin'), 
+		mobileHistory=require('../schemas/tempHistory'),  
+		siteCategory = require('../schemas/searchSiteCategory');
 
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
 	
-	//GET Categories
-	/*
-	functions.getCategories=function(req,res){
-		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getCategories.json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}
-
-
-	//GET Site
-	functions.getSite=function(req,res){
-		var site = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/sites/'+site+".json", "utf8");
-		res.json(JSON.parse(jsonObj));
-	}
-	*/
-
-	//GET Regions
-	/*functions.getRegions=function(req,res){
-		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getRegions.json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}*/
-
-	//GET Element
-	/*functions.getElement=function(req,res){
-		var element = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/elements/'+element+".json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}*/
-
-
-	//GET Site
-	/*functions.getShowcase=function(req,res){
-		var showcase = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/showcases/'+showcase+".json", "utf8");
-		res.json(JSON.parse(jsonObj));
-	}*/
 	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
 	functions.getCategories=function(req,res){
@@ -206,30 +176,30 @@ module.exports =function(){
 			if(err)
 				res.json({data:{status:"7",data:{}}});	
 			else{
-				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1},function(err, data){
+				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1,"loyaltyEnabled":1},function(err, data){
 					if(err)
-						res.json({data:{status:"7",data:{}}});	
+						res.json({data:{},status:"7",result:"0"});	
 					else
 						if(data==null)
-							res.json({data:{status:"9",data:{}}});	
+							res.json({data:{},status:"9",result:"0"});	
 						else
 							if(data.sites && data.sites.length){	
 
-								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,function(siteResult){
-									res.json({data:siteResult,status:"0"});
+								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,data,function(siteResult){
+									res.json({data:siteResult,status:"0",result:"1"});
 								});
 								
 							}
 							else{
-								res.json({data:data.sites[0],status:"0"});
+								res.json({data:data.sites[0],status:"0",result:"1"});
 							}
 				});
 			}			
 		}
 		if(biinieIdentifier){
-			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1},getSiteInformation)
+			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},getSiteInformation)
 		}else{
-			res.json({data:{status:"7",data:{}}});
+			res.json({status:"7",data:{},result:"0"});
 		}		
 	}
 
@@ -244,7 +214,7 @@ module.exports =function(){
 
  		var finalCallback =function(){
  			if(isSetElements && isSetHistory)
- 				res.json({data:{status:"0",result:"1"}});	
+ 				res.json({data:{},status:"0",result:"1"});	
  		}
 
  		var setElementsViewed =function(actions, callback){
@@ -272,6 +242,26 @@ module.exports =function(){
 	         }); 			
  		}
 
+ 		
+
+ 		/*var newTempID = utils.getGUID();
+ 		var newModel = {};
+ 		newModel.identifier = newTempID;
+ 		newModel.actions = model.actions;
+ 		var createTemporalObject = tempHistory.create(newModel).exec();
+ 		var deleteTemporalObject = tempHistory.delete({identifier:newModel.identifier}).exec();
+ 		var selectRelevantInformationVisits = tempHistory.findOne({identifier:newTempID},{_id:0,actions:1}).exec();
+ 		
+ 		promise.then(preFillVisits).then(finalCallback);//.then other tables
+
+ 		var preFillVisits = function(){
+ 			var promise = tempHistory.findOne({"identifier":newModel.identifier},{}).exec();
+ 			promise.then(function(){
+
+ 			});
+ 		}*/
+
+
  		setElementsViewed(model.actions,finalCallback);
  		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
  			isSetHistory=true;
@@ -290,8 +280,55 @@ module.exports =function(){
 
  		}) 			
  	}
+
+ 	functions.setSiteRating = function(req, res){
+ 		var identifier=req.param("siteIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
+
+			organization.update({"sites.identifier":identifier},{$push: {"sites.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
+ 	}
+
+ 	functions.setElementRating = function (req, res){
+		var identifier=req.param("elementIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
+
+			organization.update({"elements.elementIdentifier":identifier},{$push: {"elements.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
+ 	}
+
 	//Map the Site information
-	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,resultCallback){
+	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,orgData,resultCallback){
 		var newModel={};
 
 		//Get the showcases available
@@ -313,10 +350,7 @@ module.exports =function(){
 
 							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
 								var highLighEl =[];
-								console.log("Site Identifier: "+sitesIdentifier[siteShowcase]);
-								console.log("Found Showcase: " +util.inspect(foundShowcases));						
 								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
-								 console.log("the showcase: " +util.inspect(showcaseInfo));
 								 
 								 if(showcaseInfo){
 									if(showcaseInfo && showcaseInfo.elements){
@@ -356,7 +390,7 @@ module.exports =function(){
 		//Get the biins available
 		var getSiteBiins =function(siteIdentifier,callback){
 
-			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed'}).lean().exec(function(err,biinsData){
+			biin.find({'siteIdentifier':siteIdentifier, 'status':'Installed', 'objects.0': {$exists: true}}).lean().exec(function(err,biinsData){
 				if(err)
 					throw err;
 				else{
@@ -431,7 +465,8 @@ module.exports =function(){
 				}
 			});
 		}
-
+		
+		newModel.organizationIdentifier= orgId;
 		newModel.proximityUUID= model.proximityUUID;
 		newModel.identifier = model.identifier;
 		newModel.major =""+ model.major;
@@ -450,49 +485,55 @@ module.exports =function(){
 		newModel.latitude =""+ model.lat;
 		newModel.longitude =""+ model.lng;
 		newModel.biinedCount =  model.biinedCount?""+model.biinedCount:"0";
+		newModel.collectCount =  "0";//model.biinedCount?""+model.biinedCount:"0";
 		newModel.email = model.email?model.email:"";
 		newModel.nutshell = model.nutshell?model.nutshell:"";
 		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
-		var userShare =_.findWhere(model.userShared,{biinieIdentifier:biinieId});
+		
+		var userShare =_.findWhere(mobileUser.shareObjects,{identifier:siteId,type:"site"});
+
+
+		var userCollected =_.findWhere(mobileUser.biinieCollections.sites,{identifier:siteId});
+		var userFollowed =_.findWhere(mobileUser.followObjects,{identifier:siteId,type:"site"});
+		var userLiked =_.findWhere(mobileUser.likeObjects,{identifier:siteId,type:"site"});
+
 		var userComment =_.findWhere(model.userComments,{biinieIdentifier:biinieId});
 
 		newModel.userBiined = typeof(userbiined)!=="undefined"?"1":"0";
 		newModel.userShared = typeof(userShare)!=="undefined"?"1":"0";
+		newModel.userFollowed = typeof(userFollowed)!=="undefined"?"1":"0";
+		newModel.userCollected = typeof(userCollected)!=="undefined"?"1":"0";
+		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
 
-		var loyaltyModel ={
-                isSubscribed:"1",
-                subscriptionDate:utils.getDateNow(),
-                points:"0",
-                level:"0",
-                achievements: [
-                ],
-                badges: [
-                ]
-        }
-
-		if('loyalty' in mobileUser){
-			var loyaltyToFind = _.findWhere(mobileUser.loyalty,{organizationIdentifier:orgId});
-			if(typeof(loyaltyToFind)!=='undefined')
-				loyaltyModel = loyaltyToFind;
+		var userRating = _.findWhere(model.rating,{biinieIdentifier:biinieId});
+		newModel.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
+		var rating = 0;
+		if(model.rating && model.rating.length >0){
+			for (var i = model.rating.length - 1; i >= 0; i--) {
+				rating += model.rating[i].rating;
+			};
+			rating = rating/model.rating.length;
 		}
-
-		newModel.loyalty =loyaltyModel;
+		newModel.stars = ""+rating;
+		
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
 				newModel.media[i]={};				
 				newModel.media[i].domainColor= model.media[i].mainColor.replace("rgb(","").replace(")");
 				newModel.media[i].mediaType="1";
-				newModel.media[i].imgUrl= model.media[i].imgUrl;
+				newModel.media[i].url= model.media[i].url;
+				newModel.media[i].vibrantColor= model.media[i].vibrantColor ? model.media[i].vibrantColor : "0,0,0";
+				newModel.media[i].vibrantDarkColor= model.media[i].vibrantDarkColor ? model.media[i].vibrantDarkColor : "0,0,0";
+				newModel.media[i].vibrantLightColor= model.media[i].vibrantLightColor ? model.media[i].vibrantLightColor : "0,0,0";
 			}
 		}
 
 		//Get the asyc Information
-
 		var showcaseReady=false;
 		var biinsReady=false;
 		var neighborsReady=false;
