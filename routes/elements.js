@@ -122,7 +122,8 @@ module.exports = function(){
 							elementObj.isActive="1";
 							elementObj.position=elementObj.position?elementObj.position:"1";
 							elementObj.identifier= elementObj.elementIdentifier;
-
+							elementObj.detailsHtml=elementObj.detailsHtml?elementObj.detailsHtml:"";
+							
 							var userRating = _.findWhere(elementObj.rating,{biinieIdentifier:biinieIdentifier});
 							elementObj.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
 							var rating = 0;
