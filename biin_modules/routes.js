@@ -89,6 +89,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/organizations',restrict,organizations.index);
     app.get('/api/organizations',organizations.list);
     app.put('/api/organizations/:identifier',organizations.set);
+    app.put('/api/organizations',organizations.set);
     app.post('/api/organizations',organizations.set);
     app.post('/api/organizations/:identifier/image',multipartMiddleware,organizations.uploadImage); 
 
