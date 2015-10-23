@@ -41,7 +41,7 @@ var elementSchema = new Schema({
 
 	hasQuantity:{type:Boolean,default:0},
 	quantity:{type:String,default:""},
-
+	detailsHtml:{type:String, default:""},
 	details:[{
 			elementDetailType:{type:String, default:""},
 			text:{type:String,default:""},
