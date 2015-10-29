@@ -4,7 +4,7 @@ module.exports = function(){
     var util = require('util'), fs=require('fs');
 
 	//Custom Utils
-	var utils = require('../biin_modules/utils')();	    
+	var utils = require('../biin_modules/utils')();
 
 	var client = require('../schemas/client'), imageManager=require('../biin_modules/imageManager')();
 	var organization = require('../schemas/organization');
@@ -57,7 +57,7 @@ module.exports = function(){
 					date: dateNow,
 					mobileUser:'123453',
 					sessionType:'biin'
-					}					
+					}
 					];
 		mobileActions.create(data,function(err){
 			if(err)
@@ -84,8 +84,8 @@ module.exports = function(){
 						data.showcases = showcasesData;
 						res.json({data:data});
 					}
-						
-				})			
+
+				})
 			}
 		})
 	}
@@ -177,7 +177,7 @@ module.exports = function(){
 
 
 									actions[i].at = actions[i].at.split(" ")[0];
-									actions[i].atTime = totalSeconds; 
+									actions[i].atTime = totalSeconds;
 
 
 
@@ -200,16 +200,16 @@ module.exports = function(){
 								for (var i = 0; i < compressedVisitsKeys.length; i++) {
 									visits = visits.concat(compressedVisits[compressedVisitsKeys[i]]);
 								}*/
-								
-								for (i = 0; i < actions.length; i++) 
+
+								for (i = 0; i < actions.length; i++)
 								{
 									actions[i].at = actions[i].at.indexOf("T") == -1 ?  actions[i].at.split(" ")[0] : actions[i].at.split("T")[0];
 								};
 
-								
+
 								//TODO: change date schema type from string to longInteger
 								var datesKeys = Object.keys(counterDates);
-								for (i = 0; i < actions.length; i++) 
+								for (i = 0; i < actions.length; i++)
 								{
 									if(datesKeys.indexOf(actions[i].at) > -1)
 										counterDates[actions[i].at] += 1;
@@ -277,14 +277,14 @@ module.exports = function(){
 								}
 								var visits = [];
 								console.log(actions);
-								for (i = 0; i < actions.length; i++) 
+								for (i = 0; i < actions.length; i++)
 								{
 									console.log(actions[i]);
 									actions[i].at = actions[i].at.indexOf("T") == -1 ?  actions[i].at.split(" ")[0] : actions[i].at.split("T")[0];
-								}							
+								}
 								//TODO: change date schema type from string to longInteger
 								var datesKeys = Object.keys(counterDates);
-								for (i = 0; i < actions.length; i++) 
+								for (i = 0; i < actions.length; i++)
 								{
 									if(datesKeys.indexOf(actions[i].at) > -1)
 										counterDates[actions[i].at] += 1;
@@ -311,11 +311,11 @@ module.exports = function(){
 
 		if(dd<10) {
     		dd='0'+dd
-		} 
+		}
 
 		if(mm<10) {
     		mm='0'+mm
-		} 
+		}
 
 		var stringDate = yyyy+'-'+mm+'-'+dd;
 		return stringDate;
@@ -329,7 +329,7 @@ module.exports = function(){
 	functions.getNewVisitsLocal = function(req, res){
 		var organizationId = req.headers["organizationid"];
 		var dataVisits = {};
-		
+
 		dataVisits.newVisits = 0;
 		dataVisits.returningVisits = 0;
 		biin.find({organizationIdentifier:organizationId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
@@ -394,7 +394,7 @@ module.exports = function(){
 								else
 									dataVisits.returningVisits++;
 							};
-							
+
 							res.json({"data":dataVisits});
 						}
 					});
@@ -405,6 +405,30 @@ module.exports = function(){
 	}
 
 
+  functions.getSessionsMobile = function(req, res){
+    res.json({data:"2"});
+	}
+  functions.getNewVisitsMobile = function(req, res){
+    res.json({data:"3"});
+  }
+  functions.getTotalBiinedMobile = function(req, res){
+    res.json({data:"4"});
+	}
+  functions.getVisitedElementsMobile = function(req, res){
+    res.json({data:"35"});
+	}
+  functions.getNewVsReturningMobile = function(req, res){
+	}
+
+  functions.getSessionsLocal = function(req, res){
+    res.json({data:"112"});
+	}
+  functions.getNewVisitsLocal = function(req, res){
+    res.json({data:"62"});
+	}
+  functions.getFromVisitsLocal = function(req, res){
+	}
+  functions.getNewVsReturningLocal = function(req, res){
+	}
 	return functions;
 }
-
