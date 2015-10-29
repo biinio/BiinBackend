@@ -171,7 +171,7 @@
 						if(that.options.modal){	that.createModal(); }
 						if( !$.isEmptyObject(that.croppedImg)){ that.croppedImg.remove(); }
 						
-						that.imgUrl=response.url;
+						that.url=response.url;
 						
 						that.obj.append('<img src="'+response.url+'">');
 						that.initCropper();
@@ -409,7 +409,7 @@
 			that.showLoader();
 	
 			var cropData = {
-					imgUrl:that.imgUrl,
+					url:that.url,
 					imgInitW:that.imgInitW,
 					imgInitH:that.imgInitH,
 					imgW:that.imgW,
@@ -510,9 +510,9 @@
 			that.obj.html('');
 		},
 		//Biin Custom Modification
-		preInitImage:function(imgUrl){
+		preInitImage:function(url){
 			var that = this;
-			that.obj.append('<img src="'+imgUrl+'">');	
+			that.obj.append('<img src="'+url+'">');	
 		},
 		createCropetImage:function(){
 

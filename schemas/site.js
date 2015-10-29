@@ -36,14 +36,14 @@ var siteObj ={
 			identifier:{type:String, index:true, default:"-1"},
 			name:{type:String, default:""},
 			displayName:{type:String, default:""},
-			imgUrl:{type:String, default:""}
+			url:{type:String, default:""}
 		}
 	],
 	media:[
 		{
 			identifier:{type:String, default:""},
 			title1:{type:String, default:""},
-			imgUrl:{type:String,default:""},
+			url:{type:String,default:""},
 			mainColor:{type:String,default:""},
 			vibrantColor:{type:String,default:""},
 			vibrantDarkColor:{type:String,default:""},
@@ -112,7 +112,14 @@ var siteObj ={
 	usercomments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],
 	isValid:{type:Boolean,default:false},
 	isDeleted:{type:Boolean,default:false},
-	region:{type:String,default:""}
+	region:{type:String,default:""},
+	rating:[
+		{
+			biinieIdentifier : {type:String, default:""},
+			rating : {type:Number, default :0}
+		}
+	]
+
 }
 var siteSchema = new Schema(siteObj);
 

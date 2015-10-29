@@ -59,15 +59,15 @@ module.exports = function() {
         //Perform an update
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
-
+        var accountIdentifier = req.body.accountIdentifier;
         //If is pushing a new model
         if (typeof(organizationIdentifier) === "undefined") {
             var newModel = new organization();
+            newModel.accountIdentifier = accountIdentifier;
             organizationIdentifier = utils.getGUID();
 
             //Set the account and de user identifier
-            newModel.identifier = organizationIdentifier
-            newModel.accountIdentifier = req.user.accountIdentifier;
+            newModel.identifier = organizationIdentifier;
 
             //Perform an create
             newModel.save(function(err) {
@@ -80,6 +80,7 @@ module.exports = function() {
             });
         } else {
             var model = req.body.model;
+            model.accountIdentifier = accountIdentifier;
             delete model._id;
 
             //Validate the Model
@@ -139,21 +140,17 @@ module.exports = function() {
     //Post the Image of the Organization
     functions.uploadImage = function(req, res) {
         //Read the file
-        var userAccount = req.user.accountIdentifier;
-        var userIdentifier = req.user.name;
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
-
+        var userAccount = req.headers["accountidentifier"];
         if (!util.isArray(req.files.file)) {
 
             var file = req.files.file;
-
-            //var data = fs.readFileSync(file.path);
             var imagesDirectory = userAccount;
-            var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + organizationIdentifier + "." + utils.getExtension(file.originalFilename);
-            imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(imgURL) {
+            var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
+            imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(url) {
                 var mediaObj = {
-                    imgUrl: imgURL
+                    url: url
                 };
 
                 var tempId = utils.getUIDByLen(40) + ".";
@@ -173,10 +170,11 @@ module.exports = function() {
                             })
                             .write(tempPath, function(err, data) {
                                 var vibrant = new Vibrant(tempPath);
-                                vibrant.getSwatches(function(error, swatches) {
-                                    var mainColorRGB = swatches.Vibrant.rgb;
-                                    var darkVibrantRGB = swatches.DarkVibrant.rgb;
-                                    var lightVibrantRGB = swatches.LightVibrant.rgb;
+                                vibrant.getSwatches(function(error, swatches) {   
+                                    var mainColorRGB =  swatches.Vibrant? swatches.Vibrant.rgb : [0,0,0];
+                                    var darkVibrantRGB =  swatches.DarkVibrant? swatches.DarkVibrant.rgb : [0,0,0];
+                                    var lightVibrantRGB =  swatches.LightVibrant? swatches.LightVibrant.rgb : [255,255,255];
+                                    
                                     mainColor = "" + parseInt(mainColorRGB[0]) + "," + parseInt(mainColorRGB[1]) + "," + parseInt(mainColorRGB[2]);
                                     var vibrantColor = mainColor;
                                     var darkVibrantColor = "" + parseInt(darkVibrantRGB[0]) + "," + parseInt(darkVibrantRGB[1]) + "," + parseInt(darkVibrantRGB[2]);
@@ -246,8 +244,7 @@ module.exports = function() {
         }
 
         organization.findOne({
-            identifier: organizationIdentifier,
-            accountIdentifier: req.user.accountIdentifier
+            identifier: organizationIdentifier
         }, function(err, data) {
             //Remove Sites and References
             for (var s = 0; s < data.sites.length; s++) {
@@ -264,8 +261,7 @@ module.exports = function() {
                 else {
                     //Remove the organization
                     organization.remove({
-                        identifier: organizationIdentifier,
-                        accountIdentifier: req.user.accountIdentifier
+                        identifier: organizationIdentifier
                     }, function(err) {
                         if (err)
                             throw err;
@@ -289,14 +285,12 @@ module.exports = function() {
         var siteIdentifier = req.param('siteIdentifier');
         organization.findOne({
             identifier: organizationIdentifier,
-            accountIdentifier: req.user.accountIdentifier,
             'sites.identifier': siteIdentifier
         }, 'sites.$.minorCounter', function(err, data) {
             //If the site is not new
             if (data) {
                 organization.update({
                     identifier: organizationIdentifier,
-                    accountIdentifier: req.user.accountIdentifier,
                     'sites.identifier': siteIdentifier
                 }, {
                     $inc: {

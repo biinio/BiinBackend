@@ -73,8 +73,8 @@ module.exports = function(){
 							}
 
 							var isUserCollect = false;
-							for(var i=0; i<userInfo.biinieCollect.length & !isUserCollect;i++){
-								var elUserCollect =_.findWhere(userInfo.biinieCollect[i].elements,{identifier:identifier})
+							for(var i=0; i<userInfo.biinieCollections.length & !isUserCollect;i++){
+								var elUserCollect =_.findWhere(userInfo.biinieCollections[i].elements,{identifier:identifier})
 								if(elUserCollect)
 									isUserCollect=true;
 							}
@@ -114,14 +114,29 @@ module.exports = function(){
 							elementObj.sharedCount=elementObj.sharedCoun?""+elementObj.sharedCount:"0";
 							elementObj.userBiined=isUserBiined?"1":"0";
 							elementObj.userShared=isUserShared?"1":"0";
-							elementObj.userFollow=isUserFollow?"1":"0";
-							elementObj.userLike=isUserLike?"1":"0";
-							elementObj.userCollect=isUserCollect?"1":"0";
+							elementObj.userFollowed=isUserFollow?"1":"0";
+							elementObj.userLiked=isUserLike?"1":"0";
+							elementObj.userCollected=isUserCollect?"1":"0";
 							elementObj.userViewed= isUserViewedElement?"1":"0";
 							elementObj.userCommented="0";
 							elementObj.isActive="1";
 							elementObj.position=elementObj.position?elementObj.position:"1";
 							elementObj.identifier= elementObj.elementIdentifier;
+							elementObj.detailsHtml=elementObj.detailsHtml?elementObj.detailsHtml:"";
+							
+							var userRating = _.findWhere(elementObj.rating,{biinieIdentifier:biinieIdentifier});
+							elementObj.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
+							var rating = 0;
+
+							if(elementObj.rating && elementObj.rating.length >0){
+								for (var i = elementObj.rating.length - 1; i >= 0; i--) {
+									rating += elementObj.rating[i].rating;
+								};
+								rating = rating/elementObj.rating.length;
+							}
+							elementObj.stars = ""+rating;
+
+							elementObj.stars = "0";
 
 							elementObj.price = typeof(elementObj.price) === "number"? elementObj.price + "" : elementObj.price; 
 
@@ -150,7 +165,7 @@ module.exports = function(){
 							delete elementObj.domainColor;
 							delete elementObj.actionType;
 							delete elementObj.textColor;
-							delete elementObj.categories;
+							//delete elementObj.categories;
 							delete elementObj.activateNotification;
 
 							//To implement
@@ -348,7 +363,7 @@ module.exports = function(){
 
 
 		removeElementsInShowcases(elementIdentifier,function(){			
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
+			organization.update({identifier:organizationIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
 				if(err)
 					throw err;
 				else
@@ -375,7 +390,7 @@ module.exports = function(){
 	functions.imageCrop=function(req,res,next){
 		try
 		{		
-			imageManager.cropImage("element",req.body.imgUrl,req.body.imgW,req.body.imgH,req.body.cropW,req.body.cropH,req.body.imgX1,req.body.imgY1,function(err,data){
+			imageManager.cropImage("element",req.body.url,req.body.imgW,req.body.imgH,req.body.cropW,req.body.cropH,req.body.imgX1,req.body.imgY1,function(err,data){
 				if (err) throw err;
 				else					
 					res.json(JSON.stringify(data));	

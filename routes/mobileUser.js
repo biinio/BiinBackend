@@ -35,7 +35,7 @@ module.exports = function(){
 	functions.getProfile = function(req,res){
 		var identifier= req.params.identifier;
 		//Find the mobile user
-		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"imgUrl":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
+		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"url":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
 			if(err)
 				res.json({data:{},status:"5",result:"0"});
 			else{
@@ -44,6 +44,7 @@ module.exports = function(){
 					res.json({data:{},status:"7",result:"0"});
 				else{
 					var result = foundBinnie.toObject();
+					result.birthDate = foundBinnie.birthDate.replace("T", " ").replace("Z","");
 					result.isEmailVerified = foundBinnie.accountState?"1":"0";
 					delete result.accountState;
 					res.json({data:result,status:"0",result:"1"});
@@ -77,7 +78,7 @@ module.exports = function(){
 			if(err)
 				res.json({data:{},status:"5", result:"0"});	
 			else{
-				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1}).lean().exec(function(err,org){
+				organization.findOne({'identifier':organizationId},{'name':1,'brand':1,'description':1,'extraInfo':1,'media':1,'loyaltyEnabled': 1}).lean().exec(function(err,org){
 					if(err)
 						throw err;
 					else{
@@ -96,18 +97,23 @@ module.exports = function(){
 								if(typeof(loyaltyToFind)!=='undefined')
 									loyaltyModel = loyaltyToFind;
 						}
-						var loyalty = loyaltyModel;
+						org.isLoyaltyEnabled = org.loyaltyEnabled? org.loyaltyEnabled : "0";
+						if(org.loyaltyEnabled)
+							delete org.loyaltyEnabled;
+						org.loyalty = loyaltyModel;
+						//var loyalty = loyaltyModel;
 
 						if(typeof(org.media)!='undefined'){
-							if(typeof(org.media == "object")){
-								var newMedia={};				
-								newMedia.domainColor= org.media.mainColor ? org.media.mainColor.replace("rgb(","").replace(")") : "0,0,0";
-								newMedia.mediaType="1";
-								newMedia.title1="";
-								newMedia.imgUrl= org.media.imgUrl;
-								newMedia.vibrantColor= org.media.vibrantColor ? org.media.vibrantColor : "0,0,0";
-								newMedia.vibrantDarkColor= org.media.vibrantDarkColor ? org.media.vibrantDarkColor : "0,0,0";
-								newMedia.vibrantLightColor= org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
+							if(typeof(org.media) == "object" && !Array.isArray(org.media)){
+								var newMedia=[];
+								newMedia[0]={};				
+								newMedia[0].domainColor= org.media.mainColor ? org.media.mainColor.replace("rgb(","").replace(")") : "0,0,0";
+								newMedia[0].mediaType="1";
+								newMedia[0].title1="";
+								newMedia[0].url= org.media.url;
+								newMedia[0].vibrantColor= org.media.vibrantColor ? org.media.vibrantColor : "0,0,0";
+								newMedia[0].vibrantDarkColor= org.media.vibrantDarkColor ? org.media.vibrantDarkColor : "0,0,0";
+								newMedia[0].vibrantLightColor= org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
 							}
 							else if( Array.isArray(org.media)) {
 								var newMedia=[];
@@ -116,7 +122,7 @@ module.exports = function(){
 									newMedia[i].domainColor= org.media[i].mainColor ? org.media[i].mainColor.replace("rgb(","").replace(")") : "0,0,0";
 									newMedia[i].mediaType="1";
 									newMedia[i].title1="";
-									newMedia[i].imgUrl= org.media[i].imgUrl;
+									newMedia[i].url= org.media[i].url;
 									newMedia[i].vibrantColor= org.media[i].vibrantColor ? org.media[i].vibrantColor : "0,0,0";
 									newMedia[i].vibrantDarkColor= org.media[i].vibrantDarkColor ? org.media[i].vibrantDarkColor : "0,0,0";
 									newMedia[i].vibrantLightColor= org.media[i].vibrantLightColor ? org.media[i].vibrantLightColor : "0,0,0";
@@ -124,7 +130,7 @@ module.exports = function(){
 							}
 							org.media = newMedia;
 						}				        
-						res.json({data:{organization:org,loyalty:loyalty}, status:"0", result:"1"});
+						res.json({data:{organization:org}, status:"0", result:"1"});
 					}
 				})				
 			}
@@ -164,7 +170,7 @@ module.exports = function(){
 							userCommented:model.userCommented?model.userCommented:"",
 							userShared:model.userShared?model.userShared:"",
 							categories:model.categories?model.categories:[],
-							imgUrl:model.imgUrl?model.imgUrl:""
+							url:model.url?model.url:""
 						});
 
 						//Save The Model
@@ -190,7 +196,7 @@ module.exports = function(){
 					userCommented:model.userCommented? model.userCommented:"",
 					userShared:model.userShared? model.userShared:"",
 					categories:model.categories? model.categories:[],
-					imgUrl:model.imgUrl?model.imgUrl:""
+					url:model.url?model.url:""
 				},
 				function(err,raw){
 					if(err)
@@ -240,7 +246,7 @@ module.exports = function(){
 		model.biinName= req.params.biinName;
 		model.password= req.params.password;
 		model.gender= req.params.gender;
-		model.birthDate = utils.getDateNow();
+		model.birthDate = req.params.birthdate;
 		//** Set that the email is the same as biinName
 		model.email = model.biinName;
 		req.body.model = model;
@@ -417,7 +423,25 @@ module.exports = function(){
 		}else{
 			if(identifier && model){
 
-				var obj={identifier:model.identifier};				
+				//Update the collection
+				var updateCollectionCount= function(siteId){
+					organization.findOne({'sites.identifier':siteId},{'sites.$':1},function(err,site){
+						if(err)
+							throw err;
+						else{
+							if(site && site.sites && site.sites.length>0){
+								organization.update({'sites._id':site.sites[0]._id},{$inc:{'sites.$.collectCount':1}},function(err,raw){
+									if(err)
+										throw err;
+								});
+							}
+						}
+
+					})
+				}
+
+				var obj={identifier:model.identifier};
+				updateCollectionCount(model.identifier);				
 				mobileUser.update({'identifier':identifier,
 					"biinieCollections.identifier":collectionIdentifier},
 					{$push:{"biinieCollections.$.sites":obj}},function(err, raw){
@@ -706,12 +730,12 @@ module.exports = function(){
 		}
 
 		updateCollectionCount(objIdentifier);
-		mobileUser.findOne({'identifier':identifier,'biinieCollect.identifier':collectionIdentifier},{'biinieCollect.$.elements':1},function(err,data){
+		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.elements':1},function(err,data){
 			if(err)
 				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
-				var el = _.findWhere(data.biinieCollect[0].elements,{identifier:objIdentifier});
-				data.biinieCollect[0].elements.pull({_id:el._id});
+				var el = _.findWhere(data.biinieCollections[0].elements,{identifier:objIdentifier});
+				data.biinieCollections[0].elements.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
 						res.json({status:"5",data:{err:err}, result:"1"});	
@@ -731,12 +755,31 @@ module.exports = function(){
 		var collectionIdentifier= req.params.collectionIdentifier;
 		var objIdentifier = req.params.objIdentifier;
 
-		mobileUser.findOne({'identifier':identifier,'biinieCollect.identifier':collectionIdentifier},{'biinieCollect.$.sites':1},function(err,data){
+		//Update the collection
+		var updateCollectionCount= function(siteId){
+			organization.findOne({'sites.identifier':siteId},{'sites.$':1},function(err,sites){
+				if(err)
+					throw err;
+				else{
+					if(sites && sites.sites && sites.sites.length>0){
+						organization.update({'sites._id':sites.sites[0]._id},{$inc:{'sites.$.collectCount':-1}},function(err,raw){
+							if(err)
+								throw err;
+						});
+					}
+				}
+
+			})
+		}
+
+		updateCollectionCount(objIdentifier);
+
+		mobileUser.findOne({'identifier':identifier,'biinieCollections.identifier':collectionIdentifier},{'biinieCollections.$.sites':1},function(err,data){
 			if(err)
 				res.json({status:"5", result:"0", data:{err:err}});	
 			else{				
-				var el = _.findWhere(data.biinieCollect[0].sites,{identifier:objIdentifier});
-				data.biinieCollect[0].sites.pull({_id:el._id});
+				var el = _.findWhere(data.biinieCollections[0].sites,{identifier:objIdentifier});
+				data.biinieCollections[0].sites.pull({_id:el._id});
 				data.save(function(err){
 				if(err)
 						res.json({status:"5", result:"0", data:{err:err}});	
@@ -935,8 +978,8 @@ module.exports = function(){
 	 		//var data = fs.readFileSync(file.path);
 	 		var imagesDirectory = 'binnies';
 	 		var systemImageName = '/media/'+ binnieIdentifier+"/"+utils.getGUID()+"."+ utils.getExtension(file.originalFilename);
- 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(imgURL){
-	 			var mediaObj={imgUrl:imgURL}; 			
+ 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(url){
+	 			var mediaObj={url:url}; 			
 				res.json({data:mediaObj}); 				
  			});	
 

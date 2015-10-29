@@ -19,42 +19,6 @@ module.exports =function(){
 
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
 	
-	//GET Categories
-	/*
-	functions.getCategories=function(req,res){
-		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getCategories.json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}
-
-
-	//GET Site
-	functions.getSite=function(req,res){
-		var site = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/sites/'+site+".json", "utf8");
-		res.json(JSON.parse(jsonObj));
-	}
-	*/
-
-	//GET Regions
-	/*functions.getRegions=function(req,res){
-		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getRegions.json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}*/
-
-	//GET Element
-	/*functions.getElement=function(req,res){
-		var element = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/elements/'+element+".json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}*/
-
-
-	//GET Site
-	/*functions.getShowcase=function(req,res){
-		var showcase = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/showcases/'+showcase+".json", "utf8");
-		res.json(JSON.parse(jsonObj));
-	}*/
 	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
 	functions.getCategories=function(req,res){
@@ -316,6 +280,53 @@ module.exports =function(){
 
  		}) 			
  	}
+
+ 	functions.setSiteRating = function(req, res){
+ 		var identifier=req.param("siteIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
+
+			organization.update({"sites.identifier":identifier},{$push: {"sites.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
+ 	}
+
+ 	functions.setElementRating = function (req, res){
+		var identifier=req.param("elementIdentifier");		
+		var biinieIdentifier = req.param("biinieIdentifier");
+		var rating = req.param("rating");
+		if(parseFloat(rating))
+		{
+			var newRating = {};
+			newRating.biinieIdentifier = biinieIdentifier;
+			newRating.rating = parseFloat(rating);
+
+			organization.update({"elements.elementIdentifier":identifier},{$push: {"elements.$.rating":newRating}},{upsert:true},function(err, data){
+				if(err)
+					res.json({data:{},status:"7",result:"0"});	
+				else
+					res.json({data:{},status:"0",result:"1"});
+			});
+		}
+		else
+		{
+			res.json({data:{},status:"7",result:"0"});	
+		}
+ 	}
+
 	//Map the Site information
 	mapSiteMissingFields= function(biinieId,siteId,orgId,model,mobileUser,orgData,resultCallback){
 		var newModel={};
@@ -339,10 +350,7 @@ module.exports =function(){
 
 							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
 								var highLighEl =[];
-								console.log("Site Identifier: "+sitesIdentifier[siteShowcase]);
-								console.log("Found Showcase: " +util.inspect(foundShowcases));						
 								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
-								 console.log("the showcase: " +util.inspect(showcaseInfo));
 								 
 								 if(showcaseInfo){
 									if(showcaseInfo && showcaseInfo.elements){
@@ -487,7 +495,7 @@ module.exports =function(){
 		var userShare =_.findWhere(mobileUser.shareObjects,{identifier:siteId,type:"site"});
 
 
-		var userCollected =_.findWhere(mobileUser.biinieCollect.sites,{identifier:siteId});
+		var userCollected =_.findWhere(mobileUser.biinieCollections.sites,{identifier:siteId});
 		var userFollowed =_.findWhere(mobileUser.followObjects,{identifier:siteId,type:"site"});
 		var userLiked =_.findWhere(mobileUser.likeObjects,{identifier:siteId,type:"site"});
 
@@ -500,33 +508,25 @@ module.exports =function(){
 		newModel.userLiked = typeof(userLiked)!=="undefined"?"1":"0";
 		newModel.userCommented = typeof(userCommented)!=="undefined"?"1":"0";
 		newModel.commentedCount = model.commentedCount?""+model.commentedCount:"0";
-		newModel.isLoyaltyEnabled = orgData.loyaltyEnabled == null ? "0" : orgData.loyaltyEnabled;
 
-		var loyaltyModel ={
-                isSubscribed:"1",
-                subscriptionDate:utils.getDateNow(),
-                points:"0",
-                level:"0",
-                achievements: [
-                ],
-                badges: [
-                ]
-        }
-
-		if('loyalty' in mobileUser){
-			var loyaltyToFind = _.findWhere(mobileUser.loyalty,{organizationIdentifier:orgId});
-			if(typeof(loyaltyToFind)!=='undefined')
-				loyaltyModel = loyaltyToFind;
+		var userRating = _.findWhere(model.rating,{biinieIdentifier:biinieId});
+		newModel.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
+		var rating = 0;
+		if(model.rating && model.rating.length >0){
+			for (var i = model.rating.length - 1; i >= 0; i--) {
+				rating += model.rating[i].rating;
+			};
+			rating = rating/model.rating.length;
 		}
-
-		newModel.loyalty =loyaltyModel;
+		newModel.stars = ""+rating;
+		
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
 				newModel.media[i]={};				
 				newModel.media[i].domainColor= model.media[i].mainColor.replace("rgb(","").replace(")");
 				newModel.media[i].mediaType="1";
-				newModel.media[i].imgUrl= model.media[i].imgUrl;
+				newModel.media[i].url= model.media[i].url;
 				newModel.media[i].vibrantColor= model.media[i].vibrantColor ? model.media[i].vibrantColor : "0,0,0";
 				newModel.media[i].vibrantDarkColor= model.media[i].vibrantDarkColor ? model.media[i].vibrantDarkColor : "0,0,0";
 				newModel.media[i].vibrantLightColor= model.media[i].vibrantLightColor ? model.media[i].vibrantLightColor : "0,0,0";
@@ -534,7 +534,6 @@ module.exports =function(){
 		}
 
 		//Get the asyc Information
-
 		var showcaseReady=false;
 		var biinsReady=false;
 		var neighborsReady=false;

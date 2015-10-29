@@ -5,6 +5,8 @@ module.exports = function () {
 		routesUtils = require('../biin_modules/routesUtils')(),
 		math = require('mathjs'),
 		_= require('underscore');
+	var configPriorities = require('../config/priorities/priorities.json');
+
 	//Schemas
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
 					   biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory'),
@@ -12,6 +14,7 @@ module.exports = function () {
 
 	var sysGlobalsRoutes = require('./sysGlobals')();
 	var regionRoutes = require('../routes/regions')();
+
 	var functions={};
 
 	//GET the main view of sites
@@ -95,7 +98,7 @@ module.exports = function () {
 		}
 
 		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
+		mobileUser.findOne({identifier:userIdentifier},{"gender":1,"categories.identifier":1,"categories.name":1,"categories.priority":1},function(err,foundCategories){			
 			if(err){
 				res.json({data:{},status:"5",result:""});
 			}else{
@@ -104,65 +107,25 @@ module.exports = function () {
 					if(foundCategories.categories.length===0)
 						res.json({data:{},status:"9",response:"0"});
 					else{
-
-
 						var catArray = _.pluck(foundCategories.categories,'identifier')
 						var result = {data:{categories:[]}};
-
-						if(eval(process.env.ALLOW_LOCATION_FILTER)===true){
-							var latInc = userLat;
-							var lngInc= userLng;
-							maxLatModifiers = userLat;
-							maxLngModifiers = userLng;
-							var radiousRad = utils.metersToRadians(process.env.STANDARD_RADIOUS);
-							var searchAndReturn =function(lat,lng){
-								//Search the sites by user categories and proximity						
-								searchSitesByCategory(foundCategories.categories,catArray,lat,lng,function(){
-									if(cantSites===0){									
-										if(lat>0){
-											latInc =latInc +radiousRad;
-											maxLatModifiers = maxLatModifiers-radiousRad;
-										}										
-										else{
-											latInc = latInc - radiousRad;
-											maxLatModifiers = maxLatModifiers + radiousRad;
-										}
-										if(lng>0){
-											lngInc = lngInc +radiousRad;
-											maxLngModifiers = maxLngModifiers - radiousRad;
-										}										
-										else{
-											lngInc = lngInc - radiousRad;
-											maxLngModifiers= maxLngModifiers +radiousRad;
-										}
-
-										searchAndReturn(latInc,lngInc);
-
-									}else{
-										//Fill not retrieve categories sites
-										var notFoundCatSites=_.difference(catArray,catAdded);
-										for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
-											var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
-											categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
-										}									
-										//Return the sites data
-										res.json({data:categorySitesResult,status:'0',result:"1"});
-									}
-								});								
+						getAllSitesByCategories(userIdentifier,userLat,userLng,foundCategories.categories,catArray,function(categorySitesResult,cantSites,catAdded){
+						//Fill not retrieve categories sites
+							var notFoundCatSites=_.difference(catArray,catAdded);
+							for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
+								var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
+								categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
 							}
-							searchAndReturn(userLat,userLng);
-						}else{
-							getAllSitesByCategories(userIdentifier,userLat,userLng,foundCategories.categories,catArray,function(categorySitesResult,cantSites,catAdded){
-							//Fill not retrieve categories sites
-								var notFoundCatSites=_.difference(catArray,catAdded);
-								for(var ntSites=0; ntSites<notFoundCatSites.length;ntSites++){
-									var catInfo = _.findWhere(foundCategories.categories,{identifier:notFoundCatSites[ntSites]});
-									categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: [], hasSites:'0'});
-								}										
-								res.json({data:categorySitesResult,status:'0',result:"1"});
-							})
-						}
-						
+							var arrayOfPriorities = foundCategories.gender == "male"? configPriorities.priorities.men : configPriorities.priorities.women;
+							//HERE GOES THE PRIORITY
+							for(var i = 0; i < categorySitesResult.categories.length; i++){
+								var configCategory = _.findWhere(arrayOfPriorities,{identifier:categorySitesResult.categories[i].identifier});
+								categorySitesResult.categories[i].priority = configCategory.priority;
+							}
+							categorySitesResult.categories  = _.sortBy(categorySitesResult.categories,function(category){return category.priority;});
+							categorySitesResult.categories.reverse();
+							res.json({data:categorySitesResult,status:'0',result:"1"});
+						})
 					}
 				}	
 				else{
@@ -191,10 +154,12 @@ module.exports = function () {
 						category.sites = category.sites.concat(filteredsites);
 					else{
 						var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
-						var category = {identifier:catInfo.identifier, name:catInfo.name, sites: filteredsites, hasSites:'1'};						
+						var category = {identifier:catInfo.identifier, name:catInfo.name,priority: catInfo.priority, sites: filteredsites, hasSites:"1"};						
 						categorySitesResult.categories.push(category);
 						catAdded.push(foundSearchSites[c].categoryIdentifier);							
-					}		
+					}
+
+					category.hasSites = category.sites.length == 0 ? "0": "1";
 					category.sites=_.sortBy(category.sites, 'biinieProximity');				
 					cantSites += filteredsites.length;
 				}					
@@ -208,7 +173,7 @@ module.exports = function () {
 		var model = req.body.model;		
 		//Perform an update
 		var organizationIdentifier=req.param("orgIdentifier");
-		res.setHeader('Content-Type', 'application/json');
+		res.setHeader('Content-Type','application/json');
 
 		//If is pushing a new model
 		if(typeof(req.param("siteIdentifier"))==="undefined"){
@@ -216,16 +181,15 @@ module.exports = function () {
 			//Set the account and the user identifier
 			var model = new site();
             model.identifier=utils.getGUID();
-			model.accountIdentifier= req.user.accountIdentifier;
 			model.isValid = false;
 
 			//Get the Mayor and Update
-			getMajor(organizationIdentifier,req.user.accountIdentifier,function(major){
+			getMajor(organizationIdentifier,function(major){
 				model.major =major;
 				model.proximityUUID= process.env.DEFAULT_SYS_ENVIROMENT;
 				organization.update(
 					{
-						identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier
+						identifier:organizationIdentifier
 					},
 					{
 						$push: {sites:model}
@@ -283,7 +247,7 @@ module.exports = function () {
 					doneFunction();
 				})									
 				organization.update(
-	                     { identifier:organizationIdentifier, accountIdentifier: req.user.accountIdentifier,'sites.identifier':model.identifier},
+	                     { identifier:organizationIdentifier, 'sites.identifier':model.identifier},
 	                     { $set :set },
 	                     { upsert : false },
 	                     function(err, raw){
@@ -516,14 +480,19 @@ module.exports = function () {
 		var siteIdentifier=req.param("siteIdentifier");
 
 		regionRoutes.removeSiteToRegionBySite(siteIdentifier,function(){
-			organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
+			organization.update({identifier:organizationIdentifier},{$pull:{sites:{identifier:siteIdentifier}}},function(err){
+				if(err)
+					throw err;
+				else
+					siteCategory.update({"sites.identifier":siteIdentifier}, {$pull: {"sites":{'identifier':siteIdentifier}}},{multi: true},function(err,raw){
 						if(err)
 							throw err;
-						else
+						else{
 							res.json({state:"success"});
-					});			
-		})
-		
+						}
+					});		
+			});			
+		});
 	}
 
 	//PUT Purchase a Biin to a Site
@@ -538,7 +507,7 @@ module.exports = function () {
 
 		if((qty || isBasicPackage) && organizationIdentifier && siteIdentifier){
 			var newMinorValue = utils.get.minorIncrement() *qty;
-			organization.findOne({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier,'sites.identifier': siteIdentifier},{'_id':1,'sites.$':1},function(err, siteInfo){
+			organization.findOne({identifier:organizationIdentifier,'sites.identifier': siteIdentifier},{'_id':1,'sites.$':1},function(err, siteInfo){
 				if(err)
 					res.send(err,500)					
 				else
@@ -555,7 +524,7 @@ module.exports = function () {
 					historyRecord.date=utils.getDateNow(); historyRecord.quantity=qty; historyRecord.site=siteIdentifier;
 
 					//Add an history record
-					organization.update({identifier:organizationIdentifier, accountIdentifier:req.user.accountIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,raw){
+					organization.update({identifier:organizationIdentifier},{$push:{purchasedBiinsHist:{$each:[historyRecord]}}},{upsert:false},function(err,raw){
 						if(err){
 							res.send(err,500)
 						}else{
@@ -668,7 +637,7 @@ module.exports = function () {
 	//Minor and major Functions
 
 	//GET the major of the enviroment
-	getMajor =  function(organizationIdentifier,accountIdentifier, callback){
+	getMajor =  function(organizationIdentifier, callback){
 
 		//Get the mayor from the enviroment	and return it
 		//TODO: Get enviroment by Site configuration
