@@ -24,47 +24,6 @@ module.exports = function(){
 
 	//Set the information in data base of the user
 	functions.set= function(req,res){
-		var dateNow = utils.getDateNow();
-		var data=[{
-					account:'b7854392-1f7a-496f-bf36-caa2a050b7d6',
-					organization:'24974199-011e-4371-914f-c89680e77051',
-					showcase:'2067e997-c251-4e35-a4be-9e3a7cc3e204',
-					element:'54023aae-19e9-434c-ab10-c08e86e575e0',
-					biin:'',
-					action:'shared',
-					date: dateNow,
-					mobileUser:'12345',
-					sessionType:'local'
-					},
-					{
-					account:'b7854392-1f7a-496f-bf36-caa2a050b7d6',
-					organization:'24974199-011e-4371-914f-c89680e77051',
-					showcase:'2067e997-c251-4e35-a4be-9e3a7cc3e204',
-					element:'54023aae-19e9-434c-ab10-c08e86e575e0',
-					biin:'',
-					action:'biined',
-					date: dateNow,
-					mobileUser:'123453',
-					sessionType:'local'
-					},
-					{
-					account:'b7854392-1f7a-496f-bf36-caa2a050b7d6',
-					organization:'24974199-011e-4371-914f-c89680e77051',
-					showcase:'2067e997-c251-4e35-a4be-9e3a7cc3e204',
-					element:'54023aae-19e9-434c-ab10-c08e86e575e0',
-					biin:'',
-					action:'biined',
-					date: dateNow,
-					mobileUser:'123453',
-					sessionType:'biin'
-					}
-					];
-		mobileActions.create(data,function(err){
-			if(err)
-				throw err;
-			else
-				res.json({'result':1});
-		})
 	}
 
 	//Get the information about a dashboard Data
@@ -406,29 +365,31 @@ module.exports = function(){
 
 
   functions.getSessionsMobile = function(req, res){
-    res.json({data:"2"});
+    res.json({data:2});
 	}
   functions.getNewVisitsMobile = function(req, res){
-    res.json({data:"3"});
+    res.json({data:3});
   }
   functions.getTotalBiinedMobile = function(req, res){
-    res.json({data:"4"});
+    res.json({data:4});
 	}
   functions.getVisitedElementsMobile = function(req, res){
-    res.json({data:"35"});
+    res.json({data:35});
 	}
   functions.getNewVsReturningMobile = function(req, res){
+    res.json({data:{news:23,returning:45}});
 	}
 
   functions.getSessionsLocal = function(req, res){
-    res.json({data:"112"});
+    res.json({data:112});
 	}
   functions.getNewVisitsLocal = function(req, res){
-    res.json({data:"62"});
+    res.json({data:62});
 	}
   functions.getFromVisitsLocal = function(req, res){
 	}
   functions.getNewVsReturningLocal = function(req, res){
+    res.json({data:{news:12,returning:4}});
 	}
 	return functions;
 }
