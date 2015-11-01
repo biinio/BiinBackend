@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var trackingNotificationsSchema=new Schema({
 	userIdentifier:{type:String},//Mobile User Identifier
-	elementBeacon:{type:String},
+	beaconIdentifier:{type:String},
   elementIdentifier:{type:String},
   organizationIdentifier{type:String,index:true},
   siteIdentifier:{type:String},

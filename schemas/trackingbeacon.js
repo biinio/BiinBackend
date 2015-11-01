@@ -4,11 +4,11 @@ var Schema = mongoose.Schema;
 
 var trackingBeaconSchema=new Schema({
 	userIdentifier:{type:String},//Mobile User Identifier
-	elementBeacon:{type:String},
-  elementIdentifier:{type:String},
-  organizationIdentifier{type:String,index:true},
+	beaconIdentifier:{type:String},
+  organizationIdentifier:{type:String,index:true},
   siteIdentifier:{type:String},
 	showcaseIdentifier:{type:String},
+	elementIdentifier:{type:String},
   date:{type : Date, default: Date.now,index:true},
   action:{type:String}
 });

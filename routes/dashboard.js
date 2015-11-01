@@ -14,6 +14,32 @@ module.exports = function(){
 	var biin= require('../schemas/biin');
 	var visits = require('../schemas/visits');
 
+  //Tracking schemas
+	var trackingBeacon = require('../schemas/trackingBeacon'),
+		trackingFollow = require('../schemas/trackingFollows'),
+		trackingSites = require('../schemas/trackingSites'),
+		trackingLikes = require('../schemas/trackingLikes'),
+		trackingElements = require('../schemas/trackingElements'),
+		trackingBiined = require('../schemas/trackingBiined');
+
+var ENTER_BIIN_REGION  = "1";
+var EXIT_BIIN_REGION  = "2";
+var ENTER_BIIN  = "3";
+var EXIT_BIIN  = "4";
+var VIEWED_ELEMENT  = "5";
+var BIIN_NOTIFIED  = "6";
+var NOTIFICATION_OPENED  = "7";
+var ENTER_SITE_VIEW   = "8";
+var LEAVE_SITE_VIEW   = "9";
+var ENTER_ELEMENT_VIEW   = "10";
+var LEAVE_ELEMENT_VIEW   = "11";
+var BIINED_ELEMENT  = "12";
+var BIINED_SITE  = "13";
+var LIKE_SITE = "14";
+var UNLIKE_SITE = "15";
+var FOLLOW_SITE = "16";
+var UNFOLLOW_SITE = "17";
+
 	var functions ={}
 
 
@@ -371,7 +397,27 @@ module.exports = function(){
     res.json({data:3});
   }
   functions.getTotalBiinedMobile = function(req, res){
-    res.json({data:4});
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var todayDate = new Date();
+    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    trackingBiined.aggregate(
+      [{
+        $match:{
+          organizationIdentifier:organizationId,
+          date:{$gte: startDate, $lt:todayDate}
+        }
+      },
+      {
+        $group:{
+          _id:null,
+          count: {$sum: 1}
+        }
+      }]
+      ).exec(function(error,data){
+        res.json({data:data[0].count});
+      });
 	}
   functions.getVisitedElementsMobile = function(req, res){
     res.json({data:35});

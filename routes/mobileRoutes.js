@@ -18,6 +18,31 @@ module.exports =function(){
 		siteCategory = require('../schemas/searchSiteCategory');
 
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
+	//Tracking schemas
+	var trackingBeacon = require('../schemas/trackingBeacon'),
+		trackingFollow = require('../schemas/trackingFollows'),
+		trackingSites = require('../schemas/trackingSites'),
+		trackingLikes = require('../schemas/trackingLikes'),
+		trackingElements = require('../schemas/trackingElements'),
+		trackingBiined = require('../schemas/trackingBiined');
+
+var ENTER_BIIN_REGION  = "1";
+var EXIT_BIIN_REGION  = "2";
+var ENTER_BIIN  = "3";
+var EXIT_BIIN  = "4";
+var VIEWED_ELEMENT  = "5";
+var BIIN_NOTIFIED  = "6";
+var NOTIFICATION_OPENED  = "7";
+var ENTER_SITE_VIEW   = "8";
+var LEAVE_SITE_VIEW   = "9";
+var ENTER_ELEMENT_VIEW   = "10";
+var LEAVE_ELEMENT_VIEW   = "11";
+var BIINED_ELEMENT  = "12";
+var BIINED_SITE  = "13";
+var LIKE_SITE = "14";
+var UNLIKE_SITE = "15";
+var FOLLOW_SITE = "16";
+var UNFOLLOW_SITE = "17";
 
 	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
@@ -212,13 +237,13 @@ module.exports =function(){
  		//mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
  		//});
 
-		Promise.all([setTrackingBiin(model.actions,model.identifier),
-			setTrackingBeacon(model.actions,model.identifier),
-			setTrackingElements(model.actions,model.identifier),
-			setTrackingLike(model.actions,model.identifier),
-			setTrackingSites(model.actions,model.identifier),
-			setTrackingFollow(model.actions,model.identifier),
-			setTrackingNotifications(model.actions,model.identifier)]).then(function(){
+		Promise.all([setTrackingBiined(model.actions,identifier),
+			setTrackingBeacon(model.actions,identifier),
+			setTrackingElements(model.actions,identifier),
+			setTrackingLike(model.actions,identifier),
+			setTrackingSites(model.actions,identifier),
+			setTrackingFollow(model.actions,identifier),
+			setTrackingNotifications(model.actions,identifier)]).then(function(){
 				res.status(200).json({response:"nothing here"});
 			}).catch(function(){
 				res.status(500).json({response:"somthing bad happend here"});
@@ -228,52 +253,210 @@ module.exports =function(){
 
 
 
-	function setTrackingBiin( actions, userIdentifier ){
+	function setTrackingBiined( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			if(actions.length>0){
+			var filteredActionsElements = _.filter(actions,function(item){ return item.did == BIINED_ELEMENT;})
+			var filteredActionsSites = _.filter(actions,function(item){ return item.did == BIINED_SITE;})
+			var filteredActions = filteredActionsSites.concat(filteredActionsElements);
+
+			var actionsToInsert = [];
+
+			if(filteredActions.length == 0){
 				resolve();
 			}else{
-				reject();
-			}
+					var elementsToFind = _.uniq(_.pluck(filteredActionsElements,"to"));
+					var sitesToFind = _.uniq(_.pluck(filteredActionsSites,"to"));
+
+					organization.find(
+						{ $or : [
+							{"elements.elementIdentifier":{$in:elementsToFind}},
+							{"sites.identifier":{$in:sitesToFind}}
+						]},
+						{ "identifier":1,
+						 	"elements.elementIdentifier":1,
+							"sites.identifier":1
+						}).lean().exec(
+							function(err,orgData){
+								if(err)
+									reject();
+
+								var actionsToInsert = [];
+								for (var i = 0; i < filteredActions.length; i++) {
+
+									var elementExtraInfo = _.find(orgData,function(org){
+										return _.findWhere(org.elements,{elementIdentifier:filteredActions[i].to}) != null;
+									});
+
+									var siteExtraInfo = _.find(orgData,function(org){
+										return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+									});
+
+									var action = {};
+
+									action.userIdentifier = userIdentifier;
+
+									if(siteExtraInfo != null){
+										action.organizationIdentifier = siteExtraInfo.identifier;
+										action.siteIdentifier = filteredActions[i].to;
+									}else{
+										action.organizationIdentifier = elementExtraInfo.identifier;
+										action.elementIdentifier = filteredActions[i].to;
+									}
+
+									action.date = new Date(filteredActions[i].at);
+									action.action = filteredActions[i].did;
+									actionsToInsert.push(action);
+
+								}
+								trackingBiined.create(actionsToInsert,function(error){
+									if(error)
+										reject();
+									resolve();
+								});
+							});
+					}
 		});
 	}
 
 	function setTrackingBeacon( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			if(actions.length>0){
-				resolve();
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_BIIN || item.did == EXIT_BIIN })
+			if(filteredActions.length>0){
+				var biinsToFind = _.uniq(_.pluck(filteredActions,"to"));
+				biin.find({identifier:{$in:biinsToFind}},{identifier:1,organizationIdentifier:1,siteIdentifier:1},function(err,biinData){
+					if(err)
+						reject();
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var biinExtraInfo = _.findWhere(biinData,{identifier:filteredActions[i].to});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.beaconIdentifier = filteredActions[i].to;
+						action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
+						action.siteIdentifier = biinExtraInfo.siteIdentifier;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingBeacon.create(actionsToInsert,function(error){
+						if(error)
+							reject();
+						resolve();
+					});
+				});
 			}else{
-				reject();
+				resolve();
 			}
 		});
 	}
 
 	function setTrackingElements( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			if(actions.length>0){
-				resolve();
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_ELEMENT_VIEW || item.did == LEAVE_ELEMENT_VIEW })
+			if(filteredActions.length>0){
+				var elementsToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({"elements.elementIdentifier":{$in:elementsToFind}},{"identifier":1,"elements.elementIdentifier":1}).lean().exec(function(err,elementData){
+					if(err)
+						reject();
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var elementExtraInfo = _.find(elementData,function(org){
+							return _.findWhere(org.elements,{elementIdentifier:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = elementExtraInfo.identifier;
+						action.elementIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingElements.create(actionsToInsert,function(error){
+						if(error)
+							reject();
+						resolve();
+					});
+				});
 			}else{
-				reject();
+				resolve();
 			}
 		});
 	}
 
 	function setTrackingFollow( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			if(actions.length>0){
-				resolve();
+			var filteredActions = _.filter(actions,function(item){ return item.did == FOLLOW_SITE || item.did == UNFOLLOW_SITE })
+			if(filteredActions.length>0){
+				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
+					if(err)
+						reject();
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var siteExtraInfo = _.find(siteData,function(org){
+							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = siteExtraInfo.identifier;
+						action.siteIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingFollow.create(actionsToInsert,function(error){
+						if(error)
+							reject();
+						resolve();
+					});
+				});
 			}else{
-				reject();
+				resolve();
 			}
 		});
 	}
 
 	function setTrackingLike( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			if(actions.length>0){
-				resolve();
+			var filteredActions = _.filter(actions,function(item){ return item.did == LIKE_SITE || item.did == UNLIKE_SITE })
+			if(filteredActions.length>0){
+				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
+					if(err)
+						reject();
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var siteExtraInfo = _.find(siteData,function(org){
+							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = siteExtraInfo.identifier;
+						action.siteIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingLikes.create(actionsToInsert,function(error){
+						if(error)
+							reject();
+						resolve();
+					});
+				});
 			}else{
-				reject();
+				resolve();
 			}
 		});
 	}
@@ -290,10 +473,36 @@ module.exports =function(){
 
 	function setTrackingSites( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			if(actions.length>0){
-				resolve();
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_SITE_VIEW || item.did == LEAVE_SITE_VIEW })
+			if(filteredActions.length>0){
+				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
+					if(err)
+						reject();
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var siteExtraInfo = _.find(siteData,function(org){
+							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = siteExtraInfo.identifier;
+						action.siteIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingSites.create(actionsToInsert,function(error){
+						if(error)
+							reject();
+						resolve();
+					});
+				});
 			}else{
-				reject();
+				resolve();
 			}
 		});
 	}

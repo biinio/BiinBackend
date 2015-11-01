@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var trackingBiinedSchema=new Schema({
 	userIdentifier:{type:String},//Mobile User Identifier
   elementIdentifier:{type:String},
-  organizationIdentifier{type:String,index:true},
+  organizationIdentifier:{type:String,index:true},
   siteIdentifier:{type:String},
 	showcaseIdentifier:{type:String},
   date:{type : Date, default: Date.now,index:true},
