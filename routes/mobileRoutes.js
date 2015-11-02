@@ -18,13 +18,14 @@ module.exports =function(){
 		siteCategory = require('../schemas/searchSiteCategory');
 
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
+
 	//Tracking schemas
-	var trackingBeacon = require('../schemas/trackingBeacon'),
-		trackingFollow = require('../schemas/trackingFollows'),
-		trackingSites = require('../schemas/trackingSites'),
-		trackingLikes = require('../schemas/trackingLikes'),
-		trackingElements = require('../schemas/trackingElements'),
-		trackingBiined = require('../schemas/trackingBiined');
+	var trackingBeacon = require('../schemas/trackingbeacon'),
+		trackingFollow = require('../schemas/trackingfollows'),
+		trackingSites = require('../schemas/trackingsites'),
+		trackingLikes = require('../schemas/trackinglikes'),
+		trackingElements = require('../schemas/trackingelements'),
+		trackingBiined = require('../schemas/trackingbiined');
 
 var ENTER_BIIN_REGION  = "1";
 var EXIT_BIIN_REGION  = "2";
