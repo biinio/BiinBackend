@@ -15,8 +15,8 @@ module.exports = function(){
 	var visits = require('../schemas/visits');
 
   //Tracking schemas
-	var trackingBeacon = require('../schemas/trackingBeacon'),
-		trackingFollow = require('../schemas/trackingFollows'),
+	//var trackingBeacon = require('../schemas/trackingBeacon'),
+	var	trackingFollow = require('../schemas/trackingFollows'),
 		trackingSites = require('../schemas/trackingSites'),
 		trackingLikes = require('../schemas/trackingLikes'),
 		trackingElements = require('../schemas/trackingElements'),
