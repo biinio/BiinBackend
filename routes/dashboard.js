@@ -2,7 +2,7 @@ module.exports = function(){
 
     //Schemas
     var util = require('util'), fs=require('fs');
-
+    var _= require('underscore');
 	//Custom Utils
 	var utils = require('../biin_modules/utils')();
 
@@ -390,31 +390,25 @@ var UNFOLLOW_SITE = "17";
 	}
 
 
-  functions.getSessionsMobile = function(req, res){
-    res.json({data:2});
-	}
+
   functions.getNewVisitsMobile = function(req, res){
     var filters = JSON.parse(req.headers.filters);
     var dateRange = filters.dateRange;
     var organizationId = filters.organizationId;
     var todayDate = new Date();
     var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate} } },
+      { $group: { _id:"$userIdentifier" } }], function(error,visitsData){
 
-    trackingBiined.aggregate(
-      [{
-        $match:{
-          organizationIdentifier:organizationId,
-          date:{$gte: startDate, $lt:todayDate}
-        }
-      },
-      {
-        $group:{
-          _id:null,
-          count: {$sum: 1}
-        }
-      }]
-      ).exec(function(error,data){
-        res.json({data:data[0].count});
+        //getting priorVisits
+        trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$lt:startDate} } },
+          { $group: { _id:"$userIdentifier" } }], function(error,oldVisitsData){
+            var idUsersVisits = _.pluck(visitsData, '_id');
+            var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
+            var newVisits = _.difference(idUsersVisits,idUsersOldVisits);
+            var returningVisits = _.intersection(idUsersVisits,idUsersOldVisits);
+            res.json({data:{news:newVisits.length,returning:returningVisits.length}});
+          });
       });
   }
   functions.getTotalBiinedMobile = function(req, res){
@@ -440,43 +434,98 @@ var UNFOLLOW_SITE = "17";
         res.json({data:data[0].count});
       });
 	}
-  functions.getVisitedElementsMobile = function(req, res){
-    res.json({data:35});
-	}
   functions.getNewVsReturningMobile = function(req, res){
     var filters = JSON.parse(req.headers.filters);
     var dateRange = filters.dateRange;
     var organizationId = filters.organizationId;
     var todayDate = new Date();
     var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
-    trackingBeacon.aggregate(
-      [{
-        $match:{
-          organizationIdentifier:organizationId,
-          date:{$gte: startDate, $lt:todayDate}
-        }
-      },
-      {
-        $group:{
-          _id:{userIdentifier:1},
-          count: {$sum: 1}
-        }
-      }],
-      function(error,data){
-        res.json({data:data[0].count});
+    trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate} } },
+      { $group: { _id:"$userIdentifier" } }], function(error,visitsData){
+
+        //getting priorVisits
+        trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$lt:startDate} } },
+          { $group: { _id:"$userIdentifier" } }], function(error,oldVisitsData){
+            var idUsersVisits = _.pluck(visitsData, '_id');
+            var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
+            var newVisits = _.difference(idUsersVisits,idUsersOldVisits);
+            var returningVisits = _.intersection(idUsersVisits,idUsersOldVisits);
+            res.json({data:{news:newVisits.length,returning:returningVisits.length}});
+          });
       });
 	}
 
-  functions.getSessionsLocal = function(req, res){
-    res.json({data:112});
-	}
-  functions.getNewVisitsLocal = function(req, res){
-    res.json({data:62});
+
+  functions.getVisitedElementsMobile = function(req, res){
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var todayDate = new Date();
+    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, siteIdentifier:siteId, date:{$gte: startDate, $lt:todayDate} } },
+      { $group: { _id:"$userIdentifier" } }], function(error,visitsData){
+
+        //getting priorVisits
+        trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, siteIdentifier:siteId, date:{$lt:startDate} } },
+          { $group: { _id:"$userIdentifier" } }], function(error,oldVisitsData){
+            var idUsersVisits = _.pluck(visitsData, '_id');
+            var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
+            var newVisits = _.difference(idUsersVisits,idUsersOldVisits);
+            res.json({data:newVisits.length);
+          });
+      });
+  }
+  functions.getSessionsMobile = function(req, res){
+    res.json({data:2});
 	}
   functions.getFromVisitsLocal = function(req, res){
+  }
+  functions.getSessionsLocal = function(req, res){
+    res.json({data:112});
+  }
+
+  functions.getNewVisitsLocal = function(req, res){
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var siteId = filters.siteId;
+    var todayDate = new Date();
+    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, siteIdentifier:siteId, date:{$gte: startDate, $lt:todayDate} } },
+      { $group: { _id:"$userIdentifier" } }], function(error,visitsData){
+
+        //getting priorVisits
+        trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, siteIdentifier:siteId, date:{$lt:startDate} } },
+          { $group: { _id:"$userIdentifier" } }], function(error,oldVisitsData){
+            var idUsersVisits = _.pluck(visitsData, '_id');
+            var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
+            var newVisits = _.difference(idUsersVisits,idUsersOldVisits);
+            res.json({data:newVisits.length);
+          });
+      });
 	}
   functions.getNewVsReturningLocal = function(req, res){
-    res.json({data:{news:12,returning:4}});
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var siteId = filters.siteId;
+    var todayDate = new Date();
+    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, siteIdentifier:siteId, date:{$gte: startDate, $lt:todayDate} } },
+      { $group: { _id:"$userIdentifier" } }], function(error,visitsData){
+
+        //getting priorVisits
+        trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, siteIdentifier:siteId, date:{$lt:startDate} } },
+          { $group: { _id:"$userIdentifier" } }], function(error,oldVisitsData){
+            var idUsersVisits = _.pluck(visitsData, '_id');
+            var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
+            var newVisits = _.difference(idUsersVisits,idUsersOldVisits);
+            var returningVisits = _.intersection(idUsersVisits,idUsersOldVisits);
+            res.json({data:{news:newVisits.length,returning:returningVisits.length}});
+          });
+      });
 	}
+
+
 	return functions;
 }
