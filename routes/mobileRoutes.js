@@ -246,7 +246,7 @@ var UNFOLLOW_SITE = "17";
 			setTrackingNotifications(model.actions,identifier)]).then(function(){
 				res.status(200).json({response:"nothing here"});
 			}).catch(function(){
-				res.status(500).json({response:"somthing bad happend here"});
+				res.status(500).json({response:"something bad happend here"});
 			})
 
  	}

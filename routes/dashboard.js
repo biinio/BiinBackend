@@ -394,7 +394,28 @@ var UNFOLLOW_SITE = "17";
     res.json({data:2});
 	}
   functions.getNewVisitsMobile = function(req, res){
-    res.json({data:3});
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var todayDate = new Date();
+    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+
+    trackingBiined.aggregate(
+      [{
+        $match:{
+          organizationIdentifier:organizationId,
+          date:{$gte: startDate, $lt:todayDate}
+        }
+      },
+      {
+        $group:{
+          _id:null,
+          count: {$sum: 1}
+        }
+      }]
+      ).exec(function(error,data){
+        res.json({data:data[0].count});
+      });
   }
   functions.getTotalBiinedMobile = function(req, res){
     var filters = JSON.parse(req.headers.filters);
@@ -423,7 +444,27 @@ var UNFOLLOW_SITE = "17";
     res.json({data:35});
 	}
   functions.getNewVsReturningMobile = function(req, res){
-    res.json({data:{news:23,returning:45}});
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var todayDate = new Date();
+    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    trackingBeacon.aggregate(
+      [{
+        $match:{
+          organizationIdentifier:organizationId,
+          date:{$gte: startDate, $lt:todayDate}
+        }
+      },
+      {
+        $group:{
+          _id:{userIdentifier:1},
+          count: {$sum: 1}
+        }
+      }],
+      function(error,data){
+        res.json({data:data[0].count});
+      });
 	}
 
   functions.getSessionsLocal = function(req, res){
