@@ -431,7 +431,15 @@ var UNFOLLOW_SITE = "17";
         }
       }]
       ).exec(function(error,data){
-        res.json({data:data[0].count});
+        if(error){
+
+        }else {
+            if(data.length == 0)
+              res.json({data:0});
+            else
+              res.json({data:data[0].count});
+        }
+
       });
 	}
   functions.getNewVsReturningMobile = function(req, res){
