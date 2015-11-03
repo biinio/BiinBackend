@@ -406,7 +406,7 @@ var UNFOLLOW_SITE = "17";
             var idUsersVisits = _.pluck(visitsData, '_id');
             var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
             var newVisits = _.difference(idUsersVisits,idUsersOldVisits);
-            res.json({data:{news:newVisits.length}});
+            res.json({data:newVisits.length});
           });
       });
   }
