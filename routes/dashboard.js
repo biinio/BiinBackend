@@ -406,8 +406,7 @@ var UNFOLLOW_SITE = "17";
             var idUsersVisits = _.pluck(visitsData, '_id');
             var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
             var newVisits = _.difference(idUsersVisits,idUsersOldVisits);
-            var returningVisits = _.intersection(idUsersVisits,idUsersOldVisits);
-            res.json({data:{news:newVisits.length,returning:returningVisits.length}});
+            res.json({data:{news:newVisits.length}});
           });
       });
   }
@@ -462,8 +461,6 @@ var UNFOLLOW_SITE = "17";
           });
       });
 	}
-
-
   functions.getVisitedElementsMobile = function(req, res){
     var filters = JSON.parse(req.headers.filters);
     var dateRange = filters.dateRange;
