@@ -470,9 +470,9 @@ var UNFOLLOW_SITE = "17";
     var organizationId = filters.organizationId;
     var todayDate = new Date();
     var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
-    
+
     trackingElements.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate}, actions : ENTER_ELEMENT_VIEW } },
-      { $group: { _id:"$userIdentifier", elementsViewed : { $push : "$elementIdentifier" } }], function(error,elementsVisitsByUser){
+      { $group: { _id:"$userIdentifier", elementsViewed : { $push : "$elementIdentifier" } } }], function(error,elementsVisitsByUser){
         var average = 0;
         if(elementsVisitsByUser.length){
           for(var i = 0; i < elementsVisitsByUser.length; i++){
