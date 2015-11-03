@@ -470,17 +470,18 @@ var UNFOLLOW_SITE = "17";
     var organizationId = filters.organizationId;
     var todayDate = new Date();
     var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
-    trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, siteIdentifier:siteId, date:{$gte: startDate, $lt:todayDate} } },
-      { $group: { _id:"$userIdentifier" } }], function(error,visitsData){
-
-        //getting priorVisits
-        trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, siteIdentifier:siteId, date:{$lt:startDate} } },
-          { $group: { _id:"$userIdentifier" } }], function(error,oldVisitsData){
-            var idUsersVisits = _.pluck(visitsData, '_id');
-            var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
-            var newVisits = _.difference(idUsersVisits,idUsersOldVisits);
-            res.json({data:newVisits.length});
-          });
+    
+    trackingElements.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate}, actions : ENTER_ELEMENT_VIEW } },
+      { $group: { _id:"$userIdentifier", elementsViewed : { $push : "$elementIdentifier" } }], function(error,elementsVisitsByUser){
+        var average = 0;
+        if(elementsVisitsByUser.length){
+          for(var i = 0; i < elementsVisitsByUser.length; i++){
+            var distinctElementsViewed = _.uniq(elementsVisitsByUser[i].elementsViewed);
+            average += distinctElementsViewed.length;
+          }
+          average = average/elementsVisitsByUser.length;
+        }
+        res.json({data:average});
       });
   }
   functions.getSessionsMobile = function(req, res){
