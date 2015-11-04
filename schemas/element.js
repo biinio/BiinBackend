@@ -25,7 +25,7 @@ var elementSchema = new Schema({
 	hasListPrice:{type:String, default:'0'},	
 	listPrice:{type:String, default:""},
 	hasPrice:{type:String, default:"0"},
-	price:{type:String, default:""},
+	price:{type:Number, default:0},
 	
 	//Is highlight element
 	isHighlight:{type:String, default:'0'},
@@ -41,7 +41,7 @@ var elementSchema = new Schema({
 
 	hasQuantity:{type:Boolean,default:0},
 	quantity:{type:String,default:""},
-
+	detailsHtml:{type:String, default:""},
 	details:[{
 			elementDetailType:{type:String, default:""},
 			text:{type:String,default:""},
@@ -56,7 +56,7 @@ var elementSchema = new Schema({
 			identifier:{type:String, index:true, default:"-1"},
 			name:{type:String, default:""},
 			displayName:{type:String, default:""},
-			imgUrl:{type:String, default:""}
+			url:{type:String, default:""}
 		}
 	],
 	media:[{
@@ -64,11 +64,21 @@ var elementSchema = new Schema({
 		title1:{type:String, default:""},
 		url:{type:String,default:""},
 		mediaType:{type:String,default:""},
-		mainColor:{type:String,default:""}
+		mainColor:{type:String,default:""},
+		vibrantColor:{type:String,default:""},
+		vibrantDarkColor:{type:String,default:""},
+		vibrantLightColor:{type:String,default:""}
 	}],
 	biinedCount:{type:Number,default:0},
+	collectCount:{type:Number,default:0},
 	sharedCount:{type:Number,default:0},
-	commentedCount:{type:Number,default:0}
+	commentedCount:{type:Number,default:0},
+	rating:[
+		{
+			biinieIdentifier : {type:String, default:""},
+			rating : {type:Number, default: 0}
+		}
+	]
 });
 
 module.exports = mongoose.model('elements', elementSchema);

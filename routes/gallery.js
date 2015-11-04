@@ -2,6 +2,7 @@ module.exports =function(){
 
 	var util = require('util'), fs= require('fs'), path = require("path"), moment=require("moment");
 	var gm = require("gm"),imageMagick = gm.subClass({ imageMagick: true });
+	var Vibrant = require('node-vibrant');
 
 	//Custom Utils
 	var utils = require('../biin_modules/utils')();	
@@ -34,7 +35,7 @@ module.exports =function(){
 		var galleryProto = new gallery();
 		galleryProto.organizationIdentifier = organizationIdentifier;
 
-		organization.findOne({accountIdentifier:req.user.accountIdentifier, identifier:organizationIdentifier},{'gallery':1},function (err, data) {
+		organization.findOne({identifier:organizationIdentifier},{'gallery':1},function (err, data) {
 			  var gallery = null;
 			  	if(data && 'gallery' in data)
 			  		gallery = data.gallery;
@@ -46,20 +47,21 @@ module.exports =function(){
 	//PUT Files
 	functions.upload=function(req,res){
 		var organizationId = req.param("identifier");
-		var userAccount = req.user.accountIdentifier;
 		var filesUploaded =[];
 
-		var imagesDirectory = path.join(userAccount,organizationId);
+		var imagesDirectory = organizationId;
 		res.set("Content-Type","application/json");
 
 		var uploadFile = function(file,callback){
 			//Read the file
 	 		var name = file.originalFilename;	 		
 	 		var data = fs.readFileSync(file.path);
-	 		var systemImageName = userAccount+organizationId+ utils.getImageName(name,_workingImagePath); 
+	 		var systemImageName = organizationId+ utils.getImageName(name,_workingImagePath); 
 
 	 		var mainColor="";
-	 		imageManager.uploadFile(file.path,imagesDirectory,systemImageName,true,function(imgURL){
+	 		
+	 		imageManager.uploadFile(file.path,imagesDirectory,systemImageName,true,function(url){
+
 		 		var tempId=utils.getUIDByLen(40)+".";
 
 				imageMagick(file.path).format(function(err,format){
@@ -68,34 +70,39 @@ module.exports =function(){
 			 			var height=size.height*100/70;			
 			 			var width=size.width*100/70;		 			
 			 			imageMagick(file.path)
-			 					.gravity("Center")
-			 					.crop(height,width,0,0)
-			 					.scale(1,1)
 			 					.depth(8,function(err,data){
 			 						if(err)
 			 							console.log(err);
 			 					})
 			 					.write(tempPath,function(err,data){
-			 						imageMagick(tempPath).identify('%[pixel:s]',function(err,color){
-						 				console.log("Color of resized with Write: " +color);
-						 				mainColor=color.replace("srgb(","");
-						 				mainColor=mainColor.replace(")","");
+			 						var vibrant = new Vibrant(tempPath);
+			 						vibrant.getSwatches(function(error,swatches){
+		 								var mainColorRGB =  swatches.Vibrant? swatches.Vibrant.rgb : [0,0,0];
+		 								var darkVibrantRGB =  swatches.DarkVibrant? swatches.DarkVibrant.rgb : [0,0,0];
+		 								var lightVibrantRGB =  swatches.LightVibrant? swatches.LightVibrant.rgb : [255,255,255];
 
-							 			if(fs.existsSync(tempPath)){
-				 							fs.unlink(tempPath,function(err){
-				 								console.log("The image was removed succesfully");
-				 							});
-				 						}
+		 								mainColor = "" + parseInt(mainColorRGB[0]) + "," + parseInt(mainColorRGB[1]) + "," + parseInt(mainColorRGB[2]);
+		 								var vibrantColor = mainColor;
+		 								var darkVibrantColor = "" + parseInt(darkVibrantRGB[0]) + "," + parseInt(darkVibrantRGB[1]) + "," + parseInt(darkVibrantRGB[2]);
+		 								var lightVibrantColor = "" + parseInt(lightVibrantRGB[0]) + "," +parseInt(lightVibrantRGB[1]) + "," + parseInt(lightVibrantRGB[2]);
 
-								  		var galObj = {identifier:systemImageName,accountIdentifier:userAccount,
-								  		originalName:name,url:imgURL,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
-								  		mainColor:mainColor
-								  		};
 
-								  		callback(galObj);	 		
+		 								if(fs.existsSync(tempPath)){
+			 								fs.unlink(tempPath,function(err){
+			 									console.log("The image was removed succesfully");
+			 								});
+			 							}
 
-						 			});
+							  			var galObj = {identifier:systemImageName,
+							  			originalName:name,url:url,serverUrl: "",localUrl:"", dateUploaded: moment().format('YYYY-MM-DD h:mm:ss'),
+							  			mainColor:mainColor,
+							  			vibrantColor:vibrantColor,
+							  			vibrantDarkColor:darkVibrantColor,
+							  			vibrantLightColor:lightVibrantColor
+							  			};
 
+							  			callback(galObj);	 		
+			 						});
 			 					})
 			 		})	 			
 		 		});
@@ -104,7 +111,7 @@ module.exports =function(){
 
 		//Update the organization
 		var organizationUpdate = function(){
-			organization.update({"accountIdentifier":userAccount,"identifier":organizationId},
+			organization.update({"identifier":organizationId},
 			 {$push:{gallery:{$each:filesUploaded}}},
 			 { upsert : false},
 	         function(err, raw){
@@ -154,7 +161,7 @@ module.exports =function(){
 	getOganization = function(req, res, callback){
 		var identifier=req.param("identifier");
 
-		organization.findOne({"accountIdentifier":req.user.accountIdentifier,"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
+		organization.findOne({"identifier":identifier},{sites:true, name:true, identifier:true},function (err, data) {
 			req.session.selectedOrganization = data;
 			callback(data,req,res);
 		});

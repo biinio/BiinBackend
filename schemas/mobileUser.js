@@ -36,7 +36,7 @@ var mobileUserSchema=new Schema({
 		expireDate:String
 	}],	
 	email:{type:String, default:""},
-	imgUrl:{type:String, default:""},
+	url:{type:String, default:""},
 	comments:String,
 	userBiined:String,
 	userCommented:String,
@@ -52,10 +52,25 @@ var mobileUserSchema=new Schema({
 				identifier:{type:String, index:true, default:"-1"},
 				name:{type:String, default:""},
 				displayName:{type:String, default:""},
-				url:{type:String, default:""}
+				url:{type:String, default:""},
+				priority:{type:String, default:"0"}
 			}
 	],
 	biinieCollections:[
+		{
+			identifier:{type:String, index:true, default:"-1"},
+			subTitle:{type:String, default:""},
+			title:{type:String, default:""},
+			elements:[{
+				identifier:{type:String, index:true, default:"-1"},
+				_id:{type:String, index:true, default:"-1"}
+			}],
+			sites:[{
+				identifier:{type:String, index:true, default:"-1"}
+			}]
+		}
+	],
+	biinieCollect:[
 		{
 			identifier:{type:String, index:true, default:"-1"},
 			subTitle:{type:String, default:""},
@@ -81,6 +96,20 @@ var mobileUserSchema=new Schema({
 			identifier:{type:String},
 			type:{type:String},
 			shareDate:{type:String}
+		}
+	],
+	likeObjects:[
+		{			
+			identifier:{type:String},
+			type:{type:String},
+			likeDate:{type:String}
+		}
+	],
+	followObjects:[
+		{			
+			identifier:{type:String},
+			type:{type:String},
+			followDate:{type:String}
 		}
 	],
 	loyalty: [

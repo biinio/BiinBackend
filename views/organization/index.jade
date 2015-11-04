@@ -15,9 +15,9 @@ block content
 						.col-xs-4.col-sm-12.col-md-12.col-lg-6.nopadding(ng-repeat="item in organizations | filter: query" ng-click="edit(organizations.indexOf(item))")
 							.moduleWrapper.contentHideButtons(ng-class="{active: organizations.indexOf(item) == selectedOrganization}")
 								.moduleTitle {{item.name}}
-								img(ng-src="{{item.media[0].imgUrl}}" pending-indicator)
+								img(ng-src="{{item.media[0].url}}" pending-indicator)
 								//img(ng-if="item.media.length == 0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-								//img(ng-if="item.media.length>0" ng-src="{{item.media[0].imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+								//img(ng-if="item.media.length>0" ng-src="{{item.media[0].url}}" style="max-width: 250px;height: auto;" pending-indicator)
 								.btnDelete.icon-round-control.btn-on-hover(ng-click="removeOrganizationAt(organizations.indexOf(item))")
 									.icon.icon-bin-2
 								.btnShowcasePreview.icon-round-control.btn-on-hover
@@ -45,7 +45,7 @@ block content
 									div(slimscroll="" slimscroll-option="{height:'auto'}")
 										a.col-md-1.moduleImage(ng-repeat="item in organizations[selectedOrganization].media" ng-if="organizations[selectedOrganization].media.length>0")
 											.moduleImageWrapper.contentHideButtons
-												img(ng-src="{{item.imgUrl}}" pending-indicator)
+												img(ng-src="{{item.url}}" pending-indicator)
 												.btnShowcasePreview.icon-round-control.btnDelete.btn-on-hover(ng-click="removeMediaAt(organizations[selectedOrganization].media.indexOf(item))")
 													.icon.icon-bin-2
 										a.col-md-1.moduleImage.drop-images(ng-if="organizations[selectedOrganization].media.length<=0")

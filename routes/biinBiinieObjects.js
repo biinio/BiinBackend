@@ -56,7 +56,7 @@ module.exports = function () {
 						if(err)
 							throw err;
 						else{
-							res.json({status:"1",result:"0"});
+							res.json({status:"1",result:"0", data:{}});
 						}
 					})
 				}else{
@@ -65,7 +65,7 @@ module.exports = function () {
 						if(err)
 							throw err;
 						else{
-							res.json({status:"1",result:"0"});
+							res.json({status:"1",result:"0", data:{}});
 						}
 					});
 

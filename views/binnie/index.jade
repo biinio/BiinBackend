@@ -15,8 +15,8 @@ block content
 							.col-xs-4.col-sm-6.col-md-6.col-lg-6.nopadding(ng-repeat="item in binnies | filter: query" ng-click="edit(binnies.indexOf(item))")
 								.moduleWrapper.contentHideButtons(ng-class="{active: binnies.indexOf(item) == selectedBinnie}")
 									.moduleTitle {{item.biinName}}
-									img(ng-if="item.imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-									img(ng-if="item.imgUrl.length>0" ng-src="{{item.imgUrl}}" style="max-width: 250px;height: auto;" pending-indicator)
+									img(ng-if="item.url.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+									img(ng-if="item.url.length>0" ng-src="{{item.url}}" style="max-width: 250px;height: auto;" pending-indicator)
 									.btnDelete.icon-round-control.btn-on-hover(ng-click="removeAt(binnies.indexOf(item))")
 										.icon.icon-bin-2
 				.container-fluid.searchBox
@@ -29,9 +29,9 @@ block content
 							.col-md-6
 								h2 Binnie main Information
 							.col-md-6								
-								img(ng-if="binnies[selectedBinnie].imgUrl.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
-								img(ng-if="binnies[selectedBinnie].imgUrl.length>0" style="max-width:140px;" ng-src="{{binnies[selectedBinnie].imgUrl}}"  pending-indicator)
-								h3 {{binnies[selectedBinnie].imgUrl}}									
+								img(ng-if="binnies[selectedBinnie].url.length===0" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+", alt='')
+								img(ng-if="binnies[selectedBinnie].url.length>0" style="max-width:140px;" ng-src="{{binnies[selectedBinnie].url}}"  pending-indicator)
+								h3 {{binnies[selectedBinnie].url}}									
 								a.btn.btn-default(upload-binnie-image="#binnieInput") Upload Biinie Image
 								input.hidden#binnieInput(type="file")								
 							.col-md-4

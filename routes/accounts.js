@@ -85,8 +85,8 @@ module.exports = function(){
 	//Post the Image of the Profile
 	functions.uploadImageProfile = function(req,res){
 			//Read the file
-			var userAccount = req.user.accountIdentifier;
-			var userIdentifier = req.user.name;
+			var userAccount = req.headers["accountidentifier"];
+			var userIdentifier = req.headers["name"];
 			res.setHeader('Content-Type', 'application/json');
 
 	 		if(!util.isArray(req.files.file)){
@@ -97,14 +97,13 @@ module.exports = function(){
 		 		var imagesDirectory = userAccount;
 		 		var systemImageName = 'media/'+ userAccount+"_profile." + utils.getExtension(file.originalFilename);
 		 			 			
-	 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(imgURL){
-					client.update({name: userIdentifier },{profilePhoto:imgURL},function(err){
+	 			imageManager.uploadFile(file.path,imagesDirectory,systemImageName,false,function(url){
+					client.update({name: userIdentifier },{profilePhoto:url},function(err){
 		 				if(err)
 		 					res.send(err, 500);
 		 				else
 		 				{
-		 					req.user.profilePhoto=imgURL;
-		 					res.json({data:imgURL});	
+		 					res.json({data:url});	
 		 				}
 		 			});	 				
 	 			});	
