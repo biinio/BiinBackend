@@ -22,23 +22,32 @@ module.exports = function(){
 		trackingElements = require('../schemas/trackingelements'),
 		trackingBiined = require('../schemas/trackingbiined');
 
-var ENTER_BIIN_REGION  = "1";
-var EXIT_BIIN_REGION  = "2";
-var ENTER_BIIN  = "3";
-var EXIT_BIIN  = "4";
-var VIEWED_ELEMENT  = "5";
-var BIIN_NOTIFIED  = "6";
-var NOTIFICATION_OPENED  = "7";
-var ENTER_SITE_VIEW   = "8";
-var LEAVE_SITE_VIEW   = "9";
-var ENTER_ELEMENT_VIEW   = "10";
-var LEAVE_ELEMENT_VIEW   = "11";
-var BIINED_ELEMENT  = "12";
-var BIINED_SITE  = "13";
-var LIKE_SITE = "14";
-var UNLIKE_SITE = "15";
-var FOLLOW_SITE = "16";
-var UNFOLLOW_SITE = "17";
+var ENTER_BIIN_REGION  = "1";//TO->ID:beacon identifier
+var EXIT_BIIN_REGION  = "2";//TO->ID:beacon identifier
+var BIIN_NOTIFIED  = "3"; //TO->ID:_id object in biins
+var NOTIFICATION_OPENED = "4"; //TO->ID:_id object in biins
+
+var ENTER_ELEMENT_VIEW  = "5"; //TO->ID:element identifier
+var EXIT_ELEMENT_VIEW  = "6"; //TO->ID:element identifier
+var LIKE_ELEMENT = "7"; //TO->ID:element identifier
+var UNLIKE_ELEMENT = "8"; //TO->ID:element identifier
+var COLLECTED_ELEMENT = "9"; //TO->ID:element identifier
+var UNCOLLECTED_ELEMENT = "10"; //TO->ID:element identifier
+var SHARE_ELEMENT = "11"; //TO->ID:element identifier
+
+var ENTER_SITE_VIEW  = "12"; //TO->ID:site identifier
+var EXIT_SITE_VIEW  = "13"; //TO->ID:site identifier
+var LIKE_SITE = "14"; //TO->ID:site identifier
+var UNLIKE_SITE = "15"; //TO->ID:site identifier
+var FOLLOW_SITE = "16"; //TO->ID:site identifier
+var UNFOLLOW_SITE = "17"; //TO->ID:site identifier
+var SHARE_SITE = "18"; //TO->ID:site identifier
+
+var ENTER_BIIN = "19"; //TO->ID:beacon identifier
+var EXIT_BIIN ="20"; //TO->ID:beacon identifier
+
+var OPEN_APP = "21"; //TO->"biin_ios",""
+var CLOSE_APP = "22"; //TO->"biin_ios",
 
 	var functions ={}
 
@@ -103,120 +112,26 @@ var UNFOLLOW_SITE = "17";
 
 	/**GRAPHS AND CHARTS FUNCTIONS**/
 	functions.getVisitsReport =function(req, res){
-		var organizationId = req.headers["organizationid"];
-		var startDate = new Date(req.headers["startdate"]);
-		var endDate = new Date(req.headers["enddate"]);
-		if(startDate.getTime()<endDate.getTime()){
-			biin.find({organizationIdentifier:organizationId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
-				if(err)
-					throw err
-				else
-				{
-					var biinsIdentifier = [];
-					var projectionbiinsIdentifier = [];
-					for(var i = 0; i < data.length; i++)
-					{
-						biinsIdentifier.push({"actions.to":data[i].identifier});
-						projectionbiinsIdentifier.push({"to":data[i].identifier});
-
-					}
-					var counterDates = {};
-					var currentDate = new Date();
-					currentDate.setTime(startDate.getTime())
-					for(var i = 0; currentDate.getTime() <= endDate.getTime() ; i++)
-					{
-						counterDates[getDateString(currentDate)] = 0;
-						currentDate.setTime( startDate.getTime() + i * 86400000 );
-					}
-					if(biinsIdentifier.length == 0)
-					{
-						res.json({"data":counterDates});
-					}
-					else
-					{
-						mobileHistory.find( {$and:[{$or:biinsIdentifier},{$or:[{"actions.did":"3"},{"actions.did":"1"}]}]},
-							{actions:{ $elemMatch :{$and:[{$or:projectionbiinsIdentifier},{$or:[{"did":"3"},{"did":"1"}]}]}}, _id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
-						{
-							if(errMobile)
-								throw errMobile
-							else
-							{
-								var actions = [];
-								var compressedVisits = [];
-								for (var i = 0; i < data.length; i++) {
-									if(data[i].actions)
-										actions = actions.concat(data[i].actions);
-								}
-								/*for (var i = 0; i < actions.length; i++) {
-
-									var date = actions[i].at.split(" ")[0];
-									var time = actions[i].at.split(" ")[1];
-									var hours = time.split(":")[0];
-									var minutes = time.split(":")[1];
-									var seconds = time.split(":")[2];
-
-									var totalSeconds = parseInt(hours) * 3600;
-									totalSeconds += parseInt(minutes) * 60;
-									totalSeconds += seconds;
-
-
-
-									actions[i].at = actions[i].at.split(" ")[0];
-									actions[i].atTime = totalSeconds;
-
-
-
-									if(compressedVisits[actions[i].at+actions[i].whom] == null)
-										compressedVisits[actions[i].at+actions[i].whom] = [actions[i]];
-									else
-									{
-										var lastActionIndex = compressedVisits[actions[i].at+actions[i].whom].length-1;
-										if(Math.abs(compressedVisits[actions[i].at+actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 3600)
-										{
-											compressedVisits[actions[i].at+actions[i].whom].push(actions[i]);
-											compressedVisits[actions[i].at+actions[i].whom].sort(function(a,b){
-												return a.atTime - b.atTime;
-											});
-										}
-									}
-								}
-								var visits = [];
-								var compressedVisitsKeys = Object.keys(compressedVisits);
-								for (var i = 0; i < compressedVisitsKeys.length; i++) {
-									visits = visits.concat(compressedVisits[compressedVisitsKeys[i]]);
-								}*/
-
-								for (i = 0; i < actions.length; i++)
-								{
-									actions[i].at = actions[i].at.indexOf("T") == -1 ?  actions[i].at.split(" ")[0] : actions[i].at.split("T")[0];
-								};
-
-
-								//TODO: change date schema type from string to longInteger
-								var datesKeys = Object.keys(counterDates);
-								for (i = 0; i < actions.length; i++)
-								{
-									if(datesKeys.indexOf(actions[i].at) > -1)
-										counterDates[actions[i].at] += 1;
-								};
-								res.json({"data":counterDates});
-							}
-						});
-					}
-				}
-
-			});
-		}
-		else
-		{
-			res.json({"data":[]});
-		}
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var todayDate = new Date();
+    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId,
+      date:{$gte: startDate, $lt:todayDate},
+      $or: [ {action:ENTER_BIIN}, { action:ENTER_BIIN_REGION} ]  }},
+      { $group: { _id:{ $dateToString: { format: "%Y-%m-%d", date: "$date" } },count: {$sum: 1} } }], function(error,visitsData){
+        for (var i = 0; i < visitsData.length; i++) {
+          console.log(visitsData[i].count);
+        }
+      });
 	}
 
 	functions.getNotificationReport =function(req, res){
 		var organizationId = req.headers["organizationid"];
 		var startDate = new Date(req.headers["startdate"]);
 		var endDate = new Date(req.headers["enddate"]);
+
 		if(startDate.getTime()<endDate.getTime()){
 			biin.find({organizationIdentifier:organizationId, biinType:"1"},{"objects._id":1}).lean().exec(function(err,data){
 				if(err)
@@ -306,87 +221,8 @@ var UNFOLLOW_SITE = "17";
 		return stringDate;
 	}
 
-
-	function getBeaconsPerSite(){
-
-	}
-
 	functions.getNewVisitsLocal = function(req, res){
-		var organizationId = req.headers["organizationid"];
-		var dataVisits = {};
 
-		dataVisits.newVisits = 0;
-		dataVisits.returningVisits = 0;
-		biin.find({organizationIdentifier:organizationId, biinType:"2"},{identifier:1}).lean().exec(function(err,data){
-			if(err)
-				throw err
-			else
-			{
-				var biinsIdentifier = [];
-				for(var i = 0; i < data.length; i++)
-				{
-					biinsIdentifier.push({"actions.to":data[i].identifier});
-				}
-				if(biinsIdentifier.length == 0)
-				{
-					res.json({"data":dataVisits});
-					return;
-				}
-				else
-				{
-					mobileHistory.find({$or:biinsIdentifier,$or:[{"actions.did":"3"},{"actions.did":"1"}]},{_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
-					{
-						if(errMobile)
-							throw errMobile
-						else
-						{
-
-							var actions = [];
-							var compressedVisits = [];
-							for (var i = 0; i < data.length; i++) {
-								actions = actions.concat(data[i].actions);
-							}
-							for (var i = 0; i < actions.length; i++) {
-
-								var date = actions[i].at.split(" ")[0];
-								var time = actions[i].at.split(" ")[1];
-								var hours = time.split(":")[0];
-								var minutes = time.split(":")[1];
-								var seconds = time.split(":")[2];
-
-								var totalSeconds = parseInt(hours) * 3600;
-								totalSeconds += parseInt(minutes) * 60;
-								totalSeconds += seconds;
-
-								actions[i].at = actions[i].at.split(" ")[0];
-								actions[i].atTime = totalSeconds;
-
-								if(compressedVisits[actions[i].whom] == null)
-									compressedVisits[actions[i].whom] = [actions[i]];
-								else
-								{
-									var lastActionIndex = compressedVisits[actions[i].whom].length-1;
-									if(Math.abs(compressedVisits[actions[i].whom][lastActionIndex].atTime - actions[i].atTime) > 900)
-									{
-										compressedVisits[actions[i].whom].push(actions[i]);
-									}
-								}
-							}
-							var compressedVisitorsKeys = Object.keys(compressedVisits);
-							for (var i = 0; i < compressedVisitorsKeys.length; i++) {
-								if(compressedVisits[compressedVisitorsKeys[i]].length == 1)
-									dataVisits.newVisits++;
-								else
-									dataVisits.returningVisits++;
-							};
-
-							res.json({"data":dataVisits});
-						}
-					});
-				}
-			}
-
-		});
 	}
 
 
@@ -397,6 +233,7 @@ var UNFOLLOW_SITE = "17";
     var organizationId = filters.organizationId;
     var todayDate = new Date();
     var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+
     trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate} } },
       { $group: { _id:"$userIdentifier" } }], function(error,visitsData){
 
@@ -468,7 +305,7 @@ var UNFOLLOW_SITE = "17";
     var todayDate = new Date();
     var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
 
-    trackingElements.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate}, actions : ENTER_ELEMENT_VIEW } },
+    trackingElements.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate}, action : ENTER_ELEMENT_VIEW } },
       { $group: { _id:"$userIdentifier", elementsViewed : { $push : "$elementIdentifier" } } }], function(error,elementsVisitsByUser){
         var average = 0;
         if(elementsVisitsByUser.length){

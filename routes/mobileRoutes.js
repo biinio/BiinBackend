@@ -27,23 +27,32 @@ module.exports =function(){
 		trackingElements = require('../schemas/trackingelements'),
 		trackingBiined = require('../schemas/trackingbiined');
 
-var ENTER_BIIN_REGION  = "1";
-var EXIT_BIIN_REGION  = "2";
-var ENTER_BIIN  = "3";
-var EXIT_BIIN  = "4";
-var VIEWED_ELEMENT  = "5";
-var BIIN_NOTIFIED  = "6";
-var NOTIFICATION_OPENED  = "7";
-var ENTER_SITE_VIEW   = "8";
-var LEAVE_SITE_VIEW   = "9";
-var ENTER_ELEMENT_VIEW   = "10";
-var LEAVE_ELEMENT_VIEW   = "11";
-var BIINED_ELEMENT  = "12";
-var BIINED_SITE  = "13";
-var LIKE_SITE = "14";
-var UNLIKE_SITE = "15";
-var FOLLOW_SITE = "16";
-var UNFOLLOW_SITE = "17";
+		var ENTER_BIIN_REGION  = "1";//TO->ID:beacon identifier
+		var EXIT_BIIN_REGION  = "2";//TO->ID:beacon identifier
+		var BIIN_NOTIFIED  = "3"; //TO->ID:_id object in biins
+		var NOTIFICATION_OPENED = "4"; //TO->ID:_id object in biins
+
+		var ENTER_ELEMENT_VIEW  = "5"; //TO->ID:element identifier
+		var EXIT_ELEMENT_VIEW  = "6"; //TO->ID:element identifier
+		var LIKE_ELEMENT = "7"; //TO->ID:element identifier
+		var UNLIKE_ELEMENT = "8"; //TO->ID:element identifier
+		var COLLECTED_ELEMENT = "9"; //TO->ID:element identifier
+		var UNCOLLECTED_ELEMENT = "10"; //TO->ID:element identifier
+		var SHARE_ELEMENT = "11"; //TO->ID:element identifier
+
+		var ENTER_SITE_VIEW  = "12"; //TO->ID:site identifier
+		var EXIT_SITE_VIEW  = "13"; //TO->ID:site identifier
+		var LIKE_SITE = "14"; //TO->ID:site identifier
+		var UNLIKE_SITE = "15"; //TO->ID:site identifier
+		var FOLLOW_SITE = "16"; //TO->ID:site identifier
+		var UNFOLLOW_SITE = "17"; //TO->ID:site identifier
+		var SHARE_SITE = "18"; //TO->ID:site identifier
+
+		var ENTER_BIIN = "19"; //TO->ID:beacon identifier
+		var EXIT_BIIN ="20"; //TO->ID:beacon identifier
+
+		var OPEN_APP = "21"; //TO->"biin_ios",""
+		var CLOSE_APP = "22"; //TO->"biin_ios",
 
 	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
@@ -256,8 +265,8 @@ var UNFOLLOW_SITE = "17";
 
 	function setTrackingBiined( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			var filteredActionsElements = _.filter(actions,function(item){ return item.did == BIINED_ELEMENT;})
-			var filteredActionsSites = _.filter(actions,function(item){ return item.did == BIINED_SITE;})
+			var filteredActionsElements = _.filter(actions,function(item){ return item.did == COLLECTED_ELEMENT;})
+			var filteredActionsSites = _.filter(actions,function(item){ return item.did == 0;})
 			var filteredActions = filteredActionsSites.concat(filteredActionsElements);
 
 			var actionsToInsert = [];
@@ -321,7 +330,7 @@ var UNFOLLOW_SITE = "17";
 
 	function setTrackingBeacon( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_BIIN || item.did == EXIT_BIIN })
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_BIIN || item.did == EXIT_BIIN || item.did == ENTER_BIIN_REGION || item.did == EXIT_BIIN_REGION })
 			if(filteredActions.length>0){
 				var biinsToFind = _.uniq(_.pluck(filteredActions,"to"));
 				biin.find({identifier:{$in:biinsToFind}},{identifier:1,organizationIdentifier:1,siteIdentifier:1},function(err,biinData){
@@ -464,10 +473,39 @@ var UNFOLLOW_SITE = "17";
 
 	function setTrackingNotifications( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			if(actions.length>0){
-				resolve();
+			var filteredActions = _.filter(actions,function(item){ return item.did == NOTIFICATION_OPENED || item.did == BIIN_NOTIFIED })
+			if(filteredActions.length>0){
+				var objectsToFind = _.uniq(_.pluck(filteredActions,"to"));
+
+				biin.find({"objects._id":{$in:objectsToFind}},{"identifier":1,"organizationIdentifier":1,"siteIdentifier":1}).lean().exec(function(err,biinData){
+					if(err)
+						reject();
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var biinExtraInfo = _.find(biinData,function(data){
+							return _.findWhere(data.objects,{_id:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
+						action.siteIdentifier = biinExtraInfo.siteIdentifier;
+						action.beaconIdentifier = biinExtraInfo.identifier;
+						action.objectIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingNotifications.create(actionsToInsert,function(error){
+						if(error)
+							reject();
+						resolve();
+					});
+				});
 			}else{
-				reject();
+				resolve();
 			}
 		});
 	}
