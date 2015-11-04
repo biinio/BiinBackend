@@ -117,12 +117,21 @@ var CLOSE_APP = "22"; //TO->"biin_ios",
     var organizationId = filters.organizationId;
     var todayDate = new Date();
     var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+
+    var counterDates = {};
+    var currentDate = startDate;
+    for(var i = 0; currentDate.getTime() <= todayDate.getTime() ; i++)
+    {
+      counterDates[getDateString(currentDate)] = 0;
+      currentDate = new Date( Date.now() -dateRange*24*3600*1000 + (i+1)*24*3600*1000);
+    }
+
     trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId,
       date:{$gte: startDate, $lt:todayDate},
       $or: [ {action:ENTER_BIIN}, { action:ENTER_BIIN_REGION} ]  }},
       { $group: { _id:{ $dateToString: { format: "%Y-%m-%d", date: "$date" } },count: {$sum: 1} } }], function(error,visitsData){
         for (var i = 0; i < visitsData.length; i++) {
-          console.log(visitsData[i].count);
+          counterDates[visitsData[i]._id] = visitsData[i].count;
         }
       });
 	}
