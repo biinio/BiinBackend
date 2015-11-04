@@ -10,7 +10,7 @@ module.exports = function() {
         imageManager = require('../biin_modules/imageManager')();
 	var gm = require("gm"),imageMagick = gm.subClass({ imageMagick: true });
 	var Vibrant = require('node-vibrant');
-    //Schemas	
+    //Schemas
     var organization = require('../schemas/organization'),
         site = require('../schemas/site'),
         showcase = require('../schemas/showcase'),
@@ -46,7 +46,8 @@ module.exports = function() {
             description: 1,
             extraInfo: 1,
             media: 1,
-            loyaltyEnabled: 1
+            loyaltyEnabled: 1,
+            sites : 1
         }, function(err, data) {
             res.json({
                 data: data
@@ -170,11 +171,11 @@ module.exports = function() {
                             })
                             .write(tempPath, function(err, data) {
                                 var vibrant = new Vibrant(tempPath);
-                                vibrant.getSwatches(function(error, swatches) {   
+                                vibrant.getSwatches(function(error, swatches) {
                                     var mainColorRGB =  swatches.Vibrant? swatches.Vibrant.rgb : [0,0,0];
                                     var darkVibrantRGB =  swatches.DarkVibrant? swatches.DarkVibrant.rgb : [0,0,0];
                                     var lightVibrantRGB =  swatches.LightVibrant? swatches.LightVibrant.rgb : [255,255,255];
-                                    
+
                                     mainColor = "" + parseInt(mainColorRGB[0]) + "," + parseInt(mainColorRGB[1]) + "," + parseInt(mainColorRGB[2]);
                                     var vibrantColor = mainColor;
                                     var darkVibrantColor = "" + parseInt(darkVibrantRGB[0]) + "," + parseInt(darkVibrantRGB[1]) + "," + parseInt(darkVibrantRGB[2]);
@@ -191,7 +192,7 @@ module.exports = function() {
                                     mediaObj.vibrantColor = vibrantColor;
                                     mediaObj.vibrantDarkColor = darkVibrantColor;
                                     mediaObj.vibrantLightColor = lightVibrantColor;
-                                    
+
                                     organization.update({
                                         identifier: organizationIdentifier
                                     }, {
