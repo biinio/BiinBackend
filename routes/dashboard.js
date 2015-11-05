@@ -283,12 +283,12 @@ var DAY_IN_MILLISECONDS = 24*3600*1000;
       });
   }
   functions.getSessionsMobile = function(req, res){
-    res.json({data:2});
+    res.json({data:0});
 	}
   functions.getFromVisitsLocal = function(req, res){
   }
   functions.getSessionsLocal = function(req, res){
-    res.json({data:112});
+    res.json({data:0});
   }
 
   functions.getNewVisitsLocal = function(req, res){
