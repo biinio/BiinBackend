@@ -25,7 +25,8 @@ module.exports =function(){
 		trackingSites = require('../schemas/trackingsites'),
 		trackingLikes = require('../schemas/trackinglikes'),
 		trackingElements = require('../schemas/trackingelements'),
-		trackingBiined = require('../schemas/trackingbiined');
+		trackingBiined = require('../schemas/trackingbiined'),
+		trackingNotifications = require('../schemas/trackingnotifications');
 
 		var ENTER_BIIN_REGION  = "1";//TO->ID:beacon identifier
 		var EXIT_BIIN_REGION  = "2";//TO->ID:beacon identifier
