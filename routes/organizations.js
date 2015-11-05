@@ -224,26 +224,6 @@ module.exports = function() {
         //Get the organization identifier
         var organizationIdentifier = req.param("identifier");
 
-        if (req.session.defaultOrganization.identifier === organizationIdentifier) {
-            req.session.defaultOrganization = {};
-
-            client.update({
-                name: req.user.name
-            }, {
-                defaultOrganization: ''
-            }, function(err) {
-                if (err)
-                    res.send({
-                        status: 500
-                    });
-                else {
-                    req.session.defaultOrganization = null;
-                    req.user.defaultOrganization = null;
-                }
-            });
-
-        }
-
         organization.findOne({
             identifier: organizationIdentifier
         }, function(err, data) {
