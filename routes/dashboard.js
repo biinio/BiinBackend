@@ -20,7 +20,8 @@ module.exports = function(){
 		trackingSites = require('../schemas/trackingsites'),
 		trackingLikes = require('../schemas/trackinglikes'),
 		trackingElements = require('../schemas/trackingelements'),
-		trackingBiined = require('../schemas/trackingbiined');
+		trackingBiined = require('../schemas/trackingbiined'),
+    trackingNotifications = require('../schemas/trackingnotifications');
 
 var ENTER_BIIN_REGION  = "1";//TO->ID:beacon identifier
 var EXIT_BIIN_REGION  = "2";//TO->ID:beacon identifier
@@ -46,9 +47,10 @@ var SHARE_SITE = "18"; //TO->ID:site identifier
 var ENTER_BIIN = "19"; //TO->ID:beacon identifier
 var EXIT_BIIN ="20"; //TO->ID:beacon identifier
 
-var OPEN_APP = "21"; //TO->"biin_ios",""
-var CLOSE_APP = "22"; //TO->"biin_ios",
+var OPEN_APP = "21"; //TO->"biin_ios"
+var CLOSE_APP = "22"; //TO->"biin_ios"
 
+var DAY_IN_MILLISECONDS = 24*3600*1000;
 	var functions ={}
 
 
@@ -116,14 +118,15 @@ var CLOSE_APP = "22"; //TO->"biin_ios",
     var dateRange = filters.dateRange;
     var organizationId = filters.organizationId;
     var todayDate = new Date();
-    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    var tomorrowDate = new Date(Date.now() + DAY_IN_MILLISECONDS);
+    var startDate = new Date(Date.now() + -dateRange*DAY_IN_MILLISECONDS);
 
     var counterDates = {};
     var currentDate = startDate;
-    for(var i = 0; currentDate.getTime() <= todayDate.getTime() ; i++)
+    for(var i = 0; currentDate.getTime() <= tomorrowDate.getTime() ; i++)
     {
       counterDates[getDateString(currentDate)] = 0;
-      currentDate = new Date( Date.now() -dateRange*24*3600*1000 + (i+1)*24*3600*1000);
+      currentDate = new Date( Date.now() -dateRange*DAY_IN_MILLISECONDS + (i+1)*DAY_IN_MILLISECONDS);
     }
 
     trackingBeacon.aggregate([{ $match:{ organizationIdentifier:organizationId,
@@ -133,83 +136,35 @@ var CLOSE_APP = "22"; //TO->"biin_ios",
         for (var i = 0; i < visitsData.length; i++) {
           counterDates[visitsData[i]._id] = visitsData[i].count;
         }
+        res.json(counterDates);
       });
 	}
 
 	functions.getNotificationReport =function(req, res){
-		var organizationId = req.headers["organizationid"];
-		var startDate = new Date(req.headers["startdate"]);
-		var endDate = new Date(req.headers["enddate"]);
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var todayDate = new Date();
+    var tomorrowDate = new Date(Date.now() + DAY_IN_MILLISECONDS);
+    var startDate = new Date(Date.now() + -dateRange*DAY_IN_MILLISECONDS);
 
-		if(startDate.getTime()<endDate.getTime()){
-			biin.find({organizationIdentifier:organizationId, biinType:"1"},{"objects._id":1}).lean().exec(function(err,data){
-				if(err)
-					throw err
-				else
-				{
-					var objectsIdentifier = [];
-					var projectionbiinsIdentifier = [];
-					for(var i = 0; i < data.length; i++)
-					{
-						for (var j = 0; j < data[i].objects.length; j++) {
-							objectsIdentifier.push({"actions.to":data[i].objects[j]._id});
-							projectionbiinsIdentifier.push({"to":data[i].objects[j]._id});
-						};
-					}
-					var counterDates = {};
-					var currentDate = new Date();
-					currentDate.setTime(startDate.getTime())
-					for(var i = 0; currentDate.getTime() <= endDate.getTime() ; i++)
-					{
-						counterDates[getDateString(currentDate)] = 0;
-						currentDate.setTime( startDate.getTime() + i * 86400000 );
-					}
-					if(objectsIdentifier.length == 0)
-					{
-						res.json({"data":counterDates});
-					}
-					else
-					{
-						mobileHistory.find({$and:[{$or:objectsIdentifier},{"actions.did":"5"}]},
-							{ actions:{ $elemMatch :{$and:[{$or:projectionbiinsIdentifier},{$or:[{"did":"5"}]}]}},_id:0,"actions.at":1,"actions.whom":1}).lean().exec(function(errMobile,data)
-						{
-							if(errMobile)
-								throw errMobile
-							else
-							{
-								var actions = [];
-								var compressedVisits = [];
+    var counterDates = {};
+    var currentDate = startDate;
+    for(var i = 0; currentDate.getTime() <= tomorrowDate.getTime() ; i++)
+    {
+      counterDates[getDateString(currentDate)] = 0;
+      currentDate = new Date( Date.now() -dateRange*DAY_IN_MILLISECONDS + (i+1)*DAY_IN_MILLISECONDS);
+    }
 
-								for (var i = 0; i < data.length; i++) {
-									if(data[i].actions)
-										actions = actions.concat(data[i].actions);
-								}
-								var visits = [];
-								console.log(actions);
-								for (i = 0; i < actions.length; i++)
-								{
-									console.log(actions[i]);
-									actions[i].at = actions[i].at.indexOf("T") == -1 ?  actions[i].at.split(" ")[0] : actions[i].at.split("T")[0];
-								}
-								//TODO: change date schema type from string to longInteger
-								var datesKeys = Object.keys(counterDates);
-								for (i = 0; i < actions.length; i++)
-								{
-									if(datesKeys.indexOf(actions[i].at) > -1)
-										counterDates[actions[i].at] += 1;
-								};
-								res.json({"data":counterDates});
-							}
-						});
-					}
-				}
-
-			});
-		}
-		else
-		{
-			res.json({"data":[]});
-		}
+    trackingNotifications.aggregate([{ $match:{ organizationIdentifier:organizationId,
+      date:{$gte: startDate, $lt:todayDate},
+      action:BIIN_NOTIFIED}},
+      { $group: { _id:{ $dateToString: { format: "%Y-%m-%d", date: "$date" } },count: {$sum: 1} } }], function(error,notificationData){
+        for (var i = 0; i < notificationData.length; i++) {
+          counterDates[notificationData[i]._id] = notificationData[i].count;
+        }
+        res.json(counterDates);
+      });
 	}
 
 	function getDateString(date)
@@ -328,12 +283,12 @@ var CLOSE_APP = "22"; //TO->"biin_ios",
       });
   }
   functions.getSessionsMobile = function(req, res){
-    res.json({data:2});
+    res.json({data:0});
 	}
   functions.getFromVisitsLocal = function(req, res){
   }
   functions.getSessionsLocal = function(req, res){
-    res.json({data:112});
+    res.json({data:0});
   }
 
   functions.getNewVisitsLocal = function(req, res){
