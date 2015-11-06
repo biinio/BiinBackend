@@ -19,10 +19,14 @@ module.exports = function (db) {
     , methodOverride = require('method-override')
     , cors = require('cors')
     , expressValidator = require('express-validator');
+    
+    var compress = require('compression');
+    app.use(compress());
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     schemasValidations = {};
-    
+
+
     app.use(cors());
     // At the top of your web.js
     process.env.PWD = process.cwd();
@@ -58,7 +62,7 @@ module.exports = function (db) {
         app.enable('trust proxy');
         app.use(forceSsl);
     }
-    
+
 
     // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
@@ -77,11 +81,11 @@ module.exports = function (db) {
             mongoose_connection: db
         })
     }));
-    
+
     //Logger
     app.use(passport.initialize());
     app.use(passport.session());
-    app.use(expressValidator());//Express Validator 
+    app.use(expressValidator());//Express Validator
     app.use(bodyParser.json());
     app.use(methodOverride('X-HTTP-Method-Override'));
 
@@ -89,10 +93,10 @@ module.exports = function (db) {
         res.set('X-Powered-By', 'Ludusy');
         next();
     });
-    
+
     //Routes
     var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
-    
+
     /// error handlerslogger
     // development error handler
     // will print stacktrace
@@ -117,7 +121,7 @@ module.exports = function (db) {
             });
         });
     }
-    
+
     app.use(function(req, res, next){
       // the status option, or res.statusCode = 404
       // are equivalent, however with the option we
