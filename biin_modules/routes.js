@@ -101,9 +101,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Organization Routes
     app.get('/organizations',restrict,organizations.index);
     app.get('/api/organizations',organizations.list);
-    app.put('/api/organizations/:identifier',organizations.set);
-    app.put('/api/organizations',organizations.set);
-    app.post('/api/organizations',organizations.set);
+
+    app.post('/api/organizations/:identifier',organizations.set);
+    app.put('/api/organizations/:accountIdentifier',organizations.create);
+
     app.post('/api/organizations/:identifier/image',multipartMiddleware,organizations.uploadImage);
 
     app.delete('/api/organizations/:identifier',organizations.delete);
