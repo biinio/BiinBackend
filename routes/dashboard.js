@@ -283,7 +283,21 @@ var DAY_IN_MILLISECONDS = 24*3600*1000;
       });
   }
   functions.getSessionsMobile = function(req, res){
-    res.json({data:0});
+    //res.json({data:0});
+
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var todayDate = new Date();
+    var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
+    trackingSites.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate}, $or : [ { action : ENTER_SITE_VIEW}, {action : LEAVE_SITE_VIEW}] } },
+      { $group: { _id:"$userIdentifier", elementsViewed : { $push : "$elementIdentifier" } } }], function(error,sitesEnterAndLeaving){
+
+        trackingElements.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate}, $or : [ { action : ENTER_ELEMENT_VIEW}, {action : LEAVE_ELEMENT_VIEW}] }},
+          { $group: { _id:"$userIdentifier", elementsViewed : { $push : "$elementIdentifier" } } }], function(error,elementsEnterAndLeaving){
+
+          });
+      });
 	}
   functions.getFromVisitsLocal = function(req, res){
   }
