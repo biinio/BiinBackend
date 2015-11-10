@@ -306,7 +306,7 @@ var DAY_IN_MILLISECONDS = 24*3600*1000;
     var organizationId = filters.organizationId;
     var todayDate = new Date();
     var startDate = new Date(Date.now() + -dateRange*24*3600*1000);
-    var siteID =  filters.siteId;
+    var siteId =  filters.siteId;
     trackingSites.aggregate([{ $match:{ organizationIdentifier:organizationId, date:{$gte: startDate, $lt:todayDate}, action : ENTER_SITE_VIEW, siteIdentifier:siteId } },
       { $group: { _id:"$userIdentifier", count:{ $sum: 1 } }}], function(error,sitesSessions){
           var sessionCounter = 0;
