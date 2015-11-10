@@ -3,6 +3,7 @@ module.exports =function(){
 	var _= require('underscore');
 	var math = require('mathjs'), moment = require('moment-timezone');
 	var util = require('util');
+	var initialDataJson = require('../config/initialData.json');
 
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
@@ -254,9 +255,9 @@ module.exports =function(){
 			setTrackingLike(model.actions,identifier),
 			setTrackingSites(model.actions,identifier),
 			setTrackingFollow(model.actions,identifier),
-			setTrackingNotifications(model.actions,identifier)]).then(function(){
+			setTrackingNotifications(model.actions,identifier)]).then(function(b){
 				res.status(200).json({response:"nothing here"});
-			}).catch(function(){
+			}).catch(function(a){
 				res.status(500).json({response:"something bad happend here"});
 			})
 
@@ -289,7 +290,7 @@ module.exports =function(){
 						}).lean().exec(
 							function(err,orgData){
 								if(err)
-									reject();
+									reject(err);
 
 								var actionsToInsert = [];
 								for (var i = 0; i < filteredActions.length; i++) {
@@ -321,7 +322,7 @@ module.exports =function(){
 								}
 								trackingBiined.create(actionsToInsert,function(error){
 									if(error)
-										reject();
+										reject(error);
 									resolve();
 								});
 							});
@@ -336,7 +337,7 @@ module.exports =function(){
 				var biinsToFind = _.uniq(_.pluck(filteredActions,"to"));
 				biin.find({identifier:{$in:biinsToFind}},{identifier:1,organizationIdentifier:1,siteIdentifier:1},function(err,biinData){
 					if(err)
-						reject();
+						reject(err);
 					var actionsToInsert = [];
 					for (var i = 0; i < filteredActions.length; i++) {
 						var biinExtraInfo = _.findWhere(biinData,{identifier:filteredActions[i].to});
@@ -354,7 +355,7 @@ module.exports =function(){
 					}
 					trackingBeacon.create(actionsToInsert,function(error){
 						if(error)
-							reject();
+							reject(error);
 						resolve();
 					});
 				});
@@ -366,12 +367,12 @@ module.exports =function(){
 
 	function setTrackingElements( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_ELEMENT_VIEW || item.did == LEAVE_ELEMENT_VIEW })
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_ELEMENT_VIEW || item.did == EXIT_ELEMENT_VIEW })
 			if(filteredActions.length>0){
 				var elementsToFind = _.uniq(_.pluck(filteredActions,"to"));
 				organization.find({"elements.elementIdentifier":{$in:elementsToFind}},{"identifier":1,"elements.elementIdentifier":1}).lean().exec(function(err,elementData){
 					if(err)
-						reject();
+						reject(err);
 					var actionsToInsert = [];
 					for (var i = 0; i < filteredActions.length; i++) {
 						var elementExtraInfo = _.find(elementData,function(org){
@@ -390,7 +391,7 @@ module.exports =function(){
 					}
 					trackingElements.create(actionsToInsert,function(error){
 						if(error)
-							reject();
+							reject(error);
 						resolve();
 					});
 				});
@@ -407,7 +408,7 @@ module.exports =function(){
 				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
 				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
 					if(err)
-						reject();
+						reject(err);
 					var actionsToInsert = [];
 					for (var i = 0; i < filteredActions.length; i++) {
 						var siteExtraInfo = _.find(siteData,function(org){
@@ -426,7 +427,7 @@ module.exports =function(){
 					}
 					trackingFollow.create(actionsToInsert,function(error){
 						if(error)
-							reject();
+							reject(error);
 						resolve();
 					});
 				});
@@ -443,7 +444,7 @@ module.exports =function(){
 				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
 				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
 					if(err)
-						reject();
+						reject(err);
 					var actionsToInsert = [];
 					for (var i = 0; i < filteredActions.length; i++) {
 						var siteExtraInfo = _.find(siteData,function(org){
@@ -462,7 +463,7 @@ module.exports =function(){
 					}
 					trackingLikes.create(actionsToInsert,function(error){
 						if(error)
-							reject();
+							reject(error);
 						resolve();
 					});
 				});
@@ -480,7 +481,7 @@ module.exports =function(){
 
 				biin.find({"objects._id":{$in:objectsToFind}},{"identifier":1,"organizationIdentifier":1,"siteIdentifier":1}).lean().exec(function(err,biinData){
 					if(err)
-						reject();
+						reject(err);
 					var actionsToInsert = [];
 					for (var i = 0; i < filteredActions.length; i++) {
 						var biinExtraInfo = _.find(biinData,function(data){
@@ -501,7 +502,7 @@ module.exports =function(){
 					}
 					trackingNotifications.create(actionsToInsert,function(error){
 						if(error)
-							reject();
+							reject(error);
 						resolve();
 					});
 				});
@@ -513,12 +514,12 @@ module.exports =function(){
 
 	function setTrackingSites( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_SITE_VIEW || item.did == LEAVE_SITE_VIEW })
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_SITE_VIEW || item.did == EXIT_SITE_VIEW })
 			if(filteredActions.length>0){
 				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
 				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
 					if(err)
-						reject();
+						reject(err);
 					var actionsToInsert = [];
 					for (var i = 0; i < filteredActions.length; i++) {
 						var siteExtraInfo = _.find(siteData,function(org){
@@ -537,7 +538,7 @@ module.exports =function(){
 					}
 					trackingSites.create(actionsToInsert,function(error){
 						if(error)
-							reject();
+							reject(error);
 						resolve();
 					});
 				});
@@ -849,6 +850,10 @@ module.exports =function(){
 				resultCallback(newModel)
 			}
 		});
+	}
+
+	functions.getInitialData= function(req,res){
+		res.json(initialDataJson);
 	}
 
 
