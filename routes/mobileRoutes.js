@@ -55,16 +55,16 @@ module.exports =function(){
 
 		var OPEN_APP = "21"; //TO->"biin_ios",""
 		var CLOSE_APP = "22"; //TO->"biin_ios",
-    
+
         var SITE_DEFAULT_IMAGE = {
-            domainColor: '170, 171, 171', 
+            domainColor: '170, 171, 171',
             mediaType: '1',
             title1: 'default',
             url: 'https://biinapp.blob.core.windows.net/biinmedia/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/media/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/4e8b2fb3-af89-461d-9c37-2cc667c20653/media/4af24d51-2173-4d41-b651-d82f18f00d1b.jpg',
             vibrantColor: '170, 171, 171',
             vibrantDarkColor: '85,86,86',
             vibrantLightColor: '170, 171, 171'
-        };  
+        };
 
 	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
@@ -643,12 +643,12 @@ module.exports =function(){
 									if(showcaseInfo && showcaseInfo.elements){
 										for(var el =0 ;el<showcaseInfo.elements.length;el++){
 											if(showcaseInfo.elements[el].isHighlight=='1'){
-												highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier});
+												highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier, _id:showcaseInfo.elements[el]._id});
 											}
 										}
 									}
 
-									showcases.push({'identifier':showcaseInfo.identifier,'highlightElements':highLighEl});
+									showcases.push({'_id':showcaseInfo._id,'identifier':showcaseInfo.identifier,'highlightElements':highLighEl});
 								 }
 
 							}
