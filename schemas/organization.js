@@ -59,7 +59,7 @@ var orgSchema = new Schema({
 		email:{type:String, default:"email@email.com"},
 		lat:{type:String,default:0},
 		lng:{type:String,default:0},
-		geoPosition:{type:[Number],default:index:"2dsphere"},
+		geoPosition:{type:[Number],index:"2dsphere"},
 		searchTags:[],
 		categories:[
 			{
