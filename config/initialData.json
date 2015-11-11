@@ -28,6 +28,7 @@
         "streetAddress1": "Curridabat",
         "latitude": "9.923165731693336",
         "longitude": "-84.03725208107909",
+        "collectCount": "0",
         "email": "epadilla@biin.io",
         "nutshell": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
         "phoneNumber": "1800-888-8888",
@@ -53,32 +54,32 @@
               {
                 "_id": "561c2d9cb5fa4b03004e8e1a",
                 "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "561c2d9cb5fa4b03004e8e18",
                 "elementIdentifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "561c2d9cb5fa4b03004e8e19",
                 "elementIdentifier": "db424a8b-b937-4a36-b134-88f95678b816",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "561c2d9cb5fa4b03004e8e1b",
                 "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "561c2d9cb5fa4b03004e8e1c",
                 "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "561c2d9cb5fa4b03004e8e1d",
                 "elementIdentifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               }
             ]
           },
@@ -90,17 +91,17 @@
               {
                 "_id": "561c2dc4b5fa4b03004e8e36",
                 "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "561c2dc4b5fa4b03004e8e34",
                 "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "561c2dc4b5fa4b03004e8e35",
                 "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               }
             ]
           }
@@ -446,32 +447,32 @@
               {
                 "_id": "161c2d9cb5fa4b03004e8e1a",
                 "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "161c2d9cb5fa4b03004e8e18",
                 "elementIdentifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "161c2d9cb5fa4b03004e8e19",
                 "elementIdentifier": "db424a8b-b937-4a36-b134-88f95678b816",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "161c2d9cb5fa4b03004e8e1b",
                 "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "161c2d9cb5fa4b03004e8e1c",
                 "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "161c2d9cb5fa4b03004e8e1d",
                 "elementIdentifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               }
             ]
           },
@@ -483,17 +484,17 @@
               {
                 "_id": "161c2dc4b5fa4b03004e8e36",
                 "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "161c2dc4b5fa4b03004e8e34",
                 "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "161c2dc4b5fa4b03004e8e35",
                 "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               }
             ]
           }
@@ -839,32 +840,32 @@
               {
                 "_id": "261c2d9cb5fa4b03004e8e1a",
                 "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "261c2d9cb5fa4b03004e8e18",
                 "elementIdentifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "261c2d9cb5fa4b03004e8e19",
                 "elementIdentifier": "db424a8b-b937-4a36-b134-88f95678b816",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "261c2d9cb5fa4b03004e8e1b",
                 "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "261c2d9cb5fa4b03004e8e1c",
                 "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "261c2d9cb5fa4b03004e8e1d",
                 "elementIdentifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               }
             ]
           },
@@ -876,17 +877,17 @@
               {
                 "_id": "261c2dc4b5fa4b03004e8e36",
                 "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "261c2dc4b5fa4b03004e8e34",
                 "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "261c2dc4b5fa4b03004e8e35",
                 "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               }
             ]
           }
@@ -1232,32 +1233,32 @@
               {
                 "_id": "361c2d9cb5fa4b03004e8e1a",
                 "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "361c2d9cb5fa4b03004e8e18",
                 "elementIdentifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "361c2d9cb5fa4b03004e8e19",
                 "elementIdentifier": "db424a8b-b937-4a36-b134-88f95678b816",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "361c2d9cb5fa4b03004e8e1b",
                 "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "361c2d9cb5fa4b03004e8e1c",
                 "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "361c2d9cb5fa4b03004e8e1d",
                 "elementIdentifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               }
             ]
           },
@@ -1269,17 +1270,17 @@
               {
                 "_id": "361c2dc4b5fa4b03004e8e36",
                 "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "361c2dc4b5fa4b03004e8e34",
                 "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               },
               {
                 "_id": "361c2dc4b5fa4b03004e8e35",
                 "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-                "userViewed": "0"
+                "hasBeenSeen": "0"
               }
             ]
           }
