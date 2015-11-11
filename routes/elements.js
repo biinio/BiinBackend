@@ -6,6 +6,17 @@ module.exports = function(){
 	var _= require('underscore');
 	var zlib = require('zlib');
 
+    // Default image for elements
+    var ELEMENTS_DEFAULT_IMAGE = {
+        domainColor: '170, 171, 171', 
+        mediaType: '1',
+        title1: 'default',
+        url: 'https://biinapp.blob.core.windows.net/biinmedia/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/media/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/4e8b2fb3-af89-461d-9c37-2cc667c20653/media/4af24d51-2173-4d41-b651-d82f18f00d1b.jpg',
+        vibrantColor: '170, 171, 171',
+        vibrantDarkColor: '85,86,86',
+        vibrantLightColor: '170, 171, 171'
+    };       
+    
 	//Get the index view of the elements
 	functions.index = function(req,res){
 		var callback= function(organization,req, res){
@@ -54,6 +65,7 @@ module.exports = function(){
 							elementObj.initialDate=elementObj.initialDate?elementObj.initialDate:"";
 							delete elementObj.media;
 							elementObj.media=[];
+                            
 							for(var i=0; i< data.elements[0].media.length; i++){
 								var media ={};
 								media.mediaType="1";
@@ -64,6 +76,11 @@ module.exports = function(){
 								media.vibrantLightColor= data.elements[0].media[i].vibrantLightColor ? data.elements[0].media[i].vibrantLightColor : "0,0,0";
 								elementObj.media.push(media);
 							}
+                            
+                            //Add default image if none was uploaded
+                            if (data.elements[0].media.length == 0) {
+                                    elementObj.media.push(ELEMENTS_DEFAULT_IMAGE);
+                                }
 
 							var isUserBiined = false;
 							for(var i=0; i<userInfo.biinieCollections.length & !isUserBiined;i++){
@@ -122,7 +139,8 @@ module.exports = function(){
 							elementObj.isActive="1";
 							elementObj.position=elementObj.position?elementObj.position:"1";
 							elementObj.identifier= elementObj.elementIdentifier;
-
+							elementObj.detailsHtml=elementObj.detailsHtml?elementObj.detailsHtml:"";
+							
 							var userRating = _.findWhere(elementObj.rating,{biinieIdentifier:biinieIdentifier});
 							elementObj.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
 							var rating = 0;
@@ -164,7 +182,7 @@ module.exports = function(){
 							delete elementObj.domainColor;
 							delete elementObj.actionType;
 							delete elementObj.textColor;
-							delete elementObj.categories;
+							//delete elementObj.categories;
 							delete elementObj.activateNotification;
 
 							//To implement

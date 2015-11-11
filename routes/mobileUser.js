@@ -9,7 +9,18 @@ module.exports = function(){
 		imageManager=require('../biin_modules/imageManager')(),
 		category = require('../schemas/category')
 		utils =require("../biin_modules/utils")();
-	var organization = require('../schemas/organization')
+	var organization = require('../schemas/organization');
+    
+    // Default image for organizations
+    var ORGANIZATION_DEFAULT_IMAGE = {
+        domainColor: '170, 171, 171', 
+        mediaType: '1',
+        title1: 'default',
+        url: 'https://biinapp.blob.core.windows.net/biinmedia/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/media/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/4e8b2fb3-af89-461d-9c37-2cc667c20653/media/4af24d51-2173-4d41-b651-d82f18f00d1b.jpg',
+        vibrantColor: '170, 171, 171',
+        vibrantDarkColor: '85,86,86',
+        vibrantLightColor: '170, 171, 171'
+    };       
 
 	var functions ={};
 
@@ -44,6 +55,7 @@ module.exports = function(){
 					res.json({data:{},status:"7",result:"0"});
 				else{
 					var result = foundBinnie.toObject();
+					result.birthDate = foundBinnie.birthDate.replace("T", " ").replace("Z","");
 					result.isEmailVerified = foundBinnie.accountState?"1":"0";
 					delete result.accountState;
 					res.json({data:result,status:"0",result:"1"});
@@ -101,7 +113,7 @@ module.exports = function(){
 							delete org.loyaltyEnabled;
 						org.loyalty = loyaltyModel;
 						//var loyalty = loyaltyModel;
-
+                        
 						if(typeof(org.media)!='undefined'){
 							if(typeof(org.media) == "object" && !Array.isArray(org.media)){
 								var newMedia=[];
@@ -115,7 +127,12 @@ module.exports = function(){
 								newMedia[0].vibrantLightColor= org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
 							}
 							else if( Array.isArray(org.media)) {
-								var newMedia=[];
+                                
+                                var newMedia=[];
+                                if (org.media.length == 0) {
+                                    newMedia.push(ORGANIZATION_DEFAULT_IMAGE);
+                                }
+								
 								for(var i=0; i<org.media.length;i++){
 									newMedia[i]={};				
 									newMedia[i].domainColor= org.media[i].mainColor ? org.media[i].mainColor.replace("rgb(","").replace(")") : "0,0,0";
@@ -245,7 +262,7 @@ module.exports = function(){
 		model.biinName= req.params.biinName;
 		model.password= req.params.password;
 		model.gender= req.params.gender;
-		model.birthDate = utils.getDateNow();
+		model.birthDate = req.params.birthdate;
 		//** Set that the email is the same as biinName
 		model.email = model.biinName;
 		req.body.model = model;

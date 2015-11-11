@@ -178,7 +178,7 @@ biinAppAccount.controller("accountController",['$translate','$scope', '$http','$
           $scope.prevSaveOrganization=jQuery.extend({}, $scope.organizations[$scope.selectedOrganization]);
           $scope.isAnalazingOrg=false;          
 
-          $http.put('api/organizations/'+$scope.currentModelId,{model:$scope.organizations[$scope.selectedOrganization]}).success(function(data,status){
+          $http.put('api/organizations/'+$scope.currentModelId,{model:$scope.organizations[$scope.selectedOrganization], accountIdentifier:$scope.account.profile.accountIdentifier}).success(function(data,status){
             if(status===200){
               $scope.succesSaveShow=true;
             }else
@@ -281,6 +281,7 @@ biinAppAccount.directive('uploadProfileImage',function(){
             var xhr = new XMLHttpRequest();
 
             xhr.open('POST', 'api/imageProfile');
+            xhr.setRequestHeader('accountidentifier',scope.account.profile.accountIdentifier);
             xhr.onload = function (data) {
               if (xhr.status === 200) {
                 var obj= $.parseJSON(xhr.response);
@@ -340,6 +341,7 @@ biinAppAccount.directive('uploadOrganizationImage',function(){
             var organization=scope.currentModelId;
 
             xhr.open('POST', 'api/organizations/'+organization+"/image");
+            xhr.setRequestHeader('accountidentifier',scope.account.profile.accountIdentifier);
             xhr.onload = function (data) {
               if (xhr.status === 200) {
                 var obj= $.parseJSON(xhr.response);

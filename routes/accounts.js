@@ -85,8 +85,8 @@ module.exports = function(){
 	//Post the Image of the Profile
 	functions.uploadImageProfile = function(req,res){
 			//Read the file
-			var userAccount = req.user.accountIdentifier;
-			var userIdentifier = req.user.name;
+			var userAccount = req.headers["accountidentifier"];
+			var userIdentifier = req.headers["name"];
 			res.setHeader('Content-Type', 'application/json');
 
 	 		if(!util.isArray(req.files.file)){
@@ -103,7 +103,6 @@ module.exports = function(){
 		 					res.send(err, 500);
 		 				else
 		 				{
-		 					req.user.profilePhoto=url;
 		 					res.json({data:url});	
 		 				}
 		 			});	 				

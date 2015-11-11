@@ -10,7 +10,7 @@ module.exports = function() {
         imageManager = require('../biin_modules/imageManager')();
 	var gm = require("gm"),imageMagick = gm.subClass({ imageMagick: true });
 	var Vibrant = require('node-vibrant');
-    //Schemas	
+    //Schemas
     var organization = require('../schemas/organization'),
         site = require('../schemas/site'),
         showcase = require('../schemas/showcase'),
@@ -46,66 +46,59 @@ module.exports = function() {
             description: 1,
             extraInfo: 1,
             media: 1,
-            loyaltyEnabled: 1
+            loyaltyEnabled: 1,
+            sites : 1
         }, function(err, data) {
             res.json({
                 data: data
             });
         });
     }
-
     //PUT/POST an organization
     functions.set = function(req, res) {
         //Perform an update
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
+        var model = req.body.model;
 
-        //If is pushing a new model
-        if (typeof(organizationIdentifier) === "undefined") {
-            var newModel = new organization();
-            organizationIdentifier = utils.getGUID();
+        delete model._id;
+        delete model.identifier;
+        delete model.accountIdentifier;
 
-            //Set the account and de user identifier
-            newModel.identifier = organizationIdentifier;
-
-            //Perform an create
-            newModel.save(function(err) {
+        organization.update({
+                identifier: organizationIdentifier
+            }, {
+                $set: model
+            }, {
+                upsert: false
+            },
+            function(err) {
                 if (err)
                     res.send(err, 500);
-                else {
-                    //Return the state and the object
-                    res.send(newModel, 201);
-                }
-            });
-        } else {
-            var model = req.body.model;
-            delete model._id;
+                else
+                //Return the state
+                    res.send(model, 200);
+            }
+        );
+    }
 
-            //Validate the Model
-            /*
-
-            var errors =utils.validate(new organization().validations(),req,'model');
-            if(errors)
-            	res.send(errors,400);
-            else
-            */
-            delete model.identifier;
-            organization.update({
-                    identifier: organizationIdentifier
-                }, {
-                    $set: model
-                }, {
-                    upsert: false
-                },
-                function(err) {
-                    if (err)
-                        res.send(err, 500);
-                    else
-                    //Return the state
-                        res.send(model, 200);
-                }
-            );
-        }
+    //PUT an organization
+    functions.create = function(req, res) {
+        //Perform an update
+        var accountIdentifier = req.param("accountIdentifier");
+        res.setHeader('Content-Type', 'application/json');
+        var newModel = new organization();
+        newModel.accountIdentifier = accountIdentifier;
+        newModel.identifier = utils.getGUID();
+        //Perform an create
+        newModel.save(function(err) {
+            if (err)
+                res.send(err, 500);
+            else {
+                //Return the state and the object
+                res.send(newModel, 201);
+            }
+        });
     }
 
     //Set showcases into sites in a organization
@@ -140,7 +133,7 @@ module.exports = function() {
         //Read the file
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
-
+        var userAccount = req.headers["accountidentifier"];
         if (!util.isArray(req.files.file)) {
 
             var file = req.files.file;
@@ -169,9 +162,10 @@ module.exports = function() {
                             .write(tempPath, function(err, data) {
                                 var vibrant = new Vibrant(tempPath);
                                 vibrant.getSwatches(function(error, swatches) {
-                                    var mainColorRGB = swatches.Vibrant.rgb;
-                                    var darkVibrantRGB = swatches.DarkVibrant.rgb;
-                                    var lightVibrantRGB = swatches.LightVibrant.rgb;
+                                    var mainColorRGB =  swatches.Vibrant? swatches.Vibrant.rgb : [0,0,0];
+                                    var darkVibrantRGB =  swatches.DarkVibrant? swatches.DarkVibrant.rgb : [0,0,0];
+                                    var lightVibrantRGB =  swatches.LightVibrant? swatches.LightVibrant.rgb : [255,255,255];
+
                                     mainColor = "" + parseInt(mainColorRGB[0]) + "," + parseInt(mainColorRGB[1]) + "," + parseInt(mainColorRGB[2]);
                                     var vibrantColor = mainColor;
                                     var darkVibrantColor = "" + parseInt(darkVibrantRGB[0]) + "," + parseInt(darkVibrantRGB[1]) + "," + parseInt(darkVibrantRGB[2]);
@@ -188,7 +182,7 @@ module.exports = function() {
                                     mediaObj.vibrantColor = vibrantColor;
                                     mediaObj.vibrantDarkColor = darkVibrantColor;
                                     mediaObj.vibrantLightColor = lightVibrantColor;
-                                    
+
                                     organization.update({
                                         identifier: organizationIdentifier
                                     }, {
@@ -219,26 +213,6 @@ module.exports = function() {
 
         //Get the organization identifier
         var organizationIdentifier = req.param("identifier");
-
-        if (req.session.defaultOrganization.identifier === organizationIdentifier) {
-            req.session.defaultOrganization = {};
-
-            client.update({
-                name: req.user.name
-            }, {
-                defaultOrganization: ''
-            }, function(err) {
-                if (err)
-                    res.send({
-                        status: 500
-                    });
-                else {
-                    req.session.defaultOrganization = null;
-                    req.user.defaultOrganization = null;
-                }
-            });
-
-        }
 
         organization.findOne({
             identifier: organizationIdentifier

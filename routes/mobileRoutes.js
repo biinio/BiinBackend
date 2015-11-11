@@ -3,58 +3,59 @@ module.exports =function(){
 	var _= require('underscore');
 	var math = require('mathjs'), moment = require('moment-timezone');
 	var util = require('util');
+	var initialDataJson = require('../config/initialData.json');
 
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
 	var utils = require('../biin_modules/utils')(), moment = require('moment');
-	var organization = require('../schemas/organization'), 
-		site = require('../schemas/site'), 
+	var organization = require('../schemas/organization'),
+		site = require('../schemas/site'),
 		showcase = require('../schemas/showcase'),
 		region= require('../schemas/region'),
-		mobileHistory=require('../schemas/mobileHistory'),  
-		biin = require('../schemas/biin'), 
-		mobileHistory=require('../schemas/tempHistory'),  
+		mobileHistory=require('../schemas/mobileHistory'),
+		biin = require('../schemas/biin'),
+		mobileHistory=require('../schemas/tempHistory'),
 		siteCategory = require('../schemas/searchSiteCategory');
 
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
-	
-	//GET Categories
-	/*
-	functions.getCategories=function(req,res){
-		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getCategories.json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}
 
+	//Tracking schemas
+	var trackingBeacon = require('../schemas/trackingbeacon'),
+		trackingFollow = require('../schemas/trackingfollows'),
+		trackingSites = require('../schemas/trackingsites'),
+		trackingLikes = require('../schemas/trackinglikes'),
+		trackingElements = require('../schemas/trackingelements'),
+		trackingBiined = require('../schemas/trackingbiined'),
+		trackingNotifications = require('../schemas/trackingnotifications');
 
-	//GET Site
-	functions.getSite=function(req,res){
-		var site = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/sites/'+site+".json", "utf8");
-		res.json(JSON.parse(jsonObj));
-	}
-	*/
+		var ENTER_BIIN_REGION  = "1";//TO->ID:beacon identifier
+		var EXIT_BIIN_REGION  = "2";//TO->ID:beacon identifier
+		var BIIN_NOTIFIED  = "3"; //TO->ID:_id object in biins
+		var NOTIFICATION_OPENED = "4"; //TO->ID:_id object in biins
 
-	//GET Regions
-	/*functions.getRegions=function(req,res){
-		var jsonObj= fs.readFileSync("./public/workingFiles/biinFakeJsons/getRegions.json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}*/
+		var ENTER_ELEMENT_VIEW  = "5"; //TO->ID:element identifier
+		var EXIT_ELEMENT_VIEW  = "6"; //TO->ID:element identifier
+		var LIKE_ELEMENT = "7"; //TO->ID:element identifier
+		var UNLIKE_ELEMENT = "8"; //TO->ID:element identifier
+		var COLLECTED_ELEMENT = "9"; //TO->ID:element identifier
+		var UNCOLLECTED_ELEMENT = "10"; //TO->ID:element identifier
+		var SHARE_ELEMENT = "11"; //TO->ID:element identifier
 
-	//GET Element
-	/*functions.getElement=function(req,res){
-		var element = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/elements/'+element+".json", "utf8");		
-		res.json(JSON.parse(jsonObj));
-	}*/
+		var ENTER_SITE_VIEW  = "12"; //TO->ID:site identifier
+		var EXIT_SITE_VIEW  = "13"; //TO->ID:site identifier
+		var LIKE_SITE = "14"; //TO->ID:site identifier
+		var UNLIKE_SITE = "15"; //TO->ID:site identifier
+		var FOLLOW_SITE = "16"; //TO->ID:site identifier
+		var UNFOLLOW_SITE = "17"; //TO->ID:site identifier
+		var SHARE_SITE = "18"; //TO->ID:site identifier
 
+		var ENTER_BIIN = "19"; //TO->ID:beacon identifier
+		var EXIT_BIIN ="20"; //TO->ID:beacon identifier
 
-	//GET Site
-	/*functions.getShowcase=function(req,res){
-		var showcase = req.param("identifier");
-		var jsonObj= fs.readFileSync('./public/workingFiles/biinFakeJsons/showcases/'+showcase+".json", "utf8");
-		res.json(JSON.parse(jsonObj));
-	}*/
+		var OPEN_APP = "21"; //TO->"biin_ios",""
+		var CLOSE_APP = "22"; //TO->"biin_ios",
+
 	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
 	functions.getCategories=function(req,res){
@@ -64,7 +65,7 @@ module.exports =function(){
 		var enviromentId = process.env.DEFAULT_SYS_ENVIROMENT;
 
 		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
+		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){
 			if(err){
 				res.json({data:{status:"5",data:{}}});
 			}else{
@@ -94,9 +95,9 @@ module.exports =function(){
 									var countHasBiins=0;
 									var hasBiinsProved=0;
 									//Remove the Organization
-									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){										
+									for(var orgIndex =0; orgIndex<sitesCategories.length; orgIndex++){
 										if('sites' in sitesCategories[orgIndex] )
-											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){														
+											for(var siteIndex=0; siteIndex<sitesCategories[orgIndex].sites.length ;siteIndex++){
 													if( sitesCategories[orgIndex].sites[siteIndex].isValid=true && 'categories' in sitesCategories[orgIndex].sites[siteIndex] && sitesCategories[orgIndex].sites[siteIndex].categories.length>0){
 														//Get the categories of the site
 														var sitesCat = _.pluck(sitesCategories[orgIndex].sites[siteIndex].categories,'identifier')
@@ -115,38 +116,38 @@ module.exports =function(){
 																				sitesResult.push({'identifier':siteIdentifier});
 																				cantSitesAdded++;
 																			}
-																			
+
 																			if(countHasBiins===hasBiinsProved){
 																				//Callback function
 																				var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
-																				callback(index,total,result,cantSitesAdded);																														
-																			}																			
+																				callback(index,total,result,cantSitesAdded);
+																			}
 																		}
-																	})			
+																	})
 
 																}
 
-																countHasBiins++;	
+																countHasBiins++;
 																hasbiins(sitesCategories[orgIndex].sites[siteIndex].identifier);
-            													
+
 															}
 														}
 													}
 											}
-									}	
+									}
 
 									if(!hasBiinsToProve){
 										//Callback function
 										var result = {'identifier' :pcategory.identifier,"name":pcategory.name , 'sites':sitesResult};
-										callback(index,total,result,cantSitesAdded);																			
+										callback(index,total,result,cantSitesAdded);
 									}
 
 								}
 
-							});		
+							});
 
 					}
-					
+
 				}
 
 					var finalCursor=function(index,total,data,cantSites){
@@ -170,16 +171,16 @@ module.exports =function(){
 								res.json(result);
 							}
 
-						}				
+						}
 					}
 
 					//Order the sites by Category Identifier
 					for(var i=0; i< foundCategories.categories.length;i++){
-						getSitesByCat(foundCategories.categories[i],i,foundCategories.categories.length,finalCursor);						
+						getSitesByCat(foundCategories.categories[i],i,foundCategories.categories.length,finalCursor);
 					}
 				}
 				else{
-					res.json({status:"9",data:{}});	
+					res.json({status:"9",data:{}});
 				}
 			}
 		});
@@ -196,47 +197,47 @@ module.exports =function(){
 		 	var resultLong = siteY - mobY;
 			var distance= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
 
-			return distance<= radiousRadians;			
-		}		
+			return distance<= radiousRadians;
+		}
 	}
 
 	//
 	//GET Site
 	functions.getSite=function(req,res){
 
-		var identifier=req.param("identifier");		
+		var identifier=req.param("identifier");
 		var biinieIdentifier = req.param("biinieIdentifier");
 
 		var getSiteInformation = function(err,mobileUser){
 
 			if(err)
-				res.json({data:{status:"7",data:{}}});	
+				res.json({data:{status:"7",data:{}}});
 			else{
 				organization.findOne({"sites.identifier":identifier},{"_id":0,"sites.$":1,"identifier":1,"loyaltyEnabled":1},function(err, data){
 					if(err)
-						res.json({data:{},status:"7",result:"0"});	
+						res.json({data:{},status:"7",result:"0"});
 					else
 						if(data==null)
-							res.json({data:{},status:"9",result:"0"});	
+							res.json({data:{},status:"9",result:"0"});
 						else
-							if(data.sites && data.sites.length){	
+							if(data.sites && data.sites.length){
 
 								mapSiteMissingFields(biinieIdentifier,data.sites[0].identifier,data.identifier,data.sites[0],mobileUser,data,function(siteResult){
 									res.json({data:siteResult,status:"0",result:"1"});
 								});
-								
+
 							}
 							else{
 								res.json({data:data.sites[0],status:"0",result:"1"});
 							}
 				});
-			}			
+			}
 		}
 		if(biinieIdentifier){
 			mobileUser.findOne({'identifier':biinieIdentifier},{showcaseNotified:1, biinieCollections:1,loyalty:1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},getSiteInformation)
 		}else{
 			res.json({status:"7",data:{},result:"0"});
-		}		
+		}
 	}
 
  	//------------------  History Services  ------------------//
@@ -245,80 +246,322 @@ module.exports =function(){
  		var identifier = req.param('identifier');
  		var model = req.body.model;
 
- 		var isSetElements =false;
- 		var isSetHistory=false;
+ 		//mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
+ 		//});
 
- 		var finalCallback =function(){
- 			if(isSetElements && isSetHistory)
- 				res.json({data:{},status:"0",result:"1"});	
- 		}
+		Promise.all([setTrackingBiined(model.actions,identifier),
+			setTrackingBeacon(model.actions,identifier),
+			setTrackingElements(model.actions,identifier),
+			setTrackingLike(model.actions,identifier),
+			setTrackingSites(model.actions,identifier),
+			setTrackingFollow(model.actions,identifier),
+			setTrackingNotifications(model.actions,identifier)]).then(function(b){
+				res.status(200).json({response:"nothing here"});
+			}).catch(function(a){
+				res.status(500).json({response:"something bad happend here"});
+			})
 
- 		var setElementsViewed =function(actions, callback){
- 			var elementsToInsert = _.where(actions,{did:'5'});
-			var elementsToInsert = _.uniq(elementsToInsert, function(item, key, a) { 
-			    return item.to;
-			});
-
- 			var elementsStructured = [];
-
- 			for(var e=0; e<elementsToInsert.length; e++){
- 				elementsStructured.push({elementIdentifier:elementsToInsert[e].to})	;
- 			}
-
-
-			mobileUser.update({identifier:identifier},{
-	         	$push:{seenElements:{ $each:elementsStructured}}
-	         },
-	         function(err, raw){
-	         	if(err)
-	         		throw err;
-	         	else
-	         		isSetElements=true;
-	         		callback();
-	         }); 			
- 		}
-
- 		
-
- 		/*var newTempID = utils.getGUID();
- 		var newModel = {};
- 		newModel.identifier = newTempID;
- 		newModel.actions = model.actions;
- 		var createTemporalObject = tempHistory.create(newModel).exec();
- 		var deleteTemporalObject = tempHistory.delete({identifier:newModel.identifier}).exec();
- 		var selectRelevantInformationVisits = tempHistory.findOne({identifier:newTempID},{_id:0,actions:1}).exec();
- 		
- 		promise.then(preFillVisits).then(finalCallback);//.then other tables
-
- 		var preFillVisits = function(){
- 			var promise = tempHistory.findOne({"identifier":newModel.identifier},{}).exec();
- 			promise.then(function(){
-
- 			});
- 		}*/
-
-
- 		setElementsViewed(model.actions,finalCallback);
- 		mobileHistory.update({'identifier':identifier},{$set:{identifier:identifier}, $push:{actions:{$each:model.actions}}},{safe: true, upsert: true},function(err,raw){
- 			isSetHistory=true;
- 			finalCallback();
- 		});
  	}
 
+
+
+	function setTrackingBiined( actions, userIdentifier ){
+		return new Promise(function(resolve, reject){
+			var filteredActionsElements = _.filter(actions,function(item){ return item.did == COLLECTED_ELEMENT;})
+			var filteredActionsSites = _.filter(actions,function(item){ return item.did == 0;})
+			var filteredActions = filteredActionsSites.concat(filteredActionsElements);
+
+			var actionsToInsert = [];
+
+			if(filteredActions.length == 0){
+				resolve();
+			}else{
+					var elementsToFind = _.uniq(_.pluck(filteredActionsElements,"to"));
+					var sitesToFind = _.uniq(_.pluck(filteredActionsSites,"to"));
+
+					organization.find(
+						{ $or : [
+							{"elements.elementIdentifier":{$in:elementsToFind}},
+							{"sites.identifier":{$in:sitesToFind}}
+						]},
+						{ "identifier":1,
+						 	"elements.elementIdentifier":1,
+							"sites.identifier":1
+						}).lean().exec(
+							function(err,orgData){
+								if(err)
+									reject(err);
+
+								var actionsToInsert = [];
+								for (var i = 0; i < filteredActions.length; i++) {
+
+									var elementExtraInfo = _.find(orgData,function(org){
+										return _.findWhere(org.elements,{elementIdentifier:filteredActions[i].to}) != null;
+									});
+
+									var siteExtraInfo = _.find(orgData,function(org){
+										return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+									});
+
+									var action = {};
+
+									action.userIdentifier = userIdentifier;
+
+									if(siteExtraInfo != null){
+										action.organizationIdentifier = siteExtraInfo.identifier;
+										action.siteIdentifier = filteredActions[i].to;
+									}else{
+										action.organizationIdentifier = elementExtraInfo.identifier;
+										action.elementIdentifier = filteredActions[i].to;
+									}
+
+									action.date = new Date(filteredActions[i].at);
+									action.action = filteredActions[i].did;
+									actionsToInsert.push(action);
+
+								}
+								trackingBiined.create(actionsToInsert,function(error){
+									if(error)
+										reject(error);
+									resolve();
+								});
+							});
+					}
+		});
+	}
+
+	function setTrackingBeacon( actions, userIdentifier ){
+		return new Promise(function(resolve, reject){
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_BIIN || item.did == EXIT_BIIN || item.did == ENTER_BIIN_REGION || item.did == EXIT_BIIN_REGION })
+			if(filteredActions.length>0){
+				var biinsToFind = _.uniq(_.pluck(filteredActions,"to"));
+				biin.find({identifier:{$in:biinsToFind}},{identifier:1,organizationIdentifier:1,siteIdentifier:1},function(err,biinData){
+					if(err)
+						reject(err);
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var biinExtraInfo = _.findWhere(biinData,{identifier:filteredActions[i].to});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.beaconIdentifier = filteredActions[i].to;
+						action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
+						action.siteIdentifier = biinExtraInfo.siteIdentifier;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingBeacon.create(actionsToInsert,function(error){
+						if(error)
+							reject(error);
+						resolve();
+					});
+				});
+			}else{
+				resolve();
+			}
+		});
+	}
+
+	function setTrackingElements( actions, userIdentifier ){
+		return new Promise(function(resolve, reject){
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_ELEMENT_VIEW || item.did == EXIT_ELEMENT_VIEW })
+			if(filteredActions.length>0){
+				var elementsToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({"elements.elementIdentifier":{$in:elementsToFind}},{"identifier":1,"elements.elementIdentifier":1}).lean().exec(function(err,elementData){
+					if(err)
+						reject(err);
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var elementExtraInfo = _.find(elementData,function(org){
+							return _.findWhere(org.elements,{elementIdentifier:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = elementExtraInfo.identifier;
+						action.elementIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingElements.create(actionsToInsert,function(error){
+						if(error)
+							reject(error);
+						resolve();
+					});
+				});
+			}else{
+				resolve();
+			}
+		});
+	}
+
+	function setTrackingFollow( actions, userIdentifier ){
+		return new Promise(function(resolve, reject){
+			var filteredActions = _.filter(actions,function(item){ return item.did == FOLLOW_SITE || item.did == UNFOLLOW_SITE })
+			if(filteredActions.length>0){
+				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
+					if(err)
+						reject(err);
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var siteExtraInfo = _.find(siteData,function(org){
+							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = siteExtraInfo.identifier;
+						action.siteIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingFollow.create(actionsToInsert,function(error){
+						if(error)
+							reject(error);
+						resolve();
+					});
+				});
+			}else{
+				resolve();
+			}
+		});
+	}
+
+	function setTrackingLike( actions, userIdentifier ){
+		return new Promise(function(resolve, reject){
+			var filteredActions = _.filter(actions,function(item){ return item.did == LIKE_SITE || item.did == UNLIKE_SITE })
+			if(filteredActions.length>0){
+				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
+					if(err)
+						reject(err);
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var siteExtraInfo = _.find(siteData,function(org){
+							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = siteExtraInfo.identifier;
+						action.siteIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingLikes.create(actionsToInsert,function(error){
+						if(error)
+							reject(error);
+						resolve();
+					});
+				});
+			}else{
+				resolve();
+			}
+		});
+	}
+
+	function setTrackingNotifications( actions, userIdentifier ){
+		return new Promise(function(resolve, reject){
+			var filteredActions = _.filter(actions,function(item){ return item.did == NOTIFICATION_OPENED || item.did == BIIN_NOTIFIED })
+			if(filteredActions.length>0){
+				var objectsToFind = _.uniq(_.pluck(filteredActions,"to"));
+
+				biin.find({"objects._id":{$in:objectsToFind}},{"identifier":1,"organizationIdentifier":1,"siteIdentifier":1}).lean().exec(function(err,biinData){
+					if(err)
+						reject(err);
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var biinExtraInfo = _.find(biinData,function(data){
+							return _.findWhere(data.objects,{_id:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
+						action.siteIdentifier = biinExtraInfo.siteIdentifier;
+						action.beaconIdentifier = biinExtraInfo.identifier;
+						action.objectIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingNotifications.create(actionsToInsert,function(error){
+						if(error)
+							reject(error);
+						resolve();
+					});
+				});
+			}else{
+				resolve();
+			}
+		});
+	}
+
+	function setTrackingSites( actions, userIdentifier ){
+		return new Promise(function(resolve, reject){
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_SITE_VIEW || item.did == EXIT_SITE_VIEW })
+			if(filteredActions.length>0){
+				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
+					if(err)
+						reject(err);
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var siteExtraInfo = _.find(siteData,function(org){
+							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+						});
+						var action = {};
+
+						action.userIdentifier = userIdentifier;
+						action.organizationIdentifier = siteExtraInfo.identifier;
+						action.siteIdentifier = filteredActions[i].to;
+						action.date = new Date(filteredActions[i].at);
+						action.action = filteredActions[i].did;
+
+						actionsToInsert.push(action);
+
+					}
+					trackingSites.create(actionsToInsert,function(error){
+						if(error)
+							reject(error);
+						resolve();
+					});
+				});
+			}else{
+				resolve();
+			}
+		});
+	}
+
  	functions.getHistory =function(req,res){
- 		var identifier = req.param('identifier') 	
+ 		var identifier = req.param('identifier')
 
  		mobileHistory.findOne({identifier:identifier},function(err,data){
  			if(err || !(data))
  				res.json({status:"7",data:{}});
  			else
- 				res.json({status:"0",data:data.actions});	
+ 				res.json({status:"0",data:data.actions});
 
- 		}) 			
+ 		})
  	}
 
  	functions.setSiteRating = function(req, res){
- 		var identifier=req.param("siteIdentifier");		
+ 		var identifier=req.param("siteIdentifier");
 		var biinieIdentifier = req.param("biinieIdentifier");
 		var rating = req.param("rating");
 		if(parseFloat(rating))
@@ -329,19 +572,19 @@ module.exports =function(){
 
 			organization.update({"sites.identifier":identifier},{$push: {"sites.$.rating":newRating}},{upsert:true},function(err, data){
 				if(err)
-					res.json({data:{},status:"7",result:"0"});	
+					res.json({data:{},status:"7",result:"0"});
 				else
 					res.json({data:{},status:"0",result:"1"});
 			});
 		}
 		else
 		{
-			res.json({data:{},status:"7",result:"0"});	
+			res.json({data:{},status:"7",result:"0"});
 		}
  	}
 
  	functions.setElementRating = function (req, res){
-		var identifier=req.param("elementIdentifier");		
+		var identifier=req.param("elementIdentifier");
 		var biinieIdentifier = req.param("biinieIdentifier");
 		var rating = req.param("rating");
 		if(parseFloat(rating))
@@ -352,14 +595,14 @@ module.exports =function(){
 
 			organization.update({"elements.elementIdentifier":identifier},{$push: {"elements.$.rating":newRating}},{upsert:true},function(err, data){
 				if(err)
-					res.json({data:{},status:"7",result:"0"});	
+					res.json({data:{},status:"7",result:"0"});
 				else
 					res.json({data:{},status:"0",result:"1"});
 			});
 		}
 		else
 		{
-			res.json({data:{},status:"7",result:"0"});	
+			res.json({data:{},status:"7",result:"0"});
 		}
  	}
 
@@ -387,19 +630,19 @@ module.exports =function(){
 							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
 								var highLighEl =[];
 								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
-								 
+
 								 if(showcaseInfo){
 									if(showcaseInfo && showcaseInfo.elements){
 										for(var el =0 ;el<showcaseInfo.elements.length;el++){
 											if(showcaseInfo.elements[el].isHighlight=='1'){
 												highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier});
 											}
-										}	
+										}
 									}
-									
-									showcases.push({'identifier':showcaseInfo.identifier,'highlightElements':highLighEl});	 	
+
+									showcases.push({'identifier':showcaseInfo.identifier,'highlightElements':highLighEl});
 								 }
-								
+
 							}
 
 							/*
@@ -411,15 +654,15 @@ module.exports =function(){
 										highLighEl.push({elementIdentifier:foundShowcases[showCaseInd].elements[el].elementIdentifier});
 									}
 								}
-								showcases.push({'identifier':foundShowcases[showCaseInd].identifier,'highlightElements':highLighEl});	
+								showcases.push({'identifier':foundShowcases[showCaseInd].identifier,'highlightElements':highLighEl});
 							}*/
-							callback(showcases)							
+							callback(showcases)
 						}
 
-					});					
+					});
 				}else{
 					callback(showcases)
-				}				
+				}
 			});
 		}
 
@@ -435,7 +678,7 @@ module.exports =function(){
 					if(biinsData.length===0)
 						callback(biinsData);
 					else{
-						for(var iBiin =0; iBiin<biinsData.length;iBiin++){					
+						for(var iBiin =0; iBiin<biinsData.length;iBiin++){
 
 							//Get the Biins Data
 							var getBiinsObjectsData=function(myIBiinIndex){
@@ -444,19 +687,19 @@ module.exports =function(){
 									if(err)
 										throw err;
 									else{
-										for(var o =0; o<biinsData[myIBiinIndex].objects.length;o++){								
+										for(var o =0; o<biinsData[myIBiinIndex].objects.length;o++){
 
 											var startTime =moment.tz(biinsData[myIBiinIndex].objects[o].startTime,'America/Costa_Rica');
-											var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');									
+											var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');
 
-											var oData= null;									
-											if(biinsData[myIBiinIndex].objects)									
+											var oData= null;
+											if(biinsData[myIBiinIndex].objects)
 												oData=_.findWhere(biinsObjects,{'identifier':biinsData[myIBiinIndex].objects[o].identifier});
 											var el =null;
 											if(mobileUser.biinieCollections && mobileUser.biinieCollections[defaultCollection] && mobileUser.biinieCollections[defaultCollection].elements)
 												el= _.findWhere(mobileUser.biinieCollections[defaultCollection].elements,{identifier:biinsData[myIBiinIndex].objects[o].identifier})
 
-											biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';																			
+											biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';
 											biinsData[myIBiinIndex].objects[o].isBiined =	el?'1':'0';
 
 											//Time options
@@ -469,7 +712,7 @@ module.exports =function(){
 										//format the biins
 										if(processedBiins==biinsData.length)
 											callback(biinsData);
-									}							
+									}
 								});
 							}
 
@@ -477,7 +720,7 @@ module.exports =function(){
 						}
 					}
 				}
-					
+
 			});
 		}
 
@@ -493,7 +736,7 @@ module.exports =function(){
 					for(var i=0; i<sitesCategoryFound.length;i++){
 						neighbors = _.union(neighbors, sitesCategoryFound[i].sites[0].neighbors);
 					}
-					var neighbors = _.uniq(neighbors, function(item, key, a) { 
+					var neighbors = _.uniq(neighbors, function(item, key, a) {
 					    return item.siteIdentifier;
 					});
 					neighbors =  _.sortBy(neighbors, 'proximity');
@@ -501,7 +744,7 @@ module.exports =function(){
 				}
 			});
 		}
-		
+
 		newModel.organizationIdentifier= orgId;
 		newModel.proximityUUID= model.proximityUUID;
 		newModel.identifier = model.identifier;
@@ -509,11 +752,11 @@ module.exports =function(){
 		newModel.country = model.country;
 		newModel.state = model.state;
 		newModel.city = model.city;
-		newModel.zipCode = model.zipCode;		
+		newModel.zipCode = model.zipCode;
 		newModel.ubication = model.ubication;
 		//Map fields;
 
-		newModel.title = model.title1;			
+		newModel.title = model.title1;
 		newModel.subTitle = model.title2;
 		newModel.titleColor = model.textColor.replace("rgb(","").replace(")","");
 		newModel.zipCode = model.zipCode
@@ -527,7 +770,7 @@ module.exports =function(){
 		newModel.phoneNumber = model.phoneNumber?model.phoneNumber.trim().replace('-','').replace('+',''):"";
 
 		var userbiined =_.findWhere(model.biinedUsers,{biinieIdentifier:biinieId});
-		
+
 		var userShare =_.findWhere(mobileUser.shareObjects,{identifier:siteId,type:"site"});
 
 
@@ -555,11 +798,11 @@ module.exports =function(){
 			rating = rating/model.rating.length;
 		}
 		newModel.stars = ""+rating;
-		
+
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			newModel.media=[];
 			for(var i=0; i<model.media.length;i++){
-				newModel.media[i]={};				
+				newModel.media[i]={};
 				newModel.media[i].domainColor= model.media[i].mainColor.replace("rgb(","").replace(")");
 				newModel.media[i].mediaType="1";
 				newModel.media[i].url= model.media[i].url;
@@ -605,8 +848,12 @@ module.exports =function(){
 			if(showcaseReady&&biinsReady && neighborsReady){
 				//Return the result callback
 				resultCallback(newModel)
-			}			
+			}
 		});
+	}
+
+	functions.getInitialData= function(req,res){
+		res.json(initialDataJson);
 	}
 
 
