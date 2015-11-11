@@ -1,7 +1,7 @@
 module.exports = function () {
 	//Custom Utils
 	var utils = require('../biin_modules/utils')(),
-		util = require('util'), 
+		util = require('util'),
 		routesUtils = require('../biin_modules/routesUtils')(),
 		math = require('mathjs'),
 		_= require('underscore');
@@ -10,7 +10,7 @@ module.exports = function () {
 	//Schemas
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
 					   biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory'),
-					   mobileUser = require('../schemas/mobileUser');	
+					   mobileUser = require('../schemas/mobileUser');
 
 	var sysGlobalsRoutes = require('./sysGlobals')();
 	var regionRoutes = require('../routes/regions')();
@@ -35,7 +35,7 @@ module.exports = function () {
 
 	//GET the list of sites by organization Identifier
 	functions.get= function(req,res){
-			
+
 		var callback = function(sites,req,res){
 			//Set the biin prototype
 			var biinPrototype =new biin();
@@ -44,7 +44,7 @@ module.exports = function () {
 			res.json({data:sites, prototypeObj:new site(), prototypeObjBiin:biinPrototype});
 		}
 
-		getOganization(req, res, callback);				  
+		getOganization(req, res, callback);
 	}
 
 	//GET Sites User categories and proximity
@@ -58,7 +58,7 @@ module.exports = function () {
 		var maxLngModifiers=0
 		var invertSearch=false;
 		var cantSites =0;
-		
+
 
 		var categorySitesResult={categories:[]};
 		var catAdded=[]
@@ -82,23 +82,23 @@ module.exports = function () {
 			siteCategory.find({categoryIdentifier:{$in:catArray},$and:locationFilter},{_id:0,categoryIdentifier:1,"sites.identifier":1},function(err,foundSearchSites){
 				for(var c=0;c< foundSearchSites.length; c++){
 					if(foundSearchSites[c].sites.length){
-						var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});					
+						var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});
 						if(category)
 							category.sites = category.sites.concat(foundSearchSites[c].sites);
 						else{
 							var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
 							categorySitesResult.categories.push({identifier:catInfo.identifier, name:catInfo.name, sites: foundSearchSites[c].sites, hasSites:'1'});
-							catAdded.push(foundSearchSites[c].categoryIdentifier);							
-						}						
+							catAdded.push(foundSearchSites[c].categoryIdentifier);
+						}
 						cantSites += foundSearchSites[c].sites.length;
-					}					
-				}				
+					}
+				}
 				callback();
 			});
 		}
 
 		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"gender":1,"categories.identifier":1,"categories.name":1,"categories.priority":1},function(err,foundCategories){			
+		mobileUser.findOne({identifier:userIdentifier},{"gender":1,"categories.identifier":1,"categories.name":1,"categories.priority":1},function(err,foundCategories){
 			if(err){
 				res.json({data:{},status:"5",result:""});
 			}else{
@@ -127,12 +127,12 @@ module.exports = function () {
 							res.json({data:categorySitesResult,status:'0',result:"1"});
 						})
 					}
-				}	
+				}
 				else{
-					res.json({status:"9",data:{},result:"0"});	
+					res.json({status:"9",data:{},result:"0"});
 				}
 			}
-		});		
+		});
 	}
 
 
@@ -143,7 +143,7 @@ module.exports = function () {
 		siteCategory.find({categoryIdentifier:{$in:catArray}},{_id:0,categoryIdentifier:1,"sites.identifier":1,"sites.lng":1,"sites.lat":1}).lean().exec(function(err,foundSearchSites){
 			for(var c=0;c< foundSearchSites.length; c++){
 				if(foundSearchSites[c].sites.length){
-					var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});		
+					var category = _.findWhere(categorySitesResult.categories,{identifier:foundSearchSites[c].categoryIdentifier});
 					var filteredsites = _.filter(foundSearchSites[c].sites, function(site){ return site.lat && site.lng });
 					for(var csF=0;csF<filteredsites.length;csF++){
 						//cal Binnie prox
@@ -154,30 +154,30 @@ module.exports = function () {
 						category.sites = category.sites.concat(filteredsites);
 					else{
 						var catInfo = _.findWhere(userCategories,{identifier:foundSearchSites[c].categoryIdentifier});
-						var category = {identifier:catInfo.identifier, name:catInfo.name,priority: catInfo.priority, sites: filteredsites, hasSites:"1"};						
+						var category = {identifier:catInfo.identifier, name:catInfo.name,priority: catInfo.priority, sites: filteredsites, hasSites:"1"};
 						categorySitesResult.categories.push(category);
-						catAdded.push(foundSearchSites[c].categoryIdentifier);							
+						catAdded.push(foundSearchSites[c].categoryIdentifier);
 					}
 
 					category.hasSites = category.sites.length == 0 ? "0": "1";
-					category.sites=_.sortBy(category.sites, 'biinieProximity');				
+					category.sites=_.sortBy(category.sites, 'biinieProximity');
 					cantSites += filteredsites.length;
-				}					
-			}				
+				}
+			}
 			callback(categorySitesResult,cantSites,catAdded);
 		});
 	}
 
 	//PUT an update of an site
 	functions.set=function(req,res){
-		var model = req.body.model;		
+		var model = req.body.model;
 		//Perform an update
 		var organizationIdentifier=req.param("orgIdentifier");
 		res.setHeader('Content-Type','application/json');
 
 		//If is pushing a new model
 		if(typeof(req.param("siteIdentifier"))==="undefined"){
-			
+
 			//Set the account and the user identifier
 			var model = new site();
             model.identifier=utils.getGUID();
@@ -198,13 +198,13 @@ module.exports = function () {
 						if(err){
 							res.send(err, 500);
 						}
-							
+
 						else{
 							//Return the state and the object
 							res.send(model, 201);
-						}						
+						}
 					}
-				);				
+				);
 			});
 		}else{
 			var updateSiteCategory=false;
@@ -214,14 +214,14 @@ module.exports = function () {
 				//Return the state
 				if(updateSiteCategory& updateSite){
 					console.log("Done process of: " + model.identifier);
-					res.send(model,200);													
+					res.send(model,200);
 				}
-					
-			}			
+
+			}
 			model.isValid = utils.validate(new site().validations(),req,'model')==null;
 			if(model)
-			{	
-				delete model._id;				
+			{
+				delete model._id;
 				delete model.minorCounter;
 				delete model.major;
 				delete model.isDeleted;
@@ -229,12 +229,15 @@ module.exports = function () {
 				delete model.sharedCount;
 				delete model.biinedCount;
 				delete model.loyalty;
+
+				model.geoPosition = [parseFloat(model.lng),parseFloat(model.lat)];
+
 				//Remove the id of the new biins
 				for(var b =0; b< model.biins.length; b++){
 					if('isNew' in model.biins[b]){
-						delete model.biins[b]._id;	
+						delete model.biins[b]._id;
 					}
-				}				
+				}
 				var set = {};
 
 				for (var field in model) {
@@ -245,7 +248,7 @@ module.exports = function () {
 				setSiteCategory(true,model,model.identifier,function(cantAffected){
 					updateSiteCategory =true;
 					doneFunction();
-				})									
+				})
 				organization.update(
 	                     { identifier:organizationIdentifier, 'sites.identifier':model.identifier},
 	                     { $set :set },
@@ -261,19 +264,19 @@ module.exports = function () {
 								/*if(model.region)
 									regionRoutes.updateRegionSiteCategories(model.region,model.identifier,model.categories,function(succes){
 										//Return the state
-										res.send(model,200);							
+										res.send(model,200);
 									});
 								else{
-					
+
 								}*/
-	                            
+
 							}
 	                     }
 	                   );
 
 			}
-		}				
-	}	
+		}
+	}
 
 	// Set the Site Category model
 	var setSiteCategory = function(isUpdate,model,siteIdentifier,callback){
@@ -287,10 +290,10 @@ module.exports = function () {
 				else{
 					var maxNeighboards=4;
 					//Iterate over ther sitesCategorys and set the neighboards
-					for(var i =0;i<siteCategoryFound.length;i++){						
+					for(var i =0;i<siteCategoryFound.length;i++){
 						var sitesOrdered = _.sortBy(siteCategoryFound[i].sites, 'proximity');
 						//Iterate over the site of the siteCategory
-						for(var j=0;j<sitesOrdered.length;j++){							
+						for(var j=0;j<sitesOrdered.length;j++){
 							var siteToUpdate = sitesOrdered[j];
 							var neighboards =[];
 							var cantAdded =0;
@@ -301,7 +304,7 @@ module.exports = function () {
 								neighboards.push({siteIdentifier:sitesOrdered[j-1].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-1].lat,sitesOrdered[j-1].lng)});
 								neighboards.push({siteIdentifier:sitesOrdered[j-2].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[j-2].lat,sitesOrdered[j-2].lng)});
 								prevNeighAdded=2;
-								cantAdded+=2;								
+								cantAdded+=2;
 
 							}else{
 
@@ -319,7 +322,7 @@ module.exports = function () {
 							if(sitesOrdered.length-1 > cantAdded){
 								while(cantAdded<maxNeighboards && pointer< sitesOrdered.length){
 									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[pointer].lat,sitesOrdered[pointer].lng)})
-									cantAdded++;										
+									cantAdded++;
 									pointer++;
 								}
 							}
@@ -329,7 +332,7 @@ module.exports = function () {
 								var cantCanAdd = j-prevNeighAdded;
 								if(j>missingSpaces)
 									cantCanAdd= missingSpaces;
-								
+
 								for(var backNeigh=0;backNeigh<cantCanAdd;backNeigh++){
 									pointer = j-backNeigh-prevNeighAdded-1;
 									neighboards.push({siteIdentifier:sitesOrdered[pointer].identifier,proximity: utils.getProximity(lat,lng,sitesOrdered[pointer].lat,sitesOrdered[pointer].lng)})
@@ -339,12 +342,12 @@ module.exports = function () {
 							siteToUpdate.neighbors= neighboards;
 						}
 
-						siteCategoryFound[i].sites = sitesOrdered;						
+						siteCategoryFound[i].sites = sitesOrdered;
 						siteCategoryFound[i].save(function(err){
 							if(err)
 								throw err;
 						});
-					}	
+					}
 				}
 
 				callback();
@@ -355,7 +358,7 @@ module.exports = function () {
 		var endProcessPush=function(){
 			siteNeighborsProcess(siteIdentifier,model.lat,model.lng,function(){
 				callback(cantCategoriesAdded);
-			})			
+			})
 		}
 
 		//Insert the Site Categories
@@ -402,22 +405,22 @@ module.exports = function () {
 				queryMaxLng = {max_longitude:{$lte:lng}};
 			}
 
-			//Search if theres is a SiteCategory in the range			
+			//Search if theres is a SiteCategory in the range
 			siteCategory.findOne({$and:[queryMinLat,queryMinLng,queryMaxLat,queryMaxLng]},function(err,data){
 				//If there is a configuration in range
 				if(data){
 
 					var defConfiguration = {min_latitude: data.min_latitude, min_longitude:data.min_longitude,max_latitude:data.max_latitude, max_longitude:data.max_longitude,radious:data.radious};
-				 	
-				 	var resultLat = model.lat -  data.min_latitude ;				 	
+
+				 	var resultLat = model.lat -  data.min_latitude ;
 				 	var resultLong = model.lng - data.min_longitude;
 
 				 	var radiansProximity= math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
 				 	var metersProximity=((radiansProximity*1000)/360)*process.env.EARTH_CIRCUMFERENCE;
-					//Push the categories of the sites					
+					//Push the categories of the sites
 					pushSitesByCategories(defConfiguration,model.categories,metersProximity,model.lat,model.lng);
 				}else{
-					
+
 					var radiousRadians = ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE/2;
 					var minLat = model.lat>0?eval(model.lat)-radiousRadians:eval(model.lat)+radiousRadians;
 					var minLng = model.lng>0?eval(model.lng)-radiousRadians:eval(model.lng)+radiousRadians;
@@ -426,8 +429,8 @@ module.exports = function () {
 
 					var metersProximity =((radiousRadians*1000)/360)*process.env.EARTH_CIRCUMFERENCE;
 					var defConfiguration = {min_latitude: minLat, min_longitude:minLng,max_latitude:maxLat, max_longitude:maxLng,radious:radiousRadians};
-					
-					//Push the categories of the sites					
+
+					//Push the categories of the sites
 					pushSitesByCategories(defConfiguration,model.categories,metersProximity,model.lat,model.lng);
 				}
 
@@ -458,7 +461,7 @@ module.exports = function () {
 							callback(0);
 					});
 				}
-					
+
 			});
 		}else{
 			checkIfBiinHasSites(siteIdentifier,function(hasBiins){
@@ -490,8 +493,8 @@ module.exports = function () {
 						else{
 							res.json({state:"success"});
 						}
-					});		
-			});			
+					});
+			});
 		});
 	}
 
@@ -509,7 +512,7 @@ module.exports = function () {
 			var newMinorValue = utils.get.minorIncrement() *qty;
 			organization.findOne({identifier:organizationIdentifier,'sites.identifier': siteIdentifier},{'_id':1,'sites.$':1},function(err, siteInfo){
 				if(err)
-					res.send(err,500)					
+					res.send(err,500)
 				else
 				{
 					var minor = 0;
@@ -520,7 +523,7 @@ module.exports = function () {
 					}
 
 					//Todo the process of the deduction of the Credit Card
-					var historyRecord ={} ;			
+					var historyRecord ={} ;
 					historyRecord.date=utils.getDateNow(); historyRecord.quantity=qty; historyRecord.site=siteIdentifier;
 
 					//Add an history record
@@ -531,17 +534,17 @@ module.exports = function () {
 							newMinorValue += eval(minor);
 							var newBeacons =[];
 							var dateNow = utils.getDateNow();
-							var cantMinorToInc = utils.get.minorIncrement() ;							
+							var cantMinorToInc = utils.get.minorIncrement() ;
 							var minorIncrement =minor;
 
 							//Create the new Beacons
  							for(var i=0; i<qty;i++){
  								var biinIdentifier = utils.getGUID();
- 								minorIncrement+=cantMinorToInc; 								
- 								var biintype=1; 								
+ 								minorIncrement+=cantMinorToInc;
+ 								var biintype=1;
  								if(isBasicPackage)
  									biintype=(i%2)+1;
- 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype}));	
+ 								newBeacons.push(new biin({identifier:biinIdentifier,registerDate:dateNow,proximityUUID:organizationIdentifier, major:major,minor:minorIncrement, isRequiredBiin:isBasicPackage,biinType:biintype}));
  							}
  							newMinorValue=0;
  							//Organization Update
@@ -554,9 +557,9 @@ module.exports = function () {
 							});
 						}
 
-					});					
+					});
 				}
-					
+
 			});
 
 		}
@@ -568,16 +571,16 @@ module.exports = function () {
 		var siteIdentifier= req.param('siteIdentifier')
 
 		var addSiteLogic = function(siteObj){
-			addSiteToRegion(siteObj,function(result,regionId){							
+			addSiteToRegion(siteObj,function(result,regionId){
 				if(result){
 					organization.update({'identifier':orgIdentifier,'sites.identifier':siteObj.identifier},{$set:{'sites.$.region':regionId}},function(err,raw){
-						if(!err && raw.n>0)	
+						if(!err && raw.n>0)
 							res.json({status:0, data: regionId})
 						else
 							res.json({status:5})
 					});
 
-					
+
 				}else{
 					res.json({status:5})
 				}
@@ -602,7 +605,7 @@ module.exports = function () {
 				}
 			}
 		})
-	}	
+	}
 
 	//Function to add a site inside a region.
 	addSiteToRegion =function(site,callback){
@@ -633,7 +636,7 @@ module.exports = function () {
 
 		});
 	}
-	
+
 	//Minor and major Functions
 
 	//GET the major of the enviroment
@@ -659,7 +662,7 @@ module.exports = function () {
 					req.body.model = organization.sites[s];
 					var errors =  utils.validate(new site().validations(),req,'model');
 					console.log(errors);
-					data[o].sites.isValid = errors===null;	
+					data[o].sites.isValid = errors===null;
 					console.log('Is site valid: '+ data[o].sites.isValid);
 				}
 
@@ -675,8 +678,8 @@ module.exports = function () {
 				})
 			}
 
-		})    	
+		})
     }
-    
+
 	return functions;
 }
