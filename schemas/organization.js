@@ -85,7 +85,7 @@ var orgSchema = new Schema({
 				showcaseIdentifier:{type:String,default:""},
 				elements:[
 					{
-						elementIdentifier:{type:String,default:""}
+						identifier:{type:String,default:""}
 					}
 				]
 			}
