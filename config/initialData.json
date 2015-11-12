@@ -190,11 +190,6 @@
                         "subTitle": "Explore nuestros productos en promición",
                         "elements": [
                             {
-                                "_id": "55de3965a428920300cf4cdb",
-                                "elementIdentifier": "66230f30-ac04-43c9-9ea2-ff218bb97879",
-                                "userViewed": "0"
-                            },
-                            {
                                 "_id": "55de44e3a428920300cf4cfc",
                                 "elementIdentifier": "bae200ab-724f-4074-b32d-fd3cfb80f01f",
                                 "userViewed": "0"
@@ -631,57 +626,6 @@
                 "userLiked": "0",
                 "userCollected": "0",
                 "userViewed": "0"
-            },
-            {
-                "identifier": "66230f30-ac04-43c9-9ea2-ff218bb97879",
-                "sharedCount": "0",
-                "categories": [
-                    {
-                        "identifier": "category11"
-                    }
-                ],
-                "quantity": "",
-                "hasQuantity": "0",
-                "expirationDate": "2015-11-12 16:56:46",
-                "initialDate": "2015-11-12 16:56:46",
-                "hasTimming": "0",
-                "savings": "",
-                "hasSaving": "0",
-                "discount": "",
-                "hasDiscount": "0",
-                "isHighlight": "1",
-                "price": "3250",
-                "hasPrice": "1",
-                "listPrice": "",
-                "hasListPrice": "0",
-                "hasFromPrice": "1",
-                "currencyType": "1",
-                "searchTags": [
-                    "cafe"
-                ],
-                "subTitle": "El mejor café con leche en la zona.",
-                "title": "Café Late",
-                "elementType": "",
-                "collectCount": "1",
-                "reservedQuantity": "0",
-                "claimedQuantity": "0",
-                "actualQuantity": "0",
-                "media": [
-                    {
-                        "mediaType": "1",
-                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
-                        "vibrantColor": "157,90,27",
-                        "vibrantDarkColor": "113,69,34",
-                        "vibrantLightColor": "202,158,113"
-                    }
-                ],
-                "userShared": "0",
-                "userFollowed": "0",
-                "userLiked": "0",
-                "userCollected": "0",
-                "userViewed": "0",
-                "isActive": "1",
-                "detailsHtml": ""
             },
             {
                 "identifier": "bae200ab-724f-4074-b32d-fd3cfb80f01f",
@@ -1316,10 +1260,6 @@
             {
                 "_id": "361c2d9cb5fa4b03004e8e1a",
                 "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
-            },
-            {
-              "_id": "55de3965a428920300cf4cdb",
-              "elementIdentifier": "66230f30-ac04-43c9-9ea2-ff218bb97879"
             }
         ],
         "categories": [
