@@ -1,7 +1,8 @@
 {
     "data": {
         "sites": [
-            {   "identifier": "6cc5d529-25e9-43bd-b03b-14615a002685",
+            {
+                "identifier": "6cc5d529-25e9-43bd-b03b-14615a002685",
                 "organizationIdentifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a",
                 "proximityUUID": "AABBCCDD-A101-B202-C303-AABBCCDDEEFF",
                 "major": "10",
@@ -191,17 +192,17 @@
                         "elements": [
                             {
                                 "_id": "55de44e3a428920300cf4cfc",
-                                "elementIdentifier": "bae200ab-724f-4074-b32d-fd3cfb80f01f",
+                                "identifier": "bae200ab-724f-4074-b32d-fd3cfb80f01f",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "55de44e3a428920300cf4cfd",
-                                "elementIdentifier": "0b446bff-fd34-413b-8d0e-ff9e39b15688",
+                                "identifier": "0b446bff-fd34-413b-8d0e-ff9e39b15688",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "55de44e3a428920300cf4cfe",
-                                "elementIdentifier": "398f1405-befd-4f45-9e5f-029dd6028069",
+                                "identifier": "398f1405-befd-4f45-9e5f-029dd6028069",
                                 "userViewed": "0"
                             }
                         ]
@@ -219,42 +220,42 @@
                             },
                             {
                                 "_id": "560c516ce0b0e403008ac254",
-                                "elementIdentifier": "06451b13-7e31-4bdd-9e53-ae35b9479dd6",
+                                "identifier": "06451b13-7e31-4bdd-9e53-ae35b9479dd6",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "560c521fe0b0e403008ac262",
-                                "elementIdentifier": "7d2fa49c-8aaa-4419-a4ad-81a903f66ed5",
+                                "identifier": "7d2fa49c-8aaa-4419-a4ad-81a903f66ed5",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "560c516ce0b0e403008ac255",
-                                "elementIdentifier": "e71392f6-2907-4f9c-a5af-57a26b72119d",
+                                "identifier": "e71392f6-2907-4f9c-a5af-57a26b72119d",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "55ddd5dfaa2d110300c32469",
-                                "elementIdentifier": "12f9cc5b-b300-4215-9d19-a171ca11bc33",
+                                "identifier": "12f9cc5b-b300-4215-9d19-a171ca11bc33",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "55ddd72baa2d110300c32479",
-                                "elementIdentifier": "8188c3f1-6caf-4119-a724-ce1bfff8568e",
+                                "identifier": "8188c3f1-6caf-4119-a724-ce1bfff8568e",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "55db36daa891a10300ad45b3",
-                                "elementIdentifier": "5dbe8c46-a3ae-44f1-8834-8f91e5dde9f2",
+                                "identifier": "5dbe8c46-a3ae-44f1-8834-8f91e5dde9f2",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "55ddd72baa2d110300c3247a",
-                                "elementIdentifier": "d570801d-23a2-4f12-9b94-e0f5a32e4d7d",
+                                "identifier": "d570801d-23a2-4f12-9b94-e0f5a32e4d7d",
                                 "userViewed": "0"
                             },
                             {
                                 "_id": "55ddd5dfaa2d110300c32468",
-                                "elementIdentifier": "23761bc8-fb3f-4f6d-8b38-7b7ea94bbf23",
+                                "identifier": "23761bc8-fb3f-4f6d-8b38-7b7ea94bbf23",
                                 "userViewed": "0"
                             }
                         ]
@@ -416,7 +417,6 @@
                 "subTitle": "San Pedro  Gold",
                 "title": "San Pedro  Gold",
                 "collectCount": "1",
-                "detailsHtml": "",
                 "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
                 "reservedQuantity": "0",
                 "claimedQuantity": "0",
