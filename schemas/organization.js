@@ -82,9 +82,14 @@ var orgSchema = new Schema({
 		],
 		showcases:[
 			{
-	            showcaseIdentifier:{type:String,default:""}
-	        }
-	    ],
+				showcaseIdentifier:{type:String,default:""},
+				elements:[
+					{
+						elementIdentifier:{type:String,default:""}
+					}
+				]
+			}
+		],
 		biins:[
 			{
 				identifier:{type:String, index:true, default:""},

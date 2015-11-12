@@ -9,8 +9,8 @@ module.exports = function () {
 
 	//Schemas
 	var organization = require('../schemas/organization'),  site = require('../schemas/site'),
-					   biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory'),
-					   mobileUser = require('../schemas/mobileUser');
+			biin = require('../schemas/biin'), siteCategory = require('../schemas/searchSiteCategory'),
+			mobileUser = require('../schemas/mobileUser');
 
 	var sysGlobalsRoutes = require('./sysGlobals')();
 	var regionRoutes = require('../routes/regions')();
