@@ -636,14 +636,15 @@ module.exports =function(){
 						else{
 
 							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
-								var highLighEl =[];
-								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
 
+								var highLighEl =[];
+								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]});
+								var siteShowcaseInfo = _.findWhere(site.showcases,{'showcaseIdentifier':sitesIdentifier[siteShowcase]});
 								 if(showcaseInfo){
 									if(showcaseInfo && showcaseInfo.elements){
 										for(var el =0 ;el<showcaseInfo.elements.length;el++){
 											if(showcaseInfo.elements[el].isHighlight=='1'){
-												highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier, _id:showcaseInfo.elements[el]._id});
+												highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier, showcase_id:siteShowcaseInfo._id});
 											}
 										}
 									}
