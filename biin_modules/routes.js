@@ -306,7 +306,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
 
-    app.get('/mobile/initialData',mobileEndPoint.getInitialData);
+    app.get('/mobile/initialData',mobileRoutes.getInitialData);
     app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
 
     /// catch 404 and forwarding to error handler
