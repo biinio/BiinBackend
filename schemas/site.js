@@ -11,8 +11,8 @@ var siteObj ={
 	accountIdentifier:{type:String, default:"000"},
 	organizationIdentifier:{type:String,default:""},
 	proximityUUID:{type:String,default:""},
-	title1:{type:String, default:""},	
-	title2:{type:String, default:""},	
+	title1:{type:String, default:""},
+	title2:{type:String, default:""},
 	mainColor:{type:String,default:""},
 	textColor:{type:String,default:""},
 	description: {type:String, default:""},
@@ -30,6 +30,7 @@ var siteObj ={
 	email:{type:String, default:""},
 	lat:{type:String,default:0},
 	lng:{type:String,default:0},
+	geoPosition:{type:[Number],index:"2dsphere"},
 	searchTags:[],
 	categories:[
 		{
@@ -107,8 +108,8 @@ var siteObj ={
 	biinedUsers:[{biinieIdentifier:String}],
 	userShared:[{biinieIdentifier:String,sharedTo:String}],
 	userFollowed:[{biinieIdentifier:String}],
-   	userCollected:[{biinieIdentifier:String}],
-   	userLiked:[{biinieIdentifier:String}],
+  userCollected:[{biinieIdentifier:String}],
+  userLiked:[{biinieIdentifier:String}],
 	usercomments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],
 	isValid:{type:Boolean,default:false},
 	isDeleted:{type:Boolean,default:false},
@@ -119,7 +120,6 @@ var siteObj ={
 			rating : {type:Number, default :0}
 		}
 	]
-
 }
 var siteSchema = new Schema(siteObj);
 
