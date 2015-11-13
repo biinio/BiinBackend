@@ -335,6 +335,30 @@
                     "subscriptionDate": "2015-11-09 20:01:52",
                     "points": "0"
                 }
+            },
+            {
+                "identifier": "2dd2d093-f637-481b-8182-bcf33adc7b7e",
+                "_id": "55d7c931fb8c67030027bc1c",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "title1": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/media/7b5e9416-ed54-41f1-b562-fcba5a449d15/2dd2d093-f637-481b-8182-bcf33adc7b7e/media/2dd2d093-f637-481b-8182-bcf33adc7b7e.jpg",
+                        "vibrantColor": "0,0,0",
+                        "vibrantDarkColor": "0,0,0",
+                        "vibrantLightColor": "0,0,0"
+                    }
+                ],
+                "extraInfo": "a",
+                "description": "Zapatería",
+                "brand": "Flexi",
+                "name": "Flexi CR",
+                "isLoyaltyEnabled": "0",
+                "loyalty": {
+                    "isSubscribed": "1",
+                    "subscriptionDate": "2015-11-13 14:21:27",
+                    "points": "0"
+                }
             }
         ],
         "elements": [
