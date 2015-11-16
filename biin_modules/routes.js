@@ -304,6 +304,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
+    
+    //Test Vibrant
+    app.get('/test/testVibrant', organizations.testVibrant);
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {
@@ -311,4 +314,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
         err.status = 404;
         next(err);
     });
+    
+    
 }
