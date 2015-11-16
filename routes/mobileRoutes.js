@@ -55,16 +55,16 @@ module.exports =function(){
 
 		var OPEN_APP = "21"; //TO->"biin_ios",""
 		var CLOSE_APP = "22"; //TO->"biin_ios",
-    
+
         var SITE_DEFAULT_IMAGE = {
-            domainColor: '170, 171, 171', 
+            domainColor: '170, 171, 171',
             mediaType: '1',
             title1: 'default',
             url: 'https://biinapp.blob.core.windows.net/biinmedia/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/media/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/4e8b2fb3-af89-461d-9c37-2cc667c20653/media/4af24d51-2173-4d41-b651-d82f18f00d1b.jpg',
             vibrantColor: '170, 171, 171',
             vibrantDarkColor: '85,86,86',
             vibrantLightColor: '170, 171, 171'
-        };  
+        };
 
 	//[DEPRECATED]
 	//GET Sites information by Biinie Categories
@@ -264,9 +264,9 @@ module.exports =function(){
 			setTrackingSites(model.actions,identifier),
 			setTrackingFollow(model.actions,identifier),
 			setTrackingNotifications(model.actions,identifier)]).then(function(b){
-				res.status(200).json({response:"nothing here"});
+				res.status(200).json({data:{},status:"0",result:"1"});
 			}).catch(function(a){
-				res.status(500).json({response:"something bad happend here"});
+				res.status(500).json({data:{},status:"7",result:"0"});
 			})
 
  	}
@@ -636,19 +636,20 @@ module.exports =function(){
 						else{
 
 							for(var siteShowcase=0; siteShowcase < sitesIdentifier.length;siteShowcase++){
-								var highLighEl =[];
-								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]})
 
+								var highLighEl =[];
+								var showcaseInfo = _.findWhere(foundShowcases,{'identifier':sitesIdentifier[siteShowcase]});
+								var siteShowcaseInfo = _.findWhere(site.showcases,{'showcaseIdentifier':sitesIdentifier[siteShowcase]});
 								 if(showcaseInfo){
 									if(showcaseInfo && showcaseInfo.elements){
 										for(var el =0 ;el<showcaseInfo.elements.length;el++){
 											if(showcaseInfo.elements[el].isHighlight=='1'){
-												highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier});
+												highLighEl.push({elementIdentifier:showcaseInfo.elements[el].elementIdentifier, showcase_id:siteShowcaseInfo._id});
 											}
 										}
 									}
 
-									showcases.push({'identifier':showcaseInfo.identifier,'highlightElements':highLighEl});
+									showcases.push({'_id':showcaseInfo._id,'identifier':showcaseInfo.identifier,'highlightElements':highLighEl});
 								 }
 
 							}

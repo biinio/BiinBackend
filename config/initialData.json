@@ -1,716 +1,1424 @@
 {
-  "data": {
-    "sites": [
-      {
-        "identifier": "6cc5d529-25e9-43bd-b03b-14615a002685",
-        "organizationIdentifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a",
-        "proximityUUID": "AABBCCDD-A101-B202-C303-AABBCCDDEEFF",
-        "major": "10",
-        "country": "Costa Rica",
-        "state": "San Jose",
-        "city": "Curridabat",
-        "zipCode": "1000",
-        "ubication": "Curridabat",
-        "title": "Cupcake Fantasy 1",
-        "subTitle": "Curridabat",
-        "titleColor": "",
-        "streetAddress1": "Curridabat",
-        "latitude": "9.923165731693336",
-        "longitude": "-84.03725208107909",
-        "email": "epadilla@biin.io",
-        "nutshell": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
-        "phoneNumber": "1800-888-8888",
-        "userShared": "0",
-        "userFollowed": "0",
-        "userLiked": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/b49fbfcdc73d-4808-b6a0-168f7f6dc453.jpg",
-            "vibrantColor": "185,138,89",
-            "vibrantDarkColor": "197,40,20",
-            "vibrantLightColor": "224,177,111"
-          }
+    "data": {
+        "sites": [
+            {
+                "identifier": "b9ba458b-2977-4d5b-80bd-f87b5efe7e1d",
+                "organizationIdentifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a",
+                "proximityUUID": "AABBCCDD-A101-B202-C303-AABBCCDDEEFF",
+                "major": "10",
+                "country": "Costa Rica",
+                "state": "San Jose",
+                "city": "Curridabat",
+                "zipCode": "1000",
+                "ubication": "Curridabat",
+                "title": "Cupcake Fantasy 1",
+                "subTitle": "Curridabat",
+                "titleColor": "",
+                "streetAddress1": "Curridabat",
+                "latitude": "9.923165731693336",
+                "longitude": "-84.03725208107909",
+                "email": "epadilla@biin.io",
+                "nutshell": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
+                "phoneNumber": "1800-888-8888",
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/b49fbfcdc73d-4808-b6a0-168f7f6dc453.jpg",
+                        "vibrantColor": "185,138,89",
+                        "vibrantDarkColor": "197,40,20",
+                        "vibrantLightColor": "224,177,111"
+                    }
+                ],
+                "neighbors": [],
+                "showcases": [
+                    {
+                        "_id": "a11c2d9cb5fa4b03004e8e1a",
+                        "identifier": "4305d14b-7272-4fa5-ba93-52f9be13b66e",
+                        "title": "Cupcakes del sueño",
+                        "subTitle": "El perfecto acompañante de tu día.",
+                        "elements": [
+                            {
+                                "_id": "161c2d9cb5fa4b03004e8e1a",
+                                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "161c2d9cb5fa4b03004e8e18",
+                                "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "161c2d9cb5fa4b03004e8e19",
+                                "identifier": "db424a8b-b937-4a36-b134-88f95678b816",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "161c2d9cb5fa4b03004e8e1b",
+                                "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "161c2d9cb5fa4b03004e8e1c",
+                                "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "161c2d9cb5fa4b03004e8e1d",
+                                "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
+                                "userViewed": "0"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "a21c2d9cb5fa4b03004e8e1a",
+                        "identifier": "4305d14b-7272-4fa5-ba93-52f9be13b66e",
+                        "title": "Cupcakes del sueño 2",
+                        "subTitle": "El perfecto acompañante de tu día.",
+                        "elements": [
+                            {
+                                "_id": "261c2d9cb5fa4b03004e8e1a",
+                                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "261c2d9cb5fa4b03004e8e18",
+                                "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "261c2d9cb5fa4b03004e8e19",
+                                "identifier": "db424a8b-b937-4a36-b134-88f95678b816",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "261c2d9cb5fa4b03004e8e1b",
+                                "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "261c2d9cb5fa4b03004e8e1c",
+                                "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "261c2d9cb5fa4b03004e8e1d",
+                                "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
+                                "userViewed": "0"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "a31c2d9cb5fa4b03004e8e1a",
+                        "identifier": "4305d14b-7272-4fa5-ba93-52f9be13b66e",
+                        "title": "Cupcakes del sueño 3",
+                        "subTitle": "El perfecto acompañante de tu día.",
+                        "elements": [
+                            {
+                                "_id": "361c2d9cb5fa4b03004e8e1a",
+                                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "361c2d9cb5fa4b03004e8e18",
+                                "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "361c2d9cb5fa4b03004e8e19",
+                                "identifier": "db424a8b-b937-4a36-b134-88f95678b816",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "361c2d9cb5fa4b03004e8e1b",
+                                "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "361c2d9cb5fa4b03004e8e1c",
+                                "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "361c2d9cb5fa4b03004e8e1d",
+                                "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
+                                "userViewed": "0"
+                            }
+                        ]
+                    }
+                ],
+                "biins": []
+            },
+            {
+                "organizationIdentifier": "2dd2d093-f637-481b-8182-bcf33adc7b7e",
+                "proximityUUID": "AABBCCDD-A101-B202-C303-AABBCCDDEEFF",
+                "identifier": "6cc5d529-25e9-43bd-b03b-14615a002685",
+                "major": "31",
+                "country": "Costa Rica",
+                "state": "San Jose",
+                "city": "Curridabat",
+                "zipCode": "",
+                "ubication": "Segunda planta, frente al Food Court",
+                "title": "Flexi",
+                "subTitle": "Multiplaza Curridabat",
+                "streetAddress1": "Centro Comercial Multiplaza",
+                "latitude": "09.917589",
+                "longitude": "-84.04753",
+                "email": "curridabat@flexi.com",
+                "nutshell": "Tu tienda de Zapatos",
+                "phoneNumber": "506 25242602",
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/2dd2d093-f637-481b-8182-bcf33adc7b7e/43f68427690a-47a5-bcdf-bbf93ba4e2aa.jpg",
+                        "vibrantColor": "194,79,60",
+                        "vibrantDarkColor": "61,25,19",
+                        "vibrantLightColor": "220,205,180"
+                    }
+                ],
+                "biins": [],
+                "neighbors": [],
+                "showcases": [
+                    {
+                        "_id": "55de389ca428920300cf4c5d",
+                        "identifier": "2463e2b9-8298-44ee-b3ed-25c9332aa4fc",
+                        "title": "Promo.",
+                        "subTitle": "Explore nuestros productos en promición",
+                        "elements": [
+                            {
+                                "_id": "55de44e3a428920300cf4cfc",
+                                "identifier": "bae200ab-724f-4074-b32d-fd3cfb80f01f",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "55de44e3a428920300cf4cfd",
+                                "identifier": "0b446bff-fd34-413b-8d0e-ff9e39b15688",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "55de44e3a428920300cf4cfe",
+                                "identifier": "398f1405-befd-4f45-9e5f-029dd6028069",
+                                "userViewed": "0"
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "55db367ea891a10300ad45ae",
+                        "identifier": "eb4737fa-fd70-42de-bc6c-5ad75824c3c5",
+                        "title": "Damas",
+                        "subTitle": "Otoño e Invierno",
+                        "elements": [
+                            {
+                                "_id": "560c521fe0b0e403008ac264",
+                                "identifier": "8c3afcce-ddea-497b-abc5-af7d9fc7c54a",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "560c516ce0b0e403008ac254",
+                                "identifier": "06451b13-7e31-4bdd-9e53-ae35b9479dd6",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "560c521fe0b0e403008ac262",
+                                "identifier": "7d2fa49c-8aaa-4419-a4ad-81a903f66ed5",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "560c516ce0b0e403008ac255",
+                                "identifier": "e71392f6-2907-4f9c-a5af-57a26b72119d",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "55ddd5dfaa2d110300c32469",
+                                "identifier": "12f9cc5b-b300-4215-9d19-a171ca11bc33",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "55ddd72baa2d110300c32479",
+                                "identifier": "8188c3f1-6caf-4119-a724-ce1bfff8568e",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "55db36daa891a10300ad45b3",
+                                "identifier": "5dbe8c46-a3ae-44f1-8834-8f91e5dde9f2",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "55ddd72baa2d110300c3247a",
+                                "identifier": "d570801d-23a2-4f12-9b94-e0f5a32e4d7d",
+                                "userViewed": "0"
+                            },
+                            {
+                                "_id": "55ddd5dfaa2d110300c32468",
+                                "identifier": "23761bc8-fb3f-4f6d-8b38-7b7ea94bbf23",
+                                "userViewed": "0"
+                            }
+                        ]
+                    }
+                ]
+            }
         ],
-        "neighbors": [],
-        "showcases": [
-          {
-            "identifier": "4305d14b-7272-4fa5-ba93-52f9be13b66e"
-          },
-          {
-            "identifier": "5db02143-7c39-4e7b-b31b-8b1d98125e52"
-          }
+        "organizations": [
+            {
+                "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a",
+                "_id": "55ca2157c8c2be030002d00a",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "title1": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/media/f6696806-14db-4cb9-b9d6-84d2b677638c/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/media/17191ab8-3769-4a32-b625-df770013a852.jpg",
+                        "vibrantColor": "161,49,61",
+                        "vibrantDarkColor": "80,44,34",
+                        "vibrantLightColor": "243,238,229"
+                    }
+                ],
+                "extraInfo": "none.",
+                "description": "Es una organización de prueba.",
+                "brand": "Biin",
+                "name": "Biin Esteban Padilla",
+                "isLoyaltyEnabled": "0",
+                "loyalty": {
+                    "isSubscribed": "1",
+                    "subscriptionDate": "2015-11-09 20:01:52",
+                    "points": "0"
+                }
+            },
+            {
+                "identifier": "AA4d6990-e1eb-44c2-aa5f-bf102f099e0a",
+                "_id": "55ca2157c8c2be030002d00a",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "title1": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/18da21c1-6bf3-49e5-b5f9-404572e05180/9c1992007b78-4db0-b495-6c0f3092b8c7.jpg",
+                        "vibrantColor": "161,49,61",
+                        "vibrantDarkColor": "80,44,34",
+                        "vibrantLightColor": "243,238,229"
+                    }
+                ],
+                "extraInfo": "none.",
+                "description": "Es una organización de prueba.",
+                "brand": "Biin 2",
+                "name": "Biin 2 Esteban Padilla",
+                "isLoyaltyEnabled": "0",
+                "loyalty": {
+                    "isSubscribed": "1",
+                    "subscriptionDate": "2015-11-09 20:01:52",
+                    "points": "0"
+                }
+            },
+            {
+                "identifier": "BB4d6990-e1eb-44c2-aa5f-bf102f099e0a",
+                "_id": "55ca2157c8c2be030002d00a",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "title1": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/a80c3752-4ed0-4f82-a157-cbe90ac23b07/7e22c1d58e72-4f95-b3ef-28540941f624.jpg",
+                        "vibrantColor": "161,49,61",
+                        "vibrantDarkColor": "80,44,34",
+                        "vibrantLightColor": "243,238,229"
+                    }
+                ],
+                "extraInfo": "none.",
+                "description": "Es una organización de prueba.",
+                "brand": "Biin 2",
+                "name": "Biin 2 Esteban Padilla",
+                "isLoyaltyEnabled": "0",
+                "loyalty": {
+                    "isSubscribed": "1",
+                    "subscriptionDate": "2015-11-09 20:01:52",
+                    "points": "0"
+                }
+            },
+            {
+                "identifier": "2dd2d093-f637-481b-8182-bcf33adc7b7e",
+                "_id": "55d7c931fb8c67030027bc1c",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "title1": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/media/7b5e9416-ed54-41f1-b562-fcba5a449d15/2dd2d093-f637-481b-8182-bcf33adc7b7e/media/2dd2d093-f637-481b-8182-bcf33adc7b7e.jpg",
+                        "vibrantColor": "0,0,0",
+                        "vibrantDarkColor": "0,0,0",
+                        "vibrantLightColor": "0,0,0"
+                    }
+                ],
+                "extraInfo": "a",
+                "description": "Zapatería",
+                "brand": "Flexi",
+                "name": "Flexi CR",
+                "isLoyaltyEnabled": "0",
+                "loyalty": {
+                    "isSubscribed": "1",
+                    "subscriptionDate": "2015-11-13 14:21:27",
+                    "points": "0"
+                }
+            }
         ],
-        "biins": []
-      },
-      {
-        "identifier": "513A9EC5-6D78-45AE-8CC0-575E1216CFA8",
-        "organizationIdentifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a",
-        "proximityUUID": "AABBCCDD-A101-B202-C303-AABBCCDDEEFF",
-        "major": "11",
-        "country": "Costa Rica",
-        "state": "San Jose",
-        "city": "Curridabat",
-        "zipCode": "1000",
-        "ubication": "Curridabat",
-        "title": "Cupcake Fantasy 2",
-        "subTitle": "Curridabat",
-        "titleColor": "",
-        "streetAddress1": "Curridabat",
-        "latitude": "9.923165731693336",
-        "longitude": "-84.03725208107909",
-        "collectCount": "0",
-        "email": "epadilla@biin.io",
-        "nutshell": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
-        "phoneNumber": "1800-888-8888",
-        "userShared": "0",
-        "userFollowed": "0",
-        "userLiked": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/b49fbfcdc73d-4808-b6a0-168f7f6dc453.jpg",
-            "vibrantColor": "185,138,89",
-            "vibrantDarkColor": "197,40,20",
-            "vibrantLightColor": "224,177,111"
-          }
-        ],
-        "neighbors": [],
-        "showcases": [
-          {
-            "identifier": "4305d14b-7272-4fa5-ba93-52f9be13b66e"
-          },
-          {
-            "identifier": "5db02143-7c39-4e7b-b31b-8b1d98125e52"
-          }
-        ],
-        "biins": []
-      },
-      {
-        "identifier": "5b9490c3-d040-4a0b-80e9-015aaa1941cb",
-        "organizationIdentifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a",
-        "proximityUUID": "AABBCCDD-A101-B202-C303-AABBCCDDEEFF",
-        "major": "12",
-        "country": "Costa Rica",
-        "state": "San Jose",
-        "city": "Curridabat",
-        "zipCode": "1000",
-        "ubication": "Curridabat",
-        "title": "Cupcake Fantasy 3",
-        "subTitle": "Curridabat",
-        "titleColor": "",
-        "streetAddress1": "Curridabat",
-        "latitude": "9.923165731693336",
-        "longitude": "-84.03725208107909",
-        "collectCount": "0",
-        "email": "epadilla@biin.io",
-        "nutshell": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
-        "phoneNumber": "1800-888-8888",
-        "userShared": "0",
-        "userFollowed": "0",
-        "userLiked": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/b49fbfcdc73d-4808-b6a0-168f7f6dc453.jpg",
-            "vibrantColor": "185,138,89",
-            "vibrantDarkColor": "197,40,20",
-            "vibrantLightColor": "224,177,111"
-          }
-        ],
-        "neighbors": [],
-        "showcases": [
-          {
-            "identifier": "4305d14b-7272-4fa5-ba93-52f9be13b66e"
-          },
-          {
-            "identifier": "5db02143-7c39-4e7b-b31b-8b1d98125e52"
-          }
-        ],
-        "biins": []
-      },
-      {
-        "identifier": "C31320AB-4AAC-4F47-8BCC-047EFCF86859",
-        "organizationIdentifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a",
-        "proximityUUID": "AABBCCDD-A101-B202-C303-AABBCCDDEEFF",
-        "major": "14",
-        "country": "Costa Rica",
-        "state": "San Jose",
-        "city": "Curridabat",
-        "zipCode": "1000",
-        "ubication": "Curridabat",
-        "title": "Cupcake Fantasy 4",
-        "subTitle": "Curridabat",
-        "titleColor": "",
-        "streetAddress1": "Curridabat",
-        "latitude": "9.923165731693336",
-        "longitude": "-84.03725208107909",
-        "collectCount": "0",
-        "email": "epadilla@biin.io",
-        "nutshell": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
-        "phoneNumber": "1800-888-8888",
-        "userShared": "0",
-        "userFollowed": "0",
-        "userLiked": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/b49fbfcdc73d-4808-b6a0-168f7f6dc453.jpg",
-            "vibrantColor": "185,138,89",
-            "vibrantDarkColor": "197,40,20",
-            "vibrantLightColor": "224,177,111"
-          }
-        ],
-        "neighbors": [],
-        "showcases": [
-          {
-            "identifier": "4305d14b-7272-4fa5-ba93-52f9be13b66e"
-          },
-          {
-            "identifier": "5db02143-7c39-4e7b-b31b-8b1d98125e52"
-          }
-        ],
-        "biins": []
-      }
-    ],
-    "organizations": [
-      {
-        "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a",
-        "_id": "55ca2157c8c2be030002d00a",
-        "media": [
-          {
-            "mediaType": "1",
-            "title1": "",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/media/f6696806-14db-4cb9-b9d6-84d2b677638c/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/media/17191ab8-3769-4a32-b625-df770013a852.jpg",
-            "vibrantColor": "161,49,61",
-            "vibrantDarkColor": "80,44,34",
-            "vibrantLightColor": "243,238,229"
-          }
-        ],
-        "extraInfo": "none.",
-        "description": "Es una organización de prueba.",
-        "brand": "Biin",
-        "name": "Biin Esteban Padilla",
-        "isLoyaltyEnabled": "0",
-        "loyalty": {
-          "isSubscribed": "1",
-          "subscriptionDate": "2015-11-09 20:01:52",
-          "points": "0"
-        }
-      },
-      {
-        "identifier": "AA4d6990-e1eb-44c2-aa5f-bf102f099e0a",
-        "_id": "55ca2157c8c2be030002d00a",
-        "media": [
-          {
-            "mediaType": "1",
-            "title1": "",
-            "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/18da21c1-6bf3-49e5-b5f9-404572e05180/9c1992007b78-4db0-b495-6c0f3092b8c7.jpg",
-            "vibrantColor": "161,49,61",
-            "vibrantDarkColor": "80,44,34",
-            "vibrantLightColor": "243,238,229"
-          }
-        ],
-        "extraInfo": "none.",
-        "description": "Es una organización de prueba.",
-        "brand": "Biin 2",
-        "name": "Biin 2 Esteban Padilla",
-        "isLoyaltyEnabled": "0",
-        "loyalty": {
-          "isSubscribed": "1",
-          "subscriptionDate": "2015-11-09 20:01:52",
-          "points": "0"
-        }
-      },
-      {
-        "identifier": "BB4d6990-e1eb-44c2-aa5f-bf102f099e0a",
-        "_id": "55ca2157c8c2be030002d00a",
-        "media": [
-          {
-            "mediaType": "1",
-            "title1": "",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/a80c3752-4ed0-4f82-a157-cbe90ac23b07/7e22c1d58e72-4f95-b3ef-28540941f624.jpg",
-            "vibrantColor": "161,49,61",
-            "vibrantDarkColor": "80,44,34",
-            "vibrantLightColor": "243,238,229"
-          }
-        ],
-        "extraInfo": "none.",
-        "description": "Es una organización de prueba.",
-        "brand": "Biin 2",
-        "name": "Biin 2 Esteban Padilla",
-        "isLoyaltyEnabled": "0",
-        "loyalty": {
-          "isSubscribed": "1",
-          "subscriptionDate": "2015-11-09 20:01:52",
-          "points": "0"
-        }
-      }
-    ],
-    "showcases": [
-      {
-        "identifier": "4305d14b-7272-4fa5-ba93-52f9be13b66e",
-        "title": "Cupcakes del sueño",
-        "subTitle": "El perfecto acompañante de tu día.",
         "elements": [
-          {
-            "_id": "161c2d9cb5fa4b03004e8e1a",
-            "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-            "userViewed": "0"
-          },
-          {
-            "_id": "161c2d9cb5fa4b03004e8e18",
-            "elementIdentifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
-            "userViewed": "0"
-          },
-          {
-            "_id": "161c2d9cb5fa4b03004e8e19",
-            "elementIdentifier": "db424a8b-b937-4a36-b134-88f95678b816",
-            "userViewed": "0"
-          },
-          {
-            "_id": "161c2d9cb5fa4b03004e8e1b",
-            "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-            "userViewed": "0"
-          },
-          {
-            "_id": "161c2d9cb5fa4b03004e8e1c",
-            "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-            "userViewed": "0"
-          },
-          {
-            "_id": "161c2d9cb5fa4b03004e8e1d",
-            "elementIdentifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
-            "userViewed": "0"
-          }
-        ]
-      },
-      {
-        "identifier": "5db02143-7c39-4e7b-b31b-8b1d98125e52",
-        "title": "Cupcakes del sueño",
-        "subTitle": "El perfecto acompañante de tu día.",
-        "elements": [
-          {
-            "_id": "161c2dc4b5fa4b03004e8e36",
-            "elementIdentifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-            "userViewed": "0"
-          },
-          {
-            "_id": "161c2dc4b5fa4b03004e8e34",
-            "elementIdentifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-            "userViewed": "0"
-          },
-          {
-            "_id": "161c2dc4b5fa4b03004e8e35",
-            "elementIdentifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-            "userViewed": "0"
-          }
-        ]
-      }
-    ],
-    "elements": [
-      {
-        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
-        "commentedCount": "0",
-        "sharedCount": "0",
-        "biinedCount": "1",
+            {
+                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-09 19:13:57",
+                "initialDate": "2015-11-09 19:13:57",
+                "hasTimming": "0",
+                "savings": "10",
+                "hasSaving": "1",
+                "discount": "10",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "90",
+                "hasPrice": "1",
+                "listPrice": "90",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Plaza Viquez Orange",
+                "title": "Plaza Viquez Orange",
+                "collectCount": "3",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "domainColor": "239,176,106",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/3add8a4f2ba7-4484-ae3d-91ac6b70febe.jpg",
+                        "vibrantColor": "239,176,106",
+                        "vibrantDarkColor": "213,80,12",
+                        "vibrantLightColor": "239,198,144"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-09 19:20:02",
+                "initialDate": "2015-11-09 19:20:02",
+                "hasTimming": "0",
+                "savings": "30",
+                "hasSaving": "1",
+                "discount": "10",
+                "hasDiscount": "1",
+                "isHighlight": "1",
+                "price": "300",
+                "hasPrice": "1",
+                "listPrice": "270",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "San Pedro  Gold",
+                "title": "San Pedro  Gold",
+                "collectCount": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/4aafb1429bfa-435d-b45c-db11f2b8f39a.jpg",
+                        "vibrantColor": "49,173,185",
+                        "vibrantDarkColor": "156,98,45",
+                        "vibrantLightColor": "84,196,206"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "db424a8b-b937-4a36-b134-88f95678b816",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-09 19:25:04",
+                "initialDate": "2015-11-09 19:25:04",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "1000",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Curridabat Purple",
+                "title": "Curridabat Purple",
+                "collectCount": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/02eca39d8158-4c33-8b62-40607098b146.jpg",
+                        "vibrantColor": "144,106,202",
+                        "vibrantDarkColor": "59,100,39",
+                        "vibrantLightColor": "233,202,247"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-09 19:21:56",
+                "initialDate": "2015-11-09 19:21:56",
+                "hasTimming": "0",
+                "savings": "10",
+                "hasSaving": "0",
+                "discount": "10",
+                "hasDiscount": "1",
+                "isHighlight": "1",
+                "price": "354",
+                "hasPrice": "1",
+                "listPrice": "435",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Plaza Viquez",
+                "title": "Plaza Viquez Cookie",
+                "collectCount": "2",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/a6644842020e-4a1d-9917-35c4a8c57013.jpg",
+                        "vibrantColor": "166,91,23",
+                        "vibrantDarkColor": "100,52,23",
+                        "vibrantLightColor": "228,205,158"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-09 19:26:50",
+                "initialDate": "2015-11-09 19:26:50",
+                "hasTimming": "0",
+                "savings": "20",
+                "hasSaving": "1",
+                "discount": "10",
+                "hasDiscount": "1",
+                "isHighlight": "0",
+                "price": "200",
+                "hasPrice": "1",
+                "listPrice": "180",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "San Pedro Cherry",
+                "title": "San Pedro Cherry",
+                "collectCount": "2",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/3deeaf88cb25-4f59-a736-3b48d16f4fd4.jpg",
+                        "vibrantColor": "206,12,48",
+                        "vibrantDarkColor": "142,8,21",
+                        "vibrantLightColor": "208,121,164"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-09 19:29:02",
+                "initialDate": "2015-11-09 19:29:02",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "0",
+                "hasPrice": "0",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Curridabat Cake",
+                "title": "Curridabat Cake",
+                "collectCount": "0",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/13945e7072ee-4fe2-8940-63b473f4a50d.jpg",
+                        "vibrantColor": "151,125,65",
+                        "vibrantDarkColor": "18,60,76",
+                        "vibrantLightColor": "127,182,198"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "bae200ab-724f-4074-b32d-fd3cfb80f01f",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "0b446bff-fd34-413b-8d0e-ff9e39b15688",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "398f1405-befd-4f45-9e5f-029dd6028069",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "8c3afcce-ddea-497b-abc5-af7d9fc7c54a",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "06451b13-7e31-4bdd-9e53-ae35b9479dd6",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "7d2fa49c-8aaa-4419-a4ad-81a903f66ed5",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "e71392f6-2907-4f9c-a5af-57a26b72119d",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "12f9cc5b-b300-4215-9d19-a171ca11bc33",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "8188c3f1-6caf-4119-a724-ce1bfff8568e",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "5dbe8c46-a3ae-44f1-8834-8f91e5dde9f2",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "d570801d-23a2-4f12-9b94-e0f5a32e4d7d",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            },
+            {
+                "identifier": "23761bc8-fb3f-4f6d-8b38-7b7ea94bbf23",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-12 16:56:46",
+                "initialDate": "2015-11-12 16:56:46",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "3250",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "cafe"
+                ],
+                "subTitle": "El mejor café con leche en la zona.",
+                "title": "Café Late",
+                "elementType": "",
+                "collectCount": "1",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "mediaType": "1",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/f6696806-14db-4cb9-b9d6-84d2b677638c/096bcb82-e89a-4695-89c5-3df35ee4d813/fdd723b05e0b-47a9-a503-43ded73aa7fb.jpg",
+                        "vibrantColor": "157,90,27",
+                        "vibrantDarkColor": "113,69,34",
+                        "vibrantLightColor": "202,158,113"
+                    }
+                ],
+                "userShared": "0",
+                "userFollowed": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0",
+                "isActive": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>"
+            }
+        ],
+        "hightlights": [
+            {
+                "_id": "161c2d9cb5fa4b03004e8e1a",
+                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+            },
+            {
+                "_id": "361c2d9cb5fa4b03004e8e18",
+                "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
+            },
+            {
+                "_id": "261c2d9cb5fa4b03004e8e1b",
+                "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
+            },
+            {
+                "_id": "261c2d9cb5fa4b03004e8e1a",
+                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+            },
+            {
+                "_id": "361c2d9cb5fa4b03004e8e1a",
+                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+            }
+        ],
         "categories": [
-          {
-            "identifier": "category11"
-          }
-        ],
-        "quantity": "",
-        "hasQuantity": "0",
-        "expirationDate": "2015-11-09 19:13:57",
-        "initialDate": "2015-11-09 19:13:57",
-        "hasTimming": "0",
-        "savings": "10",
-        "hasSaving": "1",
-        "discount": "10",
-        "hasDiscount": "0",
-        "isHighlight": "0",
-        "price": "90",
-        "hasPrice": "1",
-        "listPrice": "90",
-        "hasListPrice": "1",
-        "hasFromPrice": "0",
-        "currencyType": "1",
-        "searchTags": [
-          "games"
-        ],
-        "subTitle": "Plaza Viquez Orange",
-        "title": "Plaza Viquez Orange",
-        "collectCount": "3",
-        "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
-        "reservedQuantity": "0",
-        "claimedQuantity": "0",
-        "actualQuantity": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "domainColor": "239,176,106",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/3add8a4f2ba7-4484-ae3d-91ac6b70febe.jpg",
-            "vibrantColor": "239,176,106",
-            "vibrantDarkColor": "213,80,12",
-            "vibrantLightColor": "239,198,144"
-          }
-        ],
-        "userShared": "0",
-        "userLiked": "0",
-        "userCollected": "0",
-        "userViewed": "0"
-      },
-      {
-        "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25",
-        "sharedCount": "0",
-        "categories": [
-          {
-            "identifier": "category11"
-          }
-        ],
-        "quantity": "",
-        "hasQuantity": "0",
-        "expirationDate": "2015-11-09 19:20:02",
-        "initialDate": "2015-11-09 19:20:02",
-        "hasTimming": "0",
-        "savings": "30",
-        "hasSaving": "1",
-        "discount": "10",
-        "hasDiscount": "1",
-        "isHighlight": "1",
-        "price": "300",
-        "hasPrice": "1",
-        "listPrice": "270",
-        "hasListPrice": "1",
-        "hasFromPrice": "0",
-        "currencyType": "1",
-        "searchTags": [
-          "games"
-        ],
-        "subTitle": "San Pedro  Gold",
-        "title": "San Pedro  Gold",
-        "collectCount": "1",
-        "detailsHtml": "",
-        "reservedQuantity": "0",
-        "claimedQuantity": "0",
-        "actualQuantity": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/4aafb1429bfa-435d-b45c-db11f2b8f39a.jpg",
-            "vibrantColor": "49,173,185",
-            "vibrantDarkColor": "156,98,45",
-            "vibrantLightColor": "84,196,206"
-          }
-        ],
-        "userShared": "0",
-        "userLiked": "0",
-        "userCollected": "0",
-        "userViewed": "0"
-      },
-      {
-        "identifier": "db424a8b-b937-4a36-b134-88f95678b816",
-        "commentedCount": "0",
-        "sharedCount": "0",
-        "categories": [
-          {
-            "identifier": "category11"
-          }
-        ],
-        "quantity": "",
-        "hasQuantity": "0",
-        "expirationDate": "2015-11-09 19:25:04",
-        "initialDate": "2015-11-09 19:25:04",
-        "hasTimming": "0",
-        "savings": "",
-        "hasSaving": "0",
-        "discount": "",
-        "hasDiscount": "0",
-        "isHighlight": "0",
-        "price": "1000",
-        "hasPrice": "1",
-        "listPrice": "",
-        "hasListPrice": "0",
-        "hasFromPrice": "0",
-        "currencyType": "2",
-        "searchTags": [
-          "games"
-        ],
-        "subTitle": "Curridabat Purple",
-        "title": "Curridabat Purple",
-        "elementType": "",
-        "collectCount": "1",
-        "detailsHtml": "<p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\">If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><blockquote style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\"><p>Lesson books alone, with no detailed video instruction,</p></blockquote><p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\"><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\"><b>Lesson books alone, with no detailed video instruction</b><br/></p><ul style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\"><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><div class=\"listPrice_Table\" style=\"width: 730px;color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\"><div class=\"listPrice_Title\"><h2 style=\"color: inherit;\"></h2></div><div class=\"listPrice\" style=\"width: 730px;\"><div class=\"listPrice_Left\" style=\"width: 584px;float: left;\"><div class=\"listPrice_Left_Top\"><p style=\"text-align: left;\">Gibson's Learn &amp; Master Guitar</p></div><div class=\"listPrice_Left_Bottom\"><p style=\"text-align: left;color: rgb(112, 112, 112);\">Gibson's Learn &amp; Master Guitar</p></div></div><div class=\"listPrice_Right\"><p style=\"width: 146px;float: right;text-align: right;\">$200</p></div></div><div class=\"listPrice\" style=\"width: 730px;\"><div class=\"listPrice_Left\" style=\"width: 584px;float: left;\"><div class=\"listPrice_Left_Top\"><p style=\"text-align: left;\">Gibson's Learn &amp; Master Guitar</p></div><div class=\"listPrice_Left_Bottom\"><p style=\"text-align: left;color: rgb(112, 112, 112);\">Gibson's Learn &amp; Master Guitar</p></div></div><div class=\"listPrice_Right\"><p style=\"width: 146px;float: right;text-align: right;\">$400</p></div></div><div class=\"listPrice\" style=\"width: 730px;\"><div class=\"listPrice_Left\" style=\"width: 584px;float: left;\"><div class=\"listPrice_Left_Top\"><p style=\"text-align: left;\">Gibson's Learn &amp; Master Guitar</p></div><div class=\"listPrice_Left_Bottom\"><p style=\"text-align: left;color: rgb(112, 112, 112);\">Gibson's Learn &amp; Master Guitar</p></div></div><div class=\"listPrice_Right\"><p style=\"width: 146px;float: right;text-align: right;\">$500</p></div></div></div><p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!<br/></p><p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\"><br/></p><div class=\"highlight\" style=\"text-align: center;width: 769px;color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\"><div class=\"highlight_title\"><p>Gibson's Learn &amp; Master Guitar</p></div><div class=\"highlight_text\"><p>-25%</p></div><div class=\"highlight_subtext\"><p>Gibson's Learn &amp; Master Guitar</p></div></div><p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\"><br/></p><p style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\">Not a beginner guitarist? That's OK. Skim through the basics and jump into the more advanced training. <a href=\"http://www.learnandmaster.com/guitar/pages/guitar-intermediate-players/\" style=\"color: rgb(84, 22, 25);background-color: transparent;\">Learn more</a> about using the course as an intermediate player.</p><div class=\"biin_h6\" style=\"color: rgb(58, 63, 81);background-color: rgb(255, 255, 255);\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!<br/></div>",
-        "reservedQuantity": "0",
-        "claimedQuantity": "0",
-        "actualQuantity": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/02eca39d8158-4c33-8b62-40607098b146.jpg",
-            "vibrantColor": "144,106,202",
-            "vibrantDarkColor": "59,100,39",
-            "vibrantLightColor": "233,202,247"
-          }
-        ],
-        "userShared": "0",
-        "userLiked": "0",
-        "userCollected": "0",
-        "userViewed": "0"
-      },
-      {
-        "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
-        "commentedCount": "0",
-        "sharedCount": "0",
-        "categories": [
-          {
-            "identifier": "category11"
-          }
-        ],
-        "quantity": "",
-        "hasQuantity": "0",
-        "expirationDate": "2015-11-09 19:21:56",
-        "initialDate": "2015-11-09 19:21:56",
-        "hasTimming": "0",
-        "savings": "10",
-        "hasSaving": "0",
-        "discount": "10",
-        "hasDiscount": "1",
-        "isHighlight": "1",
-        "price": "354",
-        "hasPrice": "1",
-        "listPrice": "435",
-        "hasListPrice": "1",
-        "hasFromPrice": "0",
-        "currencyType": "1",
-        "searchTags": [
-          "games"
-        ],
-        "subTitle": "Plaza Viquez",
-        "title": "Plaza Viquez Cookie",
-        "collectCount": "2",
-        "detailsHtml": "<p></p><p></p><p></p><p></p><p></p><p>There are two exceptions to this: List and RealmOptional properties cannot be declared as dynamic because generic properties cannot be represented in the Objective-C runtime, which is used for dynamic dispatch of dynamic properties, and should always be declared with let.</p><div class=\"biin_h1\">Transcription</div><p>Realm model properties need the dynamic var attribute in order for these properties to become accessors for the underlying database data. After you have added the object to the Realm you can continue using it, and all changes you make to it will be persisted (and must be made within a write transaction). Any changes are made available to other threads that use the same Realm when the write transaction is committed.</p><div class=\"biin_h1\">When in doubt, Beatles.</div><p>When all else fails, when I’m burnt out on my usual practice routine, when I can’t decide what to transcribe, when I start making excuses as to why I can’t practice <em style=\"color: rgb(51, 51, 51);background-color: rgb(255, 255, 255);\"><i>right now</i></em>, I learn a Beatles song. My default rule was to learn the second cut on every album, in chronological order. The fewer decisions I have to make before I start practicing, the more likely I am to simply practice.<br/></p><p><br/></p><p></p><p></p><p></p><p></p><p></p><p><br/></p><p><br/></p>",
-        "reservedQuantity": "0",
-        "claimedQuantity": "0",
-        "actualQuantity": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/a6644842020e-4a1d-9917-35c4a8c57013.jpg",
-            "vibrantColor": "166,91,23",
-            "vibrantDarkColor": "100,52,23",
-            "vibrantLightColor": "228,205,158"
-          }
-        ],
-        "userShared": "0",
-        "userLiked": "0",
-        "userCollected": "0",
-        "userViewed": "0"
-      },
-      {
-        "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
-        "commentedCount": "0",
-        "sharedCount": "0",
-        "categories": [
-          {
-            "identifier": "category11"
-          }
-        ],
-        "quantity": "",
-        "hasQuantity": "0",
-        "expirationDate": "2015-11-09 19:26:50",
-        "initialDate": "2015-11-09 19:26:50",
-        "hasTimming": "0",
-        "savings": "20",
-        "hasSaving": "1",
-        "discount": "10",
-        "hasDiscount": "1",
-        "isHighlight": "0",
-        "price": "200",
-        "hasPrice": "1",
-        "listPrice": "180",
-        "hasListPrice": "1",
-        "hasFromPrice": "0",
-        "currencyType": "1",
-        "searchTags": [
-          "games"
-        ],
-        "subTitle": "San Pedro Cherry",
-        "title": "San Pedro Cherry",
-        "collectCount": "2",
-        "detailsHtml": "",
-        "reservedQuantity": "0",
-        "claimedQuantity": "0",
-        "actualQuantity": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/3deeaf88cb25-4f59-a736-3b48d16f4fd4.jpg",
-            "vibrantColor": "206,12,48",
-            "vibrantDarkColor": "142,8,21",
-            "vibrantLightColor": "208,121,164"
-          }
-        ],
-        "userShared": "0",
-        "userLiked": "0",
-        "userCollected": "0",
-        "userViewed": "0"
-      },
-      {
-        "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
-        "sharedCount": "0",
-        "categories": [
-          {
-            "identifier": "category11"
-          }
-        ],
-        "quantity": "",
-        "hasQuantity": "0",
-        "expirationDate": "2015-11-09 19:29:02",
-        "initialDate": "2015-11-09 19:29:02",
-        "hasTimming": "0",
-        "savings": "",
-        "hasSaving": "0",
-        "discount": "",
-        "hasDiscount": "0",
-        "isHighlight": "0",
-        "price": "0",
-        "hasPrice": "0",
-        "listPrice": "",
-        "hasListPrice": "0",
-        "hasFromPrice": "0",
-        "currencyType": "2",
-        "searchTags": [
-          "games"
-        ],
-        "subTitle": "Curridabat Cake",
-        "title": "Curridabat Cake",
-        "collectCount": "0",
-        "detailsHtml": "",
-        "reservedQuantity": "0",
-        "claimedQuantity": "0",
-        "actualQuantity": "0",
-        "media": [
-          {
-            "mediaType": "1",
-            "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/13945e7072ee-4fe2-8940-63b473f4a50d.jpg",
-            "vibrantColor": "151,125,65",
-            "vibrantDarkColor": "18,60,76",
-            "vibrantLightColor": "127,182,198"
-          }
-        ],
-        "userShared": "0",
-        "userLiked": "0",
-        "userCollected": "0",
-        "userViewed": "0"
-      }
-    ],
-    "hightlights": [
-      {
-        "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
-      },
-      {
-        "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
-      },
-      {
-        "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f"
-      }
-    ],
-    "categories": [
-      {
-        "identifier": "category11",
-        "elements": [
-          {
-            "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
-          },
-          {
-            "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
-          },
-          {
-            "identifier": "db424a8b-b937-4a36-b134-88f95678b816"
-          },
-          {
-            "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
-          },
-          {
-            "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f"
-          },
-          {
-            "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a"
-          }
+            {
+                "identifier": "category11",
+                "elements": [
+                    {
+                        "_id": "161c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    },
+                    {
+                        "_id": "361c2d9cb5fa4b03004e8e18",
+                        "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
+                    },
+                    {
+                        "_id": "261c2d9cb5fa4b03004e8e1b",
+                        "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
+                    },
+                    {
+                        "_id": "261c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    },
+                    {
+                        "_id": "361c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    }
+                ]
+            },
+            {
+                "identifier": "category1",
+                "elements": [
+                    {
+                        "_id": "161c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    },
+                    {
+                        "_id": "361c2d9cb5fa4b03004e8e18",
+                        "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
+                    },
+                    {
+                        "_id": "560c521fe0b0e403008ac264",
+                        "identifier": "8c3afcce-ddea-497b-abc5-af7d9fc7c54a",
+                        "userViewed": "0"
+                    },
+                    {
+                        "_id": "560c516ce0b0e403008ac254",
+                        "identifier": "06451b13-7e31-4bdd-9e53-ae35b9479dd6",
+                        "userViewed": "0"
+                    },
+                    {
+                        "_id": "560c521fe0b0e403008ac262",
+                        "identifier": "7d2fa49c-8aaa-4419-a4ad-81a903f66ed5",
+                        "userViewed": "0"
+                    },
+                    {
+                        "_id": "261c2d9cb5fa4b03004e8e1b",
+                        "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
+                    },
+                    {
+                        "_id": "261c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    },
+                    {
+                        "_id": "361c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    }
+                ]
+            },
+            {
+                "identifier": "category2",
+                "elements": [
+                    {
+                        "_id": "161c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    },
+                    {
+                        "_id": "361c2d9cb5fa4b03004e8e18",
+                        "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
+                    },
+                    {
+                        "_id": "261c2d9cb5fa4b03004e8e1b",
+                        "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
+                    },
+                    {
+                        "_id": "261c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    },
+                    {
+                        "_id": "361c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    }
+                ]
+            },
+            {
+                "identifier": "category9",
+                "elements": [
+                    {
+                        "_id": "161c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    },
+                    {
+                        "_id": "361c2d9cb5fa4b03004e8e18",
+                        "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
+                    },
+                    {
+                        "_id": "560c521fe0b0e403008ac264",
+                        "identifier": "8c3afcce-ddea-497b-abc5-af7d9fc7c54a",
+                        "userViewed": "0"
+                    },
+                    {
+                        "_id": "560c516ce0b0e403008ac254",
+                        "identifier": "06451b13-7e31-4bdd-9e53-ae35b9479dd6",
+                        "userViewed": "0"
+                    },
+                    {
+                        "_id": "560c521fe0b0e403008ac262",
+                        "identifier": "7d2fa49c-8aaa-4419-a4ad-81a903f66ed5",
+                        "userViewed": "0"
+                    },
+                    {
+                        "_id": "261c2d9cb5fa4b03004e8e1b",
+                        "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
+                    },
+                    {
+                        "_id": "261c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    },
+                    {
+                        "_id": "361c2d9cb5fa4b03004e8e1a",
+                        "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
+                    }
+                ]
+            }
         ]
-      },
-      {
-        "identifier": "category12",
-        "elements": [
-          {
-            "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
-          },
-          {
-            "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
-          },
-          {
-            "identifier": "db424a8b-b937-4a36-b134-88f95678b816"
-          },
-          {
-            "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
-          },
-          {
-            "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f"
-          },
-          {
-            "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a"
-          }
-        ]
-      },
-      {
-        "identifier": "category1",
-        "elements": [
-          {
-            "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
-          },
-          {
-            "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
-          },
-          {
-            "identifier": "db424a8b-b937-4a36-b134-88f95678b816"
-          },
-          {
-            "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
-          },
-          {
-            "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f"
-          },
-          {
-            "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a"
-          }
-        ]
-      },
-      {
-        "identifier": "category4",
-        "elements": [
-          {
-            "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64"
-          },
-          {
-            "identifier": "deee2648-39a9-4dd2-a0bf-ca247b9fad25"
-          },
-          {
-            "identifier": "db424a8b-b937-4a36-b134-88f95678b816"
-          },
-          {
-            "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8"
-          },
-          {
-            "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f"
-          },
-          {
-            "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a"
-          }
-        ]
-      }
-    ]
-  },
-  "status": "0",
-  "result": "1"
+    },
+    "status": "0",
+    "result": "1"
 }

@@ -18,12 +18,12 @@ var orgSchema = new Schema({
 	loyaltyEnabled:{type:String, default:"0"},
 	majorCounter:{type: Number, default:1},
 	biinsCounter:{type:Number,default:0},
-	biinsAssignedCounter:{type:Number,default:0},		
+	biinsAssignedCounter:{type:Number,default:0},
 	//Count off biins purchased
 	purchasedBiinsHist:[{
 				date:{type:String,default:""},
 				quantity:{type:Number,default:0},
-				site:{type:String,default:""}					
+				site:{type:String,default:""}
 			}],
 	media:[
 		{
@@ -35,14 +35,14 @@ var orgSchema = new Schema({
 			vibrantDarkColor:{type:String,default:""},
 			vibrantLightColor:{type:String,default:""}
 		}
-	],		
+	],
 	sites:[{
 		identifier:{type:String, default:"-1", index:true},
 		accountIdentifier:{type:String, default:"000"},
 		organizationIdentifier:{type:String,default:""},
-		proximityUUID:{type:String,default:""},	
-		title1:{type:String, default:""},	
-		title2:{type:String, default:""},	
+		proximityUUID:{type:String,default:""},
+		title1:{type:String, default:""},
+		title2:{type:String, default:""},
 		mainColor:{type:String,default:""},
 		textColor:{type:String,default:""},
 		description: {type:String, default:""},
@@ -56,9 +56,10 @@ var orgSchema = new Schema({
 		streetAddres:{type:String, default:""},
 		phoneNumber:{type:String, default:"1-800-888-8888"},
 		ubication:{type:String, default:""},
-		email:{type:String, default:"email@email.com"},		
+		email:{type:String, default:"email@email.com"},
 		lat:{type:String,default:0},
 		lng:{type:String,default:0},
+		geoPosition:{type:[Number],index:"2dsphere"},
 		searchTags:[],
 		categories:[
 			{
@@ -81,9 +82,14 @@ var orgSchema = new Schema({
 		],
 		showcases:[
 			{
-	            showcaseIdentifier:{type:String,default:""}
-	        }
-	    ],
+				showcaseIdentifier:{type:String,default:""},
+				elements:[
+					{
+						identifier:{type:String,default:""}
+					}
+				]
+			}
+		],
 		biins:[
 			{
 				identifier:{type:String, index:true, default:""},
@@ -128,7 +134,7 @@ var orgSchema = new Schema({
 		userFollowed:[{biinieIdentifier:String}],
    		userCollected:[{biinieIdentifier:String}],
    		userLiked:[{biinieIdentifier:String}],
-		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],	
+		userComments:[{position:Number, biinieIdentifier:String,comment:String,date:String}],
 		isValid:{type:Boolean,default:false},
 		isDeleted:{type:Boolean,default:false},
 		region:{type:String,default:""},
@@ -137,42 +143,42 @@ var orgSchema = new Schema({
 				biinieIdentifier : {type:String, default:""},
 				rating : {type:Number, default :0}
 			}
-		]		
+		]
 	}],
 	elements:[
 		{
 		    elementIdentifier:{type:String, default:"-1", index:true},
 		    organizationIdentifier:{type:String,default:""},
-		    accountIdentifier:{type:String,default:""},    
+		    accountIdentifier:{type:String,default:""},
 		    position:{type:String, default:"1"},
 			elementType:{type:String, default:""},
 
-		    title:{type:String, default:""}, 
-		    subTitle:{type:String, default:""}, 
+		    title:{type:String, default:""},
+		    subTitle:{type:String, default:""},
 
-		    searchTags:[],    
+		    searchTags:[],
 		    sticker:{identifier:{type:String, default:""}, color:{type:String,default:""}},
 
 		    textColor:{type:String, default:""},
 		    domainColor:{type:String, default:""},
-		    
+
 			actionType:{type:String, default:""},
 			currencyType:{type:String, default:"0"},
 
 			hasFromPrice:{type:String, default:"0"},
 			//fromPrice:{type:String, default:""},
-			hasListPrice:{type:String, default:'0'},	
+			hasListPrice:{type:String, default:'0'},
 			listPrice:{type:String, default:""},
 			hasPrice:{type:String, default:"0"},
 			price:{type:Number, default:0},
-			
+
 			//Is highlight element
 			isHighlight:{type:String, default:'0'},
 
 			hasDiscount:{type:String, default:'0'},
 			discount:{type:String, default:""},
 			hasSaving:{type:String, default:'0'},
-			savings:{type:String, default:""},	
+			savings:{type:String, default:""},
 
 			hasTimming:{type:String,default:"0"},
 			initialDate:{type:Date,default:""},
@@ -185,12 +191,12 @@ var orgSchema = new Schema({
 			details:[{
 					elementDetailType:{type:String, default:""},
 					text:{type:String,default:""},
-					body:[{				
+					body:[{
 						line:{type:String,default:""},
 						description:{type:String,default:""},//Use for type 6
 						currencyType:{type:String,default:""}//Use for type  6
 					}]
-				}],	
+				}],
 			categories:[
 				{
 					identifier:{type:String, index:true, default:"-1"},
