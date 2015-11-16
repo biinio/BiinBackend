@@ -264,9 +264,9 @@ module.exports =function(){
 			setTrackingSites(model.actions,identifier),
 			setTrackingFollow(model.actions,identifier),
 			setTrackingNotifications(model.actions,identifier)]).then(function(b){
-				res.status(200).json({response:"nothing here"});
+				res.status(200).json({data:{},status:"0",result:"1"});
 			}).catch(function(a){
-				res.status(500).json({response:"something bad happend here"});
+				res.status(500).json({data:{},status:"7",result:"0"});
 			})
 
  	}
