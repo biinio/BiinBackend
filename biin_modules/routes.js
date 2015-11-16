@@ -23,6 +23,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var sysGlobals = require('../routes/sysGlobals')();
     var biinBiinieObjects =require('../routes/biinBiinieObjects')();
     var venues =require('../routes/venue')();
+    var mobileEndPoint = require('../routes/mobileEndPoint')();
 
     //Restricted login pages function
     var restrict =function(req, res, next) {
@@ -101,9 +102,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Organization Routes
     app.get('/organizations',restrict,organizations.index);
     app.get('/api/organizations',organizations.list);
-    app.put('/api/organizations/:identifier',organizations.set);
-    app.put('/api/organizations',organizations.set);
-    app.post('/api/organizations',organizations.set);
+
+    app.post('/api/organizations/:identifier',organizations.set);
+    app.put('/api/organizations/:accountIdentifier',organizations.create);
+
     app.post('/api/organizations/:identifier/image',multipartMiddleware,organizations.uploadImage);
 
     app.delete('/api/organizations/:identifier',organizations.delete);
@@ -294,6 +296,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory)
     app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory)
 
+
+
     app.get('/blog/',restrict, blog.index);
     app.get('/api/blog', blog.list);
     app.get('/public/blog/:year/:month/:day/:title', blog.entry);
@@ -301,6 +305,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
+
+    app.get('/mobile/initialData',mobileRoutes.getInitialData);
+    app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {
