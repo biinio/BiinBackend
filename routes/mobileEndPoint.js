@@ -57,7 +57,7 @@ module.exports = function(){
 
   function validateElementInitialInfo(element){
     var elementValidated = {};
-    elementValidated.identifier = element.identifier? element.identifier : "";
+    elementValidated.identifier = element.elementIdentifier? element.elementIdentifier : "";
     elementValidated.sharedCount = element.sharedCount? element.sharedCount : "0";
     elementValidated.categories = element.categories? element.categories : [];
     elementValidated.quantity = element.quantity? element.quantity : "";
