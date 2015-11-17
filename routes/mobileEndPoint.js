@@ -58,10 +58,10 @@ module.exports = function(){
   function validateElementInitialInfo(element){
     var elementValidated = {};
     elementValidated.identifier = element.identifier? element.identifier : "";
-    elementValidated.sharedCount = element.sharedCount? element.sharedCount : "";
+    elementValidated.sharedCount = element.sharedCount? element.sharedCount : "0";
     elementValidated.categories = element.categories? element.categories : [];
     elementValidated.quantity = element.quantity? element.quantity : "";
-    elementValidated.hasQuantity = element.hasQuantity? element.hasQuantity : "0";
+    elementValidated.hasQuantity = element.hasQuantity? "1" : "0";
     elementValidated.expirationDate = element.expirationDate? element.expirationDate : "";
     elementValidated.initialDate = element.initialDate? element.initialDate : "";
     elementValidated.hasTimming = element.hasTimming? element.hasTimming : "0";
@@ -70,7 +70,10 @@ module.exports = function(){
     elementValidated.discount = element.discount? element.discount : "";
     elementValidated.hasDiscount= element.hasDiscount? element.hasDiscount : "0";
     elementValidated.isHighlight= element.isHighlight? element.isHighlight : "0";
-    elementValidated.price = element.price? element.price : "";
+
+    //In the database is returned like a number
+    elementValidated.price = element.price? element.price+"" : "0";
+
     elementValidated.hasPrice = element.hasPrice? element.hasPrice : "0";
     elementValidated.listPrice = element.listPrice? element.listPrice : "";
     elementValidated.hasListPrice = element.hasListPrice? element.hasListPrice : "0";
@@ -79,12 +82,17 @@ module.exports = function(){
     elementValidated.searchTags = element.searchTags? element.searchTags : [];
     elementValidated.subTitle= element.subTitle? element.subTitle : "";
     elementValidated.title = element.title? element.title : "";
-    elementValidated.collectCount= element.collectCount? element.collectCount : "0";
+
+    //In the database is returned like a number
+    elementValidated.collectCount= element.collectCount? element.collectCount +"" : "0";
+
     elementValidated.detailsHtml= element.detailsHtml? element.detailsHtml : "";
     elementValidated.reservedQuantity = element.reservedQuantity? element.reservedQuantity : "0";
     elementValidated.claimedQuantity = element.claimedQuantity? element.claimedQuantity : "0";
     elementValidated.actualQuantity = element.actualQuantity? element.actualQuantity : "0";
     elementValidated.media = element.media? element.media : [];
+
+    //this fields need to be get from userHistory
     elementValidated.userShared = element.userShared? element.userShared : "0";
     elementValidated.userLiked = element.userLiked? element.userLiked : "0";
     elementValidated.userCollected = element.userCollected? element.userCollected : "0";
@@ -96,7 +104,7 @@ module.exports = function(){
     var userIdentifier = req.param("biinieId");
     var userLat = eval(req.param("latitude"));
     var userLng = eval(req.param("longitude"));
-    var MAX_SITES = 2;
+    var MAX_SITES = 20;
     var response = {};
     var organizations = [];
     var elements = [];
