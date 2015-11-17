@@ -62,8 +62,13 @@ module.exports = function(){
     elementValidated.categories = element.categories? element.categories : [];
     elementValidated.quantity = element.quantity? element.quantity : "";
     elementValidated.hasQuantity = element.hasQuantity? "1" : "0";
+
     elementValidated.expirationDate = element.expirationDate? element.expirationDate : "";
+    elementValidated.expirationDate = elementValidated.expirationDate == "" ? utils.getDateNow() : utils.getDate(elementValidated.expirationDate);
+
     elementValidated.initialDate = element.initialDate? element.initialDate : "";
+    elementValidated.initialDate = elementValidated.initialDate == "" ? utils.getDateNow() : utils.getDate(elementValidated.initialDate);
+
     elementValidated.hasTimming = element.hasTimming? element.hasTimming : "0";
     elementValidated.savings = element.savings? element.savings : "";
     elementValidated.hasSaving = element.hasSaving? element.hasSaving : "0";
