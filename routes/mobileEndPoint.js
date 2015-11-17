@@ -198,8 +198,11 @@ module.exports = function(){
 
           for (var i = 0; i < sites.length; i++) {
             for (var j = 0; j < sites[i].showcases.length; j++) {
+              sites[i].showcases[j].identifier = sites[i].showcases[j].showcaseIdentifier;
+              delete sites[i].showcases[j].showcaseIdentifier;
+
               var showcaseData = _.find(showcasesData,function(showcase){
-                return showcase.identifier == sites[i].showcases[j].showcaseIdentifier;
+                return showcase.identifier == sites[i].showcases[j].identifier;
               })
               sites[i].showcases[j].title = showcaseData.name;
               sites[i].showcases[j].subTitle = showcaseData.description;
