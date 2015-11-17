@@ -23,8 +23,8 @@ module.exports = function(){
     siteValidated.city = site.city ? site.city : "";
     siteValidated.zipCode = site.zipCode ? site.zipCode : "";
     siteValidated.ubication = site.ubication ? site.ubication : "";
-    siteValidated.title = site.title ? site.countitletry : "";
-    siteValidated.subTitle = site.subTitle ? site.subTitle : "";
+    siteValidated.title = site.title1 ? site.title1 : "";
+    siteValidated.subTitle = site.title2 ? site.title2 : "";
     siteValidated.streetAddress1 = site.streetAddress1 ? site.streetAddress1 : "";
     siteValidated.latitude = site.lat ? site.lat : "0";
     siteValidated.longitude = site.lng ? site.lng : "0";
@@ -131,8 +131,8 @@ module.exports = function(){
         'sites.city':1,
         'sites.zipCode':1,
         'sites.ubication':1,
-        'sites.title':1,
-        'sites.subTitle':1,
+        'sites.title1':1,
+        'sites.title2':1,
         'sites.streetAddress1':1,
         'sites.lat':1,
         'sites.lng':1,
