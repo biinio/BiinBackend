@@ -12,11 +12,91 @@ module.exports = function(){
 
   var functions ={}
 
+  function validateSiteInitialInfo(site){
+    var siteValidated = {};
+    siteValidated.identifier = site.identifier ? site.identifier : "";
+    siteValidated.organizationIdentifier = site.organizationIdentifier ? site.organizationIdentifier : "";
+    siteValidated.proximityUUID = site.proximityUUID ? site.proximityUUID : "";
+    siteValidated.major = site.major ? site.major + "" : "";
+    siteValidated.country = site.country ? site.country : "";
+    siteValidated.state = site.state ? site.state : "";
+    siteValidated.city = site.city ? site.city : "";
+    siteValidated.zipCode = site.zipCode ? site.zipCode : "";
+    siteValidated.ubication = site.ubication ? site.ubication : "";
+    siteValidated.title = site.title ? site.countitletry : "";
+    siteValidated.subTitle = site.subTitle ? site.subTitle : "";
+    siteValidated.streetAddress1 = site.streetAddress1 ? site.streetAddress1 : "";
+    siteValidated.latitude = site.lat ? site.lat : "0";
+    siteValidated.longitude = site.lng ? site.lng : "0";
+    siteValidated.email = site.email ? site.email : "";
+    siteValidated.nutshell = site.nutshell ? site.nutshell : "";
+    siteValidated.phoneNumber = site.phoneNumber ? site.phoneNumber : "";
+    siteValidated.media = site.media ? site.media : [];
+    siteValidated.neighbors= site.neighbors ? site.neighbors : [];
+    siteValidated.showcases= site.showcases ? site.showcases : [];
+    siteValidated.biins= site.biins ? site.biins : [];
+
+    return siteValidated;
+  }
+
+  function validateOrganizationInitialInfo(organization){
+
+    var organizationValidated = {};
+    organizationValidated.identifier= organization.identifier? organization.identifier : "";
+    organizationValidated._id= organization._id?organization._id : "";
+    organizationValidated.media = organization.media? organization.media : [];
+    organizationValidated.extraInfo = organization.extraInfo?organization.extraInfo : "";
+    organizationValidated.description = organization.description?organization.description : "";
+    organizationValidated.brand = organization.brand?organization.brand : "";
+    organizationValidated.name = organization.name?organization.name : "";
+    organizationValidated.isLoyaltyEnabled = organization.isLoyaltyEnabled?organization.isLoyaltyEnabled : "0";
+    organizationValidated.loyalty = organization.loyalty? organization.loyalty : [];
+
+    return organizationValidated;
+  }
+
+  function validateElementInitialInfo(element){
+    var elementValidated = {};
+    elementValidated.identifier = element.identifier? element.identifier : "";
+    elementValidated.sharedCount = element.sharedCount? element.sharedCount : "";
+    elementValidated.categories = element.categories? element.categories : [];
+    elementValidated.quantity = element.quantity? element.quantity : "";
+    elementValidated.hasQuantity = element.hasQuantity? element.hasQuantity : "0";
+    elementValidated.expirationDate = element.expirationDate? element.expirationDate : "";
+    elementValidated.initialDate = element.initialDate? element.initialDate : "";
+    elementValidated.hasTimming = element.hasTimming? element.hasTimming : "0";
+    elementValidated.savings = element.savings? element.savings : "";
+    elementValidated.hasSaving = element.hasSaving? element.hasSaving : "0";
+    elementValidated.discount = element.discount? element.discount : "";
+    elementValidated.hasDiscount= element.hasDiscount? element.hasDiscount : "0";
+    elementValidated.isHighlight= element.isHighlight? element.isHighlight : "0";
+    elementValidated.price = element.price? element.price : "";
+    elementValidated.hasPrice = element.hasPrice? element.hasPrice : "0";
+    elementValidated.listPrice = element.listPrice? element.listPrice : "";
+    elementValidated.hasListPrice = element.hasListPrice? element.hasListPrice : "0";
+    elementValidated.hasFromPrice = element.hasFromPrice? element.hasFromPrice : "0";
+    elementValidated.currencyType = element.currencyType? element.currencyType : "1";
+    elementValidated.searchTags = element.searchTags? element.searchTags : [];
+    elementValidated.subTitle= element.subTitle? element.subTitle : "";
+    elementValidated.title = element.title? element.title : "";
+    elementValidated.collectCount= element.collectCount? element.collectCount : "0";
+    elementValidated.detailsHtml= element.detailsHtml? element.detailsHtml : "";
+    elementValidated.reservedQuantity = element.reservedQuantity? element.reservedQuantity : "0";
+    elementValidated.claimedQuantity = element.claimedQuantity? element.claimedQuantity : "0";
+    elementValidated.actualQuantity = element.actualQuantity? element.actualQuantity : "0";
+    elementValidated.media = element.media? element.media : [];
+    elementValidated.userShared = element.userShared? element.userShared : "0";
+    elementValidated.userLiked = element.userLiked? element.userLiked : "0";
+    elementValidated.userCollected = element.userCollected? element.userCollected : "0";
+    elementValidated.userViewed = element.userViewed? element.userViewed : "0";
+    return elementValidated;
+  }
+
   functions.getInitialData = function(req, res){
     var userIdentifier = req.param("biinieId");
     var userLat = eval(req.param("latitude"));
     var userLng = eval(req.param("longitude"));
-    var MAX_SITES = 20;
+    var MAX_SITES = 2;
     var response = {};
     var organizations = [];
     var elements = [];
@@ -38,8 +118,8 @@ module.exports = function(){
         'sites.title':1,
         'sites.subTitle':1,
         'sites.streetAddress1':1,
-        'sites.latitude':1,
-        'sites.longitude':1,
+        'sites.lat':1,
+        'sites.lng':1,
         'sites.email':1,
         'sites.nutshell':1,
         'sites.phoneNumber':1,
@@ -125,6 +205,7 @@ module.exports = function(){
                 delete orgData[i].elements;
                 organizations.push(orgData[i]);
               }
+
               //TODO: Search by the uniqueElementsShowcase and delete the item from that array when the element item is obtained
               //(would be at least same elements or less than elements array)
               var elementsfiltered = [];
@@ -141,7 +222,6 @@ module.exports = function(){
                 elementWithCategories.push(element);
               }
 
-
               //Fill highlights array
               var highlightsWithID = [];
               for (var i = 0; i < elementsfiltered.length; i++) {
@@ -153,9 +233,6 @@ module.exports = function(){
               var hightlightsFiltered = _.filter(elementsInShowcase,function(element){
                 return highlights.indexOf(element.identifier) > -1;
               });
-
-
-
 
               //Fill categories array
               var elementsCategories = [];
@@ -178,6 +255,16 @@ module.exports = function(){
 
                 categories.push({identifier:uniqueCategories[i], elements:elementsWithCategories});
 
+              }
+
+              for (var i = 0; i < response.sites.length; i++) {
+                response.sites[i]=validateSiteInitialInfo(response.sites[i]);
+              }
+              for (var i = 0; i < organizations.length; i++) {
+                organizations[i]=validateOrganizationInitialInfo(organizations[i]);
+              }
+              for (var i = 0; i < elementsfiltered.length; i++) {
+                elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
               }
 
               response.organizations = organizations;
