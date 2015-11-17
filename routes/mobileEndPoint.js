@@ -154,6 +154,7 @@ module.exports = function(){
       }
 
       for (var i = 0; i < sitesDesnormalized.length; i++) {
+        sitesDesnormalized[i].site.organizationIdentifier = sitesDesnormalized[i].organizationId;
         sitesDesnormalized[i].site.proximity = utils.getProximity(userLat,userLng,sitesDesnormalized[i].site.lat,sitesDesnormalized[i].site.lng);
       }
       var sortByProximity = _.sortBy(sitesDesnormalized,function(site){
