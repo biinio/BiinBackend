@@ -140,7 +140,7 @@ module.exports = function(){
         'sites.showcases':1,
         'sites.biins':1,
         'sites.categories':1
-       } ,function(error,data){
+      }).lean().exec( function(error,data){
       var sitesDesnormalized = [];
       for (var i = 0; i < data.length; i++) {
         for (var j = 0; j < data[i].sites.length; j++) {
@@ -179,13 +179,23 @@ module.exports = function(){
       showcasesToFind = _.uniq(showcasesToFind);
       showcase.find({identifier : {$in : showcasesToFind}},
         {
-          "title":1,
-          "subTitle":1,
+          "name":1,
+          "description":1,
           "identifier":1
-        },
+        }).lean().exec(
         function(showcasesError, showcasesData){
           if(showcasesError)
             throw showcasesError;
+
+          for (var i = 0; i < sites.length; i++) {
+            for (var j = 0; j < sites[i].showcases.length; j++) {
+              var showcaseData = _.find(showcasesData,function(showcase){
+                return showcase.identifier == sites[i].showcases[j].showcaseIdentifier;
+              })
+              sites[i].showcases[j].title = showcaseData.name;
+              sites[i].showcases[j].subTitle = showcaseData.description;
+            }
+          }
 
           var organizationsToFind = [];
           for (i = 0; i < sitesReducedAndSorted.length; i++) {
@@ -204,7 +214,7 @@ module.exports = function(){
               "isLoyaltyEnabled": 1,
               "loyalty": 1,
               "elements": 1
-            },function(error,orgData){
+            }).lean().exec(function(error,orgData){
               if(error)
                 throw error;
 
