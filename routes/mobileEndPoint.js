@@ -10,6 +10,16 @@ module.exports = function(){
   //Schemas
 	var client = require('../schemas/client');
 
+  // Default image for elements
+  var BIIN_DEFAULT_IMAGE = {
+      domainColor: '170, 171, 171',
+      mediaType: '1',
+      title1: 'default',
+      url: 'https://biinapp.blob.core.windows.net/biinmedia/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/media/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/4e8b2fb3-af89-461d-9c37-2cc667c20653/media/4af24d51-2173-4d41-b651-d82f18f00d1b.jpg',
+      vibrantColor: '170, 171, 171',
+      vibrantDarkColor: '85,86,86',
+      vibrantLightColor: '170, 171, 171'
+  };
   var functions ={}
 
   function validateSiteInitialInfo(site){
@@ -31,7 +41,7 @@ module.exports = function(){
     siteValidated.email = site.email ? site.email : "";
     siteValidated.nutshell = site.nutshell ? site.nutshell : "";
     siteValidated.phoneNumber = site.phoneNumber ? site.phoneNumber : "";
-    siteValidated.media = site.media ? site.media : [];
+    siteValidated.media = site.media && site.media.length != 0 ? site.media : [BIIN_DEFAULT_IMAGE];
     siteValidated.neighbors= site.neighbors ? site.neighbors : [];
     siteValidated.showcases= site.showcases ? site.showcases : [];
     siteValidated.biins= site.biins ? site.biins : [];
@@ -47,7 +57,7 @@ module.exports = function(){
     var organizationValidated = {};
     organizationValidated.identifier= organization.identifier? organization.identifier : "";
     organizationValidated._id= organization._id?organization._id : "";
-    organizationValidated.media = organization.media? organization.media : [];
+    organizationValidated.media = organization.media && organization.media.length != 0? organization.media : [BIIN_DEFAULT_IMAGE];
     organizationValidated.extraInfo = organization.extraInfo?organization.extraInfo : "";
     organizationValidated.description = organization.description?organization.description : "";
     organizationValidated.brand = organization.brand?organization.brand : "";
@@ -98,7 +108,7 @@ module.exports = function(){
     elementValidated.reservedQuantity = element.reservedQuantity? element.reservedQuantity : "0";
     elementValidated.claimedQuantity = element.claimedQuantity? element.claimedQuantity : "0";
     elementValidated.actualQuantity = element.actualQuantity? element.actualQuantity : "0";
-    elementValidated.media = element.media? element.media : [];
+    elementValidated.media = element.media && element.media.length != 0? element.media : [BIIN_DEFAULT_IMAGE];
 
     //this fields need to be get from userHistory
     elementValidated.userShared = element.userShared? element.userShared : "0";
@@ -112,7 +122,7 @@ module.exports = function(){
     var userIdentifier = req.param("biinieId");
     var userLat = eval(req.param("latitude"));
     var userLng = eval(req.param("longitude"));
-    var MAX_SITES = 20;
+    var MAX_SITES = 10;
     var response = {};
     var organizations = [];
     var elements = [];
