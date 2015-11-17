@@ -35,6 +35,9 @@ module.exports = function(){
     siteValidated.neighbors= site.neighbors ? site.neighbors : [];
     siteValidated.showcases= site.showcases ? site.showcases : [];
     siteValidated.biins= site.biins ? site.biins : [];
+    siteValidated.userShared= site.userShared ? site.userShared : "0";
+    siteValidated.userFollowed= site.userShared ? site.userFollowed : "0";
+    siteValidated.userLiked= site.userShared ? site.userLiked : "0";
 
     return siteValidated;
   }
