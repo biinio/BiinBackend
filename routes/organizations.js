@@ -14,7 +14,7 @@ module.exports = function() {
     var organization = require('../schemas/organization'),
         site = require('../schemas/site'),
         showcase = require('../schemas/showcase'),
-        client = require('../schemas/client');;
+        client = require('../schemas/client');
 
     //Other Routes
     var regionRoutes = require('./regions')(),
@@ -126,6 +126,26 @@ module.exports = function() {
         });
     }
 
+    //Test Vibrant
+    functions.testVibrant = function(req, res) {
+        //mueble: var file = 'http://i.imgur.com/7AQUAab.jpg';
+        //zapato: var file = 'http://i.imgur.com/jbbXTUB.jpg';
+        var file = 'http://i.imgur.com/miZt94c.jpg';
+        var opts = {};
+        opts.quality = 5;
+        var vibrant = new Vibrant(file);
+        var result = {};
+        vibrant.getSwatches(function(error, swatches) {
+            var mainColorRGB =  swatches.Vibrant ? swatches.Vibrant.rgb : [0,0,0];
+            var darkVibrantRGB =  swatches.DarkVibrant ? swatches.DarkVibrant.rgb : [0,0,0];
+            var lightVibrantRGB =  swatches.LightVibrant ? swatches.LightVibrant.rgb : [255,255,255];
+        
+            result.main = mainColorRGB;
+            result.dark = darkVibrantRGB;
+            result.light = lightVibrantRGB;
+            res.json(result);
+        });
+    }
 
 
     //Post the Image of the Organization

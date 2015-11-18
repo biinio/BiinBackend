@@ -305,6 +305,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
+    
+    //Test Vibrant
+    app.get('/test/testVibrant', organizations.testVibrant);
 
     app.get('/mobile/initialData',mobileRoutes.getInitialData);
     app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
@@ -315,4 +318,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
         err.status = 404;
         next(err);
     });
+    
+    
 }
