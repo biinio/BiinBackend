@@ -10,13 +10,119 @@ module.exports = function(){
   //Schemas
 	var client = require('../schemas/client');
 
+  // Default image for elements
+  var BIIN_DEFAULT_IMAGE = {
+      domainColor: '170, 171, 171',
+      mediaType: '1',
+      title1: 'default',
+      url: 'https://biinapp.blob.core.windows.net/biinmedia/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/media/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/4e8b2fb3-af89-461d-9c37-2cc667c20653/media/4af24d51-2173-4d41-b651-d82f18f00d1b.jpg',
+      vibrantColor: '170, 171, 171',
+      vibrantDarkColor: '85,86,86',
+      vibrantLightColor: '170, 171, 171'
+  };
   var functions ={}
+
+  function validateSiteInitialInfo(site){
+    var siteValidated = {};
+    siteValidated.identifier = site.identifier ? site.identifier : "";
+    siteValidated.organizationIdentifier = site.organizationIdentifier ? site.organizationIdentifier : "";
+    siteValidated.proximityUUID = site.proximityUUID ? site.proximityUUID : "";
+    siteValidated.major = site.major ? site.major + "" : "";
+    siteValidated.country = site.country ? site.country : "";
+    siteValidated.state = site.state ? site.state : "";
+    siteValidated.city = site.city ? site.city : "";
+    siteValidated.zipCode = site.zipCode ? site.zipCode : "";
+    siteValidated.ubication = site.ubication ? site.ubication : "";
+    siteValidated.title = site.title1 ? site.title1 : "";
+    siteValidated.subTitle = site.title2 ? site.title2 : "";
+    siteValidated.streetAddress1 = site.streetAddress1 ? site.streetAddress1 : "";
+    siteValidated.latitude = site.lat ? site.lat : "0";
+    siteValidated.longitude = site.lng ? site.lng : "0";
+    siteValidated.email = site.email ? site.email : "";
+    siteValidated.nutshell = site.nutshell ? site.nutshell : "";
+    siteValidated.phoneNumber = site.phoneNumber ? site.phoneNumber : "";
+    siteValidated.media = site.media && site.media.length != 0 ? site.media : [BIIN_DEFAULT_IMAGE];
+    siteValidated.neighbors= site.neighbors ? site.neighbors : [];
+    siteValidated.showcases= site.showcases ? site.showcases : [];
+    siteValidated.biins= site.biins ? site.biins : [];
+    siteValidated.userShared= site.userShared ? site.userShared : "0";
+    siteValidated.userFollowed= site.userShared ? site.userFollowed : "0";
+    siteValidated.userLiked= site.userShared ? site.userLiked : "0";
+
+    return siteValidated;
+  }
+
+  function validateOrganizationInitialInfo(organization){
+
+    var organizationValidated = {};
+    organizationValidated.identifier= organization.identifier? organization.identifier : "";
+    organizationValidated._id= organization._id?organization._id : "";
+    organizationValidated.media = organization.media && organization.media.length != 0? organization.media : [BIIN_DEFAULT_IMAGE];
+    organizationValidated.extraInfo = organization.extraInfo?organization.extraInfo : "";
+    organizationValidated.description = organization.description?organization.description : "";
+    organizationValidated.brand = organization.brand?organization.brand : "";
+    organizationValidated.name = organization.name?organization.name : "";
+    organizationValidated.isLoyaltyEnabled = organization.isLoyaltyEnabled?organization.isLoyaltyEnabled : "0";
+    organizationValidated.loyalty = organization.loyalty? organization.loyalty : [];
+
+    return organizationValidated;
+  }
+
+  function validateElementInitialInfo(element){
+    var elementValidated = {};
+    elementValidated.identifier = element.elementIdentifier? element.elementIdentifier : "";
+    elementValidated.sharedCount = element.sharedCount? element.sharedCount : "0";
+    elementValidated.categories = element.categories? element.categories : [];
+    elementValidated.quantity = element.quantity? element.quantity : "";
+    elementValidated.hasQuantity = element.hasQuantity? "1" : "0";
+
+    elementValidated.expirationDate = element.expirationDate? element.expirationDate : "";
+    elementValidated.expirationDate = elementValidated.expirationDate == "" ? utils.getDateNow() : utils.getDate(elementValidated.expirationDate);
+
+    elementValidated.initialDate = element.initialDate? element.initialDate : "";
+    elementValidated.initialDate = elementValidated.initialDate == "" ? utils.getDateNow() : utils.getDate(elementValidated.initialDate);
+
+    elementValidated.hasTimming = element.hasTimming? element.hasTimming : "0";
+    elementValidated.savings = element.savings? element.savings : "";
+    elementValidated.hasSaving = element.hasSaving? element.hasSaving : "0";
+    elementValidated.discount = element.discount? element.discount : "";
+    elementValidated.hasDiscount= element.hasDiscount? element.hasDiscount : "0";
+    elementValidated.isHighlight= element.isHighlight? element.isHighlight : "0";
+
+    //In the database is returned like a number
+    elementValidated.price = element.price? element.price+"" : "0";
+
+    elementValidated.hasPrice = element.hasPrice? element.hasPrice : "0";
+    elementValidated.listPrice = element.listPrice? element.listPrice : "";
+    elementValidated.hasListPrice = element.hasListPrice? element.hasListPrice : "0";
+    elementValidated.hasFromPrice = element.hasFromPrice? element.hasFromPrice : "0";
+    elementValidated.currencyType = element.currencyType? element.currencyType : "1";
+    elementValidated.searchTags = element.searchTags? element.searchTags : [];
+    elementValidated.subTitle= element.subTitle? element.subTitle : "";
+    elementValidated.title = element.title? element.title : "";
+
+    //In the database is returned like a number
+    elementValidated.collectCount= element.collectCount? element.collectCount +"" : "0";
+
+    elementValidated.detailsHtml= element.detailsHtml? element.detailsHtml : "";
+    elementValidated.reservedQuantity = element.reservedQuantity? element.reservedQuantity : "0";
+    elementValidated.claimedQuantity = element.claimedQuantity? element.claimedQuantity : "0";
+    elementValidated.actualQuantity = element.actualQuantity? element.actualQuantity : "0";
+    elementValidated.media = element.media && element.media.length != 0? element.media : [BIIN_DEFAULT_IMAGE];
+
+    //this fields need to be get from userHistory
+    elementValidated.userShared = element.userShared? element.userShared : "0";
+    elementValidated.userLiked = element.userLiked? element.userLiked : "0";
+    elementValidated.userCollected = element.userCollected? element.userCollected : "0";
+    elementValidated.userViewed = element.userViewed? element.userViewed : "0";
+    return elementValidated;
+  }
 
   functions.getInitialData = function(req, res){
     var userIdentifier = req.param("biinieId");
     var userLat = eval(req.param("latitude"));
     var userLng = eval(req.param("longitude"));
-    var MAX_SITES = 20;
+    var MAX_SITES = 10;
     var response = {};
     var organizations = [];
     var elements = [];
@@ -35,11 +141,11 @@ module.exports = function(){
         'sites.city':1,
         'sites.zipCode':1,
         'sites.ubication':1,
-        'sites.title':1,
-        'sites.subTitle':1,
+        'sites.title1':1,
+        'sites.title2':1,
         'sites.streetAddress1':1,
-        'sites.latitude':1,
-        'sites.longitude':1,
+        'sites.lat':1,
+        'sites.lng':1,
         'sites.email':1,
         'sites.nutshell':1,
         'sites.phoneNumber':1,
@@ -52,7 +158,7 @@ module.exports = function(){
         'sites.showcases':1,
         'sites.biins':1,
         'sites.categories':1
-       } ,function(error,data){
+      }).lean().exec( function(error,data){
       var sitesDesnormalized = [];
       for (var i = 0; i < data.length; i++) {
         for (var j = 0; j < data[i].sites.length; j++) {
@@ -61,6 +167,7 @@ module.exports = function(){
       }
 
       for (var i = 0; i < sitesDesnormalized.length; i++) {
+        sitesDesnormalized[i].site.organizationIdentifier = sitesDesnormalized[i].organizationId;
         sitesDesnormalized[i].site.proximity = utils.getProximity(userLat,userLng,sitesDesnormalized[i].site.lat,sitesDesnormalized[i].site.lng);
       }
       var sortByProximity = _.sortBy(sitesDesnormalized,function(site){
@@ -91,13 +198,26 @@ module.exports = function(){
       showcasesToFind = _.uniq(showcasesToFind);
       showcase.find({identifier : {$in : showcasesToFind}},
         {
-          "title":1,
-          "subTitle":1,
+          "name":1,
+          "description":1,
           "identifier":1
-        },
+        }).lean().exec(
         function(showcasesError, showcasesData){
           if(showcasesError)
             throw showcasesError;
+
+          for (var i = 0; i < sites.length; i++) {
+            for (var j = 0; j < sites[i].showcases.length; j++) {
+              sites[i].showcases[j].identifier = sites[i].showcases[j].showcaseIdentifier;
+              delete sites[i].showcases[j].showcaseIdentifier;
+
+              var showcaseData = _.find(showcasesData,function(showcase){
+                return showcase.identifier == sites[i].showcases[j].identifier;
+              })
+              sites[i].showcases[j].title = showcaseData.name;
+              sites[i].showcases[j].subTitle = showcaseData.description;
+            }
+          }
 
           var organizationsToFind = [];
           for (i = 0; i < sitesReducedAndSorted.length; i++) {
@@ -116,7 +236,7 @@ module.exports = function(){
               "isLoyaltyEnabled": 1,
               "loyalty": 1,
               "elements": 1
-            },function(error,orgData){
+            }).lean().exec(function(error,orgData){
               if(error)
                 throw error;
 
@@ -125,6 +245,7 @@ module.exports = function(){
                 delete orgData[i].elements;
                 organizations.push(orgData[i]);
               }
+
               //TODO: Search by the uniqueElementsShowcase and delete the item from that array when the element item is obtained
               //(would be at least same elements or less than elements array)
               var elementsfiltered = [];
@@ -141,7 +262,6 @@ module.exports = function(){
                 elementWithCategories.push(element);
               }
 
-
               //Fill highlights array
               var highlightsWithID = [];
               for (var i = 0; i < elementsfiltered.length; i++) {
@@ -153,9 +273,6 @@ module.exports = function(){
               var hightlightsFiltered = _.filter(elementsInShowcase,function(element){
                 return highlights.indexOf(element.identifier) > -1;
               });
-
-
-
 
               //Fill categories array
               var elementsCategories = [];
@@ -178,6 +295,16 @@ module.exports = function(){
 
                 categories.push({identifier:uniqueCategories[i], elements:elementsWithCategories});
 
+              }
+
+              for (var i = 0; i < response.sites.length; i++) {
+                response.sites[i]=validateSiteInitialInfo(response.sites[i]);
+              }
+              for (var i = 0; i < organizations.length; i++) {
+                organizations[i]=validateOrganizationInitialInfo(organizations[i]);
+              }
+              for (var i = 0; i < elementsfiltered.length; i++) {
+                elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
               }
 
               response.organizations = organizations;
