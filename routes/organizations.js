@@ -125,6 +125,29 @@ module.exports = function() {
                 })
         });
     }
+    
+    
+    //Save selected organization to client table
+    functions.saveSelectedOrganization = function(req, res) {
+        var aIdentifier = req.param("accountIdentifier");
+        var oIdentifier = req.param("organizationIdentifier");
+        
+        client.update({
+            accountIdentifier: aIdentifier
+        },{
+            selectedOrganization: oIdentifier
+        }, function (err, data) {
+
+                if (err)
+                    throw err;
+                else
+                    res.json({
+                        state: "success"
+                    });
+        });
+        
+        
+    }
 
     //Test Vibrant
     functions.testVibrant = function(req, res) {
