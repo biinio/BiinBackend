@@ -115,6 +115,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Save selected organization
     app.put('/api/organizations/:accountIdentifier/:organizationIdentifier',organizations.saveSelectedOrganization);
+    // Get selected organization
+    app.get('/api/organizations/:accountIdentifier/selectedOrganization', organizations.getSelectedOrganization);
 
     //Showcase routes
     app.get('/organizations/:identifier/showcases',restrict,showcases.index);
