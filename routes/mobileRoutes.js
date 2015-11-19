@@ -310,29 +310,32 @@ module.exports =function(){
 									var siteExtraInfo = _.find(orgData,function(org){
 										return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
 									});
+									if(elementExtraInfo || siteExtraInfo){
+										var action = {};
 
-									var action = {};
+										action.userIdentifier = userIdentifier;
 
-									action.userIdentifier = userIdentifier;
+										if(siteExtraInfo != null){
+											action.organizationIdentifier = siteExtraInfo.identifier;
+											action.siteIdentifier = filteredActions[i].to;
+										}else{
+											action.organizationIdentifier = elementExtraInfo.identifier;
+											action.elementIdentifier = filteredActions[i].to;
+										}
 
-									if(siteExtraInfo != null){
-										action.organizationIdentifier = siteExtraInfo.identifier;
-										action.siteIdentifier = filteredActions[i].to;
-									}else{
-										action.organizationIdentifier = elementExtraInfo.identifier;
-										action.elementIdentifier = filteredActions[i].to;
+										action.date = new Date(filteredActions[i].at);
+										action.action = filteredActions[i].did;
+										actionsToInsert.push(action);
 									}
-
-									action.date = new Date(filteredActions[i].at);
-									action.action = filteredActions[i].did;
-									actionsToInsert.push(action);
-
 								}
-								trackingBiined.create(actionsToInsert,function(error){
-									if(error)
-										reject(error);
-									resolve();
-								});
+								if(actionsToInsert.length == 0)
+									resolve
+								else
+									trackingBiined.create(actionsToInsert,function(error){
+										if(error)
+											reject(error);
+											resolve();
+										});
 							});
 					}
 		});
@@ -349,23 +352,28 @@ module.exports =function(){
 					var actionsToInsert = [];
 					for (var i = 0; i < filteredActions.length; i++) {
 						var biinExtraInfo = _.findWhere(biinData,{identifier:filteredActions[i].to});
+						if(biinExtraInfo){
 						var action = {};
 
-						action.userIdentifier = userIdentifier;
-						action.beaconIdentifier = filteredActions[i].to;
-						action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
-						action.siteIdentifier = biinExtraInfo.siteIdentifier;
-						action.date = new Date(filteredActions[i].at);
-						action.action = filteredActions[i].did;
+							action.userIdentifier = userIdentifier;
+							action.beaconIdentifier = filteredActions[i].to;
+							action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
+							action.siteIdentifier = biinExtraInfo.siteIdentifier;
+							action.date = new Date(filteredActions[i].at);
+							action.action = filteredActions[i].did;
 
-						actionsToInsert.push(action);
+							actionsToInsert.push(action);
+						}
 
 					}
-					trackingBeacon.create(actionsToInsert,function(error){
-						if(error)
-							reject(error);
-						resolve();
-					});
+					if(actionsToInsert.length == 0)
+						resolve
+					else
+						trackingBeacon.create(actionsToInsert,function(error){
+							if(error)
+								reject(error);
+							resolve();
+						});
 				});
 			}else{
 				resolve();
@@ -386,22 +394,28 @@ module.exports =function(){
 						var elementExtraInfo = _.find(elementData,function(org){
 							return _.findWhere(org.elements,{elementIdentifier:filteredActions[i].to}) != null;
 						});
-						var action = {};
+						if(elementExtraInfo){
+							var action = {};
 
-						action.userIdentifier = userIdentifier;
-						action.organizationIdentifier = elementExtraInfo.identifier;
-						action.elementIdentifier = filteredActions[i].to;
-						action.date = new Date(filteredActions[i].at);
-						action.action = filteredActions[i].did;
+							action.userIdentifier = userIdentifier;
+							action.organizationIdentifier = elementExtraInfo.identifier;
+							action.elementIdentifier = filteredActions[i].to;
+							action.date = new Date(filteredActions[i].at);
+							action.action = filteredActions[i].did;
 
-						actionsToInsert.push(action);
+							actionsToInsert.push(action);
+						}
+
 
 					}
-					trackingElements.create(actionsToInsert,function(error){
-						if(error)
-							reject(error);
-						resolve();
-					});
+					if(actionsToInsert.length == 0)
+						resolve
+					else
+						trackingElements.create(actionsToInsert,function(error){
+							if(error)
+								reject(error);
+								resolve();
+							});
 				});
 			}else{
 				resolve();
@@ -422,22 +436,27 @@ module.exports =function(){
 						var siteExtraInfo = _.find(siteData,function(org){
 							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
 						});
-						var action = {};
+						if(siteExtraInfo){
+							var action = {};
 
-						action.userIdentifier = userIdentifier;
-						action.organizationIdentifier = siteExtraInfo.identifier;
-						action.siteIdentifier = filteredActions[i].to;
-						action.date = new Date(filteredActions[i].at);
-						action.action = filteredActions[i].did;
+							action.userIdentifier = userIdentifier;
+							action.organizationIdentifier = siteExtraInfo.identifier;
+							action.siteIdentifier = filteredActions[i].to;
+							action.date = new Date(filteredActions[i].at);
+							action.action = filteredActions[i].did;
 
-						actionsToInsert.push(action);
+							actionsToInsert.push(action);
+						}
 
 					}
-					trackingFollow.create(actionsToInsert,function(error){
-						if(error)
-							reject(error);
-						resolve();
-					});
+					if(actionsToInsert.length == 0)
+						resolve
+					else
+						trackingFollow.create(actionsToInsert,function(error){
+							if(error)
+								reject(error);
+								resolve();
+							});
 				});
 			}else{
 				resolve();
@@ -458,22 +477,27 @@ module.exports =function(){
 						var siteExtraInfo = _.find(siteData,function(org){
 							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
 						});
-						var action = {};
+						if(siteExtraInfo){
+							var action = {};
 
-						action.userIdentifier = userIdentifier;
-						action.organizationIdentifier = siteExtraInfo.identifier;
-						action.siteIdentifier = filteredActions[i].to;
-						action.date = new Date(filteredActions[i].at);
-						action.action = filteredActions[i].did;
+							action.userIdentifier = userIdentifier;
+							action.organizationIdentifier = siteExtraInfo.identifier;
+							action.siteIdentifier = filteredActions[i].to;
+							action.date = new Date(filteredActions[i].at);
+							action.action = filteredActions[i].did;
 
-						actionsToInsert.push(action);
+							actionsToInsert.push(action);
+						}
 
 					}
-					trackingLikes.create(actionsToInsert,function(error){
-						if(error)
-							reject(error);
-						resolve();
-					});
+					if(actionsToInsert.length == 0)
+						resolve
+					else
+						trackingLikes.create(actionsToInsert,function(error){
+							if(error)
+								reject(error);
+								resolve();
+							});
 				});
 			}else{
 				resolve();
@@ -495,24 +519,29 @@ module.exports =function(){
 						var biinExtraInfo = _.find(biinData,function(data){
 							return _.findWhere(data.objects,{_id:filteredActions[i].to}) != null;
 						});
-						var action = {};
+						if(biinExtraInfo){
+							var action = {};
 
-						action.userIdentifier = userIdentifier;
-						action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
-						action.siteIdentifier = biinExtraInfo.siteIdentifier;
-						action.beaconIdentifier = biinExtraInfo.identifier;
-						action.objectIdentifier = filteredActions[i].to;
-						action.date = new Date(filteredActions[i].at);
-						action.action = filteredActions[i].did;
+							action.userIdentifier = userIdentifier;
+							action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
+							action.siteIdentifier = biinExtraInfo.siteIdentifier;
+							action.beaconIdentifier = biinExtraInfo.identifier;
+							action.objectIdentifier = filteredActions[i].to;
+							action.date = new Date(filteredActions[i].at);
+							action.action = filteredActions[i].did;
 
-						actionsToInsert.push(action);
+							actionsToInsert.push(action);
+						}
 
 					}
-					trackingNotifications.create(actionsToInsert,function(error){
-						if(error)
-							reject(error);
-						resolve();
-					});
+					if(actionsToInsert.length == 0)
+						resolve
+					else
+						trackingNotifications.create(actionsToInsert,function(error){
+							if(error)
+								reject(error);
+								resolve();
+							});
 				});
 			}else{
 				resolve();
@@ -533,22 +562,27 @@ module.exports =function(){
 						var siteExtraInfo = _.find(siteData,function(org){
 							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
 						});
-						var action = {};
+						if(siteExtraInfo){
+							var action = {};
 
-						action.userIdentifier = userIdentifier;
-						action.organizationIdentifier = siteExtraInfo.identifier;
-						action.siteIdentifier = filteredActions[i].to;
-						action.date = new Date(filteredActions[i].at);
-						action.action = filteredActions[i].did;
+							action.userIdentifier = userIdentifier;
+							action.organizationIdentifier = siteExtraInfo.identifier;
+							action.siteIdentifier = filteredActions[i].to;
+							action.date = new Date(filteredActions[i].at);
+							action.action = filteredActions[i].did;
 
-						actionsToInsert.push(action);
+							actionsToInsert.push(action);
+						}
 
 					}
-					trackingSites.create(actionsToInsert,function(error){
-						if(error)
-							reject(error);
-						resolve();
-					});
+					if(actionsToInsert.length == 0)
+						resolve
+					else
+						trackingSites.create(actionsToInsert,function(error){
+							if(error)
+								reject(error);
+							resolve();
+						});
 				});
 			}else{
 				resolve();
