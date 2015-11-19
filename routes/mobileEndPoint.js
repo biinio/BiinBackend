@@ -189,7 +189,7 @@ module.exports = function(){
         for (var j = 0; j < response.sites[i].showcases.length; j++) {
           showcasesToFind.push(response.sites[i].showcases[j].showcaseIdentifier);
           response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
-          response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
+          response.sites[i].showcases[j].elements =response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
           elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
         }
       }
