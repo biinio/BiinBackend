@@ -315,6 +315,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/initialData',mobileRoutes.getInitialData);
     app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
     app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
+    app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch',mobileEndPoint.getNextElementInShowcase);
 
 
     /// catch 404 and forwarding to error handler

@@ -8,7 +8,7 @@ module.exports = function (db) {
     , https = require('https')
     , path = require('path')
     , app = express()
-    , favicon = require('static-favicon')
+    , favicon = require('serve-favicon')
     , logger = require('morgan')
     , cookieParser = require('cookie-parser')
     , bodyParser = require('body-parser')
@@ -23,6 +23,9 @@ module.exports = function (db) {
     var raygun = require('raygun');
     var raygunClient = new raygun.Client().init({ apiKey: 'Ln6nlknq/hd6Zj3IE41sQg==' });
 
+    // For express, at the end of the middleware definitions:
+    app.use(raygunClient.expressHandler);
+
 
 
 
@@ -34,8 +37,7 @@ module.exports = function (db) {
 
 
     app.use(cors());
-    // For express, at the end of the middleware definitions:
-    app.use(raygunClient.expressHandler);
+
     // At the top of your web.js
     process.env.PWD = process.cwd();
 
@@ -79,15 +81,17 @@ module.exports = function (db) {
     app.use(express.static(path.join(process.env.PWD , 'public')));
     app.use(express.static(path.join(process.env.PWD,'bower_components')));
     //app.use(express.static(path.join(process.env.PWD,'bower_components')));
-    app.use(favicon());
+    app.use(favicon(__dirname + '/../public/favicon.ico'));
     app.use(logger('dev'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
     app.use(session({
         secret: 'ludusy secret',
         store: new MongoStore({
-            mongoose_connection: db
-        })
+            mongooseConnection: db
+        }),
+        resave: true,
+        saveUninitialized: true
     }));
 
     //Logger
@@ -110,7 +114,7 @@ module.exports = function (db) {
     // will print stacktrace
     if (isDevelopment) {
         app.use(function(err, req, res, next) {
-            console.log("Hellow error of development: " + err.message +" stack: "+err.stack);
+            console.log("Error of development: " + err.message +" stack: "+err.stack);
             res.render('error', {
                 message: err.message,
                 error: err
