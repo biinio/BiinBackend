@@ -5,6 +5,8 @@ module.exports = function(){
   var utils = require('../biin_modules/utils')();
 
   var initialDataJson = require('../config/initialData.json');
+  var elementsJson = require('../config/elements.json');
+
   var organization = require('../schemas/organization'),
     showcase = require('../schemas/showcase');
   //Schemas
@@ -332,5 +334,8 @@ module.exports = function(){
     });
   }
 
+  functions.getNextElementInShowcase = function(req,res){
+    res.json(elementsJson);
+  }
 	return functions;
 }

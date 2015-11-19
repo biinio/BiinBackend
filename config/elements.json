@@ -1,0 +1,948 @@
+{
+    "data": {
+        "elements": [
+            {
+                "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f941d",
+                        "url": "",
+                        "displayName": "Comida y Restaurantes",
+                        "name": "Comida y Restaurantes",
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "10",
+                "hasSaving": "0",
+                "discount": "10",
+                "hasDiscount": "1",
+                "isHighlight": "1",
+                "price": "354",
+                "hasPrice": "0",
+                "listPrice": "435",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Plaza Viquez",
+                "title": "Plaza Viquez Cookie",
+                "collectCount": "9",
+                "detailsHtml": "<p></p><p></p><p></p><p></p><p></p><p>There are two exceptions to this: List and RealmOptional properties cannot be declared as dynamic because generic properties cannot be represented in the Objective-C runtime, which is used for dynamic dispatch of dynamic properties, and should always be declared with let.</p><div class=\"biin_h1\">Transcription</div><p>Realm model properties need the dynamic var attribute in order for these properties to become accessors for the underlying database data. After you have added the object to the Realm you can continue using it, and all changes you make to it will be persisted (and must be made within a write transaction). Any changes are made available to other threads that use the same Realm when the write transaction is committed.</p><div class=\"biin_h1\">When in doubt, Beatles.</div><p>When all else fails, when I’m burnt out on my usual practice routine, when I can’t decide what to transcribe, when I start making excuses as to why I can’t practice <em style=\"color: rgb(51, 51, 51);background-color: rgb(255, 255, 255);\"><i>right now</i></em>, I learn a Beatles song. My default rule was to learn the second cut on every album, in chronological order. The fewer decisions I have to make before I start practicing, the more likely I am to simply practice.<br/></p><p><br/></p><p></p><p></p><p></p><p></p><p></p><p><br/></p><p><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "561c24d2b5fa4b03004e8dc9",
+                        "vibrantLightColor": "228,205,158",
+                        "vibrantDarkColor": "100,52,23",
+                        "vibrantColor": "166,91,23",
+                        "mainColor": "166,91,23",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/a6644842020e-4a1d-9917-35c4a8c57013.jpg",
+                        "title1": "",
+                        "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a3ebde7fa6bd4-4c36-a3ba-b176aeb4301f.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f941d",
+                        "url": "",
+                        "displayName": "Comida y Restaurantes",
+                        "name": "Comida y Restaurantes",
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "20",
+                "hasSaving": "1",
+                "discount": "10",
+                "hasDiscount": "1",
+                "isHighlight": "0",
+                "price": "200",
+                "hasPrice": "0",
+                "listPrice": "180",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "San Pedro Cherry",
+                "title": "San Pedro Cherry",
+                "collectCount": "2",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "561c24c7b5fa4b03004e8dc5",
+                        "vibrantLightColor": "208,121,164",
+                        "vibrantDarkColor": "142,8,21",
+                        "vibrantColor": "206,12,48",
+                        "mainColor": "206,12,48",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/3deeaf88cb25-4f59-a736-3b48d16f4fd4.jpg",
+                        "title1": "",
+                        "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a6e17d1200306-4f69-b334-c5eb8f363216.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f941d",
+                        "url": "",
+                        "displayName": "Comida y Restaurantes",
+                        "name": "Comida y Restaurantes",
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "10",
+                "hasSaving": "1",
+                "discount": "10",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "90",
+                "hasPrice": "0",
+                "listPrice": "90",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Plaza Viquez Orange",
+                "title": "Plaza Viquez Orange",
+                "collectCount": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "561c24cab5fa4b03004e8dc6",
+                        "vibrantLightColor": "239,198,144",
+                        "vibrantDarkColor": "213,80,12",
+                        "vibrantColor": "239,176,106",
+                        "mainColor": "239,176,106",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/3add8a4f2ba7-4484-ae3d-91ac6b70febe.jpg",
+                        "title1": "",
+                        "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a692f0d2065ea-41eb-ab0e-7047dc83ff62.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "329be4d8-c8df-431e-94a0-4d83a1ae864a",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f941d",
+                        "url": "",
+                        "displayName": "Comida y Restaurantes",
+                        "name": "Comida y Restaurantes",
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "0",
+                "hasPrice": "0",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Curridabat Cake",
+                "title": "Curridabat Cake",
+                "collectCount": "0",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "561c24bfb5fa4b03004e8dc2",
+                        "vibrantLightColor": "127,182,198",
+                        "vibrantDarkColor": "18,60,76",
+                        "vibrantColor": "151,125,65",
+                        "mainColor": "151,125,65",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/13945e7072ee-4fe2-8940-63b473f4a50d.jpg",
+                        "title1": "",
+                        "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0ae7c8c39365b7-4749-8179-fab19de71fda.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "a5e87e31-a570-47e0-b4fe-23d893ff0c1f",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f941d",
+                        "url": "",
+                        "displayName": "Comida y Restaurantes",
+                        "name": "Comida y Restaurantes",
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "20",
+                "hasSaving": "1",
+                "discount": "10",
+                "hasDiscount": "1",
+                "isHighlight": "0",
+                "price": "200",
+                "hasPrice": "0",
+                "listPrice": "180",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "San Pedro Cherry",
+                "title": "San Pedro Cherry",
+                "collectCount": "2",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "561c24c7b5fa4b03004e8dc5",
+                        "vibrantLightColor": "208,121,164",
+                        "vibrantDarkColor": "142,8,21",
+                        "vibrantColor": "206,12,48",
+                        "mainColor": "206,12,48",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/3deeaf88cb25-4f59-a736-3b48d16f4fd4.jpg",
+                        "title1": "",
+                        "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a6e17d1200306-4f69-b334-c5eb8f363216.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "843f6956-2a18-4bf2-83b5-a0ea37fa66b8",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f941d",
+                        "url": "",
+                        "displayName": "Comida y Restaurantes",
+                        "name": "Comida y Restaurantes",
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "10",
+                "hasSaving": "0",
+                "discount": "10",
+                "hasDiscount": "1",
+                "isHighlight": "1",
+                "price": "354",
+                "hasPrice": "0",
+                "listPrice": "435",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Plaza Viquez",
+                "title": "Plaza Viquez Cookie",
+                "collectCount": "9",
+                "detailsHtml": "<p></p><p></p><p></p><p></p><p></p><p>There are two exceptions to this: List and RealmOptional properties cannot be declared as dynamic because generic properties cannot be represented in the Objective-C runtime, which is used for dynamic dispatch of dynamic properties, and should always be declared with let.</p><div class=\"biin_h1\">Transcription</div><p>Realm model properties need the dynamic var attribute in order for these properties to become accessors for the underlying database data. After you have added the object to the Realm you can continue using it, and all changes you make to it will be persisted (and must be made within a write transaction). Any changes are made available to other threads that use the same Realm when the write transaction is committed.</p><div class=\"biin_h1\">When in doubt, Beatles.</div><p>When all else fails, when I’m burnt out on my usual practice routine, when I can’t decide what to transcribe, when I start making excuses as to why I can’t practice <em style=\"color: rgb(51, 51, 51);background-color: rgb(255, 255, 255);\"><i>right now</i></em>, I learn a Beatles song. My default rule was to learn the second cut on every album, in chronological order. The fewer decisions I have to make before I start practicing, the more likely I am to simply practice.<br/></p><p><br/></p><p></p><p></p><p></p><p></p><p></p><p><br/></p><p><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "561c24d2b5fa4b03004e8dc9",
+                        "vibrantLightColor": "228,205,158",
+                        "vibrantDarkColor": "100,52,23",
+                        "vibrantColor": "166,91,23",
+                        "mainColor": "166,91,23",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/a6644842020e-4a1d-9917-35c4a8c57013.jpg",
+                        "title1": "",
+                        "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a3ebde7fa6bd4-4c36-a3ba-b176aeb4301f.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "67a9bbb9-4b0e-44c3-922c-0a2fe69d2c64",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f941d",
+                        "url": "",
+                        "displayName": "Comida y Restaurantes",
+                        "name": "Comida y Restaurantes",
+                        "identifier": "category11"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "10",
+                "hasSaving": "1",
+                "discount": "10",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "90",
+                "hasPrice": "0",
+                "listPrice": "90",
+                "hasListPrice": "1",
+                "hasFromPrice": "0",
+                "currencyType": "1",
+                "searchTags": [
+                    "games"
+                ],
+                "subTitle": "Plaza Viquez Orange",
+                "title": "Plaza Viquez Orange",
+                "collectCount": "1",
+                "detailsHtml": "<p>If you have looked online for guitar courses, you have probably seen a lot of thirty-minute &#34;Learn Guitar Overnight&#34; videos. Your instincts tell you that these will not work. For someone who really wants to learn to play guitar, Gibson's Learn &amp; Master Guitar provides a series of video guitar lessons that will take you from any skill level, even a total novice, through to advanced levels.<br/></p><p></p><div class=\"biin_h1\">Lesson books alone, with no detailed video instruction</div><p></p><p><a href=\"http://google.com/\" target=\"\" style=\"color: rgb(93, 156, 236);background-color: transparent;\">Google</a></p><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><br/></p><ul><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction<br/></li><li>Lesson books alone, with no detailed video instruction</li></ul><p>Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</p><p><span style=\"text-align: right;\">Lesson books alone, with no detailed video instruction, can be confusing. Using software-based instruction chains you to your computer and is difficult to use. Private guitar instruction is pricey, inconvenient, and depends on finding the perfect teacher. An average weekly guitar lesson will cost you $2,000 per year plus all that driving!</span><br/></p>",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "561c24cab5fa4b03004e8dc6",
+                        "vibrantLightColor": "239,198,144",
+                        "vibrantDarkColor": "213,80,12",
+                        "vibrantColor": "239,176,106",
+                        "mainColor": "239,176,106",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/9b4d6990-e1eb-44c2-aa5f-bf102f099e0a/3add8a4f2ba7-4484-ae3d-91ac6b70febe.jpg",
+                        "title1": "",
+                        "identifier": "9b4d6990-e1eb-44c2-aa5f-bf102f099e0a692f0d2065ea-41eb-ab0e-7047dc83ff62.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "ae440fbb-da27-4f4f-a81f-77eee35d4e72",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f9421",
+                        "url": "",
+                        "displayName": "Mascotas",
+                        "name": "Mascotas",
+                        "identifier": "category15"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "1",
+                "price": "0",
+                "hasPrice": "0",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [],
+                "subTitle": "En City Mall Pensamos en Su Mascota",
+                "title": "Dr. Jimmy Centro Veterinario",
+                "collectCount": "0",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "560ad304d33b8a0300c44c61",
+                        "vibrantLightColor": "231,177,115",
+                        "vibrantDarkColor": "145,102,55",
+                        "vibrantColor": "127,77,32",
+                        "mainColor": "127,77,32",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/7f9dd81e-e687-4bb3-ae76-143b87a59620/1392e6986ee5-49f3-844c-4a989023df7d.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d157f9dd81e-e687-4bb3-ae76-143b87a5962054d70ae5a1b7-4c9d-805a-a8ed168683d0.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "2c062bca-d574-4650-a76b-491be7243fac",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f9416",
+                        "url": "",
+                        "displayName": "Ropa y Zapatos Mujer",
+                        "name": "Ropa y Zapatos Mujer",
+                        "identifier": "category4"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "35000",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [],
+                "subTitle": "Nueva colección",
+                "title": "Saco Dama",
+                "collectCount": "0",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "55db86a92fde320300fb92ed",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "168,159,152",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d6011100-7c9a-433e-a51d-d78212ea657e/7cc7a7d0efd7-4309-8005-b9bcdad858a1.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d6011100-7c9a-433e-a51d-d78212ea657ec76626c36841-4492-88e9-4565adadbc23.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "62c09759-b8a3-460c-be12-0fe96ea2a985",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f9416",
+                        "url": "",
+                        "displayName": "Ropa y Zapatos Mujer",
+                        "name": "Ropa y Zapatos Mujer",
+                        "identifier": "category4"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "37500",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [],
+                "subTitle": "Nueva colección",
+                "title": "Vestido Rojo",
+                "collectCount": "0",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "55db87112fde320300fb9303",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "206,159,153",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d6011100-7c9a-433e-a51d-d78212ea657e/7edfe4af734d-4d31-a3ce-d1f0264c60e3.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d6011100-7c9a-433e-a51d-d78212ea657e945c878c0733-413f-8d5a-bd375e76f953.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "e8a92fad-bb08-4681-975c-df199bd41a83",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f9416",
+                        "url": "",
+                        "displayName": "Ropa y Zapatos Mujer",
+                        "name": "Ropa y Zapatos Mujer",
+                        "identifier": "category4"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "38000",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [],
+                "subTitle": "Nueva colección",
+                "title": "Vestido Floreado",
+                "collectCount": "-1",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "55db87072fde320300fb9300",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "195,176,161",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d6011100-7c9a-433e-a51d-d78212ea657e/501766033b9e-4ab9-b3c7-a3da87bbb86e.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d6011100-7c9a-433e-a51d-d78212ea657e5e968e51e558-4526-9abe-e9388f19a6f2.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "53507e71-88f5-41f8-9762-9585f0b5c335",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f9416",
+                        "url": "",
+                        "displayName": "Ropa y Zapatos Mujer",
+                        "name": "Ropa y Zapatos Mujer",
+                        "identifier": "category4"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "0",
+                "hasPrice": "0",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [],
+                "subTitle": "En CityMall",
+                "title": "Forever 21",
+                "collectCount": "0",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "560ad47cd33b8a0300c44c65",
+                        "vibrantLightColor": "233,162,103",
+                        "vibrantDarkColor": "135,50,117",
+                        "vibrantColor": "211,139,51",
+                        "mainColor": "211,139,51",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/7f9dd81e-e687-4bb3-ae76-143b87a59620/1bebf7359e1c-4803-ae21-e46b43a6761e.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d157f9dd81e-e687-4bb3-ae76-143b87a596206e4ddf82451b-419a-bb2a-0e2855e04c3a.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "4089b626-f5a7-4af1-8f9c-abe88bbb77e3",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "561e9c0aa82622512f85fc1c",
+                        "url": "",
+                        "displayName": "Muebles",
+                        "name": "Muebles",
+                        "identifier": "category17"
+                    },
+                    {
+                        "_id": "555bc63348400603006f941a",
+                        "url": "",
+                        "displayName": "Hogar, Jardín y Ferretería",
+                        "name": "Hogar, Jardín y Ferretería",
+                        "identifier": "category8"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "0.01",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [
+                    "Cuna",
+                    "Bebé"
+                ],
+                "subTitle": "El cuarto soñado para tu bebé",
+                "title": "Opción de cunas",
+                "collectCount": "4",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "55fcae28681abd0300e4096d",
+                        "vibrantLightColor": "204,235,244",
+                        "vibrantDarkColor": "133,98,62",
+                        "vibrantColor": "157,116,72",
+                        "mainColor": "157,116,72",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/d82630aeaac3-4792-a3f6-a8b03a477eb0.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c98b8e6d6eccfc-4a30-94c0-c47ace96b6ed.jpg"
+                    },
+                    {
+                        "_id": "55fcc27c681abd0300e409b6",
+                        "vibrantLightColor": "246,232,225",
+                        "vibrantDarkColor": "83,37,21",
+                        "vibrantColor": "122,50,38",
+                        "mainColor": "122,50,38",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/454368b6ace9-4413-bebd-90e57e1ceaf0.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c9f704309caf85-4a89-9447-66541de7e06a.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "4089b626-f5a7-4af1-8f9c-abe88bbb77e3",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "561e9c0aa82622512f85fc1c",
+                        "url": "",
+                        "displayName": "Muebles",
+                        "name": "Muebles",
+                        "identifier": "category17"
+                    },
+                    {
+                        "_id": "555bc63348400603006f941a",
+                        "url": "",
+                        "displayName": "Hogar, Jardín y Ferretería",
+                        "name": "Hogar, Jardín y Ferretería",
+                        "identifier": "category8"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "0.01",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "0",
+                "currencyType": "2",
+                "searchTags": [
+                    "Cuna",
+                    "Bebé"
+                ],
+                "subTitle": "El cuarto soñado para tu bebé",
+                "title": "Opción de cunas",
+                "collectCount": "4",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "55fcae28681abd0300e4096d",
+                        "vibrantLightColor": "204,235,244",
+                        "vibrantDarkColor": "133,98,62",
+                        "vibrantColor": "157,116,72",
+                        "mainColor": "157,116,72",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/d82630aeaac3-4792-a3f6-a8b03a477eb0.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c98b8e6d6eccfc-4a30-94c0-c47ace96b6ed.jpg"
+                    },
+                    {
+                        "_id": "55fcc27c681abd0300e409b6",
+                        "vibrantLightColor": "246,232,225",
+                        "vibrantDarkColor": "83,37,21",
+                        "vibrantColor": "122,50,38",
+                        "mainColor": "122,50,38",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/dev-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/454368b6ace9-4413-bebd-90e57e1ceaf0.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c9f704309caf85-4a89-9447-66541de7e06a.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            },
+            {
+                "identifier": "23a6be0c-e5d5-44f1-bfcc-a957b1b6de78",
+                "sharedCount": "0",
+                "categories": [
+                    {
+                        "_id": "555bc63348400603006f941a",
+                        "url": "",
+                        "displayName": "Hogar, Jardín y Ferretería",
+                        "name": "Hogar, Jardín y Ferretería",
+                        "identifier": "category8"
+                    }
+                ],
+                "quantity": "",
+                "hasQuantity": "0",
+                "expirationDate": "2015-11-19 16:24:55",
+                "initialDate": "2015-11-19 16:24:55",
+                "hasTimming": "0",
+                "savings": "",
+                "hasSaving": "0",
+                "discount": "",
+                "hasDiscount": "0",
+                "isHighlight": "0",
+                "price": "40",
+                "hasPrice": "1",
+                "listPrice": "",
+                "hasListPrice": "0",
+                "hasFromPrice": "1",
+                "currencyType": "1",
+                "searchTags": [
+                    "Silla",
+                    "seguridad",
+                    "logico",
+                    "coast",
+                    "nautilus",
+                    "booster",
+                    "graco"
+                ],
+                "subTitle": "Sillas de seguridad para el auto Graco",
+                "title": "Selección de silla de seguridad",
+                "collectCount": "0",
+                "detailsHtml": "",
+                "reservedQuantity": "0",
+                "claimedQuantity": "0",
+                "actualQuantity": "0",
+                "media": [
+                    {
+                        "_id": "55dbe9b12fde320300fba488",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "207,207,209",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/a988af593978-495f-9dc8-d30f2b0aa433.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c92880b5f99609-43b5-9cce-815db32f3863.jpg"
+                    },
+                    {
+                        "_id": "55dbe9b12fde320300fba487",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "236,220,220",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/2029ce745473-440d-9bec-1230fcbad526.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c981a63ab870b9-4397-9dec-31ef0b573ff0.jpg"
+                    },
+                    {
+                        "_id": "55dbe9b12fde320300fba486",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "185,184,182",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/b6eabd0ad6ad-4ead-b868-2e7793e71fe1.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c95b60b7ff299f-4353-86f2-55e34a901331.jpg"
+                    },
+                    {
+                        "_id": "55dbe9b12fde320300fba485",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "219,221,220",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/f368b8915c50-417a-af30-1fe990b7dee4.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c9192a8f74e0f3-43cb-9fde-f285aea4c08b.jpg"
+                    },
+                    {
+                        "_id": "55dbe9b12fde320300fba484",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "grey73",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/118106a0aa81-4fa2-ae73-87905d2594f9.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c9ecde81225995-489b-814f-ca6be8a54aab.jpg"
+                    },
+                    {
+                        "_id": "55dbe9b12fde320300fba483",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "207,197,198",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/e26f671e874c-4db1-b05a-05e19065c3f3.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c9fb13eb02f189-40be-9eaf-eee71ec14b58.jpg"
+                    },
+                    {
+                        "_id": "55dbe9b12fde320300fba482",
+                        "vibrantLightColor": "",
+                        "vibrantDarkColor": "",
+                        "vibrantColor": "",
+                        "mainColor": "216,216,214",
+                        "mediaType": "",
+                        "url": "https://biinapp.blob.core.windows.net/qa-biinmedia/7b5e9416-ed54-41f1-b562-fcba5a449d15/d3715307-f5b8-443a-8c10-63301c3011c9/6e5ba36fa7f0-42f6-acbc-4967ccb50c1f.jpg",
+                        "title1": "",
+                        "identifier": "7b5e9416-ed54-41f1-b562-fcba5a449d15d3715307-f5b8-443a-8c10-63301c3011c9b79bdb6cfa81-4ed9-bb2b-004cc58e8bf2.jpg"
+                    }
+                ],
+                "userShared": "0",
+                "userLiked": "0",
+                "userCollected": "0",
+                "userViewed": "0"
+            }
+        ]
+    },
+    "status": "0",
+    "result": "1"
+}
