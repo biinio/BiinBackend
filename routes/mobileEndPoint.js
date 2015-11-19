@@ -125,6 +125,7 @@ module.exports = function(){
     var MAX_SITES = process.env.SITES_INITIAL_DATA || 10;
     var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
     var LIMIT_HIGHLIGHTS_TO_SENT = process.env.LIMIT_HIGHLIGHTS_TO_SENT || 6;
+    var LIMIT_ELEMENTS_IN_SHOWCASE = process.env.LIMIT_ELEMENTS_IN_SHOWCASE || 6;
     var response = {};
     var organizations = [];
     var elements = [];
@@ -187,6 +188,8 @@ module.exports = function(){
       for (i = 0; i < response.sites.length; i++) {
         for (var j = 0; j < response.sites[i].showcases.length; j++) {
           showcasesToFind.push(response.sites[i].showcases[j].showcaseIdentifier);
+          response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
+          response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
           elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
         }
       }
@@ -305,26 +308,6 @@ module.exports = function(){
 
                 categories.push({identifier:uniqueCategories[i], elements:elementsWithCategories});
               }
-              var elementsToSend = [];
-              var elementsInCategories = [];
-              for (var i = 0; i < elementsSentInCategories.length; i++) {
-
-                var element = _.find(elementsfiltered,function(element){
-                  return elementsSentInCategories[i].identifier == element.elementIdentifier;
-                })
-                elementsInCategories.push(element);
-              }
-              elementsToSend = elementsInCategories;
-
-              for (var i = 0; i < hightlightsFiltered.length; i++) {
-                var element = _.find(elementsfiltered,function(element){
-                  return hightlightsFiltered[i].identifier == element.elementIdentifier;
-                })
-                if(elementsToSend.indexOf(element) == -1){
-                  elementsToSend.push(element);
-                }
-              }
-
 
               for (var i = 0; i < response.sites.length; i++) {
                 response.sites[i]=validateSiteInitialInfo(response.sites[i]);
@@ -332,12 +315,12 @@ module.exports = function(){
               for (var i = 0; i < organizations.length; i++) {
                 organizations[i]=validateOrganizationInitialInfo(organizations[i]);
               }
-              for (var i = 0; i < elementsToSend.length; i++) {
-                elementsToSend[i] = validateElementInitialInfo(elementsToSend[i]);
+              for (var i = 0; i < elementsfiltered.length; i++) {
+                elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
               }
 
               response.organizations = organizations;
-              response.elements = elementsToSend;
+              response.elements = elementsfiltered;
               response.highlights = hightlightsFiltered;
               response.categories = categories;
               res.json({data:response,status: "0",result: "1"});
