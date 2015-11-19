@@ -19,7 +19,13 @@ module.exports = function (db) {
     , methodOverride = require('method-override')
     , cors = require('cors')
     , expressValidator = require('express-validator');
-    
+
+    var raygun = require('raygun');
+    var raygunClient = new raygun.Client().init({ apiKey: 'Ln6nlknq/hd6Zj3IE41sQg==' });
+
+
+
+
     var compress = require('compression');
     app.use(compress());
 
@@ -28,6 +34,8 @@ module.exports = function (db) {
 
 
     app.use(cors());
+    // For express, at the end of the middleware definitions:
+    app.use(raygunClient.expressHandler);
     // At the top of your web.js
     process.env.PWD = process.cwd();
 
@@ -90,7 +98,7 @@ module.exports = function (db) {
     app.use(methodOverride('X-HTTP-Method-Override'));
 
     app.use(function (req, res, next) {
-        res.set('X-Powered-By', 'Ludusy');
+        res.set('X-Powered-By', 'Biin.io');
         next();
     });
 
@@ -131,6 +139,7 @@ module.exports = function (db) {
 
     process.on('uncaughtException', function (err) {
         console.log(err);
+        raygunClient.send(err);
     });
     return app;
 };
