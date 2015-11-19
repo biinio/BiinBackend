@@ -5,6 +5,8 @@ module.exports = function(){
   var utils = require('../biin_modules/utils')();
 
   var initialDataJson = require('../config/initialData.json');
+  var elementsJson = require('../config/elements.json');
+
   var organization = require('../schemas/organization'),
     showcase = require('../schemas/showcase');
   //Schemas
@@ -122,7 +124,10 @@ module.exports = function(){
     var userIdentifier = req.param("biinieId");
     var userLat = eval(req.param("latitude"));
     var userLng = eval(req.param("longitude"));
-    var MAX_SITES = 10;
+    var MAX_SITES = process.env.SITES_INITIAL_DATA || 10;
+    var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
+    var LIMIT_HIGHLIGHTS_TO_SENT = process.env.LIMIT_HIGHLIGHTS_TO_SENT || 6;
+    var LIMIT_ELEMENTS_IN_SHOWCASE = process.env.LIMIT_ELEMENTS_IN_SHOWCASE || 6;
     var response = {};
     var organizations = [];
     var elements = [];
@@ -185,6 +190,8 @@ module.exports = function(){
       for (i = 0; i < response.sites.length; i++) {
         for (var j = 0; j < response.sites[i].showcases.length; j++) {
           showcasesToFind.push(response.sites[i].showcases[j].showcaseIdentifier);
+          response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
+          response.sites[i].showcases[j].elements =response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
           elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
         }
       }
@@ -274,6 +281,8 @@ module.exports = function(){
                 return highlights.indexOf(element.identifier) > -1;
               });
 
+              hightlightsFiltered = hightlightsFiltered.splice(0,LIMIT_HIGHLIGHTS_TO_SENT);
+
               //Fill categories array
               var elementsCategories = [];
               for (var i = 0; i < elementsfiltered.length; i++) {
@@ -285,6 +294,9 @@ module.exports = function(){
               }
               uniqueCategories = _.uniq(uniqueCategories);
 
+
+              var elementsSentInCategories = [];
+
               for (var i = 0; i < uniqueCategories.length; i++) {
 
                 var elementsWithCategories = _.filter(elementWithCategories,function(element){
@@ -293,8 +305,10 @@ module.exports = function(){
                   }) != null;
                 });
 
-                categories.push({identifier:uniqueCategories[i], elements:elementsWithCategories});
+                elementsWithCategories= elementsWithCategories.splice(0,ELEMENTS_IN_CATEGORY);
+                elementsSentInCategories = elementsSentInCategories.concat(elementsWithCategories);
 
+                categories.push({identifier:uniqueCategories[i], elements:elementsWithCategories});
               }
 
               for (var i = 0; i < response.sites.length; i++) {
@@ -320,5 +334,8 @@ module.exports = function(){
     });
   }
 
+  functions.getNextElementInShowcase = function(req,res){
+    res.json(elementsJson);
+  }
 	return functions;
 }
