@@ -122,7 +122,9 @@ module.exports = function(){
     var userIdentifier = req.param("biinieId");
     var userLat = eval(req.param("latitude"));
     var userLng = eval(req.param("longitude"));
-    var MAX_SITES = 10;
+    var MAX_SITES = process.env.SITES_INITIAL_DATA || 10;
+    var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
+    var LIMIT_HIGHLIGHTS_TO_SENT = process.env.LIMIT_HIGHLIGHTS_TO_SENT || 6;
     var response = {};
     var organizations = [];
     var elements = [];
@@ -274,6 +276,8 @@ module.exports = function(){
                 return highlights.indexOf(element.identifier) > -1;
               });
 
+              hightlightsFiltered = hightlightsFiltered.splice(0,LIMIT_HIGHLIGHTS_TO_SENT);
+
               //Fill categories array
               var elementsCategories = [];
               for (var i = 0; i < elementsfiltered.length; i++) {
@@ -285,6 +289,9 @@ module.exports = function(){
               }
               uniqueCategories = _.uniq(uniqueCategories);
 
+
+              var elementsSentInCategories = [];
+
               for (var i = 0; i < uniqueCategories.length; i++) {
 
                 var elementsWithCategories = _.filter(elementWithCategories,function(element){
@@ -293,9 +300,31 @@ module.exports = function(){
                   }) != null;
                 });
 
-                categories.push({identifier:uniqueCategories[i], elements:elementsWithCategories});
+                elementsWithCategories= elementsWithCategories.splice(0,ELEMENTS_IN_CATEGORY);
+                elementsSentInCategories = elementsSentInCategories.concat(elementsWithCategories);
 
+                categories.push({identifier:uniqueCategories[i], elements:elementsWithCategories});
               }
+              var elementsToSend = [];
+              var elementsInCategories = [];
+              for (var i = 0; i < elementsSentInCategories.length; i++) {
+
+                var element = _.find(elementsfiltered,function(element){
+                  return elementsSentInCategories[i].identifier == element.elementIdentifier;
+                })
+                elementsInCategories.push(element);
+              }
+              elementsToSend = elementsInCategories;
+
+              for (var i = 0; i < hightlightsFiltered.length; i++) {
+                var element = _.find(elementsfiltered,function(element){
+                  return hightlightsFiltered[i].identifier == element.elementIdentifier;
+                })
+                if(elementsToSend.indexOf(element) == -1){
+                  elementsToSend.push(element);
+                }
+              }
+
 
               for (var i = 0; i < response.sites.length; i++) {
                 response.sites[i]=validateSiteInitialInfo(response.sites[i]);
@@ -303,12 +332,12 @@ module.exports = function(){
               for (var i = 0; i < organizations.length; i++) {
                 organizations[i]=validateOrganizationInitialInfo(organizations[i]);
               }
-              for (var i = 0; i < elementsfiltered.length; i++) {
-                elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
+              for (var i = 0; i < elementsToSend.length; i++) {
+                elementsToSend[i] = validateElementInitialInfo(elementsToSend[i]);
               }
 
               response.organizations = organizations;
-              response.elements = elementsfiltered;
+              response.elements = elementsToSend;
               response.highlights = hightlightsFiltered;
               response.categories = categories;
               res.json({data:response,status: "0",result: "1"});
