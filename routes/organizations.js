@@ -126,6 +126,20 @@ module.exports = function() {
         });
     }
     
+    functions.getSelectedOrganization = function(req, res) {
+        var aIdentifier = req.param("accountIdentifier");
+        
+        client.findOne({
+            accountIdentifier : aIdentifier
+        }, {
+            _id: true,
+            'selectedOrganization': true 
+        }, function (err, data) {
+            res.json({
+                data: data
+            });
+        });
+    }
     
     //Save selected organization to client table
     functions.saveSelectedOrganization = function(req, res) {

@@ -115,6 +115,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Save selected organization
     app.put('/api/organizations/:accountIdentifier/:organizationIdentifier',organizations.saveSelectedOrganization);
+    // Get selected organization
+    app.get('/api/organizations/:accountIdentifier/selectedOrganization', organizations.getSelectedOrganization);
 
     //Showcase routes
     app.get('/organizations/:identifier/showcases',restrict,showcases.index);
@@ -315,6 +317,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/initialData',mobileRoutes.getInitialData);
     app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
     app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
+    app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch',mobileEndPoint.getNextElementInShowcase);
 
 
     /// catch 404 and forwarding to error handler
