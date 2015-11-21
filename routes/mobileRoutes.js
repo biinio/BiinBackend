@@ -271,8 +271,6 @@ module.exports =function(){
 
  	}
 
-
-
 	function setTrackingBiined( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
 			var filteredActionsElements = _.filter(actions,function(item){ return item.did == COLLECTED_ELEMENT;})
@@ -841,7 +839,7 @@ module.exports =function(){
 			rating = rating/model.rating.length;
 		}
 		newModel.stars = ""+rating;
-        newModel.media=[];
+    newModel.media=[];
 
 		if(typeof(model.media)!='undefined' && model.media.length>0){
 			for(var i=0; i<model.media.length;i++){
