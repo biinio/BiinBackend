@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-require('dotenv').load();
 
 var fs= require('fs'),
   http = require('http'),
