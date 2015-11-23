@@ -1,7 +1,7 @@
 module.exports = function(){
 
     //Schemas
-	var client = require('../schemas/client'), organization = require('../schemas/organization')
+	var client = require('../schemas/client'), organization = require('../schemas/organization'), role = require('../schemas/roles');
 	var utils = require('../biin_modules/utils')();
 	var functions ={}
 
@@ -78,7 +78,7 @@ module.exports = function(){
 	    });
 
 		var url= req.protocol + '://' + req.get('host')+"/client/"+model.accountIdentifier+"/activate";
-		var subject ="Wellcome to Biin";
+		var subject ="Welcome to Biin";
 		var htmlBody = "<h3>"+subject+"</h3>" +
                     "<b>Hi</b>: <pre style='font-size: 14px'>" + model.displayName + "</pre>" +                    
                     "<b>Thanks for join Biin</b>" +
@@ -151,6 +151,8 @@ module.exports = function(){
 		})
 
 	}
+    
+    
 	//Post Creation of a Client
 	functions.create = function(req,res){
 		// create a Client

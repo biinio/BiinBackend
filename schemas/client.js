@@ -16,7 +16,8 @@ var clientSchema = new Schema({
 	profilePhoto:{type:String, default:""},
 	defaultOrganization:{type:String,default:""},
 	accountState:{type:Boolean,default:false},
-    selectedOrganization:{type:String,default:""}
+    selectedOrganization:{type:String,default:""},
+    role:{type:String, default:""}
 })
 
 //Generation of Salt Password
