@@ -1,1 +1,1 @@
-web: node-debug -b false server.js
+web: node server.js
