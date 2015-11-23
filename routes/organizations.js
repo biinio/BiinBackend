@@ -14,7 +14,7 @@ module.exports = function() {
     var organization = require('../schemas/organization'),
         site = require('../schemas/site'),
         showcase = require('../schemas/showcase'),
-        client = require('../schemas/client');;
+        client = require('../schemas/client');
 
     //Other Routes
     var regionRoutes = require('./regions')(),
@@ -125,7 +125,64 @@ module.exports = function() {
                 })
         });
     }
+    
+    functions.getSelectedOrganization = function(req, res) {
+        var aIdentifier = req.param("accountIdentifier");
+        
+        client.findOne({
+            accountIdentifier : aIdentifier
+        }, {
+            _id: true,
+            'selectedOrganization': true 
+        }, function (err, data) {
+            res.json({
+                data: data
+            });
+        });
+    }
+    
+    //Save selected organization to client table
+    functions.saveSelectedOrganization = function(req, res) {
+        var aIdentifier = req.param("accountIdentifier");
+        var oIdentifier = req.param("organizationIdentifier");
+        
+        client.update({
+            accountIdentifier: aIdentifier
+        },{
+            selectedOrganization: oIdentifier
+        }, function (err, data) {
 
+                if (err)
+                    throw err;
+                else
+                    res.json({
+                        state: "success"
+                    });
+        });
+        
+        
+    }
+
+    //Test Vibrant
+    functions.testVibrant = function(req, res) {
+        //mueble: var file = 'http://i.imgur.com/7AQUAab.jpg';
+        //zapato: var file = 'http://i.imgur.com/jbbXTUB.jpg';
+        var file = 'http://i.imgur.com/miZt94c.jpg';
+        var opts = {};
+        opts.quality = 5;
+        var vibrant = new Vibrant(file);
+        var result = {};
+        vibrant.getSwatches(function(error, swatches) {
+            var mainColorRGB =  swatches.Vibrant ? swatches.Vibrant.rgb : [0,0,0];
+            var darkVibrantRGB =  swatches.DarkVibrant ? swatches.DarkVibrant.rgb : [0,0,0];
+            var lightVibrantRGB =  swatches.LightVibrant ? swatches.LightVibrant.rgb : [255,255,255];
+        
+            result.main = mainColorRGB;
+            result.dark = darkVibrantRGB;
+            result.light = lightVibrantRGB;
+            res.json(result);
+        });
+    }
 
 
     //Post the Image of the Organization
