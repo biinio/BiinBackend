@@ -1,8 +1,13 @@
 #!/usr/bin/env node
-var fs= require('fs'), http = require('http'), https = require('https'), util = require('util');
+
+var fs= require('fs'),
+  http = require('http'),
+  https = require('https'),
+  util = require('util');
+
 var debug = require('debug')('BinnCMS'),
-	db=require('../biin_modules/db'),
-	app = require('../biin_modules/app')(db);
+  db=require('./biin_modules/db'),
+	app = require('./biin_modules/app')(db);
 
 //Define local vars
 var isDevelopment = process.env.NODE_ENV === 'development';
@@ -25,6 +30,5 @@ var httpServer = http.createServer(app).listen(httpPort,function(){
 if(!isDevelopment){
 	var httpsServer=https.createServer(credentials, app).listen(httpsPort,function(){
 		console.log("Listing https server");
-	});	
+	});
 }
-

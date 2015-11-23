@@ -1,9 +1,9 @@
 {
   "name": "Biin",
-  "version": "0.1",
+  "version": "1.0.3",
   "homepage": "https://github.com/estebanpadilla/BiinCMS",
   "authors": [
-    "Luis Bonilla Hernandez <luisbonillah@gmail.com>"
+    "Ivan Andres Salazar Solano <isalazar@biin.io>"
   ],
   "description": "Biin",
   "license": "MIT",
