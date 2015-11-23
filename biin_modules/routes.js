@@ -113,7 +113,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/organizations/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/organizations/:identifier/:siteIdentifier/minor', organizations.getMinor);
-    
+
     //Save selected organization
     app.put('/api/organizations/:accountIdentifier/:organizationIdentifier',organizations.saveSelectedOrganization);
     // Get selected organization
@@ -317,12 +317,16 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
-    
+
     //Test Vibrant
     app.get('/test/testVibrant', organizations.testVibrant);
 
     app.get('/mobile/initialData',mobileRoutes.getInitialData);
     app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
+    app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
+    app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch',mobileEndPoint.getNextElementInShowcase);
+    app.get('/mobile/biinies/:identifier/requestElementsForCategory/:idCategory/:batch',mobileEndPoint.getNextElementsInCategory);
+
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {
@@ -330,6 +334,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
         err.status = 404;
         next(err);
     });
-    
-    
+
+
 }

@@ -54,6 +54,8 @@
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "passport-oauth2-client-password": "^0.1.2",
+    "raygun": "^0.8.0",
+    "serve-favicon": "^2.3.0",
     "static-favicon": "~2.0.0-alpha",
     "underscore": "^1.8.3",
     "walk": "^2.3.9"
