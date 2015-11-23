@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 require('dotenv').load();
-var fs= require('fs'), http = require('http'), https = require('https'), util = require('util');
+
+var fs= require('fs'),
+  http = require('http'),
+  https = require('https'),
+  util = require('util');
+
 var debug = require('debug')('BinnCMS'),
-	db=require('./biin_modules/db'),
+  db=require('./biin_modules/db'),
 	app = require('./biin_modules/app')(db);
 
 //Define local vars
