@@ -318,6 +318,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
     app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch',mobileEndPoint.getNextElementInShowcase);
+    app.get('/mobile/biinies/:identifier/requestElementsForCategory/:idCategory/:batch',mobileEndPoint.getNextElementsInCategory);
 
 
     /// catch 404 and forwarding to error handler

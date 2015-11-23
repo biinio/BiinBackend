@@ -457,5 +457,8 @@ module.exports = function(){
       });
     });
   }
+  functions.getNextElementsInCategory = function(req,res){
+    res.json([]);
+  }
 	return functions;
 }
