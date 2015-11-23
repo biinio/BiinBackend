@@ -409,7 +409,7 @@ module.exports = function(){
           return showcase.showcaseIdentifier == showcaseID;
         });
         if(showcase.elements.length < startElements){
-          res.json({data:{"elements":elements},"status":"0","response":"1"});
+          res.json({data:{"elements":elements},"status":"0","result":"1"});
         }else{
           var elementsIdArray = showcase.elements.splice(startElements,endElements);
 
@@ -451,7 +451,7 @@ module.exports = function(){
 
             elements[i] = validateElementInitialInfo(elements[i]);
           }
-          res.json({data:{"elements":elements},"status":"0","response":"1"});
+          res.json({data:{"elements":elements},"status":"0","result":"1"});
         }
 
       });
