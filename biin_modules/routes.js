@@ -24,6 +24,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var biinBiinieObjects =require('../routes/biinBiinieObjects')();
     var venues =require('../routes/venue')();
     var mobileEndPoint = require('../routes/mobileEndPoint')();
+    var roles = require('../routes/roles')();
 
     //Restricted login pages function
     var restrict =function(req, res, next) {
@@ -208,6 +209,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/client',clients.create);
     app.get('/logout',clients.logout);
     app.post('/api/clients/verify', clients.verifyEmailAvailability);
+    
+    //Roles routes
+    // Add permission to role
+    app.post('/roles/:role/:permission/addpermission', roles.addPermissionToRole);
+    app.put('/roles/:accountIdentifier/:role/setrole', roles.setUserRole);
+    app.get('/roles/:role/getpermission', roles.getPermissions);
 
     //Stickers services
     app.get('/api/stickers',stickers.get);
