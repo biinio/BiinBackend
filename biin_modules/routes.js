@@ -191,9 +191,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/regions/add',regions.createPost);
     app.get('/regions/:identifier',regions.edit);
     app.post('/regions/:identifier',regions.editPost);
-
-    //app.get('/api/regions',regions.listJson);
-    //app.get('/api/regions/:region/biins',biins.listJson);
     app.post('/mobile/regions/:identifier/:latitude/:longitude',regions.setCoordsToRegion);//Update the Coords of a region
 
     //Gallery Routes
@@ -269,7 +266,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.delete('/mobile/biinies/:identifier/collections/:collectionIdentifier/site/:objIdentifier', mobileUser.deleteMobileBiinedSiteToCollection);
 
     //Biinie Loyalty
-    //Biinie Loyalty
     app.get('/mobile/biinies/:identifier/organizations/:organizationIdentifier', mobileUser.getOrganizationInformation);
     app.put('/mobile/biinies/:identifier/organizations/:organizationIdentifier/loyalty/points', mobileUser.setMobileLoyaltyPoints);
 
@@ -288,11 +284,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/venues/search',venues.getVenueALike);
     app.put('/api/venues/create',venues.createVenue);
 
-    //Mobile routes    /:
-    /*app.put('/mobile/client/grant',oauthMobileAPIGrants.set);
-    app.put('/mobile/client',passport.authenticate(['mobileClientBasic', 'mobileClientPassword']), mobileUser.set);
-    app.post('/mobile/client/token', mobileOauthManager.token);
-    app.get('/mobile/regions', passport.authenticate('mobileAccessToken', { session: false }),regions.listJson);*/
+    //Mobile routes
 
     app.get('/mobile/regions',regions.listJson);
     app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
@@ -303,17 +295,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);
     app.get('/mobile/biinies/:biinieIdentifier/showcases/:identifier',showcases.getMobileShowcase);
 
-
     //Mobile History
     app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory)
     app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory)
 
-
-
-    app.get('/blog/',restrict, blog.index);
-    app.get('/api/blog', blog.list);
-    app.get('/public/blog/:year/:month/:day/:title', blog.entry);
-    //Blog routes
 
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
@@ -326,7 +311,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch',mobileEndPoint.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForCategory/:idCategory/:batch',mobileEndPoint.getNextElementsInCategory);
-
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {

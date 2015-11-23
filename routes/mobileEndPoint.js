@@ -7,10 +7,11 @@ module.exports = function(){
   var initialDataJson = require('../config/initialData.json');
   var elementsJson = require('../config/elements.json');
 
+  //Schemas
   var organization = require('../schemas/organization'),
     showcase = require('../schemas/showcase');
   var mobileUser = require('../schemas/mobileUser');
-  //Schemas
+  var mobileSession = require('../schemas/mobileSession');
 	var client = require('../schemas/client');
 
   // Default image for elements
@@ -208,22 +209,27 @@ module.exports = function(){
 
         response.sites = sites;
 
-        var  elementsInShowcase = [];
+        var elementsInShowcase = [];
+        var elementsRemovedFromShowcase = [];
 
         var showcasesToFind = [];
         for (i = 0; i < response.sites.length; i++) {
           for (var j = 0; j < response.sites[i].showcases.length; j++) {
             showcasesToFind.push(response.sites[i].showcases[j].showcaseIdentifier);
             response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
-            response.sites[i].showcases[j].elements =response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
+            var elementsToSend = response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
+            elementsRemovedFromShowcase = elementsRemovedFromShowcase.concat(response.sites[i].showcases[j].elements);
+            response.sites[i].showcases[j].elements = elementsToSend;
             elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
           }
         }
+        var uniqueElementsRemovedShowcase = _.pluck(elementsRemovedFromShowcase,'identifier');
+        uniqueElementsRemovedShowcase = _.uniq(uniqueElementsRemovedShowcase);
 
-        var uniqueElementsShowcase = [];
-        for (var i = 0; i < elementsInShowcase.length; i++) {
+        var uniqueElementsShowcase = _.pluck(elementsInShowcase,'identifier');
+        /*for (var i = 0; i < elementsInShowcase.length; i++) {
           uniqueElementsShowcase.push(elementsInShowcase[i].identifier);
-        }
+        }*/
         uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
 
         showcasesToFind = _.uniq(showcasesToFind);
@@ -282,6 +288,10 @@ module.exports = function(){
                 var elementsfiltered = [];
                 elementsfiltered = _.filter(elements, function(element){
                   return uniqueElementsShowcase.indexOf(element.elementIdentifier) > -1;
+                });
+
+                var elementsAvailableForNextRequests = _.filter(elements, function(element){
+                  return uniqueElementsRemovedShowcase.indexOf(element.elementIdentifier) > -1;
                 });
 
                 var elementWithCategories = [];
@@ -364,15 +374,20 @@ module.exports = function(){
       						elementsfiltered[i].userCollected=isUserCollect?"1":"0";
       						elementsfiltered[i].userViewed= isUserViewedElement?"1":"0";
                 }
-
+                var sitesSent = [];
+                var organizationsSent = [];
+                var elementsSent = [];
                 for (var i = 0; i < response.sites.length; i++) {
                   response.sites[i]=validateSiteInitialInfo(response.sites[i]);
+                  sitesSent.push({identifier:response.sites[i].identifier});
                 }
                 for (var i = 0; i < organizations.length; i++) {
                   organizations[i]=validateOrganizationInitialInfo(organizations[i]);
+                  organizationsSent.push({identifier:organizations[i].identifier});
                 }
                 for (var i = 0; i < elementsfiltered.length; i++) {
                   elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
+                  elementsSent.push({identifier:elementsfiltered[i].identifier});
                 }
 
                 response.organizations = organizations;
@@ -380,6 +395,23 @@ module.exports = function(){
                 response.highlights = hightlightsFiltered;
                 response.categories = categories;
                 res.json({data:response,status: "0",result: "1"});
+
+                mobileSession.findOneAndUpdate(
+                  {identifier:userIdentifier},
+                  {
+                    $set : {
+                      sitesSent:response.sites,
+                      elementsSent: elementsfiltered,
+                      organizatonsSent : organizations,
+                      elementsAvailable : elementsAvailableForNextRequests
+                    }
+                  },
+                  {upsert: true}, // insert the document if it does not exist
+                  function(error,data){
+                    if(error)
+                      throw error;
+
+                  });
           })
         });
       });
@@ -404,7 +436,9 @@ module.exports = function(){
       organization.findOne({'sites.identifier':siteId},{'sites.identifier':1,'sites.showcases':1,'elements':1}).lean().exec(function(errorOrg,orgData){
         if(errorOrg)
           throw errorOrg;
-        var site = orgData.sites[0];
+        var site = _.find(orgData.sites,function(site){
+          return site.identifier == siteId;
+        });
         var showcase = _.find(site.showcases, function(showcase){
           return showcase.showcaseIdentifier == showcaseID;
         });
@@ -457,6 +491,7 @@ module.exports = function(){
       });
     });
   }
+
   functions.getNextElementsInCategory = function(req,res){
     res.json([]);
   }
