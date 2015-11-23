@@ -73,6 +73,7 @@ module.exports = function(){
 
   function validateElementInitialInfo(element){
     var elementValidated = {};
+    elementValidated._id = element._id? element._id : "";
     elementValidated.identifier = element.elementIdentifier? element.elementIdentifier : "";
     elementValidated.sharedCount = element.sharedCount? element.sharedCount : "0";
     elementValidated.categories = element.categories? element.categories : [];
@@ -381,9 +382,6 @@ module.exports = function(){
                 res.json({data:response,status: "0",result: "1"});
           })
         });
-
-
-
       });
 
     })
@@ -391,7 +389,73 @@ module.exports = function(){
   }
 
   functions.getNextElementInShowcase = function(req,res){
-    res.json(elementsJson);
+    //res.json(elementsJson);
+    var LIMIT_ELEMENTS_IN_SHOWCASE = process.env.LIMIT_ELEMENTS_IN_SHOWCASE || 6;
+    var userIdentifier = req.param("identifier");
+    var siteId = req.param('siteIdentifier');
+    var showcaseID = req.param('showcaseIdentifier');
+    var batchNumber = req.param('batch');
+    var startElements = (batchNumber-1) * LIMIT_ELEMENTS_IN_SHOWCASE;
+    var endElements = LIMIT_ELEMENTS_IN_SHOWCASE;
+    var elements = [];
+    mobileUser.findOne({'identifier':userIdentifier},{'showcaseNotified':1, 'biinieCollections':1,'loyalty':1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},function(errBiinie,mobileUserData){
+      if(errBiinie)
+        throw errBiinie;
+      organization.findOne({'sites.identifier':siteId},{'sites.identifier':1,'sites.showcases':1,'elements':1}).lean().exec(function(errorOrg,orgData){
+        if(errorOrg)
+          throw errorOrg;
+        var site = orgData.sites[0];
+        var showcase = _.find(site.showcases, function(showcase){
+          return showcase.showcaseIdentifier == showcaseID;
+        });
+        if(showcase.elements.length < startElements){
+          res.json({data:{"elements":elements},"status":"0","response":"1"});
+        }else{
+          var elementsIdArray = showcase.elements.splice(startElements,endElements);
+
+          for (var i = 0; i < elementsIdArray.length; i++) {
+            var elementToPush = _.find(orgData.elements,function(element){
+              return elementsIdArray[i].identifier == element.elementIdentifier;
+            });
+            elementToPush._id = elementsIdArray[i]._id;
+            elements.push(elementToPush);
+          }
+
+          for (var i = 0; i < elements.length; i++) {
+            var isUserCollect = false;
+            for(var j=0; j<mobileUserData.biinieCollections.length & !isUserCollect;j++){
+              var elUserCollect =_.findWhere(mobileUserData.biinieCollections[j].elements,{identifier:elements[i].identifier});
+              isUserCollect = elUserCollect != null;
+            }
+
+            var userShareElements = _.filter( mobileUserData.shareObjects, function(like){ return like.type === "element"});
+            var elUserShared =_.findWhere(userShareElements,{identifier:elements[i].identifier})
+            var isUserShared = elUserShared != null;
+
+            var userLikeElements = _.filter( mobileUserData.likeObjects, function(like){ return like.type === "element"});
+            var elUserLike =_.findWhere(userLikeElements,{identifier:elements[i].identifier})
+            var isUserLike = elUserLike != null;
+
+            var userFollowElements = _.filter( mobileUserData.followObjects, function(like){ return like.type === "element"});
+            var elUserFollow =_.findWhere(userFollowElements,{identifier:elements[i].identifier})
+            var isUserFollow = elUserFollow != null;
+
+            var elUserViewed =_.findWhere(mobileUserData.seenElements,{elementIdentifier:elements[i].identifier})
+            var isUserViewedElement = elUserViewed != null;
+
+            elements[i].userShared=isUserShared?"1":"0";
+            elements[i].userFollowed=isUserFollow?"1":"0";
+            elements[i].userLiked=isUserLike?"1":"0";
+            elements[i].userCollected=isUserCollect?"1":"0";
+            elements[i].userViewed= isUserViewedElement?"1":"0";
+
+            elements[i] = validateElementInitialInfo(elements[i]);
+          }
+          res.json({data:{"elements":elements},"status":"0","response":"1"});
+        }
+
+      });
+    });
   }
 	return functions;
 }
