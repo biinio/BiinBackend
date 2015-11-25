@@ -14,7 +14,7 @@ module.exports = function() {
     var organization = require('../schemas/organization'),
         site = require('../schemas/site'),
         showcase = require('../schemas/showcase'),
-        client = require('../schemas/client');;
+        client = require('../schemas/client');
 
     //Other Routes
     var regionRoutes = require('./regions')(),
@@ -54,61 +54,51 @@ module.exports = function() {
             });
         });
     }
-
     //PUT/POST an organization
     functions.set = function(req, res) {
         //Perform an update
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
-        var accountIdentifier = req.body.accountIdentifier;
-        //If is pushing a new model
-        if (typeof(organizationIdentifier) === "undefined") {
-            var newModel = new organization();
-            newModel.accountIdentifier = accountIdentifier;
-            organizationIdentifier = utils.getGUID();
+        var model = req.body.model;
 
-            //Set the account and de user identifier
-            newModel.identifier = organizationIdentifier;
+        delete model._id;
+        delete model.identifier;
+        delete model.accountIdentifier;
 
-            //Perform an create
-            newModel.save(function(err) {
+        organization.update({
+                identifier: organizationIdentifier
+            }, {
+                $set: model
+            }, {
+                upsert: false
+            },
+            function(err) {
                 if (err)
                     res.send(err, 500);
-                else {
-                    //Return the state and the object
-                    res.send(newModel, 201);
-                }
-            });
-        } else {
-            var model = req.body.model;
-            model.accountIdentifier = accountIdentifier;
-            delete model._id;
+                else
+                //Return the state
+                    res.send(model, 200);
+            }
+        );
+    }
 
-            //Validate the Model
-            /*
-
-            var errors =utils.validate(new organization().validations(),req,'model');
-            if(errors)
-            	res.send(errors,400);
-            else
-            */
-            delete model.identifier;
-            organization.update({
-                    identifier: organizationIdentifier
-                }, {
-                    $set: model
-                }, {
-                    upsert: false
-                },
-                function(err) {
-                    if (err)
-                        res.send(err, 500);
-                    else
-                    //Return the state
-                        res.send(model, 200);
-                }
-            );
-        }
+    //PUT an organization
+    functions.create = function(req, res) {
+        //Perform an update
+        var accountIdentifier = req.param("accountIdentifier");
+        res.setHeader('Content-Type', 'application/json');
+        var newModel = new organization();
+        newModel.accountIdentifier = accountIdentifier;
+        newModel.identifier = utils.getGUID();
+        //Perform an create
+        newModel.save(function(err) {
+            if (err)
+                res.send(err, 500);
+            else {
+                //Return the state and the object
+                res.send(newModel, 201);
+            }
+        });
     }
 
     //Set showcases into sites in a organization
@@ -135,7 +125,64 @@ module.exports = function() {
                 })
         });
     }
+    
+    functions.getSelectedOrganization = function(req, res) {
+        var aIdentifier = req.param("accountIdentifier");
+        
+        client.findOne({
+            accountIdentifier : aIdentifier
+        }, {
+            _id: true,
+            'selectedOrganization': true 
+        }, function (err, data) {
+            res.json({
+                data: data
+            });
+        });
+    }
+    
+    //Save selected organization to client table
+    functions.saveSelectedOrganization = function(req, res) {
+        var aIdentifier = req.param("accountIdentifier");
+        var oIdentifier = req.param("organizationIdentifier");
+        
+        client.update({
+            accountIdentifier: aIdentifier
+        },{
+            selectedOrganization: oIdentifier
+        }, function (err, data) {
 
+                if (err)
+                    throw err;
+                else
+                    res.json({
+                        state: "success"
+                    });
+        });
+        
+        
+    }
+
+    //Test Vibrant
+    functions.testVibrant = function(req, res) {
+        //mueble: var file = 'http://i.imgur.com/7AQUAab.jpg';
+        //zapato: var file = 'http://i.imgur.com/jbbXTUB.jpg';
+        var file = 'http://i.imgur.com/miZt94c.jpg';
+        var opts = {};
+        opts.quality = 5;
+        var vibrant = new Vibrant(file);
+        var result = {};
+        vibrant.getSwatches(function(error, swatches) {
+            var mainColorRGB =  swatches.Vibrant ? swatches.Vibrant.rgb : [0,0,0];
+            var darkVibrantRGB =  swatches.DarkVibrant ? swatches.DarkVibrant.rgb : [0,0,0];
+            var lightVibrantRGB =  swatches.LightVibrant ? swatches.LightVibrant.rgb : [255,255,255];
+        
+            result.main = mainColorRGB;
+            result.dark = darkVibrantRGB;
+            result.light = lightVibrantRGB;
+            res.json(result);
+        });
+    }
 
 
     //Post the Image of the Organization

@@ -1,9 +1,9 @@
 {
   "name": "BinnCMS",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server.js"
   },
   "dependencies": {
     "angular-smart-table": "^2.1.0",
@@ -13,6 +13,7 @@
     "body-parser": "~1.13.1",
     "bootstrap-table": "^1.8.1",
     "bower": "^1.4.1",
+    "compression": "^1.6.0",
     "connect-busboy": "0.0.2",
     "connect-mongo": "^0.8.1",
     "connect-multiparty": "^1.2.5",
@@ -53,6 +54,8 @@
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "passport-oauth2-client-password": "^0.1.2",
+    "raygun": "^0.8.0",
+    "serve-favicon": "^2.3.0",
     "static-favicon": "~2.0.0-alpha",
     "underscore": "^1.8.3",
     "walk": "^2.3.9"
