@@ -206,7 +206,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/client',clients.create);
     app.get('/logout',clients.logout);
     app.post('/api/clients/verify', clients.verifyEmailAvailability);
-    
+
     //Roles routes
     // Add permission to role
     app.post('/roles/:role/:permission/addpermission', roles.addPermissionToRole);
