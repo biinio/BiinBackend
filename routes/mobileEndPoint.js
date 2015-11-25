@@ -227,9 +227,6 @@ module.exports = function(){
         uniqueElementsRemovedShowcase = _.uniq(uniqueElementsRemovedShowcase);
 
         var uniqueElementsShowcase = _.pluck(elementsInShowcase,'identifier');
-        /*for (var i = 0; i < elementsInShowcase.length; i++) {
-          uniqueElementsShowcase.push(elementsInShowcase[i].identifier);
-        }*/
         uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
 
         showcasesToFind = _.uniq(showcasesToFind);
@@ -298,9 +295,11 @@ module.exports = function(){
                 for (var i = 0; i < elementsInShowcase.length; i++) {
 
                   var element =  elementsInShowcase[i];
-                  elementData = _.findWhere(elementsfiltered,{elementIdentifier:element.identifier})
-                  element.categories = elementData.categories;
-                  elementWithCategories.push(element);
+                  elementData = _.findWhere(elementsfiltered,{elementIdentifier:element.identifier});
+                  if(elementData){
+                    element.categories = elementData.categories;
+                    elementWithCategories.push(element);
+                  }
                 }
 
                 //Fill highlights array
@@ -487,13 +486,52 @@ module.exports = function(){
           }
           res.json({data:{"elements":elements},"status":"0","result":"1"});
         }
-
       });
     });
   }
 
   functions.getNextElementsInCategory = function(req,res){
-    res.json([]);
+    res.json({});
+    /*var userIdentifier = req.param("identifier");
+    var categoryId = req.param("idCategory");
+    var batchNumber = req.param('batch');
+    var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
+    mobileSession.findOne({identifier:userIdentifier},{}).lean().exec(function(errMobileSession,mobileUserData){
+      if(errMobileSession)
+        throw errMobileSession;
+      if(mobileUserData){
+        var elementsAvailable = mobileUserData.elementsAvailable;
+        var elementsWithinCategory = [];
+        //
+        for (var i = 0; i < elementsAvailable.length; i++) {
+          for(var j = 0; j < elementsAvailable[i].categories.length; j++){
+            if(elementsAvailable[i].categories[j].identifier == categoryId){
+              elementsWithinCategory.push(elementsAvailable[i]);
+              break;
+            }
+          }
+        }
+
+        if(elementsWithinCategory.length < ELEMENTS_IN_CATEGORY){
+
+        }
+        else{
+
+          var elementsToSend = elementsWithinCategory.splice(0,ELEMENTS_IN_CATEGORY);
+          organization.find({'elements.identifier': {$in: elementsToSend}},{'elements.$':1}).lean().exec(function(errElements,elementsData){
+            if(errElements)
+             throw errElements
+
+            for (var i = 0; i < elementsData.length; i++) {
+
+            }
+          })
+        }
+      }else{
+        res.json({});
+      }
+    });*/
+
   }
 	return functions;
 }
