@@ -1,7 +1,7 @@
 module.exports = function(){
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
-	var element = require('../schemas/element'), showcase = require('../schemas/showcase'), organization= require('../schemas/organization');
+	var element = require('../schemas/element'), showcase = require('../schemas/showcase'), organization= require('../schemas/organization'), biins = require('../schemas/biin');
 	var imageManager = require("../biin_modules/imageManager")(), utils = require('../biin_modules/utils')() , routesUtils = require('../biin_modules/routesUtils')();
 	var _= require('underscore');
 	var zlib = require('zlib');
@@ -417,7 +417,19 @@ module.exports = function(){
                             }, function(err) {
                                 if (err) { throw err; }
                                 else {
-                                    res.json({state:"success"});   
+                                    // remove biins which have the element associated
+                                    biins.update({
+                                        organizationIdentifier: organizationIdentifier
+                                    }, {
+                                        $pull:{objects:{identifier: elementIdentifier}}
+                                    }, {
+                                        multi: true
+                                    }, function(err) {
+                                        if (err) { throw err; }
+                                        else {
+                                            res.json({state:"success"});  
+                                        }
+                                    });
                                 }  
                             });
                         }
