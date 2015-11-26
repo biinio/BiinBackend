@@ -7,10 +7,11 @@ module.exports = function(){
   var initialDataJson = require('../config/initialData.json');
   var elementsJson = require('../config/elements.json');
 
+  //Schemas
   var organization = require('../schemas/organization'),
     showcase = require('../schemas/showcase');
   var mobileUser = require('../schemas/mobileUser');
-  //Schemas
+  var mobileSession = require('../schemas/mobileSession');
 	var client = require('../schemas/client');
 
   // Default image for elements
@@ -208,22 +209,24 @@ module.exports = function(){
 
         response.sites = sites;
 
-        var  elementsInShowcase = [];
+        var elementsInShowcase = [];
+        var elementsRemovedFromShowcase = [];
 
         var showcasesToFind = [];
         for (i = 0; i < response.sites.length; i++) {
           for (var j = 0; j < response.sites[i].showcases.length; j++) {
             showcasesToFind.push(response.sites[i].showcases[j].showcaseIdentifier);
             response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
-            response.sites[i].showcases[j].elements =response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
+            var elementsToSend = response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
+            elementsRemovedFromShowcase = elementsRemovedFromShowcase.concat(response.sites[i].showcases[j].elements);
+            response.sites[i].showcases[j].elements = elementsToSend;
             elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
           }
         }
+        var uniqueElementsRemovedShowcase = _.pluck(elementsRemovedFromShowcase,'identifier');
+        uniqueElementsRemovedShowcase = _.uniq(uniqueElementsRemovedShowcase);
 
-        var uniqueElementsShowcase = [];
-        for (var i = 0; i < elementsInShowcase.length; i++) {
-          uniqueElementsShowcase.push(elementsInShowcase[i].identifier);
-        }
+        var uniqueElementsShowcase = _.pluck(elementsInShowcase,'identifier');
         uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
 
         showcasesToFind = _.uniq(showcasesToFind);
@@ -284,13 +287,20 @@ module.exports = function(){
                   return uniqueElementsShowcase.indexOf(element.elementIdentifier) > -1;
                 });
 
+                var elementsAvailableForNextRequests = _.filter(elements, function(element){
+                  return uniqueElementsRemovedShowcase.indexOf(element.elementIdentifier) > -1;
+                });
+
                 var elementWithCategories = [];
                 for (var i = 0; i < elementsInShowcase.length; i++) {
 
                   var element =  elementsInShowcase[i];
-                  elementData = _.findWhere(elementsfiltered,{elementIdentifier:element.identifier})
-                  element.categories = elementData.categories;
-                  elementWithCategories.push(element);
+                  elementData = _.findWhere(elementsfiltered,{elementIdentifier:element.identifier});
+                  if(elementData){
+                    element.categories = elementData.categories;
+                    element.isHighlight = elementData.isHighlight;
+                    elementWithCategories.push(element);
+                  }
                 }
 
                 //Fill highlights array
@@ -328,7 +338,9 @@ module.exports = function(){
                       return uniqueCategories[i] == category.identifier;
                     }) != null;
                   });
-
+                  elementsWithCategories = _.sortBy(elementsWithCategories, function(element){
+                    return element.isHighlight == "1"? 0 : 1;
+                  })
                   elementsWithCategories= elementsWithCategories.splice(0,ELEMENTS_IN_CATEGORY);
                   elementsSentInCategories = elementsSentInCategories.concat(elementsWithCategories);
 
@@ -364,15 +376,20 @@ module.exports = function(){
       						elementsfiltered[i].userCollected=isUserCollect?"1":"0";
       						elementsfiltered[i].userViewed= isUserViewedElement?"1":"0";
                 }
-
+                var sitesSent = [];
+                var organizationsSent = [];
+                var elementsSent = [];
                 for (var i = 0; i < response.sites.length; i++) {
                   response.sites[i]=validateSiteInitialInfo(response.sites[i]);
+                  sitesSent.push({identifier:response.sites[i].identifier});
                 }
                 for (var i = 0; i < organizations.length; i++) {
                   organizations[i]=validateOrganizationInitialInfo(organizations[i]);
+                  organizationsSent.push({identifier:organizations[i].identifier});
                 }
                 for (var i = 0; i < elementsfiltered.length; i++) {
                   elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
+                  elementsSent.push({identifier:elementsfiltered[i].identifier});
                 }
 
                 response.organizations = organizations;
@@ -380,6 +397,23 @@ module.exports = function(){
                 response.highlights = hightlightsFiltered;
                 response.categories = categories;
                 res.json({data:response,status: "0",result: "1"});
+
+                mobileSession.findOneAndUpdate(
+                  {identifier:userIdentifier},
+                  {
+                    $set : {
+                      sitesSent:response.sites,
+                      elementsSent: elementsfiltered,
+                      organizatonsSent : organizations,
+                      elementsAvailable : elementsAvailableForNextRequests
+                    }
+                  },
+                  {upsert: true}, // insert the document if it does not exist
+                  function(error,data){
+                    if(error)
+                      throw error;
+
+                  });
           })
         });
       });
@@ -404,7 +438,9 @@ module.exports = function(){
       organization.findOne({'sites.identifier':siteId},{'sites.identifier':1,'sites.showcases':1,'elements':1}).lean().exec(function(errorOrg,orgData){
         if(errorOrg)
           throw errorOrg;
-        var site = orgData.sites[0];
+        var site = _.find(orgData.sites,function(site){
+          return site.identifier == siteId;
+        });
         var showcase = _.find(site.showcases, function(showcase){
           return showcase.showcaseIdentifier == showcaseID;
         });
@@ -453,12 +489,103 @@ module.exports = function(){
           }
           res.json({data:{"elements":elements},"status":"0","result":"1"});
         }
-
       });
     });
   }
+
   functions.getNextElementsInCategory = function(req,res){
-    res.json([]);
+    var userIdentifier = req.param("identifier");
+    var categoryId = req.param("idCategory");
+    var batchNumber = req.param('batch');
+    var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
+    var response = {};
+    response.sites = [];
+    response.organizations = [];
+
+    mobileSession.findOne({identifier:userIdentifier},{}).lean().exec(function(errMobileSession,mobileUserData){
+      if(errMobileSession)
+        throw errMobileSession;
+      if(mobileUserData){
+        //Get sites sent to the user
+        var sitesInUserCellphone = _.pluck(mobileUserData.sitesSent,'identifier');
+        // get site information
+        organization.find({'sites.identifier': {$in: sitesInUserCellphone}},{}).lean().exec(function(errSites,sitesData){
+          if(errSites)
+            throw errSites;
+          //Desnormalize sites into an array of sites
+          // TODO: IMPROVE THIS WITH MOVING SITES INFORMATION TO SITE COLLECTION
+          var sitesDesnormalized = [];
+          for (var i = 0; i < sitesData.length; i++) {
+            for (var j = 0; j < sitesData[i].sites.length; j++) {
+              sitesData[i].sites[j].organizationIdentifier = sitesData[i].identifier;
+              sitesDesnormalized.push(sitesData[i].sites[j]);
+            }
+          }
+          //filter sites to just the only the user had in his cellphone
+          sitesDesnormalized = _.filter(sitesDesnormalized,function(site){
+            return _.contains(sitesInUserCellphone,site.identifier);
+          });
+
+          //Desnormalize elements into an array of elements
+          var elementsDesnormalized = []
+          for (var i = 0; i < sitesData.length; i++) {
+            for (var j = 0; j < sitesData[i].elements.length; j++) {
+              elementsDesnormalized.push(sitesData[i].elements[j]);
+            }
+          }
+
+          // Get elements identifier from the showcases of the sites.
+          var elementsFromShowcases = [];
+          for (i = 0; i < sitesDesnormalized.length; i++) {
+            for (var j = 0; j < sitesDesnormalized[i].showcases.length; j++) {
+              elementsFromShowcases = elementsFromShowcases.concat(sitesDesnormalized[i].showcases[j].elements);
+            }
+          }
+          // Obtain an array with the element's identifier and convert it into a unique list
+          var elementsIdentifierFromShowcase = _.pluck(elementsFromShowcases,'identifier');
+          var uniqueElementsIdentifierFromShowcase = _.uniq(elementsIdentifierFromShowcase);
+
+          // Get elements sent to the user
+          var elementsSent = _.pluck(mobileUserData.elementsSent,'identifier');
+
+          // Obtain which elements are available for sending to the user
+          var availableElementsToSent = _.difference(uniqueElementsIdentifierFromShowcase,elementsSent);
+
+          //Get which elements are in the category.
+          //TODO: MODIFY SESSION TO STORE WHAT ELEMENTS WERE SENT BY CATEGORY
+
+          var elementsWithinCategory = [];
+          for (var i = 0; i < availableElementsToSent.length; i++) {
+            var elementData = _.findWhere(elementsDesnormalized,{'identifier':availableElementsToSent[i]});
+            if(elementData){
+              for(var j = 0; j < elementData.categories.length; j++){
+                if(elementData.categories[j].identifier == categoryId){
+                  elementsWithinCategory.push(elementData);
+                  break;
+                }
+              }
+            }
+          }
+          //if the elements are too few to send the next batch, will try to fill
+          //it with new info from sites that aren't from  site sent to the user
+          if(elementsWithinCategory.length < ELEMENTS_IN_CATEGORY){
+            res.json({data:response, "status": "0","result": "1"});
+          }
+          else{
+            // Otherwise will be sent just only the elements
+            var elementsToSend = elementsWithinCategory.splice(0,ELEMENTS_IN_CATEGORY);
+
+            response.elementsForCategory = [];
+            response.elements = elementsToSend;
+            res.json({data:response, "status": "0","result": "1"});
+          }
+        });
+
+      }else{
+        res.json({});
+      }
+    });
+
   }
 	return functions;
 }

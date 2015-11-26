@@ -1,9 +1,9 @@
 {
   "name": "BinnCMS",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server.js"
   },
   "dependencies": {
     "angular-smart-table": "^2.1.0",
