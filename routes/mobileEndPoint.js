@@ -53,6 +53,23 @@ module.exports = function(){
     siteValidated.userFollowed= site.userShared ? site.userFollowed : "0";
     siteValidated.userLiked= site.userShared ? site.userLiked : "0";
 
+    for (var i = 0; i < siteValidated.showcases.length; i++) {
+      var showcase = {};
+      showcase.identifier = siteValidated.showcases[i].showcaseIdentifier? siteValidated.showcases[i].showcaseIdentifier : "";
+      showcase._id = siteValidated.showcases[i]._id? siteValidated.showcases[i]._id : "";
+      showcase.subTitle = siteValidated.showcases[i].subTitle? siteValidated.showcases[i].subTitle : "";
+      showcase.title = siteValidated.showcases[i].title? siteValidated.showcases[i].title : "";
+      showcase.elements = siteValidated.showcases[i].elements? siteValidated.showcases[i].elements : [];
+
+      for (var j = 0; j < showcase.elements.length; j++) {
+        var element = {}
+        element._id = showcase.elements[j]._id? showcase.elements[j]._id : "";
+        element.identifier = showcase.elements[j].identifier? showcase.elements[j].identifier : "";
+        showcase.elements[j] = element;
+      }
+      siteValidated.showcases[i] = showcase;
+    }
+
     return siteValidated;
   }
 
@@ -402,6 +419,7 @@ module.exports = function(){
                   {identifier:userIdentifier},
                   {
                     $set : {
+                      lastLocation : [userLng,userLat],
                       sitesSent:response.sites,
                       elementsSent: elementsfiltered,
                       organizatonsSent : organizations,
@@ -494,10 +512,11 @@ module.exports = function(){
   }
 
   functions.getNextElementsInCategory = function(req,res){
-    var userIdentifier = req.param("identifier");
-    var categoryId = req.param("idCategory");
-    var batchNumber = req.param('batch');
+    var userIdentifier = req.params["identifier"];
+    var categoryId = req.params["idCategory"];
+    var batchNumber = req.params['batch'];
     var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
+    var LIMIT_ELEMENTS_IN_SHOWCASE = process.env.LIMIT_ELEMENTS_IN_SHOWCASE || 6;
     var response = {};
     response.sites = [];
     response.organizations = [];
@@ -556,7 +575,7 @@ module.exports = function(){
 
           var elementsWithinCategory = [];
           for (var i = 0; i < availableElementsToSent.length; i++) {
-            var elementData = _.findWhere(elementsDesnormalized,{'identifier':availableElementsToSent[i]});
+            var elementData = _.findWhere(elementsDesnormalized,{'elementIdentifier':availableElementsToSent[i]});
             if(elementData){
               for(var j = 0; j < elementData.categories.length; j++){
                 if(elementData.categories[j].identifier == categoryId){
@@ -569,13 +588,217 @@ module.exports = function(){
           //if the elements are too few to send the next batch, will try to fill
           //it with new info from sites that aren't from  site sent to the user
           if(elementsWithinCategory.length < ELEMENTS_IN_CATEGORY){
-            res.json({data:response, "status": "0","result": "1"});
-          }
-          else{
+
+            // Obtaing _id for the nearest Showcase and adding into the group id
+            var elementsForCategory = [];
+
+
+            for (var i = 0; i < elementsWithinCategory.length; i++) {
+              for (var j = 0; j < elementsFromShowcases.length; j++) {
+                if(elementsWithinCategory[i].elementIdentifier == elementsFromShowcases[j].identifier){
+                  elementsForCategory.push({_id:elementsFromShowcases[j]._id, identifier:elementsWithinCategory[i].elementIdentifier});
+                  break;
+                }
+              }
+            }
+
+
+            var amountOfExtraElementsNeeded = ELEMENTS_IN_CATEGORY - elementsWithinCategory.length;
+            var elementsForCategory = [];
+            for (var i = 0; i < elementsWithinCategory.length; i++) {
+              for (var j = 0; j < elementsFromShowcases.length; j++) {
+                if(elementsWithinCategory[i].elementIdentifier == elementsFromShowcases[j].identifier){
+                  elementsForCategory.push({_id:elementsFromShowcases[j]._id, identifier:elementsWithinCategory[i].elementIdentifier});
+                  break;
+                }
+              }
+            }
+            //Get extra site informmation
+            organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{}).lean().exec(function(errExtraSites,extraSitesData){
+              if(errExtraSites)
+                throw errExtraSites;
+              // Desnormalize result of sites
+              var sitesDesnormalized = [];
+
+              for (var i = 0; i < extraSitesData.length; i++) {
+                if(extraSitesData[i].sites){
+                  for (var j = 0; j < extraSitesData[i].sites.length; j++) {
+                    var organization = extraSitesData[i];
+                    var elements =  organization.elements;
+                    var site = organization.sites[j];
+                    sitesDesnormalized.push({organization:organization,site :site, elements: elements});
+                  }
+                }
+              }
+              //Filter sites which are not in the sites array that were sent to the user
+               sitesDesnormalized = _.filter(sitesDesnormalized, function(site){
+                 return !_.contains(sitesInUserCellphone,site.site.identifier);
+               });
+
+              //adding organization and proximity to the sites
+              for (var i = 0; i < sitesDesnormalized.length; i++) {
+                sitesDesnormalized[i].site.organizationIdentifier = sitesDesnormalized[i].organization.identifier;
+                sitesDesnormalized[i].site.proximity = utils.getProximity(mobileUserData.lastLocation[1]+"",mobileUserData.lastLocation[0]+"",sitesDesnormalized[i].site.lat,sitesDesnormalized[i].site.lng);
+              }
+
+              //sort to the closest sites
+              var sortByProximity = _.sortBy(sitesDesnormalized,function(site){
+                return site.site.proximity;
+              });
+
+              var elementsInShowcase = [];
+              var elementsRemovedFromShowcase = [];
+              var elementsToAddInCategories = 0;
+
+              var elementsWithSiteRef =[];
+              //TODO: OPTIMIZE THIS ITS On3
+
+              //Get Elements from  the showcases of the sites
+              for (i = 0; i < sortByProximity.length; i++) {
+                 for (var j = 0; j < sortByProximity[i].site.showcases.length; j++) {
+
+                  var elementsInOrganization = sortByProximity[i].elements;
+                  sortByProximity[i].site.showcases[j].elements_quantity = sortByProximity[i].site.showcases[j].elements.length + "";
+                  var elementsToSend = sortByProximity[i].site.showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
+
+                  var elementsGoingToBeRemoved =  sortByProximity[i].site.showcases[j].elements;
+
+                  sortByProximity[i].site.showcases[j].elements = elementsToSend;
+                  elementsInShowcase = elementsInShowcase.concat(sortByProximity[i].site.showcases[j].elements);
+
+                  for(var k = 0; k < elementsToSend.length;k++){
+                    var element = elementsToSend[k];
+                    element.siteId = sortByProximity[i].site.identifier;
+                    element.orgElements = sortByProximity[i].elements;
+                    elementsWithSiteRef.push(element);
+                  }
+                  for(k = 0; k < elementsGoingToBeRemoved.length;k++){
+                    elementsGoingToBeRemoved[k].siteId = sortByProximity[i].site.identifier;
+                  }
+                  elementsRemovedFromShowcase = elementsRemovedFromShowcase.concat(elementsGoingToBeRemoved);
+                }
+              }
+              var sitesIdToSend = [];
+              var elementsThatContainsCategory = [];
+              for (var i = 0; i < elementsWithSiteRef.length; i++) {
+                var element = _.find(elementsWithSiteRef[i].orgElements,function(element){
+                  return element.elementIdentifier == elementsWithSiteRef[i].identifier;
+                });
+                if(element){
+                  category = _.find(element.categories,function(category){
+                    return category.identifier == categoryId;
+                  })
+                  if(category){
+                    elementsToAddInCategories ++;
+                    sitesIdToSend.push(elementsWithSiteRef[i].siteId);
+                    element.showcaseID = elementsWithSiteRef[i]._id;
+                    elementsThatContainsCategory.push(element);
+                    if ( elementsToAddInCategories == amountOfExtraElementsNeeded)
+                    {
+                      break;
+                    }
+                  }
+                }
+              }
+
+              sitesIdToSend = _.uniq(sitesIdToSend);
+
+              sortByProximity = _.filter(sortByProximity, function(site){
+                return _.contains(sitesIdToSend,site.site.identifier);
+              });
+
+              elementsRemovedFromShowcase =_.filter(elementsRemovedFromShowcase, function(element){
+                return _.contains(sitesIdToSend,element.siteId);
+              });
+
+              var showcasesToFind = [];
+              var nonCategoryContainerElements = [];
+              var elementsToSend = [];
+              var elementsData= [];
+              for (i = 0; i < sortByProximity.length; i++) {
+                 for (var j = 0; j < sortByProximity[i].site.showcases.length; j++) {
+                  showcasesToFind.push(sortByProximity[i].site.showcases[j].showcaseIdentifier);
+                  elementsToSend = elementsToSend.concat(sortByProximity[i].site.showcases[j].elements);
+                  elementsData = elementsData.concat(sortByProximity[i].elements);
+                }
+              }
+              var elementsIds = _.pluck(elementsToSend, 'identifier');
+              var uniqueElementsToSend = _.uniq(elementsIds);
+
+              var elements = [];
+              for (var i = 0; i < uniqueElementsToSend.length; i++) {
+                var elementData = _.find(elementsData,function(element){
+                  return uniqueElementsToSend[i] == element.elementIdentifier;
+                });
+                if(elementData)
+                  elements.push(elementData);
+              }
+
+              var sites = [];
+              var organizations =[];
+              for (i = 0; i < sortByProximity.length; i++) {
+                sites.push(sortByProximity[i].site);
+                organizations.push(sortByProximity[i].organization);
+              }
+              organizations = _.uniq(organizations);
+              response.organizations = organizations;
+              //Fill organizations
+
+
+              var elementsWithCategory = [];
+              for(i = 0; i< elementsThatContainsCategory.length; i++){
+                var element = {};
+                element._id = elementsThatContainsCategory[i].showcaseID;
+                element.identifier = elementsThatContainsCategory[i].elementIdentifier;
+                elementsWithCategory.push(element);
+              }
+
+
+              var sitesSent = [];
+              var organizationsSent = [];
+              var elementsSent = [];
+
+              response.sites = sites;
+
+              for (var i = 0; i < response.sites.length; i++) {
+                response.sites[i]=validateSiteInitialInfo(response.sites[i]);
+                sitesSent.push({identifier:response.sites[i].identifier});
+              }
+              for (var i = 0; i < response.organizations.length; i++) {
+                response.organizations[i]=validateOrganizationInitialInfo(response.organizations[i]);
+                organizationsSent.push({identifier:response.organizations[i].identifier});
+              }
+              for (var i = 0; i < elements.length; i++) {
+                elements[i] = validateElementInitialInfo(elements[i]);
+                elementsSent.push({identifier:elements[i].identifier});
+              }
+
+              response.elementsForCategory = elementsForCategory.concat(elementsWithCategory);
+              response.elements = elements;
+
+              res.json({data:response, "status": "0","result": "1"});
+            });
+
+          } else {
             // Otherwise will be sent just only the elements
             var elementsToSend = elementsWithinCategory.splice(0,ELEMENTS_IN_CATEGORY);
 
-            response.elementsForCategory = [];
+            // Obtaing _id for the nearest Showcase and adding into the group id
+            var elementsForCategory = [];
+            for (var i = 0; i < elementsToSend.length; i++) {
+              for (var j = 0; j < elementsFromShowcases.length; j++) {
+                if(elementsToSend[i].elementIdentifier == elementsFromShowcases[j].identifier){
+                  elementsForCategory.push({_id:elementsFromShowcases[j]._id, identifier:elementsToSend[i].elementIdentifier});
+                  break;
+                }
+              }
+            }
+
+            response.elementsForCategory = elementsForCategory;
+
+            for (var i = 0; i < elementsToSend.length; i++) {
+              elementsToSend[i] = validateElementInitialInfo(elementsToSend[i]);
+            }
             response.elements = elementsToSend;
             res.json({data:response, "status": "0","result": "1"});
           }
