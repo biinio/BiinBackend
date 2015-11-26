@@ -372,26 +372,62 @@ module.exports = function(){
 		}
 	}
 
-	//DELETE an specific showcase
+	//DELETE an specific element
 	functions.delete= function(req,res){
 		//Perform an update
 		var organizationIdentifier = req.param('identifier');
 		var elementIdentifier=req.param("element");
+        
+        //remove elements from organization.elements
+		organization.update({
+            identifier:organizationIdentifier
+        },{
+            $pull:{elements:{elementIdentifier:elementIdentifier}}
+        }, function(err){
+        if(err)
+            throw err;
+        else {             
+            //remove elements from elements from organization.showcases.elements
+            organization.findOne({
+                identifier:organizationIdentifier
+            },{}, function(err, org){
+                if (err) { throw err; }
+                else {
+                    var siteCount;
+                    for (siteCount = 0; siteCount < org.sites.length; siteCount++) {
+                        var showCount;
+                        for (showCount = 0; showCount < org.sites[siteCount].showcases.length; showCount++) {
+                            var newElementsArray = _.filter(org.sites[siteCount].showcases[showCount].elements,function(element){
+                                return element.identifier != elementIdentifier;
+                            });
+                            org.sites[siteCount].showcases[showCount].elements = newElementsArray;
+                        }
+                    }
+                    org.save(function(err){
+                        if(err)
+                        { throw err; }
+                        else {
+                            //remove elements from showcases table
+                            showcase.update({
+                                organizationIdentifier: organizationIdentifier
+                            },{
+                                $pull:{elements:{elementIdentifier: elementIdentifier}}
+                            }, {
+                                multi:true
+                            }, function(err) {
+                                if (err) { throw err; }
+                                else {
+                                    res.json({state:"success"});   
+                                }  
+                            });
+                        }
+                    });
+                }
+            });
+            }
+        });
+    }
 
-
-		removeElementsInShowcases(elementIdentifier,function(){			
-			organization.update({identifier:organizationIdentifier},{$pull:{elements:{elementIdentifier:elementIdentifier}}},function(err){
-				if(err)
-					throw err;
-				else
-					res.json({state:"success"});
-			});	
-
-		});		
-	}
-
-	//Delete elements references
-	functions.removeElementsInShowcases= removeElementsInShowcases;
 
 	//POST an image for a showcase
 	functions.imagePost=function(req,res,next){	  		

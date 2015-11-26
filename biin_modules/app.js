@@ -20,11 +20,11 @@ module.exports = function (db) {
     , cors = require('cors')
     , expressValidator = require('express-validator');
 
-    var raygun = require('raygun');
-    var raygunClient = new raygun.Client().init({ apiKey: 'Ln6nlknq/hd6Zj3IE41sQg==' });
+    //var raygun = require('raygun');
+    //var raygunClient = new raygun.Client().init({ apiKey: 'roejUjt4HoqIczi0zgC99Q==' });
 
     // For express, at the end of the middleware definitions:
-    app.use(raygunClient.expressHandler);
+    //app.use(raygunClient.expressHandler);
 
 
 
@@ -143,7 +143,7 @@ module.exports = function (db) {
 
     process.on('uncaughtException', function (err) {
         console.log(err);
-        raygunClient.send(err);
+        //raygunClient.send(err);
     });
     return app;
 };
