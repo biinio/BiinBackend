@@ -414,7 +414,14 @@ module.exports = function(){
                 response.highlights = hightlightsFiltered;
                 response.categories = categories;
                 res.json({data:response,status: "0",result: "1"});
-
+                var elementsByCategoriesSent = [];
+                for (var i = 0; i < categories.length; i++) {
+                  var elementsInTheCategorySent = []
+                  for (var j = 0; j < categories[i].elements.length; j++) {
+                    elementsInTheCategorySent.push(categories[i].elements[j].identifier);
+                  }
+                  elementsByCategoriesSent.push({identifier:categories[i].identifier, elementsSent : elementsInTheCategorySent});
+                }
                 mobileSession.findOneAndUpdate(
                   {identifier:userIdentifier},
                   {
@@ -422,6 +429,7 @@ module.exports = function(){
                       lastLocation : [userLng,userLat],
                       sitesSent:response.sites,
                       elementsSent: elementsfiltered,
+                      elementsSentByCategory:elementsByCategoriesSent,
                       organizatonsSent : organizations,
                       elementsAvailable : elementsAvailableForNextRequests
                     }
@@ -432,7 +440,7 @@ module.exports = function(){
                       throw error;
 
                   });
-          })
+          });
         });
       });
 
@@ -565,11 +573,14 @@ module.exports = function(){
           var uniqueElementsIdentifierFromShowcase = _.uniq(elementsIdentifierFromShowcase);
 
           // Get elements sent to the user
-          var elementsSent = _.pluck(mobileUserData.elementsSent,'identifier');
-
+          var elementsInCategorySent  = _.findWhere(mobileUserData.elementsSentByCategory, {'identifier':categoryId});
           // Obtain which elements are available for sending to the user
-          var availableElementsToSent = _.difference(uniqueElementsIdentifierFromShowcase,elementsSent);
-
+          var availableElementsToSent = [];
+          if(elementsInCategorySent){
+            availableElementsToSent = _.difference(uniqueElementsIdentifierFromShowcase,elementsInCategorySent.elementsSent);
+          } else {
+            availableElementsToSent = _.difference(uniqueElementsIdentifierFromShowcase,[]);
+          }
           //Get which elements are in the category.
           //TODO: MODIFY SESSION TO STORE WHAT ELEMENTS WERE SENT BY CATEGORY
 
@@ -805,7 +816,7 @@ module.exports = function(){
         });
 
       }else{
-        res.json({});
+        res.json({data:{}, "status": "2","result": "0"});
       }
     });
 

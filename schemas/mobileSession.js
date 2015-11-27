@@ -11,6 +11,12 @@ var mobileUserSchema=new Schema({
   elementsSent:[
     {identifier:{type:String}}
   ],
+	elementsSentByCategory : [
+		{
+			identifier:{type:String},
+			elementsSent :{ type:[String]	}
+		}
+	],
   organizatonsSent:[
     {identifier:{type:String}}
   ],
