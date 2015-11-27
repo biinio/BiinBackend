@@ -60,6 +60,7 @@ module.exports = function(){
       showcase.subTitle = siteValidated.showcases[i].subTitle? siteValidated.showcases[i].subTitle : "";
       showcase.title = siteValidated.showcases[i].title? siteValidated.showcases[i].title : "";
       showcase.elements = siteValidated.showcases[i].elements? siteValidated.showcases[i].elements : [];
+      showcase.elements_quantity = siteValidated.showcases[i].elements_quantity?siteValidated.showcases[i].elements_quantity : "0"; 
 
       for (var j = 0; j < showcase.elements.length; j++) {
         var element = {}
@@ -812,6 +813,7 @@ module.exports = function(){
             }
             response.elements = elementsToSend;
             res.json({data:response, "status": "0","result": "1"});
+
           }
         });
 
@@ -822,4 +824,8 @@ module.exports = function(){
 
   }
 	return functions;
+
+  function saveInfoIntoUserMobileSession( userIdentifier, sitesArray, elementsSent, elementsByCategorySent, organizationsSent){
+
+  }
 }
