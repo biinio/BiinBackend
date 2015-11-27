@@ -60,7 +60,7 @@ module.exports = function(){
       showcase.subTitle = siteValidated.showcases[i].subTitle? siteValidated.showcases[i].subTitle : "";
       showcase.title = siteValidated.showcases[i].title? siteValidated.showcases[i].title : "";
       showcase.elements = siteValidated.showcases[i].elements? siteValidated.showcases[i].elements : [];
-      showcase.elements_quantity = siteValidated.showcases[i].elements_quantity?siteValidated.showcases[i].elements_quantity : "0"; 
+      showcase.elements_quantity = siteValidated.showcases[i].elements_quantity?siteValidated.showcases[i].elements_quantity : "0";
 
       for (var j = 0; j < showcase.elements.length; j++) {
         var element = {}
@@ -86,6 +86,17 @@ module.exports = function(){
     organizationValidated.name = organization.name?organization.name : "";
     organizationValidated.isLoyaltyEnabled = organization.isLoyaltyEnabled?organization.isLoyaltyEnabled : "0";
     organizationValidated.loyalty = organization.loyalty? organization.loyalty : [];
+    if(!Array.isArray(organizationValidated.media)){
+      organizationValidated.media = [ organizationValidated.media ];
+    }
+    for (var i = 0; i < organizationValidated.media.length; i++) {
+      var newOrganization = {};
+      newOrganization.vibrantLightColor= organizationValidated.media[i].vibrantLightColor;
+      newOrganization.vibrantDarkColor = organizationValidated.media[i].vibrantDarkColor;
+      newOrganization.vibrantColor = organizationValidated.media[i].vibrantColor;
+      newOrganization.url = organizationValidated.media[i].url;
+      organizationValidated.media[i] = newOrganization;
+    }
 
     return organizationValidated;
   }
@@ -826,6 +837,12 @@ module.exports = function(){
 	return functions;
 
   function saveInfoIntoUserMobileSession( userIdentifier, sitesArray, elementsSent, elementsByCategorySent, organizationsSent){
+    mobileSession.findOne({identifier:userIdentifier}, {}, function(error,userSessionData){
+      if(error)
+        throw error;
+      else {
 
+      }
+    });
   }
 }
