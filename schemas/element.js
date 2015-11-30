@@ -78,7 +78,9 @@ var elementSchema = new Schema({
 			biinieIdentifier : {type:String, default:""},
 			rating : {type:Number, default: 0}
 		}
-	]
+	],
+    
+    isReady:{type:Number,default:0}
 });
 
 module.exports = mongoose.model('elements', elementSchema);
