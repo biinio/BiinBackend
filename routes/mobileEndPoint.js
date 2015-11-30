@@ -844,100 +844,170 @@ module.exports = function(){
     var response = {};
     response.sites = [];
     response.organizations = [];
+    mobileUser.findOne({'identifier':userIdentifier},{'showcaseNotified':1, 'biinieCollections':1,'loyalty':1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},function(errBiinie,userData){
+      if(errBiinie)
+        throw errBiinie;
 
-    mobileSession.findOne({identifier:userIdentifier},{}).lean().exec(function(errMobileSession,mobileUserData){
-      if(errMobileSession)
-        throw errMobileSession;
-      if(mobileUserData){
-        //Get sites sent to the user
-        var sitesInUserCellphone = _.pluck(mobileUserData.sitesSent,'identifier');
+      mobileSession.findOne({identifier:userIdentifier},{}).lean().exec(function(errMobileSession,mobileUserData){
+        if(errMobileSession)
+          throw errMobileSession;
+        if(mobileUserData){
+          //Get sites sent to the user
+          var sitesInUserCellphone = _.pluck(mobileUserData.sitesSent,'identifier');
 
-        //Get extra site informmation
-        organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{}).lean().exec(function(errExtraSites,extraSitesData){
-          if(errExtraSites)
-            throw errExtraSites;
-          // Desnormalize result of sites
-          var sitesDesnormalized = [];
+          //Get extra site informmation
+          organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{}).lean().exec(function(errExtraSites,extraSitesData){
+            if(errExtraSites)
+              throw errExtraSites;
+            // Desnormalize result of sites
+            var sitesDesnormalized = [];
+            var elementsData = [];
+            var orgData = [];
 
-          for (var i = 0; i < extraSitesData.length; i++) {
-            if(extraSitesData[i].sites){
-              for (var j = 0; j < extraSitesData[i].sites.length; j++) {
-                var organization = extraSitesData[i];
-                var elements =  organization.elements;
-                var site = organization.sites[j];
-                sitesDesnormalized.push({organization:organization,site :site, elements: elements});
-              }
-            }
-          }
-          //Filter sites which are not in the sites array that were sent to the user
-           sitesDesnormalized = _.filter(sitesDesnormalized, function(site){
-             return !_.contains(sitesInUserCellphone,site.site.identifier);
-           });
-
-          //adding organization and proximity to the sites
-          for (var i = 0; i < sitesDesnormalized.length; i++) {
-            sitesDesnormalized[i].site.organizationIdentifier = sitesDesnormalized[i].organization.identifier;
-            sitesDesnormalized[i].site.proximity = utils.getProximity(mobileUserData.lastLocation[1]+"",mobileUserData.lastLocation[0]+"",sitesDesnormalized[i].site.lat,sitesDesnormalized[i].site.lng);
-          }
-
-          //sort to the closest sites
-          var sortByProximity = _.sortBy(sitesDesnormalized,function(site){
-            return site.site.proximity;
-          });
-
-          response.sites = sortByProximity.splice(0,MAX_SITES);
-
-          var elementsInShowcase = [];
-          var elementsRemovedFromShowcase = [];
-
-          var showcasesToFind = [];
-          for (i = 0; i < response.sites.length; i++) {
-            for (var j = 0; j < response.sites[i].showcases.length; j++) {
-              showcasesToFind.push(response.sites[i].showcases[j].showcaseIdentifier);
-              response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
-              var elementsToSend = response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
-              elementsRemovedFromShowcase = elementsRemovedFromShowcase.concat(response.sites[i].showcases[j].elements);
-              response.sites[i].showcases[j].elements = elementsToSend;
-              elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
-            }
-          }
-          var uniqueElementsRemovedShowcase = _.pluck(elementsRemovedFromShowcase,'identifier');
-          uniqueElementsRemovedShowcase = _.uniq(uniqueElementsRemovedShowcase);
-
-          var uniqueElementsShowcase = _.pluck(elementsInShowcase,'identifier');
-          uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
-
-          showcasesToFind = _.uniq(showcasesToFind);
-          showcase.find({identifier : {$in : showcasesToFind}},
-            {
-              "name":1,
-              "description":1,
-              "identifier":1
-            }).lean().exec(
-            function(showcasesError, showcasesData){
-              if(showcasesError)
-                throw showcasesError;
-
-              for (var i = 0; i < response.sites.length; i++) {
-                for (var j = 0; j < response.sites[i].showcases.length; j++) {
-                  response.sites[i].showcases[j].identifier = response.sites[i].showcases[j].showcaseIdentifier;
-                  delete response.sites[i].showcases[j].showcaseIdentifier;
-
-                  var showcaseData = _.find(showcasesData,function(showcase){
-                    return showcase.identifier == response.sites[i].showcases[j].identifier;
-                  })
-                  response.sites[i].showcases[j].title = showcaseData.name;
-                  response.sites[i].showcases[j].subTitle = showcaseData.description;
+            for (var i = 0; i < extraSitesData.length; i++) {
+              if(extraSitesData[i].sites){
+                for (var j = 0; j < extraSitesData[i].sites.length; j++) {
+                  var organization = extraSitesData[i];
+                  var elements =  organization.elements;
+                  var site = organization.sites[j];
+                  sitesDesnormalized.push({organization:organization,site :site, elements: elements});
                 }
               }
-              res.json({data:response, "status": "0","result": "1"});
-              //saveInfoIntoUserMobileSession(userIdentifier,response.sites,response.elements, {'identifier':categoryId, 'elements':elementsForCategory},response.organization);
-          });
-        });
+            }
+            //Filter sites which are not in the sites array that were sent to the user
+             sitesDesnormalized = _.filter(sitesDesnormalized, function(site){
+               return !_.contains(sitesInUserCellphone,site.site.identifier);
+             });
 
-      }else{
-        res.json({data:{}, "status": "2","result": "0"});
-      }
+            //adding organization and proximity to the sites
+            for (var i = 0; i < sitesDesnormalized.length; i++) {
+              sitesDesnormalized[i].site.organizationIdentifier = sitesDesnormalized[i].organization.identifier;
+              sitesDesnormalized[i].site.proximity = utils.getProximity(mobileUserData.lastLocation[1]+"",mobileUserData.lastLocation[0]+"",sitesDesnormalized[i].site.lat,sitesDesnormalized[i].site.lng);
+            }
+
+            //sort to the closest sites
+            var sortByProximity = _.sortBy(sitesDesnormalized,function(site){
+              return site.site.proximity;
+            });
+            sortByProximity = sortByProximity.splice(0,MAX_SITES);
+
+            for (var i = 0; i < sortByProximity.length; i++) {
+              orgData.push(sortByProximity[i].organization);
+              elementsData = elementsData.concat(sortByProximity[i].elements);
+            }
+
+            response.sites = _.pluck(sortByProximity,'site');
+
+            var elementsInShowcase = [];
+
+            var showcasesToFind = [];
+            for (i = 0; i < response.sites.length; i++) {
+              for (var j = 0; j < response.sites[i].showcases.length; j++) {
+                showcasesToFind.push(response.sites[i].showcases[j].showcaseIdentifier);
+                response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
+                response.sites[i].showcases[j].elements = response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
+                elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
+              }
+            }
+
+            var uniqueElementsShowcase = _.pluck(elementsInShowcase,'identifier');
+            uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
+
+            showcasesToFind = _.uniq(showcasesToFind);
+            showcase.find({identifier : {$in : showcasesToFind}},
+              {
+                "name":1,
+                "description":1,
+                "identifier":1
+              }).lean().exec(
+              function(showcasesError, showcasesData){
+                if(showcasesError)
+                  throw showcasesError;
+
+                for (var i = 0; i < response.sites.length; i++) {
+                  for (var j = 0; j < response.sites[i].showcases.length; j++) {
+                    response.sites[i].showcases[j].identifier = response.sites[i].showcases[j].showcaseIdentifier;
+                    delete response.sites[i].showcases[j].showcaseIdentifier;
+
+                    var showcaseData = _.find(showcasesData,function(showcase){
+                      return showcase.identifier == response.sites[i].showcases[j].identifier;
+                    })
+                    response.sites[i].showcases[j].title = showcaseData.name;
+                    response.sites[i].showcases[j].subTitle = showcaseData.description;
+                  }
+                }
+                elementsData = _.uniq(elementsData);
+
+                var elementsfiltered = [];
+                elementsfiltered = _.filter(elementsData, function(element){
+                  return uniqueElementsShowcase.indexOf(element.elementIdentifier) > -1;
+                });
+
+
+
+                for (var i = 0; i < elementsfiltered.length; i++) {
+
+                  var isUserCollect = false;
+                  for(var j=0; j<userData.biinieCollections.length & !isUserCollect;j++){
+                    var elUserCollect =_.findWhere(userData.biinieCollections[j].elements,{identifier:elementsfiltered[i].identifier});
+                    isUserCollect = elUserCollect != null;
+                  }
+
+                  var userShareElements = _.filter( userData.shareObjects, function(like){ return like.type === "element"});
+                  var elUserShared =_.findWhere(userShareElements,{identifier:elementsfiltered[i].identifier})
+                  var isUserShared = elUserShared != null;
+
+                  var userLikeElements = _.filter( userData.likeObjects, function(like){ return like.type === "element"});
+                  var elUserLike =_.findWhere(userLikeElements,{identifier:elementsfiltered[i].identifier})
+                  var isUserLike = elUserLike != null;
+
+                  var userFollowElements = _.filter( userData.followObjects, function(like){ return like.type === "element"});
+                  var elUserFollow =_.findWhere(userFollowElements,{identifier:elementsfiltered[i].identifier})
+                  var isUserFollow = elUserFollow != null;
+
+                  var elUserViewed =_.findWhere(userData.seenElements,{elementIdentifier:elementsfiltered[i].identifier})
+                  var isUserViewedElement = elUserViewed != null;
+
+                  elementsfiltered[i].userShared=isUserShared?"1":"0";
+                  elementsfiltered[i].userFollowed=isUserFollow?"1":"0";
+                  elementsfiltered[i].userLiked=isUserLike?"1":"0";
+                  elementsfiltered[i].userCollected=isUserCollect?"1":"0";
+                  elementsfiltered[i].userViewed= isUserViewedElement?"1":"0";
+                }
+
+
+
+                var sitesSent = [];
+                var organizationsSent = [];
+                var elementsSent = [];
+
+                orgData = _.uniq(orgData);
+
+                for (var i = 0; i < response.sites.length; i++) {
+                  response.sites[i]=validateSiteInitialInfo(response.sites[i]);
+                  sitesSent.push({identifier:response.sites[i].identifier});
+                }
+                for (var i = 0; i < orgData.length; i++) {
+                  orgData[i]=validateOrganizationInitialInfo(orgData[i]);
+                  organizationsSent.push({identifier:orgData[i].identifier});
+                }
+                for (var i = 0; i < elementsfiltered.length; i++) {
+                  elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
+                  elementsSent.push({identifier:elementsfiltered[i].identifier});
+                }
+
+                response.organizations = orgData;
+                response.elements = elementsfiltered;
+
+                res.json({data:response, "status": "0","result": "1"});
+                saveInfoIntoUserMobileSession(userIdentifier,response.sites,response.elements, null ,response.organization);
+            });
+          });
+
+        }else{
+          res.json({data:{}, "status": "2","result": "0"});
+        }
+      });
     });
   }
 	return functions;
@@ -947,7 +1017,7 @@ module.exports = function(){
       if(error)
         throw error;
       else {
-        elementsByCategorySent.elements = _.pluck(elementsByCategorySent.elements,'identifier');
+
 
         var sitesToSave = _.filter(sitesArray,function(site){
           return _.find(userSessionData.sitesSent,function(siteSent){
@@ -972,6 +1042,7 @@ module.exports = function(){
         userSessionData.organizatonsSent = userSessionData.organizatonsSent.concat(organizationsToSave);
 
         if(elementsByCategorySent){
+          elementsByCategorySent.elements = _.pluck(elementsByCategorySent.elements,'identifier');
           categoryToUpdate = _.find(userSessionData.elementsSentByCategory,{identifier:elementsByCategorySent.identifier});
           if(categoryToUpdate){
             categoryToUpdate.elementsSent = categoryToUpdate.elementsSent.concat(elementsByCategorySent.elements);
