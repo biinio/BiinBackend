@@ -188,7 +188,7 @@ var orgSchema = new Schema({
 			quantity:{type:String,default:""},
 			detailsHtml:{type:String, default:""},
             
-            isReady:{type:Number,default:0}
+            isReady:{type:Number,default:0},
 
 			details:[{
 					elementDetailType:{type:String, default:""},
