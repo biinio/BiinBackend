@@ -800,6 +800,7 @@ module.exports = function(){
               response.elements = elements;
 
               res.json({data:response, "status": "0","result": "1"});
+              saveInfoIntoUserMobileSession(userIdentifier,response.sites,response.elements, {'identifier':categoryId, 'elements':elementsForCategory},response.organization);
             });
 
           } else {
@@ -824,6 +825,7 @@ module.exports = function(){
             }
             response.elements = elementsToSend;
             res.json({data:response, "status": "0","result": "1"});
+            saveInfoIntoUserMobileSession(userIdentifier,response.sites,response.elements, {'identifier':categoryId, 'elements':elementsForCategory},response.organizations);
 
           }
         });
@@ -834,6 +836,110 @@ module.exports = function(){
     });
 
   }
+  functions.getNextSites = function(req,res){
+    var userIdentifier = req.params["identifier"];
+    var batchNumber = req.params['batch'];
+    var MAX_SITES = process.env.SITES_INITIAL_DATA || 10;
+    var LIMIT_ELEMENTS_IN_SHOWCASE = process.env.LIMIT_ELEMENTS_IN_SHOWCASE || 6;
+    var response = {};
+    response.sites = [];
+    response.organizations = [];
+
+    mobileSession.findOne({identifier:userIdentifier},{}).lean().exec(function(errMobileSession,mobileUserData){
+      if(errMobileSession)
+        throw errMobileSession;
+      if(mobileUserData){
+        //Get sites sent to the user
+        var sitesInUserCellphone = _.pluck(mobileUserData.sitesSent,'identifier');
+
+        //Get extra site informmation
+        organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{}).lean().exec(function(errExtraSites,extraSitesData){
+          if(errExtraSites)
+            throw errExtraSites;
+          // Desnormalize result of sites
+          var sitesDesnormalized = [];
+
+          for (var i = 0; i < extraSitesData.length; i++) {
+            if(extraSitesData[i].sites){
+              for (var j = 0; j < extraSitesData[i].sites.length; j++) {
+                var organization = extraSitesData[i];
+                var elements =  organization.elements;
+                var site = organization.sites[j];
+                sitesDesnormalized.push({organization:organization,site :site, elements: elements});
+              }
+            }
+          }
+          //Filter sites which are not in the sites array that were sent to the user
+           sitesDesnormalized = _.filter(sitesDesnormalized, function(site){
+             return !_.contains(sitesInUserCellphone,site.site.identifier);
+           });
+
+          //adding organization and proximity to the sites
+          for (var i = 0; i < sitesDesnormalized.length; i++) {
+            sitesDesnormalized[i].site.organizationIdentifier = sitesDesnormalized[i].organization.identifier;
+            sitesDesnormalized[i].site.proximity = utils.getProximity(mobileUserData.lastLocation[1]+"",mobileUserData.lastLocation[0]+"",sitesDesnormalized[i].site.lat,sitesDesnormalized[i].site.lng);
+          }
+
+          //sort to the closest sites
+          var sortByProximity = _.sortBy(sitesDesnormalized,function(site){
+            return site.site.proximity;
+          });
+
+          response.sites = sortByProximity.splice(0,MAX_SITES);
+
+          var elementsInShowcase = [];
+          var elementsRemovedFromShowcase = [];
+
+          var showcasesToFind = [];
+          for (i = 0; i < response.sites.length; i++) {
+            for (var j = 0; j < response.sites[i].showcases.length; j++) {
+              showcasesToFind.push(response.sites[i].showcases[j].showcaseIdentifier);
+              response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
+              var elementsToSend = response.sites[i].showcases[j].elements.splice(0,LIMIT_ELEMENTS_IN_SHOWCASE);
+              elementsRemovedFromShowcase = elementsRemovedFromShowcase.concat(response.sites[i].showcases[j].elements);
+              response.sites[i].showcases[j].elements = elementsToSend;
+              elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
+            }
+          }
+          var uniqueElementsRemovedShowcase = _.pluck(elementsRemovedFromShowcase,'identifier');
+          uniqueElementsRemovedShowcase = _.uniq(uniqueElementsRemovedShowcase);
+
+          var uniqueElementsShowcase = _.pluck(elementsInShowcase,'identifier');
+          uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
+
+          showcasesToFind = _.uniq(showcasesToFind);
+          showcase.find({identifier : {$in : showcasesToFind}},
+            {
+              "name":1,
+              "description":1,
+              "identifier":1
+            }).lean().exec(
+            function(showcasesError, showcasesData){
+              if(showcasesError)
+                throw showcasesError;
+
+              for (var i = 0; i < response.sites.length; i++) {
+                for (var j = 0; j < response.sites[i].showcases.length; j++) {
+                  response.sites[i].showcases[j].identifier = response.sites[i].showcases[j].showcaseIdentifier;
+                  delete response.sites[i].showcases[j].showcaseIdentifier;
+
+                  var showcaseData = _.find(showcasesData,function(showcase){
+                    return showcase.identifier == response.sites[i].showcases[j].identifier;
+                  })
+                  response.sites[i].showcases[j].title = showcaseData.name;
+                  response.sites[i].showcases[j].subTitle = showcaseData.description;
+                }
+              }
+              res.json({data:response, "status": "0","result": "1"});
+              //saveInfoIntoUserMobileSession(userIdentifier,response.sites,response.elements, {'identifier':categoryId, 'elements':elementsForCategory},response.organization);
+          });
+        });
+
+      }else{
+        res.json({data:{}, "status": "2","result": "0"});
+      }
+    });
+  }
 	return functions;
 
   function saveInfoIntoUserMobileSession( userIdentifier, sitesArray, elementsSent, elementsByCategorySent, organizationsSent){
@@ -841,7 +947,47 @@ module.exports = function(){
       if(error)
         throw error;
       else {
+        elementsByCategorySent.elements = _.pluck(elementsByCategorySent.elements,'identifier');
 
+        var sitesToSave = _.filter(sitesArray,function(site){
+          return _.find(userSessionData.sitesSent,function(siteSent){
+            return siteSent.identifier == site.identifier;
+          }) == null;
+        });
+
+        var elementsToSave = _.filter(elementsSent,function(element){
+          return _.find(userSessionData.elementsSent,function(elementSent){
+            return elementSent.identifier == element.identifier;
+          }) == null;
+        });
+
+        var organizationsToSave = _.filter(organizationsSent,function(organization){
+          return _.find(userSessionData.organizatonsSent,function(organizationSent){
+            return organizationSent.identifier == organization.identifier;
+          }) == null;
+        });
+
+        userSessionData.sitesSent = userSessionData.sitesSent.concat(sitesToSave);
+        userSessionData.elementsSent = userSessionData.elementsSent.concat(elementsToSave);
+        userSessionData.organizatonsSent = userSessionData.organizatonsSent.concat(organizationsToSave);
+
+        if(elementsByCategorySent){
+          categoryToUpdate = _.find(userSessionData.elementsSentByCategory,{identifier:elementsByCategorySent.identifier});
+          if(categoryToUpdate){
+            categoryToUpdate.elementsSent = categoryToUpdate.elementsSent.concat(elementsByCategorySent.elements);
+            for (var i = 0; i < userSessionData.elementsSentByCategory.length; i++) {
+              if(userSessionData.elementsSentByCategory[i].identifier == elementsByCategorySent.identifier){
+                userSessionData.elementsSentByCategory[i] = categoryToUpdate;
+              }
+            }
+          } else {
+            userSessionData.elementsSentByCategory.push(elementsByCategorySent);
+          }
+        }
+        userSessionData.save(function(error){
+          if (error)
+            throw error;
+        });
       }
     });
   }

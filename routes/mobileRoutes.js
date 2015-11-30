@@ -263,7 +263,8 @@ module.exports =function(){
 			setTrackingLike(model.actions,identifier),
 			setTrackingSites(model.actions,identifier),
 			setTrackingFollow(model.actions,identifier),
-			setTrackingNotifications(model.actions,identifier)]).then(function(b){
+			setTrackingNotifications(model.actions,identifier)
+			]).then(function(b){
 				res.status(200).json({data:{},status:"0",result:"1"});
 			}).catch(function(a){
 				res.status(500).json({data:{},status:"7",result:"0"});
@@ -327,7 +328,7 @@ module.exports =function(){
 									}
 								}
 								if(actionsToInsert.length == 0)
-									resolve
+									resolve();
 								else
 									trackingBiined.create(actionsToInsert,function(error){
 										if(error)
@@ -365,7 +366,7 @@ module.exports =function(){
 
 					}
 					if(actionsToInsert.length == 0)
-						resolve
+						resolve();
 					else
 						trackingBeacon.create(actionsToInsert,function(error){
 							if(error)
@@ -407,7 +408,7 @@ module.exports =function(){
 
 					}
 					if(actionsToInsert.length == 0)
-						resolve
+						resolve();
 					else
 						trackingElements.create(actionsToInsert,function(error){
 							if(error)
@@ -448,7 +449,7 @@ module.exports =function(){
 
 					}
 					if(actionsToInsert.length == 0)
-						resolve
+						resolve();
 					else
 						trackingFollow.create(actionsToInsert,function(error){
 							if(error)
@@ -489,7 +490,7 @@ module.exports =function(){
 
 					}
 					if(actionsToInsert.length == 0)
-						resolve
+						resolve();
 					else
 						trackingLikes.create(actionsToInsert,function(error){
 							if(error)
@@ -533,7 +534,7 @@ module.exports =function(){
 
 					}
 					if(actionsToInsert.length == 0)
-						resolve
+						resolve();
 					else
 						trackingNotifications.create(actionsToInsert,function(error){
 							if(error)
@@ -574,7 +575,7 @@ module.exports =function(){
 
 					}
 					if(actionsToInsert.length == 0)
-						resolve
+						resolve();
 					else
 						trackingSites.create(actionsToInsert,function(error){
 							if(error)

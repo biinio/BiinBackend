@@ -311,6 +311,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch',mobileEndPoint.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForCategory/:idCategory/:batch',mobileEndPoint.getNextElementsInCategory);
+    app.get('/mobile/biinies/:identifier/requestSites/:batch',mobileEndPoint.getNextSites);
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {
