@@ -57,7 +57,13 @@ module.exports = function(){
 
     for (var i = 0; i < siteValidated.showcases.length; i++) {
       var showcase = {};
-      showcase.identifier = siteValidated.showcases[i].showcaseIdentifier? siteValidated.showcases[i].showcaseIdentifier : "";
+      if(siteValidated.showcases[i].showcaseIdentifier != null)
+        showcase.identifier = siteValidated.showcases[i].showcaseIdentifier;
+      else if ( siteValidated.showcases[i].identifier != null )
+        showcase.identifier = siteValidated.showcases[i].identifier;
+      else
+        showcase.identifier = "";
+
       showcase._id = siteValidated.showcases[i]._id? siteValidated.showcases[i]._id : "";
       showcase.subTitle = siteValidated.showcases[i].subTitle? siteValidated.showcases[i].subTitle : "";
       showcase.title = siteValidated.showcases[i].title? siteValidated.showcases[i].title : "";
