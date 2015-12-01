@@ -564,7 +564,7 @@ module.exports = function(){
         //Get sites sent to the user
         var sitesInUserCellphone = _.pluck(mobileUserData.sitesSent,'identifier');
         // get site information
-        organization.find({'sites.identifier': {$in: sitesInUserCellphone}},{}).lean().exec(function(errSites,sitesData){
+        organization.find({'sites.identifier': {$in: sitesInUserCellphone}},{"sites.userComments":0,"sites.userLiked":0,"sites.userCollected":0,"sites.userFollowed":0,"sites.userShared":0,"sites.biinedUsers":0}).lean().exec(function(errSites,sitesData){
           if(errSites)
             throw errSites;
           //Desnormalize sites into an array of sites
@@ -653,7 +653,7 @@ module.exports = function(){
               }
             }
             //Get extra site informmation
-            organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{}).lean().exec(function(errExtraSites,extraSitesData){
+            organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{"sites.userComments":0,"sites.userLiked":0,"sites.userCollected":0,"sites.userFollowed":0,"sites.userShared":0,"sites.biinedUsers":0}).lean().exec(function(errExtraSites,extraSitesData){
               if(errExtraSites)
                 throw errExtraSites;
               // Desnormalize result of sites
@@ -864,7 +864,7 @@ module.exports = function(){
       if(errBiinie)
         throw errBiinie;
 
-      mobileSession.findOne({identifier:userIdentifier},{}).lean().exec(function(errMobileSession,mobileUserData){
+      mobileSession.findOne({identifier:userIdentifier},{"sites.userComments":0,"sites.userLiked":0,"sites.userCollected":0,"sites.userFollowed":0,"sites.userShared":0,"sites.biinedUsers":0}).lean().exec(function(errMobileSession,mobileUserData){
         if(errMobileSession)
           throw errMobileSession;
         if(mobileUserData){
@@ -872,7 +872,7 @@ module.exports = function(){
           var sitesInUserCellphone = _.pluck(mobileUserData.sitesSent,'identifier');
 
           //Get extra site informmation
-          organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{}).lean().exec(function(errExtraSites,extraSitesData){
+          organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{"sites.userComments":0,"sites.userLiked":0,"sites.userCollected":0,"sites.userFollowed":0,"sites.userShared":0,"sites.biinedUsers":0}).lean().exec(function(errExtraSites,extraSitesData){
             if(errExtraSites)
               throw errExtraSites;
             // Desnormalize result of sites
