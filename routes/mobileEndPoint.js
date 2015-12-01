@@ -14,6 +14,8 @@ module.exports = function(){
   var mobileSession = require('../schemas/mobileSession');
 	var client = require('../schemas/client');
 
+  var configPriorities = require('../config/priorities/priorities.json');
+
   // Default image for elements
   var BIIN_DEFAULT_IMAGE = {
       domainColor: '170, 171, 171',
@@ -167,7 +169,7 @@ module.exports = function(){
     var categories = [];
     var sites = [];
 
-    mobileUser.findOne({'identifier':userIdentifier},{'showcaseNotified':1, 'biinieCollections':1,'loyalty':1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},function(errBiinie,mobileUserData){
+    mobileUser.findOne({'identifier':userIdentifier},{'gender':1,'showcaseNotified':1, 'biinieCollections':1,'loyalty':1,"likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1},function(errBiinie,mobileUserData){
       if(errBiinie)
         throw errBiinie;
 
@@ -357,6 +359,13 @@ module.exports = function(){
                 }
                 uniqueCategories = _.uniq(uniqueCategories);
 
+                var prioritiesList = mobileUserData.gender == 'male' ?  configPriorities.priorities.men : configPriorities.priorities.women;
+                uniqueCategories = _.sortBy(uniqueCategories,function(category){
+                  var priorityObject = _.find(prioritiesList, {identifier : category});
+                  return priorityObject.priority;
+                });
+                uniqueCategories = uniqueCategories.reverse();
+
 
                 var elementsSentInCategories = [];
 
@@ -426,6 +435,7 @@ module.exports = function(){
                 response.highlights = hightlightsFiltered;
                 response.categories = categories;
                 res.json({data:response,status: "0",result: "1"});
+
                 var elementsByCategoriesSent = [];
                 for (var i = 0; i < categories.length; i++) {
                   var elementsInTheCategorySent = []
