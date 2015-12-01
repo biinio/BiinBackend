@@ -299,7 +299,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory)
     app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory)
 
-
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
 
