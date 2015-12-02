@@ -157,6 +157,10 @@ module.exports = function(){
     elementValidated.userLiked = element.userLiked? element.userLiked : "0";
     elementValidated.userCollected = element.userCollected? element.userCollected : "0";
     elementValidated.userViewed = element.userViewed? element.userViewed : "0";
+    elementValidated.hasCallToAction = "1";
+    elementValidated.callToActionURL = "http//:www.google.com";
+    elementValidated.callToActionTitle = "GOOGLE";
+
     return elementValidated;
   }
 
@@ -593,15 +597,21 @@ module.exports = function(){
           var elementsFromShowcases = [];
           for (i = 0; i < sitesDesnormalized.length; i++) {
             for (var j = 0; j < sitesDesnormalized[i].showcases.length; j++) {
-              elementsFromShowcases = elementsFromShowcases.concat(sitesDesnormalized[i].showcases[j].elements);
+              var elementsToConcat = sitesDesnormalized[i].showcases[j].elements;
+              _.each(elementsToConcat,function(element){
+                  element.showcase_id = sitesDesnormalized[i].showcases[j]._id;
+              });
+              elementsFromShowcases = elementsFromShowcases.concat(elementsToConcat);
             }
           }
+
           // Obtain an array with the element's identifier and convert it into a unique list
           var elementsIdentifierFromShowcase = _.pluck(elementsFromShowcases,'identifier');
           var uniqueElementsIdentifierFromShowcase = _.uniq(elementsIdentifierFromShowcase);
 
           // Get elements sent to the user
           var elementsInCategorySent  = _.findWhere(mobileUserData.elementsSentByCategory, {'identifier':categoryId});
+
           // Obtain which elements are available for sending to the user
           var availableElementsToSent = [];
           if(elementsInCategorySent){
@@ -610,8 +620,6 @@ module.exports = function(){
             availableElementsToSent = _.difference(uniqueElementsIdentifierFromShowcase,[]);
           }
           //Get which elements are in the category.
-          //TODO: MODIFY SESSION TO STORE WHAT ELEMENTS WERE SENT BY CATEGORY
-
           var elementsWithinCategory = [];
           for (var i = 0; i < availableElementsToSent.length; i++) {
             var elementData = _.findWhere(elementsDesnormalized,{'elementIdentifier':availableElementsToSent[i]});
@@ -630,28 +638,17 @@ module.exports = function(){
 
             // Obtaing _id for the nearest Showcase and adding into the group id
             var elementsForCategory = [];
-
-
             for (var i = 0; i < elementsWithinCategory.length; i++) {
               for (var j = 0; j < elementsFromShowcases.length; j++) {
                 if(elementsWithinCategory[i].elementIdentifier == elementsFromShowcases[j].identifier){
-                  elementsForCategory.push({_id:elementsFromShowcases[j]._id, identifier:elementsWithinCategory[i].elementIdentifier});
+                  elementsForCategory.push({showcase_id:elementsFromShowcases[j].showcase_id, _id:elementsFromShowcases[j]._id, identifier:elementsWithinCategory[i].elementIdentifier});
                   break;
                 }
               }
             }
-
 
             var amountOfExtraElementsNeeded = ELEMENTS_IN_CATEGORY - elementsWithinCategory.length;
-            var elementsForCategory = [];
-            for (var i = 0; i < elementsWithinCategory.length; i++) {
-              for (var j = 0; j < elementsFromShowcases.length; j++) {
-                if(elementsWithinCategory[i].elementIdentifier == elementsFromShowcases[j].identifier){
-                  elementsForCategory.push({_id:elementsFromShowcases[j]._id, identifier:elementsWithinCategory[i].elementIdentifier});
-                  break;
-                }
-              }
-            }
+
             //Get extra site informmation
             organization.find({'sites.identifier': {$nin: sitesInUserCellphone}},{"sites.userComments":0,"sites.userLiked":0,"sites.userCollected":0,"sites.userFollowed":0,"sites.userShared":0,"sites.biinedUsers":0}).lean().exec(function(errExtraSites,extraSitesData){
               if(errExtraSites)
@@ -707,6 +704,7 @@ module.exports = function(){
 
                   for(var k = 0; k < elementsToSend.length;k++){
                     var element = elementsToSend[k];
+                    element.showcase_id = sortByProximity[i].site.showcases[j]._id;
                     element.siteId = sortByProximity[i].site.identifier;
                     element.orgElements = sortByProximity[i].elements;
                     elementsWithSiteRef.push(element);
@@ -731,6 +729,7 @@ module.exports = function(){
                     elementsToAddInCategories ++;
                     sitesIdToSend.push(elementsWithSiteRef[i].siteId);
                     element.showcaseID = elementsWithSiteRef[i]._id;
+                    element.showcase_id = elementsWithSiteRef[i].showcase_id;
                     elementsThatContainsCategory.push(element);
                     if ( elementsToAddInCategories == amountOfExtraElementsNeeded)
                     {
@@ -757,7 +756,11 @@ module.exports = function(){
               for (i = 0; i < sortByProximity.length; i++) {
                  for (var j = 0; j < sortByProximity[i].site.showcases.length; j++) {
                   showcasesToFind.push(sortByProximity[i].site.showcases[j].showcaseIdentifier);
-                  elementsToSend = elementsToSend.concat(sortByProximity[i].site.showcases[j].elements);
+                  var elementsToConcat = sortByProximity[i].site.showcases[j].elements;
+                  _.each(elementsToConcat,function(element){
+                      element.showcase_id = sortByProximity[i].site.showcases[j]._id;
+                  });
+                  elementsToSend = elementsToSend.concat(elementsToConcat);
                   elementsData = elementsData.concat(sortByProximity[i].elements);
                 }
               }
@@ -789,6 +792,7 @@ module.exports = function(){
                 var element = {};
                 element._id = elementsThatContainsCategory[i].showcaseID;
                 element.identifier = elementsThatContainsCategory[i].elementIdentifier;
+                element.showcase_id = elementsThatContainsCategory[i].showcase_id;
                 elementsWithCategory.push(element);
               }
 
@@ -828,7 +832,7 @@ module.exports = function(){
             for (var i = 0; i < elementsToSend.length; i++) {
               for (var j = 0; j < elementsFromShowcases.length; j++) {
                 if(elementsToSend[i].elementIdentifier == elementsFromShowcases[j].identifier){
-                  elementsForCategory.push({_id:elementsFromShowcases[j]._id, identifier:elementsToSend[i].elementIdentifier});
+                  elementsForCategory.push({showcase_id:elementsFromShowcases[j].showcase_id, _id:elementsFromShowcases[j]._id, identifier:elementsToSend[i].elementIdentifier});
                   break;
                 }
               }
