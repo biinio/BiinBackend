@@ -560,6 +560,7 @@ module.exports = function(){
     var response = {};
     response.sites = [];
     response.organizations = [];
+    response.elements = [];
 
     mobileSession.findOne({identifier:userIdentifier},{}).lean().exec(function(errMobileSession,mobileUserData){
       if(errMobileSession)
@@ -592,6 +593,8 @@ module.exports = function(){
               elementsDesnormalized.push(sitesData[i].elements[j]);
             }
           }
+          //getting only the elements without copy
+          elementsDesnormalized = _.uniq(elementsDesnormalized);
 
           // Get elements identifier from the showcases of the sites.
           var elementsFromShowcases = [];
@@ -604,6 +607,7 @@ module.exports = function(){
               elementsFromShowcases = elementsFromShowcases.concat(elementsToConcat);
             }
           }
+
 
           // Obtain an array with the element's identifier and convert it into a unique list
           var elementsIdentifierFromShowcase = _.pluck(elementsFromShowcases,'identifier');
@@ -636,16 +640,21 @@ module.exports = function(){
           //it with new info from sites that aren't from  site sent to the user
           if(elementsWithinCategory.length < ELEMENTS_IN_CATEGORY){
 
+
             // Obtaing _id for the nearest Showcase and adding into the group id
             var elementsForCategory = [];
             for (var i = 0; i < elementsWithinCategory.length; i++) {
               for (var j = 0; j < elementsFromShowcases.length; j++) {
                 if(elementsWithinCategory[i].elementIdentifier == elementsFromShowcases[j].identifier){
                   elementsForCategory.push({showcase_id:elementsFromShowcases[j].showcase_id, _id:elementsFromShowcases[j]._id, identifier:elementsWithinCategory[i].elementIdentifier});
+                  response.elements.push(elementsWithinCategory[i]);
                   break;
                 }
               }
             }
+
+
+
 
             var amountOfExtraElementsNeeded = ELEMENTS_IN_CATEGORY - elementsWithinCategory.length;
 
@@ -753,6 +762,7 @@ module.exports = function(){
               var nonCategoryContainerElements = [];
               var elementsToSend = [];
               var elementsData= [];
+
               for (i = 0; i < sortByProximity.length; i++) {
                  for (var j = 0; j < sortByProximity[i].site.showcases.length; j++) {
                   showcasesToFind.push(sortByProximity[i].site.showcases[j].showcaseIdentifier);
@@ -811,13 +821,14 @@ module.exports = function(){
                 response.organizations[i]=validateOrganizationInitialInfo(response.organizations[i]);
                 organizationsSent.push({identifier:response.organizations[i].identifier});
               }
-              for (var i = 0; i < elements.length; i++) {
-                elements[i] = validateElementInitialInfo(elements[i]);
-                elementsSent.push({identifier:elements[i].identifier});
+              response.elements = response.elements.concat(elements);
+
+              for (var i = 0; i < response.elements.length; i++) {
+                response.elements[i] = validateElementInitialInfo(response.elements[i]);
+                elementsSent.push({identifier:response.elements[i].identifier});
               }
 
               response.elementsForCategory = elementsForCategory.concat(elementsWithCategory);
-              response.elements = elements;
 
               res.json({data:response, "status": "0","result": "1"});
               saveInfoIntoUserMobileSession(userIdentifier,response.sites,response.elements, {'identifier':categoryId, 'elements':elementsForCategory},response.organization);
@@ -833,6 +844,7 @@ module.exports = function(){
               for (var j = 0; j < elementsFromShowcases.length; j++) {
                 if(elementsToSend[i].elementIdentifier == elementsFromShowcases[j].identifier){
                   elementsForCategory.push({showcase_id:elementsFromShowcases[j].showcase_id, _id:elementsFromShowcases[j]._id, identifier:elementsToSend[i].elementIdentifier});
+                  response.elements.push(elementsToSend[i]);
                   break;
                 }
               }
@@ -840,10 +852,9 @@ module.exports = function(){
 
             response.elementsForCategory = elementsForCategory;
 
-            for (var i = 0; i < elementsToSend.length; i++) {
-              elementsToSend[i] = validateElementInitialInfo(elementsToSend[i]);
+            for (var i = 0; i < response.elements.length; i++) {
+              response.elements[i] = validateElementInitialInfo(response.elements[i]);
             }
-            response.elements = elementsToSend;
             res.json({data:response, "status": "0","result": "1"});
             saveInfoIntoUserMobileSession(userIdentifier,response.sites,response.elements, {'identifier':categoryId, 'elements':elementsForCategory},response.organizations);
 
