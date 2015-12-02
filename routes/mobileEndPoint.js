@@ -157,6 +157,10 @@ module.exports = function(){
     elementValidated.userLiked = element.userLiked? element.userLiked : "0";
     elementValidated.userCollected = element.userCollected? element.userCollected : "0";
     elementValidated.userViewed = element.userViewed? element.userViewed : "0";
+    elementValidated.hasCallToAction = "1";
+    elementValidated.callToActionURL = "http//:www.google.com";
+    elementValidated.callToActionTitle = "GOOGLE";
+    
     return elementValidated;
   }
 
