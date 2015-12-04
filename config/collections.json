@@ -689,7 +689,6 @@
       }
     ],
     "collections" : [
-      [
         {
           "_id":"564655ed15a8790300db7367",
           "sites":[],
@@ -741,7 +740,6 @@
           "subTitle":"This is a list of all your biined elements and sites.",
           "identifier":"f8e6b769-4d47-4729-9591-acc1bd8115f2"
         }
-      ]
     ]
   },
   "status": "0",
