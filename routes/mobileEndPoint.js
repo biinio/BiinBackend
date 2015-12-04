@@ -1207,6 +1207,11 @@ module.exports = function () {
               elementsFromOrganizations = elementsFromOrganizations.concat(sitesData[i].elements);
               sitesFromOrganization = sitesFromOrganization.concat(sitesData[i].sites);
             }
+            for (i = 0; i < sitesFromOrganization.length; i++) {
+              for (j = 0; j < sitesFromOrganization[i].showcases.length; j++) {
+                sitesFromOrganization[i].showcases[j].elements_quantity = sitesFromOrganization[i].showcases[j].elements.length + "";
+              }
+            }
 
             var showcases = [];
             for (i = 0; i < sitesFromOrganization.length; i++) {
