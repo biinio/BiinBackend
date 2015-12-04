@@ -1156,29 +1156,30 @@ module.exports = function () {
     };
 
     functions.getCollections = function(req,res) {
-      res.json(collectionData);
+      //res.json(collectionData);
 
-/*      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Content-Type', 'application/json');
   		var identifier =req.params.identifier;
       var response = {};
       response.sites = [];
       response.organizations = [];
-      response.elementsForCollection = [];
+      response.collections = [];
       response.elements = [];
+
   		mobileUser.findOne({"identifier":identifier},{_id:0,biinieCollections:1},function(err,data){
   			if(err)
   				throw err;
-        mobileSession.findOne({identifier: userIdentifier}, {}).lean().exec(function (errMobileSession, mobileUserData) {
+        mobileSession.findOne({identifier: identifier}, {}).lean().exec(function (errMobileSession, mobileUserData) {
           if(errMobileSession)
             throw errMobileSession;
 
           var elementsUserCollected = [];
+          var elementsShowcaseRelationID = [];
           for (var i = 0; i < data.biinieCollections.length; i++) {
             var collections = data.biinieCollections[i];
-            for (var j = 0; j < collections.length; j++) {
-              for (var k = 0; k < collections[j].elements.length; k++) {
-                elementsUserCollected.push(collections[j].elements[k].identifier);
-              }
+              for (var j = 0; j < collections.elements.length; j++) {
+                elementsUserCollected.push(collections.elements[j].identifier);
+                elementsShowcaseRelationID.push({_id : collections.elements[j]._id, identifier:collections.elements[j].identifier});
             }
           }
           organization.find({'elements.elementIdentifier': {$in: elementsUserCollected}}, {
@@ -1192,16 +1193,117 @@ module.exports = function () {
             if(errSites)
               throw errSites;
             var elementsFromOrganizations = [];
-            for (i = 0; i < siteData.length; i++) {
-              elementsFromOrganizations = elementsFromOrganizations.concat(siteData[i].elements);
+            var sitesFromOrganization = [];
+
+            for (i = 0; i < sitesData.length; i++) {
+              elementsFromOrganizations = elementsFromOrganizations.concat(sitesData[i].elements);
+              sitesFromOrganization = sitesFromOrganization.concat(sitesData[i].sites);
             }
+
+            var showcases = [];
+            for (i = 0; i < sitesFromOrganization.length; i++) {
+              showcases = showcases.concat(sitesFromOrganization[i].showcases)
+            }
+
+            var showcasesWithCollectedElements = [];
+
+            for (i = 0; i < elementsShowcaseRelationID.length; i++) {
+              var showcase = null;
+
+              for (j = 0; j < showcases.length; j++) {
+                for (var k = 0; k < showcases[j].elements.length; k++) {
+                  if(showcases[j].elements[k]._id == elementsShowcaseRelationID[i]._id){
+                    showcase = showcases[j];
+                    break;
+                  }
+                }
+                if(showcase)
+                  break;
+              }
+
+              if(showcase){
+                showcasesWithCollectedElements.push(showcase);
+                elementsShowcaseRelationID[i].showcase_id = showcases[i]._id;
+                elementsShowcaseRelationID[i].isRemovedFromShowcase = "0";
+              }else{
+                elementsShowcaseRelationID[i].showcase_id = "";
+                elementsShowcaseRelationID[i].isRemovedFromShowcase = "1";
+              }
+            }
+
+            for ( i = 0; i < data.biinieCollections.length; i++) {
+              for ( j = 0; j < data.biinieCollections[i].elements.length; j++) {
+                var elementWithData = _.findWhere(elementsShowcaseRelationID,{identifier:data.biinieCollections[i].elements[j].identifier});
+                data.biinieCollections[i].elements[j] = elementWithData;
+              }
+            }
+
+            response.collections = data.biinieCollections;
+
+
+            var sitesWithCollectedElementsInShowcases = [];
+
+            for (i = 0; i < sitesFromOrganization.length; i++) {
+              var site = null;
+              for (var j = 0; j < sitesFromOrganization[i].showcases.length; j++) {
+                for (var k = 0; k < showcasesWithCollectedElements.length; k++) {
+                  if(showcasesWithCollectedElements[k]._id == sitesFromOrganization[i].showcases[j]._id){
+                    site = sitesFromOrganization[i];
+                    break;
+                  }
+                  if(site)
+                    break;
+                }
+              }
+              if(site)
+                sitesWithCollectedElementsInShowcases.push(site);
+            }
+
+            sitesWithCollectedElementsInShowcases = _.uniq(sitesWithCollectedElementsInShowcases);
+            var organizationsWithCollectedElements = [];
+            for ( i = 0; i < sitesWithCollectedElementsInShowcases.length; i++) {
+              var org = null;
+              for (j = 0; j < sitesData.length; j++) {
+                for (k = 0; k < sitesData[j].sites.length; k++) {
+                  if(sitesData[j].sites[k].identifier == sitesWithCollectedElementsInShowcases[i].identifier){
+                    org = sitesData[j];
+                    break;
+                  }
+                }
+                if(org)
+                  break;
+              }
+              organizationsWithCollectedElements.push(org);
+            }
+            organizationsWithCollectedElements = _.uniq(organizationsWithCollectedElements);
+
+            for (i = 0; i < sitesWithCollectedElementsInShowcases.length; i++) {
+                sitesWithCollectedElementsInShowcases[i] = validateSiteInitialInfo(sitesWithCollectedElementsInShowcases[i]);
+            }
+            for (i = 0; i < organizationsWithCollectedElements.length; i++) {
+                organizationsWithCollectedElements[i] = validateOrganizationInitialInfo(organizationsWithCollectedElements[i]);
+            }
+
             var elementsData = _.filter(elementsFromOrganizations,function(element){
               return _.contains(elementsUserCollected,element.elementIdentifier);
             });
 
+            for (i = 0; i < elementsData.length; i++) {
+                elementsData[i] = validateElementInitialInfo(elementsData[i]);
+            }
+
+            response.sites = sitesWithCollectedElementsInShowcases;
+            response.elements = elementsData;
+            response.organizations = organizationsWithCollectedElements;
+
+            res.json({data: response, "status": "0", "result": "1"});
+
+
+
+
           });
         });
-  		});*/
+  		});
     }
 
     return functions;
