@@ -1212,6 +1212,17 @@ module.exports = function () {
             for (i = 0; i < sitesFromOrganization.length; i++) {
               showcases = showcases.concat(sitesFromOrganization[i].showcases)
             }
+            var elementsInShowcase = [];
+            for ( i = 0; i < showcases.length; i++) {
+              elementsInShowcase = elementsInShowcase.concat(showcases[i].elements);
+            }
+            elementsInShowcase = _.pluck(elementsInShowcase,'identifier');
+
+            elementsInShowcase = _.uniq(elementsInShowcase);
+
+            elementsInShowcase = _.difference(elementsInShowcase,elementsUserCollected);
+
+
 
             var showcasesWithCollectedElements = [];
 
@@ -1295,6 +1306,11 @@ module.exports = function () {
             var elementsData = _.filter(elementsFromOrganizations,function(element){
               return _.contains(elementsUserCollected,element.elementIdentifier);
             });
+
+            var elementsFromShowcasesData = _.filter(elementsFromOrganizations,function(element){
+              return _.contains(elementsInShowcase,element.elementIdentifier);
+            });
+            elementsData = elementsData.concat(elementsFromShowcasesData);
 
             for (i = 0; i < elementsData.length; i++) {
                 elementsData[i] = validateElementInitialInfo(elementsData[i]);
