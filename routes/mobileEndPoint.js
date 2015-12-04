@@ -244,7 +244,7 @@ module.exports = function () {
                             var biinsSite = _.filter(biins, function(biin){
                               return biin.siteIdentifier == sitesDesnormalized[i].site.identifier;
                             });
-                            sitesDesnormalized[i].site.biins = biinsSite;
+                            //sitesDesnormalized[i].site.biins = biinsSite;
                         }
                         //THIS SHOULD TRIM THE SITES TO ONLY THE ONES THAT HAVE BIINS
                         //TODO: UNCOMMENT THIS LINES
@@ -1158,7 +1158,7 @@ module.exports = function () {
     functions.getCollections = function(req,res) {
       res.json(collectionData);
 
-      /*res.setHeader('Content-Type', 'application/json');
+/*      res.setHeader('Content-Type', 'application/json');
   		var identifier =req.params.identifier;
       var response = {};
       response.sites = [];
@@ -1168,26 +1168,38 @@ module.exports = function () {
   		mobileUser.findOne({"identifier":identifier},{_id:0,biinieCollections:1},function(err,data){
   			if(err)
   				throw err;
-        mobileSession.findOne({identifier: userIdentifier}, {
-            "sites.userComments": 0,
-            "sites.userLiked": 0,
-            "sites.userCollected": 0,
-            "sites.userFollowed": 0,
-            "sites.userShared": 0,
-            "sites.biinedUsers": 0
-        }).lean().exec(function (errMobileSession, mobileUserData) {
+        mobileSession.findOne({identifier: userIdentifier}, {}).lean().exec(function (errMobileSession, mobileUserData) {
           if(errMobileSession)
             throw errMobileSession;
-            var elementsUserCollected = [];
-            for (var i = 0; i < data.biinieCollections.length; i++) {
-              var collections = data.biinieCollections[i];
-              for (var j = 0; j < collections.length; j++) {
-                for (var k = 0; k < collections[j].elements.length; k++) {
-                  elementsUserCollected.push(collections[j].elements[k].identifier);
-                }
+
+          var elementsUserCollected = [];
+          for (var i = 0; i < data.biinieCollections.length; i++) {
+            var collections = data.biinieCollections[i];
+            for (var j = 0; j < collections.length; j++) {
+              for (var k = 0; k < collections[j].elements.length; k++) {
+                elementsUserCollected.push(collections[j].elements[k].identifier);
               }
             }
+          }
+          organization.find({'elements.elementIdentifier': {$in: elementsUserCollected}}, {
+              "sites.userComments": 0,
+              "sites.userLiked": 0,
+              "sites.userCollected": 0,
+              "sites.userFollowed": 0,
+              "sites.userShared": 0,
+              "sites.biinedUsers": 0
+          }).lean().exec(function (errSites, sitesData) {
+            if(errSites)
+              throw errSites;
+            var elementsFromOrganizations = [];
+            for (i = 0; i < siteData.length; i++) {
+              elementsFromOrganizations = elementsFromOrganizations.concat(siteData[i].elements);
+            }
+            var elementsData = _.filter(elementsFromOrganizations,function(element){
+              return _.contains(elementsUserCollected,element.elementIdentifier);
+            });
 
+          });
         });
   		});*/
     }

@@ -692,37 +692,44 @@
       {
         "_id": "56454adf8804190300a6236c",
         "identifier": "b198cd8d-9837-4f64-869b-a5bc12afa9d9",
-        "showcase_id": "55e46eb40cd3b603003028dc"
+        "showcase_id": "55e46eb40cd3b603003028dc",
+        "isRemovedFromShowcase":"0"
       },
       {
         "_id": "56454adf8804190300a6236b",
         "identifier": "74605060-7767-4685-ac5e-9e67c41846e8",
-        "showcase_id": "55e46eb40cd3b603003028dc"
+        "showcase_id": "55e46eb40cd3b603003028dc",
+        "isRemovedFromShowcase":"0"
       },
       {
         "_id": "55e46eb40cd3b603003028db",
         "identifier": "4816a63e-4bec-4bd8-892f-b3bb474c4886",
-        "showcase_id": "55dbd2472fde320300fb9adf"
+        "showcase_id": "55dbd2472fde320300fb9adf",
+        "isRemovedFromShowcase":"0"
       },
       {
         "_id": "55e46eb40cd3b603003028db",
         "identifier": "41405c03-d646-4e99-abed-b72b3ec9bbb7",
-        "showcase_id": "55dbd2472fde320300fb9adf"
+        "showcase_id": "55dbd2472fde320300fb9adf",
+        "isRemovedFromShowcase":"0"
       },
       {
         "_id": "56454ae48804190300a62376",
         "identifier": "5b0de70b-58e3-4519-af32-aca52b30d4cb",
-        "showcase_id": "55d2089a7316fe0300d8e6dc"
+        "showcase_id": "55d2089a7316fe0300d8e6dc",
+        "isRemovedFromShowcase":"0"
       },
       {
         "_id": "56454ae48804190300a62374",
         "identifier": "a5843f21-deb0-4447-a1b5-89960e8deb1c",
-        "showcase_id": "55d2089a7316fe0300d8e6dc"
+        "showcase_id": "55d2089a7316fe0300d8e6dc",
+        "isRemovedFromShowcase":"0"
       },
       {
         "_id": "56454ae48804190300a62372",
         "identifier": "a43eced0-5601-4b7a-9c0f-6385bd278a21",
-        "showcase_id": "55d2089a7316fe0300d8e6dc"
+        "showcase_id": "55d2089a7316fe0300d8e6dc",
+        "isRemovedFromShowcase":"0"
       }
     ]
   },
