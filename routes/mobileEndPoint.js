@@ -1195,6 +1195,14 @@ module.exports = function () {
             var elementsFromOrganizations = [];
             var sitesFromOrganization = [];
 
+            for ( i = 0; i < sitesData.length; i++) {
+              var orgId = sitesData[i].identifier;
+
+              for ( j = 0; j < sitesData[i].sites.length; j++) {
+                sitesData[i].sites[j].organizationIdentifier = orgId;
+              }
+            }
+
             for (i = 0; i < sitesData.length; i++) {
               elementsFromOrganizations = elementsFromOrganizations.concat(sitesData[i].elements);
               sitesFromOrganization = sitesFromOrganization.concat(sitesData[i].sites);
