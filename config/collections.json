@@ -688,7 +688,7 @@
         "callToActionTitle": "GOOGLE"
       }
     ],
-    "elementsForCollection" : [
+    "collections" : [
       [
         {
           "_id":"564655ed15a8790300db7367",
