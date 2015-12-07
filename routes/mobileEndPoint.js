@@ -238,6 +238,17 @@ module.exports = function () {
                             }
                         }
 
+                        /*for (var i = 0; i < biins.length; i++) {
+
+                          var oData= null;
+                          if(biins[i].objects)
+                            oData=_.findWhere(biinsObjects,{'identifier':biinsData[myIBiinIndex].objects[o].identifier});
+                          var el =null;
+                          if(mobileUser.biinieCollections && mobileUser.biinieCollections[defaultCollection] && mobileUser.biinieCollections[defaultCollection].elements)
+                            el= _.findWhere(mobileUser.biinieCollections[defaultCollection].elements,{identifier:biinsData[myIBiinIndex].objects[o].identifier})
+
+                        }*/
+
                         for (i = 0; i < sitesDesnormalized.length; i++) {
                             sitesDesnormalized[i].site.organizationIdentifier = sitesDesnormalized[i].organizationId;
                             sitesDesnormalized[i].site.proximity = utils.getProximity(userLat, userLng, sitesDesnormalized[i].site.lat, sitesDesnormalized[i].site.lng);
@@ -246,8 +257,21 @@ module.exports = function () {
                             });
                             //sitesDesnormalized[i].site.biins = biinsSite;
                         }
-                        //THIS SHOULD TRIM THE SITES TO ONLY THE ONES THAT HAVE BIINS
-                        //TODO: UNCOMMENT THIS LINES
+
+
+
+                        //var startTime =moment.tz(biinsData[myIBiinIndex].objects[o].startTime,'America/Costa_Rica');
+                        //var endtime = moment.tz(biinsData[myIBiinIndex].objects[o].endTime,'America/Costa_Rica');
+
+
+
+                        //biinsData[myIBiinIndex].objects[o].isUserNotified = oData?'1':'0';
+                        //biinsData[myIBiinIndex].objects[o].isBiined =	el?'1':'0';
+
+                        //Time options
+                        //biinsData[myIBiinIndex].objects[o].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
+                        //biinsData[myIBiinIndex].objects[o].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
+
                         /*sitesDesnormalized = _.filter(sitesDesnormalized,function(site){
                           return site.site.biins.length > 0;
                         });*/
@@ -435,29 +459,29 @@ module.exports = function () {
 
                                             var isUserCollect = false;
                                             for ( j = 0; j < mobileUserData.biinieCollections.length && !isUserCollect; j++) {
-                                                var elUserCollect = _.findWhere(mobileUserData.biinieCollections[j].elements, {identifier: elementsfiltered[i].identifier});
+                                                var elUserCollect = _.findWhere(mobileUserData.biinieCollections[j].elements, {identifier: elementsfiltered[i].elementIdentifier});
                                                 isUserCollect = elUserCollect != null;
                                             }
 
                                             var userShareElements = _.filter(mobileUserData.shareObjects, function (like) {
                                                 return like.type === "element"
                                             });
-                                            var elUserShared = _.findWhere(userShareElements, {identifier: elementsfiltered[i].identifier});
+                                            var elUserShared = _.findWhere(userShareElements, {identifier: elementsfiltered[i].elementIdentifier});
                                             var isUserShared = elUserShared != null;
 
                                             var userLikeElements = _.filter(mobileUserData.likeObjects, function (like) {
                                                 return like.type === "element"
                                             });
-                                            var elUserLike = _.findWhere(userLikeElements, {identifier: elementsfiltered[i].identifier});
+                                            var elUserLike = _.findWhere(userLikeElements, {identifier: elementsfiltered[i].elementIdentifier});
                                             var isUserLike = elUserLike != null;
 
                                             var userFollowElements = _.filter(mobileUserData.followObjects, function (like) {
                                                 return like.type === "element"
                                             });
-                                            var elUserFollow = _.findWhere(userFollowElements, {identifier: elementsfiltered[i].identifier});
+                                            var elUserFollow = _.findWhere(userFollowElements, {identifier: elementsfiltered[i].elementIdentifier});
                                             var isUserFollow = elUserFollow != null;
 
-                                            var elUserViewed = _.findWhere(mobileUserData.seenElements, {elementIdentifier: elementsfiltered[i].identifier});
+                                            var elUserViewed = _.findWhere(mobileUserData.seenElements, {elementIdentifier: elementsfiltered[i].elementIdentifier});
                                             var isUserViewedElement = elUserViewed != null;
 
                                             elementsfiltered[i].userShared = isUserShared ? "1" : "0";
@@ -573,29 +597,29 @@ module.exports = function () {
                     for (var i = 0; i < elements.length; i++) {
                         var isUserCollect = false;
                         for (var j = 0; j < mobileUserData.biinieCollections.length && !isUserCollect; j++) {
-                            var elUserCollect = _.findWhere(mobileUserData.biinieCollections[j].elements, {identifier: elements[i].identifier});
+                            var elUserCollect = _.findWhere(mobileUserData.biinieCollections[j].elements, {identifier: elements[i].elementIdentifier});
                             isUserCollect = elUserCollect != null;
                         }
 
                         var userShareElements = _.filter(mobileUserData.shareObjects, function (like) {
                             return like.type === "element"
                         });
-                        var elUserShared = _.findWhere(userShareElements, {identifier: elements[i].identifier});
+                        var elUserShared = _.findWhere(userShareElements, {identifier: elements[i].elementIdentifier});
                         var isUserShared = elUserShared != null;
 
                         var userLikeElements = _.filter(mobileUserData.likeObjects, function (like) {
                             return like.type === "element"
                         });
-                        var elUserLike = _.findWhere(userLikeElements, {identifier: elements[i].identifier});
+                        var elUserLike = _.findWhere(userLikeElements, {identifier: elements[i].elementIdentifier});
                         var isUserLike = elUserLike != null;
 
                         var userFollowElements = _.filter(mobileUserData.followObjects, function (like) {
                             return like.type === "element"
                         });
-                        var elUserFollow = _.findWhere(userFollowElements, {identifier: elements[i].identifier});
+                        var elUserFollow = _.findWhere(userFollowElements, {identifier: elements[i].elementIdentifier});
                         var isUserFollow = elUserFollow != null;
 
-                        var elUserViewed = _.findWhere(mobileUserData.seenElements, {elementIdentifier: elements[i].identifier});
+                        var elUserViewed = _.findWhere(mobileUserData.seenElements, {elementIdentifier: elements[i].elementIdentifier});
                         var isUserViewedElement = elUserViewed != null;
 
                         elements[i].userShared = isUserShared ? "1" : "0";
@@ -621,6 +645,17 @@ module.exports = function () {
         response.sites = [];
         response.organizations = [];
         response.elements = [];
+        mobileUser.findOne({"identifier":userIdentifier},{_id:0,'gender': 1,
+          'showcaseNotified': 1,
+          'biinieCollections': 1,
+          'loyalty': 1,
+          "likeObjects": 1,
+          "followObjects": 1,
+          "biinieCollect": 1,
+          "shareObjects": 1
+        },function(err,data){
+          if (err)
+              throw err;
 
         mobileSession.findOne({identifier: userIdentifier}, {}).lean().exec(function (errMobileSession, mobileUserData) {
             if (errMobileSession)
@@ -896,7 +931,44 @@ module.exports = function () {
                                     response.organizations[i] = validateOrganizationInitialInfo(response.organizations[i]);
                                     organizationsSent.push({identifier: response.organizations[i].identifier});
                                 }
+
                                 response.elements = response.elements.concat(elements);
+
+                                for (i = 0; i < response.elements.length; i++) {
+
+                                    var isUserCollect = false;
+                                    for (var j = 0; j < data.biinieCollections.length && !isUserCollect; j++) {
+                                        var elUserCollect = _.findWhere(data.biinieCollections[j].elements, {identifier: response.elements[i].elementIdentifier});
+                                        isUserCollect = elUserCollect != null;
+                                    }
+
+                                    var userShareElements = _.filter(data.shareObjects, function (like) {
+                                        return like.type === "element"
+                                    });
+                                    var elUserShared = _.findWhere(userShareElements, {identifier: response.elements[i].elementIdentifier});
+                                    var isUserShared = elUserShared != null;
+
+                                    var userLikeElements = _.filter(data.likeObjects, function (like) {
+                                        return like.type === "element"
+                                    });
+                                    var elUserLike = _.findWhere(userLikeElements, {identifier: response.elements[i].elementIdentifier});
+                                    var isUserLike = elUserLike != null;
+
+                                    var userFollowElements = _.filter(data.followObjects, function (like) {
+                                        return like.type === "element"
+                                    });
+                                    var elUserFollow = _.findWhere(userFollowElements, {identifier: response.elements[i].elementIdentifier});
+                                    var isUserFollow = elUserFollow != null;
+
+                                    var elUserViewed = _.findWhere(data.seenElements, {elementIdentifier: response.elements[i].elementIdentifier});
+                                    var isUserViewedElement = elUserViewed != null;
+
+                                    response.elements[i].userShared = isUserShared ? "1" : "0";
+                                    response.elements[i].userFollowed = isUserFollow ? "1" : "0";
+                                    response.elements[i].userLiked = isUserLike ? "1" : "0";
+                                    response.elements[i].userCollected = isUserCollect ? "1" : "0";
+                                    response.elements[i].userViewed = isUserViewedElement ? "1" : "0";
+                                }
 
                                 for (var i = 0; i < response.elements.length; i++) {
                                     response.elements[i] = validateElementInitialInfo(response.elements[i]);
@@ -935,6 +1007,43 @@ module.exports = function () {
                             response.elementsForCategory = elementsForCategory;
 
                             for (i = 0; i < response.elements.length; i++) {
+
+                                var isUserCollect = false;
+                                for (var j = 0; j < data.biinieCollections.length && !isUserCollect; j++) {
+                                    var elUserCollect = _.findWhere(data.biinieCollections[j].elements, {identifier: response.elements[i].elementIdentifier});
+                                    isUserCollect = elUserCollect != null;
+                                }
+
+                                var userShareElements = _.filter(data.shareObjects, function (like) {
+                                    return like.type === "element"
+                                });
+                                var elUserShared = _.findWhere(userShareElements, {identifier: response.elements[i].elementIdentifier});
+                                var isUserShared = elUserShared != null;
+
+                                var userLikeElements = _.filter(data.likeObjects, function (like) {
+                                    return like.type === "element"
+                                });
+                                var elUserLike = _.findWhere(userLikeElements, {identifier: response.elements[i].elementIdentifier});
+                                var isUserLike = elUserLike != null;
+
+                                var userFollowElements = _.filter(data.followObjects, function (like) {
+                                    return like.type === "element"
+                                });
+                                var elUserFollow = _.findWhere(userFollowElements, {identifier: response.elements[i].elementIdentifier});
+                                var isUserFollow = elUserFollow != null;
+
+                                var elUserViewed = _.findWhere(data.seenElements, {elementIdentifier: response.elements[i].elementIdentifier});
+                                var isUserViewedElement = elUserViewed != null;
+
+                                response.elements[i].userShared = isUserShared ? "1" : "0";
+                                response.elements[i].userFollowed = isUserFollow ? "1" : "0";
+                                response.elements[i].userLiked = isUserLike ? "1" : "0";
+                                response.elements[i].userCollected = isUserCollect ? "1" : "0";
+                                response.elements[i].userViewed = isUserViewedElement ? "1" : "0";
+                            }
+
+
+                            for (i = 0; i < response.elements.length; i++) {
                                 response.elements[i] = validateElementInitialInfo(response.elements[i]);
                             }
                             res.json({data: response, "status": "0", "result": "1"});
@@ -950,6 +1059,7 @@ module.exports = function () {
             } else {
                 res.json({data: {}, "status": "2", "result": "0"});
             }
+          });
         });
 
     };
@@ -1089,29 +1199,29 @@ module.exports = function () {
 
                                     var isUserCollect = false;
                                     for (var j = 0; j < userData.biinieCollections.length && !isUserCollect; j++) {
-                                        var elUserCollect = _.findWhere(userData.biinieCollections[j].elements, {identifier: elementsfiltered[i].identifier});
+                                        var elUserCollect = _.findWhere(userData.biinieCollections[j].elements, {identifier: elementsfiltered[i].elementIdentifier});
                                         isUserCollect = elUserCollect != null;
                                     }
 
                                     var userShareElements = _.filter(userData.shareObjects, function (like) {
                                         return like.type === "element"
                                     });
-                                    var elUserShared = _.findWhere(userShareElements, {identifier: elementsfiltered[i].identifier});
+                                    var elUserShared = _.findWhere(userShareElements, {identifier: elementsfiltered[i].elementIdentifier});
                                     var isUserShared = elUserShared != null;
 
                                     var userLikeElements = _.filter(userData.likeObjects, function (like) {
                                         return like.type === "element"
                                     });
-                                    var elUserLike = _.findWhere(userLikeElements, {identifier: elementsfiltered[i].identifier});
+                                    var elUserLike = _.findWhere(userLikeElements, {identifier: elementsfiltered[i].elementIdentifier});
                                     var isUserLike = elUserLike != null;
 
                                     var userFollowElements = _.filter(userData.followObjects, function (like) {
                                         return like.type === "element"
                                     });
-                                    var elUserFollow = _.findWhere(userFollowElements, {identifier: elementsfiltered[i].identifier});
+                                    var elUserFollow = _.findWhere(userFollowElements, {identifier: elementsfiltered[i].elementIdentifier});
                                     var isUserFollow = elUserFollow != null;
 
-                                    var elUserViewed = _.findWhere(userData.seenElements, {elementIdentifier: elementsfiltered[i].identifier});
+                                    var elUserViewed = _.findWhere(userData.seenElements, {elementIdentifier: elementsfiltered[i].elementIdentifier});
                                     var isUserViewedElement = elUserViewed != null;
 
                                     elementsfiltered[i].userShared = isUserShared ? "1" : "0";
@@ -1166,7 +1276,15 @@ module.exports = function () {
       response.collections = [];
       response.elements = [];
 
-  		mobileUser.findOne({"identifier":identifier},{_id:0,biinieCollections:1},function(err,data){
+  		mobileUser.findOne({"identifier":identifier},{_id:0,'gender': 1,
+        'showcaseNotified': 1,
+        'biinieCollections': 1,
+        'loyalty': 1,
+        "likeObjects": 1,
+        "followObjects": 1,
+        "biinieCollect": 1,
+        "shareObjects": 1
+      }).lean().exec(function(err,data){
   			if(err)
   				throw err;
         mobileSession.findOne({identifier: identifier}, {}).lean().exec(function (errMobileSession, mobileUserData) {
@@ -1236,7 +1354,7 @@ module.exports = function () {
 
               for (j = 0; j < showcases.length; j++) {
                 for (var k = 0; k < showcases[j].elements.length; k++) {
-                  if(showcases[j].elements[k]._id == elementsShowcaseRelationID[i]._id){
+                  if(showcases[j].elements[k].identifier == elementsShowcaseRelationID[i].identifier){
                     showcase = showcases[j];
                     break;
                   }
@@ -1247,7 +1365,7 @@ module.exports = function () {
 
               if(showcase){
                 showcasesWithCollectedElements.push(showcase);
-                elementsShowcaseRelationID[i].showcase_id = showcases[i]._id;
+                elementsShowcaseRelationID[i].showcase_id = showcase._id;
                 elementsShowcaseRelationID[i].isRemovedFromShowcase = "0";
               }else{
                 elementsShowcaseRelationID[i].showcase_id = "";
@@ -1260,6 +1378,7 @@ module.exports = function () {
                 var elementWithData = _.findWhere(elementsShowcaseRelationID,{identifier:data.biinieCollections[i].elements[j].identifier});
                 data.biinieCollections[i].elements[j] = elementWithData;
               }
+              data.biinieCollections[i].elements = _.uniq(data.biinieCollections[i].elements);
             }
 
             response.collections = data.biinieCollections;
@@ -1315,11 +1434,51 @@ module.exports = function () {
             var elementsFromShowcasesData = _.filter(elementsFromOrganizations,function(element){
               return _.contains(elementsInShowcase,element.elementIdentifier);
             });
+
             elementsData = elementsData.concat(elementsFromShowcasesData);
+
+            for (i = 0; i < elementsData.length; i++) {
+
+                var isUserCollect = false;
+                for (var j = 0; j < data.biinieCollections.length && !isUserCollect; j++) {
+                    var elUserCollect = _.findWhere(data.biinieCollections[j].elements, {identifier: elementsData[i].elementIdentifier});
+                    isUserCollect = elUserCollect != null;
+                }
+
+                var userShareElements = _.filter(data.shareObjects, function (like) {
+                    return like.type === "element"
+                });
+                var elUserShared = _.findWhere(userShareElements, {identifier: elementsData[i].elementIdentifier});
+                var isUserShared = elUserShared != null;
+
+                var userLikeElements = _.filter(data.likeObjects, function (like) {
+                    return like.type === "element"
+                });
+                var elUserLike = _.findWhere(userLikeElements, {identifier: elementsData[i].elementIdentifier});
+                var isUserLike = elUserLike != null;
+
+                var userFollowElements = _.filter(data.followObjects, function (like) {
+                    return like.type === "element"
+                });
+                var elUserFollow = _.findWhere(userFollowElements, {identifier: elementsData[i].elementIdentifier});
+                var isUserFollow = elUserFollow != null;
+
+                var elUserViewed = _.findWhere(data.seenElements, {elementIdentifier: elementsData[i].elementIdentifier});
+                var isUserViewedElement = elUserViewed != null;
+
+                elementsData[i].userShared = isUserShared ? "1" : "0";
+                elementsData[i].userFollowed = isUserFollow ? "1" : "0";
+                elementsData[i].userLiked = isUserLike ? "1" : "0";
+                elementsData[i].userCollected = isUserCollect ? "1" : "0";
+                elementsData[i].userViewed = isUserViewedElement ? "1" : "0";
+            }
+
+
 
             for (i = 0; i < elementsData.length; i++) {
                 elementsData[i] = validateElementInitialInfo(elementsData[i]);
             }
+            elementsData = _.uniq(elementsData);
 
             response.sites = sitesWithCollectedElementsInShowcases;
             response.elements = elementsData;
