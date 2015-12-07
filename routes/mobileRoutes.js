@@ -3,7 +3,6 @@ module.exports =function(){
 	var _= require('underscore');
 	var math = require('mathjs'), moment = require('moment-timezone');
 	var util = require('util');
-	var initialDataJson = require('../config/initialData.json');
 
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
@@ -897,11 +896,6 @@ module.exports =function(){
 			}
 		});
 	}
-
-	functions.getInitialData= function(req,res){
-		res.json(initialDataJson);
-	}
-
 
 	return functions;
 }
