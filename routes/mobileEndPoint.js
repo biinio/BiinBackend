@@ -249,7 +249,7 @@ module.exports = function () {
                               var endtime = moment.tz(biins[i].objects[j].endTime,'America/Costa_Rica');
 
                               biins[i].objects[j].isUserNotified = '0';
-                              biins[i].objects[j].isBiined =	el?'1':'0';
+                              biins[i].objects[j].isCollected =	el?'1':'0';
 
                               //Time options
                               biins[i].objects[j].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
