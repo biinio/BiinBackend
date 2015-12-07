@@ -645,6 +645,17 @@ module.exports = function () {
         response.sites = [];
         response.organizations = [];
         response.elements = [];
+        mobileUser.findOne({"identifier":userIdentifier},{_id:0,'gender': 1,
+          'showcaseNotified': 1,
+          'biinieCollections': 1,
+          'loyalty': 1,
+          "likeObjects": 1,
+          "followObjects": 1,
+          "biinieCollect": 1,
+          "shareObjects": 1
+        },function(err,data){
+          if (err)
+              throw err;
 
         mobileSession.findOne({identifier: userIdentifier}, {}).lean().exec(function (errMobileSession, mobileUserData) {
             if (errMobileSession)
@@ -920,7 +931,44 @@ module.exports = function () {
                                     response.organizations[i] = validateOrganizationInitialInfo(response.organizations[i]);
                                     organizationsSent.push({identifier: response.organizations[i].identifier});
                                 }
+
                                 response.elements = response.elements.concat(elements);
+
+                                for (i = 0; i < response.elements.length; i++) {
+
+                                    var isUserCollect = false;
+                                    for (var j = 0; j < data.biinieCollections.length && !isUserCollect; j++) {
+                                        var elUserCollect = _.findWhere(data.biinieCollections[j].elements, {identifier: response.elements[i].elementIdentifier});
+                                        isUserCollect = elUserCollect != null;
+                                    }
+
+                                    var userShareElements = _.filter(data.shareObjects, function (like) {
+                                        return like.type === "element"
+                                    });
+                                    var elUserShared = _.findWhere(userShareElements, {identifier: response.elements[i].elementIdentifier});
+                                    var isUserShared = elUserShared != null;
+
+                                    var userLikeElements = _.filter(data.likeObjects, function (like) {
+                                        return like.type === "element"
+                                    });
+                                    var elUserLike = _.findWhere(userLikeElements, {identifier: response.elements[i].elementIdentifier});
+                                    var isUserLike = elUserLike != null;
+
+                                    var userFollowElements = _.filter(data.followObjects, function (like) {
+                                        return like.type === "element"
+                                    });
+                                    var elUserFollow = _.findWhere(userFollowElements, {identifier: response.elements[i].elementIdentifier});
+                                    var isUserFollow = elUserFollow != null;
+
+                                    var elUserViewed = _.findWhere(data.seenElements, {elementIdentifier: response.elements[i].elementIdentifier});
+                                    var isUserViewedElement = elUserViewed != null;
+
+                                    response.elements[i].userShared = isUserShared ? "1" : "0";
+                                    response.elements[i].userFollowed = isUserFollow ? "1" : "0";
+                                    response.elements[i].userLiked = isUserLike ? "1" : "0";
+                                    response.elements[i].userCollected = isUserCollect ? "1" : "0";
+                                    response.elements[i].userViewed = isUserViewedElement ? "1" : "0";
+                                }
 
                                 for (var i = 0; i < response.elements.length; i++) {
                                     response.elements[i] = validateElementInitialInfo(response.elements[i]);
@@ -959,6 +1007,43 @@ module.exports = function () {
                             response.elementsForCategory = elementsForCategory;
 
                             for (i = 0; i < response.elements.length; i++) {
+
+                                var isUserCollect = false;
+                                for (var j = 0; j < data.biinieCollections.length && !isUserCollect; j++) {
+                                    var elUserCollect = _.findWhere(data.biinieCollections[j].elements, {identifier: response.elements[i].elementIdentifier});
+                                    isUserCollect = elUserCollect != null;
+                                }
+
+                                var userShareElements = _.filter(data.shareObjects, function (like) {
+                                    return like.type === "element"
+                                });
+                                var elUserShared = _.findWhere(userShareElements, {identifier: response.elements[i].elementIdentifier});
+                                var isUserShared = elUserShared != null;
+
+                                var userLikeElements = _.filter(data.likeObjects, function (like) {
+                                    return like.type === "element"
+                                });
+                                var elUserLike = _.findWhere(userLikeElements, {identifier: response.elements[i].elementIdentifier});
+                                var isUserLike = elUserLike != null;
+
+                                var userFollowElements = _.filter(data.followObjects, function (like) {
+                                    return like.type === "element"
+                                });
+                                var elUserFollow = _.findWhere(userFollowElements, {identifier: response.elements[i].elementIdentifier});
+                                var isUserFollow = elUserFollow != null;
+
+                                var elUserViewed = _.findWhere(data.seenElements, {elementIdentifier: response.elements[i].elementIdentifier});
+                                var isUserViewedElement = elUserViewed != null;
+
+                                response.elements[i].userShared = isUserShared ? "1" : "0";
+                                response.elements[i].userFollowed = isUserFollow ? "1" : "0";
+                                response.elements[i].userLiked = isUserLike ? "1" : "0";
+                                response.elements[i].userCollected = isUserCollect ? "1" : "0";
+                                response.elements[i].userViewed = isUserViewedElement ? "1" : "0";
+                            }
+
+
+                            for (i = 0; i < response.elements.length; i++) {
                                 response.elements[i] = validateElementInitialInfo(response.elements[i]);
                             }
                             res.json({data: response, "status": "0", "result": "1"});
@@ -974,6 +1059,7 @@ module.exports = function () {
             } else {
                 res.json({data: {}, "status": "2", "result": "0"});
             }
+          });
         });
 
     };
