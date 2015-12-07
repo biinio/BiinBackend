@@ -239,6 +239,8 @@ module.exports = function () {
                             }
                         }
 
+
+
                         for (var i = 0; i < biins.length; i++) {
                           for (var j = 0; j < biins[i].objects.length; j++) {
                             var el =null;
@@ -254,7 +256,6 @@ module.exports = function () {
                               //Time options
                               biins[i].objects[j].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
                               biins[i].objects[j].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
-
                           }
                         }
 
@@ -264,7 +265,7 @@ module.exports = function () {
                             var biinsSite = _.filter(biins, function(biin){
                               return biin.siteIdentifier == sitesDesnormalized[i].site.identifier;
                             });
-                            sitesDesnormalized[i].site.biins = biinsSite;
+                            //sitesDesnormalized[i].site.biins = biinsSite;
                         }
 
                         /*sitesDesnormalized = _.filter(sitesDesnormalized,function(site){
@@ -300,6 +301,8 @@ module.exports = function () {
                             sites[i].userCollected = typeof(userCollected) !== "undefined" ? "1" : "0";
                             sites[i].userLiked = typeof(userLiked) !== "undefined" ? "1" : "0";
                         }
+
+                        
 
 
                         response.sites = sites;
