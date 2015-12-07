@@ -1284,7 +1284,7 @@ module.exports = function () {
         "followObjects": 1,
         "biinieCollect": 1,
         "shareObjects": 1
-      },function(err,data){
+      }).lean().exec(function(err,data){
   			if(err)
   				throw err;
         mobileSession.findOne({identifier: identifier}, {}).lean().exec(function (errMobileSession, mobileUserData) {
@@ -1378,7 +1378,11 @@ module.exports = function () {
                 var elementWithData = _.findWhere(elementsShowcaseRelationID,{identifier:data.biinieCollections[i].elements[j].identifier});
                 data.biinieCollections[i].elements[j] = elementWithData;
               }
+              data.biinieCollections[i].elements = _.uniq(data.biinieCollections[i].elements);
+
             }
+
+
 
             response.collections = data.biinieCollections;
 
@@ -1433,6 +1437,7 @@ module.exports = function () {
             var elementsFromShowcasesData = _.filter(elementsFromOrganizations,function(element){
               return _.contains(elementsInShowcase,element.elementIdentifier);
             });
+
             elementsData = elementsData.concat(elementsFromShowcasesData);
 
             for (i = 0; i < elementsData.length; i++) {
