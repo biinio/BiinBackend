@@ -1354,7 +1354,7 @@ module.exports = function () {
 
               for (j = 0; j < showcases.length; j++) {
                 for (var k = 0; k < showcases[j].elements.length; k++) {
-                  if(showcases[j].elements[k]._id == elementsShowcaseRelationID[i]._id){
+                  if(showcases[j].elements[k].identifier == elementsShowcaseRelationID[i].identifier){
                     showcase = showcases[j];
                     break;
                   }
@@ -1365,7 +1365,7 @@ module.exports = function () {
 
               if(showcase){
                 showcasesWithCollectedElements.push(showcase);
-                elementsShowcaseRelationID[i].showcase_id = showcases[i]._id;
+                elementsShowcaseRelationID[i].showcase_id = showcase._id;
                 elementsShowcaseRelationID[i].isRemovedFromShowcase = "0";
               }else{
                 elementsShowcaseRelationID[i].showcase_id = "";
@@ -1379,10 +1379,7 @@ module.exports = function () {
                 data.biinieCollections[i].elements[j] = elementWithData;
               }
               data.biinieCollections[i].elements = _.uniq(data.biinieCollections[i].elements);
-
             }
-
-
 
             response.collections = data.biinieCollections;
 
