@@ -239,8 +239,6 @@ module.exports = function () {
                             }
                         }
 
-
-
                         for (var i = 0; i < biins.length; i++) {
                           for (var j = 0; j < biins[i].objects.length; j++) {
                             var el =null;
@@ -265,12 +263,12 @@ module.exports = function () {
                             var biinsSite = _.filter(biins, function(biin){
                               return biin.siteIdentifier == sitesDesnormalized[i].site.identifier;
                             });
-                            //sitesDesnormalized[i].site.biins = biinsSite;
+                            sitesDesnormalized[i].site.biins = biinsSite;
                         }
 
-                        /*sitesDesnormalized = _.filter(sitesDesnormalized,function(site){
+                        sitesDesnormalized = _.filter(sitesDesnormalized,function(site){
                           return site.site.biins.length > 0;
-                        });*/
+                        });
 
                         var sortByProximity = _.sortBy(sitesDesnormalized, function (site) {
                             return site.site.proximity;
@@ -301,9 +299,18 @@ module.exports = function () {
                             sites[i].userCollected = typeof(userCollected) !== "undefined" ? "1" : "0";
                             sites[i].userLiked = typeof(userLiked) !== "undefined" ? "1" : "0";
                         }
+                        var elementsInBiinsObjects = [];
+                        for (var i = 0; i < sites.length; i++) {
+                          for (var j = 0; j < sites[i].biins.length; j++) {
+                            for (var k = 0; k < sites[i].biins[j].objects.length; k++) {
+                              if(sites[i].biins[j].objects[k].name == "element"){
+                                elementsInBiinsObjects.push(sites[i].biins[j].objects[k].identifier);
+                              }
+                            }
+                          }
+                        }
 
-                        
-
+                        elementsInBiinsObjects = _.uniq(elementsInBiinsObjects);
 
                         response.sites = sites;
 
@@ -380,6 +387,9 @@ module.exports = function () {
 
                                         //TODO: Search by the uniqueElementsShowcase and delete the item from that array when the element item is obtained
                                         //(would be at least same elements or less than elements array)
+                                        uniqueElementsShowcase = uniqueElementsShowcase.concat(elementsInBiinsObjects);
+                                        uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
+
                                         var elementsfiltered = _.filter(elements, function (element) {
                                             return uniqueElementsShowcase.indexOf(element.elementIdentifier) > -1;
                                         });
@@ -488,6 +498,7 @@ module.exports = function () {
                                             elementsfiltered[i].userCollected = isUserCollect ? "1" : "0";
                                             elementsfiltered[i].userViewed = isUserViewedElement ? "1" : "0";
                                         }
+
                                         var sitesSent = [];
                                         var organizationsSent = [];
                                         var elementsSent = [];
