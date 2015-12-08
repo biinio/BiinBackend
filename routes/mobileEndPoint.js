@@ -82,6 +82,58 @@ module.exports = function () {
             siteValidated.showcases[i] = showcase;
         }
 
+        for (i = 0; i < siteValidated.biins.length; i++) {
+          var biin = {};
+            biin._id = siteValidated.biins[i]._id? siteValidated.biins[i]._id : "";
+            biin.purchaseDate = siteValidated.biins[i].purchaseDate? siteValidated.biins[i].purchaseDate : "";
+            biin.accountIdentifier = siteValidated.biins[i].accountIdentifier? siteValidated.biins[i].accountIdentifier : "";
+            biin.siteIdentifier = siteValidated.biins[i].siteIdentifier? siteValidated.biins[i].siteIdentifier : "";
+            biin.organizationIdentifier = siteValidated.biins[i].organizationIdentifier? siteValidated.biins[i].organizationIdentifier : "";
+            biin.isAssigned = siteValidated.biins[i].isAssigned? "1" : "0";
+            biin.status = siteValidated.biins[i].status? siteValidated.biins[i].status : "";
+            biin.longitude = siteValidated.biins[i].longitude? siteValidated.biins[i].longitude +"" : "0";
+            biin.latitude = siteValidated.biins[i].latitude? siteValidated.biins[i].latitude +"" : "0";
+            biin.isRequiredBiin = siteValidated.biins[i].isRequiredBiin? "1" : "0";
+            biin.biinType = siteValidated.biins[i].biinType? siteValidated.biins[i].biinType : "";
+            biin.showcases = siteValidated.biins[i].showcases? siteValidated.biins[i].showcases : [];
+            biin.children = siteValidated.biins[i].children? siteValidated.biins[i].children : [];
+            biin.lastUpdate = siteValidated.biins[i].lastUpdate? siteValidated.biins[i].lastUpdate : "";
+            biin.registerDate = siteValidated.biins[i].registerDate? siteValidated.biins[i].registerDate : "";
+            biin.position = siteValidated.biins[i].position? siteValidated.biins[i].position : "";
+            biin.venue = siteValidated.biins[i].venue? siteValidated.biins[i].venue : "";
+            biin.proximityUUID = siteValidated.biins[i].proximityUUID? siteValidated.biins[i].proximityUUID : "";
+            biin.minor = siteValidated.biins[i].minor? siteValidated.biins[i].minor : "";
+            biin.major = siteValidated.biins[i].major? siteValidated.biins[i].major : "";
+            biin.name = siteValidated.biins[i].name? siteValidated.biins[i].name : "";
+            biin.brandIdentifier = siteValidated.biins[i].brandIdentifier? siteValidated.biins[i].brandIdentifier : "";
+            biin.identifier = siteValidated.biins[i].identifier? siteValidated.biins[i].identifier : "";
+            var objects = [];
+            for ( j = 0; j < siteValidated.biins[i].objects.length; j++) {
+              var object = {};
+              var objectToValidate = siteValidated.biins[i].objects[j];
+              object._id = objectToValidate._id ? objectToValidate._id : "";
+              object.onSaturday = objectToValidate.onSaturday ? objectToValidate.onSaturday : "0";
+              object.onFriday = objectToValidate.onFriday ? objectToValidate.onFriday : "0";
+              object.onThursday = objectToValidate.onThursday ? objectToValidate.onThursday : "0";
+              object.onWednesday = objectToValidate.onWednesday ? objectToValidate.onWednesday : "0";
+              object.onTuesday = objectToValidate.onTuesday ? objectToValidate.onTuesday : "0";
+              object.onMonday = objectToValidate.onMonday ? objectToValidate.onMonday : "0";
+              object.onSunday = objectToValidate.onSunday ? objectToValidate.onSunday : "0";
+              object.endTime= objectToValidate.endTime ? objectToValidate.endTime : "0";
+              object.startTime = objectToValidate.startTime ? objectToValidate.startTime : "0";
+              object.hasTimeOptions = objectToValidate.hasTimeOptions ? objectToValidate.hasTimeOptions : "0";
+              object.hasNotification = objectToValidate.hasNotification ? objectToValidate.hasNotification : "0";
+              object.notification = objectToValidate.notification ? objectToValidate.notification : "";
+              object.name = objectToValidate.name ? objectToValidate.name : "";
+              object.objectType = objectToValidate.objectType ? objectToValidate.objectType : "1";
+              object.identifier = objectToValidate.identifier ? objectToValidate.identifier : "";
+              object.isDefault = objectToValidate.isDefault ? objectToValidate.isDefault : "0";
+              object.isUserNotified = objectToValidate.isUserNotified ? objectToValidate.isUserNotified : "0";
+              object.isCollected = objectToValidate.isCollected ? objectToValidate.isCollected : "0";
+            }
+          siteValidated.biins[i] = biin;
+        }
+
         return siteValidated;
     }
 
