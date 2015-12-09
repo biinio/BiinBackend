@@ -130,7 +130,9 @@ module.exports = function () {
               object.isDefault = objectToValidate.isDefault ? objectToValidate.isDefault : "0";
               object.isUserNotified = objectToValidate.isUserNotified ? objectToValidate.isUserNotified : "0";
               object.isCollected = objectToValidate.isCollected ? objectToValidate.isCollected : "0";
+              objects.push(object);
             }
+            biin.objects = objects;
           siteValidated.biins[i] = biin;
         }
 
