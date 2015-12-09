@@ -31,6 +31,7 @@ var siteObj ={
 	lat:{type:String,default:0},
 	lng:{type:String,default:0},
 	geoPosition:{type:[Number],index:"2dsphere"},
+    isReady:{type:Number, default:0},
 	searchTags:[],
 	categories:[
 		{
