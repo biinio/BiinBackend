@@ -509,6 +509,7 @@ module.exports = function () {
                                             elementsWithCategories = _.sortBy(elementsWithCategories, function (element) {
                                                 return element.isHighlight == "1" ? 0 : 1;
                                             });
+                                            elementsWithCategories = _.uniq(elementsWithCategories);
                                             elementsWithCategories = elementsWithCategories.splice(0, ELEMENTS_IN_CATEGORY);
                                             elementsSentInCategories = elementsSentInCategories.concat(elementsWithCategories);
 
