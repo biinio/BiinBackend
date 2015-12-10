@@ -967,7 +967,7 @@ module.exports = function () {
                                   for (j = 0; j < sortByProximity[i].site.biins.length; j++) {
                                     for (k = 0; k < sortByProximity[i].site.biins[j].objects.length; k++) {
                                       if(sortByProximity[i].site.biins[j].objects[k].name == "element"){
-                                        elementsInBiinsObjects.push(sites[i].biins[j].objects[k].identifier);
+                                        elementsInBiinsObjects.push(sortByProximity[i].site.biins[j].objects[k].identifier);
                                       }
                                     }
                                   }
