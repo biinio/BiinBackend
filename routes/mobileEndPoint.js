@@ -26,11 +26,6 @@ module.exports = function () {
     };
     var functions = {};
 
-    /**
-     *
-     * @param site
-     * @returns {{}}
-     */
     function validateSiteInitialInfo(site) {
         var siteValidated = {};
         siteValidated.identifier = site.identifier ? site.identifier : "";
@@ -220,6 +215,9 @@ module.exports = function () {
 
         return elementValidated;
     }
+
+
+
 
     functions.getInitialData = function (req, res) {
         var userIdentifier = req.param("biinieId");
@@ -471,16 +469,20 @@ module.exports = function () {
                                         hightlightsFiltered = hightlightsFiltered.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
 
                                         //Fill categories array
+
+                                        //Obtain the categories
                                         var elementsCategories = [];
                                         for ( i = 0; i < elementsfiltered.length; i++) {
                                             elementsCategories = elementsCategories.concat(elementsfiltered[i].categories);
                                         }
+                                        //Obtain the unique categories from elements that are going to sent
                                         var uniqueCategories = [];
                                         for (i = 0; i < elementsCategories.length; i++) {
                                             uniqueCategories.push(elementsCategories[i].identifier);
                                         }
                                         uniqueCategories = _.uniq(uniqueCategories);
 
+                                        //reorder categories
                                         var prioritiesList = mobileUserData.gender == 'male' ? configPriorities.priorities.men : configPriorities.priorities.women;
                                         uniqueCategories = _.sortBy(uniqueCategories, function (category) {
                                             var priorityObject = _.find(prioritiesList, {identifier: category});
@@ -501,7 +503,16 @@ module.exports = function () {
                                             elementsWithCategories = _.sortBy(elementsWithCategories, function (element) {
                                                 return element.isHighlight == "1" ? 0 : 1;
                                             });
-                                            elementsWithCategories = _.uniq(elementsWithCategories);
+
+                                            var elementsIdAdded = [];
+                                            elementsWithCategories = _.filter(elementsWithCategories, function(element){
+                                              var isAddedInElements = _.contains(element.identifier);
+                                              if(!isAddedInElements)
+                                                elementsIdAdded.push(element.identifier);
+                                              return !isAddedInElements;
+                                            });
+
+
                                             elementsWithCategories = elementsWithCategories.splice(0, ELEMENTS_IN_CATEGORY);
                                             elementsSentInCategories = elementsSentInCategories.concat(elementsWithCategories);
 
