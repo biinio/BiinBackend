@@ -506,7 +506,7 @@ module.exports = function () {
 
                                             var elementsIdAdded = [];
                                             elementsWithCategories = _.filter(elementsWithCategories, function(element){
-                                              var isAddedInElements = _.contains(element.identifier);
+                                              var isAddedInElements = _.contains(elementsIdAdded,element.identifier);
                                               if(!isAddedInElements)
                                                 elementsIdAdded.push(element.identifier);
                                               return !isAddedInElements;
