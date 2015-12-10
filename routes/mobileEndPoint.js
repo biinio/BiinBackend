@@ -26,11 +26,6 @@ module.exports = function () {
     };
     var functions = {};
 
-    /**
-     *
-     * @param site
-     * @returns {{}}
-     */
     function validateSiteInitialInfo(site) {
         var siteValidated = {};
         siteValidated.identifier = site.identifier ? site.identifier : "";
@@ -119,7 +114,7 @@ module.exports = function () {
               object.onTuesday = objectToValidate.onTuesday ? objectToValidate.onTuesday : "0";
               object.onMonday = objectToValidate.onMonday ? objectToValidate.onMonday : "0";
               object.onSunday = objectToValidate.onSunday ? objectToValidate.onSunday : "0";
-              object.endTime= objectToValidate.endTime ? objectToValidate.endTime : "0";
+              object.endTime= objectToValidate.endTime ? objectToValidate.endTime : "24";
               object.startTime = objectToValidate.startTime ? objectToValidate.startTime : "0";
               object.hasTimeOptions = objectToValidate.hasTimeOptions ? objectToValidate.hasTimeOptions : "0";
               object.hasNotification = objectToValidate.hasNotification ? objectToValidate.hasNotification : "0";
@@ -221,6 +216,9 @@ module.exports = function () {
         return elementValidated;
     }
 
+
+
+
     functions.getInitialData = function (req, res) {
         var userIdentifier = req.param("biinieId");
         var userLat = eval(req.param("latitude"));
@@ -298,16 +296,8 @@ module.exports = function () {
                             var el =null;
                             if(mobileUser.biinieCollections && mobileUser.biinieCollections[DEFAULT_COLLECTION] && mobileUser.biinieCollections[DEFAULT_COLLECTION].elements)
                               el= _.findWhere(mobileUser.biinieCollections[DEFAULT_COLLECTION].elements,{identifier:biins[i].objects[j].identifier});
-
-                              var startTime =moment.tz(biins[i].objects[j].startTime,'America/Costa_Rica');
-                              var endtime = moment.tz(biins[i].objects[j].endTime,'America/Costa_Rica');
-
                               biins[i].objects[j].isUserNotified = '0';
                               biins[i].objects[j].isCollected =	el?'1':'0';
-
-                              //Time options
-                              biins[i].objects[j].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
-                              biins[i].objects[j].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
                           }
                         }
 
@@ -479,16 +469,20 @@ module.exports = function () {
                                         hightlightsFiltered = hightlightsFiltered.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
 
                                         //Fill categories array
+
+                                        //Obtain the categories
                                         var elementsCategories = [];
                                         for ( i = 0; i < elementsfiltered.length; i++) {
                                             elementsCategories = elementsCategories.concat(elementsfiltered[i].categories);
                                         }
+                                        //Obtain the unique categories from elements that are going to sent
                                         var uniqueCategories = [];
                                         for (i = 0; i < elementsCategories.length; i++) {
                                             uniqueCategories.push(elementsCategories[i].identifier);
                                         }
                                         uniqueCategories = _.uniq(uniqueCategories);
 
+                                        //reorder categories
                                         var prioritiesList = mobileUserData.gender == 'male' ? configPriorities.priorities.men : configPriorities.priorities.women;
                                         uniqueCategories = _.sortBy(uniqueCategories, function (category) {
                                             var priorityObject = _.find(prioritiesList, {identifier: category});
@@ -509,7 +503,16 @@ module.exports = function () {
                                             elementsWithCategories = _.sortBy(elementsWithCategories, function (element) {
                                                 return element.isHighlight == "1" ? 0 : 1;
                                             });
-                                            elementsWithCategories = _.uniq(elementsWithCategories);
+
+                                            var elementsIdAdded = [];
+                                            elementsWithCategories = _.filter(elementsWithCategories, function(element){
+                                              var isAddedInElements = _.contains(elementsIdAdded,element.identifier);
+                                              if(!isAddedInElements)
+                                                elementsIdAdded.push(element.identifier);
+                                              return !isAddedInElements;
+                                            });
+
+
                                             elementsWithCategories = elementsWithCategories.splice(0, ELEMENTS_IN_CATEGORY);
                                             elementsSentInCategories = elementsSentInCategories.concat(elementsWithCategories);
 
@@ -875,16 +878,8 @@ module.exports = function () {
                                     var el =null;
                                     if(mobileUser.biinieCollections && mobileUser.biinieCollections[DEFAULT_COLLECTION] && mobileUser.biinieCollections[DEFAULT_COLLECTION].elements)
                                       el= _.findWhere(mobileUser.biinieCollections[DEFAULT_COLLECTION].elements,{identifier:biins[i].objects[j].identifier});
-
-                                      var startTime =moment.tz(biins[i].objects[j].startTime,'America/Costa_Rica');
-                                      var endtime = moment.tz(biins[i].objects[j].endTime,'America/Costa_Rica');
-
                                       biins[i].objects[j].isUserNotified = '0';
                                       biins[i].objects[j].isCollected =	el?'1':'0';
-
-                                      //Time options
-                                      biins[i].objects[j].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
-                                      biins[i].objects[j].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
                                   }
                                 }
 
@@ -972,7 +967,7 @@ module.exports = function () {
                                   for (j = 0; j < sortByProximity[i].site.biins.length; j++) {
                                     for (k = 0; k < sortByProximity[i].site.biins[j].objects.length; k++) {
                                       if(sortByProximity[i].site.biins[j].objects[k].name == "element"){
-                                        elementsInBiinsObjects.push(sites[i].biins[j].objects[k].identifier);
+                                        elementsInBiinsObjects.push(sortByProximity[i].site.biins[j].objects[k].identifier);
                                       }
                                     }
                                   }
@@ -1252,16 +1247,8 @@ module.exports = function () {
                               var el =null;
                               if(userData.biinieCollections && userData.biinieCollections[DEFAULT_COLLECTION] && userData.biinieCollections[DEFAULT_COLLECTION].elements)
                                 el= _.findWhere(userData.biinieCollections[DEFAULT_COLLECTION].elements,{identifier:biins[i].objects[j].identifier});
-
-                                var startTime =moment.tz(biins[i].objects[j].startTime,'America/Costa_Rica');
-                                var endtime = moment.tz(biins[i].objects[j].endTime,'America/Costa_Rica');
-
                                 biins[i].objects[j].isUserNotified = '0';
                                 biins[i].objects[j].isCollected =	el?'1':'0';
-
-                                //Time options
-                                biins[i].objects[j].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
-                                biins[i].objects[j].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
                             }
                           }
 
@@ -1501,16 +1488,8 @@ module.exports = function () {
                     var el =null;
                     if(data.biinieCollections && data.biinieCollections[DEFAULT_COLLECTION] && data.biinieCollections[DEFAULT_COLLECTION].elements)
                       el= _.findWhere(data.biinieCollections[DEFAULT_COLLECTION].elements,{identifier:biins[i].objects[j].identifier});
-
-                      var startTime =moment.tz(biins[i].objects[j].startTime,'America/Costa_Rica');
-                      var endtime = moment.tz(biins[i].objects[j].endTime,'America/Costa_Rica');
-
                       biins[i].objects[j].isUserNotified = '0';
                       biins[i].objects[j].isCollected =	el?'1':'0';
-
-                      //Time options
-                      biins[i].objects[j].startTime= ""+ (eval(startTime.hours()) + eval(startTime.minutes()/60));
-                      biins[i].objects[j].endTime= ""+ (eval(endtime.hours()) + eval(endtime.minutes()/60));
                   }
                 }
 
