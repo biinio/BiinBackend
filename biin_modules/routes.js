@@ -299,18 +299,18 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory)
     app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory)
 
-
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
 
     //Test Vibrant
     app.get('/test/testVibrant', organizations.testVibrant);
 
-    app.get('/mobile/initialData',mobileRoutes.getInitialData);
     app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
     app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch',mobileEndPoint.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForCategory/:idCategory/:batch',mobileEndPoint.getNextElementsInCategory);
+    app.get('/mobile/biinies/:identifier/requestSites/:batch',mobileEndPoint.getNextSites);
+    app.get('/mobile/biinies/:identifier/requestCollection',mobileEndPoint.getCollections);
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {

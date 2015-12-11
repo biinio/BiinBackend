@@ -54,6 +54,7 @@ var showcaseObj={
 
 		hasQuantity:{type:Boolean,default:0},
 		quantity:{type:String,default:""},
+        isReady:{type:Number,default:0},
 
 		details:[{
 				elementDetailType:{type:String, default:""},
@@ -94,7 +95,8 @@ var showcaseObj={
 		text:{type:String, default:""}
 	}],
 	startTime:{type:String, default:"000000"},
-	endTime:{type:String, default:"000000"}
+	endTime:{type:String, default:"000000"},
+    isReady:{type:Number,default:0}
 };
 var showcaseSchema = new Schema(showcaseObj);
 showcaseSchema.methods.createNew = function() {	
