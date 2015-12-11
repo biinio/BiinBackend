@@ -60,6 +60,7 @@ var orgSchema = new Schema({
 		lat:{type:String,default:0},
 		lng:{type:String,default:0},
 		geoPosition:{type:[Number],index:"2dsphere"},
+        isReady:{type:Number, default:0},
 		searchTags:[],
 		categories:[
 			{
@@ -187,6 +188,8 @@ var orgSchema = new Schema({
 			hasQuantity:{type:Boolean,default:0},
 			quantity:{type:String,default:""},
 			detailsHtml:{type:String, default:""},
+            
+            isReady:{type:Number,default:0},
 
 			details:[{
 					elementDetailType:{type:String, default:""},
