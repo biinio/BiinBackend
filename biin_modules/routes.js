@@ -185,6 +185,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/api/organizations/:identifier/elements/:element',elements.set);
     app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
     app.delete('/api/organizations/:identifier/elements/:element/delete',elements.markAsDeleted);
+    app.delete('/api/organizations/:identifier/elements/:element/testdelete',elements.testDelete);
 
     //Regions routes
     app.get('/regions',restrict,regions.index)

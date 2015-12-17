@@ -371,6 +371,27 @@ module.exports = function(){
 
 		}
 	}
+    
+    functions.testDelete = function(req, res) {
+        var organizationIdentifier = req.param('identifier');
+        var elementIdentifier=req.param("element");
+            
+        //update element from organization.elements
+		organization.update({
+            identifier:organizationIdentifier,
+            "elements.elementIdentifier":elementIdentifier
+        },{
+            $set:{"elements.$.isDeleted": 1}
+        }, function(err){
+        if(err) {
+            throw err;
+        }
+        else {
+            res.json({state:"success"}); 
+        }
+    });
+    }
+                            
 
     //Set element's isDeleted attribtue to true
     functions.markAsDeleted = function(req, res){
