@@ -80,7 +80,8 @@ var elementSchema = new Schema({
 		}
 	],
     
-    isReady:{type:Number,default:0}
+    isReady:{type:Number,default:0},
+    isDeleted:{type:Number,default:0}
 });
 
 module.exports = mongoose.model('elements', elementSchema);
