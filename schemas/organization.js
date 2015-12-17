@@ -190,6 +190,7 @@ var orgSchema = new Schema({
 			detailsHtml:{type:String, default:""},
             
             isReady:{type:Number,default:0},
+            isDeleted:{type:Number,default:0},
 
 			details:[{
 					elementDetailType:{type:String, default:""},

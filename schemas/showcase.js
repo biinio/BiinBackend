@@ -55,6 +55,7 @@ var showcaseObj={
 		hasQuantity:{type:Boolean,default:0},
 		quantity:{type:String,default:""},
         isReady:{type:Number,default:0},
+        isDeleted:{type:Number,default:0},
 
 		details:[{
 				elementDetailType:{type:String, default:""},
