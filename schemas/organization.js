@@ -60,7 +60,8 @@ var orgSchema = new Schema({
 		lat:{type:String,default:0},
 		lng:{type:String,default:0},
 		geoPosition:{type:[Number],index:"2dsphere"},
-        isReady:{type:Number, default:0},
+        isReady:{type:Number,default:0},
+        isDeleted:{type:Boolean,default:0},
 		searchTags:[],
 		categories:[
 			{
@@ -190,7 +191,7 @@ var orgSchema = new Schema({
 			detailsHtml:{type:String, default:""},
             
             isReady:{type:Number,default:0},
-            isDeleted:{type:Number,default:0},
+            isDeleted:{type:Boolean,default:0},
 
 			details:[{
 					elementDetailType:{type:String, default:""},
