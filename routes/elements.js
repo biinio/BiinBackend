@@ -8,15 +8,15 @@ module.exports = function(){
 
     // Default image for elements
     var ELEMENTS_DEFAULT_IMAGE = {
-        domainColor: '170, 171, 171', 
+        domainColor: '170, 171, 171',
         mediaType: '1',
         title1: 'default',
         url: 'https://biinapp.blob.core.windows.net/biinmedia/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/media/cb8b7da3-dfdf-4ae0-9291-1f60eb386c43/4e8b2fb3-af89-461d-9c37-2cc667c20653/media/4af24d51-2173-4d41-b651-d82f18f00d1b.jpg',
         vibrantColor: '170, 171, 171',
         vibrantDarkColor: '85,86,86',
         vibrantLightColor: '170, 171, 171'
-    };       
-    
+    };
+
 	//Get the index view of the elements
 	functions.index = function(req,res){
 		var callback= function(organization,req, res){
@@ -37,7 +37,7 @@ module.exports = function(){
 			req.session.selectedOrganization = data;
 			res.json({data:data});
 		});
-	}	
+	}
 
 	//GET Mobile info of Elements
 	functions.getMobile=function(req,res){
@@ -48,7 +48,7 @@ module.exports = function(){
 			mobileUser.findOne({identifier:biinieIdentifier},{"biinieCollections":1, "likeObjects":1, "followObjects":1, "biinieCollect":1, "shareObjects":1, "seenElements":1},function(err,userInfo){
 				organization.findOne({"elements.elementIdentifier":identifier},{"elements.$":1},function(err,data){
 					if(err)
-						res.json({data:{},status:"7", result:'0'});	
+						res.json({data:{},status:"7", result:'0'});
 					else
 						if(data!=null && "elements" in data && data.elements.length>0){
 							var elementObj = data.elements[0].toObject();
@@ -56,7 +56,7 @@ module.exports = function(){
 							delete elementObj.identifier;
 							elementObj.titleColor = getColor(elementObj.textColor);
 							elementObj.subTitle = elementObj.subTitle?elementObj.subTitle :'';
-							
+
 							elementObj.reservedQuantity="0";
 							elementObj.claimedQuantity="0";
 							elementObj.actualQuantity="0";
@@ -65,7 +65,7 @@ module.exports = function(){
 							elementObj.initialDate=elementObj.initialDate?elementObj.initialDate:"";
 							delete elementObj.media;
 							elementObj.media=[];
-                            
+
 							for(var i=0; i< data.elements[0].media.length; i++){
 								var media ={};
 								media.mediaType="1";
@@ -76,7 +76,7 @@ module.exports = function(){
 								media.vibrantLightColor= data.elements[0].media[i].vibrantLightColor ? data.elements[0].media[i].vibrantLightColor : "0,0,0";
 								elementObj.media.push(media);
 							}
-                            
+
                             //Add default image if none was uploaded
                             if (data.elements[0].media.length == 0) {
                                     elementObj.media.push(ELEMENTS_DEFAULT_IMAGE);
@@ -95,7 +95,7 @@ module.exports = function(){
 								if(elUserCollect)
 									isUserCollect=true;
 							}
-				
+
 							var isUserShared = false;
 							var userShareElements = _.filter( userInfo.shareObjects, function(like){ return like.type === "element"});
 							var elUserShared =_.findWhere(userShareElements,{identifier:identifier})
@@ -140,7 +140,7 @@ module.exports = function(){
 							elementObj.position=elementObj.position?elementObj.position:"1";
 							elementObj.identifier= elementObj.elementIdentifier;
 							elementObj.detailsHtml=elementObj.detailsHtml?elementObj.detailsHtml:"";
-							
+
 							var userRating = _.findWhere(elementObj.rating,{biinieIdentifier:biinieIdentifier});
 							elementObj.userStars = typeof(userRating)!=="undefined"? ""+ userRating.rating : "0";
 							var rating = 0;
@@ -155,7 +155,7 @@ module.exports = function(){
 
 							elementObj.stars = "0";
 
-							elementObj.price = typeof(elementObj.price) === "number"? elementObj.price + "" : elementObj.price; 
+							elementObj.price = typeof(elementObj.price) === "number"? elementObj.price + "" : elementObj.price;
 
 							elementObj.initialDate = elementObj.initialDate? utils.getDate(elementObj.initialDate):utils.getDateNow();
 							elementObj.expirationDate = elementObj.expirationDate? utils.getDate(elementObj.expirationDate):utils.getDateNow();
@@ -163,7 +163,7 @@ module.exports = function(){
 							if(!'hasFromPrice' in elementObj){
 								elementObj.hasFromPrice='0';
 								elementObj.hasFromPrice="0";
-							}								
+							}
 							if(!'hasPrice' in elementObj)
 								elementObj.hasPrice='0';
 
@@ -171,7 +171,7 @@ module.exports = function(){
 								elementObj.hasPrice='1'
 							}else
 								elementObj.hasPrice='0'
-														
+
 							delete elementObj.elementIdentifier;
 
 							//Remove the old notifications object
@@ -194,11 +194,11 @@ module.exports = function(){
 
 							res.json({data:elementObj,status:"0",result:"1"});
 						}else{
-							res.json({data:{},status:"9", result:"0"});		
+							res.json({data:{},status:"9", result:"0"});
 						}
-				});					
+				});
 
-			});			
+			});
 		}
 	}
 
@@ -207,9 +207,9 @@ module.exports = function(){
 
 		//Get the user identifier
 		var userIdentifier= req.param('identifier');
-		
+
 		//Get the categories of the user
-		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){			
+		mobileUser.findOne({identifier:userIdentifier},{"categories.identifier":1,"categories.name":1},function(err,foundCategories){
 			if(err){
 				res.json({data:{},status:"5",result:"0"});
 			}else{
@@ -238,7 +238,7 @@ module.exports = function(){
 									var cantElAdded =0;
 
 									//Remove the Organization
-									for(var orgIndex =0; orgIndex<elementsByCategories.length; orgIndex++){										
+									for(var orgIndex =0; orgIndex<elementsByCategories.length; orgIndex++){
 										if('elements' in elementsByCategories[orgIndex] )
 											for(var elIndex=0; elIndex<elementsByCategories[orgIndex].elements.length ;elIndex++){
 
@@ -250,21 +250,21 @@ module.exports = function(){
 														if(_.indexOf(elCat,pcategory.identifier)!=-1){
 															elResult.push({'_id':elementsByCategories[orgIndex].elements[elIndex]._id,'elementIdentifier':elementsByCategories[orgIndex].elements[elIndex].elementIdentifier});
 															cantElAdded++;
-															//if(isSiteInRegion(xcord,ycord,eval(elementsByCategories[orgIndex].elements[elIndex].lat),eval(elementsByCategories[orgIndex].elements[elIndex].lng))){													
+															//if(isSiteInRegion(xcord,ycord,eval(elementsByCategories[orgIndex].elements[elIndex].lat),eval(elementsByCategories[orgIndex].elements[elIndex].lng))){
 															//}
 														}
 													}
 											}
-									}	
+									}
 
 									//Callback function
-									callback(index,total,elResult,cantElAdded);									
+									callback(index,total,elResult,cantElAdded);
 								}
 
-							});		
+							});
 
 					}
-					
+
 				}
 
 					var finalCursor=function(index,total,data,cantElements){
@@ -288,19 +288,19 @@ module.exports = function(){
 								res.json(result);
 							}
 
-						}				
+						}
 					}
 
 					//Order the sites by Category Identifier
-					for(var i=0; i< foundCategories.categories.length;i++){						
-						getElementsByCat(foundCategories.categories[i],i,foundCategories.categories.length,finalCursor);						
-					}					
+					for(var i=0; i< foundCategories.categories.length;i++){
+						getElementsByCat(foundCategories.categories[i],i,foundCategories.categories.length,finalCursor);
+					}
 				}
 				else{
-					res.json({status:"9",data:{},result:"0"});	
+					res.json({status:"9",data:{},result:"0"});
 				}
 			}
-		});		
+		});
 	}
 
 	//PUT an update of the showcase
@@ -310,11 +310,11 @@ module.exports = function(){
 
 		//Perform an update
 		var organizationIdentifier= req.param('identifier');
-		var elementIdentifier=req.param("element");	
+		var elementIdentifier=req.param("element");
 
 		//If is a new element
 		if(typeof(elementIdentifier)==="undefined"){
-   
+
          var newModel  = new element();
 
          newModel.elementIdentifier=utils.getGUID();
@@ -349,7 +349,7 @@ module.exports = function(){
 				var setModel ={};
 				if(model){
 					for(var field in model){
-						setModel['elements.$.'+field]=model[field];						
+						setModel['elements.$.'+field]=model[field];
 					}
 				}
 
@@ -448,7 +448,7 @@ module.exports = function(){
 		//Perform an update
 		var organizationIdentifier = req.param('identifier');
 		var elementIdentifier=req.param("element");
-        
+
         //remove elements from organization.elements
 		organization.update({
             identifier:organizationIdentifier
@@ -457,7 +457,7 @@ module.exports = function(){
         }, function(err){
         if(err)
             throw err;
-        else {             
+        else {
             //remove elements from elements from organization.showcases.elements
             organization.findOne({
                 identifier:organizationIdentifier
@@ -498,10 +498,10 @@ module.exports = function(){
                                     }, function(err) {
                                         if (err) { throw err; }
                                         else {
-                                            res.json({state:"success"});  
+                                            res.json({state:"success"});
                                         }
                                     });
-                                }  
+                                }
                             });
                         }
                     });
@@ -513,7 +513,7 @@ module.exports = function(){
 
 
 	//POST an image for a showcase
-	functions.imagePost=function(req,res,next){	  		
+	functions.imagePost=function(req,res,next){
 		imageManager.upload(req.headers.origin,req.files.img.path,req.files.img.name,function(err,data){
 			if(err)
 				throw err;
@@ -525,51 +525,34 @@ module.exports = function(){
 	//POST image crop
 	functions.imageCrop=function(req,res,next){
 		try
-		{		
+		{
 			imageManager.cropImage("element",req.body.url,req.body.imgW,req.body.imgH,req.body.cropW,req.body.cropH,req.body.imgX1,req.body.imgY1,function(err,data){
 				if (err) throw err;
-				else					
-					res.json(JSON.stringify(data));	
+				else
+					res.json(JSON.stringify(data));
 			});
 	  	}
 		catch(err){
 		  	console.log(err);
 		}
-	}	
+	}
 
-    /**** 
+    /****
     	Other methods
     	****/
     //Update elements in showcases
     function updateElementsInShowcases(model,elementId,callback){
-	    	showcase.find({"objects.elementIdentifier":elementId},"",function(err,data){
+	    	showcase.find({"elements.elementIdentifier":elementId},"",function(err,data){
 				if(err){
-					throw err;    		
+					throw err;
 				}
 				else{
 					for(var i=0; i<data.length;i++){
-						showcase.update({"identifier":data[i].identifier,"objects.elementIdentifier":elementId},
-						{$set:{"objects.$.objectType":model.objectType,
-							    "objects.$.likes":model.likes,
-								"objects.$.title1":model.title1,
-								"objects.$.subTitle":model.subTitle,
-								"objects.$.title1Color":model.title1Color,								
-								"objects.$.title2Color":model.title2Color,
-								"objects.$.title1Size":model.title1Size,																
-								"objects.$.title2Size":model.title2Size,
-								"objects.$.objectDescription":model.objectDescription,																
-								"objects.$.actionType":model.actionType,								
-								"objects.$.originalPrice":model.originalPrice,
-								"objects.$.biinPrice":model.biinPrice,
-								"objects.$.discount":model.discount,
-								"objects.$.savings":model.savings,
-								"objects.$.biinSold":model.biinSold,
-								"objects.$.timeFrame":model.timeFrame,
-								"objects.$.imageUrl":model.imageUrl,
-								"objects.$.categories":model.categories																																																																
+						showcase.update({"identifier":data[i].identifier,"elements.elementIdentifier":elementId},
+						{$set:{"elements.$":model,
 							}},function(err,data){
 							if(err)
-								throw err;    		
+								throw err;
 						});
 				}
 				callback();
@@ -596,9 +579,9 @@ module.exports = function(){
     					var elementToRemovePosition = -1;
 
     					//Search for the object to remove in showcases
-    					for(var objElement =0; objElement<workingElement.objects.length && removedElement ==false; objElement++){    			
+    					for(var objElement =0; objElement<workingElement.objects.length && removedElement ==false; objElement++){
     						if(workingElement.objects[objElement].elementIdentifier === elementId){
-    							removedElement =true;    							
+    							removedElement =true;
     							elementToRemovePosition = workingElement.objects[objElement].position;
     							workingElement.objects.splice(objElement,1);
     						}
