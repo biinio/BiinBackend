@@ -371,7 +371,99 @@ module.exports = function(){
 
 		}
 	}
+    
+    functions.testDelete = function(req, res) {
+        var organizationIdentifier = req.param('identifier');
+        var elementIdentifier=req.param("element");
+            
+        //update element from organization.elements
+		organization.update({
+            identifier:organizationIdentifier,
+            "elements.elementIdentifier":elementIdentifier
+        },{
+            $set:{"elements.$.isDeleted": 1}
+        }, function(err){
+        if(err) {
+            throw err;
+        }
+        else {
+            res.json({state:"success"}); 
+        }
+    });
+    }
+                            
 
+    //Set element's isDeleted attribtue to true
+    functions.markAsDeleted = function(req, res){
+        //Perform an update
+		var organizationIdentifier = req.param('identifier');
+		var elementIdentifier=req.param("element");
+            
+        //update element from organization.elements
+		organization.update({
+            identifier:organizationIdentifier,
+            "elements.elementIdentifier":elementIdentifier
+        },{
+            $set:{"elements.$.isDeleted": 1}
+        }, function(err){
+        if(err)
+            throw err;
+        else {             
+            //remove elements from elements from organization.showcases.elements 
+            organization.findOne({
+                identifier:organizationIdentifier
+            },{}, function(err, org){
+                if (err) { throw err; }
+                else {
+                    var siteCount;
+                    for (siteCount = 0; siteCount < org.sites.length; siteCount++) {
+                        var showCount;
+                        for (showCount = 0; showCount < org.sites[siteCount].showcases.length; showCount++) {
+                            var newElementsArray = _.filter(org.sites[siteCount].showcases[showCount].elements,function(element){
+                                return element.identifier != elementIdentifier;
+                            });
+                            org.sites[siteCount].showcases[showCount].elements = newElementsArray;
+                        }
+                    }
+                    org.save(function(err){
+                        if(err)
+                        { throw err; }
+                        else {
+                            //mark elements from showcases table as deleted
+                            showcase.update({
+                                organizationIdentifier: organizationIdentifier,
+                                "elements.elementIdentifier":elementIdentifier
+                                
+                            },{
+                                $set: { isDeleted: 1 }
+                            }, {
+                                multi:true
+                            }, function(err) {
+                                if (err) { throw err; }
+                                else {
+                                    // remove biins which have the element associated
+                                    biins.update({
+                                        organizationIdentifier: organizationIdentifier
+                                    }, {
+                                        $pull:{objects:{identifier: elementIdentifier}}
+                                    }, {
+                                        multi: true
+                                    }, function(err) {
+                                        if (err) { throw err; }
+                                        else {
+                                            res.json({state:"success"});  
+                                        }
+                                    });
+                                }  
+                            });
+                        }
+                    });
+                }
+            });
+            }
+        });
+    }
+    
 	//DELETE an specific element
 	functions.delete= function(req,res){
 		//Perform an update
