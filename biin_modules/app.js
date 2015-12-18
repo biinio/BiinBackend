@@ -120,9 +120,6 @@ module.exports = function (db) {
                 error: err
             });
         });
-
-        //Only for development Live Reload Plugin
-        require('express-livereload')(app, config={});
     }else{
         // production error handler
         // no stacktraces leaked to user
