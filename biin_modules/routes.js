@@ -163,8 +163,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Create a biin
     app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier/purchase',sites.biinPurchase);
     
-    //app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
-    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier/deleteSite',sites.markAsDeleted);
+    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
+    //app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier/deleteSite',sites.markAsDeleted);
 
     //Biins
     app.get('/organizations/:identifier/biins',restrict,biins.index);
@@ -187,7 +187,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Element Update
     app.put('/api/organizations/:identifier/elements/:element',elements.set);
     app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
-    app.delete('/api/organizations/:identifier/elements/:element/delete',elements.markAsDeleted);
+    //app.delete('/api/organizations/:identifier/elements/:element/delete',elements.markAsDeleted);
     app.delete('/api/organizations/:identifier/elements/:element/testdelete',elements.testDelete);
 
     //Regions routes
