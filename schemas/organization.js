@@ -19,6 +19,7 @@ var orgSchema = new Schema({
 	majorCounter:{type: Number, default:1},
 	biinsCounter:{type:Number,default:0},
 	biinsAssignedCounter:{type:Number,default:0},
+    isDeleted:{type:Boolean,default:0},
 	//Count off biins purchased
 	purchasedBiinsHist:[{
 				date:{type:String,default:""},
