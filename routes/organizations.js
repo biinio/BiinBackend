@@ -47,8 +47,8 @@ module.exports = function() {
             extraInfo: 1,
             media: 1,
             loyaltyEnabled: 1,
-            sites : 1,
-            isDeleted: false
+            sites : 1
+            //isDeleted: false
         }, function(err, data) {
             res.json({
                 data: data
