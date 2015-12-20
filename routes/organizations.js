@@ -37,7 +37,8 @@ module.exports = function() {
     functions.list = function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         organization.find({
-            "accountIdentifier": req.user.accountIdentifier
+            "accountIdentifier": req.user.accountIdentifier,
+            "isDeleted": false
         }, {
             _id: 0,
             identifier: 1,
@@ -48,13 +49,13 @@ module.exports = function() {
             media: 1,
             loyaltyEnabled: 1,
             sites : 1
-            //isDeleted: false
         }, function(err, data) {
             res.json({
                 data: data
             });
         });
     }
+    
     //PUT/POST an organization
     functions.set = function(req, res) {
         //Perform an update
