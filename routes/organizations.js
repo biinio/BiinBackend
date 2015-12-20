@@ -56,6 +56,29 @@ module.exports = function() {
         });
     }
     
+    functions.testlist = function(req, res) {
+        res.setHeader('Content-Type', 'application/json');
+        var id = req.param("accountIdentifier");
+        organization.find({
+            "accountIdentifier": id,
+            "isDeleted": false
+        }, {
+            _id: 0,
+            identifier: 1,
+            name: 1,
+            brand: 1,
+            description: 1,
+            extraInfo: 1,
+            media: 1,
+            loyaltyEnabled: 1,
+            sites : 1
+        }, function(err, data) {
+            res.json({
+                data: data
+            });
+        });
+    }
+    
     //PUT/POST an organization
     functions.set = function(req, res) {
         //Perform an update
