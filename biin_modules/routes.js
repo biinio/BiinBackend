@@ -103,6 +103,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Organization Routes
     app.get('/organizations',restrict,organizations.index);
     app.get('/api/organizations',organizations.list);
+    //app.get('/api/organizations/:accountIdentifier',organizations.testlist);
 
     app.post('/api/organizations/:identifier',organizations.set);
     app.put('/api/organizations/:accountIdentifier',organizations.create);
