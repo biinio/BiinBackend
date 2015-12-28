@@ -899,11 +899,11 @@ module.exports = function () {
                                             // Obtaing _id for the nearest Showcase and adding into the group id
                                             var elementsForCategory = [];
                                             for (i = 0; i < elementsWithinCategory.length; i++) {
-                                                for (j = 0; j < elementsFromShowcases.length; j++) {
-                                                    if (elementsWithinCategory[i].elementIdentifier == elementsFromShowcases[j].identifier) {
+                                                for (j = 0; j < elementsInShowcase.length; j++) {
+                                                    if (elementsWithinCategory[i].elementIdentifier == elementsInShowcase[j].identifier) {
                                                         elementsForCategory.push({
-                                                            showcase_id: elementsFromShowcases[j].showcase_id,
-                                                            _id: elementsFromShowcases[j]._id,
+                                                            showcase_id: elementsInShowcase[j].showcase_id,
+                                                            _id: elementsInShowcase[j]._id,
                                                             identifier: elementsWithinCategory[i].elementIdentifier
                                                         });
                                                         response.elements.push(elementsWithinCategory[i]);
