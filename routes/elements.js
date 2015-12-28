@@ -33,7 +33,17 @@ module.exports = function(){
 
 	//GET the list of elements
 	functions.list = function(req,res){
-		organization.findOne({"identifier":req.param('identifier'), "isDeleted":false},{elements:true, name:true, identifier:true},function (err, data) {
+		organization.findOne({"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
+            
+            var elementList = [];
+            for (var index = 0; index < data.elements.length; index++) {
+                if (data.elements[index].isDeleted == 0) {
+                    elementList.push(data.elements[index]);
+                }
+            }
+            
+            data.elements = elementList;
+            
 			req.session.selectedOrganization = data;
 			res.json({data:data});
 		});
