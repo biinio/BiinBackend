@@ -21,16 +21,16 @@ module.exports = function(){
 		this.uploadFileAzure(originUrl,imagePath,imageName,function(err,succes){
 			if(err){
 				callback(err);
-			}				
+			}
 			else
-			{			
+			{
 				// obtain the size of an image
-				imageMagick(succes.localPath).size(function(err, value){					
-				  
+				imageMagick(succes.localPath).size(function(err, value){
+
 				  if (err) throw err
 				  succes.width = value.width;
 			  	  succes.height = value.height;
-                  
+
                   delete succes.localPath;
 		          callback(err,succes);
 				});
@@ -40,10 +40,10 @@ module.exports = function(){
 
 	//Crop an Image
 	functions.cropImage = function(pixelEquival,moduleOwner, imageUrl, resizeW, resizeH, cropW, cropH, positionX, positionY, callback){
-		var that = this;      
+		var that = this;
 		var imageName= path.basename(imageUrl);
 		var pathImage = _workingImagePath+imageName;
-       	
+
        	//Pixel ajustment for cropper
        	resizeW*=pixelEquival;
        	resizeH*=pixelEquival;
@@ -67,30 +67,30 @@ module.exports = function(){
 				callback(err)
 			else{
 				that.copyToFtp(pathImage,imageFTPPath,imageName,function(err){
-                  if(err)       
+                  if(err)
                   	callback(err);
                   else
                    var jsonObj = {
 				 	status:"success",
 				 	url:"http://"+process.env.FTP_HOST+imageFTPPath+imageName
-				    }	
+				    }
 				    callback(err,jsonObj);
-				});								
+				});
 			}
 		});
-	} 
+	}
 
 	//Uploads an imag
-	functions.uploadFile = function(imagePath,directory, imageName,callback){		
+	functions.uploadFile = function(imagePath,directory, imageName,callback){
 		this.uploadFileAzure(imagePath, directory, imageName,true,callback);
 	}
 
-	functions.uploadFile = function(imagePath,directory, imageName,generateName,callback){		
+	functions.uploadFile = function(imagePath,directory, imageName,generateName,callback){
 		this.uploadFileAzure(imagePath, directory, imageName,generateName,callback);
 	}
 	//Uploads an imag
-	functions.uploadFileAWS = function(imagePath,directory, imageName, generateName,callback){		
-		var mainBuquet =  process.env.S3_BUCKET;	
+	functions.uploadFileAWS = function(imagePath,directory, imageName, generateName,callback){
+		var mainBuquet =  process.env.S3_BUCKET;
 
 
 	   	var systemImageName ="";//path.join(directory,utils.getImageName(imageName,_workingImagePath));
@@ -100,33 +100,33 @@ module.exports = function(){
 	   	else
 	   		systemImageName =path.join(directory,imageName);
 
-		var newPath = process.env.IMAGES_REPOSITORY+"/"+systemImageName;	
+		var newPath = process.env.IMAGES_REPOSITORY+"/"+systemImageName;
 		var sizeExtend =process.env.STANDARD_IMAGE_HEIGHT + "x"+process.env.STANDARD_IMAGE_WIDTH;
 
-		imageMagick(imagePath)		
+		imageMagick(imagePath)
 		.resize( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT)
-		.crop( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT,0,0)		
-		.geometry(process.env.STANDARD_IMAGE_WIDTH+'!', process.env.STANDARD_IMAGE_HEIGHT+"!")		
+		.crop( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT,0,0)
+		.geometry(process.env.STANDARD_IMAGE_WIDTH+'!', process.env.STANDARD_IMAGE_HEIGHT+"!")
 		.gravity('Center')
 		.quality(process.env.STANDARD_IMAGE_QUALITY)
 		.toBuffer(function (err, buffer) {
 		  if (err){
 		  	throw err;
-		  } 
+		  }
 		  else{
 		  	awsManager.uploadObjectToBuquet(mainBuquet, systemImageName, buffer,function(data){
 		  		callback(newPath);
 		  	});
-		  	
+
 		  }
 
 		})
-		//var buffer =fs.readFileSync(imagePath);		
+		//var buffer =fs.readFileSync(imagePath);
 	}
-     
+
 	//Uploads an imag
-	functions.uploadFileAzure = function(imagePath,directory, imageName, generateName,callback){		
-		var mainContainer=  process.env.AZURE_CONTAINER;	
+	functions.uploadFileAzure = function(imagePath,directory, imageName, generateName,callback){
+		var mainContainer=  process.env.AZURE_CONTAINER;
 
 
 	   	var systemImageName ="";//path.join(directory,utils.getImageName(imageName,_workingImagePath));
@@ -136,24 +136,16 @@ module.exports = function(){
 	   	else
 	   		systemImageName =path.join(directory,imageName);
 
-		var newPath = process.env.IMAGES_REPOSITORY_AZURE+"/"+systemImageName;	
+		var newPath = process.env.IMAGES_REPOSITORY_AZURE+"/"+systemImageName;
 		var sizeExtend =process.env.STANDARD_IMAGE_HEIGHT + "x"+process.env.STANDARD_IMAGE_WIDTH;
-
-		imageMagick(imagePath)		
-		.resize( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT)
-		.crop( process.env.STANDARD_IMAGE_WIDTH, process.env.STANDARD_IMAGE_HEIGHT,0,0)		
-		.geometry(process.env.STANDARD_IMAGE_WIDTH+'!', process.env.STANDARD_IMAGE_HEIGHT+"!")		
-		.gravity('Center')
-		.quality(process.env.STANDARD_IMAGE_QUALITY)
-		.toBuffer(function (err, buffer) {
-			azureManager.uploadObjectToContainer(mainContainer, systemImageName,buffer,imageFormat,function(data){
-					callback(newPath);
-			});
+		var fileBuffer = fs.readFileSync(imagePath);
+		azureManager.uploadObjectToContainer(mainContainer, systemImageName,fileBuffer,imageFormat,function(data){
+				callback(newPath);
 		});
 	}
 
     //Copy a image to a FTP server
-    functions.copyToFtp = function(localPath,ftpPath, systemImageName,callback){             
+    functions.copyToFtp = function(localPath,ftpPath, systemImageName,callback){
        var remotePath = ftpPath+systemImageName;
        utils.FTPUpload(localPath,remotePath,callback);
     }
