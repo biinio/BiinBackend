@@ -32,6 +32,8 @@ module.exports = function () {
 	functions.mapComponent = function(req, res) {
         res.render('site/_partials/mapComponent');
     }
+    
+    
 
 	//GET the list of sites by organization Identifier
 	functions.get= function(req,res){
@@ -476,7 +478,51 @@ module.exports = function () {
 	//Set Site category Public Method
 	functions.setSiteCategory = setSiteCategory;
 
-	//DELETE an specific site
+    
+    //GET the list of sites which have not been marked as deleted
+	functions.list = function(req,res){
+        var organizationIdentifier=req.param("identifier");
+		organization.findOne({
+            "identifier":organizationIdentifier
+        },{
+            sites:true, 
+            name: true,
+            identifier:true
+        },function (err, data) {
+            //return only sites that have not been deleted.
+            var siteList = [];
+            for (var index = 0; index < data.sites.length; index++) {
+                if (data.sites[index].isDeleted == 0) {
+                    siteList.push(data.sites[index]);
+                }
+            }
+            
+            data.sites = siteList;
+            var biinPrototype =new biin();
+			biinPrototype.proximityUUID = req.param('identifier');
+
+			res.json({data:data, prototypeObj:new site(), prototypeObjBiin:biinPrototype});
+		});
+	}
+    
+    //MARK site as deleted 
+    functions.markAsDeleted = function(req,res) {
+        //Perform an update
+		var organizationIdentifier=req.param("orgIdentifier");
+		var siteIdentifier=req.param("siteIdentifier");
+
+        organization.update({
+            identifier:organizationIdentifier,
+            "sites.identifier":siteIdentifier
+        },{ 
+            $set:{"sites.$.isDeleted": 1}
+        }, function(err){
+            if(err) { throw err; }
+            else { res.json({state:"success"}); }
+        });
+    }
+    
+	//DELETE an specific site from DB
 	functions.delete= function(req,res){
 		//Perform an update
 		var organizationIdentifier=req.param("orgIdentifier");
