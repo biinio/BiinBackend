@@ -134,7 +134,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/showcases/:identifier',showcases.get);
     app.put('/api/showcases/:showcase',showcases.set);
-    app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.delete);
+                                app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.markAsDeleted);
     app.get('/api/organizations/:identifier/showcases',showcases.list);
 
 
