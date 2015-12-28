@@ -33,7 +33,7 @@ module.exports = function () {
 		var organizationIdentifier = req.param("identifier");
 		var showcaseProto = new showcase();
 		showcaseProto.organizationIdentifier = organizationIdentifier;
-		showcase.find({organizationIdentifier:organizationIdentifier},function (err, data) {
+		showcase.find({organizationIdentifier:organizationIdentifier, "isDeleted": false},function (err, data) {
 			   res.json({data:data, prototypeObj : showcaseProto});
 		});		
 	}
