@@ -110,7 +110,10 @@ module.exports = function () {
         //Perform a delete
 		var organizationIdentifier = req.param('identifier');
 		var showcaseIdentifier=req.param("showcase");
-                    organization.findOne({identifier:organizationIdentifier,'sites.showcases.showcaseIdentifier':showcaseIdentifier},function(err,orgData){
+        
+        var updateLinkingReferences=function(callback){
+			//Update the showcases inside the biins references.
+			organization.findOne({identifier:organizationIdentifier,'sites.showcases.showcaseIdentifier':showcaseIdentifier},function(err,orgData){
 				if(orgData && orgData.sites && orgData.sites.length){
 					for(var i=0; i<orgData.sites.length;i++){
 						if('showcases' in orgData.sites[i] && orgData.sites[i].showcases.length){
@@ -132,17 +135,24 @@ module.exports = function () {
 					if(err)
 						throw err;
 					else{						
-						showcase.update({
+						callback();
+					}
+				})
+			});
+		}
+        
+        showcase.update({
                             identifier:showcaseIdentifier, organizationIdentifier:organizationIdentifier
                         },{
                             $set:{"isDeleted":1}
                         },function(err) {
 			                 if(err) { throw err; }
-			                 else { res.json({state:"success"});}	
+			                 else { 
+                                updateLinkingReferences(function(){
+					               res.json({state:"success"});
+				                });
+                             }	
 		                });
-					}
-				})
-			});
     }
     
 	//DELETE an specific showcase
