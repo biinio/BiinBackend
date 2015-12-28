@@ -186,9 +186,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/organizations/:identifier/elements',elements.set);
     //Element Update
     app.put('/api/organizations/:identifier/elements/:element',elements.set);
-    app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
-    //app.delete('/api/organizations/:identifier/elements/:element/delete',elements.markAsDeleted);
-    app.delete('/api/organizations/:identifier/elements/:element/testdelete',elements.testDelete);
+    //app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
+    app.delete('/api/organizations/:identifier/elements/:element',elements.markAsDeleted);
+    
 
     //Regions routes
     app.get('/regions',restrict,regions.index)
