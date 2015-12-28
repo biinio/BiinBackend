@@ -479,7 +479,7 @@ module.exports = function () {
 	functions.setSiteCategory = setSiteCategory;
 
     
-    //GET the list of sites
+    //GET the list of sites which have not been marked as deleted
 	functions.list = function(req,res){
         var organizationIdentifier=req.param("identifier");
 		organization.findOne({
@@ -497,6 +497,7 @@ module.exports = function () {
                 }
             }
             
+            data.sites = siteList;
             var biinPrototype =new biin();
 			biinPrototype.proximityUUID = req.param('identifier');
 

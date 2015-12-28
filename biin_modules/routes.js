@@ -141,8 +141,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Sites routes
     app.get('/organizations/:identifier/sites',restrict,sites.index);
     app.get('/site/mapComponent',sites.mapComponent);
-    app.get('/api/organizations/:identifier/sites',sites.get);
-    //app.get('/api/organizations/:identifier/sites',sites.list);
+    //app.get('/api/organizations/:identifier/sites',sites.get);
+    app.get('/api/organizations/:identifier/sites',sites.list);
     app.post('/api/organizations/:orgIdentifier/sites',sites.set);
 
     //Maintenance
