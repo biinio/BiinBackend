@@ -33,7 +33,7 @@ module.exports = function () {
 		var organizationIdentifier = req.param("identifier");
 		var showcaseProto = new showcase();
 		showcaseProto.organizationIdentifier = organizationIdentifier;
-		showcase.find({organizationIdentifier:organizationIdentifier},function (err, data) {
+		showcase.find({organizationIdentifier:organizationIdentifier, "isDeleted": false},function (err, data) {
 			   res.json({data:data, prototypeObj : showcaseProto});
 		});		
 	}
@@ -105,6 +105,56 @@ module.exports = function () {
 		}						
 	}
 
+    //Mark showcase as deleted
+    functions.markAsDeleted = function(req, res){
+        //Perform a delete
+		var organizationIdentifier = req.param('identifier');
+		var showcaseIdentifier=req.param("showcase");
+        
+        var updateLinkingReferences=function(callback){
+			//Update the showcases inside the biins references.
+			organization.findOne({identifier:organizationIdentifier,'sites.showcases.showcaseIdentifier':showcaseIdentifier},function(err,orgData){
+				if(orgData && orgData.sites && orgData.sites.length){
+					for(var i=0; i<orgData.sites.length;i++){
+						if('showcases' in orgData.sites[i] && orgData.sites[i].showcases.length){
+							var toSpliceIndex=[];
+							for(var s =0; s<orgData.sites[i].showcases.length;s++){
+								if(orgData.sites[i].showcases[s].showcaseIdentifier===showcaseIdentifier){
+									toSpliceIndex.push(s);
+								}
+							}
+							//Remove the Index
+							if(toSpliceIndex.length>0){
+								for(var index=0;index<toSpliceIndex.length;index++)
+									orgData.sites[i].showcases.splice(toSpliceIndex[index],1);
+							}
+						}
+					}
+				}
+				orgData.save(function(err){
+					if(err)
+						throw err;
+					else{						
+						callback();
+					}
+				})
+			});
+		}
+        
+        showcase.update({
+                            identifier:showcaseIdentifier, organizationIdentifier:organizationIdentifier
+                        },{
+                            $set:{"isDeleted":1}
+                        },function(err) {
+			                 if(err) { throw err; }
+			                 else { 
+                                updateLinkingReferences(function(){
+					               res.json({state:"success"});
+				                });
+                             }	
+		                });
+    }
+    
 	//DELETE an specific showcase
 	functions.delete= function(req,res){
 

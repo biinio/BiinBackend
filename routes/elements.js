@@ -34,6 +34,16 @@ module.exports = function(){
 	//GET the list of elements
 	functions.list = function(req,res){
 		organization.findOne({"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
+            
+            var elementList = [];
+            for (var index = 0; index < data.elements.length; index++) {
+                if (data.elements[index].isDeleted == 0) {
+                    elementList.push(data.elements[index]);
+                }
+            }
+            
+            data.elements = elementList;
+            
 			req.session.selectedOrganization = data;
 			res.json({data:data});
 		});
@@ -371,26 +381,6 @@ module.exports = function(){
 
 		}
 	}
-    
-    functions.testDelete = function(req, res) {
-        var organizationIdentifier = req.param('identifier');
-        var elementIdentifier=req.param("element");
-            
-        //update element from organization.elements
-		organization.update({
-            identifier:organizationIdentifier,
-            "elements.elementIdentifier":elementIdentifier
-        },{
-            $set:{"elements.$.isDeleted": 1}
-        }, function(err){
-        if(err) {
-            throw err;
-        }
-        else {
-            res.json({state:"success"}); 
-        }
-    });
-    }
                             
 
     //Set element's isDeleted attribtue to true
@@ -429,16 +419,22 @@ module.exports = function(){
                         if(err)
                         { throw err; }
                         else {
-                            //mark elements from showcases table as deleted
+                            //remove elements from showcases table as deleted
+                            showcase.update({
+                                organizationIdentifier: organizationIdentifier
+                            },{
+                                $pull:{elements:{elementIdentifier: elementIdentifier}}
+                            }, {
+                                multi:true
+                            }, /*
                             showcase.update({
                                 organizationIdentifier: organizationIdentifier,
                                 "elements.elementIdentifier":elementIdentifier
-                                
                             },{
-                                $set: { isDeleted: 1 }
+                                $set:{"elements.$.isDeleted": 1}
                             }, {
                                 multi:true
-                            }, function(err) {
+                            },*/ function(err) {
                                 if (err) { throw err; }
                                 else {
                                     // remove biins which have the element associated

@@ -134,15 +134,15 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/showcases/:identifier',showcases.get);
     app.put('/api/showcases/:showcase',showcases.set);
-    app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.delete);
+                                app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.markAsDeleted);
     app.get('/api/organizations/:identifier/showcases',showcases.list);
 
 
     //Sites routes
     app.get('/organizations/:identifier/sites',restrict,sites.index);
     app.get('/site/mapComponent',sites.mapComponent);
-    app.get('/api/organizations/:identifier/sites',sites.get);
-    //app.get('/api/organizations/:identifier/sites',sites.list);
+    //app.get('/api/organizations/:identifier/sites',sites.get);
+    app.get('/api/organizations/:identifier/sites',sites.list);
     app.post('/api/organizations/:orgIdentifier/sites',sites.set);
 
     //Maintenance
@@ -164,8 +164,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Create a biin
     app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier/purchase',sites.biinPurchase);
     
-    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
-    //app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier/deleteSite',sites.markAsDeleted);
+    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.markAsDeleted);
 
     //Biins
     app.get('/organizations/:identifier/biins',restrict,biins.index);
@@ -187,9 +186,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/organizations/:identifier/elements',elements.set);
     //Element Update
     app.put('/api/organizations/:identifier/elements/:element',elements.set);
-    app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
-    //app.delete('/api/organizations/:identifier/elements/:element/delete',elements.markAsDeleted);
-    app.delete('/api/organizations/:identifier/elements/:element/testdelete',elements.testDelete);
+    //app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
+    app.delete('/api/organizations/:identifier/elements/:element',elements.markAsDeleted);
+    
 
     //Regions routes
     app.get('/regions',restrict,regions.index)
