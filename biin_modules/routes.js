@@ -318,6 +318,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier/requestSites/:batch',mobileEndPoint.getNextSites);
     app.get('/mobile/biinies/:identifier/requestCollection',mobileEndPoint.getCollections);
 
+    app.get('/mobile/v2/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitalDataFullCategories);
+
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {
         var err = new Error('Not Found');
