@@ -168,6 +168,11 @@ var orgSchema = new Schema({
 			actionType:{type:String, default:""},
 			currencyType:{type:String, default:"0"},
 
+            //has call to action
+            "hasCallToAction":{type:Boolean,default:0},
+            "callToActionURL":{type:String, default:""},
+            "callToActionTitle":{type:String, default:""},
+
 			hasFromPrice:{type:String, default:"0"},
 			//fromPrice:{type:String, default:""},
 			hasListPrice:{type:String, default:'0'},
