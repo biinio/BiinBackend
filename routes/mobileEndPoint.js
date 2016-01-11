@@ -209,7 +209,7 @@ module.exports = function () {
         elementValidated.userLiked = element.userLiked ? element.userLiked : "0";
         elementValidated.userCollected = element.userCollected ? element.userCollected : "0";
         elementValidated.userViewed = element.userViewed ? element.userViewed : "0";
-        elementValidated.hasCallToAction = elementValidated.hasCallToAction?:elementValidated.hasCallToAction:"0";
+        elementValidated.hasCallToAction = elementValidated.hasCallToAction?elementValidated.hasCallToAction:"0";
         elementValidated.callToActionURL = elementValidated.callToActionURL?elementValidated.callToActionURL:"";
         elementValidated.callToActionTitle = elementValidated.callToActionTitle? elementValidated.callToActionTitle : "";
 
