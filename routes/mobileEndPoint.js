@@ -1929,14 +1929,20 @@ module.exports = function () {
       var categories = [];
       var sites = [];
 
-      category.find({},{},function(categoryErr,categoriesData){
+      var startedTime = Date.now();
+
+      category.find({},{identifier:1},function(categoryErr,categoriesData){
+        var currenttime = Date.now();
+        console.log((currenttime-startedTime)/1000);
         if(categoryErr)
           res.json({data:{}, "status": "1", "result": "0" });
         else{
           _.each(categoriesData,function(category){
             categories.push({identifier:category.identifier,elements:[]});
           });
-          organization.find({},{elements:1},function(elementsErr,elementsData){
+          organization.find({},{},function(elementsErr,elementsData){
+            var currenttime = Date.now();
+            console.log((currenttime-startedTime)/1000);
             if(elementsErr)
               res.json({data:{}, "status": "2", "result": "0" });
             else{
@@ -1961,6 +1967,8 @@ module.exports = function () {
               });
 
               organization.find({},{sites:1},function(errSites,sitesData){
+                var currenttime = Date.now();
+                console.log((currenttime-startedTime)/1000);
                 if(errSites)
                   res.json({data:{}, "status": "2", "result": "0" });
                 else {
@@ -1977,6 +1985,8 @@ module.exports = function () {
                   });
                   showcasesToFind = _.pluck(showcasesInSites,'showcaseIdentifier');
                   showcase.find({identifier: {$in: showcasesToFind}},{},function(showcaseErr,showcasesData){
+                    var currenttime = Date.now();
+                    console.log((currenttime-startedTime)/1000);
                     if(showcaseErr)
                       res.json({data:{}, "status": "3", "result": "0" });
                     else {
@@ -2015,6 +2025,8 @@ module.exports = function () {
                           });
                         });
                       });
+                      var currenttime = Date.now();
+                      console.log((currenttime-startedTime)/1000);
 
 
                       res.json({categories:categories, sites:sitesDesnormalized});
