@@ -25,6 +25,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var venues =require('../routes/venue')();
     var mobileEndPoint = require('../routes/mobileEndPoint')();
     var roles = require('../routes/roles')();
+    var ratingSites = require('../routes/ratingSites')();
 
     //Restricted login pages function
     var restrict =function(req, res, next) {
@@ -319,6 +320,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier/requestCollection',mobileEndPoint.getCollections);
 
     app.get('/mobile/v2/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitalDataFullCategories);
+
+    app.put('/mobile/rating/site',ratingSites.putRating);
+    app.get('/ratings/site',ratingSites.getRatings);
 
     /// catch 404 and forwarding to error handler
     app.use(function(req, res, next) {
