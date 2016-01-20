@@ -7,7 +7,7 @@ module.exports = function () {
 	var functions = {};
 
 	functions.putRating = function(req, res){
-		var reqData = req.body.data;
+		var reqData = req.body.model;
 		var siteId = reqData.siteId;
 		var userId = reqData.userId;
 		var rating = reqData.rating;
