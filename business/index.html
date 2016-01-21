@@ -13,11 +13,6 @@
    <script src="vendor/nprogress/nprogress.js"></script>
    <!-- FAVICON-->
    <link rel="icon" href="img/favicon/favicon.ico">
-   <link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
-   <link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-touch-icon-57x57-precomposed.png">
-   <link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72-precomposed.png">
-   <link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114-precomposed.png">
-   <link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-touch-icon-144x144-precomposed.png">
    <!-- FONT-->
    <link href="//fonts.googleapis.com/css?family=Lato:400,700,300" rel="stylesheet," type="text/css">
    <!-- ICONS-->
@@ -41,7 +36,7 @@
 <body>
    <!-- WEBSITE PRELOADER-->
    <div class="preloader">
-      <div class="loading">Loading ...</div>
+      <div class="loading">Cargando ...</div>
    </div>
    <!-- START HEADER-->
    <header id="header" class="header novideo">
@@ -67,7 +62,7 @@
                      </li>
                      <li><a href="#features">Caracteristicas</a>
                      </li>
-                     <li><a href="#contact" class="btn btn-sm btn-theme btn-demo">Solicitar Demo</a>
+                     <li><a href="#contact" class="btn btn-sm btn-theme btn-demo">Solicitar Prueba Gratuita</a>
                      </li>
                   </ul>
                </div>
@@ -83,25 +78,30 @@
                <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
                   <!-- INTRO MESSAGE-->
                   <div class="intro-section">
-                     <h1 class="intro">
-                        <strong>CONSTRUYA VINCULOS&nbsp;</strong>con sus clientes</h1>
-                     <h5>Con presencia móvil y beneficios con contexto para sus visitantes.</h5>
+                     <h1 class="intro">Conéctese con sus clientes en su móvil durante toda la experiencia de compra.</h1>
+                     <h5>Empiece ya con un mes&nbsp;
+                        <strong>gratis&nbsp;</strong>incluyendo la instalación.</h5>
+                  </div>
+                  <form id="headerform" class="row">
+                     <div class="col-md-3 request-demo-field">
+                        <input id="nameInputHeader" name="nameInputHeader" placeholder="Nombre" minlenght="2" maxlength="100" required class="input-lg form-control">
+                     </div>
+                     <div class="col-md-3 request-demo-field">
+                        <input id="emailInputHeader" name="emailInputHeader" placeholder="Correo Electronico" minlenght="5" maxlength="100" type="email" required class="input-lg form-control">
+                     </div>
+                     <div class="col-md-3 request-demo-field">
+                        <input id="phoneInputHeader" name="phoneInputHeader" placeholder="Telefono" type="phoneCR" required class="input-lg form-control">
+                     </div>
+                     <div class="col-md-3 request-demo-field">
+                        <input id="companyInputHeader" name="companyInputHeader" placeholder="Compañia" maxlength="100" required class="input-lg form-control">
+                     </div>
+                  </form>
+                  <div class="row text-center request-demo-button"><a id="headerDemoButton" class="btn btn-lg btn-theme">Solicitar Prueba Gratuita</a>
                   </div>
                   <div class="row">
-                     <div class="col-md-3 request-demo-field">
-                        <input placeholder="Nombre" class="input-lg form-control">
-                     </div>
-                     <div class="col-md-3 request-demo-field">
-                        <input placeholder="Correo Electronico" class="input-lg form-control">
-                     </div>
-                     <div class="col-md-3 request-demo-field">
-                        <input placeholder="Telefono" class="input-lg form-control">
-                     </div>
-                     <div class="col-md-3 request-demo-field">
-                        <input placeholder="Compañia" class="input-lg form-control">
-                     </div>
-                  </div>
-                  <div class="row text-center request-demo-button"><a href="#contact" class="btn btn-lg btn-theme scrollto">Solicitar Demo</a>
+                     <h5>Para conocer más sobre la plataforma Biin llame al&nbsp;
+                        <strong>+506 8701-1518</strong>
+                     </h5>
                   </div>
                </div>
             </div>
@@ -113,116 +113,103 @@
    <section id="features" class="features-list">
       <div class="container">
          <!-- START SECTION HEADER-->
-         <div data-wow-offset="120" data-wow-duration="1.3s" class="section-header wow fadeIn animated">
+         <div data-wow-offset="120" data-wow-duration="1.3s" class="wow fadeIn animated">
             <!-- SECTION TITLE-->
-            <h2>Biin le brinda a su negocio una solución móvil para
-               <strong>conectarse mejor con tus clientes.</strong>
-            </h2>
+            <h2>
+               <strong>Conéctese mejor con sus clientes&nbsp;</strong>con contenido de alta calidad + mensajes con contexto por medio de smart beacons.</h2>
          </div>
          <!-- END SECTION HEADER-->
-         <div class="row">
-            <!-- START FEATURES LEFT-->
-            <div class="col-md-4 col-sm-4 features-left">
-               <!-- FEATURE-->
-               <div class="feature">
-                  <!-- FEATURE ICON-->
-                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
-                     <span class="fa-stack fa-lg">
-                        <em class="fa fa-circle fa-stack-2x"></em>
-                        <em class="fa fa-home fa-stack-1x fa-inverse"></em>
-                     </span>
-                  </div>
-                  <!-- FEATURE TEXT-->
-                  <div class="feature-details">
-                     <h3Biin class="main-color">En casa</h3Biin>
-                     <p>Genere intención de compra con sus productos, ofertas</p>
+         <!-- START FEATURES LEFT-->
+         <div id="featurescarrusel" class="features-left owl-carousel owl-theme">
+            <!--Feature-->
+            <div class="row">
+               <div class="col-md-12">
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="image-container wow fadeIn animated">
+                     <img src="img/casa.png" alt="" data-no-retina>
                   </div>
                </div>
-               <!-- FEATURE-->
-               <div class="feature">
-                  <!-- FEATURE ICON-->
-                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
-                     <span class="fa-stack fa-lg">
-                        <em class="fa fa-circle fa-stack-2x"></em>
-                        <em class="fa fa-map-o fa-stack-1x fa-inverse"></em>
-                     </span>
-                  </div>
-                  <!-- FEATURE TEXT-->
-                  <div class="feature-details">
-                     <h3Biin class="main-color">En las cercanías</h3Biin>
-                     <p>atraiga a clientes con mensajes contextuales</p>
-                  </div>
-               </div>
-               <!-- FEATURE-->
-               <div class="feature">
-                  <!-- FEATURE ICON-->
-                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
-                     <span class="fa-stack fa-lg">
-                        <em class="fa fa-circle fa-stack-2x"></em>
-                        <em class="fa fa-mobile fa-stack-1x fa-inverse"></em>
-                     </span>
-                  </div>
-                  <!-- FEATURE TEXT-->
-                  <div class="feature-details">
-                     <h3Biin class="main-color">En la entrada</h3Biin>
-                     <p>de la bienvenida y premie a sus clientes</p>
-                  </div>
+               <div class="col-md-12">
+                  <h3Biin class="main-color">En casa o la oficina</h3Biin>
+                  <p>Genere intención de compra con contenido de sus productos, ofertas y eventos.</p>
                </div>
             </div>
-            <!-- END FEATURES LEFT-->
-            <!-- START MOBILE MOCKUP-->
-            <div class="col-md-4 col-sm-4">
-               <div data-wow-offset="120" data-wow-duration="1.3s" class="mockup-mobile wow fadeIn animated">
-                  <img src="img/iphone-minimal.png" alt="" data-no-retina>
+            <!--Feature-->
+            <div class="row feature">
+               <div class="col-md-12">
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="image-container wow fadeIn animated">
+                     <img src="img/cercanias.png" alt="" data-no-retina>
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <h3Biin class="main-color">En las cercanías</h3Biin>
+                  <p>Atraiga a clientes con mensajes contextuales y contenido de acuerdo a su posición y por proximidad inmediata.</p>
                </div>
             </div>
-            <!-- END MOBILE MOCKUP-->
-            <!-- START FEATURES RIGHT-->
-            <div class="col-md-4 col-sm-4 features-right">
-               <!-- FEATURE-->
-               <div class="feature">
-                  <!-- FEATURE ICON-->
-                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
-                     <span class="fa-stack fa-lg">
-                        <em class="fa fa-circle fa-stack-2x"></em>
-                        <em class="fa fa-university fa-stack-1x fa-inverse"></em>
-                     </span>
-                  </div>
-                  <!-- FEATURE TEXT-->
-                  <div class="feature-details">
-                     <h3Biin class="main-color">Despues</h3Biin>
-                     <p>Obtenga la opinión de sus clientes en el momento correcto</p>
+            <!--Feature-->
+            <div class="row feature">
+               <div class="col-md-12">
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="image-container wow fadeIn animated">
+                     <img src="img/entrada.png" alt="" data-no-retina>
                   </div>
                </div>
-               <!-- FEATURE-->
-               <div class="feature">
-                  <!-- FEATURE ICON-->
-                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
-                     <span class="fa-stack fa-lg">
-                        <em class="fa fa-circle fa-stack-2x"></em>
-                        <em class="fa fa-user fa-stack-1x fa-inverse"></em>
-                     </span>
-                  </div>
-                  <!-- FEATURE TEXT-->
-                  <div class="feature-details">
-                     <h3Biin class="main-color">Dentro</h3Biin>
-                     <p>Brinde información relevante en cada departamento</p>
-                  </div>
+               <div class="col-md-12">
+                  <h3Biin class="main-color">En la entrada</h3Biin>
+                  <p>Dé la bienvenida y premie a sus clientes.</p>
                </div>
             </div>
-            <!-- END FEATURES RIGHT-->
+            <!--Feature-->
+            <div class="row feature">
+               <div class="col-md-12">
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="image-container wow fadeIn animated">
+                     <img src="img/dentro.png" alt="" data-no-retina>
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <h3Biin class="main-color">Dentro</h3Biin>
+                  <p>Brinde información relevante en cada área de su negocio.</p>
+               </div>
+            </div>
+            <!--Feature-->
+            <div class="row">
+               <div class="col-md-12">
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="image-container wow fadeIn animated">
+                     <img src="img/salida.png" alt="" data-no-retina>
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <h3Biin class="main-color">A la salida</h3Biin>
+                  <p>Obtenga la opinión de sus clientes en cuanto salen de su negocio y mejore su índice de promotor neto (NPS).</p>
+               </div>
+            </div>
+            <!--Feature-->
+            <div class="row">
+               <div class="col-md-12">
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="image-container wow fadeIn animated">
+                     <img src="img/despues.png" alt="" data-no-retina>
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <h3Biin class="main-color">Después</h3Biin>
+                  <p>Analice cómo sus clientes interactúan con su negocio desde la casa hasta su negocio.</p>
+               </div>
+            </div>
          </div>
-         <div class="row text-center">
-            <!-- SECTION TITLE-->
-            <h2>Biin tiene las
-               <strong>HERRAMIENTAS NESESARIAS &nbsp;</strong>para hacer crecer su empresa</h2>
-            <h5>Biin es la vitrina digital para su marca y la herramienta que lo acerca más a sus clientes ayudando a crecer su negocio.</h5>
-         </div>
+         <!-- END FEATURES RIGHT-->
       </div>
    </section>
    <!-- END FEATURE LIST-->
    <!-- START PIC TEXT RIGHT-->
-   <section id="desc1" class="pic-text pic-text-right light-gray-background">
+   <section id="featuresdescription" data-wow-offset="15" data-wow-duration="1.3s" class="light-gray-background wow fadeIn animated">
+      <div class="container">
+         <div class="row text-center">
+            <!-- SECTION TITLE-->
+            <h2>Su negocio como una
+               <strong>experiencia móvil.</strong>
+            </h2>
+         </div>
+      </div>
+   </section>
+   <div id="desc0" class="pic-text pic-text-right light-gray-background">
       <div class="container">
          <div class="row">
             <!-- LEFT PIC-->
@@ -235,10 +222,16 @@
             <div class="col-md-6">
                <!-- SECTION TITLE-->
                <h2>
-                  <strong>Presencia móvil&nbsp;</strong>para su negocio.</h2>
-               <p>Sus clientes podrán ver sus productos, y promociones, coleccionar y compartir además de tener toda la información de su negocio.</p>Sea encontrado en búsquedas por personas en las cercanías o dentro del centro comercial. Con Biin puedes
-               crear contenido de forma rapida y facil.</div>
+                  <strong>Presencia móvil.</strong>
+               </h2>
+               <p>Sus clientes podrán ver sus productos y promociones y eventos, además de coleccionar y compartir al instante.</p>
+               <p>Toda la información de su negocio para ser encontrado en búsquedas en las cercanías, o dentro del centro comercial, con biin puedes gestionar el contenido de forma rápida y fácil.</p>
+            </div>
          </div>
+      </div>
+   </div>
+   <div id="desc2" class="pic-text pic-text-right">
+      <div class="container">
          <div class="row">
             <div data-wow-offset="15" data-wow-duration="1.2s" class="col-md-6 wow fadeInLeft animated">
                <div class="mockup-mobile">
@@ -248,25 +241,32 @@
             <!-- RIGHT TEXT-->
             <div class="col-md-6">
                <!-- SECTION TITLE-->
-               <h2>Una
-                  <strong>aplicación&nbsp;</strong>con contexto del mundo real.</h2>
-               <p>Notifique a los clientes de las promociones en el momento que entran a su local.</p>Personalice la experiencia de acuerdo al día y la hora o las características de su público. Pronto: Haga encuestas de servicio al cliente en el momento
-               que los clientes dejan su local y en la misma app.</div>
-         </div>
-         <div class="row light-gray-background">
-            <div data-wow-offset="15" data-wow-duration="1.2s" class="col-md-6 wow fadeInLeft animated">
-               <div class="mockup-mobile">
-                  <img src="img/lealtad.png" alt="" data-no-retina>
-               </div>
+               <h2>Contexto del mundo real con&nbsp;
+                  <strong>smart beacons.</strong>
+               </h2>
+               <p>Notifique a los clientes de las promociones en el momento que se aproximan o entran a su local.</p>
+               <p>Personalice la experiencia de acuerdo al día y la hora o las características de su público.</p>
+               <p>
+                  <strong>Pronto!&nbsp;</strong>Haga encuestas de servicio al cliente en el momento que los clientes dejan su local y en la misma app.</p>
             </div>
-            <!-- RIGHT TEXT-->
-            <div class="col-md-6">
-               <!-- SECTION TITLE-->
-               <h2>
-                  <strong>Lealtad Digital&nbsp;</strong>en la era del contexto.</h2>
-               <p>Genere relaciones con sus clientes actuales y crezca su base de clientes leales con una herramienta de lealtad poderosa por su simplicidad y conveniencia.</p>Sus clientes acumulan puntos por sus visitas, acciones en el app y por sus compras,
-               después pueden cambiarlos por regalos de su negocio.</div>
          </div>
+      </div>
+   </div>
+   <!--#desc3.pic-text.pic-text-right.light-gray-background.container
+  .row
+    .col-md-6.wow.fadeInLeft.animated(data-wow-offset='15', data-wow-duration='1.2s')
+      .mockup-mobile
+        img(src='img/lealtad.png', alt='', data-no-retina)
+    // RIGHT TEXT
+    .col-md-6
+      // SECTION TITLE
+      h2
+        strong Lealtad Digital
+      p Genere relaciones con sus clientes actuales y crezca su base de clientes leales con una herramienta de lealtad poderosa por su simplicidad y conveniencia.
+      p Sus clientes acumulan puntos por sus visitas, acciones en el app y por sus compras, después pueden cambiarlos por regalos de su negocio.
+-->
+   <div id="desc4" class="pic-text pic-text-right light-gray-background">
+      <div class="container">
          <div class="row">
             <div data-wow-offset="15" data-wow-duration="1.2s" class="col-md-6 wow fadeInLeft animated">
                <div class="mockup-mobile">
@@ -278,22 +278,36 @@
                <!-- SECTION TITLE-->
                <h2>
                   <strong>Analiticas&nbsp;</strong>del mundo real.</h2>
-               <p>Mida la efectividad de sus campañas con información generada en su tienda.</p>Conozca cuántas personas entran a su local, en que espacios se quedan más tiempo y mucha información</div>
+               <p>Mida la efectividad de sus campañas con información generada en su local y en la aplicación.</p>
+               <p>Conozca cuántas personas entran a su local, en cuáles espacios se quedan más tiempo, cuáles productos ven, coleccionan y comparten.</p>
+               <p>Nuevas posibilidades de información en la era del contexto.</p>
+            </div>
          </div>
       </div>
-   </section>
+   </div>
    <!-- END PIC TEXT RIGHT-->
    <!-- START APP SHOTS-->
    <section id="shots" class="appshots">
       <div class="container">
-         <!-- SECTION HEADER-->
-         <div class="section-header">
-            <div class="col-md-6">
-               <h2>Unase a la era digital del contexto con Biin</h2>
-               <h4>Integre su negocio a la plataforma Biin y comience a relacionarse mejor con sus clientes.</h4>
+         <h2 data-wow-offset="15" data-wow-duration="1.3s" class="wow fadeIn animated">La tecnología de proximidad de Biin abre&nbsp;
+            <strong>nuevas oportunidades&nbsp;</strong>para interactuar con sus visitantes en su local.</h2>
+         <div class="section-description">
+            <div class="row">
+               <div data-wow-offset="20" data-wow-duration="1.3s" class="col-md-4 wow fadeIn animated">
+                  <div class="image-container">
+                     <img src="img/image3.png" alt="" data-no-retina>
+                  </div>Los beacons de Biin son pequeños transmisores bluetooth de baja energía que emiten una señal que es captada por teléfonos inteligentes que tengan la aplicación biin instalada. Se coloca el beacon en la entrada de su tienda o en un departamento
+                  específico.</div>
+               <div data-wow-offset="21" data-wow-duration="1.3s" class="col-md-4 wow fadeIn animated">
+                  <div class="image-container">
+                     <img src="img/image1.png" alt="" data-no-retina>
+                  </div>La aplicación Biin detecta la presencia de los beacons y con esto sabe en donde se encuentra el usuario, pudiendo mostrarle contenido o mensajes con contexto de proximidad.</div>
+               <div data-wow-offset="22" data-wow-duration="1.3s" class="col-md-4 wow fadeIn animated">
+                  <div class="image-container">
+                     <img src="img/image2.png" alt="" data-no-retina>
+                  </div>Su negocio mantiene el contenido dinámico y personalizado para brindarle a cada visitante una experiencia relevante.</div>
             </div>
          </div>
-         <!-- END SECTION HEADER-->
       </div>
    </section>
    <!-- END APP SHOTS-->
@@ -302,35 +316,32 @@
       <div class="container">
          <!-- SECTION HEADER-->
          <div data-wow-offset="15" data-wow-duration="1.3s" class="text-centre wow fadeIn animated">
-            <h2>Solicite un demo.</h2>
-            <p>Nos encantaria ir a tu negocio para mostrarte lo que biin puede hacer....Explicar que es el demo...</p>
+            <h2>Integre su negocio a la era digital del contexto.</h2>
+            <h5>Empiece ya con un mes&nbsp;
+               <strong>gratis&nbsp;</strong>incluyendo la instalación.</h5>
+            <br>
+            <form id="formBottom" class="row">
+               <div class="col-md-3 request-demo-field">
+                  <input id="nameInputBottom" name="nameInputBottom" placeholder="Nombre" minlenght="2" maxlength="100" required class="input-lg form-control">
+               </div>
+               <div class="col-md-3 request-demo-field">
+                  <input id="emailInputBottom" name="emailInputBottom" placeholder="Correo Electronico" minlenght="5" maxlength="100" type="email" required class="input-lg form-control">
+               </div>
+               <div class="col-md-3 request-demo-field">
+                  <input id="phoneInputBottom" name="phoneInputBottom" placeholder="Telefono" type="phoneCR" required class="input-lg form-control">
+               </div>
+               <div class="col-md-3 request-demo-field">
+                  <input id="companyInputBottom" name="companyInputBottom" placeholder="Compañia" maxlength="100" required class="input-lg form-control">
+               </div>
+            </form>
             <br>
             <div class="row">
-               <div class="col-md-3">
-                  <input placeholder="Nombre" class="input-lg form-control">
-               </div>
-               <div class="col-md-3">
-                  <input placeholder="Correo Electronico" class="input-lg form-control">
-               </div>
-               <div class="col-md-3">
-                  <input placeholder="Telefono" class="input-lg form-control">
-               </div>
-               <div class="col-md-3">
-                  <input placeholder="Compañia" class="input-lg form-control">
+               <div class="text-center"><a id="bottomDemoButton" class="btn btn-lg btn-theme">Solicitar Prueba Gratuita</a>
                </div>
             </div>
-            <br>
-            <div class="row">
-               <div class="text-center"><a href="" class="btn btn-lg btn-theme">Solicitar Demo</a>
-               </div>
-            </div>
-            <h5>Si te interesa agregar Biin a tu negocio puedes llamarnos directamente al número.</h5>
-            <h4>
-               <strong>506-8701-1518&nbsp;</strong>o al correo
-               <a href="mailto::contact@biin.io">
-                  <strong>contact@biin.io</strong>
-               </a>
-            </h4>
+            <h5>Para conocer más sobre la plataforma biin llame al&nbsp;
+               <strong>+506 8701-1518</strong>
+            </h5>
             <!-- SOCIAL SHARE-->
             <ul class="list-icons">
                <li>
@@ -341,6 +352,11 @@
                <li>
                   <a href="https://www.facebook.com/biin.io">
                      <em class="fa fa-facebook-square"></em>
+                  </a>
+               </li>
+               <li>
+                  <a href="mailto:contact@biin.io">
+                     <em class="fa fa-envelope-o"></em>
                   </a>
                </li>
             </ul>
@@ -357,13 +373,13 @@
                   </li>
                   <li><a href="#features" class="scrollto">Caracteristicas</a>
                   </li>
-                  <li><a href="#contact" class="scrollto">Solicitar Demo</a>
+                  <li><a href="#contact" class="scrollto">Solicitar Prueba Gratuita</a>
                   </li>
                </ul>
             </div>
             <div class="col-sm-6">
                <!-- COPYRIGHT-->
-               <p class="copyright">Biin &copy; 2015</p>
+               <p class="copyright">Biin &copy; 2016 version 1.0.0</p>
             </div>
          </div>
       </div>
@@ -372,6 +388,9 @@
    <!-- VENDOR SCRIPTS-->
    <script src="vendor/jquery/dist/jquery.min.js"></script>
    <script src="vendor/jquery.easing/js/jquery.easing.js"></script>
+   <script src="vendor/jquery-validation/dist/jquery.validate.js"></script>
+   <script src="vendor/jquery-validation/dist/additional-methods.js"></script>
+   <script src="vendor/jquery-validation/src/localization/messages_es_PE.js"></script>
    <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
    <script src="vendor/waitForImages/dist/jquery.waitforimages.min.js"></script>
    <script src="vendor/smoothscroll/smoothscroll.js"></script>
@@ -383,7 +402,6 @@
    <script src="vendor/jquery.scrollTo/jquery.scrollTo.js"></script>
    <script src="vendor/wow/dist/wow.js"></script>
    <script src="vendor/matchMedia/matchMedia.js"></script>
-   <script src="vendor/background-video/jquery.backgroundvideo.js"></script>
    <script src="vendor/jQuery-One-Page-Nav/jquery.nav.js"></script>
    <script src="vendor/jQuery-Storage-API/jquery.storageapi.js"></script>
    <!-- SITE SCRIPTS-->
