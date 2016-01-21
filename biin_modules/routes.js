@@ -44,11 +44,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
         passport.authenticate('clientLocal', function(err, user, info) {
             if (err) { return next(err); }
             // Redirect if it fails
-            if (!user) { return res.redirect('/login'); }
+            if (!user) { return res.json({status:"success",url:"/accounts"}); }
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 // Redirect if it succeeds
-                return res.redirect('/accounts');
+                return res.json({status:"success",url:"/accounts"});
             });
         })(req, res, next);
     });
