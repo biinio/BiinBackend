@@ -56,13 +56,13 @@ module.exports = function (db) {
 
     app.use(express.static(path.join(process.env.PWD , 'public')));
     app.use('/css',express.static(path.join(process.env.PWD , 'public/css')));
-    app.use(express.static(path.join(process.env.PWD,'bower_components')));
+    //app.use(express.static(path.join(process.env.PWD,'bower_components')));
 
     app.use(favicon(__dirname + '/../public/favicon.ico'));
     //app.use(logger('dev'));
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(cookieParser());
-    app.use(session({
+    //app.use(bodyParser.urlencoded({ extended: false }));
+    //app.use(cookieParser());
+    /*app.use(session({
         secret: 'ludusy secret',
         store: new MongoStore({
             mongooseConnection: db
@@ -82,7 +82,7 @@ module.exports = function (db) {
         res.set('X-Powered-By', 'Biin.io');
         next();
     });
-
+    */
     //Routes
     var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
 
