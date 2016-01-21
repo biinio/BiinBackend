@@ -30,13 +30,13 @@ module.exports = function (db) {
 
 
     var compress = require('compression');
-    app.use(compress());
+    //app.use(compress());
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     schemasValidations = {};
 
 
-    app.use(cors());
+    //app.use(cors());
 
     // At the top of your web.js
     process.env.PWD = process.cwd();
