@@ -15,7 +15,7 @@ module.exports = function (db) {
     , crypto = require('crypto')
     , multipart = require('connect-multiparty')
     , multipartMiddleware = multipart()
-    , lessMiddleware = require('less-middleware')
+    //, lessMiddleware = require('less-middleware')
     , methodOverride = require('method-override')
     , cors = require('cors')
     , expressValidator = require('express-validator');
@@ -50,38 +50,13 @@ module.exports = function (db) {
         }
     };
 
-    // Less configuration
-    if(isDevelopment){
-        //app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
-        //    force:true,
-        //    debug:true,
-        //    compress:false
-        //}));
-    }
-    else
-    {
-        //Less middleware use in production
-        app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
-            force:false,
-            debug:false,
-            once:true,//Set to compile once when the application start
-            compress:true
-        }));
-
-        //SSL configuration
-        app.enable('trust proxy');
-        app.use(forceSsl);
-    }
-
-
     // View engine setup
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
     app.set('view engine', 'jade');
 
     app.use(express.static(path.join(process.env.PWD , 'public')));
-    app.use('/css',express.static(path.join(__dirname, 'public/css')));
     app.use(express.static(path.join(process.env.PWD,'bower_components')));
-    //app.use(express.static(path.join(process.env.PWD,'bower_components')));
+
     app.use(favicon(__dirname + '/../public/favicon.ico'));
     app.use(logger('dev'));
     app.use(bodyParser.urlencoded({ extended: false }));
