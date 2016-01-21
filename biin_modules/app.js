@@ -85,38 +85,5 @@ module.exports = function (db) {
     //Routes
     var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
 
-    /// error handlerslogger
-    // development error handler
-    // will print stacktrace
-    if (isDevelopment) {
-        app.use(function(err, req, res, next) {
-            console.log("Error of development: " + err.message +" stack: "+err.stack);
-            res.render('error', {
-                message: err.message,
-                error: err
-            });
-        });
-    }else{
-        // production error handler
-        // no stacktraces leaked to user
-        app.use(function(err, req, res, next) {
-                res.render('error', {
-                message: err.message,
-                error: {}
-            });
-        });
-    }
-
-    app.use(function(req, res, next){
-      // the status option, or res.statusCode = 404
-      // are equivalent, however with the option we
-      // get the "status" local available as well
-      res.render('404', { status: 404, url: req.url });
-    });
-
-    process.on('uncaughtException', function (err) {
-        console.log(err);
-        //raygunClient.send(err);
-    });
     return app;
 };
