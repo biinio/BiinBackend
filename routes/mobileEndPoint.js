@@ -9,6 +9,7 @@ module.exports = function () {
     var mobileSession = require('../schemas/mobileSession');
     var client = require('../schemas/client');
     var biin = require('../schemas/biin');
+    var category = require('../schemas/category');
 
     // Config of priorities of categories
     var configPriorities = require('../config/priorities/priorities.json');
@@ -208,9 +209,10 @@ module.exports = function () {
         elementValidated.userLiked = element.userLiked ? element.userLiked : "0";
         elementValidated.userCollected = element.userCollected ? element.userCollected : "0";
         elementValidated.userViewed = element.userViewed ? element.userViewed : "0";
-        elementValidated.hasCallToAction = "1";
-        elementValidated.callToActionURL = "http://www.google.com";
-        elementValidated.callToActionTitle = "GOOGLE";
+        elementValidated.hasCallToAction = elementValidated.hasCallToAction?elementValidated.hasCallToAction:"0";
+        elementValidated.callToActionURL = elementValidated.callToActionURL?elementValidated.callToActionURL:"";
+        elementValidated.callToActionTitle = elementValidated.callToActionTitle? elementValidated.callToActionTitle : "";
+
 
         return elementValidated;
     }
@@ -1859,7 +1861,7 @@ module.exports = function () {
         });
     }
 
-    return functions;
+
 
     function saveInfoIntoUserMobileSession(userIdentifier, sitesArray, elementsSent, elementsByCategorySent, organizationsSent) {
         mobileSession.findOne({identifier: userIdentifier}, {}, function (error, userSessionData) {
@@ -1911,4 +1913,138 @@ module.exports = function () {
             }
         });
     }
+
+    functions.getInitalDataFullCategories = function(req,res){
+      var userIdentifier = req.param("biinieId");
+      var userLat = eval(req.param("latitude"));
+      var userLng = eval(req.param("longitude"));
+      var MAX_SITES = process.env.SITES_INITIAL_DATA || 10;
+      var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
+      var LIMIT_HIGHLIGHTS_TO_SENT = process.env.LIMIT_HIGHLIGHTS_TO_SENT || 6;
+      var LIMIT_ELEMENTS_IN_SHOWCASE = process.env.LIMIT_ELEMENTS_IN_SHOWCASE || 6;
+      var DEFAULT_COLLECTION = 0;
+      var response = {};
+      var organizations = [];
+      var elements = [];
+      var highlights = [];
+      var categories = [];
+      var sites = [];
+
+      var startedTime = Date.now();
+
+      category.find({},{identifier:1},function(categoryErr,categoriesData){
+        var currenttime = Date.now();
+        console.log((currenttime-startedTime)/1000);
+        if(categoryErr)
+          res.json({data:{}, "status": "1", "result": "0" });
+        else{
+          _.each(categoriesData,function(category){
+            categories.push({identifier:category.identifier,elements:[]});
+          });
+          organization.find({},{},function(elementsErr,elementsData){
+            var currenttime = Date.now();
+            console.log((currenttime-startedTime)/1000);
+            if(elementsErr)
+              res.json({data:{}, "status": "2", "result": "0" });
+            else{
+              var elementsDesnormalized = [];
+              _.each(elementsData,function(organization){
+                elementsDesnormalized = elementsDesnormalized.concat(organization.elements);
+              });
+
+              elementsDesnormalized = _.filter(elementsDesnormalized,function(element){
+                return element.isReady == 1 && element.isDeleted == 0;
+              });
+
+              elementsDesnormalized = _.sortBy(elementsDesnormalized, function(element){ return element.isHighlight == "1" ? 0 : 1; });
+
+              _.each(elementsDesnormalized,function(element){
+                _.each(element.categories,function(category){
+                    var cat = _.findWhere(categories,{identifier:category.identifier});
+                    if(cat){
+                      cat.elements.push({identifier:element.elementIdentifier});
+                    }
+                });
+              });
+
+              organization.find({},{sites:1},function(errSites,sitesData){
+                var currenttime = Date.now();
+                console.log((currenttime-startedTime)/1000);
+                if(errSites)
+                  res.json({data:{}, "status": "2", "result": "0" });
+                else {
+                  var sitesDesnormalized = [];
+                  _.each(sitesData,function(organization){
+                    sitesDesnormalized = sitesDesnormalized.concat(organization.sites);
+                  });
+                  sitesDesnormalized = _.filter(sitesDesnormalized,function(site){
+                    return site.isReady == 1 && site.isDeleted == 0;
+                  });
+                  var showcasesInSites = [];
+                  _.each(sitesDesnormalized,function(site){
+                    showcasesInSites = showcasesInSites.concat(site.showcases);
+                  });
+                  showcasesToFind = _.pluck(showcasesInSites,'showcaseIdentifier');
+                  showcase.find({identifier: {$in: showcasesToFind}},{},function(showcaseErr,showcasesData){
+                    var currenttime = Date.now();
+                    console.log((currenttime-startedTime)/1000);
+                    if(showcaseErr)
+                      res.json({data:{}, "status": "3", "result": "0" });
+                    else {
+                      var showcasesFiltered = _.filter(showcasesData,function(showcase){
+                        return showcase.isReady == 1 && showcase.isDeleted == 0 && showcase.elements.length != 0;
+                      });
+                      showcasesInSites = _.filter(showcasesInSites,function(showcase){
+                        return _.findWhere(showcasesFiltered,{identifier:showcase.showcaseIdentifier}) != null;
+                      });
+
+                      var elementsInShowcases = [];
+                      _.each(showcasesInSites,function(showcase){
+                        elementsInShowcases = elementsInShowcases.concat(showcase.elements);
+                      });
+                      elementsInShowcases = _.pluck(elementsInShowcases,'identifier');
+                      elementsInShowcases = _.uniq(elementsInShowcases);
+                      var elementsIdentifierFromAllElements = _.pluck(elementsDesnormalized,'elementIdentifier');
+                      var elementsThatAreInShowcaseAndAllElements = _.intersection(elementsIdentifierFromAllElements,elementsInShowcases);
+
+                      _.each(categories,function(category){
+                        category.elements = _.filter(category.elements,function(element){
+                          return _.contains(elementsThatAreInShowcaseAndAllElements,element.identifier);
+                        });
+                      });
+                      categories = _.filter(categories,function(category){
+                        return category.elements.length != 0;
+                      });
+
+                      _.each(sitesDesnormalized,function(site){
+                        site.showcases = _.filter(site.showcases,function(showcase){
+                          return _.findWhere(showcasesInSites,{showcaseIdentifier:showcase.showcaseIdentifier}) != null;
+                        });
+                        _.each(site.showcases,function(showcase){
+                          showcase.elements = _.filter(showcase.elements,function(element){
+                            return _.contains(elementsThatAreInShowcaseAndAllElements,element.identifier);
+                          });
+                        });
+                      });
+                      var currenttime = Date.now();
+                      console.log((currenttime-startedTime)/1000);
+
+
+                      res.json({categories:categories, sites:sitesDesnormalized});
+                    }
+                  });
+                }
+              });
+
+              //_.each(categories,function(category){
+                //category.elements = category.elements.splice(ELEMENTS_IN_CATEGORY);
+              //});
+            }
+          });
+        }
+      });
+
+    };
+
+    return functions;
 };

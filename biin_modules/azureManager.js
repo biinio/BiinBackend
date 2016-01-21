@@ -8,7 +8,7 @@ module.exports = function(){
 	var azure = require('azure-storage');
 	var util= require('util'), path = require('path');
 	var functions = {};
-	var stream = require('stream')	
+	var stream = require('stream');
 	//
 	//Create a buquet credentials
 	functions.createContainer=function(container,callbak){
