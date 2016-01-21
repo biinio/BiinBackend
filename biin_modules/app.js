@@ -55,10 +55,10 @@ module.exports = function (db) {
     //app.set('view engine', 'jade');
 
     app.use(express.static(path.join(process.env.PWD , 'public')));
-    app.use('/css',express.static(path.join(process.env.PWD , 'public/css')));
+    //app.use('/css',express.static(path.join(process.env.PWD , 'public/css')));
     //app.use(express.static(path.join(process.env.PWD,'bower_components')));
 
-    app.use(favicon(__dirname + '/../public/favicon.ico'));
+    //app.use(favicon(__dirname + '/../public/favicon.ico'));
     //app.use(logger('dev'));
     //app.use(bodyParser.urlencoded({ extended: false }));
     //app.use(cookieParser());
