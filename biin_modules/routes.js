@@ -324,12 +324,4 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/rating/site',ratingSites.putRating);
     app.get('/ratings/site',ratingSites.getRatings);
 
-    /// catch 404 and forwarding to error handler
-    app.use(function(req, res, next) {
-        var err = new Error('Not Found');
-        err.status = 404;
-        next(err);
-    });
-
-
 }
