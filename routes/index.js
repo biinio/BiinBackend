@@ -12,20 +12,7 @@ module.exports = function () {
 
 	//Get the Login
 	functions.login = function (req,res) {
-
-		//The none ajax request is not available
-		var is_ajax_request = true;// req.xhr;
-		if(!is_ajax_request){
-			res.render('login',{title:'login'});
-		}
-		else{
-			var obj={
-				status:"error",
-				url: '/login'
-			}
-			res.json(obj);			
-		}
-
+		res.render("login");
 	};
 
 	//Get the Dashboard
