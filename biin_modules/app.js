@@ -52,11 +52,11 @@ module.exports = function (db) {
 
     // Less configuration
     if(isDevelopment){
-        app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
-            force:true,
-            debug:true,
-            compress:false
-        }));
+        //app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
+        //    force:true,
+        //    debug:true,
+        //    compress:false
+        //}));
     }
     else
     {
