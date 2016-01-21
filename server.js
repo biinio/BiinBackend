@@ -6,8 +6,8 @@ var fs= require('fs'),
   util = require('util');
 
 var debug = require('debug')('BinnCMS'),
-  db=require('./biin_modules/db'),
-	app = require('./biin_modules/app')(db);
+  //db=require('./biin_modules/db'),
+	app = require('./biin_modules/app')();
 
 //Define local vars
 var isDevelopment = process.env.NODE_ENV === 'development';
