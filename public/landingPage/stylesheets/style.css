@@ -1,0 +1,2424 @@
+/*Template Name: Pilot - Responsive Landing Page Template
+Theme URL: http://themeforest.net/user/DSA79/
+Description: Pilot - Responsive Landing Page Template
+Author: DSA79
+Author URL: http://themeforest.net/user/DSA79
+Version: 1.0.0
+Website: www.dsathemes.com
+Tags: responsive, html5 template, one page, landing, mobile app, company, creative, business, corporate, project
+*/
+/* ------------------------------------------ */
+/*             TABLE OF CONTENTS
+/* ------------------------------------------ */
+/*   01 - General & Basic Styles   */
+/*   02 - Header & Navigation      */
+/*   03 - Intro      			   */
+/*   04 - Banner_1    			   */
+/*   05 - Features                 */
+/*   06 - Banner_2	               */
+/*   07 - Newsletter               */
+/*   08 - Screens			       */
+/*   09 - Banner_3	               */
+/*   10 - Testimonials Rotator	   */
+/*   11 - Pricing	               */
+/*   12 - Contact	               */
+/*   13 - Footer         		   */
+/*   14 - Scroll to Top	   		   */
+/*   15 - Contact Form Response    */
+/* ==========================================================================
+   01. GENERAL & BASIC STYLES
+   ========================================================================== */
+/*------------------------------------------*/
+/*	 Preload Animation 
+/*------------------------------------------*/
+#preloader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: #fff;
+}
+#status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -100px;
+  width: 200px;
+  height: 200px;
+  background-image: url(../img/icons/loader.gif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 125px 125px;
+}
+/*------------------------------------------*/
+/*	 Parallax Settings
+/*------------------------------------------*/
+.parallax {
+  background-attachment: fixed !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#newsletter {
+  background-image: url(../img/parallax_bg/newsletter_bkg.jpg);
+}
+#testimonials-rotator {
+  background-image: url(../img/parallax_bg/testimonials_bkg.jpg);
+}
+
+p {
+  margin: 0 0 30px !important;
+}
+/*------------------------------------------*/
+/*	 Headers
+/*------------------------------------------*/
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+/*------------------------------------------*/
+/*	 Link Setting
+/*------------------------------------------*/
+a {
+  text-decoration: none;
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  -ms-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+a:hover {
+  color: #00adef;
+  text-decoration: none;
+}
+a:focus {
+  color: #f8f8f8;
+  outline: none;
+  text-decoration: none;
+}
+
+blockquote {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 25px !important;
+  width: 100%;
+  margin: 60px 0px 80px -40px;
+  /*padding: 0.25em 12px;*/
+  line-height: 1.3;
+  position: relative;
+  color: #FFFFFF!important;  
+  text-shadow:none;
+  border-left: 3px solid #FFFFFF!important;
+}
+
+
+/*------------------------------------------*/
+/*	 Lists
+/*------------------------------------------*/
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/*------------------------------------------*/
+/*	 Theme Button
+/*------------------------------------------*/
+.btn-theme {
+  background-color: #444;
+  /*border: 1px solid #71D7FF;*/
+  color: #FFFFFF;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  padding: 14px 40px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-transition: all 200ms ease-in-out;
+  -moz-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
+  -ms-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+.btn-theme:hover {
+  background-color: #888888;
+  /*border-color: #71D7FF;
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);*/
+}
+/*------------------------------------------*/
+/*	 Black Button
+/*------------------------------------------*/
+.btn-black {
+  background-color: #444;
+  /*border: 1px solid #444;*/
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  padding: 12px 40px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-transition: all 200ms ease-in-out;
+  -moz-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
+  -ms-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+.btn-black:hover {
+  background-color: #888888;
+  /*border-color: #222;*/
+  /*box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);*/
+}
+/*------------------------------------------*/
+/*	 Button Large
+/*------------------------------------------*/
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 18px;
+  width: 175px;
+}
+/*------------------------------------------*/
+/*	 Button Hover/Focus
+/*------------------------------------------*/
+.btn:focus {
+  outline: none;
+}
+.btn:focus {
+  color: #f8f8f8;
+  text-decoration: none;
+}
+
+.btn.btn-comprar{
+  /*margin-top:25px;*/
+  color:#fff;
+  background-color: initial;
+  width: 205px;
+  height: 60px;
+  border: solid;
+  border-color: #fff;
+  border-radius: 0px;
+  font-family: 'Lato', sans-serif;
+  line-height: 40px;
+  font-weight: 400;
+  font-size: 17px;
+  text-transform: uppercase;
+  /*Position*/
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;;
+}
+.btn.btn-comprar:hover{
+  background-color: #fff;
+  color: black!important;
+}
+
+.wrapperButtonInfo{
+  position: absolute;
+  bottom: 20%;
+  width: 100%;
+}
+
+/*------------------------------------------*/
+/*	 Section Titlebar
+/*------------------------------------------*/
+.titlebar h2 {
+  font-weight: 300;
+  margin-bottom: 5px;
+  font-size: 45px;
+}
+.titlebar h3 {
+  line-height: 30px;
+  color: #71D7FF;
+  font-weight: 300;
+}
+.titlebar h3 span {
+  color: #71D7FF;
+}
+.titlebar p {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+/* ==========================================================================
+   02. HEADER & NAVIGATION
+   ========================================================================== */
+/*------------------------------------------*/
+/*	 Logo Image    
+/*------------------------------------------*/
+.navbar-brand {
+  padding: 0px 15px;  
+}
+
+.navbar.navbar-fixed-top.scroll-fixed-navbar .navbar-brand > img{
+  position: relative;
+  margin-top: 25px!important;
+}
+
+.navbar.navbar-fixed-top.scroll-fixed-navbar li{
+  margin-top: 34px!important;
+}
+.navbar.navbar-fixed-top .navbar-brand > img{
+  position: absolute!important;
+  left: 50px!important;
+}
+
+.navbar-brand img{
+  height: 100px !important;
+  
+}
+
+.navbar-brand:hover {
+  color: #fff;
+}
+/*------------------------------------------*/
+/*	 Navigation Menu    
+/*------------------------------------------*/
+.navbar {
+  margin-bottom: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  padding: 30px 0px;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  -ms-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+
+
+.navbar-fixed-top {
+  border-bottom: none;
+}
+
+.navbar-nav > li > a {
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  line-height: 40px;
+  font-weight: 400;
+  font-size: 17px;
+  text-transform: uppercase;
+  display: block;
+  padding: 0 15px;
+  -webkit-transition: all 100ms ease-in-out;
+  -moz-transition: all 100ms ease-in-out;
+  -o-transition: all 100ms ease-in-out;
+  -ms-transition: all 100ms ease-in-out;
+  transition: all 100ms ease-in-out;
+}
+
+.navbar-nav > li{
+  margin-top: 17px;
+}
+
+.nav.navbar-helper{
+  position: fixed;
+  width: 100%;
+  height: 30px;
+  background-color: #000;
+  color: #333;
+  z-index: 10010;
+}
+.navbar-helper .navbar-right{
+  margin-top: -15px;
+}
+
+.langsDropDown{
+  color: #fff!important;
+  min-width: 55px;
+  position: relative;
+  background-color: #000;
+}
+
+.langsDropDown img{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  cursor: pointer;
+}
+.navbar-helper .open > a, .nav .open > a:hover, .nav .open > a:focus{
+  background-color: #000;
+  border-color: #000;
+}
+
+/*------------------------------------------*/
+/*	 Navbar Scroll   
+/*------------------------------------------*/
+.scroll-fixed-navbar {
+  padding: 0px;  
+  min-height: 109px;
+}
+
+.scroll-fixed-navbar .transparency{
+  position: absolute;
+  top:0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #333;
+   opacity:0.75;  
+  filter:alpha(opacity=50);  
+  -moz-opacity:0.5;  
+}
+.scroll-fixed-navbar .navbar-nav > li > a,
+.scroll-fixed-navbar .navbar-brand .black-color {
+  color: #fff;
+  z-index: 10000;
+}
+/*------------------------------------------*/
+/*	 Menu Hover
+/*------------------------------------------*/
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a.selected-nav {
+  color: #fff;
+  background-color: transparent;
+}
+.scroll-fixed-navbar .navbar-nav > li > a:hover,
+.scroll-fixed-navbar .navbar-nav > li > a.selected-nav {
+  color: #71D7FF;
+}
+/*------------------------------------------*/
+/*	 Responsive Menu    
+/*------------------------------------------*/
+.navbar-toggle {
+  position: relative;
+  float: right;
+  background-color: none;
+  padding: 10px;
+  margin: 13px 30px 13px 0;
+  border: none;
+  color: #fff;
+  background-image: url(../img/menuIconMovil.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50px;
+  width: 50px;
+}
+
+.navbar-toggle .icon-bar {
+  background-color: #fff;
+}
+
+#navigation-menu{
+  padding-top: 15px;
+}
+.navbar-helper .nav.navbar-nav > li > a{
+  text-transform:none;
+  margin-top: -9px;
+  cursor: pointer;
+}
+
+.navbar-helper  span{
+  color: #333!important;
+  padding-left: 10px;
+}
+.navbar-helper{
+  padding-right: 40px;
+}
+
+
+/* ==========================================================================
+   03. INTRO   
+   ========================================================================== */
+#intro {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0px;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  padding: 0 !important;
+}
+#slides {
+  position: relative;
+}
+#slides .scrollable {
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  *zoom: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#slides .scrollable:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.forwhoIsBiin-wrapper{
+  background-color: #71D7FF;
+}
+
+.forwhoIsBiin-wrapper .titlebar{  
+  height: 20%!important;
+  /*padding-top: 100px;
+  padding-left: 10%;
+  padding-right: 10%;*/
+  color: #fff;
+}
+
+.forwhoIsBiin-wrapper .titlebar h3{
+    color:#fff;
+  }
+
+#slides-forwhoIsBiin{
+  min-height: 750px;
+}
+#slides-forwhoIsBiin .slides {
+  margin: 0px 0px 0px !important;
+  padding: 0px 0 0px !important;
+}
+
+.forwhoIsBiin-slider{
+  background-color: #71D7FF;
+  height: 450px;
+  position: relative;
+  padding-top: 0px;
+}
+
+.forwhoIsBiin-slider .flex-direction-nav .flex-prev{
+    left: 10%;
+    border-radius: 50%;
+    display: none;
+    background-color: white;
+   /* background: url(../img/icons/back-to-left.png) no-repeat 0 0!important;
+   */
+}
+.forwhoIsBiin-slider .flex-direction-nav .flex-prev:hover{
+    background-color: #069FCE;
+   /* background: url(../img/icons/back-to-left.png) no-repeat 0 0!important;
+   */
+}
+.flex-prev, .flex-next{
+  font-size: 36px!important !important;
+  display: inline-block !important;
+  font-family: FontAwesome !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  -webkit-font-smoothing: antialiased !important;
+  box-sizing: border-box !important;  
+  color:black!important;
+  font-size: 50px !important;
+  line-height: 40px !important;
+}
+.flex-prev:before {  
+  position: relative;
+  content: "\f053";
+  text-align: center;
+  /*margin-left: -15px;*/
+  font-size: 24px;
+}
+.flex-next:before {
+  content:"\f054";
+  text-align: center;
+  /*margin-left: -7px;*/
+  font-size: 24px;
+}
+
+.flex-prev,.flex-next{
+  padding-top:8px;
+  color: black !important;
+  font-size: 36px!important;
+  line-height: 40px;
+}
+
+.flex-prev:hover, .flex-next:hover{
+  background: #71D7FF;
+  border-color: #71D7FF;
+  box-shadow: 0px 0px 0px 10px rgba(240, 240, 240, 0.3);
+}
+
+.forwhoIsBiin-slider .flex-direction-nav .flex-next{
+    right: 10%;
+    border-radius: 50%;
+    background-color: white;
+}
+.forwhoIsBiin-slider .flex-direction-nav .flex-next:hover{
+    background-color: #069FCE;
+}
+
+.flex-direction-nav{
+  width: 100%;
+  color: #fff;
+  font-weight: 400!important;
+  text-align: center!important;
+  text-transform: uppercase!important;
+  z-index: 99!important;
+  /*text-shadow: 5px 2px 5px rgba(146, 146, 146, 1)!important;*/
+}
+
+.flex-direction-nav a {
+   margin: -20px 0 0; 
+   display: block; 
+   top: 30%;
+   text-indent:inherit; 
+   opacity: 1;
+   background: transparent;
+   width: 60px;
+   height: 60px;
+   text-align: center;
+   cursor: pointer;
+   display: block;
+   margin: 0 auto 10px;
+   /*border: 2px solid #fff;*/
+    
+   /*box-shadow: 0px 0px 0px 0 rgba(10, 10, 10, 0.15);*/
+   -webkit-border-radius: 50%;
+   -moz-border-radius: 50%;
+   border-radius: 50%;
+   -webkit-transition: all 250ms ease-in-out;
+   -moz-transition: all 250ms ease-in-out;
+   -o-transition: all 250ms ease-in-out;
+   -ms-transition: all 250ms ease-in-out;
+   transition: all 250ms ease-in-out;
+}
+
+#FORWHOISBIIN .flex-control-paging{
+  bottom:20%!important;
+
+}
+.forwhoIsBiin-wrapper{
+  height: 300px;
+}
+
+#slides-forwhoIsBiin .slides-navigation .prev{
+  position: absolute;
+  top: 60%;
+  left: 10%;
+  background-color: #fff;
+  height: 50px;
+  width:50px;
+  border-radius: 50%;
+}
+
+.slides-navigation .prev i, .slides-navigation .next i{
+  color: #00adef;
+  font-size: 40px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  float: none;
+  display: block;
+}
+
+#slides-forwhoIsBiin .slides-navigation .next{
+  position: absolute;
+  top: 60%;
+  right: 10%;
+  background-color: #fff;
+  height: 50px;
+  width:50px;
+  border-radius: 50%;
+}
+#slides-forwhoIsBiin .slides-pagination{
+  bottom: 8%!important;
+}
+
+#slides-forwhoIsBiin .slides-pagination .flex-control-nav{
+   bottom: 5%!important;
+}
+
+ .next, .prev{
+  cursor: pointer;
+  z-index: 9999;
+}
+
+
+.forhow-content{
+  text-align: center;
+
+}
+.forhow-content img{
+  position: relative!important;
+  margin-top: 20px;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  width: 300px!important;
+
+}
+
+.forhow-content .titlebar{
+  position: relative;
+  padding-top:8px!important;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60%;
+  overflow: hidden;
+}
+
+.slides-navigation .next:hover{
+  background-color: #333;
+}
+
+#blog{
+  position: relative;
+  height: 100%;
+  padding-top: 140px;
+}
+
+#blog h1{
+
+}
+
+#blog p{
+  font-size: 18px;
+  color: #333;
+}
+
+
+#blog .entry{
+  height: 300px;
+  padding: 3px 3px 3px 3px;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  float: none;
+  border-bottom: solid;
+  border-bottom-color: #EAEAEA;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+#blog .entry .wrapper{
+  padding: 7px 7px 7px 7px;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  }
+
+.wapper{
+  position: relative;
+}
+.wrapper  .title{
+  text-align: left;
+}
+
+.wrapper  .date{
+  text-align: right;
+}
+
+.readmore{
+  position: absolute;
+  bottom: 5px;
+  left: 0px;
+}
+.readmore p{
+  color:  #71D7FF!important;
+}
+
+
+/*------------------------------------------*/
+/*	 Intro Page Content   
+/*------------------------------------------*/
+.intro-content {
+  width: 80%;
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+  padding: 50px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.intro-content h1 {
+  font-size: 500%;
+  font-weight: 300;
+  line-height: 100%;
+  margin-bottom: 20px !important;
+}
+.intro-content h3 {
+  font-size: 244%;
+  font-weight: 200;
+  margin-top: 0;
+  margin-bottom: 10px !important;
+}
+
+.intro-content h1{
+  color: #71D7FF;
+}
+/*------------------------------------------*/
+/*	 Intro Page Pagination   
+/*------------------------------------------*/
+.slides-pagination, .flex-control-nav{
+  width: 100%!important;
+  position: absolute!important;
+  bottom: 16%!important;
+  z-index: 20!important;
+  text-align: center!important;
+}
+.slides-pagination a, .flex-control-nav a{
+  width: 30px !important;
+  height: 4px !important;
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  opacity: 0.5 !important;
+  -moz-opacity: 0.5 !important;
+  filter: alpha(opacity=50) !important;
+  display: -moz-inline-stack !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  *vertical-align: auto !important;
+  zoom: 1 !important;
+  *display: inline !important;
+  margin: 2px !important;
+  overflow: hidden !important;
+  text-indent: -100% !important;
+}
+.slides-pagination a:hover,
+.slides-pagination a.current, .flex-control-nav a:hover,.flex-control-nav a.flex-active {
+  opacity: 1!important;
+  -moz-opacity: 1!important;
+  filter: alpha(opacity=100)!important;
+}
+
+/*------------------------------------------*/
+/*   Video history section
+/*------------------------------------------*/
+#videoHistory{
+  padding-top: 100px;  
+  padding-bottom: 100px;  
+}
+#videoHistory .row{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width:854px;
+  height:480px;
+}
+
+#videoHistory iframe{
+    margin-left: auto;
+    margin-right: auto; 
+    position: relative;
+    display: block;
+}
+
+#videoHistory .video{
+  background-color: #fff;
+}
+
+.player .video-wrapper{
+  background-color: #fff!important;
+}
+
+.video-wrapper video{
+  height: auto!important;
+}
+/*------------------------------------------*/
+/*	 Intro Page Scroll Down Button
+/*------------------------------------------*/
+.scroll-down {
+  width: 100%;
+  color: #fff;
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: -30px;
+  z-index: 99;
+  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
+}
+.scroll-down span {
+  background: transparent;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto 10px;
+  border: 2px solid #fff;
+  
+  box-shadow: 0px 0px 0px 0 rgba(10, 10, 10, 0.15);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  -ms-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+  
+}
+.scroll-down span:hover {
+  background: #71D7FF;
+  border-color: #71D7FF;
+  box-shadow: 0px 0px 0px 10px rgba(240, 240, 240, 0.3);
+}
+.scroll-down span [class*="fa-"] {
+  color: #fff;
+  font-size: 36px;
+  line-height: 40px;
+}
+/* ==========================================================================
+   04. BANNER_1
+   ========================================================================== */
+.banner-container{
+  padding-top: 80px;
+  border-bottom: 1px solid #ddd;
+  background-color: #71D7FF;
+}
+.banner-container .container{
+  position: relative;
+  margin-top: 50px; 
+  margin-bottom: 100px; 
+}
+
+#banner_1 {
+  padding-top: 80px;
+  border-bottom: 1px solid #ddd;
+  background-color: #71D7FF;
+}
+#banner_1 .container{
+  position: relative;
+  margin-top: 50px; 
+  margin-bottom: 100px; 
+
+}
+.banner_1_content h2 {
+  color: #fff;
+}
+.banner_1_content h3 {
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+.banner_1_content p {
+  color: #333;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+.banner_1_content .important p strong {
+  line-height: 24px;
+  color: #fff;
+  font-size: 23px;
+}
+.banner_1_image img{
+  position: relative;
+  height: auto;
+  width: 100%;
+}
+.important p{
+  margin-top: 4px!important;
+  margin-bottom: 4px!important;
+  padding-left:10px;
+  padding-top:10px;
+  padding-bottom:10px;
+  color: #fff;
+  background-color: #333!important;
+}
+
+.important .important-1{
+  width: 185px;
+}
+
+.important .important-2{
+  width: 200px;
+}
+
+.important .important-3{
+  width: 175px;
+}
+
+.important .important-4{
+  width: 295px;
+}
+
+/* ==========================================================================
+   CRM banner
+   ========================================================================== */
+#crm_banner .container{
+   padding-top: 100px;
+    padding-bottom: 100px;  
+  }
+
+#crm_banner .titlebar{
+  
+}
+#crm_banner .container{
+  position: relative;
+}
+.crm_banner_content h2 {
+  color: #333;
+}
+.crm_banner_content h3 {
+  color: #71D7FF;
+}
+
+.crm_banner_content p {
+  color: #333;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+.crm_banner_image img{
+    position: relative;
+    height: auto;
+    width: 100%;
+}
+
+/*------------------------------------------*/
+/*	  Banner_1 Image
+/*------------------------------------------*/
+#banner_1 .img-responsive {
+  display: inline-block;
+}
+/* ==========================================================================
+   05. FEATURES
+   ========================================================================== */
+#features {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+#features .titlebar p{
+  margin-top: 40px;
+}
+/*------------------------------------------*/
+/*	  Feature Box
+/*------------------------------------------*/
+.feature-box {
+  padding-left: 5px;
+  padding-right: 5px;
+  /*height: 130px;*/
+}
+/*------------------------------------------*/
+/*	  Feature Box Icon
+/*------------------------------------------*/
+.feature-box-icon {
+  position: relative;
+  display: block;
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 0px;
+  top: 10px;
+  color: #FFF;
+  line-height: 60px;
+  text-align: center;
+  font-size: 50px;
+}
+
+.feature-box-icon img{
+  position: relative;
+  margin-top: -10px;
+  width: 100px;
+  height: 100px;
+}
+
+
+
+/*------------------------------------------*/
+/*	  Feature Box Content
+/*------------------------------------------*/
+.feature-box-content {
+  padding-top: 10px;
+  padding-left: 125px;
+}
+
+.feature-box-content p{
+   font-size: 20px;
+   font-weight: 300;
+  }
+.feature-box-content h4 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+/* ==========================================================================
+   06. BANNER_2
+   ========================================================================== */
+#banner_2 {
+  background-color: #71D7FF;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.banner_2_content h2 {
+  color: #FFF;
+}
+
+.banner_2_content h3 {
+  color: #FFF;
+  margin-bottom: 20px;
+}
+.banner_2_content p {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+.banner_2_image img{
+  position: relative;
+  height: auto;
+  width: 100%;
+}
+
+#banner-list p{
+  color: #fff;
+
+}
+
+#banner-list .important-1{
+  width: 300px!important;
+}
+
+#banner-list .important-2{
+  width: 395px!important;
+}
+#banner-list .important-3{
+  width: 380px!important;
+}
+
+#banner-list .important-4{
+  width: 110px!important;
+}
+
+/*------------------------------------------*/
+/*	  Banner List Content
+/*------------------------------------------*/
+
+#banner-list .list-item{
+
+}
+
+.list-item {
+  margin-bottom: 20px;
+}
+.list-item i {
+  color: black;
+  margin-right: 8px;
+  font-size: 18px;
+}
+.list-item h5 {
+  font-size: 20px;
+  font-weight: 400;
+}
+/* ==========================================================================
+   07. NEWSLETTER  
+   ========================================================================== */
+#subscribe {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  color: #fff;
+}
+/*------------------------------------------*/
+/*	  Newsletter Title
+/*------------------------------------------*/
+#newsletter_title h1 {
+  font-size: 45px;
+  font-weight: 300;
+  margin-bottom: 10px;
+  color: #71D7FF;
+}
+#newsletter_title p {
+  line-height: 24px;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  padding: 0 8%;
+}
+/*------------------------------------------*/
+/*	  Newsletter Form
+/*------------------------------------------*/
+.subscribe-form {
+  margin: 25px auto 14px;
+  position: relative;
+  z-index: 10;
+  width: 90%;
+}
+.subscribe-form input {
+  width: 100%;
+  border: none!important;
+  border-radius: initial!important;
+}
+.subscribe-input {
+  width: 75%;
+  height: 54px;
+  color: #222;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  padding-left: 20px;
+  border: none!important;
+  border-radius: initial!important;
+}
+.subscribe-submit {
+  width: 35% !important;
+  height: 54px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #71D7FF;
+  /*border: 1px solid #71D7FF;*/
+  color: #fff;
+  font-size: 18px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+  outline: 0;
+}
+.subscribe-submit:active {
+  outline: 0;
+}
+.subscribe-submit:hover {
+  /*opacity:0.9;*/
+  background-color: #069FCE;
+}
+/*------------------------------------------*/
+/*	  Newsletter Form Error Message 
+/*------------------------------------------*/
+.error {
+  color: #F50000;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  padding: 5px;
+}
+/* ==========================================================================
+   08. SCREENS 
+   ========================================================================== */
+#screens {
+  padding-top: 80px;
+  padding-bottom: 60px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
+}
+#screenshot_1,
+#screenshot_2,
+#screenshot_3,
+#screenshot_4,
+#screenshot_5,
+#screenshot_6,
+#screenshot_7,
+#screenshot_8 {
+  margin-bottom: 40px;
+}
+/*------------------------------------------*/
+/*	  Image Hover Effect
+/*------------------------------------------*/
+.hover-details {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  -moz-transition: all ease 400ms ease-in-out;
+  -webkit-transition: all ease 400ms ease-in-out;
+  -o-transition: all ease 400ms ease-in-out;
+  transition: all ease 400ms ease-in-out;
+}
+.hover-details .img-cover {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(10, 10, 10, 0.55);
+  -moz-transition: all ease 400ms ease-in-out;
+  -webkit-transition: all ease 400ms ease-in-out;
+  -o-transition: all ease 400ms ease-in-out;
+  transition: all ease 400ms ease-in-out;
+}
+.hover-details > img {
+  width: 100%;
+  height: auto;
+  -moz-transition: all ease 400ms ease-in-out;
+  -webkit-transition: all ease 400ms ease-in-out;
+  -o-transition: all ease 400ms ease-in-out;
+  transition: all ease 400ms ease-in-out;
+}
+/*------------------------------------------*/
+/*	  Image Zoom Icon
+/*------------------------------------------*/
+.image_zoom {
+  width: 50px;
+  height: 50px;
+  background-image: url(../img/icons/zoom-ico.png);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-color: #71D7FF;
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  border-radius: 50%;
+  margin-top: -25px;
+  margin-left: -25px;
+  -webkit-transition: all ease 400ms ease-in-out;
+  -moz-transition: all ease 400ms ease-in-out;
+  -ms-transition: all ease 400ms ease-in-out;
+  -o-transition: all ease 400ms ease-in-out;
+  transition: all ease 400ms ease-in-out;
+}
+/*------------------------------------------*/
+/*	 Image Title
+/*------------------------------------------*/
+.img-cover h3 {
+  width: 100%;
+  position: absolute;
+  bottom: -28%;
+  color: #f8f8f8;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0 10px;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  -ms-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+/*------------------------------------------*/
+/*	 Image Scale ( Hover Effect )
+/*------------------------------------------*/
+.hover-details:hover > img {
+  transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+}
+.hover-details:hover .image_zoom {
+  top: 45%;
+}
+.hover-details:hover .img-cover h3 {
+  bottom: 28%;
+}
+.hover-details:hover .img-cover {
+  opacity: 1;
+}
+.image_zoom:hover {
+  background-color: #069FCE;
+}
+.btn-contact{
+  margin-top: 65px;
+}
+.btn-beacons{
+  margin-top: 80px;
+}
+.btn-store-slide{
+  display:block !important; 
+  z-index:1000 !important; 
+  margin-left: auto !important; 
+  margin-right: auto !important; 
+  width: 275px !important; 
+  height: 75px !important; 
+  position: relative !important;
+  top: inherit !important;
+  left: inherit !important;
+}
+/* ==========================================================================
+   09. BANNER_3
+   ========================================================================== */
+#banner_3 {
+  padding-top: 80px;
+}
+.banner_3_content h3 {
+  color: #71D7FF;
+  margin-bottom: 20px;
+}
+.banner_3_content p {
+  color: #444;
+  font-size: 18px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+.stores a {
+  margin-right: 5px;
+}
+
+.stores img {
+  width: auto;
+  height: 70px !important;
+}
+.stores a:last-child {
+  margin-right: 0;
+}
+/*------------------------------------------*/
+/*	  Banner_3 Image
+/*------------------------------------------*/
+#banner_3 .img-responsive {
+  display: inline-block;
+}
+/* ==========================================================================
+   10. TESTIMONIALS ROTATOR
+   ========================================================================== */
+.testimonials {
+  margin: 50px 8%;
+  text-shadow: 5px 2px 5px rgba(146, 146, 146, 1);
+}
+.slides {
+  margin: 10px 0 50px;
+}
+/*------------------------------------------*/
+/*	 Author Avatar
+/*------------------------------------------*/
+.flexslider .slides img {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  text-align: center;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+/*------------------------------------------*/
+/*	 Message Author
+/*------------------------------------------*/
+.testimonials p.author {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+  margin-bottom: 0;
+  padding-top: 10px;
+}
+.testimonials p.author span {
+  color: #71D7FF;
+  font-weight: 900;
+}
+/*------------------------------------------*/
+/*	 Testimonial Message Text
+/*------------------------------------------*/
+.testimonials p {
+  color: #fff;
+  font-size: 24px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 30px;
+  margin-bottom: 60px;
+  padding-top: 10px;
+}
+/* ==========================================================================
+   11. PRICING 
+   ========================================================================== */
+#pricing,#beaconsPackages {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+
+#beaconsPackages{
+  background-image: url(../img/thumbs/buyiBeaconBiin.jpg);
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: cover;
+}
+
+#pricing-table-holder {
+  padding: 30px 0px;
+}
+#price_1,
+#price_2 {
+  margin-bottom: 50px;
+}
+.pricing-table {
+  background-color: #fafafa;
+}
+
+.pricing-table .plan-price {
+  background-color: #C3C3C3;
+  margin: 0;
+  line-height: normal;
+  padding: 20px;
+  border-top: 1px solid #e7e7e7;
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  -ms-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+
+.pricing-table .plan-price span {
+  color: #FFFFFF;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.plan-icons i{
+  font-size: 40px;
+  padding-left: 10px;
+  color: #fff;
+}
+
+#beaconsPackages #price_1 .price-header{
+  background-color: #71D7FF;
+}
+#beaconsPackages #price_1 .price-header h4{
+  color: #000;
+
+}
+
+#beaconsPackages #price_2 .plan-icons i{
+  color:#FFFFFF!important;
+}
+
+/*------------------------------------------*/
+/*	  Pricing Table Header
+/*------------------------------------------*/
+
+.pricing-table .price-header {
+  border-bottom: 1px solid #c7c7c7;
+  position: relative;
+}
+
+.pricing-table .plan-title {
+  color: #000;
+  font-size: 23px;
+  font-weight: 300;
+  text-transform: uppercase;
+  padding: 30px 15px;
+  margin: 0;
+  /*-webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;*/
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  -ms-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+
+/*------------------------------------------*/
+/*	  Pricing Table Body
+/*------------------------------------------*/
+.pricing-table ul.features {
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  padding: 5px 20px;
+  -webkit-transition: all 200ms ease-in-out;
+  -moz-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
+  -ms-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+.pricing-table ul.features li {
+  border-top: 1px solid #e7e7e7;
+  padding: 10px 25px;
+}
+.pricing-table ul.features li:nth-child(1),
+.pricing-table.featured ul.features li:nth-child(1) {
+  border: none;
+}
+/*------------------------------------------*/
+/*	  Pricing Table Footer
+/*------------------------------------------*/
+.pricing-table .price-footer {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border-top: 1px solid #e7e7e7;
+  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  -ms-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+/*------------------------------------------*/
+/*    Background colors
+/*------------------------------------------*/
+
+ .gold {
+
+  background: #3399FF!important;
+ }
+
+ .gold  h2{
+  margin-bottom: 10px !important;
+  color: white;
+}
+
+.silver {
+  background: #B8E62E!important;
+}
+
+.silver  h2{
+  margin-bottom: 10px !important;
+  color: white;
+}
+
+.diamond{
+  background: #FF3300!important;
+}
+
+.diamond  h2{
+  margin-bottom: 10px !important;
+  color: white;
+}
+
+.unum{
+  background: #B8E62E!important;
+}
+
+.unum  h2{
+  margin-bottom: 10px !important;
+}
+
+.tribus{
+  background: #3399FF!important;
+}
+
+.decem{
+  background: #FF3300!important;
+}
+/*------------------------------------------*/
+/*	  Featured Table
+/*------------------------------------------*/
+.pricing-table.featured .plan-title {
+  /*background-color: #71D7FF;*/
+  color: #333;
+}
+.pricing-table.featured .plan-price {
+  background-color: #71D7FF;
+  color: #f7f7f7;
+  border-top: 1px solid #C3C3C3;
+}
+.pricing-table.featured .plan-price h2,
+.pricing-table.featured .plan-price span {
+  color: #FFFFFF;
+}
+#beaconsPackages .titlebar h2,#beaconsPackages .titlebar p{
+  color:#fff;
+}
+.pricingIndividual p, .pricingIndividual h4{
+  color: #fff!important;
+}
+.pricingIndividual p{
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   12. CONTACTS 
+   ========================================================================== */
+#contact {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  border-top: 1px solid #ddd;
+  background-color: #71D7FF;
+  background-repeat: repeat;
+  background-position: center center;
+  overflow: hidden;
+}
+#contact .titlebar h3{
+    color:#fff;
+
+}
+/*------------------------------------------*/
+/*	  Contact Form Input
+/*------------------------------------------*/
+#contact-form .form-control {
+  height: 50px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: none;
+  /*border: 1px solid #ccc;*/
+  border-radius: 0px;
+  padding: 6px 20px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  background-color: #f3f3f3;
+  color: #444;
+  font-size: 16px;
+  margin-bottom: 15px;
+  padding: 8px;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  -ms-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+  box-shadow: 0 0 0 0;
+}
+#contact-form textarea {
+  min-height: 180px;
+}
+/*------------------------------------------*/
+/*	  Contact Form Input Focus
+/*------------------------------------------*/
+.col-md-6 {
+  /*padding-right: 5px !important;*/
+  /*padding-left: 5px !important;*/
+}
+
+.col-md-12 {
+  /*padding-right: 5px !important;*/
+  /*padding-left: 5px !important;*/
+}
+
+.form-control:focus {
+  outline: 0px none;
+  box-shadow: none;
+}
+/*------------------------------------------*/
+/*	  Contact Form Submit Button
+/*------------------------------------------*/
+#form_btn {
+  margin-top: 30px;
+}
+/*------------------------------------------*/
+/*	  Contact Form Error Message 
+/*------------------------------------------*/
+.error {
+  color: #F50000;
+}
+/* ==========================================================================
+   13. FOOTER
+   ========================================================================== */
+#footer {
+  width: 100%;
+  background-color: #333;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#footer p {
+  color: #999;
+  font-size: 13px;
+  font-family: 'Lato', sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+/*------------------------------------------*/
+/*	 Footer Social Icons  
+/*------------------------------------------*/
+.footer-socials {
+  display: inline-block;
+  padding-left: 0;
+  margin-bottom: 3px;
+}
+.footer-socials li {
+  float: left;
+  width: auto !important;
+  display: inline-block !important;
+  vertical-align: top;
+  clear: none !important;
+}
+.foo_social {
+  width: 40px;
+  height: 40px;
+  color: #DEDEDE;
+  font-size: 50px;
+  line-height: 40px;
+  text-align: center;
+  margin: 10px 20px;
+  display: block;
+  text-decoration: none;
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  -ms-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+/*------------------------------------------*/
+/*	 Footer Icons Hover 
+/*------------------------------------------*/
+.ico-facebook:hover {
+  color: #3b5998;
+}
+.ico-twitter:hover {
+  color: #00a9ed;
+}
+.ico-google-plus:hover {
+  color: #cd1111;
+}
+.ico-linkedin:hover {
+  color: #015886;
+}
+.ico-dribbble:hover {
+  color: #d92d84;
+}
+.ico-instagram:hover {
+  color: #beb3a8;
+}
+.ico-pinterest:hover {
+  color: #ac281a;
+}
+.ico-dropbox:hover {
+  color: #008ad2;
+}
+.ico-skype:hover {
+  color: #00a9ed;
+}
+.ico-youtube:hover {
+  color: #cd1b20;
+}
+.ico-tumblr:hover {
+  color: #3a5976;
+}
+.ico-vimeo:hover {
+  color: #00adee;
+}
+.ico-flickr:hover {
+  color: #d2d2d2;
+}
+.ico-github:hover {
+  color: #222;
+}
+.ico-renren:hover {
+  color: #364a83;
+}
+.ico-vk:hover {
+  color: #3b5998;
+}
+.ico-xing:hover {
+  color: #015f5e;
+}
+.ico-weibo:hover {
+  color: #be4443;
+}
+.ico-rss:hover {
+  color: #ff6600;
+}
+/* ==========================================================================
+   14. SCROLL TO TOP   
+   ========================================================================== */
+#scrollUp {
+  display: none;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-image: url(../img/icons/back-to-top.png);
+  background-repeat: no-repeat;
+  background-position: 50% 48%;
+  background-color: #000000;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-transition: all 250ms linear;
+  -moz-transition: all 250ms linear;
+  transition: all 250ms linear;
+}
+#scrollUp:hover {
+  background-color: #069FCE;
+}
+nav a#pull {
+  display: none;
+}
+/* ==========================================================================
+   14. CONTACT FORM RESPONSE PAGE   
+   ========================================================================== */
+#form_response {
+  margin: 50px auto;
+}
+#form_response .img-responsive {
+  display: inline-block;
+}
+#form_response h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+#form_response p {
+  font-size: 18px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.loginDropDown h4 {
+  text-align: center;
+  color: #333;
+}
+.loginDropDown li {
+  margin-left: auto;
+  margin-right: auto;
+  width: 220px;
+}
+.loginDropDown .form-control {
+  margin-bottom: 20px;
+
+}
+.loginDropDown input.form-control {
+  height: 50px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+.loginForm .btn-theme{
+  background-color: #71D7FF;
+  border-color: #71D7FF;
+
+}
+.forgotPass {
+  font-size: 12px;
+  /*color: red;*/
+  margin-top: -17px;
+}
+.stayLogged {
+  padding-top: 10px;
+}
+.stayLogged label {
+  color: #71D7FF!important;
+}
+.inline {
+  display: inline!important;
+}
+.loginDropDown input[type=checkbox] {
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(1.6);
+  /* IE */
+  -moz-transform: scale(1.6);
+  /* FF */
+  -webkit-transform: scale(1.6);
+  /* Safari and Chrome */
+  -o-transform: scale(1.6);
+  /* Opera */
+  padding: 10px;
+}
+.adviceLoggedIn {
+  color: #C3C3C3;
+  font-size: x-small;
+  margin-left: 20px;
+  margin-top: -10px;
+  padding-bottom: 5px;
+  position: relative;
+}
+.fulllWidth {
+  width: 100%;
+}
+.btn-signUp {
+  margin-top: 10px;
+  background-color: #333;
+  border-color: #333;
+}
+.btn-signUp:hover {
+  color: #FFF;
+  background-color: #333;
+  border-color: #333;
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);
+}
+/* ==========================================================================
+   15. CONTACT FORM RESPONSE PAGE   
+   ========================================================================== */
+.sent-message{
+    color: #288026;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    text-align: center;
+}
+
+/* ==========================================================================
+   16. Preorder and register Style
+   ========================================================================== */
+#preRegister  .container, #preorder .container {
+  padding-top: 150px;
+  padding-bottom: 100px;
+} 
+
+#preRegister .imgPreOrder img, #preorder .imgPreOrder img{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100%;
+  height:  auto;
+  vertical-align:middle;
+  margin-top: 20%;
+}
+
+div#packGroup.input-group{
+  width: 100%;
+}
+
+#preRegister .btnEnviar,#preorder .btnEnviar{
+  margin-top: 60px;
+}
+
+#preRegister input, #preorder input{
+  margin-bottom: 0px;
+}
+
+label[generated]{
+  display: none!important;
+}
+#preorder h1{
+  color: #FFF;;
+}
+
+#preRegister h1{
+  color: #71D7FF;
+  font-weight: 300;
+}
+#packGroup .selectpicker:not(ul){
+  height: 50px!important;
+  margin-top: -10px;
+}
+#registerSucced{
+  background-color: #FFF;
+}
+#registerSucced.blue{
+  background-color: #71D7FF!important;
+}
+
+#registerSucced .container{
+  padding-top: 25%;
+  padding-bottom: 100px;
+}
+#preRegister .form-control, #preorder .form-control {
+  height: 50px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 0px;
+  padding: 6px 20px;
+}
+
+#preRegister span, #preorder span {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  margin-left: 10px;
+  margin-top: 2px;
+}
+
+#preRegister span input, #preorder span input {
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+#preRegister p, #preorder p {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+#preRegister label, #preorder label {
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.spinner-package-label{
+  color: #444;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  float: left;
+  margin-right: 25px;
+  margin-top: 10px;
+}
+
+.checkboxFour {
+  width: 30px;
+  height: 30px;
+  background: #333;
+  margin-left: 15px;
+  border-radius: 100%;
+  position: relative;
+}
+
+.checkboxFour label {
+  width: 22px;
+  height: 22px;
+  border-radius: 100px;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  transition: all .5s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  background: #bbb;
+}
+
+.contentCheckBox {
+  display: inline-flex;
+  width: 100%;
+}
+
+/**
+ * Create the checked state
+ */
+.checkboxFour input[type=checkbox]:checked + label {
+  background: #26ca28;
+}
+
+#preorder{
+  background-color: #71D7FF;
+}
+
+#preorder h1{
+  color:white;
+  font-weight: 300;
+}
+
+input[type="number"] {
+   width:100%;
+   
+}
+
+.spinner {
+  width: 100px;
+}
+.spinner input {
+  text-align: right;
+}
+.input-group-btn-vertical {
+  position: relative;
+  white-space: nowrap;
+  width: 1%;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.input-group-btn-vertical > .btn {
+  display: block;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px 15px 12px 17px;
+  margin-left: 3px;
+  position: relative;
+  border-radius: 0;
+  margin-bottom: 5px;
+  margin-top: -4px;
+  border-radius: 0px;
+}
+
+.input-group-btn-vertical > .btn:first-child {
+  border-top-right-radius: 0px;
+}
+.input-group-btn-vertical > .btn:last-child {
+  margin-top: -2px;
+  border-bottom-right-radius: 0px;
+}
+.input-group-btn-vertical i{
+  position: absolute;
+  top: 0;
+  left: 13px;
+
+}
+
+/* ==========================================================================
+   Controls style
+   ========================================================================== */
+.bootstrap-select{
+  width: 100% !important;
+  border-radius:0!important;
+}
+
+.bootstrap-select > .btn{
+ border-radius:0!important;
+ border:1px solid #ddd!important; 
+}
+
+.bootstrap-select span{
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  font-family: 'Lato', sans-serif!important;
+}
+
+.thankYuoTitle h1{
+  font-weight: 300;
+  font-size: 70px;
+  margin-left: 100px;
+}
+
+.thankYuoTitleBeacons h1{
+  font-weight: 300;
+  font-size: 70px;
+  margin-left: 100px;
+  color: white;
+}
+
+.thankYouParagraph p{
+  font-weight: 300;
+  font-size: 20px;
+  margin-left: 100px !important;
+}
+
+.thankYouButton {
+  margin-left: 117px;
+  margin-top: 20px;
+}
+
+.thankYouButton > .btn {
+  font-weight: 300;
+  font-size: 22px;
+}
+
+.happyBiinie img{
+  width: 100%;
+  height: 100%;
+  margin-top: -135px;
+  margin-left: -31px;
+}
+
+.cantidadPaquetes {
+}
+
+.cantidadPaqueteTexto {
+
+}
+
+.cantidadPaquetesContador {
+}
+
+.error{
+  border-color:#F50000!important;
+  border:solid!important;
+  border-width:medium!important;
+}
+
+/* ==========================================================================
+   SingUp Style
+   ========================================================================== */
+
+.wizardProfile  {
+  padding-top: 15%;
+  a{
+
+    height: 150px;
+    margin-left: 10%;
+
+    .icon-wrapper{
+      position: relative;
+      overflow: hidden;
+      background-color: @colorBaseWhite;
+      height: 80px;
+      width: 80px;
+      display: inline-block;
+
+
+      border-radius: 50%;
+        -moz-border-radius: 50%;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+
+    }
+
+    i{  
+
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top:20%;
+      display: block;
+      height: 40px;
+      width: 40px;
+      font-size: 40px;
+      color:@colorGray;
+    }
+
+    .text-wrapper{
+      position: absolute;
+      display: inline-block;      
+      height: 80px;
+      padding-top: 10%;
+      padding-left: 10px;
+
+      span{       
+        position: relative;
+        margin-top: 50px;
+        color:@colorBaseWhite;
+      }     
+    }
+
+
+  }
+}
+
+//Profile Section
+#profileSection{
+
+  img{
+
+    border: solid;
+    border-color: @colorGray;
+    border-width: 5px;
+    height: 127px;
+  }
+
+  .btn-default{
+    margin-top: @standardPadding;
+    display:table;
+    text-transform: uppercase;
+  }
+
+}
+
+/* ==========================================================================
+   Terms And Conditions Style
+   ========================================================================== */
+#termsAndConditions .container{
+  height: 100%;
+  padding-top: 150px;
+  padding-bottom:100px;
+}
+
+#termsAndConditions .container h1{
+  font-size: 50px;
+  font-weight: 300;
+  color: #71D7FF;
+  margin-bottom: 45px!important;
+}
+
+
+#termsAndConditions .container h2{
+  font-weight: 400;
+  margin-bottom: 10px!important;
+}
+
+#termsAndConditions .container p{
+  font-weight: 300;
+  font-size: 20px;
+  margin-bottom: 40px!important;
+}
+
+#termsAndConditions .container {
+  width: 50%;
+  padding-top: 170px;
+}
+
+.btn-termsAccept {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  display: block;
+  width: 250px;
+  height: 70px!important;
+  font-weight: 300;
+  font-size: 25px;
+}
+
+.termsWhite{
+  color:#077CC7;
+  font-weight: 400;
+}
+.termsWhite:hover{
+  color:#0932BF;
+  font-weight: 400; 
+}
+
+/* ==========================================================================
+  Modal header Style
+   ========================================================================== */
+
+.modal-header{
+  border: none!important;
+}
+
+.modal-content{
+  border-radius:initial;
+  border: none;
+}
+.modal-footer{
+  border: none;
+}
+
+#singupWrapper{
+  padding-top: 150px;
+  padding-bottom: 100px;
+}
+
+.form-control {
+  -webkit-box-shadow:none;
+  box-shadow:none;
+  -webkit-transition:none;
+}
+
+.modal-header .close{
+    background-color: #000 !important;
+    color:#fff!important;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: 100;
+    padding-bottom: 2px;
+ } 
+
+ #singUpModal .welComeText{
+    margin-top: 10%;
+    text-align: center;
+    width: 100%;
+ }
+
+#singUpModal .loginDropDown {
+  width: 100%;
+  padding-top: 25px!important;
+}
+
+
+/* ==========================================================================
+   Validation Indicators
+   ========================================================================== */
+
+input[require].ng-pristine{
+  border-color: #e74c3c;
+}
+
+input.ng-invalid.ng-dirty{
+  border-color:#e74c3c;
+}
+
+input.ng-valid.ng-dirty{
+  border-color: #2ecc71;
+}
+
+/*------------------------------------------*/
+/* Support and Private Policy
+/*------------------------------------------*/
+.beginningSection{
+  margin-top: 10%;
+}
+
+
