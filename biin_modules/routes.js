@@ -44,7 +44,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Application routes
     app.get('/sendEmail', routes.sendEmail)
     app.get('/partials/:filename', routes.partials);
-    app.get('/', routes.index);
+    //app.get('/', routes.index);
     app.get('/dashboard', routes.dashboard);
     app.get('/login',routes.login);
     app.get('/home',restrict,routes.home);
