@@ -84,7 +84,7 @@ module.exports = function (db) {
     });
     */
     //Routes
-    var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
+    //var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
 
     return app;
 };
