@@ -27,8 +27,8 @@ var httpServer = http.createServer(app).listen(httpPort,function(){
 });
 
 //Https Server instance
-if(!isDevelopment){
+/*if(!isDevelopment){
 	var httpsServer=https.createServer(credentials, app).listen(httpsPort,function(){
 		console.log("Listing https server");
 	});
-}
+}*/

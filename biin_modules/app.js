@@ -9,16 +9,16 @@ module.exports = function (db) {
     , path = require('path')
     , app = express()
     , favicon = require('serve-favicon')
-    , logger = require('morgan')
-    , cookieParser = require('cookie-parser')
-    , bodyParser = require('body-parser')
-    , crypto = require('crypto')
-    , multipart = require('connect-multiparty')
-    , multipartMiddleware = multipart()
+    //, logger = require('morgan')
+    //, cookieParser = require('cookie-parser')
+    //, bodyParser = require('body-parser')
+    //, crypto = require('crypto')
+    //, multipart = require('connect-multiparty')
+    //, multipartMiddleware = multipart()
     //, lessMiddleware = require('less-middleware')
-    , methodOverride = require('method-override')
+    //, methodOverride = require('method-override')
     , cors = require('cors')
-    , expressValidator = require('express-validator');
+    //, expressValidator = require('express-validator');
 
     //var raygun = require('raygun');
     //var raygunClient = new raygun.Client().init({ apiKey: 'roejUjt4HoqIczi0zgC99Q==' });
