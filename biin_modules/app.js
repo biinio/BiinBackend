@@ -1,8 +1,8 @@
 module.exports = function (db) {
     var express = require('express')
-    , session = require('express-session')
-    , MongoStore = require('connect-mongo')(session)
-    , passport = require('./auth')
+    //, session = require('express-session')
+    //, MongoStore = require('connect-mongo')(session)
+    //, passport = require('./auth')
     , fs = require('fs')
     , http = require('http')
     , https = require('https')
