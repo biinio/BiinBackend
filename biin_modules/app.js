@@ -34,11 +34,8 @@ module.exports = function (db) {
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     schemasValidations = {};
-    
-    var httpPort = process.env.PORT || 3000;
-    var httpsPort = 8443;
 
-    app.set('port',httpPort);
+    app.set('port', process.env.PORT || 5000);
 
     //app.use(cors());
 
