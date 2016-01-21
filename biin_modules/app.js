@@ -79,9 +79,7 @@ module.exports = function (db) {
     app.set('view engine', 'jade');
 
     app.use(express.static(path.join(process.env.PWD , 'public')));
-    app.use('/business', express.static(path.join(process.env.PWD , 'business')));
     app.use(express.static(path.join(process.env.PWD,'bower_components')));
-    //app.use(express.static(path.join(process.env.PWD,'bower_components')));
     app.use(favicon(__dirname + '/../public/favicon.ico'));
     app.use(logger('dev'));
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -100,12 +98,6 @@ module.exports = function (db) {
     app.use(passport.session());
     app.use(expressValidator());//Express Validator
     app.use(bodyParser.json());
-    app.use(methodOverride('X-HTTP-Method-Override'));
-
-    app.use(function (req, res, next) {
-        res.set('X-Powered-By', 'Biin.io');
-        next();
-    });
 
     //Routes
     var routes = require("./routes.js")(app,db,passport,multipartMiddleware);

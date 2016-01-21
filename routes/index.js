@@ -1,9 +1,13 @@
 module.exports = function () {
 	var functions = {};
+
 	var fs = require('fs');
-	var organization= require('../schemas/organization'),biin= require('../schemas/biin');;
+	var organization= require('../schemas/organization'),
+		biin= require('../schemas/biin');
+
 	var client = require('../schemas/client');
-	var utils = require('../biin_modules/utils')(), routesUtils = require('../biin_modules/routesUtils')(), sysGlobals= require('../schemas/sysGlobals');
+	var utils = require('../biin_modules/utils')(),
+		routesUtils = require('../biin_modules/routesUtils')();
 	
 	//Get the index page
 	functions.index = function(req, res){
@@ -15,96 +19,16 @@ module.exports = function () {
 		res.render("login");
 	};
 
-	//Get the Dashboard
-	functions.home = function(req,res){
-		//var organization={};
-		if(typeof(req.session.defaultOrganization)==='undefined'){
-			if(typeof(req.user.defaultOrganization)!=='undefined' && req.user.defaultOrganization!==''){
-				routesUtils.getOrganization(req.user.defaultOrganization,req,res,{name:true, identifier:true},function (data,req,res) {
-					//set the first time for the data
-					req.session.defaultOrganization = data;					
-					res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:data});						
-
-				});
-			}				
-			else{
-				req.user.defaultOrganization = null;
-				res.render('dashboard/index',{title:'Welcome!',user:req.user, organization:req.user.defaultOrganization});	
-			}
-		}				
-		else{
-			if(req.session.defaultOrganization===null){
-				res.redirect('/accounts');
-			}else{
-				res.render('dashboard/index',{title:'Welcome!',user:req.user,organization:req.session.defaultOrganization});					
-			}			
-		}
-
-	}
-
-	//Get the SingUp information of a client
-	functions.singup =function(req,res){	
-		res.render('singup/index',{title:'Signup!',user:req.user});
-	}
-    	
-
-	//Get the dashboard
-	functions.dashboard = function (req,res) {
-		//The none ajax request is not available
-		var is_ajax_request = true;// req.xhr;
-		if(!is_ajax_request){
-			if(req.session.passport.user==undefined){
-				res.redirect('/login');
-			}else{
-				 res.render('dashboard/index',{title:'Welcome!',				
-				 user:req.user});
-			}
-		}else{
-			var obj={
-				status:"error"
-			}
-
-			if(req.session.passport.user==undefined){
-				obj.url= '/login';
-			}else{
-				obj.url ="/home";
-				obj.status="success"
-			}
-
-			res.json(obj);			
-		}
-	};
-
-	//Get the partial views for use with angular
-	functions.partials = function(req, res){
-	  var filename = req.params.filename;
-	  if(!filename) return;  // might want to change this
-	  res.render("_partials/" + filename );
-	}
-
-	//Get the pre-register form
-	functions.preregister =function(req,res){
-		res.render("index_pre_register",{packageSlected:req.params.packageSlected,accept:req.params.accept});
-	}
-
-	//Get the pre-order form
-	functions.preorder =function(req,res){
-		res.render("index_pre_order",{packageSlected:req.params.packageSlected,accept:req.params.accept});
-	}
-
-	//Get the pre-order form
 	functions.terms=function(req,res){
-
-		var backPage = req.params.backPage.replace('-','/');
-		res.render("termsAndConditions",{backPage:backPage});
-	}
+		res.render("termsAndConditions");
+	};
 
 	functions.privacyPolicy=function(req,res){
 		res.render("privacyPolicy");
-	}
+	};
 	functions.support=function(req,res){
 		res.render("support");
-	}
+	};
 	
 	//Send emails
 	functions.sendEmail = function(req,res){
@@ -217,44 +141,7 @@ module.exports = function () {
 			});		  
 		});        
 
-    }
-
-    //Get the Mobile API
-    functions.mobileAPI=function(req,res){
-    	res.render('mobileAPI',{title:'Signup!',user:req.user});
-    }
-
-    //Get the mobile Test page
-    functions.mobileTest =function(req,res){    
-
-    	biin.find({},function(err,data){
-    		for(var o=0; o<data.length;o++){
-	    		if(data[o].objects){
-		    		if(err)
-		    			throw err;
-		    		else{    		
-		    			for(var i=0; i<data[o].objects.length;i++){
-		    				if(data[o].objects[i].objectType=='element'){
-    							data[o].objects[i].objectType='1';
-    						}else{
-    							data[o].objects[i].objectType='2';
-    						}
-		    			}
-		    		}
-
-		    		data[o].save(function(err,cantAffected){
-		    			console.log('Org Modified');
-		    		});    			
-	    		}else{
-	    			console.log('There are not sites');
-	    		}    			
-    		}
-
-    	});
-
-    }
-
-    
+    };
     
 	return functions;
 };
