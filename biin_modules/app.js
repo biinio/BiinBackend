@@ -8,7 +8,7 @@ module.exports = function (db) {
     , https = require('https')
     , path = require('path')
     , app = express()
-    , favicon = require('serve-favicon')
+    //, favicon = require('serve-favicon')
     //, logger = require('morgan')
     //, cookieParser = require('cookie-parser')
     //, bodyParser = require('body-parser')
@@ -17,7 +17,7 @@ module.exports = function (db) {
     //, multipartMiddleware = multipart()
     //, lessMiddleware = require('less-middleware')
     //, methodOverride = require('method-override')
-    , cors = require('cors')
+    //, cors = require('cors')
     //, expressValidator = require('express-validator');
 
     //var raygun = require('raygun');
@@ -29,12 +29,16 @@ module.exports = function (db) {
 
 
 
-    var compress = require('compression');
+    //var compress = require('compression');
     //app.use(compress());
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     schemasValidations = {};
+    
+    var httpPort = process.env.PORT || 3000;
+    var httpsPort = 8443;
 
+    app.set('port',httpPort);
 
     //app.use(cors());
 
@@ -42,13 +46,13 @@ module.exports = function (db) {
     process.env.PWD = process.cwd();
 
     //SSL Force Confifuration
-    var forceSsl = function (req, res, next) {
+    /*var forceSsl = function (req, res, next) {
         if (!req.secure) {
             return res.redirect(['https://', req.get('Host'), req.url].join(''));
         } else {
             next();
         }
-    };
+    };*/
 
     // View engine setup
     //app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname

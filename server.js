@@ -5,9 +5,9 @@ var fs= require('fs'),
   https = require('https'),
   util = require('util');
 
-var debug = require('debug')('BinnCMS'),
+//var debug = require('debug')('BinnCMS'),
   //db=require('./biin_modules/db'),
-	app = require('./biin_modules/app')();
+	var app = require('./biin_modules/app')();
 
 //Define local vars
 var isDevelopment = process.env.NODE_ENV === 'development';
@@ -17,9 +17,9 @@ var httpsPort = 8443;
 app.set('port',httpPort);
 
 //Https credentials
-var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8').toString();;
-var certificate = fs.readFileSync('sslcert/bundle.crt', 'utf8').toString();;
-var credentials = {key: privateKey, cert: certificate};
+//var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8').toString();;
+//var certificate = fs.readFileSync('sslcert/bundle.crt', 'utf8').toString();;
+// /var credentials = {key: privateKey, cert: certificate};
 
 //Http Server instance
 var httpServer = http.createServer(app).listen(httpPort,function(){
