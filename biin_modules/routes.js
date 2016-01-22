@@ -154,7 +154,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/_partials/galleryWidget',elements.galleryWidget);
 
     //Element List
-    app.get('/api/organizations/:identifier/elements',elements.list);
+    app.get('/api/organizations/:identifier/elements',elements.list)
+    app.get('/api/organizations/:identifier/readyElements',elements.listReady)
     //Element Creation
     app.post('/api/organizations/:identifier/elements',elements.set);
     //Element Update

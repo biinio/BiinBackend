@@ -48,6 +48,25 @@ module.exports = function(){
 			res.json({data:data});
 		});
 	}
+    
+    //GET the list of elements which are not deleted and are ready
+	functions.listReady = function(req,res){
+		organization.findOne({"identifier":req.param('identifier')},{elements:true, name:true, identifier:true},function (err, data) {
+            
+            var elementList = [];
+            for (var index = 0; index < data.elements.length; index++) {
+                if (data.elements[index].isDeleted == 0 && data.elements[index].isReady != 0) {
+                    elementList.push(data.elements[index]);
+                }
+            }
+            
+            data.elements = elementList;
+            
+			req.session.selectedOrganization = data;
+			res.json({data:data});
+		});
+	}
+
 
 	//GET Mobile info of Elements
 	functions.getMobile=function(req,res){
