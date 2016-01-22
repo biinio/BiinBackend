@@ -210,9 +210,9 @@ module.exports = function () {
         elementValidated.userCollected = element.userCollected ? element.userCollected : "0";
         elementValidated.userViewed = element.userViewed ? element.userViewed : "0";
         if(!element.hasCallToAction){
-          element.hasCallToAction  = "0";
+          elementValidated.hasCallToAction  = "0";
         }else{
-          element.hasCallToAction  = "1";
+          elementValidated.hasCallToAction  = "1";
         }
         elementValidated.callToActionURL = element.callToActionURL?element.callToActionURL:"";
         elementValidated.callToActionTitle = element.callToActionTitle? element.callToActionTitle : "";
