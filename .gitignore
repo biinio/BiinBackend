@@ -1,6 +1,7 @@
 #	Main ignore files for the BIIN.CMS Project
 
-node_modules/**
+node_modules/*
+!node_modules/node-vibrant/
 
 *.swp
 
@@ -19,7 +20,6 @@ biin.sublime-project.save
 .idea/
 
 .idea/**
-*.css
 
 biin.sublime-project
 

@@ -1,8 +1,0 @@
-extends ../layout_blog
-block head_scripts
-	script(src="/javascripts/angular/blogController.js")
-block content
-	section#blog(ng-app="biinAppBlog" ng-controller="blogController" ngCloack)
-		.container
-			.row
-				include listing

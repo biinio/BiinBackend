@@ -3,13 +3,3 @@ block head_scripts
 	script(src="/javascripts/angular/accountController.js")
 block content	
 	#sectionContent(ng-app="biinAppAccount" ng-controller="accountController" ngCloack)
-		#wrapperContent
-			.account-section-content
-				.animate-switch.wizard-wrapper
-					.wizard-body.wizard
-						#wizardOption1.wizard
-							include wizardProfile
-						#wizardOption2.wizard
-							include wizardBilling
-						#wizardOption3.wizard
-							include wizardOrganizations
