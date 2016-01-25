@@ -80,7 +80,6 @@ module.exports = function (db) {
 
     app.use(express.static(path.join(process.env.PWD , 'public')));
     app.use(express.static(path.join(process.env.PWD,'bower_components')));
-    //app.use(express.static(path.join(process.env.PWD,'bower_components')));
     app.use(favicon(__dirname + '/../public/favicon.ico'));
     app.use(logger('dev'));
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -99,51 +98,8 @@ module.exports = function (db) {
     app.use(passport.session());
     app.use(expressValidator());//Express Validator
     app.use(bodyParser.json());
-    app.use(methodOverride('X-HTTP-Method-Override'));
-
-    app.use(function (req, res, next) {
-        res.set('X-Powered-By', 'Biin.io');
-        next();
-    });
 
     //Routes
     var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
-
-    /// error handlerslogger
-    // development error handler
-    // will print stacktrace
-    if (isDevelopment) {
-        app.use(function(err, req, res, next) {
-            console.log("Error of development: " + err.message +" stack: "+err.stack);
-            res.render('error', {
-                message: err.message,
-                error: err
-            });
-        });
-
-        //Only for development Live Reload Plugin
-        require('express-livereload')(app, config={});
-    }else{
-        // production error handler
-        // no stacktraces leaked to user
-        app.use(function(err, req, res, next) {
-                res.render('error', {
-                message: err.message,
-                error: {}
-            });
-        });
-    }
-
-    app.use(function(req, res, next){
-      // the status option, or res.statusCode = 404
-      // are equivalent, however with the option we
-      // get the "status" local available as well
-      res.render('404', { status: 404, url: req.url });
-    });
-
-    process.on('uncaughtException', function (err) {
-        console.log(err);
-        //raygunClient.send(err);
-    });
     return app;
 };

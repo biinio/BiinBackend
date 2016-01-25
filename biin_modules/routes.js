@@ -25,48 +25,35 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var venues =require('../routes/venue')();
     var mobileEndPoint = require('../routes/mobileEndPoint')();
     var roles = require('../routes/roles')();
-
-    //Restricted login pages function
-    var restrict =function(req, res, next) {
-      if (req.user) {
-        next();
-      } else {
-        req.session.error = 'Access denied!';
-        res.redirect('/');
-      }
-    }
-
-    //Sys routes
-    app.post('/enviroments', sysGlobals.set)
+    var ratingSites = require('../routes/ratingSites')();
     var maintenance = require('../routes/maintenance')();
 
+    //Sys routes
+    app.post('/enviroments', sysGlobals.set);
+
     //Application routes
-    app.get('/sendEmail', routes.sendEmail)
-    app.get('/partials/:filename', routes.partials);
-    app.get('/', routes.index);
-    app.get('/dashboard', routes.dashboard);
+    app.get('/sendEmail', routes.sendEmail);
     app.get('/login',routes.login);
-    app.get('/home',restrict,routes.home);
-    app.get('/singup',routes.singup);
-    app.get('/mobileAPI',routes.mobileAPI);
-    app.get('/preregister/:packageSlected/:accept',routes.preregister);
-    app.get('/preorder/:packageSlected/:accept',routes.preorder);
-    app.get('/preregister/:packageSlected',routes.preregister);
-    app.get('/preorder/:packageSlected',routes.preorder);
-    app.get('/termsAndConditions/:backPage',routes.terms);
+    app.get('/termsAndConditions',routes.terms);
     app.get('/privacypolicy',routes.privacyPolicy);
     app.get('/support',routes.support);
     app.post('/api/singup',clients.set);
     app.get('/client/:identifier/activate',clients.activate);
     app.post('/client/:identifier/activate',clients.activate);
-    app.post('/login',passport.authenticate('clientLocal',{
-        failureRedirect:'/login',
-        successRedirect:'/dashboard'
-    }));
-    app.get('/mobileTest',routes.mobileTest);
+    app.post('/api/login',function(req, res, next) {
+        passport.authenticate('clientLocal', function(err, user, info) {
+            if (err) { return next(err); }
+            // Redirect if it fails
+            if (!user) { return res.json({status:"success",url:"/accounts"}); }
+            req.logIn(user, function(err) {
+                if (err) { return next(err); }
+                // Redirect if it succeeds
+                return res.json({status:"success",url:"/accounts"});
+            });
+        })(req, res, next);
+    });
 
     //Dashboard
-    //app.get('/dashboard', dashboard.index);
     app.get('/api/dashboard', dashboard.get);
     app.get('/api/dashboard/set', dashboard.set);
     app.get('/api/dashboard/comparative', dashboard.getComparativeData);
@@ -87,9 +74,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/dashboard/local/fromvisits', dashboard.getFromVisitsLocal);
     app.get('/api/dashboard/local/newsvsreturning', dashboard.getNewVsReturningLocal);
 
-
     //Acounts Routes
-    app.get('/accounts',restrict,accounts.index);
+    app.get('/accounts',accounts.index);
     app.put('/api/accounts',accounts.set);
     app.post('/api/accounts/:organizationIdentifier/default',accounts.setDefaultOrganization);
     app.get('/api/accounts',accounts.list);
@@ -98,18 +84,14 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Categories Routes
     app.get('/api/categories',categories.list);
-    app.get('/api/categories/set', categories.set)
+    app.get('/api/categories/set', categories.set);
 
     //Organization Routes
-    app.get('/organizations',restrict,organizations.index);
     app.get('/api/organizations',organizations.list);
-
     app.post('/api/organizations/:identifier',organizations.set);
     app.put('/api/organizations/:accountIdentifier',organizations.create);
-
     app.post('/api/organizations/:identifier/image',multipartMiddleware,organizations.uploadImage);
-
-    app.delete('/api/organizations/:identifier',organizations.delete);
+    app.delete('/api/organizations/:identifier',organizations.markAsDeleted);
     app.post('/organizations/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/organizations/:identifier/:siteIdentifier/minor', organizations.getMinor);
@@ -120,7 +102,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/organizations/:accountIdentifier/selectedOrganization', organizations.getSelectedOrganization);
 
     //Showcase routes
-    app.get('/organizations/:identifier/showcases',restrict,showcases.index);
     app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId);
     app.post('/api/organizations/:identifier/site/showcases',organizations.setShowcasesPerSite);
 
@@ -133,18 +114,15 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/showcases/:identifier',showcases.get);
     app.put('/api/showcases/:showcase',showcases.set);
-    app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.delete);
+    app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.markAsDeleted);
     app.get('/api/organizations/:identifier/showcases',showcases.list);
 
-
     //Sites routes
-    app.get('/organizations/:identifier/sites',restrict,sites.index);
     app.get('/site/mapComponent',sites.mapComponent);
-    app.get('/api/organizations/:identifier/sites',sites.get);
+    app.get('/api/organizations/:identifier/sites',sites.list);
     app.post('/api/organizations/:orgIdentifier/sites',sites.set);
 
     //Maintenance
-    app.get('/maintenance',restrict,maintenance.index);
     app.get('/maintenance/organizations',maintenance.getOrganizationInformation);
     app.get('/maintenance/addBiinToOrganizationModal',maintenance.addBiinToOrganizationModal);
     app.get('/maintenance/getBiinsOrganizationInformation/:orgIdentifier',maintenance.getBiinsOrganizationInformation);
@@ -161,10 +139,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     //Create a biin
     app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier/purchase',sites.biinPurchase);
-    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.delete);
+    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.markAsDeleted);
 
     //Biins
-    app.get('/organizations/:identifier/biins',restrict,biins.index);
     app.get('/api/biins',biins.list);
     app.post('/api/organizations/:identifier/sites/biins',biins.updateSiteBiins);
     app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
@@ -172,21 +149,22 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/api/biins/:biinIdentifier/update',biins.updateBiin);
 
     //Elements
-    app.get('/organizations/:identifier/elements',restrict, elements.index);
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/_partials/galleryWidget',elements.galleryWidget);
 
     //Element List
     app.get('/api/organizations/:identifier/elements',elements.list)
+    app.get('/api/organizations/:identifier/readyElements',elements.listReady)
     //Element Creation
     app.post('/api/organizations/:identifier/elements',elements.set);
     //Element Update
     app.put('/api/organizations/:identifier/elements/:element',elements.set);
-    app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
+    //app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
+    app.delete('/api/organizations/:identifier/elements/:element',elements.markAsDeleted);
+
 
     //Regions routes
-    app.get('/regions',restrict,regions.index)
     app.get('/regions/add',regions.create);
     app.post('/regions/add',regions.createPost);
     app.get('/regions/:identifier',regions.edit);
@@ -194,13 +172,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/mobile/regions/:identifier/:latitude/:longitude',regions.setCoordsToRegion);//Update the Coords of a region
 
     //Gallery Routes
-    app.get('/organizations/:identifier/gallery', restrict,gallery.index);
     app.get('/api/organizations/:identifier/gallery',gallery.list);
     app.post('/api/organizations/:identifier/gallery', multipartMiddleware,gallery.upload);
-
-    //Utilities Routes
-    app.get('/errors',restrict,errors.index);
-    app.post('/api/errors/add',errors.create);
+    app.post('/api/organizations/:identifier/gallery/upload',gallery.uploadBase64Image);
 
     //Client routes
     app.get('/client',clients.create);
@@ -218,7 +192,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/stickers/create',stickers.set);
 
     //Binnies Routes
-    app.get('/biinies',restrict,mobileUser.index);
+    app.get('/biinies',mobileUser.index);
     app.get('/api/biinies',mobileUser.get);
     app.put('/api/biinies',mobileUser.set);
     app.delete('/api/biinies/:identifier',mobileUser.delete);
@@ -270,15 +244,15 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies/:identifier/organizations/:organizationIdentifier/loyalty/points', mobileUser.setMobileLoyaltyPoints);
 
     //Biin Biinie Object Relation setters
-    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/biined',biinBiinieObjects.setBiined)
-    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/notified',biinBiinieObjects.setNotified)
+    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/biined',biinBiinieObjects.setBiined);
+    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/notified',biinBiinieObjects.setNotified);
 
     //Biinie/ Site relation
     app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified',mobileUser.setShowcaseNotified);
 
     //Stars/Rating
     app.post('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/rating/:rating',mobileRoutes.setSiteRating);
-    app.post('/mobile/biinies/:biinieIdentifier/elements/:elementIdentifier/rating/:rating',mobileRoutes.setElementRating)
+    app.post('/mobile/biinies/:biinieIdentifier/elements/:elementIdentifier/rating/:rating',mobileRoutes.setElementRating);
 
     //Venues
     app.get('/api/venues/search',venues.getVenueALike);
@@ -296,14 +270,12 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:biinieIdentifier/showcases/:identifier',showcases.getMobileShowcase);
 
     //Mobile History
-    app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory)
-    app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory)
+    app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory);
+    app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory);
 
     //Utils
     app.get('/sites/update/validation',sites.setSitesValid);
 
-    //Test Vibrant
-    app.get('/test/testVibrant', organizations.testVibrant);
 
     app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
     app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
@@ -312,12 +284,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier/requestSites/:batch',mobileEndPoint.getNextSites);
     app.get('/mobile/biinies/:identifier/requestCollection',mobileEndPoint.getCollections);
 
-    /// catch 404 and forwarding to error handler
-    app.use(function(req, res, next) {
-        var err = new Error('Not Found');
-        err.status = 404;
-        next(err);
-    });
+    app.get('/mobile/v2/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitalDataFullCategories);
+
+    app.put('/mobile/rating/site',ratingSites.putRating);
+    app.get('/ratings/site',ratingSites.getRatings);
 
 
-}
+};

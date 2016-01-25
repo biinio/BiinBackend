@@ -37,7 +37,8 @@ module.exports = function() {
     functions.list = function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         organization.find({
-            "accountIdentifier": req.user.accountIdentifier
+            "accountIdentifier": req.user.accountIdentifier,
+            "isDeleted": false
         }, {
             _id: 0,
             identifier: 1,
@@ -54,6 +55,7 @@ module.exports = function() {
             });
         });
     }
+    
     //PUT/POST an organization
     functions.set = function(req, res) {
         //Perform an update
@@ -265,6 +267,32 @@ module.exports = function() {
         }
     }
 
+    
+    //Mark an organization, and its showcases as deleted
+    functions.markAsDeleted = function(req, res) {
+        //Get the organization identifier
+        var organizationIdentifier = req.param("identifier");
+        organization.update({
+            identifier:organizationIdentifier
+        },{ 
+            $set:{"isDeleted": 1}
+        }, function(err){
+            if(err) { throw err; }
+            else { 
+                showcase.update({
+                    'organizationIdentifier': organizationIdentifier
+                },{
+                    $set:{"isDeleted": 1}
+                }, function(err){
+                    if(err) { throw err; }
+                    else {
+                        res.json({state:"success"}); 
+                    }
+                });
+            }
+        });
+    }
+    
     //DELETE an specific Organization
     functions.delete = function(req, res) {
 

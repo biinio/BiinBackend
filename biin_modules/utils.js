@@ -2,7 +2,7 @@
 var path = require("path"), uuid=require('node-uuid'),
   fs = require('fs'),
   util = require('util'),
-  math = require('mathjs'),  
+  math = require('mathjs'),
   //FTP Package
   ftp = require("ftp")
   moment = require('moment');
@@ -12,7 +12,7 @@ var dateFormat ='YYYY-MM-DD HH:mm:ss';
 
 module.exports = function(){
 	var functions={};
-    
+
   //Validations Utils
   //modelValidations: Validations for the model
   //modelObject: Object request to validate
@@ -63,7 +63,7 @@ module.exports = function(){
     return moment(pdate).format(dateFormat);
   }
 
-  
+
   /*
    * Return a unique identifier with the given `len`.
    *
@@ -91,13 +91,13 @@ module.exports = function(){
      var ext = path.extname(filename||'').split('.');
      return ext[ext.length - 1];
   }
-  
+
   //Return a new name for an image
   functions.getImageName=function(filename,toPath){
     var extension= this.getExtension(filename);
     var newName = this.getGUID()+"."+extension;
     newName = newName.replace("-","");
-     //Verify if the image all ready exists       
+     //Verify if the image all ready exists
      /*fs.exists(path.join(filename,filename),function(exists){
        if(!exists){
           return  newName;
@@ -134,7 +134,7 @@ module.exports = function(){
 
   //Get Proximity of two points in radians
   functions.getProximity= function(startLat,startLng,endLat,endLng){
-    var resultLat = startLat -  endLat ;          
+    var resultLat = startLat -  endLat ;
     var resultLong = startLng - endLng;
 
     return math.sqrt((resultLat*resultLat) + (resultLong*resultLong));
@@ -143,6 +143,5 @@ module.exports = function(){
   functions.metersToRadians =function(radious){
     return ((process.env.STANDARD_RADIOUS/1000)*360)/process.env.EARTH_CIRCUMFERENCE;
   }
-  return functions;	
+  return functions;
 }
-

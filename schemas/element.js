@@ -19,6 +19,11 @@ var elementSchema = new Schema({
     
 	actionType:{type:String, default:""},
 	currencyType:{type:String, default:"2"},
+    
+    //has call to action
+    "hasCallToAction":{type:Boolean,default:0},
+    "callToActionURL":{type:String, default:""},
+    "callToActionTitle":{type:String, default:""},
 
 	hasFromPrice:{type:String, default:"0"},
 	//fromPrice:{type:String, default:""},
@@ -80,7 +85,8 @@ var elementSchema = new Schema({
 		}
 	],
     
-    isReady:{type:Number,default:0}
+    isReady:{type:Number,default:0},
+    isDeleted:{type:Boolean,default:0}
 });
 
 module.exports = mongoose.model('elements', elementSchema);
