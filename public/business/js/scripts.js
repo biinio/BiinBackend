@@ -263,7 +263,7 @@
 
     $.validator.addMethod("phoneCR", function(phone_number, element) {
         phone_number = phone_number.replace(/\s+/g, "");
-        return this.optional(element) || phone_number.length > 8 &&
+        return this.optional(element) || phone_number.length > 7 &&
             phone_number.match(/^(00)?[\s|-]?((\+)?[\s|-]?[0-9]{3})?[\s|-]?([0-9]{2})[\s|-]?([0-9]{2})[\s|-]?([0-9]{2})[\s|-]?([0-9]{2})[\s|-]?$/);
     }, "Please specify a valid phone number");
 
@@ -365,8 +365,8 @@
                         }
                     ],
                     'autotext': 'true',
-                    'subject': 'Thank you for being interested in trying our product!',
-                    'html': 'Thank you for being interested in our product, we will contact you as soon as posible.'
+                    'subject': 'Gracias por su interés en Biin',
+                    'html': 'Estaremos pronto en contacto para conocer más de su negocio e iniciar con la puesta en marcha de Biin<br/>Saludos,<br/><br/>César Arce<br/>CEO en biin'
                 }
             }
         }).done(function (response) {
