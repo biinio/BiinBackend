@@ -293,6 +293,7 @@ module.exports = function() {
         });
     }
     
+    
     //DELETE an specific Organization
     functions.delete = function(req, res) {
 
@@ -331,6 +332,30 @@ module.exports = function() {
 
 
         });
+    }
+    
+    //Delete gallery images
+    functions.deleteImage = function(req, res) {
+        var organizationIdentifier = req.param('identifier');
+        var imageIdentifier = req.param('imageIdentifier');
+        
+        //remove elements from organization.elements
+		organization.update({
+            identifier:organizationIdentifier
+        },{
+            $pull:{gallery:{identifier: imageIdentifier}}
+        },{
+            multi:true
+        },function(err){
+            if(err)
+                throw err;
+            else {
+                res.json({
+                    state: "success"
+                });
+            }
+        });
+            
     }
 
     //Minor and major Functions

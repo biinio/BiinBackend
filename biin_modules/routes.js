@@ -95,6 +95,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/organizations/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/organizations/:identifier/:siteIdentifier/minor', organizations.getMinor);
+    app.delete('/api/organizations/:identifier/:imageIdentifier',organizations.deleteImage);
 
     //Save selected organization
     app.put('/api/organizations/:accountIdentifier/:organizationIdentifier',organizations.saveSelectedOrganization);
