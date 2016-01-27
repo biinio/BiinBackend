@@ -115,9 +115,22 @@ module.exports = function() {
             'sites._id': true,
             'sites.showcases': true
         }, function(err, data) {
-            for (var i = 0; i < data.sites.length; i++) {
-                data.sites[i].showcases = model.sites[i].showcases;
+            
+            // Find the correct site to assign the showcase to
+            for (var index=0; index < model.sites.length; index++) {
+                for (var j = 0; j < data.sites.length; j++) {
+                    if (model.sites[index].identifier == data.sites[j].identifier) {
+                        data.sites[j].showcases = model.sites[index].showcases;
+                        break;
+                    }
+                }
             }
+            
+            /*for (var i = 0; i < data.sites.length; i++) {
+                data.sites[i].showcases = model.sites[i].showcases;
+            }*/
+            
+            
             data.save(
                 function(err) {
                     if (err)
@@ -293,6 +306,7 @@ module.exports = function() {
         });
     }
     
+    
     //DELETE an specific Organization
     functions.delete = function(req, res) {
 
@@ -331,6 +345,30 @@ module.exports = function() {
 
 
         });
+    }
+    
+    //Delete gallery images
+    functions.deleteImage = function(req, res) {
+        var organizationIdentifier = req.param('identifier');
+        var imageIdentifier = req.param('imageIdentifier');
+        
+        //remove elements from organization.elements
+		organization.update({
+            identifier:organizationIdentifier
+        },{
+            $pull:{gallery:{identifier: imageIdentifier}}
+        },{
+            multi:true
+        },function(err){
+            if(err)
+                throw err;
+            else {
+                res.json({
+                    state: "success"
+                });
+            }
+        });
+            
     }
 
     //Minor and major Functions
