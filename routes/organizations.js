@@ -398,9 +398,31 @@ module.exports = function() {
                     }
                 }
                 
+                // Image still not in use, proceed to delete
+                if (imageInUse == false) {
+                    //remove elements from organization.elements
+                    organization.update({
+                        identifier:organizationIdentifier
+                    },{
+                        $pull:{gallery:{identifier: imageIdentifier}}
+                    },{
+                        multi:true
+                    },function(err){
+                        if(err)
+                            throw err;
+                        else {
+                            res.json({
+                                deleted: true
+                            });
+                        }
+                    });
+                }
+                else {
+                
                 res.json({
-                     data: imageInUse
+                     deleted: imageInUse
                 });
+                }
             }
         });
     }
