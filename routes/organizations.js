@@ -102,7 +102,7 @@ module.exports = function() {
             }
         });
     }
-
+    
     //Set showcases into sites in a organization
     functions.setShowcasesPerSite = function(req, res) {
         var organizationIdentifier = req.param("identifier");
@@ -344,6 +344,86 @@ module.exports = function() {
             });
 
 
+        });
+    }
+    
+    // Check if gallery image is being used before deleting
+    functions.checkImageUse = function (req, res) {
+        var organizationIdentifier = req.param('identifier');
+        var imageIdentifier = req.param('imageIdentifier');
+        
+        organization.findOne({
+            identifier: organizationIdentifier,
+            "isDeleted": false
+        }, {
+            _id: true,
+            'sites._id': true,
+            'sites.media': true,
+            'sites.isDeleted': true,
+            'elements._id': true,
+            'elements.media': true,
+            'elements.isDeleted': true
+        }, function(err, data) {
+            if (err) { throw err; }
+            else {
+                var activeElements = [];
+                var activeSites = [];
+                var imageInUse = false;
+                
+                for (var elementIndex = 0; elementIndex < data.elements.length; elementIndex++) {
+                    // Check elements that have not been deleted
+                    if (data.elements[elementIndex].isDeleted == false)
+                    {
+                        // Check media from the element to see if image is being used
+                        for (image = 0; image < data.elements[elementIndex].media.length; image++) {
+                            if (data.elements[elementIndex].media[image].identifier == imageIdentifier) {
+                                imageInUse = true;
+                            }
+                        }
+                    }
+                }
+                
+                // Check that it is not being used in sites if it's not being used in elements
+                if (imageInUse == false) {
+                    for (var siteIndex = 0; siteIndex < data.sites.length; siteIndex++) {
+
+                        //Check on sites that have not been deleted
+                        if (data.sites[siteIndex].isDeleted == false) {
+                            for (imageIndex = 0; imageIndex < data.sites[siteIndex].media.length; imageIndex++) {
+                                if (data.sites[siteIndex].media[imageIndex].identifier == imageIdentifier) {
+                                    imageInUse = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Image still not in use, proceed to delete
+                if (imageInUse == false) {
+                    //remove elements from organization.elements
+                    organization.update({
+                        identifier:organizationIdentifier
+                    },{
+                        $pull:{gallery:{identifier: imageIdentifier}}
+                    },{
+                        multi:true
+                    },function(err){
+                        if(err)
+                            throw err;
+                        else {
+                            res.json({
+                                deleted: true
+                            });
+                        }
+                    });
+                }
+                else {
+                
+                res.json({
+                     deleted: imageInUse
+                });
+                }
+            }
         });
     }
     
