@@ -44,10 +44,10 @@ module.exports = function () {
 			biinPrototype.proximityUUID = req.param('identifier');
 
 			res.json({data:sites, prototypeObj:new site(), prototypeObjBiin:biinPrototype});
-		}
+		};
 
 		getOganization(req, res, callback);
-	}
+	};
 
 	//GET Sites User categories and proximity
 	functions.getMobileByCategories=function(req,res){
@@ -57,13 +57,13 @@ module.exports = function () {
 		var enviromentId = process.env.DEFAULT_SYS_ENVIROMENT;
 
 		var maxLatModifiers=0;
-		var maxLngModifiers=0
+		var maxLngModifiers=0;
 		var invertSearch=false;
 		var cantSites =0;
 
 
 		var categorySitesResult={categories:[]};
-		var catAdded=[]
+		var catAdded=[];
 		var searchSitesByCategory =function(userCategories,catArray,lat,lng,callback){
 
 			var queryMinLat ={min_latitude:{$lte:lat}};
@@ -97,7 +97,7 @@ module.exports = function () {
 				}
 				callback();
 			});
-		}
+		};
 
 		//Get the categories of the user
 		mobileUser.findOne({identifier:userIdentifier},{"gender":1,"categories.identifier":1,"categories.name":1,"categories.priority":1},function(err,foundCategories){
@@ -135,13 +135,13 @@ module.exports = function () {
 				}
 			}
 		});
-	}
+	};
 
 
 	var getAllSitesByCategories = function(userIdentifier, userLat, userLng, userCategories,catArray,callback){
 		var cantSites =0;
 		var categorySitesResult={categories:[]};
-		var catAdded=[]
+		var catAdded=[];
 		siteCategory.find({categoryIdentifier:{$in:catArray}},{_id:0,categoryIdentifier:1,"sites.identifier":1,"sites.lng":1,"sites.lat":1}).lean().exec(function(err,foundSearchSites){
 			for(var c=0;c< foundSearchSites.length; c++){
 				if(foundSearchSites[c].sites.length){
@@ -168,7 +168,7 @@ module.exports = function () {
 			}
 			callback(categorySitesResult,cantSites,catAdded);
 		});
-	}
+	};
 
 	//PUT an update of an site
 	functions.set=function(req,res){
@@ -219,7 +219,7 @@ module.exports = function () {
 					res.send(model,200);
 				}
 
-			}
+			};
 			model.isValid = utils.validate(new site().validations(),req,'model')==null;
 			if(model)
 			{
@@ -250,7 +250,7 @@ module.exports = function () {
 				setSiteCategory(true,model,model.identifier,function(cantAffected){
 					updateSiteCategory =true;
 					doneFunction();
-				})
+				});
 				organization.update(
 	                     { identifier:organizationIdentifier, 'sites.identifier':model.identifier},
 	                     { $set :set },
@@ -278,7 +278,7 @@ module.exports = function () {
 
 			}
 		}
-	}
+	};
 
 	// Set the Site Category model
 	var setSiteCategory = function(isUpdate,model,siteIdentifier,callback){
@@ -354,14 +354,14 @@ module.exports = function () {
 
 				callback();
 			});
-		}
+		};
 
 		//Call back of Push Sites By Categories
 		var endProcessPush=function(){
 			siteNeighborsProcess(siteIdentifier,model.lat,model.lng,function(){
 				callback(cantCategoriesAdded);
 			})
-		}
+		};
 
 		//Insert the Site Categories
 		var pushSitesByCategories =function(siteCategoryConfig,categories, proximity,lat,lng){
@@ -386,7 +386,7 @@ module.exports = function () {
 			if(cantCategoriesAdded === totalCategories){
 				endProcessPush();
 			}
-		}
+		};
 
 		//Get a region where is in the area
 		var sitesCategoriesProcess=function(siteIdentifier){
@@ -437,7 +437,7 @@ module.exports = function () {
 				}
 
 			});
-		}
+		};
 
 		//Check if a Site has Biins associated
 		var checkIfBiinHasSites=function(siteIdentifier,callback){
@@ -448,7 +448,7 @@ module.exports = function () {
 					var hasBiins = foundBiin?true:false;
 					callback(hasBiins);
 			});
-		}
+		};
 
 		if(isUpdate){
 				//Remove the Site in the siteCategory Schema
@@ -473,7 +473,7 @@ module.exports = function () {
 					callback(0);
 			})
 		}
-	}
+	};
 
 	//Set Site category Public Method
 	functions.setSiteCategory = setSiteCategory;
@@ -503,7 +503,7 @@ module.exports = function () {
 
 			res.json({data:data, prototypeObj:new site(), prototypeObjBiin:biinPrototype});
 		});
-	}
+	};
     
     //MARK site as deleted 
     functions.markAsDeleted = function(req,res) {
@@ -520,7 +520,7 @@ module.exports = function () {
             if(err) { throw err; }
             else { res.json({state:"success"}); }
         });
-    }
+    };
     
 	//DELETE an specific site from DB
 	functions.delete= function(req,res){
@@ -542,7 +542,7 @@ module.exports = function () {
 					});
 			});
 		});
-	}
+	};
 
 	//PUT Purchase a Biin to a Site
 	functions.biinPurchase = function(req,res){
@@ -558,7 +558,7 @@ module.exports = function () {
 			var newMinorValue = utils.get.minorIncrement() *qty;
 			organization.findOne({identifier:organizationIdentifier,'sites.identifier': siteIdentifier},{'_id':1,'sites.$':1},function(err, siteInfo){
 				if(err)
-					res.send(err,500)
+					res.send(err,500);
 				else
 				{
 					var minor = 0;
@@ -596,7 +596,7 @@ module.exports = function () {
  							//Organization Update
 							organization.update({'_id':siteInfo._id,"sites._id":siteInfo.sites[0]._id},{$push:{"sites.$.biins":{$each:newBeacons}},$set:{"sites.$.minorCounter":newMinorValue}},function(err,raw){
 								if(err)
-									res.send(err,500)
+									res.send(err,500);
 								else{
 									res.send(newBeacons,201);
 								}
@@ -632,7 +632,7 @@ module.exports = function () {
 				}
 
 			})
-		}
+		};
 
 		organization.findOne({identifier:orgIdentifier, "sites.identifier":siteIdentifier},{"sites.$":1},function(err,foundSite){
 			if(err)
@@ -681,7 +681,7 @@ module.exports = function () {
 
 
 		});
-	}
+	};
 
 	//Minor and major Functions
 
@@ -695,7 +695,7 @@ module.exports = function () {
 		sysGlobalsRoutes.incrementMajor(enviroment,function(major){
 			callback(major);
 		})
-	}
+	};
 
 	//Test and other Utils
 	functions.setSitesValid= function(req,res){
@@ -717,7 +717,7 @@ module.exports = function () {
 					if(err)
 						throw err;
 					else
-						console.log("save changes in org: " + organization.identifier)
+						console.log("save changes in org: " + organization.identifier);
 
 					if(processed ===orgCant)
 						res.json({status:0});
@@ -725,7 +725,7 @@ module.exports = function () {
 			}
 
 		})
-    }
+    };
 
 	return functions;
-}
+};

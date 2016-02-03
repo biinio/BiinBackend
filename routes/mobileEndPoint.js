@@ -39,7 +39,8 @@ module.exports = function () {
         siteValidated.ubication = site.ubication ? site.ubication : "";
         siteValidated.title = site.title1 ? site.title1 : "";
         siteValidated.subTitle = site.title2 ? site.title2 : "";
-        siteValidated.streetAddress1 = site.streetAddress1 ? site.streetAddress1 : "";
+        siteValidated.streetAddress1 = site.streetAddres ? site.streetAddres : "";
+        siteValidated.streetAddress2 = site.ubication ? site.ubication : "";
         siteValidated.latitude = site.lat ? site.lat : "0";
         siteValidated.longitude = site.lng ? site.lng : "0";
         siteValidated.email = site.email ? site.email : "";
@@ -269,7 +270,7 @@ module.exports = function () {
                         'sites.ubication': 1,
                         'sites.title1': 1,
                         'sites.title2': 1,
-                        'sites.streetAddress1': 1,
+                        'sites.streetAddres': 1,
                         'sites.lat': 1,
                         'sites.lng': 1,
                         'sites.email': 1,
