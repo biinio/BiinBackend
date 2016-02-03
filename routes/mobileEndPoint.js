@@ -270,7 +270,7 @@ module.exports = function () {
                         'sites.ubication': 1,
                         'sites.title1': 1,
                         'sites.title2': 1,
-                        'sites.streetAddress1': 1,
+                        'sites.streetAddres': 1,
                         'sites.lat': 1,
                         'sites.lng': 1,
                         'sites.email': 1,
