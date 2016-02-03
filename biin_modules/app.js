@@ -20,12 +20,20 @@ module.exports = function (db) {
     , cors = require('cors')
     , expressValidator = require('express-validator');
 
-    //var raygun = require('raygun');
-    //var raygunClient = new raygun.Client().init({ apiKey: 'roejUjt4HoqIczi0zgC99Q==' });
 
-    // For express, at the end of the middleware definitions:
-    //app.use(raygunClient.expressHandler);
+    var rollbar = require("rollbar");
+    rollbar.init("bccc96a9f2794cdd835f2cf9f498a381");
 
+    app.use(rollbar.errorHandler('bccc96a9f2794cdd835f2cf9f498a381'));
+
+    var options = {
+        // Call process.exit(1) when an uncaught exception occurs but after reporting all
+        // pending errors to Rollbar.
+        //
+        // Default: false
+        exitOnUncaughtException: true
+    };
+    rollbar.handleUncaughtExceptions("bccc96a9f2794cdd835f2cf9f498a381", options);
 
 
 
