@@ -23,10 +23,10 @@ module.exports = function () {
 
 		var callback= function(organization,req, res){
 			res.render('showcase/index', { title: 'Organizations list' ,user:req.user, organization:organization, isSiteManteinance:true});
-		}
+		};
 
 		routesUtils.getOrganization(req.param("identifier"),req,res,{name:true, identifier:true},callback)			 
-	}
+	};
 
 	//GET the list of showcases
 	functions.list = function(req,res){
@@ -36,7 +36,7 @@ module.exports = function () {
 		showcase.find({organizationIdentifier:organizationIdentifier, "isDeleted": false},function (err, data) {
 			   res.json({data:data, prototypeObj : showcaseProto});
 		});		
-	}
+	};
 
 	//GET a showcase By Id
 	functions.get=function(req,res){

@@ -113,7 +113,8 @@ module.exports = function() {
         }, {
             _id: true,
             'sites._id': true,
-            'sites.showcases': true
+            'sites.showcases': true,
+            'sites.identifier': true
         }, function(err, data) {
             
             // Find the correct site to assign the showcase to
@@ -125,11 +126,6 @@ module.exports = function() {
                     }
                 }
             }
-            
-            /*for (var i = 0; i < data.sites.length; i++) {
-                data.sites[i].showcases = model.sites[i].showcases;
-            }*/
-            
             
             data.save(
                 function(err) {
