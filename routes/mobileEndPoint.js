@@ -147,6 +147,7 @@ module.exports = function () {
         organizationValidated.name = organization.name ? organization.name : "";
         organizationValidated.isLoyaltyEnabled = organization.isLoyaltyEnabled ? organization.isLoyaltyEnabled : "0";
         organizationValidated.loyalty = organization.loyalty ? organization.loyalty : [];
+        organizationValidated.hasNPS = organization.hasNPS ? organization.hasNPS : "1";
         if (!Array.isArray(organizationValidated.media)) {
             organizationValidated.media = [organizationValidated.media];
         }
