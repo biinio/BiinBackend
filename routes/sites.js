@@ -214,7 +214,7 @@ module.exports = function () {
 
 			var doneFunction=function(){
 				//Return the state
-				if(updateSiteCategory& updateSite){
+				if( updateSite){
 					console.log("Done process of: " + model.identifier);
 					res.send(model,200);
 				}
@@ -247,10 +247,10 @@ module.exports = function () {
 				  		set['sites.$.' + field] = model[field];
 				}
 				//Set sites categories
-				setSiteCategory(true,model,model.identifier,function(cantAffected){
+				/*setSiteCategory(true,model,model.identifier,function(cantAffected){
 					updateSiteCategory =true;
 					doneFunction();
-				});
+				});*/
 				organization.update(
 	                     { identifier:organizationIdentifier, 'sites.identifier':model.identifier},
 	                     { $set :set },
@@ -476,7 +476,7 @@ module.exports = function () {
 	};
 
 	//Set Site category Public Method
-	functions.setSiteCategory = setSiteCategory;
+	//functions.setSiteCategory = setSiteCategory;
 
     
     //GET the list of sites which have not been marked as deleted
