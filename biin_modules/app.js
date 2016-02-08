@@ -21,26 +21,27 @@ module.exports = function (db) {
     , expressValidator = require('express-validator');
 
 
+    var isDevelopment = process.env.NODE_ENV === 'development';
+    if(process.env.DONT_TRACK != 'YES'){
     var rollbar = require("rollbar");
-    rollbar.init("bccc96a9f2794cdd835f2cf9f498a381");
+        rollbar.init("bccc96a9f2794cdd835f2cf9f498a381");
 
-    app.use(rollbar.errorHandler('bccc96a9f2794cdd835f2cf9f498a381'));
+        app.use(rollbar.errorHandler('bccc96a9f2794cdd835f2cf9f498a381'));
 
-    var options = {
-        // Call process.exit(1) when an uncaught exception occurs but after reporting all
-        // pending errors to Rollbar.
-        //
-        // Default: false
-        exitOnUncaughtException: true
-    };
-    rollbar.handleUncaughtExceptions("bccc96a9f2794cdd835f2cf9f498a381", options);
-
-
+        var options = {
+            // Call process.exit(1) when an uncaught exception occurs but after reporting all
+            // pending errors to Rollbar.
+            //
+            // Default: false
+            exitOnUncaughtException: true
+        };
+        rollbar.handleUncaughtExceptions("bccc96a9f2794cdd835f2cf9f498a381", options);
+    }
 
     var compress = require('compression');
     app.use(compress());
 
-    var isDevelopment = process.env.NODE_ENV === 'development';
+
     schemasValidations = {};
 
 

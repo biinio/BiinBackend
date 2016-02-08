@@ -20,6 +20,7 @@ var orgSchema = new Schema({
 	biinsCounter:{type:Number,default:0},
 	biinsAssignedCounter:{type:Number,default:0},
     isDeleted:{type:Boolean,default:0},
+	isPublished:{type:Boolean,default:false},
 	//Count off biins purchased
 	purchasedBiinsHist:[{
 				date:{type:String,default:""},

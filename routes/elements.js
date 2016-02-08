@@ -127,26 +127,26 @@ module.exports = function(){
 
 							var isUserShared = false;
 							var userShareElements = _.filter( userInfo.shareObjects, function(like){ return like.type === "element"});
-							var elUserShared =_.findWhere(userShareElements,{identifier:identifier})
+							var elUserShared =_.findWhere(userShareElements,{identifier:identifier});
 							if(elUserShared)
 								isUserShared=true;
 
 
 							var isUserLike = false;
 							var userLikeElements = _.filter( userInfo.likeObjects, function(like){ return like.type === "element"});
-							var elUserLike =_.findWhere(userLikeElements,{identifier:identifier})
+							var elUserLike =_.findWhere(userLikeElements,{identifier:identifier});
 							if(elUserLike)
 								isUserLike=true;
 
 
 							var isUserFollow = false;
 							var userFollowElements = _.filter( userInfo.followObjects, function(like){ return like.type === "element"});
-							var elUserFollow =_.findWhere(userFollowElements,{identifier:identifier})
+							var elUserFollow =_.findWhere(userFollowElements,{identifier:identifier});
 							if(elUserFollow)
 								isUserFollow=true;
 
 							var isUserViewedElement = false;
-							var elUserViewed =_.findWhere(userInfo.seenElements,{elementIdentifier:identifier})
+							var elUserViewed =_.findWhere(userInfo.seenElements,{elementIdentifier:identifier});
 							if(elUserViewed)
 								isUserViewedElement=true;
 							//elementObj.hasFromPrice=!elementObj.hasFromPrice?elementObj.hasFromPrice:"0";
@@ -199,7 +199,7 @@ module.exports = function(){
 							if(eval(elementObj.price)>0){
 								elementObj.hasPrice='1'
 							}else
-								elementObj.hasPrice='0'
+								elementObj.hasPrice='0';
 
 							delete elementObj.elementIdentifier;
 
@@ -330,7 +330,7 @@ module.exports = function(){
 				}
 			}
 		});
-	}
+	};
 
 	//PUT an update of the showcase
 	functions.set=function(req,res){
@@ -545,7 +545,7 @@ module.exports = function(){
             });
             }
         });
-    }
+    };
 
 
 	//POST an image for a showcase
@@ -556,7 +556,7 @@ module.exports = function(){
 			else
 				res.json(JSON.stringify(data));
 		});
-	}
+	};
 
 	//POST image crop
 	functions.imageCrop=function(req,res,next){
@@ -571,7 +571,7 @@ module.exports = function(){
 		catch(err){
 		  	console.log(err);
 		}
-	}
+	};
 
     /****
     	Other methods
