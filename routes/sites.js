@@ -417,11 +417,11 @@ module.exports = function () {
                             for (var j = 0; j < data.length; j++) {
                                 data[i].proximity = utils.getProximity(data[i].geoPosition[1], data[i].geoPosition[0], data[j].geoPosition[1], data[j].geoPosition[0]);
                             }
-                            data = _.sortBy(data, function (site) {
+                            var sortedData = _.sortBy(data, function (site) {
                                 return site.proximity;
                             });
 
-                            var neighbours = data[i].splice(0, MAX_NEIGHBOURS);
+                            var neighbours = sortedData.splice(0, MAX_NEIGHBOURS);
                             var neighboursID = _.pluck(neighbours, "siteIdentifier");
                             neighboursID.shift();
                             data[i].neighbours = neighboursID;
