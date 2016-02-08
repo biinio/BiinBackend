@@ -415,7 +415,7 @@ module.exports = function () {
                         var savePromise = [];
                         for (var i = 0; i < data.length; i++) {
                             for (var j = 0; j < data.length; j++) {
-                                data[i].proximity = utils.getProximity(data[i].geoPosition[1], data[i].geoPosition[0], data[j].geoPosition[1], data[j].geoPosition[0]);
+                                data[j].proximity = utils.getProximity(data[i].geoPosition[1], data[i].geoPosition[0], data[j].geoPosition[1], data[j].geoPosition[0]);
                             }
                             var sortedData = _.sortBy(data, function (site) {
                                 return site.proximity;
@@ -425,7 +425,7 @@ module.exports = function () {
                             var neighboursID = _.pluck(neighbours, "siteIdentifier");
                             neighboursID.shift();
                             data[i].neighbours = neighboursID;
-                            savePromise.push(neighbour.update({"identifier": data[i].siteIdentifier}, {$set: {"neighbours": data[i].neighbours}}));
+                            savePromise.push(neighbour.update({"siteIdentifier": data[i].siteIdentifier}, {$set: {"neighbours": data[i].neighbours}}));
                         }
                         Promise.all(savePromise).then(function () {
                             callback(true);
