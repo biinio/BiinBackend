@@ -46,6 +46,7 @@ module.exports = function () {
         siteValidated.email = site.email ? site.email : "";
         siteValidated.nutshell = site.nutshell ? site.nutshell : "";
         siteValidated.phoneNumber = site.phoneNumber ? site.phoneNumber : "";
+        siteValidated.phoneNumber = siteValidated.phoneNumber.replace(/ /g, "");
         siteValidated.media = site.media && site.media.length != 0 ? site.media : [BIIN_DEFAULT_IMAGE];
         siteValidated.neighbors = site.neighbors ? site.neighbors : [];
         siteValidated.showcases = site.showcases ? site.showcases : [];
