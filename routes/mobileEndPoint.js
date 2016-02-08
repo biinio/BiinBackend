@@ -258,7 +258,7 @@ module.exports = function () {
                 if (errBiin)
                     throw errBiin;
 
-                organization.find({},
+                organization.find({isDeleted:false,isPublished:true},
                     {
                         'identifier': 1,
                         'sites.identifier': 1,
@@ -413,7 +413,7 @@ module.exports = function () {
                                 }
 
                                 organizationsToFind = _.uniq(organizationsToFind);
-                                organization.find({identifier: {$in: organizationsToFind}},
+                                organization.find({identifier: {$in: organizationsToFind}, isDeleted:false,isPublished:true},
                                     {
                                         "identifier": 1,
                                         "_id": 1,
@@ -772,7 +772,7 @@ module.exports = function () {
                                 throw errBiin;
 
                             // get site information
-                            organization.find({'sites.identifier': {$in: sitesInUserCellphone}}, {
+                            organization.find({'sites.identifier': {$in: sitesInUserCellphone},isDeleted:false,isPublished:true}, {
                                 "sites.userComments": 0,
                                 "sites.userLiked": 0,
                                 "sites.userCollected": 0,
@@ -924,7 +924,7 @@ module.exports = function () {
                                             var amountOfExtraElementsNeeded = ELEMENTS_IN_CATEGORY - elementsWithinCategory.length;
 
                                             //Get extra site informmation
-                                            organization.find({'sites.identifier': {$nin: sitesInUserCellphone}}, {
+                                            organization.find({'sites.identifier': {$nin: sitesInUserCellphone},isDeleted:false,isPublished:true}, {
                                                 "sites.userComments": 0,
                                                 "sites.userLiked": 0,
                                                 "sites.userCollected": 0,
@@ -1369,7 +1369,7 @@ module.exports = function () {
                         var sitesInUserCellphone = _.pluck(mobileUserData.sitesSent, 'identifier');
 
                         //Get extra site informmation
-                        organization.find({'sites.identifier': {$nin: sitesInUserCellphone}}, {
+                        organization.find({'sites.identifier': {$nin: sitesInUserCellphone},isDeleted:false,isPublished:true}, {
                             "sites.userComments": 0,
                             "sites.userLiked": 0,
                             "sites.userCollected": 0,
@@ -1645,7 +1645,7 @@ module.exports = function () {
                             });
                         }
                     }
-                    organization.find({'elements.elementIdentifier': {$in: elementsUserCollected}}, {
+                    organization.find({'elements.elementIdentifier': {$in: elementsUserCollected},isDeleted:false,isPublished:true}, {
                         "sites.userComments": 0,
                         "sites.userLiked": 0,
                         "sites.userCollected": 0,
@@ -1948,7 +1948,7 @@ module.exports = function () {
           _.each(categoriesData,function(category){
             categories.push({identifier:category.identifier,elements:[]});
           });
-          organization.find({},{},function(elementsErr,elementsData){
+          organization.find({isDeleted:false,isPublished:true},{},function(elementsErr,elementsData){
             var currenttime = Date.now();
             console.log((currenttime-startedTime)/1000);
             if(elementsErr)
@@ -1974,7 +1974,7 @@ module.exports = function () {
                 });
               });
 
-              organization.find({},{sites:1},function(errSites,sitesData){
+              organization.find({isDeleted:false,isPublished:true},{sites:1},function(errSites,sitesData){
                 var currenttime = Date.now();
                 console.log((currenttime-startedTime)/1000);
                 if(errSites)
