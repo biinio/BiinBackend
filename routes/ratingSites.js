@@ -1,6 +1,7 @@
 module.exports = function () {
 	var math = require('mathjs');
 	var ratingSites = require('../schemas/ratingSites');
+	var organization = require('../schemas/organization');
 	var _= require('underscore');
 	var utils = require('../biin_modules/utils')();
 
@@ -29,8 +30,8 @@ module.exports = function () {
 			else
 				res.status(200).json({data:objectToSave,status:"0",result:"1"});
 		});
+	};
 
-	}
 	functions.getRatings = function(req, res){
 		var siteId = req.headers["siteid"];
 
@@ -40,7 +41,30 @@ module.exports = function () {
 			else
 				res.status(200).json({data:ratings,status:"0",result:"1"});
 		});
-	}
+	};
+
+	functions.getRatingsByOrganization = function(req, res){
+		var organizationid = req.headers["organizationid"];
+
+		organization.findOne({identifier:organizationid},{"sites.identifier":1,"sites.isDeleted":1},function(errOrg, orgData){
+			if(errOrg)
+				res.status(200).json({data:{},status:"1",result:"0"});
+			else{
+				var sitesId = [];
+				for(var i = 0; i < orgData.sites.length; i++){
+					if(!orgData.sites[i].isDeleted){
+						sitesId.push(orgData.sites[i].identifier)
+					}
+				}
+				ratingSites.find({siteIdentifier:{$in:sitesId}},{}, function (err, ratings) {
+					if (err)
+						res.status(200).json({data:{},status:"1",result:"0"});
+					else
+						res.status(200).json({data:ratings,status:"0",result:"1"});
+				});
+			}
+		});
+	};
 
 	return functions;
-}
+};

@@ -290,6 +290,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
     app.put('/mobile/rating/site',ratingSites.putRating);
     app.get('/ratings/site',ratingSites.getRatings);
+    app.get('/ratings/organization',ratingSites.getRatingsByOrganization);
 
 
 };
