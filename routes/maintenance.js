@@ -93,52 +93,6 @@ module.exports = function() {
         var mode = beacon.mode;
         delete beacon.mode;
 
-        //Set site category model
-        var setSiteCategory = function(newBeaconModel, callback) {
-            var updateOldModel = false;
-            var updateNewModel = false;
-
-            var doneProcess = function() {
-                if (updateOldModel && updateNewModel)
-                    callback();
-            }
-            biins.findOne({
-                identifier: newBeaconModel.identifier
-            }, function(err, oldBeaconModel) {
-                if (oldBeaconModel && oldBeaconModel.siteIdentifier !== '' && oldBeaconModel.status === 'Installed' && newBeaconModel.siteIdentifier !== oldBeaconModel.siteIdentifier) {
-                    organization.findOne({
-                        'sites.identifier': oldBeaconModel.siteIdentifier
-                    }, {
-                        'sites.$': 1
-                    }, function(err, siteModel) {
-                        siteRoutes.setSiteCategory(true, siteModel.sites[0], siteModel.sites[0].identifier, function() {
-                            updateOldModel = true;
-                            doneProcess();
-                        })
-                    })
-                } else {
-                    updateOldModel = true;
-                    doneProcess();
-                }
-
-                if (newBeaconModel.siteIdentifier !== '' && newBeaconModel.status === 'Installed') {
-                    organization.findOne({
-                        'sites.identifier': newBeaconModel.siteIdentifier
-                    }, {
-                        'sites.$': 1
-                    }, function(err, siteModel) {
-                        siteRoutes.setSiteCategory(true, siteModel.sites[0], siteModel.sites[0].identifier, function() {
-                            updateNewModel = true;
-                            doneProcess();
-                        })
-                    })
-                } else {
-                    updateNewModel = true;
-                    doneProcess();
-                }
-
-            })
-        }
         var newMinor = beacon.siteMinor;
         delete beacon.siteMinor;
 
@@ -154,16 +108,8 @@ module.exports = function() {
             else
                 return res.send("{\"success\":\"true\"}", 200);
 
-        }
+        };
 
-        var beaconReady = false;
-        var siteCategoryReady = false;
-        setSiteCategory(beacon, function() {
-            siteCategoryReady = true;
-            if (beaconReady && siteCategoryReady) {
-                doneFunction();
-            }
-        });
 
         var createBeaconsFunction = function(beacon, incQuery, setQuery){
             biins.create(beacon, function(error, data) {
@@ -171,25 +117,19 @@ module.exports = function() {
                         organization.update({ identifier: orgID }, { $inc: incQuery, $set: setQuery }, function(errorUpdate, raw) {
                             if (errorUpdate !== null)
                                 hasError = true;
-                            beaconReady = true;
-                            if (beaconReady && siteCategoryReady) {
-                                doneFunction();
-                            }
+                            doneFunction();
                         });
                     } else {
                         hasError = true;
-                        beaconReady = true;
                         if(error.code == 11000)
                             errorMessage = "Can't add a beacon with same ID";
                         else
                             errorMessage = "An unexpected error has been occurred";
-                        
-                        if (beaconReady && siteCategoryReady) {
-                            doneFunction();
-                        }
+
+                        doneFunction();
                     }
                 });
-        }
+        };
 
         var updateBeaconFunction = function(beacon, incQuery, setQuery){
             biins.update({ identifier: beacon.identifier }, { $set: beacon }, function(error, raw) {
@@ -197,14 +137,11 @@ module.exports = function() {
                     organization.update({ identifier: orgID }, { $set: setQuery }, function(errorUpdate, data) {
                         if (errorUpdate !== null)
                             hasError = true;
-                        beaconReady = true;
-                        if (beaconReady && siteCategoryReady) {
-                            doneFunction();
-                        }
+                        doneFunction();
                     });
                 }
             });
-        }
+        };
 
         if (mode == "create") {
             
@@ -221,7 +158,7 @@ module.exports = function() {
                     var children = [];
                     for (var i = 0; i < data.length; i++) {
                         children.push(data[i].minor)
-                    };
+                    }
                     beacon.children = children;
                     createBeaconsFunction(beacon,incQuery,setQuery);
                 });
@@ -229,10 +166,7 @@ module.exports = function() {
                 biins.update({ organizationIdentifier: orgID, venue: "", siteIdentifier: beacon.siteIdentifier, biinType: "2" }, { $push: { children: beacon.minor } }, { multi: true }).exec(function(err, raw) {
                     if (err) {
                         hasError = true;
-                        beaconReady = true;
-                        if (beaconReady && siteCategoryReady) {
-                            doneFunction();
-                        }
+                        doneFunction();
                     } else {
                         createBeaconsFunction(beacon,incQuery,setQuery);
                     }
@@ -245,20 +179,14 @@ module.exports = function() {
                 biins.findOne({identifier:beacon.identifier},{_id:0,minor:1},function(err,oldBeacon){
                     if(err){
                         hasError = true;
-                        beaconReady = true;
-                        if (beaconReady && siteCategoryReady) {
-                            doneFunction();
-                        }
+                        doneFunction();
                     }else{
                         var beaconMinor = oldBeacon.minor;
                         //remove from existing children in other beacons
                         biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2", children: { $in: [beaconMinor] } }, { $pull: { children: beaconMinor } }, { multi: true }).exec(function(err, raw) {
                             if (err) {
                                 hasError = true;
-                                beaconReady = true;
-                                if (beaconReady && siteCategoryReady) {
-                                    doneFunction();
-                                }
+                                doneFunction();
                             } else {
                                 updateBeaconFunction(beacon,incQuery,setQuery);
                             }
@@ -270,25 +198,19 @@ module.exports = function() {
                 biins.find({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "3", minor : {$ne: beacon.minor} }, { _id: 0, minor: 1 }).exec(function(err, data) {
                     if (err) {
                         hasError = true;
-                        beaconReady = true;
-                        if (beaconReady && siteCategoryReady) {
-                            doneFunction();
-                        }
+                        doneFunction();
                     } else {
                         var children = [];
                         for (var i = 0; i < data.length; i++) {
                             children.push(data[i].minor)
-                        };
+                        }
                         beacon.children = children;
                         //remove from existing children in other beacons
                         var beaconMinor = beacon.minor + "";
                         biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2", children: { $in: [beaconMinor] } }, { $pull: { children: beaconMinor } }, { multi: true }).exec(function(err, raw) {
                             if (err) {
                                 hasError = true;
-                                beaconReady = true;
-                                if (beaconReady && siteCategoryReady) {
-                                    doneFunction();
-                                }
+                                doneFunction();
                             } else {
                                 updateBeaconFunction(beacon,incQuery,setQuery);
                             }
@@ -301,10 +223,7 @@ module.exports = function() {
                 biins.update({ organizationIdentifier: orgID, venue: beacon.venue, siteIdentifier: beacon.siteIdentifier, biinType: "2", minor : {$ne: beacon.minor}, children:{$not:{$in:[beaconMinor]}} }, { $push: { children: beaconMinor } }, { multi: true }).exec(function(err, raw) {
                     if (err) {
                         hasError = true;
-                        beaconReady = true;
-                        if (beaconReady && siteCategoryReady) {
-                            doneFunction();
-                        }
+                        doneFunction();
                     } else {
                         beacon.children = [];
                         updateBeaconFunction(beacon,incQuery,setQuery);
@@ -313,7 +232,7 @@ module.exports = function() {
 
             }
         }
-    }
+    };
 
     functions.getBeaconChildren = function(req, res) {
         res.setHeader('Content-Type', 'application/json');
@@ -334,14 +253,14 @@ module.exports = function() {
                 var response = [];
                 for (var i = 0; i < data.length; i++) {
                     response.push(data[i].minor)
-                };
+                }
                 res.json(response);
             });
         } else {
             res.json([]);
         }
 
-    }
+    };
 
     return functions;
-}
+};
