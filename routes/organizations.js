@@ -49,7 +49,8 @@ module.exports = function() {
             media: 1,
             loyaltyEnabled: 1,
             sites : 1,
-            isPublished : 1
+            isPublished : 1,
+            hasNPS : 1
         }, function(err, data) {
             res.json({
                 data: data
