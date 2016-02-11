@@ -54,6 +54,7 @@ module.exports = function () {
         siteValidated.userShared = site.userShared ? site.userShared : "0";
         siteValidated.userFollowed = site.userShared ? site.userFollowed : "0";
         siteValidated.userLiked = site.userShared ? site.userLiked : "0";
+        siteValidated.siteSchedule = site.siteSchedule? site.siteSchedule : "";
 
         for (var i = 0; i < siteValidated.showcases.length; i++) {
             var showcase = {};
@@ -148,7 +149,7 @@ module.exports = function () {
         organizationValidated.name = organization.name ? organization.name : "";
         organizationValidated.isLoyaltyEnabled = organization.isLoyaltyEnabled ? organization.isLoyaltyEnabled : "0";
         organizationValidated.loyalty = organization.loyalty ? organization.loyalty : [];
-        organizationValidated.hasNPS = organization.hasNPS ? organization.hasNPS : "1";
+        organizationValidated.hasNPS = organization.hasNPS ? organization.hasNPS : "0";
         if (!Array.isArray(organizationValidated.media)) {
             organizationValidated.media = [organizationValidated.media];
         }
