@@ -33,6 +33,7 @@ var siteObj ={
 	geoPosition:{type:[Number],index:"2dsphere"},
     isReady:{type:Number, default:0},
     isDeleted:{type:Boolean, default:0},
+	siteSchedule:{type:String,default:""},
 	searchTags:[],
 	categories:[
 		{
