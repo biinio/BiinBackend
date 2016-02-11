@@ -54,7 +54,7 @@ module.exports = function () {
         siteValidated.userShared = site.userShared ? site.userShared : "0";
         siteValidated.userFollowed = site.userShared ? site.userFollowed : "0";
         siteValidated.userLiked = site.userShared ? site.userLiked : "0";
-        siteValidated.siteSchedule = site.siteSchedule? site.siteSchedule : "Lunes a Viernes 8:00 am - 5:00 pm";
+        siteValidated.siteSchedule = site.siteSchedule? site.siteSchedule : "";
 
         for (var i = 0; i < siteValidated.showcases.length; i++) {
             var showcase = {};
@@ -288,7 +288,8 @@ module.exports = function () {
                         'sites.showcases': 1,
                         'sites.biins': 1,
                         'sites.categories': 1,
-                        'sites.isReady': 1
+                        'sites.isReady': 1,
+                        'sites.siteSchedule':1
                     }).lean().exec(function (error, data) {
 
                         var sitesDesnormalized = [];
