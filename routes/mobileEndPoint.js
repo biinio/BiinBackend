@@ -425,7 +425,8 @@ module.exports = function () {
                                         "name": 1,
                                         "isLoyaltyEnabled": 1,
                                         "loyalty": 1,
-                                        "elements": 1
+                                        "elements": 1,
+                                        "hasNPS" :1
                                     }).lean().exec(function (error, orgData) {
                                         if (error)
                                             throw error;
