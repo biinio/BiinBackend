@@ -20,19 +20,28 @@ module.exports = function (db) {
     , cors = require('cors')
     , expressValidator = require('express-validator');
 
-    //var raygun = require('raygun');
-    //var raygunClient = new raygun.Client().init({ apiKey: 'roejUjt4HoqIczi0zgC99Q==' });
 
-    // For express, at the end of the middleware definitions:
-    //app.use(raygunClient.expressHandler);
+    var isDevelopment = process.env.NODE_ENV === 'development';
+    if(process.env.DONT_TRACK != 'YES'){
+    var rollbar = require("rollbar");
+        rollbar.init("bccc96a9f2794cdd835f2cf9f498a381");
 
+        app.use(rollbar.errorHandler('bccc96a9f2794cdd835f2cf9f498a381'));
 
-
+        var options = {
+            // Call process.exit(1) when an uncaught exception occurs but after reporting all
+            // pending errors to Rollbar.
+            //
+            // Default: false
+            exitOnUncaughtException: true
+        };
+        rollbar.handleUncaughtExceptions("bccc96a9f2794cdd835f2cf9f498a381", options);
+    }
 
     var compress = require('compression');
     app.use(compress());
 
-    var isDevelopment = process.env.NODE_ENV === 'development';
+
     schemasValidations = {};
 
 
@@ -80,10 +89,10 @@ module.exports = function (db) {
 
     app.use(express.static(path.join(process.env.PWD , 'public')));
     app.use(express.static(path.join(process.env.PWD,'bower_components')));
-    //app.use(express.static(path.join(process.env.PWD,'bower_components')));
     app.use(favicon(__dirname + '/../public/favicon.ico'));
     app.use(logger('dev'));
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.json({limit: '50mb'}));
+    app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
     app.use(cookieParser());
     app.use(session({
         secret: 'ludusy secret',
@@ -99,51 +108,8 @@ module.exports = function (db) {
     app.use(passport.session());
     app.use(expressValidator());//Express Validator
     app.use(bodyParser.json());
-    app.use(methodOverride('X-HTTP-Method-Override'));
-
-    app.use(function (req, res, next) {
-        res.set('X-Powered-By', 'Biin.io');
-        next();
-    });
 
     //Routes
     var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
-
-    /// error handlerslogger
-    // development error handler
-    // will print stacktrace
-    if (isDevelopment) {
-        app.use(function(err, req, res, next) {
-            console.log("Error of development: " + err.message +" stack: "+err.stack);
-            res.render('error', {
-                message: err.message,
-                error: err
-            });
-        });
-
-        //Only for development Live Reload Plugin
-        require('express-livereload')(app, config={});
-    }else{
-        // production error handler
-        // no stacktraces leaked to user
-        app.use(function(err, req, res, next) {
-                res.render('error', {
-                message: err.message,
-                error: {}
-            });
-        });
-    }
-
-    app.use(function(req, res, next){
-      // the status option, or res.statusCode = 404
-      // are equivalent, however with the option we
-      // get the "status" local available as well
-      res.render('404', { status: 404, url: req.url });
-    });
-
-    process.on('uncaughtException', function (err) {
-        console.log(err);
-        //raygunClient.send(err);
-    });
     return app;
 };

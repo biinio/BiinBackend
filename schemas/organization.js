@@ -16,9 +16,12 @@ var orgSchema = new Schema({
 	description: {type:String, default:""},
 	extraInfo:{type:String, default:""},
 	loyaltyEnabled:{type:String, default:"0"},
+	hasNPS:{type:String, default:"0"},
 	majorCounter:{type: Number, default:1},
 	biinsCounter:{type:Number,default:0},
 	biinsAssignedCounter:{type:Number,default:0},
+    isDeleted:{type:Boolean,default:0},
+	isPublished:{type:Boolean,default:false},
 	//Count off biins purchased
 	purchasedBiinsHist:[{
 				date:{type:String,default:""},
@@ -60,7 +63,9 @@ var orgSchema = new Schema({
 		lat:{type:String,default:0},
 		lng:{type:String,default:0},
 		geoPosition:{type:[Number],index:"2dsphere"},
-        isReady:{type:Number, default:0},
+        isReady:{type:Number,default:0},
+        isDeleted:{type:Boolean,default:0},
+		siteSchedule:{type:String,default:""},
 		searchTags:[],
 		categories:[
 			{
@@ -166,6 +171,11 @@ var orgSchema = new Schema({
 			actionType:{type:String, default:""},
 			currencyType:{type:String, default:"0"},
 
+            //has call to action
+            "hasCallToAction":{type:Boolean,default:0},
+            "callToActionURL":{type:String, default:""},
+            "callToActionTitle":{type:String, default:""},
+
 			hasFromPrice:{type:String, default:"0"},
 			//fromPrice:{type:String, default:""},
 			hasListPrice:{type:String, default:'0'},
@@ -190,6 +200,7 @@ var orgSchema = new Schema({
 			detailsHtml:{type:String, default:""},
             
             isReady:{type:Number,default:0},
+            isDeleted:{type:Boolean,default:0},
 
 			details:[{
 					elementDetailType:{type:String, default:""},

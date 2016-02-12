@@ -84,7 +84,7 @@ biinLandingPage.controller("indexController",['$translate','$scope', '$http',fun
 
     $scope.processing=true;
 
-    $http.post('/login',model).success(function(data,status){
+    $http.post('/api/login',model).success(function(data,status){
       $scope.processing=false;
       if(status!==200){
         $scope.succesSaveShow=false;

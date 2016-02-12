@@ -37,7 +37,8 @@ module.exports = function() {
     functions.list = function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         organization.find({
-            "accountIdentifier": req.user.accountIdentifier
+            "accountIdentifier": req.user.accountIdentifier,
+            "isDeleted": false
         }, {
             _id: 0,
             identifier: 1,
@@ -47,13 +48,16 @@ module.exports = function() {
             extraInfo: 1,
             media: 1,
             loyaltyEnabled: 1,
-            sites : 1
+            sites : 1,
+            isPublished : 1,
+            hasNPS : 1
         }, function(err, data) {
             res.json({
                 data: data
             });
         });
     }
+    
     //PUT/POST an organization
     functions.set = function(req, res) {
         //Perform an update
@@ -100,7 +104,7 @@ module.exports = function() {
             }
         });
     }
-
+    
     //Set showcases into sites in a organization
     functions.setShowcasesPerSite = function(req, res) {
         var organizationIdentifier = req.param("identifier");
@@ -111,11 +115,20 @@ module.exports = function() {
         }, {
             _id: true,
             'sites._id': true,
-            'sites.showcases': true
+            'sites.showcases': true,
+            'sites.identifier': true
         }, function(err, data) {
-            for (var i = 0; i < data.sites.length; i++) {
-                data.sites[i].showcases = model.sites[i].showcases;
+            
+            // Find the correct site to assign the showcase to
+            for (var index=0; index < model.sites.length; index++) {
+                for (var j = 0; j < data.sites.length; j++) {
+                    if (model.sites[index].identifier == data.sites[j].identifier) {
+                        data.sites[j].showcases = model.sites[index].showcases;
+                        break;
+                    }
+                }
             }
+            
             data.save(
                 function(err) {
                     if (err)
@@ -265,6 +278,33 @@ module.exports = function() {
         }
     }
 
+    
+    //Mark an organization, and its showcases as deleted
+    functions.markAsDeleted = function(req, res) {
+        //Get the organization identifier
+        var organizationIdentifier = req.param("identifier");
+        organization.update({
+            identifier:organizationIdentifier
+        },{ 
+            $set:{"isDeleted": 1}
+        }, function(err){
+            if(err) { throw err; }
+            else { 
+                showcase.update({
+                    'organizationIdentifier': organizationIdentifier
+                },{
+                    $set:{"isDeleted": 1}
+                }, function(err){
+                    if(err) { throw err; }
+                    else {
+                        res.json({state:"success"}); 
+                    }
+                });
+            }
+        });
+    }
+    
+    
     //DELETE an specific Organization
     functions.delete = function(req, res) {
 
@@ -303,6 +343,110 @@ module.exports = function() {
 
 
         });
+    }
+    
+    // Check if gallery image is being used before deleting
+    functions.checkImageUse = function (req, res) {
+        var organizationIdentifier = req.param('identifier');
+        var imageIdentifier = req.param('imageIdentifier');
+        
+        organization.findOne({
+            identifier: organizationIdentifier,
+            "isDeleted": false
+        }, {
+            _id: true,
+            'sites._id': true,
+            'sites.media': true,
+            'sites.isDeleted': true,
+            'elements._id': true,
+            'elements.media': true,
+            'elements.isDeleted': true
+        }, function(err, data) {
+            if (err) { throw err; }
+            else {
+                var activeElements = [];
+                var activeSites = [];
+                var imageInUse = false;
+                
+                for (var elementIndex = 0; elementIndex < data.elements.length; elementIndex++) {
+                    // Check elements that have not been deleted
+                    if (data.elements[elementIndex].isDeleted == false)
+                    {
+                        // Check media from the element to see if image is being used
+                        for (image = 0; image < data.elements[elementIndex].media.length; image++) {
+                            if (data.elements[elementIndex].media[image].identifier == imageIdentifier) {
+                                imageInUse = true;
+                            }
+                        }
+                    }
+                }
+                
+                // Check that it is not being used in sites if it's not being used in elements
+                if (imageInUse == false) {
+                    for (var siteIndex = 0; siteIndex < data.sites.length; siteIndex++) {
+
+                        //Check on sites that have not been deleted
+                        if (data.sites[siteIndex].isDeleted == false) {
+                            for (imageIndex = 0; imageIndex < data.sites[siteIndex].media.length; imageIndex++) {
+                                if (data.sites[siteIndex].media[imageIndex].identifier == imageIdentifier) {
+                                    imageInUse = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Image still not in use, proceed to delete
+                if (imageInUse == false) {
+                    //remove elements from organization.elements
+                    organization.update({
+                        identifier:organizationIdentifier
+                    },{
+                        $pull:{gallery:{identifier: imageIdentifier}}
+                    },{
+                        multi:true
+                    },function(err){
+                        if(err)
+                            throw err;
+                        else {
+                            res.json({
+                                deleted: true
+                            });
+                        }
+                    });
+                }
+                else {
+                
+                res.json({
+                     deleted: imageInUse
+                });
+                }
+            }
+        });
+    }
+    
+    //Delete gallery images
+    functions.deleteImage = function(req, res) {
+        var organizationIdentifier = req.param('identifier');
+        var imageIdentifier = req.param('imageIdentifier');
+        
+        //remove elements from organization.elements
+		organization.update({
+            identifier:organizationIdentifier
+        },{
+            $pull:{gallery:{identifier: imageIdentifier}}
+        },{
+            multi:true
+        },function(err){
+            if(err)
+                throw err;
+            else {
+                res.json({
+                    state: "success"
+                });
+            }
+        });
+            
     }
 
     //Minor and major Functions
