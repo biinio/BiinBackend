@@ -494,6 +494,8 @@ module.exports = function () {
                                             return highlights.indexOf(element.identifier) > -1;
                                         });
 
+                                        hightlightsFiltered = _.uniq(hightlightsFiltered);
+
                                         hightlightsFiltered = hightlightsFiltered.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
 
                                         //Fill categories array
