@@ -6275,6 +6275,7 @@ header .top-logo > img {
   header .top-logo {
     height: auto;
     padding-top: 60px;
+    padding-bottom: 40px;
   }
 }
 @media (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {

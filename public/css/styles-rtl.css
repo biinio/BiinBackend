@@ -7605,6 +7605,7 @@ header .top-logo > img {
   header .top-logo {
     height: auto;
     padding-top: 60px;
+    padding-bottom: 40px;
   }
 }
 

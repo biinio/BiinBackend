@@ -936,7 +936,7 @@ module.exports = function(){
 	    });
 
 		var url= req.protocol + '://' + req.get('host')+"/biinie/"+model.identifier+"/activate";
-		var subject ="Wellcome to Biin";
+		var subject ="Welcome to Biin";
 		var htmlBody = "<h3>"+subject+"</h3>" +
                     "<b>Hi</b>: <pre style='font-size: 14px'>" + model.firstName + "</pre>" +
                     "<b>Thanks for join Biin</b>" +
