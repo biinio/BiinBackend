@@ -34,9 +34,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Application routes
     app.get('/sendEmail', routes.sendEmail);
     app.get('/login',routes.login);
-    app.get('/termsAndConditions',routes.terms);
-    app.get('/privacypolicy',routes.privacyPolicy);
-    app.get('/support',routes.support);
+    //app.get('/termsAndConditions',routes.terms);
+    //app.get('/privacypolicy',routes.privacyPolicy);
+    //app.get('/support',routes.support);
     app.post('/api/singup',clients.set);
     app.get('/client/:identifier/activate',clients.activate);
     app.post('/client/:identifier/activate',clients.activate);

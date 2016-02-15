@@ -22,13 +22,6 @@ module.exports = function () {
 	functions.terms=function(req,res){
 		res.render("termsAndConditions");
 	};
-
-	functions.privacyPolicy=function(req,res){
-		res.render("privacyPolicy");
-	};
-	functions.support=function(req,res){
-		res.render("support");
-	};
 	
 	//Send emails
 	functions.sendEmail = function(req,res){

@@ -45,7 +45,12 @@ module.exports = function (db) {
     schemasValidations = {};
 
 
-    app.use(cors());
+    app.use(cors())
+
+    app.use(function(req, res, next) {
+        res.setHeader("code-version", "1.0.10");
+        return next();
+    });
 
     // At the top of your web.js
     process.env.PWD = process.cwd();
