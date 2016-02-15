@@ -1,0 +1,44 @@
+extends layout_landing_page_out
+block head_scripts
+	script(src="/landingPage/js/angular/landing.js")
+block content
+	#contentWrapper
+		section#preRegister
+			.container
+				.row
+					.col-md-6
+						h1 Excelente! Pre-registre Biin ahora
+					.col-md-6.pull-right
+						.row.imgPreOrder
+							img(src="/landingPage/img/thumbs/biinCMS.png")
+					.col-md-6
+						p Sea parte de las primeras empresas que aprovechan Biin. Pre-registe ahora y reciba
+							| atenci&oacute;n personalizada para crear la nueva experiencia para sus clientes. Biin estar&aacute;
+							| disponible pronto, perm&iacute;tanos saber a qui&eacute;n contactar para coordinar los detalles de la puesta
+							| en marcha de Biin en su empresa.
+						form#pre-registform(action="#" name="pre-registform", method="post")
+							label= "Usted está pre-ordenando el PAQUETE " + packageSlected.toUpperCase()
+							input#name.form-control(type='text' name='name' placeholder='Full Name' required)
+							input#company.form-control(type='text', name='company', placeholder='Company (mandatory if shipping to a business addres)', required)
+							input#email.form-control(type='text', name='email', placeholder='Email', required)
+							input#phone.form-control(type='text', name='phone', placeholder='Phone number', required)
+							input#plan.hidden(type="tex" name="plan" value=packageSlected)													
+							.row.text-center
+								input#btn-preRegist.btn.btn-black.btn-lg.btnEnviar(type="submit" value="Enviar" )
+								label.sent-message
+					
+		section#registerSucced(style="display: none;")
+			.container
+				.row
+					.col-md-6.pull-right
+						.row
+							.happyBiinie
+								img(src="/images/happyBiinieBlue.png")
+					.col-md-6
+						.thankYuoTitle
+							h1 Gracias por hacer su pre-registro para los servicios de Biin.
+						.thankYouParagraph
+							p Le hemos enviado un correo electr&oacute;nico con informaci&oacute;n de su suscripci&oacute;n y sobre los siguientes pasos para la exitosa implementaci&oacute;n de Biin en su empresa o instituci&oacute;n.						
+					.col-md-12
+						.thankYouButton
+							a.btn.btn-black(href="/") Continua disfrutando nuestra p&aacute;gina

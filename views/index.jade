@@ -1,0 +1,305 @@
+extends layout_landing_page
+block head_scripts
+	script(src="/landingPage/js/angular/landing.js")
+block content
+	#contentWrapper
+		//INTRO=============================================
+		section#intro
+			//Intro Page Slides
+			#slides
+				ul.slides-container
+					//Intro Page Slider Image 1
+					li
+						#GoConoceBiin.intro-content.intro-content-1(href='#videoHistory')
+							h1(translate="SLIDER.1.TITLE")
+							h3(translate="SLIDER.1.TEXT")
+						img(src='/landingPage/img/thumbs/intro_slide_1.jpg', alt='')
+					//Intro Page Slider Image 2
+					li
+						#GoToAppMovil.intro-content.text-center.intro-content-3(href='#banner_1')
+							h1(translate="SLIDER.2.TITLE")
+							h3(translate="SLIDER.2.1.TEXT")
+							h3(translate="SLIDER.2.2.TEXT")
+							h3(translate="SLIDER.2.3.TEXT")
+						.wrapperButtonInfo
+							a#GoToPricing2(href="#banner_1")
+								img.btn-store-slide(src='/landingPage/img/icons/appstoreWhite.png', alt='' )
+								//#GoToPricing2.btn.btn-comprar(href="#banner_1" translate="SLIDER.2.BUTTON.DOWNLOAD")
+						img(src='/landingPage/img/thumbs/intro_slide_3.jpg', alt='')
+					//Intro Page Slider Image 3								
+					li
+						#GoToCMS.intro-content.text-center.intro-content-2(href='#crm_banner')
+							h1(translate="SLIDER.3.TITLE")
+							h3(translate="SLIDER.3.1.TEXT")
+							h3(translate="SLIDER.3.2.TEXT")
+							h3(translate="SLIDER.3.3.TEXT")
+						.wrapperButtonInfo		
+							a#GoToPricing2.btn.btn-comprar(href="#crm_banner" translate="SLIDER.3.BUTTON.SIGNUP")
+						img(src='/landingPage/img/thumbs/intro_slide_2.jpg', alt='')							
+					//Intro Page Slider Image 4
+					li
+						.intro-content.text-center.intro-content-4
+							h1(translate="SLIDER.4.TITLE")
+							h3(translate="SLIDER.4.1.TEXT")
+							h3(translate="SLIDER.4.2.TEXT")
+							h3(translate="SLIDER.4.3.TEXT")
+							h3(translate="SLIDER.4.4.TEXT")
+						.wrapperButtonInfo		
+							a#GoToPricing2.btn.btn-comprar(href="#banner_2" translate="SLIDER.4.BUTTON.BUY")
+						img(src='/landingPage/img/thumbs/intro_slide_4.jpg', alt='')
+			//End Intro Page Slides
+			//Scroll Down Button
+			span.scroll-down
+				a#GoToMainContent(href='#videoHistory')
+					span
+						i.fa.fa-angle-down.fa-3x
+				p(translate="SHOWMEMORE")
+		//END INTRO
+		//VIDEO============================================= 											
+		section#videoHistory
+			.container
+				.row
+					//the video goes here				
+					iframe(src="//player.vimeo.com/video/109066736?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;autoplay=0&amp" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+		//END VIDEO		
+		//FOR WHO IS BIIN=============================================
+		section#FORWHOISBIIN.banner-container
+			.container
+				.row
+					.scrollsection.slides-forwhoIsBiin-wrapper
+						//Intro Page Slides
+						#slides-forwhoIsBiin
+							.forwhoIsBiin-wrapper 
+								.col-sm-12.titlebar
+									h2(translate="FORWHOISBIIN.TITLE")
+									h3(translate="FORWHOISBIIN.TEXT.1")
+									p(translate="FORWHOISBIIN.TEXT.2")
+							.forwhoIsBiin-slider
+								ul.slides
+									//Intro Page Slider Image 1
+									li
+										.forhow-content
+											img(src="/landingPage/img/thumbs/forWhoStores.png")
+											.titlebar									
+												h2(translate="FORWHOISBIIN.SLIDER.1.TITLE")
+												p(translate="FORWHOISBIIN.SLIDER.1.TEXT")
+									//Intro Page Slider Image 2
+									li
+										.forhow-content
+											img(src="/landingPage/img/thumbs/forWhoRestaurant.png")
+											.titlebar
+												h2(translate="FORWHOISBIIN.SLIDER.2.TITLE")
+												p(translate="FORWHOISBIIN.SLIDER.2.TEXT")
+									//Intro Page Slider Image 3
+									li
+										.forhow-content
+											img(src="/landingPage/img/thumbs/forWhoInstitutions.png")
+											.titlebar
+												h2(translate="FORWHOISBIIN.SLIDER.3.TITLE")
+												p(translate="FORWHOISBIIN.SLIDER.3.TEXT")
+									//Intro Page Slider Image 4
+									li
+										.forhow-content
+											img(src="/landingPage/img/thumbs/forWhoMuseums.png")
+											.titlebar
+												h2(translate="FORWHOISBIIN.SLIDER.4.TITLE")
+												p(translate="FORWHOISBIIN.SLIDER.4.TEXT")
+									//Intro Page Slider Image 5
+									li
+										.forhow-content
+											img(src="/landingPage/img/thumbs/forWhoExposition.png")
+											.titlebar
+												h2(translate="FORWHOISBIIN.SLIDER.5.TITLE")
+												p(translate="FORWHOISBIIN.SLIDER.5.TEXT")
+									//Intro Page Slider Image 6
+									li
+										.forhow-content
+											img(src="/landingPage/img/thumbs/forWhoSportEvents.png")
+											.titlebar
+												h2(translate="FORWHOISBIIN.SLIDER.6.TITLE")
+												p(translate="FORWHOISBIIN.SLIDER.6.TEXT")
+									//Intro Page Slider Image 7
+									//li
+										.forhow-content
+											img(src="/landingPage/img/thumbs/forWhoHotels.png")
+											.titlebar
+												h2(translate="FORWHOISBIIN.SLIDER.7.TITLE")
+												p(translate="FORWHOISBIIN.SLIDER.7.TEXT")
+									//Intro Page Slider Image 8
+									//li
+										.forhow-content
+											img(src="/landingPage/img/thumbs/forWhoHotels.png")
+											.titlebar
+												h2 En la industria automotriz
+												p Para encontrar el auto de mis sue&ntilde;os conocer todos los detalles, guardar y compartir con mis
+													| amigos. 										
+		//END FOR WHO IS BIIN
+		//FEATURES============================================= 
+		section#features
+			.container
+				//Section Tittle
+				.row
+					.col-sm-12.titlebar
+						h2(translate="BIINFEATURES.TITLE")
+						h3(translate="BIINFEATURES.TEXT1") 
+						p(translate="BIINFEATURES.TEXT2") 
+						p(translate="BIINFEATURES.TEXT3") 
+
+				//Features Holder
+				.row
+					.col-md-12
+						ul
+							//Feature Icon 1
+							li#feature-1
+								.col-sm-12.col-md-12.feature-box.clearfix
+									.feature-box-icon
+										img(src="landingPage/img/thumbs/iOSCircle.png")
+									.feature-box-content
+										h4(translate="BIINFEATURES.MOBILEAPP.TITLE") 
+										p(translate="BIINFEATURES.MOBILEAPP.TEXT") 
+							//Feature Icon 5
+							li#feature-5
+								.col-sm-12.col-md-12.feature-box.clearfix
+									.feature-box-icon
+										img(src="landingPage/img/thumbs/ibeaconCircle.png")
+									.feature-box-content
+										h4(translate="BIINFEATURES.BEACONS.TITLE") 
+										p(translate="BIINFEATURES.BEACONS.TEXT") 
+							//Feature Icon 3
+							li#feature-2
+								.col-sm-12.col-md-12.feature-box.clearfix
+									.feature-box-icon
+										img(src="landingPage/img/thumbs/cmsCircle.png")
+									.feature-box-content
+										h4(translate="BIINFEATURES.CONTENTMANAGMENT.TITLE") 
+										p(translate="BIINFEATURES.CONTENTMANAGMENT.TEXT") 
+							//Feature Icon 3
+							li#feature-3
+								.col-sm-12.col-md-12.feature-box.clearfix
+									.feature-box-icon
+										img(src="landingPage/img/thumbs/loyaltyCircle.png")
+									.feature-box-content
+										h4(translate="BIINFEATURES.LOYALTYPROGRAM.TITLE") 
+										p(translate="BIINFEATURES.LOYALTYPROGRAM.TEXT") 
+							//Feature Icon 4
+							li#feature-4
+								.col-sm-12.col-md-12.feature-box.clearfix
+									.feature-box-icon
+										img(src="landingPage/img/thumbs/crmCircle.png")
+									.feature-box-content
+										h4(translate="BIINFEATURES.MANAGEMENTPORTAL.TITLE") 
+										p(translate="BIINFEATURES.MANAGEMENTPORTAL.TEXT") 
+					//End col-md-12
+				//End Features Holder
+			//End container
+		//END FEATURES		
+		//BANNER_1============================================= 
+		section#banner_1.banner-container
+			.container
+				.row
+					//Banner Description
+					.col-md-6.titlebar.banner_1_content
+						h2(translate="BIINMOBILEAPP.TITLE") 
+						h3(translate="BIINMOBILEAPP.TEXT1") 
+						p(translate="BIINMOBILEAPP.TEXT2") 						
+						.testimonials
+							blockquote(translate="BIINMOBILEAPP.QUOTE") 
+					.col-md-6.banner_1_image
+						img(src="/landingPage/img/thumbs/biinMovil.png")
+					.col-md-12.text-center
+						.col-md-6
+							.stores
+								a(href="")
+									img(src="/landingPage/img/icons/appstore.png", alt="")
+				//End row
+			//End container
+		//END BANNER_1
+		//CMS============================================= 
+		seccion#crm_banner
+			.container
+				.row
+					//Banner Description
+					.col-md-6.titlebar.crm_banner_content
+						h2(translate="MANAGECONTENTFORBIIN.TITLE")
+						h3(translate="MANAGECONTENTFORBIIN.SUBTITLE")
+						p(translate="MANAGECONTENTFORBIIN.TEXT1")
+						p(translate="MANAGECONTENTFORBIIN.TEXT2")
+						p(translate="MANAGECONTENTFORBIIN.TEXT3")
+					.col-md-6.crm_banner_image
+						img(src="/landingPage/img/thumbs/biinCMS.png")
+				//End row
+			//End container
+		//END CMS		
+		//BANNER_2============================================= 
+		section#banner_2.banner-container
+			.container
+				.row
+					//Banner Image
+					//#banner_2_image.col-md-6
+						img.img-responsive(src='/landingPage/img/thumbs/2.png', alt='banner_2_image')
+					//Banner Description
+					.col-md-6.titlebar.banner_2_content
+						h2(translate="BIINBEACONS.TITLE")
+						h3(translate="BIINBEACONS.SUBTITLE")
+						p(translate="BIINBEACONS.TEXT1")
+						p(translate="BIINBEACONS.TEXT2")
+						//Banner List
+						#banner-list
+							//List Item #1
+							.list-item
+								h5
+									i.fa.fa-check
+									| {{ "BIINBEACONS.LIST.ITEM1" | translate }}
+							//List Item #2							
+							.list-item
+								h5
+									i.fa.fa-check
+									| {{ "BIINBEACONS.LIST.ITEM2" | translate }}
+							//List Item #3
+							.list-item
+								h5
+									i.fa.fa-check
+									| {{ "BIINBEACONS.LIST.ITEM3" | translate }}
+							//List Item #4
+							.list-item
+								h5
+									i.fa.fa-check
+									| {{ "BIINBEACONS.LIST.ITEM4" | translate }}
+					.col-md-6.banner_2_image
+						img(src="/landingPage/img/thumbs/biinBeacon.png")
+						//End Banner List
+					//End Banner Description
+				//End row
+			//End container
+		//END BANNER_2
+		//NEWSLETTER============================================= 
+		#newsletter.parallax
+			.container
+				//Section Tittle
+				.row
+					.col-sm-12.titlebar
+						h2 Contacta a Biin!
+						h3 Nos encantar&iacute;a conversar sobre como Biin puede ayudar a su empresa o instituci&oacute;n.
+						p
+							| Llena el formulario y te estaremos contactando lo antes posible.
+					//Contact form
+					.col-sm-12
+						form#contact-form.row(action='#', name='contactform', method='post')
+							#input_name.col-md-6
+								input#name.form-control(type='text', name='first_name', placeholder='Nombre', required)
+							#input_email.col-md-6
+								input#email.form-control(type='text', name='email', placeholder='Email', required)
+							#input_subject.col-md-12
+								input#subject.form-control(type='text', name='compania', placeholder='Compañia', required)
+							#input_message.col-md-12
+								textarea#comments.form-control(name='message', rows='6', placeholder='Tu mensaje...', required)
+								.sent-message
+							//Submit Button
+							#form_btn.col-md-12
+								.text-center
+									input#submit.btn-contact.btn.btn-black.btn-lg(type='submit', value='Enviar mensaje')
+					//END Contact form
+				//End row
+			//End container
+		//END NEWSLETTER	
+	//END CONTENT WRAPPER 
