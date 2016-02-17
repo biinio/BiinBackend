@@ -293,7 +293,4 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/ratings/organization',ratingSites.getRatingsByOrganization);
 
 
-    app.get('/crashserver', routes.crashserver);
-
-
 };

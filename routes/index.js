@@ -135,13 +135,6 @@ module.exports = function () {
 		});        
 
     };
-	functions.crashserver = function(){
-		var mobileUserData = null;
-		var userShare = _.findWhere(mobileUserData.shareObjects, {
-			identifier: sites[i].identifier,
-			type: "site"
-		});
-	};
     
 	return functions;
 };
