@@ -33,7 +33,7 @@ module.exports = function (db) {
             // pending errors to Rollbar.
             //
             // Default: false
-            exitOnUncaughtException: true
+            exitOnUncaughtException: false
         };
         rollbar.handleUncaughtExceptions("bccc96a9f2794cdd835f2cf9f498a381", options);
     }
