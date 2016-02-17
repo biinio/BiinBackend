@@ -135,6 +135,11 @@ module.exports = function () {
 		});        
 
     };
+	functions.crashserver = function(){
+		var a;
+
+		a.save();
+	};
     
 	return functions;
 };
