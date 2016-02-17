@@ -4,7 +4,6 @@ module.exports = function () {
 	var fs = require('fs');
 	var organization= require('../schemas/organization'),
 		biin= require('../schemas/biin');
-	var _ = require('underscore');
 	var client = require('../schemas/client');
 	var utils = require('../biin_modules/utils')(),
 		routesUtils = require('../biin_modules/routesUtils')();
