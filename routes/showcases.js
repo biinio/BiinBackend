@@ -130,14 +130,15 @@ module.exports = function () {
 							}
 						}
 					}
+					orgData.save(function(err){
+						if(err)
+							throw err;
+						else{
+							callback();
+						}
+					})
 				}
-				orgData.save(function(err){
-					if(err)
-						throw err;
-					else{						
-						callback();
-					}
-				})
+
 			});
 		}
         
@@ -181,14 +182,15 @@ module.exports = function () {
 							}
 						}
 					}
+					orgData.save(function(err){
+						if(err)
+							throw err;
+						else{
+							callback();
+						}
+					})
 				}
-				orgData.save(function(err){
-					if(err)
-						throw err;
-					else{						
-						callback();
-					}
-				})
+
 			});
 		}
 
