@@ -6262,8 +6262,9 @@ header .intro-section .btn-theme {
 }
 header .top-logo {
   padding-top: 20px;
+  padding-bottom: 20px;
   text-align: center;
-  height: 70px;
+  height: auto;
   margin: 0 auto;
 }
 header .top-logo > img {
