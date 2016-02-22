@@ -11,6 +11,10 @@ var debug = require('debug')('BinnCMS'),
 
 //Define local vars
 var isDevelopment = process.env.NODE_ENV === 'development';
+var isQA = process.env.NODE_ENV === 'qa';
+var isDemo = process.env.NODE_ENV === 'demo';
+var isProduction = process.env.NODE_ENV === 'production';
+
 var httpPort = process.env.PORT || 3000;
 var httpsPort = 8443;
 
@@ -27,7 +31,7 @@ var httpServer = http.createServer(app).listen(httpPort,function(){
 });
 
 //Https Server instance
-if(!isDevelopment){
+if(!isDevelopment && !isQA && !isDemo){
 	var httpsServer=https.createServer(credentials, app).listen(httpsPort,function(){
 		console.log("Listing https server");
 	});

@@ -22,6 +22,9 @@ module.exports = function (db) {
 
 
     var isDevelopment = process.env.NODE_ENV === 'development';
+    var isQA = process.env.NODE_ENV === 'qa';
+    var isDemo = process.env.NODE_ENV === 'demo';
+    var isProduction = process.env.NODE_ENV === 'production';
     if(process.env.DONT_TRACK != 'YES'){
     var rollbar = require("rollbar");
         rollbar.init("bccc96a9f2794cdd835f2cf9f498a381");
@@ -45,7 +48,7 @@ module.exports = function (db) {
     schemasValidations = {};
 
 
-    app.use(cors())
+    app.use(cors());
 
     app.use(function(req, res, next) {
         res.setHeader("code-version", "1.0.10");
@@ -65,7 +68,7 @@ module.exports = function (db) {
     };
 
     // Less configuration
-    if(isDevelopment){
+    if(isDevelopment || isQA || isDemo){
         app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
             force:true,
             debug:true,
