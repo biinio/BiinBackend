@@ -505,18 +505,20 @@ module.exports =function(){
 
 	function setTrackingNotifications( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			var filteredActions = _.filter(actions,function(item){ return item.did == NOTIFICATION_OPENED || item.did == BIIN_NOTIFIED })
+			var filteredActions = _.filter(actions,function(item){ return item.did == NOTIFICATION_OPENED || item.did == BIIN_NOTIFIED });
 			if(filteredActions.length>0){
 				var objectsToFind = _.uniq(_.pluck(filteredActions,"to"));
 
-				biin.find({"objects._id":{$in:objectsToFind}},{"identifier":1,"organizationIdentifier":1,"siteIdentifier":1}).lean().exec(function(err,biinData){
+				biin.find({"objects._id":{$in:objectsToFind}},{"identifier":1,'objects':1,"organizationIdentifier":1,"siteIdentifier":1}).lean().exec(function(err,biinData){
 					if(err)
 						reject(err);
 					var actionsToInsert = [];
 					for (var i = 0; i < filteredActions.length; i++) {
 						var biinExtraInfo = _.find(biinData,function(data){
-							return _.findWhere(data.objects,{_id:filteredActions[i].to}) != null;
-						});
+							return _.find(data.objects,function(dataObject){
+									return dataObject._id.valueOf() == filteredActions[i].to;
+								}) != null;
+							});
 						if(biinExtraInfo){
 							var action = {};
 
