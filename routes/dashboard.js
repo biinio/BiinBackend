@@ -237,7 +237,7 @@ module.exports = function () {
                 }
             }
 
-        ]], function (error, notificationData) {
+        ], function (error, notificationData) {
             for (var i = 0; i < notificationData.length; i++) {
                 counterDates[notificationData[i]._id] = notificationData[i].count;
             }
