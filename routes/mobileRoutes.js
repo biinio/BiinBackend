@@ -1,13 +1,15 @@
 module.exports =function(){
 	var fs=require('fs');
 	var _= require('underscore');
-	var math = require('mathjs'), moment = require('moment-timezone');
+	var math = require('mathjs'),
+		moment = require('moment-timezone');
 	var util = require('util');
 
 	var functions ={};
 	var mobileUser = require('../schemas/mobileUser');
 	var mobileHistory = require('../schemas/mobileHistory');
-	var utils = require('../biin_modules/utils')(), moment = require('moment');
+	var utils = require('../biin_modules/utils')(),
+		moment = require('moment');
 	var organization = require('../schemas/organization'),
 		site = require('../schemas/site'),
 		showcase = require('../schemas/showcase'),
