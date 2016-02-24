@@ -135,12 +135,13 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -193,12 +194,13 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -271,12 +273,13 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -310,12 +313,13 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -355,12 +359,13 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -394,12 +399,13 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -439,12 +445,13 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -478,12 +485,13 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -516,12 +524,13 @@ module.exports = function () {
         var organizationId = filters.organizationId;
         var siteId = filters.siteId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
@@ -563,12 +572,13 @@ module.exports = function () {
         var organizationId = filters.organizationId;
         var siteId = filters.siteId;
         var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
         var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
 
-        var timezoneSymbol = offset < 0 ? "-" : "+";
+        var timezoneSymbol = offset < 0 ? "+" : "-";
         var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
         var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
 
