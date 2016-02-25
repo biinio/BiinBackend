@@ -833,7 +833,7 @@ module.exports = function(){
 
 		var updateModel = function(model){
 			var birthDate = utils.getDate(model.birthDate);
-			var facebookId = model.facebookId || "";
+			var facebookId = model.facebook_id || "";
 			mobileUser.update({'identifier':identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false,facebookId:facebookId},function(err,raw){
 				if(err)
 					res.json({data:{},status:"5", result:"0"});
