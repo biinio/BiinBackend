@@ -51,7 +51,7 @@ module.exports = function (db) {
     app.use(cors());
 
     app.use(function(req, res, next) {
-        res.setHeader("code-version", "1.0.10");
+        res.setHeader("code-version", "1.0.11");
         return next();
     });
 
