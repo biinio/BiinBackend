@@ -321,7 +321,7 @@ module.exports = function(){
 							tempPassword:model.password,
 							gender:model.gender,
 							joinDate:joinDate,
-							accountState:false,
+							accountState:true,
 							biinieCollections:defBiinedCollection,
 							facebookId:model.facebookId
 						});
