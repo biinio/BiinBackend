@@ -209,6 +209,10 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies',mobileUser.setMobile);
     app.post('/mobile/biinies/:identifier',mobileUser.updateMobile);
 
+    //Facebook Login
+    app.get('/mobile/biinies/auth/thirdparty/facebook/:user', mobileUser.loginFacebook);
+    app.get('/mobile/biinies/facebook/:firstName/:lastName/:biinName/:password/:gender/:birthdate/:facebookId',mobileUser.setMobileByURLParamsFacebook);
+
     //Mobile Biinies Share
     app.get('/mobile/biinies/:identifier/share',mobileUser.getShare);
     app.put('/mobile/biinies/:identifier/share',mobileUser.setShare);

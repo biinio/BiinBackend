@@ -7,7 +7,7 @@ module.exports = function(){
 		util = require('util'),
 		bcrypt = require('bcrypt'),
 		imageManager=require('../biin_modules/imageManager')(),
-		category = require('../schemas/category')
+		category = require('../schemas/category'),
 		utils =require("../biin_modules/utils")();
 	var organization = require('../schemas/organization');
 
@@ -27,7 +27,7 @@ module.exports = function(){
 	//GET the Main view of an Binnies
 	functions.index = function(req, res){
 		res.render('binnie/index', { title: 'Binnies list' ,user:req.user,organization:null});
-	}
+	};
 
 	//Get the list of Binnies
 	functions.get = function(req,res){
@@ -40,13 +40,13 @@ module.exports = function(){
 			else
 				res.json({data:binnies, prototype:prototype});
 		});
-	}
+	};
 
 	//Get the profile of a biinnie
 	functions.getProfile = function(req,res){
 		var identifier= req.params.identifier;
 		//Find the mobile user
-		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"url":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1},function(err,foundBinnie){
+		mobileUser.findOne({'identifier':identifier},{"identifier":1,"email":1, "biinName":1,"firstName":1,"birthDate":1,"accountState":1,"gender":1,"lastName":1,"url":1,"friends":1,"biins":1,"following":1,"followers":1, "categories":1,"facebookId":1},function(err,foundBinnie){
 			if(err)
 				res.json({data:{},status:"5",result:"0"});
 			else{
@@ -57,12 +57,13 @@ module.exports = function(){
 					var result = foundBinnie.toObject();
 					result.birthDate = foundBinnie.birthDate.replace("T", " ").replace("Z","");
 					result.isEmailVerified = foundBinnie.accountState?"1":"0";
+					result.facebookId = foundBinnie.facebookId || "";
 					delete result.accountState;
 					res.json({data:result,status:"0",result:"1"});
 				}
 			}
 		});
-	}
+	};
 
 	//Get The Biinie Biined Collections
 	functions.getCollections =function(req,res){
@@ -78,7 +79,7 @@ module.exports = function(){
 					res.json({data:{},status:"9", result:"0"});
 				}
 		});
-	}
+	};
 
 	//GET the Organization information and biinie info
 	functions.getOrganizationInformation =function(req,res){
@@ -102,7 +103,7 @@ module.exports = function(){
 				                ],
 				                badges: [
 				                ]
-				        }
+				        };
 						if('loyalty' in mobileUserFound){
 								var loyaltyToFind = _.findWhere(mobileUserFound.loyalty,{organizationIdentifier:organizationId});
 								if(typeof(loyaltyToFind)!=='undefined')
@@ -151,7 +152,7 @@ module.exports = function(){
 				})
 			}
 		});
-	}
+	};
 
 	//PUT a new Mobile User
 	functions.set = function(req,res){
@@ -264,9 +265,26 @@ module.exports = function(){
 		model.birthDate = req.params.birthdate;
 		//** Set that the email is the same as biinName
 		model.email = model.biinName;
+		model.facebookId = "";
 		req.body.model = model;
 		functions.setMobile(req,res);
-	}
+	};
+
+	//SET a new Mobile user taking the params from the URL **To change **Deprecated
+	functions.setMobileByURLParamsFacebook =function(req,res){
+		var model ={};
+		model.firstName = req.params.firstName;
+		model.lastName = req.params.lastName;
+		model.biinName= req.params.biinName;
+		model.password= req.params.password;
+		model.gender= req.params.gender;
+		model.birthDate = req.params.birthdate;
+		//** Set that the email is the same as biinName
+		model.email = model.biinName;
+		model.facebookId = req.params.facebookId;
+		req.body.model = model;
+		functions.setMobile(req,res);
+	};
 
 	//Set a new Mobile User
 	functions.setMobile = function(req,res){
@@ -305,7 +323,8 @@ module.exports = function(){
 								gender:model.gender,
 								joinDate:joinDate,
 								accountState:false,
-								biinieCollections:defBiinedCollection
+								biinieCollections:defBiinedCollection,
+								facebookId:model.facebookId
 							});
 
 							//Save The Model
@@ -716,9 +735,6 @@ module.exports = function(){
 		})
 	}
 
-
-
-
 	//DELETE a object to a Collect Collection
 	functions.deleteMobileCollectElementToCollection=function(req,res){
 		var identifier=req.params.identifier;
@@ -817,7 +833,8 @@ module.exports = function(){
 
 		var updateModel = function(model){
 			var birthDate = utils.getDate(model.birthDate);
-			mobileUser.update({'identifier':identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false},function(err,raw){
+			var facebookId = model.facebookId || "";
+			mobileUser.update({'identifier':identifier},{biinName:model.email,firstName:model.firstName, lastName:model.lastName,email:model.email, gender:model.gender,birthDate:birthDate,accountState:false,facebookId:facebookId},function(err,raw){
 				if(err)
 					res.json({data:{},status:"5", result:"0"});
 				else
@@ -885,7 +902,28 @@ module.exports = function(){
 				}
 			}
 		});
-	}
+	};
+
+	//Get the authentication of the user **To change **Deprecated
+	functions.loginFacebook =function(req,res){
+		var user =req.params.user;
+
+		mobileUser.findOne({'biinName':user},function(err,foundBinnie){
+			if(err)
+				res.json({data:{identifier:""},status:"5",result:"0"});
+			else
+			{
+				var result = typeof(foundBinnie)!=='undefined' && foundBinnie!==null;
+				var identifier="";
+				if(result){
+					identifier = foundBinnie.identifier;
+					res.json({data:{identifier:identifier},status: "0", result:"1"});
+				}else{
+					res.json({data:{identifier:identifier},status:"7", result:"0"});
+				}
+			}
+		});
+	};
 
 	//GET/POST the activation of the user
 	functions.activate=function(req,res){
