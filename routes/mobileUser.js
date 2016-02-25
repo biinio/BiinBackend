@@ -283,7 +283,70 @@ module.exports = function(){
 		model.email = model.biinName;
 		model.facebookId = req.params.facebookId;
 		req.body.model = model;
-		functions.setMobile(req,res);
+		functions.setMobileFacebook(req,res);
+	};
+
+	functions.setMobileFacebook = function(req,res){
+
+		var model =req.body.model;
+		res.setHeader('Content-Type', 'application/json');
+		var errors = utils.validate(new mobileUser().validations(),req,'model');
+		if(!errors){
+			mobileUser.findOne({'biinName':model.biinName},function(err,mobileUserAccount){
+				if(mobileUserAccount){
+					res.json({data:{identifier:mobileUserAccount.identifier},status:"0",result:"1"});
+				}else{
+					bcrypt.hash(model.password, 11, function (err, hash) {
+						var joinDate = utils.getDateNow();
+						var identifier= utils.getGUID();
+
+						//Build the default Biined Collection
+						var collectionIdentifier= utils.getGUID();
+						var defBiinedCollection = [{
+							identifier:collectionIdentifier,
+							subTitle:"This is a list of all your biined elements and sites.",
+							title:"Biined elements and sites",
+							elements:[],
+							sites:[]
+						}];
+
+						var newModel = new mobileUser({
+							identifier: identifier,
+							firstName:model.firstName,
+							lastName:model.lastName,
+							biinName:model.biinName,
+							email:model.email,
+							password:hash,
+							birthDate:model.birthDate,
+							tempPassword:model.password,
+							gender:model.gender,
+							joinDate:joinDate,
+							accountState:false,
+							biinieCollections:defBiinedCollection,
+							facebookId:model.facebookId
+						});
+
+						//Save The Model
+						newModel.save(function(err){
+							if(err)
+								res.json({data:{identifier:""},status:"5", result:"0"});
+							else{
+
+								//Send the verification of the e-mail
+								sendVerificationMail(req,newModel,function(){
+									//callback of mail verification
+									res.json({data:{identifier:identifier},status:"0", result:"1"});
+								});
+							}
+
+						});
+					});
+				}
+			});
+		}
+		else{
+			res.send({data:{errors:errors},status:"6",result:"0"});
+		}
 	};
 
 	//Set a new Mobile User
