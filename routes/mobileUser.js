@@ -951,6 +951,8 @@ module.exports = function () {
         var updateModel = function (model) {
             var birthDate = utils.getDate(model.birthDate);
             var facebookId = model.facebook_id || "";
+            var accountState = model.facebook_id != "";
+
             mobileUser.update({'identifier': identifier}, {
                 biinName: model.email,
                 firstName: model.firstName,
@@ -958,7 +960,7 @@ module.exports = function () {
                 email: model.email,
                 gender: model.gender,
                 birthDate: birthDate,
-                accountState: false,
+                accountState : accountState,
                 facebookId: facebookId
             }, function (err, raw) {
                 if (err)
