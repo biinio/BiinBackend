@@ -57,7 +57,7 @@ module.exports = function(){
 					var result = foundBinnie.toObject();
 					result.birthDate = foundBinnie.birthDate.replace("T", " ").replace("Z","");
 					result.isEmailVerified = foundBinnie.accountState?"1":"0";
-					result.facebookId = foundBinnie.facebookId || "";
+					result.facebook_id = foundBinnie.facebookId || "";
 					delete result.accountState;
 					res.json({data:result,status:"0",result:"1"});
 				}
