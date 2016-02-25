@@ -501,9 +501,24 @@ module.exports = function () {
                                                 return highlights.indexOf(element.identifier) > -1;
                                             });
 
-                                            hightlightsFiltered = _.uniq(hightlightsFiltered);
+                                            _.each(hightlightsFiltered,function(highlight,index,highlightArray){
+                                                var newHighlight = {};
+                                                newHighlight._id = highlight._id;
+                                                newHighlight.identifier = highlight.identifier;
+                                                highlightArray[index] = newHighlight;
+                                            });
 
-                                            hightlightsFiltered = hightlightsFiltered.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
+                                            var uniqueHighlights = [];
+
+                                            while(hightlightsFiltered.length > 0){
+                                                var testHighlight =  hightlightsFiltered.shift();
+                                                var isUnique = _.findWhere(uniqueHighlights,{identifier:testHighlight.identifier}) == null;
+                                                if(isUnique){
+                                                    uniqueHighlights.push(testHighlight);
+                                                }
+                                            }
+
+                                            hightlightsFiltered = uniqueHighlights.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
 
                                             //Fill categories array
 
