@@ -1053,10 +1053,10 @@ module.exports = function () {
         var identifier = req.params.identifier;
         mobileUser.findOne({'identifier': identifier, accountState: false}, function (err, foundBinnie) {
             if (err)
-                res.send(500, "The user was not found")
+                res.send(500, "The user was not found");
             else {
                 if (typeof(foundBinnie) === 'undefined' || foundBinnie === null)
-                    res.send(500, "The user was not found")
+                    res.send(500, "The user was not found");
 
                 foundBinnie.accountState = true;
                 foundBinnie.save(function (err) {

@@ -68,6 +68,10 @@
       {
         "identifier": "category17",
         "priority": 0.76
+      },
+      {
+        "identifier": "category18",
+        "priority": 0.77
       }
     ],
     "women": [
@@ -138,6 +142,10 @@
       {
         "identifier": "category17",
         "priority": 0.80
+      },
+      {
+        "identifier": "category18",
+        "priority": 0.77
       }
     ]
   }
