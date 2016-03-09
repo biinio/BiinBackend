@@ -106,6 +106,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Showcase routes
     app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId);
     app.post('/api/organizations/:identifier/site/showcases',organizations.setShowcasesPerSite);
+    app.post('/api/organizations/:identifier/biins/showcases',biins.setShowcasesPerBiins);
 
     //Showcases creation
     app.post('/api/organizations/:identifier/showcases',showcases.set);
