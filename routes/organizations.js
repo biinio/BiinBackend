@@ -114,9 +114,7 @@ module.exports = function() {
             identifier: organizationIdentifier
         }, {
             _id: true,
-            'sites._id': true,
-            'sites.showcases': true,
-            'sites.identifier': true
+            'sites': true
         }, function(err, data) {
             
             // Find the correct site to assign the showcase to
@@ -130,14 +128,14 @@ module.exports = function() {
             }
             
             data.save(
-                function(err) {
+                function(err, organization) {
                     if (err)
                         res.send(err, 500);
                     else
-                        res.send(model, 200);
+                        res.send(organization, 200);
                 })
         });
-    }
+    };
     
     functions.getSelectedOrganization = function(req, res) {
         var aIdentifier = req.param("accountIdentifier");
