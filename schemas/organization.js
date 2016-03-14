@@ -22,6 +22,9 @@ var orgSchema = new Schema({
 	biinsAssignedCounter:{type:Number,default:0},
     isDeleted:{type:Boolean,default:0},
 	isPublished:{type:Boolean,default:false},
+	isUsingBrandColors:{type:String,default:"0"},
+	primaryColor:{type:String,default:"0,0,0"},
+	secondaryColor:{type:String,default:"0,0,0"},
 	//Count off biins purchased
 	purchasedBiinsHist:[{
 				date:{type:String,default:""},

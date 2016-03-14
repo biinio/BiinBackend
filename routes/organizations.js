@@ -50,13 +50,32 @@ module.exports = function() {
             loyaltyEnabled: 1,
             sites : 1,
             isPublished : 1,
-            hasNPS : 1
+            hasNPS : 1,
+            isUsingBrandColors: 1,
+            primaryColor : 1,
+            secondaryColor:1
+
         }, function(err, data) {
+            if(!data.isUsingBrandColors){
+                data.isUsingBrandColors = "0";
+            }
+
+            if(!data.primaryColor){
+                data.primaryColor = "rgb(0,0,0)";
+            }else{
+                data.primaryColor = "rgb("+data.primaryBrandColor+")";
+            }
+
+            if(!data.secondaryColor){
+                data.secondaryColor = "rgb(0,0,0)";
+            }else{
+                data.secondaryColor = "rgb("+data.secondaryBrandColor+")";
+            }
             res.json({
                 data: data
             });
         });
-    }
+    };
     
     //PUT/POST an organization
     functions.set = function(req, res) {
@@ -68,6 +87,22 @@ module.exports = function() {
         delete model._id;
         delete model.identifier;
         delete model.accountIdentifier;
+
+        if(!model.isUsingBrandColors){
+            model.isUsingBrandColors = "0";
+        }
+
+        if(!model.primaryColor){
+            model.primaryColor = "0,0,0";
+        }else{
+            model.primaryColor = model.primaryColor.replace("rgb(","").replace(")","");
+        }
+
+        if(!model.secondaryColor){
+            model.secondaryColor = "0,0,0";
+        }else{
+            model.secondaryColor = model.secondaryColor.replace("rgb(","").replace(")","");;
+        }
 
         organization.update({
                 identifier: organizationIdentifier
@@ -94,6 +129,8 @@ module.exports = function() {
         var newModel = new organization();
         newModel.accountIdentifier = accountIdentifier;
         newModel.identifier = utils.getGUID();
+        newModel.primaryColor = "rgb(0,0,0)";
+        newModel.secondaryColor = "rgb(0,0,0)";
         //Perform an create
         newModel.save(function(err) {
             if (err)
