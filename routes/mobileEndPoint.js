@@ -150,6 +150,10 @@ module.exports = function () {
         organizationValidated.isLoyaltyEnabled = organization.isLoyaltyEnabled ? organization.isLoyaltyEnabled : "0";
         organizationValidated.loyalty = organization.loyalty ? organization.loyalty : [];
         organizationValidated.hasNPS = organization.hasNPS ? organization.hasNPS : "0";
+        organizationValidated.isUsingBrandColors = organization.isUsingBrandColors ? organization.isUsingBrandColors : "0";
+        organizationValidated.primaryColor = organization.primaryColor ? organization.primaryColor : "0,0,0";
+        organizationValidated.secondaryColor = organization.secondaryColor ? organization.secondaryColor : "0,0,0";
+
         if (!Array.isArray(organizationValidated.media)) {
             organizationValidated.media = [organizationValidated.media];
         }
@@ -434,7 +438,10 @@ module.exports = function () {
                                             "isLoyaltyEnabled": 1,
                                             "loyalty": 1,
                                             "elements": 1,
-                                            "hasNPS": 1
+                                            "hasNPS": 1,
+                                            isUsingBrandColors: 1,
+                                            primaryColor : 1,
+                                            secondaryColor:1
                                         }).lean().exec(function (error, orgData) {
                                             if (error)
                                                 throw error;
