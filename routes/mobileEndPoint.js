@@ -151,8 +151,8 @@ module.exports = function () {
         organizationValidated.loyalty = organization.loyalty ? organization.loyalty : [];
         organizationValidated.hasNPS = organization.hasNPS ? organization.hasNPS : "0";
         organizationValidated.isUsingBrandColors = organization.isUsingBrandColors ? organization.isUsingBrandColors : "0";
-        organizationValidated.primaryColor = organization.primaryColor ? organization.primaryColor : "0,0,0";
-        organizationValidated.secondaryColor = organization.secondaryColor ? organization.secondaryColor : "0,0,0";
+        organizationValidated.primaryColor = organization.primaryColor ? organization.primaryColor : "170,171,171";
+        organizationValidated.secondaryColor = organization.secondaryColor ? organization.secondaryColor : "85,86,86";
 
         if (!Array.isArray(organizationValidated.media)) {
             organizationValidated.media = [organizationValidated.media];
