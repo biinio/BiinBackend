@@ -134,13 +134,15 @@ module.exports = function() {
         var newModel = new organization();
         newModel.accountIdentifier = accountIdentifier;
         newModel.identifier = utils.getGUID();
-        newModel.primaryColor = "rgb(0,0,0)";
-        newModel.secondaryColor = "rgb(0,0,0)";
+        newModel.primaryColor = "170,171,171";
+        newModel.secondaryColor = "85,86,86";
         //Perform an create
         newModel.save(function(err) {
             if (err)
                 res.send(err, 500);
             else {
+                newModel.primaryColor = "rgb(170,171,171)";
+                newModel.secondaryColor = "rgb(85,86,86)";
                 //Return the state and the object
                 res.send(newModel, 201);
             }
