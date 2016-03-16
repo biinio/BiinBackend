@@ -17,19 +17,6 @@ module.exports = function(){
         vibrantLightColor: '170, 171, 171'
     };
 
-	//Get the index view of the elements
-	functions.index = function(req,res){
-		var callback= function(organization,req, res){
-			res.render('element/index', { title: 'Elements List' ,user:req.user, organization:organization, isSiteManteinance:true});
-		}
-		//getOganization
-		routesUtils.getOrganization(req.param("identifier"),req,res,{name:true, identifier:true},callback)
-	}
-
-	functions.galleryWidget = function(req, res) {
-        res.render('_partials/galleryWidget');
-    }
-
 
 	//GET the list of elements
 	functions.list = function(req,res){
@@ -65,7 +52,7 @@ module.exports = function(){
 			req.session.selectedOrganization = data;
 			res.json({data:data});
 		});
-	}
+	};
 
 
 	//GET Mobile info of Elements
@@ -366,12 +353,9 @@ module.exports = function(){
          });
 		}
 		else{
-
-			//Todo Elements Showcase Update
 			var model = req.body.model;
 			if(model)
 				delete model._id;
-
 			//Update the model Elements in the Showcases
 			updateElementsInShowcases(model,elementIdentifier,function(){
 				//Update the Element
@@ -381,7 +365,6 @@ module.exports = function(){
 						setModel['elements.$.'+field]=model[field];
 					}
 				}
-
 				organization.update(
 					{identifier:organizationIdentifier,"elements.elementIdentifier":elementIdentifier},
 					{$set:setModel},

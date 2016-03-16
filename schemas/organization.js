@@ -193,7 +193,7 @@ var orgSchema = new Schema({
 			discount:{type:String, default:""},
 			hasSaving:{type:String, default:'0'},
 			savings:{type:String, default:""},
-
+			isTaxIncludedInPrice:{type:String, default:'0'},
 			hasTimming:{type:String,default:"0"},
 			initialDate:{type:Date,default:""},
 			expirationDate:{type:Date,default:""},

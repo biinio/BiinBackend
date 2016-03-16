@@ -38,7 +38,8 @@ var elementSchema = new Schema({
 	hasDiscount:{type:String, default:'0'},
 	discount:{type:String, default:""},
 	hasSaving:{type:String, default:'0'},
-	savings:{type:String, default:""},	
+	savings:{type:String, default:""},
+	isTaxIncludedInPrice:{type:String, default:'0'},
 
 	hasTimming:{type:String,default:"0"},
 	initialDate:{type:Date,default:""},
