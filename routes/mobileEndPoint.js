@@ -1503,7 +1503,30 @@ module.exports = function () {
                                     elementsData = elementsData.concat(sortByProximity[i].elements);
                                 }
 
+
                                 response.sites = _.pluck(sortByProximity, 'site');
+
+                                for (i = 0; i < response.sites.length; i++) {
+
+                                    var userShare = _.findWhere(userData.shareObjects, {
+                                        identifier: response.sites[i].identifier,
+                                        type: "site"
+                                    });
+                                    var userCollected = _.findWhere(userData.biinieCollections.sites, {identifier: response.sites[i].identifier});
+                                    var userFollowed = _.findWhere(userData.followObjects, {
+                                        identifier: response.sites[i].identifier,
+                                        type: "site"
+                                    });
+                                    var userLiked = _.findWhere(userData.likeObjects, {
+                                        identifier: response.sites[i].identifier,
+                                        type: "site"
+                                    });
+
+                                    response.sites[i].userShared = typeof(userShare) !== "undefined" ? "1" : "0";
+                                    response.sites[i].userFollowed = typeof(userFollowed) !== "undefined" ? "1" : "0";
+                                    response.sites[i].userCollected = typeof(userCollected) !== "undefined" ? "1" : "0";
+                                    response.sites[i].userLiked = typeof(userLiked) !== "undefined" ? "1" : "0";
+                                }
 
                                 var elementsInBiinsObjects = [];
                                 for (var i = 0; i < response.sites.length; i++) {
