@@ -198,6 +198,7 @@ module.exports = function () {
         elementValidated.listPrice = element.listPrice ? element.listPrice : "";
         elementValidated.hasListPrice = element.hasListPrice ? element.hasListPrice : "0";
         elementValidated.hasFromPrice = element.hasFromPrice ? element.hasFromPrice : "0";
+        elementValidated.isTaxIncludedInPrice = element.isTaxIncludedInPrice ? element.isTaxIncludedInPrice : "0";
         elementValidated.currencyType = element.currencyType ? element.currencyType : "1";
         elementValidated.searchTags = element.searchTags ? element.searchTags : [];
         elementValidated.subTitle = element.subTitle ? element.subTitle : "";
