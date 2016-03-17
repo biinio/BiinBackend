@@ -948,60 +948,122 @@ module.exports = function () {
         var model = req.body.model;
         var identifier = req.params.identifier;
 
-        var updateModel = function (model) {
-            var birthDate = utils.getDate(model.birthDate);
-            var facebookId = model.facebook_id || "";
-            var accountState = model.facebook_id != "";
+        if(identifier == ""){
 
-            mobileUser.update({'identifier': identifier}, {
-                biinName: model.email,
-                firstName: model.firstName,
-                lastName: model.lastName,
-                email: model.email,
-                gender: model.gender,
-                birthDate: birthDate,
-                accountState : accountState,
-                facebookId: facebookId
-            }, function (err, raw) {
-                if (err)
-                    res.json({data: {}, status: "5", result: "0"});
-                else {
+            bcrypt.hash(model.password, 11, function (err, hash) {
+                var joinDate = utils.getDateNow();
+                var identifier = utils.getGUID();
 
-                    var status = raw.n > 0 ? "0" : "9";
-                    var result = raw.n > 0 ? "1" : "0";
+                //Build the default Biined Collection
+                var collectionIdentifier = utils.getGUID();
+                var defBiinedCollection = [{
+                    identifier: collectionIdentifier,
+                    subTitle: "This is a list of all your biined elements and sites.",
+                    title: "Biined elements and sites",
+                    elements: [],
+                    sites: []
+                }];
 
-                    //Send the email verification if all is ok.
-                    if (raw.n > 0) {
-                        model.identifier = identifier;
-                        model.biinName = model.email;
-                        sendVerificationMail(req, model, function () {
-                            res.json({data: {}, status: status, result: result});
-                        })
-                    } else {
-                        res.json({data: {}, status: status, result: result});
-                    }
 
-                }
-            })
-        }
-        //Chek if the User exist and if the e-mail is available
-        if (model && identifier) {
-            mobileUser.findOne({'biinName': model.email}, function (err, foundEmail) {
-                if (err)
-                    res.json({data: {}, status: "5", result: "0"});
-                else if (typeof(foundEmail) === "undefined" || foundEmail === null) {
-                    updateModel(model);
-                } else {
-                    if (foundEmail.identifier === identifier)
-                        updateModel(model);
+                model.facebookId = model.facebookId || "";
+                model.facebookFriends= model.facebookFriends || [];
+                model.facebookAvatarUrl= model.facebookAvatarUrl || "";
+
+                var newModel = new mobileUser({
+                    identifier: identifier,
+                    firstName: model.firstName,
+                    lastName: model.lastName,
+                    biinName: model.biinName,
+                    email: model.email,
+                    password: hash,
+                    birthDate: model.birthDate,
+                    tempPassword: model.password,
+                    gender: model.gender,
+                    joinDate: joinDate,
+                    accountState: false,
+                    biinieCollections: defBiinedCollection,
+                    facebookId: model.facebookId,
+                    facebookFriends: model.facebookFriends,
+                    facebookAvatarUrl: model.facebookAvatarUrl
+                });
+
+                //Save The Model
+                newModel.save(function (err) {
+                    if (err)
+                        res.json({data: {identifier: ""}, status: "5", result: "0"});
                     else {
-                        res.json({data: {}, status: "1", result: "0"});
-                    }
-                }
-            })
 
+                        //Send the verification of the e-mail
+                        sendVerificationMail(req, newModel, function () {
+                            //callback of mail verification
+                            res.json({data: newModel, status: "0", result: "1"});
+                        });
+                    }
+
+                });
+            });
+        }else{
+            var updateModel = function (model) {
+                var birthDate = utils.getDate(model.birthDate);
+                var facebookId = model.facebook_id || "";
+                var accountState = model.facebook_id != "";
+
+                model.facebookFriends= model.facebookFriends || [];
+                model.facebookAvatarUrl= model.facebookAvatarUrl || "";
+
+                mobileUser.update({'identifier': identifier}, {
+                    biinName: model.email,
+                    firstName: model.firstName,
+                    lastName: model.lastName,
+                    email: model.email,
+                    gender: model.gender,
+                    birthDate: birthDate,
+                    accountState : accountState,
+                    facebookId: facebookId,
+                    facebookFriends: model.facebookFriends,
+                    facebookAvatarUrl: model.facebookAvatarUrl
+
+                }, function (err, raw) {
+                    if (err)
+                        res.json({data: {}, status: "5", result: "0"});
+                    else {
+                        var status = raw.n > 0 ? "0" : "9";
+                        var result = raw.n > 0 ? "1" : "0";
+                        //Send the email verification if all is ok.
+                        if (raw.n > 0) {
+                            model.identifier = identifier;
+                            model.biinName = model.email;
+                            sendVerificationMail(req, model, function () {
+                                res.json({data: model, status: status, result: result});
+                            })
+                        } else {
+                            res.json({data: {}, status: status, result: result});
+                        }
+
+                    }
+                })
+            };
+
+            //Chek if the User exist and if the e-mail is available
+            if (model && identifier) {
+                mobileUser.findOne({'biinName': model.email}, function (err, foundEmail) {
+                    if (err)
+                        res.json({data: {}, status: "5", result: "0"});
+                    else if (typeof(foundEmail) === "undefined" || foundEmail === null) {
+                        updateModel(model);
+                    } else {
+                        if (foundEmail.identifier === identifier)
+                            updateModel(model);
+                        else {
+                            res.json({data: {}, status: "1", result: "0"});
+                        }
+                    }
+                })
+            }
         }
-    }
+
+
+    };
 
 //Get the authentication of the user **To change **Deprecated
     functions.login = function (req, res) {

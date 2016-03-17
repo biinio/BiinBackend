@@ -135,7 +135,10 @@ var mobileUserSchema=new Schema({
 	seenElements:[
 		{elementIdentifier:{type:String,index:{sparse:true}}}
 	],
-	facebookId:{type:String,default:""}
+
+	facebookId:{type:String,default:""},
+	facebookFriends:{type:[String],default:[]},
+	facebookAvatarUrl:{type:String,default:""}
 });
 
 //Methods
