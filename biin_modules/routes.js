@@ -208,6 +208,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/mobile/biinies/:identifier',mobileUser.getProfile);
     app.put('/mobile/biinies',mobileUser.setMobile);
     app.post('/mobile/biinies/:identifier',mobileUser.updateMobile);
+    app.post('/mobile/biinies',mobileUser.updateMobile);
 
     //Facebook Login
     app.get('/mobile/biinies/auth/thirdparty/facebook/:user', mobileUser.loginFacebook);

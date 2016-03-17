@@ -948,7 +948,7 @@ module.exports = function () {
         var model = req.body.model;
         var identifier = req.params.identifier;
 
-        if(identifier == "\"\""){
+        if(identifier == null || identifier == "\"\""){
 
             bcrypt.hash(model.password, 11, function (err, hash) {
                 var joinDate = utils.getDateNow();
