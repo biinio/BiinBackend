@@ -58,9 +58,9 @@ block content
 									.container
 						.row.section
 							#categories
-								.container
+								.fluid-container
 									.row
-										a.col-md-1.catModule(ng-class="{'separator':$index==5}" ng-repeat="cat in categories" ng-click="switchCategoryState(cat)")
+										a.col-md-1.catModule(ng-repeat="cat in categories" ng-click="switchCategoryState(cat)")
 											.catModuleWrapper(ng-class="containsCategory(cat)")
 												.catIcon(class="icon icon-{{cat.icon}}")
 												p {{cat.displayName}}
