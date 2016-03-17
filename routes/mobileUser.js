@@ -62,7 +62,8 @@ module.exports = function () {
             "followers": 1,
             "categories": 1,
             "facebookId": 1,
-            "facebookAvatarUrl":1
+            "facebookAvatarUrl":1,
+            "facebookFriends":1
         }, function (err, foundBinnie) {
             if (err)
                 res.json({data: {}, status: "5", result: "0"});
