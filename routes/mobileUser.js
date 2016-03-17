@@ -61,7 +61,8 @@ module.exports = function () {
             "following": 1,
             "followers": 1,
             "categories": 1,
-            "facebookId": 1
+            "facebookId": 1,
+            "facebookAvatarUrl":1
         }, function (err, foundBinnie) {
             if (err)
                 res.json({data: {}, status: "5", result: "0"});
@@ -74,6 +75,8 @@ module.exports = function () {
                     result.birthDate = foundBinnie.birthDate.replace("T", " ").replace("Z", "");
                     result.isEmailVerified = foundBinnie.accountState ? "1" : "0";
                     result.facebook_id = foundBinnie.facebookId || "";
+                    result.facebookAvatarUrl = foundBinnie.facebookAvatarUrl || "";
+                    result.facebookFriends = foundBinnie.facebookFriends || [];
                     delete result.facebookId;
                     delete result.accountState;
                     res.json({data: result, status: "0", result: "1"});
