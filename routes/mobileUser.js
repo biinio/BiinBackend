@@ -948,7 +948,7 @@ module.exports = function () {
         var model = req.body.model;
         var identifier = req.params.identifier;
 
-        if(identifier == ""){
+        if(identifier == "\"\""){
 
             bcrypt.hash(model.password, 11, function (err, hash) {
                 var joinDate = utils.getDateNow();
@@ -965,7 +965,7 @@ module.exports = function () {
                 }];
 
 
-                model.facebookId = model.facebookId || "";
+                model.facebookId = model.facebook_id || "";
                 model.facebookFriends= model.facebookFriends || [];
                 model.facebookAvatarUrl= model.facebookAvatarUrl || "";
 
@@ -973,14 +973,14 @@ module.exports = function () {
                     identifier: identifier,
                     firstName: model.firstName,
                     lastName: model.lastName,
-                    biinName: model.biinName,
+                    biinName: model.email,
                     email: model.email,
                     password: hash,
                     birthDate: model.birthDate,
                     tempPassword: model.password,
                     gender: model.gender,
                     joinDate: joinDate,
-                    accountState: false,
+                    accountState: model.facebookId != "",
                     biinieCollections: defBiinedCollection,
                     facebookId: model.facebookId,
                     facebookFriends: model.facebookFriends,
@@ -996,7 +996,13 @@ module.exports = function () {
                         //Send the verification of the e-mail
                         sendVerificationMail(req, newModel, function () {
                             //callback of mail verification
-                            res.json({data: newModel, status: "0", result: "1"});
+                            var modelToReturn = newModel.toObject();
+                            modelToReturn.facebook_id = modelToReturn.facebookId;
+                            modelToReturn.birthDate = modelToReturn.birthDate.replace("T", " ").replace("Z", "");
+                            modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                            delete modelToReturn.facebookId;
+                            delete modelToReturn.accountState;
+                            res.json({data: modelToReturn, status: "0", result: "1"});
                         });
                     }
 
@@ -1034,7 +1040,13 @@ module.exports = function () {
                             model.identifier = identifier;
                             model.biinName = model.email;
                             sendVerificationMail(req, model, function () {
-                                res.json({data: model, status: status, result: result});
+                                var modelToReturn = model;
+                                modelToReturn.birthDate = model.birthDate.replace("T", " ").replace("Z", "");
+                                modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                                modelToReturn.facebook_id = facebookId;
+                                delete modelToReturn.facebookId;
+                                delete modelToReturn.accountState;
+                                res.json({data: modelToReturn, status: status, result: result});
                             })
                         } else {
                             res.json({data: {}, status: status, result: result});
