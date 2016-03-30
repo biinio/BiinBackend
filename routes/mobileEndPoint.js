@@ -508,6 +508,7 @@ module.exports = function () {
                                             var hightlightsFiltered = _.filter(elementsInShowcase, function (element) {
                                                 return highlights.indexOf(element.identifier) > -1;
                                             });
+                                            var hightlightsWithCategory = hightlightsFiltered.concat([]);
 
                                             _.each(hightlightsFiltered,function(highlight,index,highlightArray){
                                                 var newHighlight = {};
@@ -532,8 +533,8 @@ module.exports = function () {
 
                                             //Obtain the categories
                                             var elementsCategories = [];
-                                            for (i = 0; i < elementsfiltered.length; i++) {
-                                                elementsCategories = elementsCategories.concat(elementsfiltered[i].categories);
+                                            for (i = 0; i < hightlightsWithCategory.length; i++) {
+                                                elementsCategories = elementsCategories.concat(hightlightsWithCategory[i].categories);
                                             }
                                             //Obtain the unique categories from elements that are going to sent
                                             var uniqueCategories = [];
@@ -555,17 +556,17 @@ module.exports = function () {
 
                                             for (i = 0; i < uniqueCategories.length; i++) {
 
-                                                var elementsWithCategories = _.filter(elementWithCategories, function (element) {
+                                                var elementsWithCategories = _.filter(hightlightsWithCategory, function (element) {
                                                     return _.find(element.categories, function (category) {
                                                             return uniqueCategories[i] == category.identifier;
                                                         }) != null;
                                                 });
-                                                elementsWithCategories = _.sortBy(elementsWithCategories, function (element) {
+                                                /*elementsWithCategories = _.sortBy(hightlightsWithCategory, function (element) {
                                                     return element.isHighlight == "1" ? 0 : 1;
-                                                });
+                                                });*/
 
                                                 var elementsIdAdded = [];
-                                                elementsWithCategories = _.filter(elementsWithCategories, function (element) {
+                                                hightlightsWithCategory = _.filter(hightlightsWithCategory, function (element) {
                                                     var isAddedInElements = _.contains(elementsIdAdded, element.identifier);
                                                     if (!isAddedInElements)
                                                         elementsIdAdded.push(element.identifier);
