@@ -903,11 +903,13 @@ module.exports = function () {
                                                     for (var k = 0; k < sitesDesnormalized[i].showcases[j].elements.length; k++) {
                                                         elementData = _.findWhere(elementsDesnormalized, {elementIdentifier: sitesDesnormalized[i].showcases[j].elements[k].identifier});
                                                         sitesDesnormalized[i].showcases[j].elements[k].isReady = elementData.isReady;
+                                                        sitesDesnormalized[i].showcases[j].elements[k].isHighlight = elementData.isHighlight;
                                                     }
 
                                                     sitesDesnormalized[i].showcases[j].elements = _.filter(sitesDesnormalized[i].showcases[j].elements, function (element) {
-                                                        return element.isReady == 1;
+                                                        return element.isReady == 1 && element.isHighlight == "1";
                                                     });
+
 
                                                     var elementsToConcat = sitesDesnormalized[i].showcases[j].elements;
                                                     _.each(elementsToConcat, function (element) {
@@ -1089,13 +1091,12 @@ module.exports = function () {
                                                             }
 
 
-                                                            var elementsInShowcase = [];
-
                                                             for (i = 0; i < sortByProximity.length; i++) {
                                                                 for (j = 0; j < sortByProximity[i].site.showcases.length; j++) {
                                                                     for (var k = 0; k < sortByProximity[i].site.showcases[j].elements.length; k++) {
                                                                         elementData = _.findWhere(elementsDesnormalized, {elementIdentifier: sortByProximity[i].site.showcases[j].elements[k].identifier});
                                                                         sortByProximity[i].site.showcases[j].elements[k].isReady = elementData.isReady;
+                                                                        sortByProximity[i].site.showcases[j].elements[k].isHighlight = elementData.isHighlight;
                                                                     }
 
                                                                     sortByProximity[i].site.showcases[j].elements = _.filter(sortByProximity[i].site.showcases[j].elements, function (element) {
@@ -1113,18 +1114,12 @@ module.exports = function () {
                                                                     } else {
                                                                         sortByProximity[i].site.showcases[j].elements_quantity = sortByProximity[i].site.showcases[j].elements.length + "";
                                                                         sortByProximity[i].site.showcases[j].elements = sortByProximity[i].site.showcases[j].elements.splice(0, LIMIT_ELEMENTS_IN_SHOWCASE);
-                                                                        elementsInShowcase = elementsInShowcase.concat(sortByProximity[i].site.showcases[j].elements);
                                                                     }
                                                                 }
                                                             }
 
-                                                            // Obtain an array with the element's identifier and convert it into a unique list
-                                                            var elementsIdentifierFromShowcase = _.pluck(elementsInShowcase, 'identifier');
-                                                            var uniqueElementsIdentifierFromShowcase = _.uniq(elementsIdentifierFromShowcase);
-
 
                                                             var elementsInShowcase = [];
-                                                            var elementsRemovedFromShowcase = [];
                                                             var elementsToAddInCategories = 0;
 
                                                             var elementsWithSiteRef = [];
@@ -1148,11 +1143,16 @@ module.exports = function () {
                                                                     }
                                                                 }
                                                             }
+
+                                                            var elementsThatAreHightlights = _.filter(elementsWithSiteRef,function(element){
+                                                               return element.isHighlight == "1";
+                                                            });
+
                                                             var sitesIdToSend = [];
                                                             var elementsThatContainsCategory = [];
-                                                            for (i = 0; i < elementsWithSiteRef.length; i++) {
-                                                                var element = _.find(elementsWithSiteRef[i].orgElements, function (element) {
-                                                                    return element.elementIdentifier == elementsWithSiteRef[i].identifier;
+                                                            for (i = 0; i < elementsThatAreHightlights.length; i++) {
+                                                                var element = _.find(elementsThatAreHightlights[i].orgElements, function (element) {
+                                                                    return element.elementIdentifier == elementsThatAreHightlights[i].identifier;
                                                                 });
                                                                 if (element) {
                                                                     category = _.find(element.categories, function (category) {
