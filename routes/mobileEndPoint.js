@@ -531,10 +531,19 @@ module.exports = function () {
 
                                             //Fill categories array
 
+                                            var uniquehightlightsWithCategory = [];
+                                            while(hightlightsWithCategory.length > 0){
+                                                var testHighlight =  hightlightsWithCategory.shift();
+                                                var isUnique = _.findWhere(uniquehightlightsWithCategory,{identifier:testHighlight.identifier}) == null;
+                                                if(isUnique){
+                                                    uniquehightlightsWithCategory.push(testHighlight);
+                                                }
+                                            }
+
                                             //Obtain the categories
                                             var elementsCategories = [];
-                                            for (i = 0; i < hightlightsWithCategory.length; i++) {
-                                                elementsCategories = elementsCategories.concat(hightlightsWithCategory[i].categories);
+                                            for (i = 0; i < uniquehightlightsWithCategory.length; i++) {
+                                                elementsCategories = elementsCategories.concat(uniquehightlightsWithCategory[i].categories);
                                             }
                                             //Obtain the unique categories from elements that are going to sent
                                             var uniqueCategories = [];
@@ -556,7 +565,7 @@ module.exports = function () {
 
                                             for (i = 0; i < uniqueCategories.length; i++) {
 
-                                                var elementsWithCategories = _.filter(hightlightsWithCategory, function (element) {
+                                                var elementsWithCategories = _.filter(uniquehightlightsWithCategory, function (element) {
                                                     return _.find(element.categories, function (category) {
                                                             return uniqueCategories[i] == category.identifier;
                                                         }) != null;
@@ -566,7 +575,7 @@ module.exports = function () {
                                                 });*/
 
                                                 var elementsIdAdded = [];
-                                                hightlightsWithCategory = _.filter(hightlightsWithCategory, function (element) {
+                                                uniquehightlightsWithCategory = _.filter(uniquehightlightsWithCategory, function (element) {
                                                     var isAddedInElements = _.contains(elementsIdAdded, element.identifier);
                                                     if (!isAddedInElements)
                                                         elementsIdAdded.push(element.identifier);
