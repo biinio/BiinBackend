@@ -1067,11 +1067,7 @@ module.exports = function () {
                 else if (typeof(foundEmail) === "undefined" || foundEmail === null) {
                     createNewUser(model);
                 } else {
-                    if (foundEmail.identifier === identifier)
-                        updateModel(model);
-                    else {
-                        res.json({data: {}, status: "1", result: "0"});
-                    }
+                    updateModel(model);
                 }
             })
         } else {
