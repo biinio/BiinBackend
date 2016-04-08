@@ -1062,7 +1062,7 @@ module.exports = function () {
                     createNewUser(model);
                 } else {
                     if(identifier == "none")
-                        model.identifier = foundEmail.identifier;
+                        identifier = foundEmail.identifier;
                     updateModel(model);
                 }
             })
