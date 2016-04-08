@@ -952,8 +952,7 @@ module.exports = function () {
         var model = req.body.model;
         var identifier = req.params.identifier;
 
-        if(identifier == null || identifier == "\"\"" || identifier == "none"){
-
+        var createNewUser = function(model){
             bcrypt.hash(model.password, 11, function (err, hash) {
                 var joinDate = utils.getDateNow();
                 var identifier = utils.getGUID();
@@ -1012,70 +1011,71 @@ module.exports = function () {
 
                 });
             });
-        }else{
-            var updateModel = function (model) {
-                var birthDate = utils.getDate(model.birthDate);
-                var facebookId = model.facebook_id || "";
-                var accountState = model.facebook_id != "";
+        };
+        var updateModel = function (model) {
+            var birthDate = utils.getDate(model.birthDate);
+            var facebookId = model.facebook_id || "";
+            var accountState = model.facebook_id != "";
 
-                model.facebookFriends= model.facebookFriends || [];
-                model.facebookAvatarUrl= model.facebookAvatarUrl || "";
+            model.facebookFriends= model.facebookFriends || [];
+            model.facebookAvatarUrl= model.facebookAvatarUrl || "";
 
-                mobileUser.update({'identifier': identifier}, {
-                    biinName: model.email,
-                    firstName: model.firstName,
-                    lastName: model.lastName,
-                    email: model.email,
-                    gender: model.gender,
-                    birthDate: birthDate,
-                    accountState : accountState,
-                    facebookId: facebookId,
-                    facebookFriends: model.facebookFriends,
-                    facebookAvatarUrl: model.facebookAvatarUrl
+            mobileUser.update({'identifier': identifier}, {
+                biinName: model.email,
+                firstName: model.firstName,
+                lastName: model.lastName,
+                email: model.email,
+                gender: model.gender,
+                birthDate: birthDate,
+                accountState : accountState,
+                facebookId: facebookId,
+                facebookFriends: model.facebookFriends,
+                facebookAvatarUrl: model.facebookAvatarUrl
 
-                }, function (err, raw) {
-                    if (err)
-                        res.json({data: {}, status: "5", result: "0"});
-                    else {
-                        var status = raw.n > 0 ? "0" : "9";
-                        var result = raw.n > 0 ? "1" : "0";
-                        //Send the email verification if all is ok.
-                        if (raw.n > 0) {
-                            model.identifier = identifier;
-                            model.biinName = model.email;
-                            sendVerificationMail(req, model, function () {
-                                var modelToReturn = model;
-                                modelToReturn.birthDate = model.birthDate.replace("T", " ").replace("Z", "");
-                                modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
-                                modelToReturn.facebook_id = facebookId;
-                                delete modelToReturn.facebookId;
-                                delete modelToReturn.accountState;
-                                res.json({data: modelToReturn, status: status, result: result});
-                            })
-                        } else {
-                            res.json({data: {}, status: status, result: result});
-                        }
-
-                    }
-                })
-            };
-
-            //Chek if the User exist and if the e-mail is available
-            if (model && identifier) {
-                mobileUser.findOne({'biinName': model.email}, function (err, foundEmail) {
-                    if (err)
-                        res.json({data: {}, status: "5", result: "0"});
-                    else if (typeof(foundEmail) === "undefined" || foundEmail === null) {
-                        updateModel(model);
+            }, function (err, raw) {
+                if (err)
+                    res.json({data: {}, status: "5", result: "0"});
+                else {
+                    var status = raw.n > 0 ? "0" : "9";
+                    var result = raw.n > 0 ? "1" : "0";
+                    //Send the email verification if all is ok.
+                    if (raw.n > 0) {
+                        model.identifier = identifier;
+                        model.biinName = model.email;
+                        sendVerificationMail(req, model, function () {
+                            var modelToReturn = model;
+                            modelToReturn.birthDate = model.birthDate.replace("T", " ").replace("Z", "");
+                            modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                            modelToReturn.facebook_id = facebookId;
+                            delete modelToReturn.facebookId;
+                            delete modelToReturn.accountState;
+                            res.json({data: modelToReturn, status: status, result: result});
+                        })
                     } else {
-                        if (foundEmail.identifier === identifier)
-                            updateModel(model);
-                        else {
-                            res.json({data: {}, status: "1", result: "0"});
-                        }
+                        res.json({data: {}, status: status, result: result});
                     }
-                })
-            }
+
+                }
+            })
+        };
+        
+
+        if(model){
+            mobileUser.findOne({'biinName': model.email}, function (err, foundEmail) {
+                if (err)
+                    res.json({data: {}, status: "5", result: "0"});
+                else if (typeof(foundEmail) === "undefined" || foundEmail === null) {
+                    createNewUser(model);
+                } else {
+                    if (foundEmail.identifier === identifier)
+                        updateModel(model);
+                    else {
+                        res.json({data: {}, status: "1", result: "0"});
+                    }
+                }
+            })
+        } else {
+            res.json({data: {}, status: "5", result: "0"});
         }
 
 
