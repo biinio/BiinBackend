@@ -967,6 +967,8 @@ module.exports = function () {
                     sites: []
                 }];
 
+                model.birthDate = model.birthDate? model.birthDate : joinDate;
+
 
                 model.facebookId = model.facebook_id || "";
                 model.facebookFriends= model.facebookFriends || [];
@@ -1036,25 +1038,17 @@ module.exports = function () {
                 if (err)
                     res.json({data: {}, status: "5", result: "0"});
                 else {
-                    var status = raw.n > 0 ? "0" : "9";
-                    var result = raw.n > 0 ? "1" : "0";
-                    //Send the email verification if all is ok.
-                    if (raw.n > 0) {
-                        model.identifier = identifier;
-                        model.biinName = model.email;
-                        sendVerificationMail(req, model, function () {
-                            var modelToReturn = model;
-                            modelToReturn.birthDate = model.birthDate.replace("T", " ").replace("Z", "");
-                            modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
-                            modelToReturn.facebook_id = facebookId;
-                            delete modelToReturn.facebookId;
-                            delete modelToReturn.accountState;
-                            res.json({data: modelToReturn, status: status, result: result});
-                        })
-                    } else {
-                        res.json({data: {}, status: status, result: result});
-                    }
-
+                    model.identifier = identifier;
+                    model.biinName = model.email;
+                    sendVerificationMail(req, model, function () {
+                        var modelToReturn = model;
+                        modelToReturn.birthDate = birthDate.replace("T", " ").replace("Z", "");
+                        modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                        modelToReturn.facebook_id = facebookId;
+                        delete modelToReturn.facebookId;
+                        delete modelToReturn.accountState;
+                        res.json({data: modelToReturn, status: "0", result: "1"});
+                    })
                 }
             })
         };
