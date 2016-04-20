@@ -448,6 +448,7 @@ module.exports = function () {
         var filters = JSON.parse(req.headers.filters);
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
+        var siteId = filters.siteId;
         var offset =  req.headers.offset || 0;
         offset = parseInt(offset);
         var nowDate = new Date();
@@ -467,6 +468,7 @@ module.exports = function () {
         trackingSites.aggregate([{
             $match: {
                 organizationIdentifier: organizationId,
+                siteIdentifier: siteId,
                 date: {$gte: startDate, $lt: todayDate},
                 action: ENTER_SITE_VIEW
             }
