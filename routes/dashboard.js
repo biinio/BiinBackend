@@ -363,6 +363,7 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var offset =  req.headers.offset || 0;
+        var siteId = filters.siteId;
         offset = parseInt(offset);
         var nowDate = new Date();
 
@@ -381,13 +382,14 @@ module.exports = function () {
         trackingBeacon.aggregate([{
             $match: {
                 organizationIdentifier: organizationId,
+                siteIdentifier: siteId,
                 date: {$gte: startDate, $lt: todayDate}
             }
         },
             {$group: {_id: "$userIdentifier"}}], function (error, visitsData) {
 
             //getting priorVisits
-            trackingBeacon.aggregate([{$match: {organizationIdentifier: organizationId, date: {$lt: startDate}}},
+            trackingBeacon.aggregate([{$match: {organizationIdentifier: organizationId,siteIdentifier: siteId, date: {$lt: startDate}}},
                 {$group: {_id: "$userIdentifier"}}], function (error, oldVisitsData) {
                 var idUsersVisits = _.pluck(visitsData, '_id');
                 var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
