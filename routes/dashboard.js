@@ -267,11 +267,6 @@ module.exports = function () {
         return yyyy + '-' + mm + '-' + dd;
     }
 
-    functions.getNewVisitsLocal = function (req, res) {
-
-    };
-
-
     functions.getNewVisitsMobile = function (req, res) {
         var filters = JSON.parse(req.headers.filters);
         var dateRange = filters.dateRange;
@@ -313,6 +308,52 @@ module.exports = function () {
     };
 
     functions.getTotalBiinedMobile = function (req, res) {
+        var filters = JSON.parse(req.headers.filters);
+        var dateRange = filters.dateRange;
+        var organizationId = filters.organizationId;
+        var offset =  req.headers.offset || 0;
+        offset = parseInt(offset);
+        var nowDate = new Date();
+
+        var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
+        var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
+
+        var timezoneSymbol = offset < 0 ? "+" : "-";
+        var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
+        var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
+
+        var todayStringDate = getDateString(todayDate)+"T23:59:59.999"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
+        var startStringDate = getDateString(startDate)+"T00:00:00.000"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
+
+        todayDate = new Date(todayStringDate);
+        startDate = new Date(startStringDate);
+        trackingBiined.aggregate(
+            [{
+                $match: {
+                    organizationIdentifier: organizationId,
+                    date: {$gte: startDate, $lt: todayDate}
+                }
+            },
+                {
+                    $group: {
+                        _id: null,
+                        count: {$sum: 1}
+                    }
+                }]
+        ).exec(function (error, data) {
+                if (error) {
+
+                } else {
+                    if (data.length == 0)
+                        res.json({data: 0});
+                    else
+                        res.json({data: data[0].count});
+                }
+
+            });
+    };
+
+    functions.getTotalSharedMobile = function (req, res) {
         var filters = JSON.parse(req.headers.filters);
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;

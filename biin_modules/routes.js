@@ -62,16 +62,14 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/dashboard/local/visits/newvsreturning', dashboard.getNewVisitsLocal);
 
     //Dashboard Mobile
-    app.get('/api/dashboard/mobile/sessions', dashboard.getSessionsMobile);
-    app.get('/api/dashboard/mobile/newvisits', dashboard.getNewVisitsMobile);
     app.get('/api/dashboard/mobile/totalbiined', dashboard.getTotalBiinedMobile);
-    app.get('/api/dashboard/mobile/visitedelements', dashboard.getVisitedElementsMobile);
     app.get('/api/dashboard/mobile/newsvsreturning', dashboard.getNewVsReturningMobile);
+    app.get('/api/dashboard/mobile/sharedelements', dashboard.getTotalSharedMobile);
+
 
     //Dashboard Locals
     app.get('/api/dashboard/local/sessions', dashboard.getSessionsLocal);
     app.get('/api/dashboard/local/newvisits', dashboard.getNewVisitsLocal);
-    app.get('/api/dashboard/local/fromvisits', dashboard.getFromVisitsLocal);
     app.get('/api/dashboard/local/newsvsreturning', dashboard.getNewVsReturningLocal);
 
     //Acounts Routes
