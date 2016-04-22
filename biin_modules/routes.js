@@ -296,5 +296,8 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/ratings/organization',ratingSites.getRatingsByOrganization);
     app.get('/ratings/nps',ratingSites.getNPSRatings);
 
+    app.get('/mobile/termsofservice',mobileEndPoint.getTermsOfService);
+
+
 
 };
