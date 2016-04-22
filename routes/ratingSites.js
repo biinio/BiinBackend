@@ -2,6 +2,7 @@ module.exports = function () {
 	var math = require('mathjs');
 	var ratingSites = require('../schemas/ratingSites');
 	var organization = require('../schemas/organization');
+	var mobileUser = require('../schemas/mobileUser');
 	var _= require('underscore');
 	var utils = require('../biin_modules/utils')();
 
@@ -66,11 +67,36 @@ module.exports = function () {
 		var offset =  req.headers.offset || 0;
 		var siteId = filters.siteId;
 
-		ratingSites.find({siteIdentifier:siteId}, {}, function (err, ratings) {
+		ratingSites.find({siteIdentifier:siteId}, {}).lean().exec(function (err, ratings) {
 			if (err)
 				res.status(200).json({data:{},status:"1",result:"0"});
-			else
-				res.status(200).json({data:ratings,status:"0",result:"1"});
+			else{
+				var usersID = [];
+				for(var i = 0; i< ratings.length; i++){
+					if(usersID.indexOf(ratings[i].userIdentifier) == -1){
+						usersID.push(ratings[i].userIdentifier)
+					}
+				}
+				mobileUser.find({identifier:{$in:usersID}},{identifier:1,firstName:1,lastName:1,facebookAvatarUrl:1, url:1},function(err,usersData){
+					if(err)
+						res.status(200).json({data:{},status:"1",result:"0"});
+					else{
+
+						var users = {};
+						for(i = 0; i< usersData.length; i++){
+							users[usersData[i].identifier] = { };
+							users[usersData[i].identifier].name = usersData[i].firstName + " " + usersData[i].lastName;
+							users[usersData[i].identifier].facebookAvatarUrl = usersData[i].facebookAvatarUrl;
+							users[usersData[i].identifier].url = usersData[i].url;
+						}
+						for(i = 0; i< ratings.length; i++){
+							ratings[i].user = users[ratings[i].userIdentifier];
+						}
+						res.status(200).json({data:ratings,status:"0",result:"1", test:users});
+					}
+				});
+
+			}
 		});
 	};
 
