@@ -59,7 +59,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/dashboard/comparative', dashboard.getComparativeData);
     app.get('/api/dashboard/visits', dashboard.getVisitsReport);
     app.get('/api/dashboard/notifications', dashboard.getNotificationReport);
-    app.get('/api/dashboard/local/visits/newvsreturning', dashboard.getNewVisitsLocal);
 
     //Dashboard Mobile
     app.get('/api/dashboard/mobile/totalbiined', dashboard.getTotalBiinedMobile);
@@ -68,8 +67,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
 
     //Dashboard Locals
-    app.get('/api/dashboard/local/sessions', dashboard.getSessionsLocal);
-    app.get('/api/dashboard/local/newvisits', dashboard.getNewVisitsLocal);
     app.get('/api/dashboard/local/newsvsreturning', dashboard.getNewVsReturningLocal);
 
     //Acounts Routes

@@ -31,7 +31,7 @@ module.exports = function() {
             title: 'Organizations list',
             user: req.user
         });
-    }
+    };
 
     //GET the list of organizations
     functions.list = function(req, res) {

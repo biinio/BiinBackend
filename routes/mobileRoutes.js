@@ -28,6 +28,7 @@ module.exports =function(){
 		trackingLikes = require('../schemas/trackinglikes'),
 		trackingElements = require('../schemas/trackingelements'),
 		trackingBiined = require('../schemas/trackingbiined'),
+		trackingShares = require('../schemas/trackingshares'),
 		trackingNotifications = require('../schemas/trackingnotifications');
 
 		var ENTER_BIIN_REGION  = "1";//TO->ID:beacon identifier
@@ -264,7 +265,8 @@ module.exports =function(){
 			setTrackingLike(model.actions,identifier),
 			setTrackingSites(model.actions,identifier),
 			setTrackingFollow(model.actions,identifier),
-			setTrackingNotifications(model.actions,identifier)
+			setTrackingNotifications(model.actions,identifier),
+			setTrackingShare(model.actions,identifier),
 			]).then(function(b){
 				res.status(200).json({data:{},status:"0",result:"1"});
 			}).catch(function(a){
@@ -505,6 +507,77 @@ module.exports =function(){
 		});
 	}
 
+	function setTrackingShare( actions, userIdentifier ){
+		return new Promise(function(resolve, reject){
+			var filteredActions = _.filter(actions,function(item){ return item.did == SHARE_SITE || item.did == SHARE_ELEMENT });
+			if(filteredActions.length>0){
+				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
+				organization.find({ $or : [
+					{"elements.elementIdentifier":{$in:sitesToFind}},
+					{"sites.identifier":{$in:sitesToFind}}
+				]},{ "identifier":1,
+					"elements.elementIdentifier":1,
+					"sites.identifier":1
+				}).lean().exec(function(err,siteData){
+					if(err)
+						reject(err);
+					var actionsToInsert = [];
+					for (var i = 0; i < filteredActions.length; i++) {
+						var siteExtraInfo = _.find(siteData,function(org){
+							return _.findWhere(org.sites,{identifier:filteredActions[i].to}) != null;
+						});
+
+						var elementExtraInfo = _.find(siteData,function(org){
+							return _.findWhere(org.elements,{identifier:filteredActions[i].to}) != null;
+						});
+
+						if(siteExtraInfo){
+							var action = {};
+							action.userIdentifier = userIdentifier;
+							action.organizationIdentifier = siteExtraInfo.identifier;
+							action.siteIdentifier = filteredActions[i].to;
+							action.date = new Date(filteredActions[i].at);
+							action.action = filteredActions[i].did;
+							actionsToInsert.push(action);
+
+						} else if(elementExtraInfo) {
+
+							for(var j=0; j< elementExtraInfo.sites.length;j++){
+								var currentSite = elementExtraInfo.sites[j];
+								for(var k=0; k < currentSite.showcases.length;k++){
+									var currentShowcase = currentSite.showcases[k];
+									for(var l=0; l < currentShowcase.elements.length;l++){
+										var currentElement = currentShowcase.elements[l];
+										if(currentElement.identifier == filteredActions[i].to){
+											var action = {};
+											action.userIdentifier = userIdentifier;
+											action.organizationIdentifier = elementExtraInfo.identifier;
+											action.elementIdentifier = filteredActions[i].to;
+											action.siteIdentifier = currentSite.identifier;
+											action.date = new Date(filteredActions[i].at);
+											action.action = filteredActions[i].did;
+											actionsToInsert.push(action);
+										}
+									}
+								}
+							}
+						}
+					}
+					if(actionsToInsert.length == 0)
+						resolve();
+					else
+						trackingShares.create(actionsToInsert,function(error){
+							if(error)
+								reject(error);
+							resolve();
+						});
+				});
+			}else{
+				resolve();
+			}
+		});
+	}
+
 	function setTrackingNotifications( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
 			var filteredActions = _.filter(actions,function(item){ return item.did == NOTIFICATION_OPENED || item.did == BIIN_NOTIFIED });
@@ -553,7 +626,7 @@ module.exports =function(){
 
 	function setTrackingSites( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_SITE_VIEW || item.did == EXIT_SITE_VIEW })
+			var filteredActions = _.filter(actions,function(item){ return item.did == ENTER_SITE_VIEW || item.did == EXIT_SITE_VIEW || item.did == SHARE_SITE });
 			if(filteredActions.length>0){
 				var sitesToFind = _.uniq(_.pluck(filteredActions,"to"));
 				organization.find({"sites.identifier":{$in:sitesToFind}},{"identifier":1,"sites.identifier":1}).lean().exec(function(err,siteData){
