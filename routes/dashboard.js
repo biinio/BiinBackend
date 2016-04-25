@@ -362,7 +362,7 @@ module.exports = function () {
             });
     };
 
-     functions.getNewVsReturningMobile = function (req, res) {
+    functions.getNewVsReturningMobile = function (req, res) {
         var filters = JSON.parse(req.headers.filters);
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
@@ -399,7 +399,25 @@ module.exports = function () {
                 var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
                 var newVisits = _.difference(idUsersVisits, idUsersOldVisits);
                 var returningVisits = _.intersection(idUsersVisits, idUsersOldVisits);
-                res.json({data: {news: newVisits.length, returning: returningVisits.length}});
+                trackingSites.aggregate([{
+                    $match: {
+                        organizationIdentifier: organizationId,
+                        siteIdentifier: siteId,
+                        date: {$gte: startDate, $lt: todayDate},
+                        action: ENTER_SITE_VIEW
+                    }
+                },
+                    {$group: {_id: "$userIdentifier", count: {$sum: 1}}}], function (error, sitesSessions) {
+                    var sessionCounter = 0;
+                    for (var i = 0; i < sitesSessions.length; i++) {
+                        sessionCounter += sitesSessions[i].count;
+                    }
+                    res.json({data: {news: newVisits.length, returning: returningVisits.length, totalSessions:sessionCounter}});
+                });
+
+
+
+
             });
         });
     };
@@ -447,7 +465,25 @@ module.exports = function () {
                 var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
                 var newVisits = _.difference(idUsersVisits, idUsersOldVisits);
                 var returningVisits = _.intersection(idUsersVisits, idUsersOldVisits);
-                res.json({data: {news: newVisits.length, returning: returningVisits.length}});
+                trackingSites.aggregate([{
+                    $match: {
+                        organizationIdentifier: organizationId,
+                        date: {$gte: startDate, $lt: todayDate},
+                        action: ENTER_SITE_VIEW,
+                        siteIdentifier: siteId
+                    }
+                },
+                    {$group: {_id: "$userIdentifier", count: {$sum: 1}}}], function (error, sitesSessions) {
+                    var sessionCounter = 0;
+                    for (var i = 0; i < sitesSessions.length; i++) {
+                        sessionCounter += sitesSessions[i].count;
+                    }
+
+                    res.json({data: {news: newVisits.length, returning: returningVisits.length, totalSessions:sessionCounter}});
+                });
+
+
+
             });
         });
     };
