@@ -383,17 +383,18 @@ module.exports = function () {
 
         todayDate = new Date(todayStringDate);
         startDate = new Date(startStringDate);
-        trackingBeacon.aggregate([{
+        trackingSites.aggregate([{
             $match: {
                 organizationIdentifier: organizationId,
                 siteIdentifier: siteId,
-                date: {$gte: startDate, $lt: todayDate}
+                date: {$gte: startDate, $lt: todayDate},
+                action: ENTER_SITE_VIEW
             }
         },
             {$group: {_id: "$userIdentifier"}}], function (error, visitsData) {
 
             //getting priorVisits
-            trackingBeacon.aggregate([{$match: {organizationIdentifier: organizationId,siteIdentifier: siteId, date: {$lt: startDate}}},
+            trackingSites.aggregate([{$match: {organizationIdentifier: organizationId,siteIdentifier: siteId, date: {$lt: startDate}}},
                 {$group: {_id: "$userIdentifier"}}], function (error, oldVisitsData) {
                 var idUsersVisits = _.pluck(visitsData, '_id');
                 var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
