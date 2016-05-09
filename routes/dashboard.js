@@ -6,129 +6,25 @@ module.exports = function () {
     //Custom Utils
     var utils = require('../biin_modules/utils')();
 
-    var client = require('../schemas/client'), imageManager = require('../biin_modules/imageManager')();
+    var client = require('../schemas/client');
     var organization = require('../schemas/organization');
-    var showcase = require('../schemas/showcase');
-
-    var mobileActions = require('../schemas/mobileActions');
-    var mobileHistory = require('../schemas/mobileHistory');
     var biin = require('../schemas/biin');
     var visits = require('../schemas/visits');
 
     //Tracking schemas
     var trackingBeacon = require('../schemas/trackingbeacon'),
-        trackingFollow = require('../schemas/trackingfollows'),
+        //trackingFollow = require('../schemas/trackingfollows'),
         trackingSites = require('../schemas/trackingsites'),
-        trackingLikes = require('../schemas/trackinglikes'),
-        trackingElements = require('../schemas/trackingelements'),
+        //trackingLikes = require('../schemas/trackinglikes'),
+        //trackingElements = require('../schemas/trackingelements'),
         trackingBiined = require('../schemas/trackingbiined'),
         trackingShares = require('../schemas/trackingshares'),
         trackingNotifications = require('../schemas/trackingnotifications');
 
-    var ENTER_BIIN_REGION = "1";//TO->ID:beacon identifier
-    var EXIT_BIIN_REGION = "2";//TO->ID:beacon identifier
-    var BIIN_NOTIFIED = "3"; //TO->ID:_id object in biins
-    var NOTIFICATION_OPENED = "4"; //TO->ID:_id object in biins
-
-    var ENTER_ELEMENT_VIEW = "5"; //TO->ID:element identifier
-    var EXIT_ELEMENT_VIEW = "6"; //TO->ID:element identifier
-    var LIKE_ELEMENT = "7"; //TO->ID:element identifier
-    var UNLIKE_ELEMENT = "8"; //TO->ID:element identifier
-    var COLLECTED_ELEMENT = "9"; //TO->ID:element identifier
-    var UNCOLLECTED_ELEMENT = "10"; //TO->ID:element identifier
-    var SHARE_ELEMENT = "11"; //TO->ID:element identifier
-
-    var ENTER_SITE_VIEW = "12"; //TO->ID:site identifier
-    var EXIT_SITE_VIEW = "13"; //TO->ID:site identifier
-    var LIKE_SITE = "14"; //TO->ID:site identifier
-    var UNLIKE_SITE = "15"; //TO->ID:site identifier
-    var FOLLOW_SITE = "16"; //TO->ID:site identifier
-    var UNFOLLOW_SITE = "17"; //TO->ID:site identifier
-    var SHARE_SITE = "18"; //TO->ID:site identifier
-
-    var ENTER_BIIN = "19"; //TO->ID:beacon identifier
-    var EXIT_BIIN = "20"; //TO->ID:beacon identifier
-
-    var OPEN_APP = "21"; //TO->"biin_ios"
-    var CLOSE_APP = "22"; //TO->"biin_ios"
+    var actionsEnum = require('../biin_modules/actionsenum');
 
     var DAY_IN_MILLISECONDS = 24 * 3600 * 1000;
     var functions = {};
-
-
-    //Get Client List
-    functions.index = function (req, res) {
-        res.render('dashboard/index', {
-            title: 'Dashboard',
-            user: req.user,
-            organization: req.session.defaultOrganization,
-            isSiteManteinance: true
-        });
-    };
-
-    //Set the information in data base of the user
-    functions.set = function (req, res) {
-    };
-
-    //Get the information about a dashboard Data
-    functions.get = function (req, res) {
-
-        var data = {};
-
-        organization.find({accountIdentifier: req.user.accountIdentifier}, {
-            'identifier': 1,
-            "name": 1,
-            "sites.identifier": 1,
-            "sites.title1": 1,
-            'sites.biins': 1,
-            'elements.elementIdentifier': 1,
-            'elements.title': 1
-        }, function (err, orgData) {
-            if (err)
-                throw err;
-            else {
-                data.organizations = orgData;
-                showcase.find({accountIdentifier: req.user.accountIdentifier}, {
-                    identifier: 1,
-                    name: 1
-                }, function (err, showcasesData) {
-                    if (err)
-                        throw err;
-                    else {
-                        data.showcases = showcasesData;
-                        res.json({data: data});
-                    }
-
-                })
-            }
-        })
-    };
-
-    //Get the comprative information data
-    functions.getComparativeData = function (req, res) {
-        var model = req.body.model;
-        var filters = model.filters;
-
-        var query = {};
-        if (filters) {
-            for (var i = 0; i < filters.length; i++) {
-                query[filters[i].name] = filters[i].value;
-            }
-        }
-
-        query.sessionType = model.compareBy;
-        query.accountIdentifier = req.user.accountIdentifier;
-        mobileActions.find(query, function (err, data) {
-            if (err)
-                throw err;
-            else {
-                var result = {};
-                result[model.compareBy] = data;
-                res.json({data: result});
-            }
-        })
-    };
-
 
     /**GRAPHS AND CHARTS FUNCTIONS**/
     functions.getVisitsReport = function (req, res) {
@@ -166,7 +62,7 @@ module.exports = function () {
                 organizationIdentifier: organizationId,
                 siteIdentifier:siteId,
                 date: {$gte: startDate, $lt: todayDate},
-                $or: [{action: ENTER_BIIN}, {action: ENTER_BIIN_REGION}]
+                $or: [{action: actionsEnum.ENTER_BIIN}, {action: actionsEnum.ENTER_BIIN_REGION}]
             }
         },
             // Stage 2
@@ -226,7 +122,7 @@ module.exports = function () {
                 organizationIdentifier: organizationId,
                 siteIdentifier:siteId,
                 date: {$gte: startDate, $lt: todayDate},
-                action: BIIN_NOTIFIED
+                action: actionsEnum.BIIN_NOTIFIED
             }
         },
             // Stage 2
@@ -388,7 +284,7 @@ module.exports = function () {
                 organizationIdentifier: organizationId,
                 siteIdentifier: siteId,
                 date: {$gte: startDate, $lt: todayDate},
-                action: ENTER_SITE_VIEW
+                action: actionsEnum.ENTER_SITE_VIEW
             }
         },
             {$group: {_id: "$userIdentifier"}}], function (error, visitsData) {
@@ -405,7 +301,7 @@ module.exports = function () {
                         organizationIdentifier: organizationId,
                         siteIdentifier: siteId,
                         date: {$gte: startDate, $lt: todayDate},
-                        action: ENTER_SITE_VIEW
+                        action: actionsEnum.ENTER_SITE_VIEW
                     }
                 },
                     {$group: {_id: "$userIdentifier", count: {$sum: 1}}}], function (error, sitesSessions) {
@@ -470,7 +366,7 @@ module.exports = function () {
                     $match: {
                         organizationIdentifier: organizationId,
                         date: {$gte: startDate, $lt: todayDate},
-                        action: ENTER_SITE_VIEW,
+                        action: actionsEnum.ENTER_SITE_VIEW,
                         siteIdentifier: siteId
                     }
                 },
@@ -488,7 +384,6 @@ module.exports = function () {
             });
         });
     };
-
 
     return functions;
 };

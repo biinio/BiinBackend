@@ -34,9 +34,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     //Application routes
     app.get('/sendEmail', routes.sendEmail);
     app.get('/login',routes.login);
-    //app.get('/termsAndConditions',routes.terms);
-    //app.get('/privacypolicy',routes.privacyPolicy);
-    //app.get('/support',routes.support);
     app.post('/api/singup',clients.set);
     app.get('/client/:identifier/activate',clients.activate);
     app.post('/client/:identifier/activate',clients.activate);
@@ -54,9 +51,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     });
 
     //Dashboard
-    app.get('/api/dashboard', dashboard.get);
-    app.get('/api/dashboard/set', dashboard.set);
-    app.get('/api/dashboard/comparative', dashboard.getComparativeData);
     app.get('/api/dashboard/visits', dashboard.getVisitsReport);
     app.get('/api/dashboard/notifications', dashboard.getNotificationReport);
 
@@ -90,8 +84,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.post('/organizations/imageUpload',multipartMiddleware,showcases.imagePost);
     app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
     app.get('/api/organizations/:identifier/:siteIdentifier/minor', organizations.getMinor);
-    //app.delete('/api/organizations/:identifier/:imageIdentifier',organizations.deleteImage);
-    app.get('/api/organizations/:identifier/checkImage/:imageIdentifier', organizations.checkImageUse)
+    app.get('/api/organizations/:identifier/checkImage/:imageIdentifier', organizations.checkImageUse);
 
     //Save selected organization
     app.put('/api/organizations/:accountIdentifier/:organizationIdentifier',organizations.saveSelectedOrganization);
@@ -260,6 +253,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/venues/search',venues.getVenueALike);
     app.put('/api/venues/create',venues.createVenue);
 
+
+
+
+
+
     //Mobile routes
 
     app.get('/mobile/regions',regions.listJson);
@@ -292,7 +290,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/ratings/site',ratingSites.getRatings);
     app.get('/ratings/organization',ratingSites.getRatingsByOrganization);
     app.get('/ratings/nps',ratingSites.getNPSRatings);
-
     app.get('/mobile/termsofservice',mobileEndPoint.getTermsOfService);
 
 
