@@ -59,6 +59,11 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/dashboard/mobile/newsvsreturning', dashboard.getNewVsReturningMobile);
     app.get('/api/dashboard/mobile/sharedelements', dashboard.getTotalSharedMobile);
 
+    app.get('/downloads', function(req, res) {
+        var path = require('path');
+        res.sendFile(path.resolve('public/downloads.html'));
+    });
+
 
     //Dashboard Locals
     app.get('/api/dashboard/local/newsvsreturning', dashboard.getNewVsReturningLocal);
