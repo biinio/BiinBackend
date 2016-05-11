@@ -362,25 +362,37 @@ module.exports = function () {
                 var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
                 var newVisits = _.difference(idUsersVisits, idUsersOldVisits);
                 var returningVisits = _.intersection(idUsersVisits, idUsersOldVisits);
-                trackingSites.aggregate([{
-                    $match: {
-                        organizationIdentifier: organizationId,
-                        date: {$gte: startDate, $lt: todayDate},
-                        action: actionsEnum.ENTER_SITE_VIEW,
-                        siteIdentifier: siteId
-                    }
-                },
-                    {$group: {_id: "$userIdentifier", count: {$sum: 1}}}], function (error, sitesSessions) {
-                    var sessionCounter = 0;
-                    for (var i = 0; i < sitesSessions.length; i++) {
-                        sessionCounter += sitesSessions[i].count;
+                trackingBeacon.aggregate([
+                    {
+                        $match: {
+                            organizationIdentifier: organizationId,
+                            siteIdentifier:siteId,
+                            date: {$gte: startDate, $lt: todayDate},
+                            $or: [{action: actionsEnum.ENTER_BIIN}, {action: actionsEnum.ENTER_BIIN_REGION}]
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $project: {
+                            date : { $add : [ "$date", offset * 60 * -1000] }
+                        }
+                    },
+
+                    // Stage 3
+                    {
+                        $group: {
+                            _id: {$dateToString: {format: "%Y-%m-%d", date: "$date"}},
+                            count: {$sum: 1}
+                        }
                     }
 
+                ], function (error, visitsData) {
+                    var sessionCounter = 0;
+                    for (var i = 0; i < visitsData.length; i++) {
+                        sessionCounter += visitsData[i].count;
+                    }
                     res.json({data: {news: newVisits.length, returning: returningVisits.length, totalSessions:sessionCounter}});
                 });
-
-
-
             });
         });
     };
