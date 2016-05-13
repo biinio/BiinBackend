@@ -251,6 +251,7 @@ module.exports = function () {
         var highlights = [];
         var categories = [];
         var sites = [];
+        var nearbySites =[];
         var favorites = {};
         favorites.sites = [];
         favorites.elements = [];
@@ -389,6 +390,14 @@ module.exports = function () {
 
 
                             response.sites = sites;
+                            nearbySites = _.pluck(sites,"identifier");
+                            var tempNearby =  [];
+                            for(i = 0; i< nearbySites.length;i++){
+                                var identifier = nearbySites[i];
+                                tempNearby.push({"identifier":identifier});
+                            }
+                            response.nearbySites = tempNearby;
+
 
                             var showcasesToFind = [];
 
