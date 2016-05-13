@@ -855,44 +855,44 @@ module.exports = function () {
                                                             uniqueElementsShowcase = uniqueElementsShowcase.concat(elementsInBiinsObjects);
                                                             uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
 
-                                                            var elementsfiltered = _.filter(elementsData, function (element) {
+                                                            var elementsfilteredSite = _.filter(elementsData, function (element) {
                                                                 return uniqueElementsShowcase.indexOf(element.elementIdentifier) > -1;
                                                             });
 
-                                                            for (i = 0; i < elementsfiltered.length; i++) {
+                                                            for (i = 0; i < elementsfilteredSite.length; i++) {
 
                                                                 var isUserCollect = false;
                                                                 for (var j = 0; j < mobileUserData.biinieCollections.length && !isUserCollect; j++) {
-                                                                    var elUserCollect = _.findWhere(mobileUserData.biinieCollections[j].elements, {identifier: elementsfiltered[i].elementIdentifier});
+                                                                    var elUserCollect = _.findWhere(mobileUserData.biinieCollections[j].elements, {identifier: elementsfilteredSite[i].elementIdentifier});
                                                                     isUserCollect = elUserCollect != null;
                                                                 }
 
                                                                 var userShareElements = _.filter(mobileUserData.shareObjects, function (like) {
                                                                     return like.type === "element"
                                                                 });
-                                                                var elUserShared = _.findWhere(userShareElements, {identifier: elementsfiltered[i].elementIdentifier});
+                                                                var elUserShared = _.findWhere(userShareElements, {identifier: elementsfilteredSite[i].elementIdentifier});
                                                                 var isUserShared = elUserShared != null;
 
                                                                 var userLikeElements = _.filter(mobileUserData.likeObjects, function (like) {
                                                                     return like.type === "element"
                                                                 });
-                                                                var elUserLike = _.findWhere(userLikeElements, {identifier: elementsfiltered[i].elementIdentifier});
+                                                                var elUserLike = _.findWhere(userLikeElements, {identifier: elementsfilteredSite[i].elementIdentifier});
                                                                 var isUserLike = elUserLike != null;
 
                                                                 var userFollowElements = _.filter(mobileUserData.followObjects, function (like) {
                                                                     return like.type === "element"
                                                                 });
-                                                                var elUserFollow = _.findWhere(userFollowElements, {identifier: elementsfiltered[i].elementIdentifier});
+                                                                var elUserFollow = _.findWhere(userFollowElements, {identifier: elementsfilteredSite[i].elementIdentifier});
                                                                 var isUserFollow = elUserFollow != null;
 
-                                                                var elUserViewed = _.findWhere(mobileUserData.seenElements, {elementIdentifier: elementsfiltered[i].elementIdentifier});
+                                                                var elUserViewed = _.findWhere(mobileUserData.seenElements, {elementIdentifier: elementsfilteredSite[i].elementIdentifier});
                                                                 var isUserViewedElement = elUserViewed != null;
 
-                                                                elementsfiltered[i].userShared = isUserShared ? "1" : "0";
-                                                                elementsfiltered[i].userFollowed = isUserFollow ? "1" : "0";
-                                                                elementsfiltered[i].userLiked = isUserLike ? "1" : "0";
-                                                                elementsfiltered[i].userCollected = isUserCollect ? "1" : "0";
-                                                                elementsfiltered[i].userViewed = isUserViewedElement ? "1" : "0";
+                                                                elementsfilteredSite[i].userShared = isUserShared ? "1" : "0";
+                                                                elementsfilteredSite[i].userFollowed = isUserFollow ? "1" : "0";
+                                                                elementsfilteredSite[i].userLiked = isUserLike ? "1" : "0";
+                                                                elementsfilteredSite[i].userCollected = isUserCollect ? "1" : "0";
+                                                                elementsfilteredSite[i].userViewed = isUserViewedElement ? "1" : "0";
                                                             }
 
                                                             var sitesSent = [];
@@ -909,17 +909,18 @@ module.exports = function () {
                                                                 orgData[i] = validateOrganizationInitialInfo(orgData[i]);
                                                                 organizationsSent.push({identifier: orgData[i].identifier});
                                                             }
-                                                            for (i = 0; i < elementsfiltered.length; i++) {
-                                                                elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
-                                                                elementsSent.push({identifier: elementsfiltered[i].identifier});
+                                                            for (i = 0; i < elementsfilteredSite.length; i++) {
+                                                                elementsfilteredSite[i] = validateElementInitialInfo(elementsfilteredSite[i]);
+                                                                elementsSent.push({identifier: elementsfilteredSite[i].identifier});
                                                             }
-                                                            response.sitesToConcat = sitesLiked;
-                                                            response.toConcatOrg = orgData;
-                                                            response.toConcatElements = elementsfiltered;
 
-                                                            response.sites.concat(sitesLiked);
-                                                            response.organizations.concat(orgData);
-                                                            response.elements = elementsfiltered.concat()
+                                                            /*response.sitesToConcat = sitesLiked;
+                                                            response.toConcatOrg = orgData;
+                                                            response.toConcatElements = elementsfiltered;*/
+
+                                                            response.sites= response.sites.concat(sitesLiked);
+                                                            organizations = organizations.concat(orgData);
+                                                            elementsfiltered = elementsfiltered.concat(elementsfilteredSite);
 
 
 
