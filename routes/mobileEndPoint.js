@@ -723,6 +723,10 @@ module.exports = function () {
                                                         return site.site.isReady == 1;
                                                     });
 
+                                                    sitesDesnormalized = _.filter(sitesDesnormalized, function (site) {
+                                                        return sitesToFindInOrganization.indexOf(site.site.identifier) > -1;
+                                                    });
+
                                                     for (var i = 0; i < biins.length; i++) {
                                                         for (var j = 0; j < biins[i].objects.length; j++) {
                                                             var el = null;
