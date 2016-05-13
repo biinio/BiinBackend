@@ -25,6 +25,11 @@ module.exports = function () {
         vibrantDarkColor: '85,86,86',
         vibrantLightColor: '170, 171, 171'
     };
+
+
+
+
+
     var functions = {};
 
     function validateSiteInitialInfo(site) {
@@ -246,6 +251,11 @@ module.exports = function () {
         var highlights = [];
         var categories = [];
         var sites = [];
+        var favorites = {};
+        favorites.sites = [];
+        favorites.elements = [];
+
+
 
         mobileUser.findOne({'identifier': userIdentifier}, {
             'gender': 1,
@@ -649,40 +659,315 @@ module.exports = function () {
                                                 elementsSent.push({identifier: elementsfiltered[i].identifier});
                                             }
 
-                                            response.organizations = organizations;
-                                            response.elements = elementsfiltered;
-                                            response.highlights = hightlightsFiltered;
-                                            response.categories = categories;
-                                            res.json({data: response, status: "0", result: "1"});
 
-                                            var elementsByCategoriesSent = [];
-                                            for (var i = 0; i < categories.length; i++) {
-                                                var elementsInTheCategorySent = [];
-                                                for (var j = 0; j < categories[i].elements.length; j++) {
-                                                    elementsInTheCategorySent.push(categories[i].elements[j].identifier);
-                                                }
-                                                elementsByCategoriesSent.push({
-                                                    identifier: categories[i].identifier,
-                                                    elementsSent: elementsInTheCategorySent
+                                            //Favorites from user:
+                                            favorites.sites = _.filter(mobileUserData.likeObjects,function(likedObject){
+                                                return likedObject.type == "site";
+                                            });
+
+                                            for( i = 0; i < favorites.sites.length; i++){
+                                                var currentSite = favorites.sites[i];
+                                                delete currentSite.type;
+                                                delete currentSite._id;
+                                                delete currentSite.likeDate;
+                                                favorites.sites[i] = currentSite;
+                                            }
+
+                                            //get information from sites that arent in response.sites
+
+                                            var sitesToSearch = _.filter(favorites.sites,function(siteToEval){
+                                                return _.find(response.sites,function(siteInResponse){
+                                                    return siteInResponse.identifier == siteToEval.identifier;
+                                                }) == null;
+                                            });
+                                            var sitesToFindInOrganization = [];
+                                            for(i = 0; i< sitesToSearch.length; i++){
+                                                sitesToFindInOrganization.push(sitesToSearch[i].identifier);
+                                            }
+                                            organization.find({"sites.identifier":{$in:sitesToFindInOrganization},isDeleted: false,
+                                                isPublished: true},{}).lean().exec(function(err, organizationsData){
+                                                if(err){
+
+                                                }else{
+
+                                                    var sitesDesnormalized = [];
+                                                    var elementsData = [];
+                                                    var orgData = [];
+
+                                                    for (var i = 0; i < organizationsData.length; i++) {
+                                                        if (organizationsData[i].sites) {
+                                                            for (var j = 0; j < organizationsData[i].sites.length; j++) {
+                                                                var organization = organizationsData[i];
+                                                                var elements = organization.elements;
+                                                                var site = organization.sites[j];
+                                                                sitesDesnormalized.push({
+                                                                    organization: organization,
+                                                                    site: site,
+                                                                    elements: elements
+                                                                });
+                                                            }
+                                                        }
+                                                    }
+
+
+                                                    sitesDesnormalized = _.filter(sitesDesnormalized, function (site) {
+                                                        return site.site.isReady == 1;
+                                                    });
+
+                                                    for (var i = 0; i < biins.length; i++) {
+                                                        for (var j = 0; j < biins[i].objects.length; j++) {
+                                                            var el = null;
+                                                            if (mobileUserData.biinieCollections && mobileUserData.biinieCollections[DEFAULT_COLLECTION] && mobileUserData.biinieCollections[DEFAULT_COLLECTION].elements)
+                                                                el = _.findWhere(mobileUserData.biinieCollections[DEFAULT_COLLECTION].elements, {identifier: biins[i].objects[j].identifier});
+                                                            biins[i].objects[j].isUserNotified = '0';
+                                                            biins[i].objects[j].isCollected = el ? '1' : '0';
+                                                        }
+                                                    }
+
+                                                    //adding organization and proximity to the sites
+                                                    for (i = 0; i < sitesDesnormalized.length; i++) {
+                                                        sitesDesnormalized[i].site.organizationIdentifier = sitesDesnormalized[i].organization.identifier;
+                                                        sitesDesnormalized[i].site.proximity = utils.getProximity(userLat + "", userLng + "", sitesDesnormalized[i].site.lat, sitesDesnormalized[i].site.lng);
+                                                        var biinsSite = _.filter(biins, function (biin) {
+                                                            return biin.siteIdentifier == sitesDesnormalized[i].site.identifier;
+                                                        });
+                                                        sitesDesnormalized[i].site.biins = biinsSite;
+                                                    }
+
+                                                    sitesDesnormalized = _.filter(sitesDesnormalized, function (site) {
+                                                        return site.site.biins.length > 0;
+                                                    });
+
+                                                    //sort to the closest sites
+                                                    var sortByProximity = _.sortBy(sitesDesnormalized, function (site) {
+                                                        return site.site.proximity;
+                                                    });
+                                                    sortByProximity = sortByProximity.splice(0, MAX_SITES);
+
+                                                    for (i = 0; i < sortByProximity.length; i++) {
+                                                        orgData.push(sortByProximity[i].organization);
+                                                        elementsData = elementsData.concat(sortByProximity[i].elements);
+                                                    }
+
+                                                    var sitesLiked = [];
+                                                    sitesLiked = _.pluck(sortByProximity, 'site');
+
+                                                    for (i = 0; i < sitesLiked.length; i++) {
+
+                                                        var userShare = _.findWhere(mobileUserData.shareObjects, {
+                                                            identifier: response.sites[i].identifier,
+                                                            type: "site"
+                                                        });
+                                                        var userCollected = _.findWhere(mobileUserData.biinieCollections.sites, {identifier: sitesLiked[i].identifier});
+                                                        var userFollowed = _.findWhere(mobileUserData.followObjects, {
+                                                            identifier: sitesLiked[i].identifier,
+                                                            type: "site"
+                                                        });
+                                                        var userLiked = _.findWhere(mobileUserData.likeObjects, {
+                                                            identifier: sitesLiked[i].identifier,
+                                                            type: "site"
+                                                        });
+
+                                                        sitesLiked[i].userShared = typeof(userShare) !== "undefined" ? "1" : "0";
+                                                        sitesLiked[i].userFollowed = typeof(userFollowed) !== "undefined" ? "1" : "0";
+                                                        sitesLiked[i].userCollected = typeof(userCollected) !== "undefined" ? "1" : "0";
+                                                        sitesLiked[i].userLiked = typeof(userLiked) !== "undefined" ? "1" : "0";
+                                                    }
+
+                                                    var elementsInBiinsObjects = [];
+                                                    for (var i = 0; i < sitesLiked.length; i++) {
+                                                        for (var j = 0; j < sitesLiked[i].biins.length; j++) {
+                                                            for (var k = 0; k < sitesLiked[i].biins[j].objects.length; k++) {
+                                                                if (sitesLiked[i].biins[j].objects[k].name == "element") {
+                                                                    elementsInBiinsObjects.push(sitesLiked[i].biins[j].objects[k].identifier);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    elementsInBiinsObjects = _.uniq(elementsInBiinsObjects);
+
+                                                    var showcasesToFind = [];
+                                                    for (i = 0; i < sitesLiked.length; i++) {
+                                                        for (j = 0; j < sitesLiked[i].showcases.length; j++) {
+                                                            showcasesToFind.push(sitesLiked[i].showcases[j].showcaseIdentifier);
+                                                        }
+                                                    }
+
+                                                    showcasesToFind = _.uniq(showcasesToFind);
+                                                    showcase.find({identifier: {$in: showcasesToFind}},
+                                                        {
+                                                            "name": 1,
+                                                            "description": 1,
+                                                            "identifier": 1,
+                                                            "isReady": 1
+                                                        }).lean().exec(
+                                                        function (showcasesError, showcasesData) {
+                                                            if (showcasesError)
+                                                                throw showcasesError;
+
+                                                            for (i = 0; i < sitesLiked.length; i++) {
+                                                                for (j = 0; j < sitesLiked[i].showcases.length; j++) {
+                                                                    sitesLiked[i].showcases[j].identifier = sitesLiked[i].showcases[j].showcaseIdentifier;
+                                                                    delete sitesLiked[i].showcases[j].showcaseIdentifier;
+
+                                                                    var showcaseData = _.find(showcasesData, function (showcase) {
+                                                                        return showcase.identifier == sitesLiked[i].showcases[j].identifier;
+                                                                    });
+                                                                    sitesLiked[i].showcases[j].title = showcaseData.name;
+                                                                    sitesLiked[i].showcases[j].subTitle = showcaseData.description;
+                                                                    sitesLiked[i].showcases[j].isReady = showcaseData.isReady;
+                                                                }
+                                                                sitesLiked[i].showcases = _.filter(sitesLiked[i].showcases, function (showcase) {
+                                                                    return showcase.isReady == 1;
+                                                                });
+
+                                                            }
+
+                                                            var elementsInShowcase = [];
+
+                                                            for (i = 0; i < sitesLiked.length; i++) {
+                                                                for (j = 0; j < sitesLiked[i].showcases.length; j++) {
+                                                                    for (var k = 0; k < sitesLiked[i].showcases[j].elements.length; k++) {
+                                                                        elementData = _.findWhere(elementsData, {elementIdentifier: sitesLiked[i].showcases[j].elements[k].identifier});
+                                                                        sitesLiked[i].showcases[j].elements[k].isReady = elementData.isReady;
+                                                                    }
+
+                                                                    sitesLiked[i].showcases[j].elements = _.filter(sitesLiked[i].showcases[j].elements, function (element) {
+                                                                        return element.isReady == 1;
+                                                                    })
+                                                                    if (sitesLiked[i].showcases[j].elements.length == 0) {
+                                                                        sitesLiked[i].showcases.splice(j, 1);
+                                                                        j--;
+                                                                    } else {
+                                                                        sitesLiked[i].showcases[j].elements_quantity = sitesLiked[i].showcases[j].elements.length + "";
+                                                                        sitesLiked[i].showcases[j].elements = sitesLiked[i].showcases[j].elements.splice(0, LIMIT_ELEMENTS_IN_SHOWCASE);
+                                                                        elementsInShowcase = elementsInShowcase.concat(sitesLiked[i].showcases[j].elements);
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            var uniqueElementsShowcase = _.pluck(elementsInShowcase, 'identifier');
+                                                            uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
+
+                                                            elementsData = _.uniq(elementsData);
+
+                                                            uniqueElementsShowcase = uniqueElementsShowcase.concat(elementsInBiinsObjects);
+                                                            uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
+
+                                                            var elementsfiltered = _.filter(elementsData, function (element) {
+                                                                return uniqueElementsShowcase.indexOf(element.elementIdentifier) > -1;
+                                                            });
+
+                                                            for (i = 0; i < elementsfiltered.length; i++) {
+
+                                                                var isUserCollect = false;
+                                                                for (var j = 0; j < mobileUserData.biinieCollections.length && !isUserCollect; j++) {
+                                                                    var elUserCollect = _.findWhere(mobileUserData.biinieCollections[j].elements, {identifier: elementsfiltered[i].elementIdentifier});
+                                                                    isUserCollect = elUserCollect != null;
+                                                                }
+
+                                                                var userShareElements = _.filter(mobileUserData.shareObjects, function (like) {
+                                                                    return like.type === "element"
+                                                                });
+                                                                var elUserShared = _.findWhere(userShareElements, {identifier: elementsfiltered[i].elementIdentifier});
+                                                                var isUserShared = elUserShared != null;
+
+                                                                var userLikeElements = _.filter(mobileUserData.likeObjects, function (like) {
+                                                                    return like.type === "element"
+                                                                });
+                                                                var elUserLike = _.findWhere(userLikeElements, {identifier: elementsfiltered[i].elementIdentifier});
+                                                                var isUserLike = elUserLike != null;
+
+                                                                var userFollowElements = _.filter(mobileUserData.followObjects, function (like) {
+                                                                    return like.type === "element"
+                                                                });
+                                                                var elUserFollow = _.findWhere(userFollowElements, {identifier: elementsfiltered[i].elementIdentifier});
+                                                                var isUserFollow = elUserFollow != null;
+
+                                                                var elUserViewed = _.findWhere(mobileUserData.seenElements, {elementIdentifier: elementsfiltered[i].elementIdentifier});
+                                                                var isUserViewedElement = elUserViewed != null;
+
+                                                                elementsfiltered[i].userShared = isUserShared ? "1" : "0";
+                                                                elementsfiltered[i].userFollowed = isUserFollow ? "1" : "0";
+                                                                elementsfiltered[i].userLiked = isUserLike ? "1" : "0";
+                                                                elementsfiltered[i].userCollected = isUserCollect ? "1" : "0";
+                                                                elementsfiltered[i].userViewed = isUserViewedElement ? "1" : "0";
+                                                            }
+
+                                                            var sitesSent = [];
+                                                            var organizationsSent = [];
+                                                            var elementsSent = [];
+
+                                                            orgData = _.uniq(orgData);
+
+                                                            for (i = 0; i < sitesLiked.length; i++) {
+                                                                sitesLiked[i] = validateSiteInitialInfo(sitesLiked[i]);
+                                                                sitesSent.push({identifier: sitesLiked[i].identifier});
+                                                            }
+                                                            for (i = 0; i < orgData.length; i++) {
+                                                                orgData[i] = validateOrganizationInitialInfo(orgData[i]);
+                                                                organizationsSent.push({identifier: orgData[i].identifier});
+                                                            }
+                                                            for (i = 0; i < elementsfiltered.length; i++) {
+                                                                elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
+                                                                elementsSent.push({identifier: elementsfiltered[i].identifier});
+                                                            }
+                                                            response.sitesToConcat = sitesLiked;
+                                                            response.toConcatOrg = orgData;
+                                                            response.toConcatElements = elementsfiltered;
+
+                                                            response.sites.concat(sitesLiked);
+                                                            response.organizations.concat(orgData);
+                                                            response.elements = elementsfiltered.concat()
+
+
+
+
+                                                    favorites.elements = _.filter(mobileUserData.likeObjects,function(likedObject){
+                                                        return likedObject.type == "element";
+                                                    });
+                                                            favorites.elements = [];
+
+                                                    response.organizations = organizations;
+                                                    response.elements = elementsfiltered;
+                                                    response.highlights = hightlightsFiltered;
+                                                    response.categories = categories;
+                                                    response.favorites = favorites;
+
+                                                    res.json({data: response, status: "0", result: "1"});
+
+                                                    var elementsByCategoriesSent = [];
+                                                    for (var i = 0; i < categories.length; i++) {
+                                                        var elementsInTheCategorySent = [];
+                                                        for (var j = 0; j < categories[i].elements.length; j++) {
+                                                            elementsInTheCategorySent.push(categories[i].elements[j].identifier);
+                                                        }
+                                                        elementsByCategoriesSent.push({
+                                                            identifier: categories[i].identifier,
+                                                            elementsSent: elementsInTheCategorySent
+                                                        });
+                                                    }
+                                                    mobileSession.findOneAndUpdate(
+                                                        {identifier: userIdentifier},
+                                                        {
+                                                            $set: {
+                                                                lastLocation: [userLng, userLat],
+                                                                sitesSent: response.sites,
+                                                                elementsSent: elementsfiltered,
+                                                                elementsSentByCategory: elementsByCategoriesSent,
+                                                                organizatonsSent: organizations,
+                                                                elementsAvailable: []
+                                                            }
+                                                        },
+                                                        {upsert: true}, // insert the document if it does not exist
+                                                        function (error) {
+                                                            if (error)
+                                                                throw error;
+                                                        });
                                                 });
                                             }
-                                            mobileSession.findOneAndUpdate(
-                                                {identifier: userIdentifier},
-                                                {
-                                                    $set: {
-                                                        lastLocation: [userLng, userLat],
-                                                        sitesSent: response.sites,
-                                                        elementsSent: elementsfiltered,
-                                                        elementsSentByCategory: elementsByCategoriesSent,
-                                                        organizatonsSent: organizations,
-                                                        elementsAvailable: []
-                                                    }
-                                                },
-                                                {upsert: true}, // insert the document if it does not exist
-                                                function (error) {
-                                                    if (error)
-                                                        throw error;
-                                                });
+                                            });
                                         });
                                 });
                         });
@@ -693,6 +978,7 @@ module.exports = function () {
                 response.elements = [];
                 response.highlights = [];
                 response.categories = [];
+                response.favorites = [];
                 res.json({data: response, status: "0", result: "1"});
             }
         });
@@ -1978,8 +2264,6 @@ module.exports = function () {
         });
     }
 
-
-
     function saveInfoIntoUserMobileSession(userIdentifier, sitesArray, elementsSent, elementsByCategorySent, organizationsSent) {
         mobileSession.findOne({identifier: userIdentifier}, {}, function (error, userSessionData) {
             if (error)
@@ -2042,6 +2326,7 @@ module.exports = function () {
     function getElements(){
 
     }
+
     function getUserData(userIdentifier){
         return mobileUser.findOne({'identifier': userIdentifier}, {
             'gender': 1,
@@ -2059,11 +2344,9 @@ module.exports = function () {
 
     }
 
-
     functions.getTermsOfService = function(req,res){
         res.json({data: configPrivacy, status: "0", result: "1"});
     };
-
 
     return functions;
 };
