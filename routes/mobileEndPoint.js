@@ -235,6 +235,30 @@ module.exports = function () {
         return elementValidated;
     }
 
+    function validateShowcaseInitialInfo(showcase) {
+        var showcaseValidated = {};
+        showcaseValidated.identifier = showcase.identifier ? showcase.identifier : "";
+        showcaseValidated.name = showcase.name ? showcase.name : "";
+        showcaseValidated.description = showcase.description ? showcase.description : "";
+        showcaseValidated.elements = [];
+
+        for (var i = 0; i < showcase.elements.length; i++) {
+            var currentElement = showcase.elements[i];
+            var newElement = null;
+
+            if(currentElement.identifier){
+                newElement = {identifier: currentElement.identifier}
+            }
+            if(currentElement.elementIdentifier){
+                newElement = {identifier: currentElement.elementIdentifier}
+            }
+            if(newElement){
+                showcaseValidated.elements.push(newElement);
+            }
+        }
+        return showcaseValidated;
+    }
+
     functions.getInitialData = function (req, res) {
         var userIdentifier = req.params["biinieId"];
         var userLat = eval(req.params["latitude"]);
@@ -1042,43 +1066,53 @@ module.exports = function () {
                                                         if(err){
 
                                                         }else{
-                                                            showcase.find({"elements.elementIdentifier": {$in: elementsToFind}, isDeleted: false,
-                                                                isPublished: true
+                                                            var favElementsData = new HashTable();
+                                                            var elementsDesnormalized = [];
+                                                            for ( i = 0; i < organizationsData.length; i++) {
+                                                                if (organizationsData[i].elements) {
+                                                                    for (var j = 0; j < organizationsData[i].elements.length; j++) {
+                                                                        var organization = organizationsData[i];
+                                                                        var element = organization.elements[j];
+                                                                        var sites = organization.sites;
+                                                                        elementsDesnormalized.push({
+                                                                            organization: organization,
+                                                                            sites: sites,
+                                                                            element: element
+                                                                        });
+                                                                        favElementsData.put(element.elementIdentifier,{
+                                                                            organization: organization,
+                                                                            sites: sites,
+                                                                            element: element
+                                                                        });
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            var elementsTotalToFind = _.pluck(elementsDesnormalized,"element");
+                                                            elementsTotalToFind = _.pluck(elementsTotalToFind,"elementIdentifier");
+
+
+                                                            showcase.find({"elements.elementIdentifier": {$in: elementsTotalToFind}, isDeleted: false, isReady:1
                                                             },{}).lean().exec(function(errShowcases, showcasesData){
 
+                                                                var showcasesToAddToResponse = [];
                                                                 var favElementsShowcases = new HashTable();
-                                                                var favElementsData = new HashTable();
+
+
 
                                                                 for( i = 0; i < showcasesData.length; i++){
                                                                     favElementsShowcases.put(showcasesData[i].identifier,showcasesData[i]);
                                                                 }
 
+                                                                var elementsThatAreProbInShowcases = _.filter(elementsDesnormalized,function(elementtoEval){
+                                                                    return elementsToFind.indexOf(elementtoEval.element.elementIdentifier) == -1;
+                                                                });
 
-                                                                var elementsDesnormalized = [];
-                                                                for ( i = 0; i < organizationsData.length; i++) {
-                                                                    if (organizationsData[i].elements) {
-                                                                        for (var j = 0; j < organizationsData[i].elements.length; j++) {
-                                                                            var organization = organizationsData[i];
-                                                                            var element = organization.elements[j];
-                                                                            var sites = organization.sites;
-                                                                            elementsDesnormalized.push({
-                                                                                organization: organization,
-                                                                                sites: sites,
-                                                                                element: element
-                                                                            });
-                                                                            favElementsData.put(element.elementIdentifier,{
-                                                                                organization: organization,
-                                                                                sites: sites,
-                                                                                element: element
-                                                                            });
-                                                                        }
-                                                                    }
-                                                                }
 
-                                                                //TODO: CHECK IF ELEMENT IS DELETED
                                                                 elementsDesnormalized = _.filter(elementsDesnormalized,function(elementtoEval){
                                                                     return elementsToFind.indexOf(elementtoEval.element.elementIdentifier) > -1;
                                                                 });
+
 
                                                                 for(i = 0; i < elementsDesnormalized.length; i++){
                                                                     for(j=0; j< elementsDesnormalized[i].sites.length;j++){
@@ -1120,9 +1154,26 @@ module.exports = function () {
                                                                 });
 
                                                                 for(i = 0; i < elementsDesnormalized.length; i++){
+                                                                    for (j = 0; j < elementsDesnormalized[i].site.showcases.length; j++) {
+                                                                        var showcase = favElementsShowcases.get(elementsDesnormalized[i].site.showcases[j].showcaseIdentifier);
+                                                                        showcasesToAddToResponse.push(showcase);
+                                                                    }
+                                                                }
+
+                                                                var elementsToAddToResponse = [];
+                                                                for (var i = 0; i < showcasesToAddToResponse.length; i++) {
+                                                                    var currentShowcase = showcasesToAddToResponse[i];
+                                                                    for (var j = 0; j < currentShowcase.elements.length; j++) {
+                                                                        var currentElement = favElementsData.get(currentShowcase.elements[j].elementIdentifier);
+                                                                        elementsToAddToResponse.push(currentElement);
+                                                                    }
+                                                                }
+
+                                                                for(i = 0; i < elementsDesnormalized.length; i++){
                                                                     var site = _.find(response.sites,function(site){
                                                                         return  elementsDesnormalized[i].site  && site.identifier == elementsDesnormalized[i].site.identifier;
                                                                     });
+
                                                                     if(site != null){
 
                                                                         var userShare = _.findWhere( mobileUserData.shareObjects, {
@@ -1209,6 +1260,18 @@ module.exports = function () {
                                                                 favorites.elements = _.filter(favorites.elements,function(element){
                                                                     return element.site && element.showcase;
                                                                 });
+
+                                                                //TODO: DELETE DUPLICATED SHOWCASES AND ELEMENTS
+
+                                                                elementsfiltered = elementsfiltered.concat(elementsToAddToResponse);
+
+                                                                showcases = showcases.concat(showcasesToAddToResponse);
+
+                                                                for ( i = 0; i < showcases.length; i++) {
+                                                                    var currentShowcase = showcases[i];
+                                                                    currentShowcase = validateShowcaseInitialInfo(currentShowcase);
+                                                                    showcases[i] = currentShowcase;
+                                                                }
 
 
                                                                 response.organizations = organizations;
@@ -1313,7 +1376,7 @@ module.exports = function () {
                     }
                     showcase.elements = _.filter(showcase.elements, function (element) {
                         return element.isReady == 1;
-                    })
+                    });
 
                     var elementsIdArray = showcase.elements.splice(startElements, endElements);
 
