@@ -238,7 +238,7 @@ module.exports = function () {
     function validateShowcaseInitialInfo(showcase) {
         var showcaseValidated = {};
         showcaseValidated.identifier = showcase.identifier ? showcase.identifier : "";
-        showcaseValidated.name = showcase.name ? showcase.name : "";
+        showcaseValidated.title = showcase.name ? showcase.name : "";
         showcaseValidated.elements = [];
 
         for (var i = 0; i < showcase.elements.length; i++) {
