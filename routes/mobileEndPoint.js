@@ -646,8 +646,8 @@ module.exports = function () {
                                         var newHighlight = {};
                                         //newHighlight._id = highlight._id;
                                         newHighlight.identifier = highlight.identifier;
-                                        newHighlight.showcaseIdentifier = highlight.identifier;
-                                        newHighlight.siteIdentifier = highlight.identifier;
+                                        newHighlight.showcaseIdentifier = highlight.showcaseIdentifier;
+                                        newHighlight.siteIdentifier = highlight.siteIdentifier;
                                         highlightArray[index] = newHighlight;
                                     });
 
