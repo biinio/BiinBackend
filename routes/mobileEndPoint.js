@@ -578,6 +578,15 @@ module.exports = function () {
                                     uniqueElementsShowcase = uniqueElementsShowcase.concat(elementsInBiinsObjects);
                                     uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
 
+
+                                    for (i = 0; i < showcases.length; i++) {
+                                        var currentShowcase = showcases[i];
+                                        currentShowcase.elements = _.filter( currentShowcase.elements , function(element){
+                                            return uniqueElementsShowcase.indexOf(element.identifier) > -1;
+                                        });
+
+                                    }
+
                                     var elementsfiltered = _.filter(elements, function (element) {
                                         return uniqueElementsShowcase.indexOf(element.elementIdentifier) > -1;
                                     });
