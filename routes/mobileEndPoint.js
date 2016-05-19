@@ -289,6 +289,44 @@ module.exports = function () {
         favorites.elements = [];
 
 
+
+        /*function getSitesNear(){
+            return new Promise(function(resolve,reject){
+
+                resolve();
+            });
+        }
+
+        function getHighlights( ){
+            return new Promise(function(resolve,reject){
+                resolve();
+            });
+        }
+
+        function getFavorites(){
+            return new Promise(function(resolve,reject){
+                resolve();
+            });
+        }
+        function getCategories(){
+            return new Promise(function(resolve,reject){
+                resolve();
+            });
+        }
+
+        getSitesNear()
+        .then(getHighlights().then(
+                getCategories().then(
+                    getFavorites().then(function(){
+                    })
+                )
+            )
+        );*/
+
+
+
+
+
         mobileUser.findOne({'identifier': userIdentifier}, {
             'gender': 1,
             'showcaseNotified': 1,
@@ -575,7 +613,7 @@ module.exports = function () {
 
                                     _.each(hightlightsFiltered, function (highlight, index, highlightArray) {
                                         var newHighlight = {};
-                                        newHighlight._id = highlight._id;
+                                        //newHighlight._id = highlight._id;
                                         newHighlight.identifier = highlight.identifier;
                                         highlightArray[index] = newHighlight;
                                     });
@@ -591,6 +629,32 @@ module.exports = function () {
                                     }
 
                                     hightlightsFiltered = uniqueHighlights.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
+
+                                    for (var i = 0; i < hightlightsFiltered.length; i++) {
+                                        var currentHighlight = hightlightsFiltered[i];
+                                        var isHighlightFound = false;
+
+                                        for (var j = 0; j < response.sites.length && !isHighlightFound; j++) {
+                                            var currentSite = response.sites[j];
+
+                                            for (var k = 0; k < response.sites[j].showcases.length && !isHighlightFound; k++) {
+                                                var currentShowcase = response.sites[j].showcases[k];
+                                                var showcaseData = _.find(showcases,function(showcase){
+                                                    return showcase.identifier == response.sites[j].showcases[k].identifier;
+                                                });
+                                                if(showcaseData){
+                                                    for (var l = 0; l < showcaseData.elements.length && !isHighlightFound; l++) {
+                                                        var currentElement = showcaseData.elements[l];
+                                                        if(currentElement.identifier == currentHighlight.identifier){
+                                                            currentHighlight.showcaseIdentifier = currentShowcase.identifier;
+                                                            currentHighlight.siteIdentifier = currentSite.identifier;
+                                                            isHighlightFound = true;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
 
                                     //Fill categories array
 
