@@ -608,26 +608,7 @@ module.exports = function () {
                                         return highlights.indexOf(element.identifier) > -1;
                                     });
 
-                                    var hightlightsWithCategory = hightlightsFiltered.concat([]);
 
-                                    _.each(hightlightsFiltered, function (highlight, index, highlightArray) {
-                                        var newHighlight = {};
-                                        //newHighlight._id = highlight._id;
-                                        newHighlight.identifier = highlight.identifier;
-                                        highlightArray[index] = newHighlight;
-                                    });
-
-                                    var uniqueHighlights = [];
-
-                                    while (hightlightsFiltered.length > 0) {
-                                        var testHighlight = hightlightsFiltered.shift();
-                                        var isUnique = _.findWhere(uniqueHighlights, {identifier: testHighlight.identifier}) == null;
-                                        if (isUnique) {
-                                            uniqueHighlights.push(testHighlight);
-                                        }
-                                    }
-
-                                    hightlightsFiltered = uniqueHighlights.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
 
                                     for (var i = 0; i < hightlightsFiltered.length; i++) {
                                         var currentHighlight = hightlightsFiltered[i];
@@ -654,6 +635,36 @@ module.exports = function () {
                                             }
                                         }
                                     }
+
+                                    hightlightsFiltered = _.filter(hightlightsFiltered, function(highlight){
+                                        return highlight.showcaseIdentifier && highlight.siteIdentifier;
+                                    });
+
+                                    var hightlightsWithCategory = hightlightsFiltered.concat([]);
+
+                                    _.each(hightlightsFiltered, function (highlight, index, highlightArray) {
+                                        var newHighlight = {};
+                                        //newHighlight._id = highlight._id;
+                                        newHighlight.identifier = highlight.identifier;
+                                        newHighlight.showcaseIdentifier = highlight.identifier;
+                                        newHighlight.siteIdentifier = highlight.identifier;
+                                        highlightArray[index] = newHighlight;
+                                    });
+
+                                    var uniqueHighlights = [];
+
+                                    while (hightlightsFiltered.length > 0) {
+                                        var testHighlight = hightlightsFiltered.shift();
+                                        var isUnique = _.findWhere(uniqueHighlights, {identifier: testHighlight.identifier}) == null;
+                                        if (isUnique) {
+                                            uniqueHighlights.push(testHighlight);
+                                        }
+                                    }
+
+
+                                    hightlightsFiltered = uniqueHighlights.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
+
+
 
                                     //Fill categories array
 
@@ -711,6 +722,15 @@ module.exports = function () {
 
 
                                         elementsWithCategories = elementsWithCategories.splice(0, ELEMENTS_IN_CATEGORY);
+
+                                        for( j = 0; j< elementsWithCategories.length; j++){
+                                            var newElementCategorie = {};
+                                            newElementCategorie.identifier = elementsWithCategories[j].identifier;
+                                            newElementCategorie.siteIdentifier = elementsWithCategories[j].siteIdentifier;
+                                            newElementCategorie.showcaseIdentifier = elementsWithCategories[j].showcaseIdentifier;
+                                            elementsWithCategories[j] = newElementCategorie;
+                                        }
+
                                         elementsSentInCategories = elementsSentInCategories.concat(elementsWithCategories);
 
                                         categories.push({
