@@ -20,6 +20,14 @@ var mobileUserSchema=new Schema({
   organizatonsSent:[
     {identifier:{type:String}}
   ],
+  showcasesSent:[
+    {
+      identifier:{type:String},
+      elements:{
+        identifier:{type:String}
+      }
+    }
+  ],
   elementsAvailable:[
     {
       identifier:{type:String},
@@ -28,7 +36,7 @@ var mobileUserSchema=new Schema({
       ]
     }
   ],
-  lastrequest:{type:Date}
+  lastrequest:{type:Date, default:Date.now()}
 });
 
 module.exports = mongoose.model('mobileSession', mobileUserSchema);

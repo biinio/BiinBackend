@@ -60,6 +60,8 @@ module.exports = function () {
         siteValidated.userFollowed = site.userShared ? site.userFollowed : "0";
         siteValidated.userLiked = site.userShared ? site.userLiked : "0";
         siteValidated.siteSchedule = site.siteSchedule ? site.siteSchedule : "";
+        siteValidated.proximity = site.proximity ? site.proximity + "" : "999999999999999";
+
 
         for (var i = 0; i < siteValidated.showcases.length; i++) {
             var showcase = {};
@@ -70,18 +72,6 @@ module.exports = function () {
             else
                 showcase.identifier = "";
 
-            /*showcase._id = siteValidated.showcases[i]._id ? siteValidated.showcases[i]._id : "";
-            showcase.subTitle = siteValidated.showcases[i].subTitle ? siteValidated.showcases[i].subTitle : "";
-            showcase.title = siteValidated.showcases[i].title ? siteValidated.showcases[i].title : "";
-            showcase.elements = siteValidated.showcases[i].elements ? siteValidated.showcases[i].elements : [];
-            showcase.elements_quantity = siteValidated.showcases[i].elements_quantity ? siteValidated.showcases[i].elements_quantity : "0";
-
-            for (var j = 0; j < showcase.elements.length; j++) {
-                var element = {};
-                element._id = showcase.elements[j]._id ? showcase.elements[j]._id : "";
-                element.identifier = showcase.elements[j].identifier ? showcase.elements[j].identifier : "";
-                showcase.elements[j] = element;
-            }*/
             siteValidated.showcases[i] = showcase;
         }
 
@@ -1134,8 +1124,8 @@ module.exports = function () {
                                                                 }
                                                             }
                                                         }
-                                                        elementInResponse.showcase = showcaseElement? showcaseElement.identifier : showcaseElement;
-                                                        elementInResponse.site = siteElement ? siteElement.identifier : siteElement ;
+                                                        elementInResponse.showcaseIdentifier = showcaseElement? showcaseElement.identifier : showcaseElement;
+                                                        elementInResponse.siteIdentifier = siteElement ? siteElement.identifier : siteElement ;
                                                         elementsToFindThatAreInResponse[i] = elementInResponse;
                                                     }
 
@@ -1303,8 +1293,8 @@ module.exports = function () {
                                                                         return element.element.elementIdentifier == favorites.elements[i].identifier;
                                                                     });
                                                                     if(elementData){
-                                                                        favorites.elements[i].showcase = elementData.showcase.identifier;
-                                                                        favorites.elements[i].site = elementData.site.identifier;
+                                                                        favorites.elements[i].showcaseIdentifier = elementData.showcase.identifier;
+                                                                        favorites.elements[i].siteIdentifier = elementData.site.identifier;
                                                                     }
                                                                 }
 
@@ -1350,7 +1340,7 @@ module.exports = function () {
                                                                 }
 
                                                                 favorites.elements = _.filter(favorites.elements,function(element){
-                                                                    return element.site && element.showcase;
+                                                                    return element.siteIdentifier && element.showcaseIdentifier;
                                                                 });
 
                                                                 //TODO: DELETE DUPLICATED SHOWCASES AND ELEMENTS
@@ -1395,6 +1385,7 @@ module.exports = function () {
                                                                             elementsSent: elementsfiltered,
                                                                             elementsSentByCategory: elementsByCategoriesSent,
                                                                             organizatonsSent: organizations,
+                                                                            showcasesSent: response.showcases,
                                                                             elementsAvailable: []
                                                                         }
                                                                     },
@@ -1531,9 +1522,12 @@ module.exports = function () {
         var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
         var LIMIT_ELEMENTS_IN_SHOWCASE = process.env.LIMIT_ELEMENTS_IN_SHOWCASE || 6;
         var response = {};
+
         response.sites = [];
         response.organizations = [];
         response.elements = [];
+        response.showcases = [];
+
         mobileUser.findOne({"identifier": userIdentifier}, {
             _id: 0, 'gender': 1,
             'showcaseNotified': 1,
