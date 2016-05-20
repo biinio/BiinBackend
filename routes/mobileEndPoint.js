@@ -60,7 +60,7 @@ module.exports = function () {
         siteValidated.userFollowed = site.userShared ? site.userFollowed : "0";
         siteValidated.userLiked = site.userShared ? site.userLiked : "0";
         siteValidated.siteSchedule = site.siteSchedule ? site.siteSchedule : "";
-        siteValidated.proximity = site.proximity ? site.proximity + "" : "999999999999999";
+        siteValidated.proximity = site.proximity ? site.proximity.toFixed(14) + "" : "999999999999";
 
 
         for (var i = 0; i < siteValidated.showcases.length; i++) {
