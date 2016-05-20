@@ -2183,6 +2183,9 @@ module.exports = function () {
         var response = {};
         response.sites = [];
         response.organizations = [];
+        response.showcases = [];
+
+        var showcases = [];
         mobileUser.findOne({'identifier': userIdentifier}, {
             'showcaseNotified': 1,
             'biinieCollections': 1,
@@ -2348,6 +2351,7 @@ module.exports = function () {
                                         if (showcasesError)
                                             throw showcasesError;
 
+                                        showcases = [];
                                         for (i = 0; i < response.sites.length; i++) {
                                             for (j = 0; j < response.sites[i].showcases.length; j++) {
                                                 response.sites[i].showcases[j].identifier = response.sites[i].showcases[j].showcaseIdentifier;
@@ -2357,12 +2361,16 @@ module.exports = function () {
                                                     return showcase.identifier == response.sites[i].showcases[j].identifier;
                                                 });
                                                 response.sites[i].showcases[j].title = showcaseData.name;
+                                                response.sites[i].showcases[j].name = showcaseData.name;
                                                 response.sites[i].showcases[j].subTitle = showcaseData.description;
                                                 response.sites[i].showcases[j].isReady = showcaseData.isReady;
                                             }
                                             response.sites[i].showcases = _.filter(response.sites[i].showcases, function (showcase) {
                                                 return showcase.isReady == 1;
                                             });
+
+                                            showcases = showcases.concat(response.sites[i].showcases);
+
 
                                         }
 
@@ -2383,11 +2391,11 @@ module.exports = function () {
                                                     j--;
                                                 } else {
                                                     response.sites[i].showcases[j].elements_quantity = response.sites[i].showcases[j].elements.length + "";
-                                                    response.sites[i].showcases[j].elements = response.sites[i].showcases[j].elements.splice(0, LIMIT_ELEMENTS_IN_SHOWCASE);
                                                     elementsInShowcase = elementsInShowcase.concat(response.sites[i].showcases[j].elements);
                                                 }
                                             }
                                         }
+
 
                                         var uniqueElementsShowcase = _.pluck(elementsInShowcase, 'identifier');
                                         uniqueElementsShowcase = _.uniq(uniqueElementsShowcase);
@@ -2400,6 +2408,15 @@ module.exports = function () {
                                         var elementsfiltered = _.filter(elementsData, function (element) {
                                             return uniqueElementsShowcase.indexOf(element.elementIdentifier) > -1;
                                         });
+
+
+                                        for (i = 0; i < showcases.length; i++) {
+                                            var currentShowcase = showcases[i];
+                                            currentShowcase.elements = _.filter( currentShowcase.elements , function(element){
+                                                return uniqueElementsShowcase.indexOf(element.identifier) > -1;
+                                            });
+
+                                        }
 
                                         for (i = 0; i < elementsfiltered.length; i++) {
 
@@ -2455,9 +2472,15 @@ module.exports = function () {
                                             elementsfiltered[i] = validateElementInitialInfo(elementsfiltered[i]);
                                             elementsSent.push({identifier: elementsfiltered[i].identifier});
                                         }
+                                        for (i = 0; i < showcases.length; i++) {
+                                            var currentShowcase = validateShowcaseInitialInfo(showcases[i]);
+                                            showcases[i] = currentShowcase;
+
+                                        }
 
                                         response.organizations = orgData;
                                         response.elements = elementsfiltered;
+                                        response.showcases = showcases;
 
                                         res.json({data: response, "status": "0", "result": "1"});
                                         saveInfoIntoUserMobileSession(userIdentifier, response.sites, response.elements, null, response.organization);
