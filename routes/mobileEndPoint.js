@@ -1238,7 +1238,9 @@ module.exports = function () {
                                                                 for(i = 0; i < elementsDesnormalized.length; i++){
                                                                     for (j = 0; j < elementsDesnormalized[i].site.showcases.length; j++) {
                                                                         var showcase = favElementsShowcases.get(elementsDesnormalized[i].site.showcases[j].showcaseIdentifier);
-                                                                        showcasesToAddToResponse.push(showcase);
+                                                                        if(showcase){
+                                                                            showcasesToAddToResponse.push(showcase);
+                                                                        }
                                                                     }
                                                                 }
 
