@@ -814,7 +814,7 @@ module.exports = function () {
                                     favorites.sites = _.uniq(favorites.sites,false,function(site){
                                         return site.identifier;
                                     });
-                                    
+
 
                                     //get information from sites that arent in response.sites
 
