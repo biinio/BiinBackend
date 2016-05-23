@@ -796,6 +796,13 @@ module.exports = function () {
                                         return likedObject.type == "site";
                                     });
 
+
+                                    var copy = [];
+                                    for( i =0; i < favorites.sites.length; i++){
+                                        copy.push(JSON.parse(JSON.stringify(favorites.sites[i])));
+                                    }
+                                    favorites.sites = copy;
+
                                     for (i = 0; i < favorites.sites.length; i++) {
                                         var currentSite = favorites.sites[i];
                                         delete currentSite.type;
@@ -803,6 +810,10 @@ module.exports = function () {
                                         delete currentSite.likeDate;
                                         favorites.sites[i] = currentSite;
                                     }
+
+                                    favorites.sites = _.uniq(favorites.sites,false,function(site){
+                                        return site.identifier;
+                                    });
 
                                     //get information from sites that arent in response.sites
 
@@ -1077,6 +1088,12 @@ module.exports = function () {
                                                     favorites.elements = _.filter(mobileUserData.likeObjects, function (likedObject) {
                                                         return likedObject.type == "element";
                                                     });
+
+                                                    var copy = [];
+                                                    for( i =0; i < favorites.elements.length; i++){
+                                                        copy.push(JSON.parse(JSON.stringify(favorites.elements[i])));
+                                                    }
+                                                    favorites.elements = copy;
 
 
                                                     for (i = 0; i < favorites.elements.length; i++) {
