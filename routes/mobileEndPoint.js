@@ -1063,6 +1063,8 @@ module.exports = function () {
                                                         elementsSent.push({identifier: elementsfilteredSite[i].identifier});
                                                     }
 
+
+
                                                     /*response.sitesToConcat = sitesLiked;
                                                      response.toConcatOrg = orgData;
                                                      response.toConcatElements = elementsfiltered;*/
@@ -1149,23 +1151,27 @@ module.exports = function () {
 
                                                         }else{
                                                             var favElementsData = new HashTable();
+                                                            var favOrganization = new HashTable();
                                                             var elementsDesnormalized = [];
                                                             for ( i = 0; i < organizationsData.length; i++) {
+                                                                favOrganization.put(organizationsData[i].identifier, organizationsData[i])
                                                                 if (organizationsData[i].elements) {
                                                                     for (var j = 0; j < organizationsData[i].elements.length; j++) {
-                                                                        var organization = organizationsData[i];
-                                                                        var element = organization.elements[j];
-                                                                        var sites = organization.sites;
-                                                                        elementsDesnormalized.push({
-                                                                            organization: organization,
-                                                                            sites: sites,
-                                                                            element: element
-                                                                        });
-                                                                        favElementsData.put(element.elementIdentifier,{
-                                                                            organization: organization,
-                                                                            sites: sites,
-                                                                            element: element
-                                                                        });
+                                                                        if(organizationsData[i].elements[j].isReady == 1){
+                                                                            var organization = organizationsData[i];
+                                                                            var element = organization.elements[j];
+                                                                            var sites = organization.sites;
+                                                                            elementsDesnormalized.push({
+                                                                                organization: organization,
+                                                                                sites: sites,
+                                                                                element: element
+                                                                            });
+                                                                            favElementsData.put(element.elementIdentifier,{
+                                                                                organization: organization,
+                                                                                sites: sites,
+                                                                                element: element
+                                                                            });
+                                                                        }
                                                                     }
                                                                 }
                                                             }
@@ -1197,17 +1203,24 @@ module.exports = function () {
 
 
                                                                 for(i = 0; i < elementsDesnormalized.length; i++){
+                                                                    elementsDesnormalized[i].sites = _.filter(elementsDesnormalized[i].sites,function(site){
+                                                                        return site.isReady == "1";
+                                                                    });
+
                                                                     for(j=0; j< elementsDesnormalized[i].sites.length;j++){
                                                                         elementsDesnormalized[i].sites[j].proximity = utils.getProximity(userLat, userLng, elementsDesnormalized[i].sites[j].lat, elementsDesnormalized[i].sites[j].lng);
                                                                     }
+
                                                                     elementsDesnormalized[i].sites = _.sortBy(elementsDesnormalized[i].sites, function (site) {
                                                                         return site.proximity;
                                                                     });
+
                                                                 }
 
                                                                 for(i = 0; i < elementsDesnormalized.length; i++){
                                                                     var site = null;
                                                                     var showcase = null;
+
                                                                     for(j=0; j< elementsDesnormalized[i].sites.length && !site;j++){
 
                                                                         for(k=0; k<elementsDesnormalized[i].sites[j].showcases.length && !showcase;k++){
@@ -1239,8 +1252,26 @@ module.exports = function () {
                                                                     for (j = 0; j < elementsDesnormalized[i].site.showcases.length; j++) {
                                                                         var showcase = favElementsShowcases.get(elementsDesnormalized[i].site.showcases[j].showcaseIdentifier);
                                                                         if(showcase){
+                                                                            for (var k = 0; k < showcase.elements.length; k++) {
+                                                                                var currentElement = showcase.elements[k];
+                                                                                var elementData = favElementsData.get(currentElement.elementIdentifier);
+                                                                                if(!elementData){
+                                                                                    showcase.elements.splice(k,1);
+                                                                                    k --;
+                                                                                }
+                                                                            }
+                                                                            favElementsShowcases.put(elementsDesnormalized[i].site.showcases[j].showcaseIdentifier,showcase);
+                                                                        }
+                                                                        if(!showcase || showcase.elements.length == 0){
+                                                                            elementsDesnormalized.site.showcases.splice(j,1);
+                                                                            j--;
+                                                                        } else {
                                                                             showcasesToAddToResponse.push(showcase);
                                                                         }
+                                                                    }
+                                                                    if(elementsDesnormalized[i].site.showcases.length == 0){
+                                                                        elementsDesnormalized.splice(i,1);
+                                                                        i--;
                                                                     }
                                                                 }
 
@@ -1249,8 +1280,15 @@ module.exports = function () {
                                                                     var currentShowcase = showcasesToAddToResponse[i];
                                                                     for (var j = 0; j < currentShowcase.elements.length; j++) {
                                                                         var currentElement = favElementsData.get(currentShowcase.elements[j].elementIdentifier);
-                                                                        elementsToAddToResponse.push(currentElement);
+                                                                        if(currentElement) {
+                                                                            elementsToAddToResponse.push(currentElement);
+                                                                        }
                                                                     }
+                                                                }
+
+                                                                for (var i = 0; i < elementsDesnormalized.length; i++) {
+                                                                    var currentElement = elementsDesnormalized[i];
+                                                                    elementsDesnormalized[i] = currentElement;
                                                                 }
 
                                                                 for(i = 0; i < elementsDesnormalized.length; i++){
@@ -1347,6 +1385,61 @@ module.exports = function () {
 
                                                                 //TODO: DELETE DUPLICATED SHOWCASES AND ELEMENTS
 
+                                                                var organizationsToAddToResponse = _.pluck(elementsToAddToResponse,"organization");
+                                                                organizationsToAddToResponse = _.uniq(organizationsToAddToResponse,false,function(organization){
+                                                                    return organization.identifier;
+                                                                });
+
+                                                                elementsToAddToResponse = _.pluck(elementsToAddToResponse,"element");
+                                                                elementsToAddToResponse = _.uniq(elementsToAddToResponse,false,function(element){
+                                                                    return element.elementIdentifier;
+                                                                });
+
+                                                                for ( i = 0; i < elementsToAddToResponse.length; i++) {
+                                                                    var currentElement = elementsToAddToResponse[i];
+                                                                    var isUserCollect = false;
+                                                                    for (var j = 0; j < mobileUserData.biinieCollections.length && !isUserCollect; j++) {
+                                                                        var elUserCollect = _.findWhere(mobileUserData.biinieCollections[j].elements, {identifier: currentElement.elementIdentifier});
+                                                                        isUserCollect = elUserCollect != null;
+                                                                    }
+
+                                                                    var userShareElements = _.filter(mobileUserData.shareObjects, function (like) {
+                                                                        return like.type === "element"
+                                                                    });
+                                                                    var elUserShared = _.findWhere(userShareElements, {identifier: currentElement.elementIdentifier});
+                                                                    var isUserShared = elUserShared != null;
+
+                                                                    var userLikeElements = _.filter(mobileUserData.likeObjects, function (like) {
+                                                                        return like.type === "element"
+                                                                    });
+                                                                    var elUserLike = _.findWhere(userLikeElements, {identifier: currentElement.elementIdentifier});
+                                                                    var isUserLike = elUserLike != null;
+
+                                                                    var userFollowElements = _.filter(mobileUserData.followObjects, function (like) {
+                                                                        return like.type === "element"
+                                                                    });
+                                                                    var elUserFollow = _.findWhere(userFollowElements, {identifier: currentElement.elementIdentifier});
+                                                                    var isUserFollow = elUserFollow != null;
+
+                                                                    var elUserViewed = _.findWhere(mobileUserData.seenElements, {elementIdentifier: currentElement.elementIdentifier});
+                                                                    var isUserViewedElement = elUserViewed != null;
+
+                                                                    currentElement.userShared = isUserShared ? "1" : "0";
+                                                                    currentElement.userFollowed = isUserFollow ? "1" : "0";
+                                                                    currentElement.userLiked = isUserLike ? "1" : "0";
+                                                                    currentElement.userCollected = isUserCollect ? "1" : "0";
+                                                                    currentElement.userViewed = isUserViewedElement ? "1" : "0";
+
+                                                                    currentElement = validateElementInitialInfo(currentElement);
+
+                                                                    elementsToAddToResponse[i] = currentElement;
+
+                                                                }
+
+                                                                showcasesToAddToResponse = _.uniq(showcasesToAddToResponse,false,function(showcase){
+                                                                    return showcase.identifier;
+                                                                });
+
                                                                 elementsfiltered = elementsfiltered.concat(elementsToAddToResponse);
 
                                                                 showcases = showcases.concat(showcasesToAddToResponse);
@@ -1356,6 +1449,14 @@ module.exports = function () {
                                                                     currentShowcase = validateShowcaseInitialInfo(currentShowcase);
                                                                     showcases[i] = currentShowcase;
                                                                 }
+
+                                                                for ( i = 0; i < organizationsToAddToResponse.length; i++) {
+                                                                    var currentOrganization = organizationsToAddToResponse[i];
+                                                                    currentOrganization = validateOrganizationInitialInfo(currentOrganization);
+                                                                    organizationsToAddToResponse[i] =currentOrganization;
+                                                                }
+
+                                                                organizations = organizations.concat(organizationsToAddToResponse);
 
 
                                                                 response.organizations = organizations;
