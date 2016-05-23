@@ -1263,7 +1263,7 @@ module.exports = function () {
                                                                             favElementsShowcases.put(elementsDesnormalized[i].site.showcases[j].showcaseIdentifier,showcase);
                                                                         }
                                                                         if(!showcase || showcase.elements.length == 0){
-                                                                            elementsDesnormalized.site.showcases.splice(j,1);
+                                                                            elementsDesnormalized[i].site.showcases.splice(j,1);
                                                                             j--;
                                                                         } else {
                                                                             showcasesToAddToResponse.push(showcase);
