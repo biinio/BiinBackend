@@ -1,6 +1,7 @@
 module.exports = function () {
 
     var _ = require('underscore');
+    var fs = require('fs');
 
     //Schemas
     var mobileUser = require('../schemas/mobileUser'),
@@ -1166,14 +1167,13 @@ module.exports = function () {
             }
         });
 
+
+
         var url = req.protocol + '://' + req.get('host') + "/biinie/" + model.identifier + "/activate";
         var subject = "Welcome to Biin";
-        var htmlBody = "<h3>" + subject + "</h3>" +
-            "<b>Hi</b>: <pre style='font-size: 14px'>" + model.firstName + "</pre>" +
-            "<b>Thanks for join Biin</b>" +
-            "<b>Your user is </b>: <pre style='font-size: 14px'>" + model.biinName + "</pre>" +
-            "<b>In order to complete your registration please visit the following link</b><a href='" + url + "'> BIIN USER ACTIVATION </a>";
 
+
+        var htmlEmailTemplate = fs.readFileSync('../config/email.html');
         // setup e-mail data with unicode symbols
         var mailOptions = {
             // sender address
@@ -1189,7 +1189,7 @@ module.exports = function () {
             text: "",
 
             // html body
-            html: htmlBody
+            html: htmlEmailTemplate
         };
         // send mail with defined transport object
         transporter.sendMail(mailOptions, function (error, info) {
