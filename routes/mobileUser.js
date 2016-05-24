@@ -1170,16 +1170,17 @@ module.exports = function () {
 
 
         var url = req.protocol + '://' + req.get('host') + "/biinie/" + model.identifier + "/activate";
-        var subject = "Welcome to Biin";
+        var subject = "Bienvenido a Biin&nbsp;😀";
 
         var path = require('path');
 
 
-        var htmlEmailTemplate = fs.readFileSync(__dirname + '/../config/email.html');
+        var htmlEmailTemplate = fs.readFileSync(__dirname + '/../config/email.html',"utf-8");
+        htmlEmailTemplate.replace(/#####/g,url);
         // setup e-mail data with unicode symbols
         var mailOptions = {
             // sender address
-            from: "[ BIIN NO REPLY] <" + process.env.EMAIL_ACCOUNT + ">",
+            from: process.env.EMAIL_ACCOUNT,
 
             // list of receivers
             to: model.biinName,
