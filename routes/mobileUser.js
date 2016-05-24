@@ -1172,8 +1172,10 @@ module.exports = function () {
         var url = req.protocol + '://' + req.get('host') + "/biinie/" + model.identifier + "/activate";
         var subject = "Welcome to Biin";
 
+        var path = require('path');
 
-        var htmlEmailTemplate = fs.readFileSync('../config/email.html');
+
+        var htmlEmailTemplate = fs.readFileSync(__dirname + '/../config/email.html');
         // setup e-mail data with unicode symbols
         var mailOptions = {
             // sender address
