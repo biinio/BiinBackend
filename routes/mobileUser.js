@@ -1124,20 +1124,21 @@ module.exports = function () {
         var identifier = req.params.identifier;
         mobileUser.findOne({'identifier': identifier, accountState: false}, function (err, foundBinnie) {
             if (err)
-                res.send(500, "The user was not found");
+                res.redirect("/usernotverified.html");
             else {
                 if (typeof(foundBinnie) === 'undefined' || foundBinnie === null)
-                    res.send(500, "The user was not found");
-
-                foundBinnie.accountState = true;
-                foundBinnie.save(function (err) {
-                    if (err)
-                        res.send(err, 500);
-                    else {
-                        //Return the state and the object
-                        res.json("/verifiedBinnie");
-                    }
-                });
+                    res.redirect("/usernotverified.html");
+                else {
+                    foundBinnie.accountState = true;
+                    foundBinnie.save(function (err) {
+                        if (err)
+                            res.redirect("/usernotverified.html");
+                        else {
+                            //Return the state and the object
+                            res.redirect("/userverified.html");
+                        }
+                    });
+                }
             }
         })
     }
@@ -1170,13 +1171,14 @@ module.exports = function () {
 
 
         var url = req.protocol + '://' + req.get('host') + "/biinie/" + model.identifier + "/activate";
-        var subject = "Bienvenido a Biin&nbsp;😀";
+        var subject = "Bienvenido a Biin 😀";
 
         var path = require('path');
 
 
         var htmlEmailTemplate = fs.readFileSync(__dirname + '/../config/email.html',"utf-8");
-        htmlEmailTemplate.replace(/#####/g,url);
+
+        htmlEmailTemplate = htmlEmailTemplate.replace(/\/\/\/\/\//g,url);
         // setup e-mail data with unicode symbols
         var mailOptions = {
             // sender address
