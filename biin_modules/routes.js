@@ -27,6 +27,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var roles = require('../routes/roles')();
     var ratingSites = require('../routes/ratingSites')();
     var maintenance = require('../routes/maintenance')();
+    var notices = require ('../routes/notices')();
 
     //Sys routes
     app.post('/enviroments', sysGlobals.set);
@@ -143,6 +144,13 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
     app.post('/api/organizations/:identifier/biins/:biinIdentifier/objects',biins.setObjects);
     app.post('/api/biins/:biinIdentifier/update',biins.updateBiin);
+
+
+    //Local's notices
+    app.get('/api/organizations/:identifier/notices',notices.get);
+    app.put('/api/organizations/:identifier/notices',notices.create);
+    app.post('/api/organizations/:identifier/notices',notices.update);
+
 
     //Elements
     app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
