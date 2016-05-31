@@ -147,9 +147,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
 
 
     //Local's notices
-    app.get('/api/organizations/:identifier/notices',notices.get);
-    app.put('/api/organizations/:identifier/notices',notices.create);
-    app.post('/api/organizations/:identifier/notices',notices.update);
+    app.get('/api/notices/organizations/:identifier',notices.get);
+    app.put('/api/notices/organizations/:identifier',notices.create);
+    app.post('/api/notices/organizations/:identifier',notices.update);
 
 
     //Elements

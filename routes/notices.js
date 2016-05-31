@@ -29,8 +29,7 @@ module.exports = function () {
 
     functions.create = function(req, res){
         var newNotice = new notices();
-        var organizationId = req.param('identifier');
-        newNotice.organizationIdentifier = organizationId;
+        newNotice.organizationIdentifier = req.param('identifier');
         newNotice.identifier = utils.getGUID();
         newNotice.save(function(err, notice){
             if(err){
