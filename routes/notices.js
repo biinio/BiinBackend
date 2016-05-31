@@ -35,7 +35,7 @@ module.exports = function () {
             if(err){
                 res.status(500).send(err);
             }else{
-                res.status(400).json(notice);
+                res.status(201).json(notice);
             }
         });
     };
