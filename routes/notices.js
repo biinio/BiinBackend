@@ -31,6 +31,7 @@ module.exports = function () {
         var newNotice = new notices();
         var organizationId = req.param('identifier');
         newNotice.organizationIdentifier = organizationId;
+        newNotice.identifier = utils.getGUID();
         newNotice.save(function(err, notice){
             if(err){
                 res.status(500).send(err);
