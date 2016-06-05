@@ -41,7 +41,43 @@ module.exports = function () {
     };
 
     functions.update = function(req, res){
+        var data = req.body;
+        var organizationId = req.param('identifier');
+        notices.update({identifier:data.notice.identifier},data.notice, function(err,success ){
+            if(err){
+                res.status(500).send(err);
+            }else{
+                organization.findOne({identifier:organizationId},{sites:1},function(err,organization){
+                    if(err){
+                        res.status(500).send(err);
+                    } else {
 
+                        for(var i = 0; i < organization.sites.length; i++){
+
+                            var sitesNotices = organization.sites[i].notices;
+                            var siteAssigned = _.find(data.sites,{"identifier":organization.sites[i].identifier});
+
+                            if(siteAssigned) {
+                                if ( siteAssigned.isAssigned && sitesNotices.indexOf(data.notice.identifier) == -1)
+                                    sitesNotices.push(data.notice.identifier);
+                                else if(!siteAssigned.isAssigned && sitesNotices.indexOf(data.notice.identifier) > -1){
+                                    sitesNotices = _.without(sitesNotices,data.notice.identifier);
+                                }
+                            }
+                            organization.sites[i].notices = sitesNotices;
+                        }
+
+                        organization.save(function(err, organization){
+                            if(err){
+                                res.status(400).send(err);
+                            } else {
+                                res.status(200).send(organization);
+                            }
+                        })
+                    }
+                });
+            }
+        });
     };
 
 

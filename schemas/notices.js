@@ -19,5 +19,6 @@ module.exports = moongose.model('notices',{
     startTime:{type:String,default:"00:00"},
     endTime:{type:String,default:"23:59"},
     isDeleted:{type:Boolean,default:false},
-    isReady:{type:Boolean,default:false}
+    isReady:{type:Boolean,default:false},
+    isActive:{type:Boolean,default:false}
 });
