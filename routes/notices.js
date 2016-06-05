@@ -55,7 +55,9 @@ module.exports = function () {
                         for(var i = 0; i < organization.sites.length; i++){
 
                             var sitesNotices = organization.sites[i].notices;
-                            var siteAssigned = _.find(data.sites,{"identifier":organization.sites[i].identifier});
+                            var siteAssigned = _.find(data.sites,function(site){
+                                return site.site.identifier == organization.sites[i].identifier;
+                            });
 
                             if(siteAssigned) {
                                 if ( siteAssigned.isAssigned && sitesNotices.indexOf(data.notice.identifier) == -1)
