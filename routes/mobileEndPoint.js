@@ -12,6 +12,7 @@ module.exports = function () {
     var client = require('../schemas/client');
     var biin = require('../schemas/biin');
     var category = require('../schemas/category');
+    var notice =require('../schemas/notices');
 
     // Config of priorities of categories
     var configPriorities = require('../config/priorities/priorities.json');
@@ -61,6 +62,8 @@ module.exports = function () {
         siteValidated.userLiked = site.userShared ? site.userLiked : "0";
         siteValidated.siteSchedule = site.siteSchedule ? site.siteSchedule : "";
         siteValidated.proximity = site.proximity ? site.proximity.toFixed(14) + "" : "999999999999";
+
+        siteValidated.notices = site.notices ? site.notices : [];
 
 
         for (var i = 0; i < siteValidated.showcases.length; i++) {
@@ -248,6 +251,29 @@ module.exports = function () {
         return showcaseValidated;
     }
 
+    function  validateNoticesInitialInfo(notice){
+        var noticeValidated = {};
+        noticeValidated.identifier = notice.identifier? notice.identifier : "";
+        noticeValidated.elementIdentifier = notice.elementIdentifier? notice.elementIdentifier : "";
+        noticeValidated.name = notice.name ? notice.name : "";
+        noticeValidated.message = notice.message? notice.message : "";
+        noticeValidated.onSunday = notice.onSunday? notice.onSunday : "0";
+        noticeValidated.onMonday = notice.onMonday? notice.onMonday : "0";
+        noticeValidated.onTuesday = notice.onTuesday? notice.onTuesday : "0";
+        noticeValidated.onWednesday = notice.onWednesday? notice.onWednesday : "0";
+        noticeValidated.onThursday = notice.onThursday? notice.onThursday : "0";
+        noticeValidated.onFriday  = notice.onFriday? notice.onFriday : "0";
+        noticeValidated.onSaturday = notice.onSaturday? notice.onSaturday : "0";
+
+        noticeValidated.startTime = notice.startTime ? notice.startTime : "00:00";
+        noticeValidated.endTime = notice.startTime ? notice.startTime : "23:59";
+        noticeValidated.isActive = notice.isActive ? notice.isActive : "0";
+        noticeValidated.isActive = notice.isActive == "1" ?  "1" : "0";
+
+
+        return noticeValidated;
+    }
+
     functions.getInitialData = function (req, res) {
         var userIdentifier = req.params["biinieId"];
         var userLat = eval(req.params["latitude"]);
@@ -363,7 +389,8 @@ module.exports = function () {
                             'sites.biins': 1,
                             'sites.categories': 1,
                             'sites.isReady': 1,
-                            'sites.siteSchedule': 1
+                            'sites.siteSchedule': 1,
+                            'sites.notices':1
                         }).lean().exec(function (error, data) {
 
                         var sitesDesnormalized = [];
@@ -1484,37 +1511,73 @@ module.exports = function () {
                                                                 response.favorites = favorites;
                                                                 response.showcases = showcases;
 
-                                                                res.json({data: response, status: "0", result: "1"});
+                                                                //ADDING NOTICES INFORMATION
 
-                                                                var elementsByCategoriesSent = [];
-                                                                for (var i = 0; i < categories.length; i++) {
-                                                                    var elementsInTheCategorySent = [];
-                                                                    for (var j = 0; j < categories[i].elements.length; j++) {
-                                                                        elementsInTheCategorySent.push(categories[i].elements[j].identifier);
-                                                                    }
-                                                                    elementsByCategoriesSent.push({
-                                                                        identifier: categories[i].identifier,
-                                                                        elementsSent: elementsInTheCategorySent
-                                                                    });
+                                                                var noticesToFind = [];
+                                                                var noticesValidated = [];
+
+                                                                for (i = 0; i < response.sites.length; i++) {
+                                                                    var site = response.sites[i];
+                                                                    noticesToFind = noticesToFind.concat(response.sites[i].notices);
                                                                 }
-                                                                mobileSession.findOneAndUpdate(
-                                                                    {identifier: userIdentifier},
-                                                                    {
-                                                                        $set: {
-                                                                            lastLocation: [userLng, userLat],
-                                                                            sitesSent: response.sites,
-                                                                            elementsSent: elementsfiltered,
-                                                                            elementsSentByCategory: elementsByCategoriesSent,
-                                                                            organizatonsSent: organizations,
-                                                                            showcasesSent: response.showcases,
-                                                                            elementsAvailable: []
+
+                                                                noticesToFind = _.uniq(noticesToFind);
+                                                                //TODO: CHECK IS READY
+                                                                notice.find({"identifier":{$in:noticesToFind}, isDeleted:false },{},function(err, notices){
+                                                                    if(err) {
+
+                                                                    } else {
+                                                                        var noticesIdentifierFound = _.pluck(notices,"identifier");
+                                                                        var noticesNotFound = _.difference(noticesToFind,noticesIdentifierFound);
+                                                                        for ( i = 0; i < notices.length; i++) {
+                                                                            var notice = notices[i];
+                                                                            noticesValidated.push(validateNoticesInitialInfo(notice));
                                                                         }
-                                                                    },
-                                                                    {upsert: true}, // insert the document if it does not exist
-                                                                    function (error) {
-                                                                        if (error)
-                                                                            throw error;
-                                                                    });
+
+                                                                        for (i = 0; i < response.sites.length; i++) {
+                                                                            var site = response.sites[i];
+                                                                            site.notices = _.difference(sites.notices, noticesNotFound);
+                                                                            response.sites[i] = site;
+                                                                        }
+                                                                        
+                                                                        response.notices = noticesValidated;
+
+
+                                                                        res.json({data: response, status: "0", result: "1"});
+
+                                                                        var elementsByCategoriesSent = [];
+                                                                        for (var i = 0; i < categories.length; i++) {
+                                                                            var elementsInTheCategorySent = [];
+                                                                            for (var j = 0; j < categories[i].elements.length; j++) {
+                                                                                elementsInTheCategorySent.push(categories[i].elements[j].identifier);
+                                                                            }
+                                                                            elementsByCategoriesSent.push({
+                                                                                identifier: categories[i].identifier,
+                                                                                elementsSent: elementsInTheCategorySent
+                                                                            });
+                                                                        }
+                                                                        mobileSession.findOneAndUpdate(
+                                                                            {identifier: userIdentifier},
+                                                                            {
+                                                                                $set: {
+                                                                                    lastLocation: [userLng, userLat],
+                                                                                    sitesSent: response.sites,
+                                                                                    elementsSent: elementsfiltered,
+                                                                                    elementsSentByCategory: elementsByCategoriesSent,
+                                                                                    organizatonsSent: organizations,
+                                                                                    showcasesSent: response.showcases,
+                                                                                    elementsAvailable: []
+                                                                                }
+                                                                            },
+                                                                            {upsert: true}, // insert the document if it does not exist
+                                                                            function (error) {
+                                                                                if (error)
+                                                                                    throw error;
+                                                                            });
+                                                                    }
+                                                                });
+
+
                                                             });
                                                         }
                                                     });
@@ -1533,6 +1596,7 @@ module.exports = function () {
                 response.highlights = [];
                 response.categories = [];
                 response.favorites = [];
+                response.notices = [];
                 res.json({data: response, status: "0", result: "1"});
             }
         });
