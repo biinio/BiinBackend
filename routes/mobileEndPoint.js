@@ -1539,7 +1539,7 @@ module.exports = function () {
                                                                             site.notices = _.difference(sites.notices, noticesNotFound);
                                                                             response.sites[i] = site;
                                                                         }
-                                                                        
+
                                                                         response.notices = noticesValidated;
 
 
