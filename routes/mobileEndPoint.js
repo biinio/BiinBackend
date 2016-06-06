@@ -1536,7 +1536,7 @@ module.exports = function () {
 
                                                                         for (i = 0; i < response.sites.length; i++) {
                                                                             var site = response.sites[i];
-                                                                            site.notices = _.difference(sites.notices, noticesNotFound);
+                                                                            site.notices = _.difference(site.notices, noticesNotFound);
                                                                             response.sites[i] = site;
                                                                         }
 
