@@ -13,10 +13,10 @@ module.exports = function () {
 
     //Tracking schemas
     var trackingBeacon = require('../schemas/trackingbeacon'),
-        //trackingFollow = require('../schemas/trackingfollows'),
+    //trackingFollow = require('../schemas/trackingfollows'),
         trackingSites = require('../schemas/trackingsites'),
-        //trackingLikes = require('../schemas/trackinglikes'),
-        //trackingElements = require('../schemas/trackingelements'),
+    //trackingLikes = require('../schemas/trackinglikes'),
+    //trackingElements = require('../schemas/trackingelements'),
         trackingBiined = require('../schemas/trackingbiined'),
         trackingShares = require('../schemas/trackingshares'),
         trackingNotifications = require('../schemas/trackingnotifications');
@@ -32,19 +32,19 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var siteId = filters.siteId;
-        var offset =  req.headers.offset || 0;
+        var offset = req.headers.offset || 0;
         offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
-        var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
+        var startDate = new Date(todayDate - dateRange * DAY_IN_MILLISECONDS);
 
         var timezoneSymbol = offset < 0 ? "+" : "-";
-        var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
-        var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
+        var hourTimezone = Math.abs(Math.trunc(offset / 60)) < 10 ? "0" + Math.abs(Math.trunc(offset / 60)) : Math.abs(Math.trunc(offset / 60)) + "";
+        var minuteTimezone = Math.abs(offset % 60) < 10 ? "0" + Math.abs(offset % 60) : Math.abs(offset % 60);
 
-        var todayStringDate = getDateString(todayDate)+"T23:59:59.999"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
-        var startStringDate = getDateString(startDate)+"T00:00:00.000"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
+        var todayStringDate = getDateString(todayDate) + "T23:59:59.999" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
+        var startStringDate = getDateString(startDate) + "T00:00:00.000" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
 
         todayDate = new Date(todayStringDate);
         startDate = new Date(startStringDate);
@@ -60,7 +60,7 @@ module.exports = function () {
         trackingBeacon.aggregate([{
             $match: {
                 organizationIdentifier: organizationId,
-                siteIdentifier:siteId,
+                siteIdentifier: siteId,
                 date: {$gte: startDate, $lt: todayDate},
                 $or: [{action: actionsEnum.ENTER_BIIN}, {action: actionsEnum.ENTER_BIIN_REGION}]
             }
@@ -68,7 +68,7 @@ module.exports = function () {
             // Stage 2
             {
                 $project: {
-                    date : { $add : [ "$date", offset * 60 * -1000] }
+                    date: {$add: ["$date", offset * 60 * -1000]}
                 }
             },
 
@@ -93,19 +93,19 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var siteId = filters.siteId;
-        var offset =  req.headers.offset || 0;
+        var offset = req.headers.offset || 0;
         offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
-        var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
+        var startDate = new Date(todayDate - dateRange * DAY_IN_MILLISECONDS);
 
         var timezoneSymbol = offset < 0 ? "+" : "-";
-        var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
-        var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
+        var hourTimezone = Math.abs(Math.trunc(offset / 60)) < 10 ? "0" + Math.abs(Math.trunc(offset / 60)) : Math.abs(Math.trunc(offset / 60)) + "";
+        var minuteTimezone = Math.abs(offset % 60) < 10 ? "0" + Math.abs(offset % 60) : Math.abs(offset % 60);
 
-        var todayStringDate = getDateString(todayDate)+"T23:59:59.999"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
-        var startStringDate = getDateString(startDate)+"T00:00:00.000"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
+        var todayStringDate = getDateString(todayDate) + "T23:59:59.999" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
+        var startStringDate = getDateString(startDate) + "T00:00:00.000" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
 
         todayDate = new Date(todayStringDate);
         startDate = new Date(startStringDate);
@@ -120,7 +120,7 @@ module.exports = function () {
         trackingNotifications.aggregate([{
             $match: {
                 organizationIdentifier: organizationId,
-                siteIdentifier:siteId,
+                siteIdentifier: siteId,
                 date: {$gte: startDate, $lt: todayDate},
                 action: actionsEnum.BIIN_NOTIFIED
             }
@@ -128,7 +128,7 @@ module.exports = function () {
             // Stage 2
             {
                 $project: {
-                    date : { $add : [ "$date", offset * 60 * -1000] }
+                    date: {$add: ["$date", offset * 60 * -1000]}
                 }
             },
 
@@ -168,19 +168,19 @@ module.exports = function () {
         var filters = JSON.parse(req.headers.filters);
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
-        var offset =  req.headers.offset || 0;
+        var offset = req.headers.offset || 0;
         offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
-        var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
+        var startDate = new Date(todayDate - dateRange * DAY_IN_MILLISECONDS);
 
         var timezoneSymbol = offset < 0 ? "+" : "-";
-        var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
-        var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
+        var hourTimezone = Math.abs(Math.trunc(offset / 60)) < 10 ? "0" + Math.abs(Math.trunc(offset / 60)) : Math.abs(Math.trunc(offset / 60)) + "";
+        var minuteTimezone = Math.abs(offset % 60) < 10 ? "0" + Math.abs(offset % 60) : Math.abs(offset % 60);
 
-        var todayStringDate = getDateString(todayDate)+"T23:59:59.999"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
-        var startStringDate = getDateString(startDate)+"T00:00:00.000"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
+        var todayStringDate = getDateString(todayDate) + "T23:59:59.999" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
+        var startStringDate = getDateString(startDate) + "T00:00:00.000" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
 
         todayDate = new Date(todayStringDate);
         startDate = new Date(startStringDate);
@@ -198,16 +198,16 @@ module.exports = function () {
                     }
                 }]
         ).exec(function (error, data) {
-                if (error) {
+            if (error) {
 
-                } else {
-                    if (data.length == 0)
-                        res.json({data: 0});
-                    else
-                        res.json({data: data[0].count});
-                }
+            } else {
+                if (data.length == 0)
+                    res.json({data: 0});
+                else
+                    res.json({data: data[0].count});
+            }
 
-            });
+        });
     };
 
     functions.getTotalSharedMobile = function (req, res) {
@@ -215,19 +215,19 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var siteId = filters.siteId;
-        var offset =  req.headers.offset || 0;
+        var offset = req.headers.offset || 0;
         offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
-        var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
+        var startDate = new Date(todayDate - dateRange * DAY_IN_MILLISECONDS);
 
         var timezoneSymbol = offset < 0 ? "+" : "-";
-        var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
-        var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
+        var hourTimezone = Math.abs(Math.trunc(offset / 60)) < 10 ? "0" + Math.abs(Math.trunc(offset / 60)) : Math.abs(Math.trunc(offset / 60)) + "";
+        var minuteTimezone = Math.abs(offset % 60) < 10 ? "0" + Math.abs(offset % 60) : Math.abs(offset % 60);
 
-        var todayStringDate = getDateString(todayDate)+"T23:59:59.999"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
-        var startStringDate = getDateString(startDate)+"T00:00:00.000"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
+        var todayStringDate = getDateString(todayDate) + "T23:59:59.999" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
+        var startStringDate = getDateString(startDate) + "T00:00:00.000" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
 
         todayDate = new Date(todayStringDate);
         startDate = new Date(startStringDate);
@@ -235,7 +235,7 @@ module.exports = function () {
             [{
                 $match: {
                     organizationIdentifier: organizationId,
-                    siteIdentifier:siteId,
+                    siteIdentifier: siteId,
                     date: {$gte: startDate, $lt: todayDate}
                 }
             },
@@ -246,36 +246,36 @@ module.exports = function () {
                     }
                 }]
         ).exec(function (error, data) {
-                if (error) {
+            if (error) {
 
-                } else {
-                    if (data.length == 0)
-                        res.json({data: 0});
-                    else
-                        res.json({data: data[0].count});
-                }
+            } else {
+                if (data.length == 0)
+                    res.json({data: 0});
+                else
+                    res.json({data: data[0].count});
+            }
 
-            });
+        });
     };
 
     functions.getNewVsReturningMobile = function (req, res) {
         var filters = JSON.parse(req.headers.filters);
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
-        var offset =  req.headers.offset || 0;
+        var offset = req.headers.offset || 0;
         var siteId = filters.siteId;
         offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
-        var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
+        var startDate = new Date(todayDate - dateRange * DAY_IN_MILLISECONDS);
 
         var timezoneSymbol = offset < 0 ? "+" : "-";
-        var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
-        var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
+        var hourTimezone = Math.abs(Math.trunc(offset / 60)) < 10 ? "0" + Math.abs(Math.trunc(offset / 60)) : Math.abs(Math.trunc(offset / 60)) + "";
+        var minuteTimezone = Math.abs(offset % 60) < 10 ? "0" + Math.abs(offset % 60) : Math.abs(offset % 60);
 
-        var todayStringDate = getDateString(todayDate)+"T23:59:59.999"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
-        var startStringDate = getDateString(startDate)+"T00:00:00.000"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
+        var todayStringDate = getDateString(todayDate) + "T23:59:59.999" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
+        var startStringDate = getDateString(startDate) + "T00:00:00.000" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
 
         todayDate = new Date(todayStringDate);
         startDate = new Date(startStringDate);
@@ -287,35 +287,38 @@ module.exports = function () {
                 action: actionsEnum.ENTER_SITE_VIEW
             }
         },
-            {$group: {_id: "$userIdentifier"}}], function (error, visitsData) {
+            {$group: {_id: "$userIdentifier", count: {$sum: 1}}}], function (error, visitsData) {
+            var newVisits = 0;
+            var returningVisits = 0;
 
-            //getting priorVisits
-            trackingSites.aggregate([{$match: {organizationIdentifier: organizationId,siteIdentifier: siteId, date: {$lt: startDate}}},
-                {$group: {_id: "$userIdentifier"}}], function (error, oldVisitsData) {
-                var idUsersVisits = _.pluck(visitsData, '_id');
-                var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
-                var newVisits = _.difference(idUsersVisits, idUsersOldVisits);
-                var returningVisits = _.intersection(idUsersVisits, idUsersOldVisits);
-                trackingSites.aggregate([{
-                    $match: {
-                        organizationIdentifier: organizationId,
-                        siteIdentifier: siteId,
-                        date: {$gte: startDate, $lt: todayDate},
-                        action: actionsEnum.ENTER_SITE_VIEW
+            for (var i = 0; i < visitsData.length; i++) {
+                var visit = visitsData[i];
+                newVisits++;
+                returningVisits += (visit.count - 1);
+            }
+            trackingSites.aggregate([{
+                $match: {
+                    organizationIdentifier: organizationId,
+                    siteIdentifier: siteId,
+                    date: {$gte: startDate, $lt: todayDate},
+                    action: actionsEnum.ENTER_SITE_VIEW
+                }
+            },
+                {$group: {_id: "$userIdentifier", count: {$sum: 1}}}], function (error, sitesSessions) {
+                var sessionCounter = 0;
+                for (var i = 0; i < sitesSessions.length; i++) {
+                    sessionCounter += sitesSessions[i].count;
+                }
+                res.json({
+                    data: {
+                        news: newVisits,
+                        returning: returningVisits,
+                        totalSessions: sessionCounter
                     }
-                },
-                    {$group: {_id: "$userIdentifier", count: {$sum: 1}}}], function (error, sitesSessions) {
-                    var sessionCounter = 0;
-                    for (var i = 0; i < sitesSessions.length; i++) {
-                        sessionCounter += sitesSessions[i].count;
-                    }
-                    res.json({data: {news: newVisits.length, returning: returningVisits.length, totalSessions:sessionCounter}});
                 });
-
-
-
-
             });
+
+
         });
     };
 
@@ -324,19 +327,19 @@ module.exports = function () {
         var dateRange = filters.dateRange;
         var organizationId = filters.organizationId;
         var siteId = filters.siteId;
-        var offset =  req.headers.offset || 0;
+        var offset = req.headers.offset || 0;
         offset = parseInt(offset);
         var nowDate = new Date();
 
         var todayDate = new Date(nowDate.getTime() + (offset * 60 * 1000));
-        var startDate = new Date(todayDate -dateRange * DAY_IN_MILLISECONDS);
+        var startDate = new Date(todayDate - dateRange * DAY_IN_MILLISECONDS);
 
         var timezoneSymbol = offset < 0 ? "+" : "-";
-        var hourTimezone =  Math.abs(Math.trunc(offset/60)) < 10 ? "0" + Math.abs(Math.trunc(offset/60)) : Math.abs(Math.trunc(offset/60)) + "";
-        var minuteTimezone = Math.abs(offset%60) < 10? "0"+Math.abs(offset%60): Math.abs(offset%60);
+        var hourTimezone = Math.abs(Math.trunc(offset / 60)) < 10 ? "0" + Math.abs(Math.trunc(offset / 60)) : Math.abs(Math.trunc(offset / 60)) + "";
+        var minuteTimezone = Math.abs(offset % 60) < 10 ? "0" + Math.abs(offset % 60) : Math.abs(offset % 60);
 
-        var todayStringDate = getDateString(todayDate)+"T23:59:59.999"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
-        var startStringDate = getDateString(startDate)+"T00:00:00.000"+timezoneSymbol+hourTimezone+":"+minuteTimezone;
+        var todayStringDate = getDateString(todayDate) + "T23:59:59.999" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
+        var startStringDate = getDateString(startDate) + "T00:00:00.000" + timezoneSymbol + hourTimezone + ":" + minuteTimezone;
 
         todayDate = new Date(todayStringDate);
         startDate = new Date(startStringDate);
@@ -347,51 +350,52 @@ module.exports = function () {
                 date: {$gte: startDate, $lt: todayDate}
             }
         },
-            {$group: {_id: "$userIdentifier"}}], function (error, visitsData) {
+            {$group: {_id: "$userIdentifier", count: {$sum: 1}}}], function (error, visitsData) {
+            var newVisits = 0;
+            var returningVisits = 0;
 
-            //getting priorVisits
-            trackingBeacon.aggregate([{
-                $match: {
-                    organizationIdentifier: organizationId,
-                    siteIdentifier: siteId,
-                    date: {$lt: startDate}
+            for (var i = 0; i < visitsData.length; i++) {
+                var visit = visitsData[i];
+                newVisits++;
+                returningVisits += (visit.count - 1);
+            }
+
+
+            trackingBeacon.aggregate([
+                {
+                    $match: {
+                        organizationIdentifier: organizationId,
+                        siteIdentifier: siteId,
+                        date: {$gte: startDate, $lt: todayDate},
+                        $or: [{action: actionsEnum.ENTER_BIIN}, {action: actionsEnum.ENTER_BIIN_REGION}]
+                    }
+                },
+                // Stage 2
+                {
+                    $project: {
+                        date: {$add: ["$date", offset * 60 * -1000]}
+                    }
+                },
+
+                // Stage 3
+                {
+                    $group: {
+                        _id: {$dateToString: {format: "%Y-%m-%d", date: "$date"}},
+                        count: {$sum: 1}
+                    }
                 }
-            },
-                {$group: {_id: "$userIdentifier"}}], function (error, oldVisitsData) {
-                var idUsersVisits = _.pluck(visitsData, '_id');
-                var idUsersOldVisits = _.pluck(oldVisitsData, '_id');
-                var newVisits = _.difference(idUsersVisits, idUsersOldVisits);
-                var returningVisits = _.intersection(idUsersVisits, idUsersOldVisits);
-                trackingBeacon.aggregate([
-                    {
-                        $match: {
-                            organizationIdentifier: organizationId,
-                            siteIdentifier:siteId,
-                            date: {$gte: startDate, $lt: todayDate},
-                            $or: [{action: actionsEnum.ENTER_BIIN}, {action: actionsEnum.ENTER_BIIN_REGION}]
-                        }
-                    },
-                    // Stage 2
-                    {
-                        $project: {
-                            date : { $add : [ "$date", offset * 60 * -1000] }
-                        }
-                    },
 
-                    // Stage 3
-                    {
-                        $group: {
-                            _id: {$dateToString: {format: "%Y-%m-%d", date: "$date"}},
-                            count: {$sum: 1}
-                        }
+            ], function (error, visitsData) {
+                var sessionCounter = 0;
+                for (var i = 0; i < visitsData.length; i++) {
+                    sessionCounter += visitsData[i].count;
+                }
+                res.json({
+                    data: {
+                        news: newVisits,
+                        returning: returningVisits,
+                        totalSessions: sessionCounter
                     }
-
-                ], function (error, visitsData) {
-                    var sessionCounter = 0;
-                    for (var i = 0; i < visitsData.length; i++) {
-                        sessionCounter += visitsData[i].count;
-                    }
-                    res.json({data: {news: newVisits.length, returning: returningVisits.length, totalSessions:sessionCounter}});
                 });
             });
         });
