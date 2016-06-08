@@ -1712,6 +1712,7 @@ module.exports = function () {
         response.organizations = [];
         response.elements = [];
         response.showcases = [];
+        response.notices = [];
 
         mobileUser.findOne({"identifier": userIdentifier}, {
             _id: 0, 'gender': 1,
@@ -2269,11 +2270,48 @@ module.exports = function () {
 
                                                     response.elementsForCategory = elementsForCategory.concat(elementsWithCategory);
 
-                                                    res.json({data: response, "status": "0", "result": "1"});
-                                                    saveInfoIntoUserMobileSession(userIdentifier, response.sites, response.elements, {
-                                                        'identifier': categoryId,
-                                                        'elements': elementsForCategory
-                                                    }, response.organization);
+
+                                                    //ADDING NOTICES INFORMATION
+
+                                                    var noticesToFind = [];
+                                                    var noticesValidated = [];
+
+                                                    for (i = 0; i < response.sites.length; i++) {
+                                                        var site = response.sites[i];
+                                                        noticesToFind = noticesToFind.concat(response.sites[i].notices);
+                                                    }
+
+                                                    noticesToFind = _.uniq(noticesToFind);
+                                                    //TODO: CHECK IS READY
+                                                    notice.find({"identifier":{$in:noticesToFind}, isDeleted:false },{},function(err, notices){
+                                                        if(err) {
+
+                                                        } else {
+                                                            var noticesIdentifierFound = _.pluck(notices,"identifier");
+                                                            var noticesNotFound = _.difference(noticesToFind,noticesIdentifierFound);
+                                                            for ( i = 0; i < notices.length; i++) {
+                                                                var notice = notices[i];
+                                                                noticesValidated.push(validateNoticesInitialInfo(notice));
+                                                            }
+
+                                                            for (i = 0; i < response.sites.length; i++) {
+                                                                var site = response.sites[i];
+                                                                site.notices = _.difference(site.notices, noticesNotFound);
+                                                                response.sites[i] = site;
+                                                            }
+
+                                                            response.notices = noticesValidated;
+
+
+                                                            res.json({data: response, status: "0", result: "1"});
+                                                            saveInfoIntoUserMobileSession(userIdentifier, response.sites, response.elements, {
+                                                                'identifier': categoryId,
+                                                                'elements': elementsForCategory
+                                                            }, response.organization);
+                                                        }
+                                                    });
+
+
                                                 });
                                             });
 
@@ -2339,11 +2377,46 @@ module.exports = function () {
                                             for (i = 0; i < response.elements.length; i++) {
                                                 response.elements[i] = validateElementInitialInfo(response.elements[i]);
                                             }
-                                            res.json({data: response, "status": "0", "result": "1"});
-                                            saveInfoIntoUserMobileSession(userIdentifier, response.sites, response.elements, {
-                                                'identifier': categoryId,
-                                                'elements': elementsForCategory
-                                            }, response.organizations);
+                                            //ADDING NOTICES INFORMATION
+
+                                            var noticesToFind = [];
+                                            var noticesValidated = [];
+
+                                            for (i = 0; i < response.sites.length; i++) {
+                                                var site = response.sites[i];
+                                                noticesToFind = noticesToFind.concat(response.sites[i].notices);
+                                            }
+
+                                            noticesToFind = _.uniq(noticesToFind);
+                                            //TODO: CHECK IS READY
+                                            notice.find({"identifier":{$in:noticesToFind}, isDeleted:false },{},function(err, notices){
+                                                if(err) {
+
+                                                } else {
+                                                    var noticesIdentifierFound = _.pluck(notices,"identifier");
+                                                    var noticesNotFound = _.difference(noticesToFind,noticesIdentifierFound);
+                                                    for ( i = 0; i < notices.length; i++) {
+                                                        var notice = notices[i];
+                                                        noticesValidated.push(validateNoticesInitialInfo(notice));
+                                                    }
+
+                                                    for (i = 0; i < response.sites.length; i++) {
+                                                        var site = response.sites[i];
+                                                        site.notices = _.difference(site.notices, noticesNotFound);
+                                                        response.sites[i] = site;
+                                                    }
+
+                                                    response.notices = noticesValidated;
+
+
+                                                    res.json({data: response, status: "0", result: "1"});
+                                                    saveInfoIntoUserMobileSession(userIdentifier, response.sites, response.elements, {
+                                                        'identifier': categoryId,
+                                                        'elements': elementsForCategory
+                                                    }, response.organizations);
+                                                }
+                                            });
+
 
                                         }
                                     });
