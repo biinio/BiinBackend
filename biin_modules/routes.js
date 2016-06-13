@@ -150,6 +150,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/notices/organizations/:identifier',notices.get);
     app.put('/api/notices/organizations/:identifier',notices.create);
     app.post('/api/notices/organizations/:identifier',notices.update);
+    app.delete('/api/notices/:identifier',notices.delete);
 
 
     //Elements

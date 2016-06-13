@@ -83,5 +83,24 @@ module.exports = function () {
     };
 
 
+    functions.delete = function(req,res){
+        var noticeId = req.param('identifier');
+        notices.findOne({identifier:noticeId},{}, function(err, notice ){
+            if(err){
+                res.status(500).send(err);
+            }else{
+                notice.isDeleted = true;
+                notice.save( function(err,success){
+                    if(err){
+                        res.status(400).send(err);
+                    } else {
+                        res.status(200).send();
+                    }
+                })
+            }
+        });
+    };
+
+
     return functions;
 };
