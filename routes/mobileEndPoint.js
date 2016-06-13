@@ -265,8 +265,8 @@ module.exports = function () {
         noticeValidated.onFriday  = notice.onFriday? notice.onFriday : "0";
         noticeValidated.onSaturday = notice.onSaturday? notice.onSaturday : "0";
 
-        noticeValidated.startTime = notice.startTime ? notice.startTime : "00:00";
-        noticeValidated.endTime = notice.startTime ? notice.startTime : "23:59";
+        noticeValidated.startTime = notice.startTime ? notice.startTime : "0";
+        noticeValidated.endTime = notice.endTime ? notice.endTime : "24";
         noticeValidated.isActive = notice.isActive ? notice.isActive : "0";
         noticeValidated.isActive = notice.isActive == "1" ?  "1" : "0";
 
