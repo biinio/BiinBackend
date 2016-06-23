@@ -21,6 +21,8 @@ module.exports =function(){
 
 	var biinBiinieObject =require('../schemas/biinBiinieObject');
 
+    var versionsConfig = require('../config/versions');
+
 	//Tracking schemas
 	var trackingBeacon = require('../schemas/trackingbeacon'),
 		trackingFollow = require('../schemas/trackingfollows'),
@@ -277,8 +279,8 @@ module.exports =function(){
 
 	function setTrackingBiined( actions, userIdentifier ){
 		return new Promise(function(resolve, reject){
-			var filteredActionsElements = _.filter(actions,function(item){ return item.did == COLLECTED_ELEMENT;})
-			var filteredActionsSites = _.filter(actions,function(item){ return item.did == 0;})
+			var filteredActionsElements = _.filter(actions,function(item){ return item.did == COLLECTED_ELEMENT;});
+			var filteredActionsSites = _.filter(actions,function(item){ return item.did == 0;});
 			var filteredActions = filteredActionsSites.concat(filteredActionsElements);
 
 			var actionsToInsert = [];
@@ -528,13 +530,13 @@ module.exports =function(){
 						});
 
 						var elementExtraInfo = _.find(siteData,function(org){
-							return _.findWhere(org.elements,{identifier:filteredActions[i].to}) != null;
+							return _.findWhere(org.elements,{elementIdentifier:filteredActions[i].to}) != null;
 						});
 
 						if(siteExtraInfo){
 							var action = {};
 							action.userIdentifier = userIdentifier;
-							action.organizationIdentifier = siteExtraInfo.identifier;
+							action.organizationIdentifier = org.identifier;
 							action.siteIdentifier = filteredActions[i].to;
 							action.date = new Date(filteredActions[i].at);
 							action.action = filteredActions[i].did;
@@ -546,12 +548,13 @@ module.exports =function(){
 								var currentSite = elementExtraInfo.sites[j];
 								for(var k=0; k < currentSite.showcases.length;k++){
 									var currentShowcase = currentSite.showcases[k];
+
 									for(var l=0; l < currentShowcase.elements.length;l++){
 										var currentElement = currentShowcase.elements[l];
 										if(currentElement.identifier == filteredActions[i].to){
 											var action = {};
 											action.userIdentifier = userIdentifier;
-											action.organizationIdentifier = elementExtraInfo.identifier;
+											action.organizationIdentifier = org.identifier;
 											action.elementIdentifier = filteredActions[i].to;
 											action.siteIdentifier = currentSite.identifier;
 											action.date = new Date(filteredActions[i].at);
@@ -972,7 +975,59 @@ module.exports =function(){
 				resultCallback(newModel)
 			}
 		});
-	}
+	};
+
+
+	functions.checkVersion = function(req, res){
+		var version = req.params["version"];
+		var platform = req.params["platform"];
+		var target = req.params["target"];
+
+		var response = {};
+		response.result = "1";
+		response.status = "0";
+		response.data = {};
+		response.data.needsUpdate = "0";
+		response.data.rootURL = "";
+
+
+		switch (target){
+			case "dev":
+				response.data.rootURL = "https://dev-biin-backend.herokuapp.com";
+				break;
+			case "qa":
+				response.data.rootURL = "https://qa-biin-backend.herokuapp.com";
+				break;
+			case "demo":
+				response.data.rootURL = "https://demo-biin-backend.herokuapp.com";
+				break;
+			case "prod":
+                    var versionPlatformConfig = versionsConfig[platform];
+                    if(versionPlatformConfig) {
+                        var versionStatus = versionPlatformConfig[version];
+                        if(versionStatus) {
+                            if (versionStatus == "production" || versionStatus == "supported")
+                                response.data.rootURL = "https://www.biin.io";
+                            else if (versionStatus == "staging")
+                                response.data.rootURL = "https://demo-biin-backend.herokuapp.com";
+                            else if (versionStatus == "deprecated")
+                                response.data.needsUpdate = "1";
+                        }
+                        else{
+                            response.data.rootURL = "https://demo-biin-backend.herokuapp.com";
+                        }
+                    } else {
+                        response.data.rootURL = "https://demo-biin-backend.herokuapp.com";
+                    }
+				break;
+			default:
+				response.data.rootURL = "https://demo-biin-backend.herokuapp.com";
+				break;
+		}
+
+		res.json(response);
+
+	};
 
 	return functions;
-}
+};

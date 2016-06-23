@@ -268,10 +268,6 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/api/venues/create',venues.createVenue);
 
 
-
-
-
-
     //Mobile routes
 
     app.get('/mobile/regions',regions.listJson);
@@ -305,6 +301,9 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/ratings/organization',ratingSites.getRatingsByOrganization);
     app.get('/ratings/nps',ratingSites.getNPSRatings);
     app.get('/mobile/termsofservice',mobileEndPoint.getTermsOfService);
+
+    app.get('/checkversion/:version/:platform/:target', mobileRoutes.checkVersion );
+
 
 
 
