@@ -5,10 +5,10 @@
 
 var moongose = require('mongoose');
 
-module.exports = moongose.model('oauthMobileAccesTokens',{
-	token:{type:String, index:true},
-	expirationDate:{type:Date},
-	clientId:{type:String},
-	biinName:{type:String},
-	creationDate:{type:Date}
+module.exports = moongose.model('oauthMobileAccesTokens', {
+    token: {type: String, index: true},
+    expirationDate: {type: Date},
+    clientId: {type: String},
+    biinName: {type: String},
+    creationDate: {type: Date}
 });

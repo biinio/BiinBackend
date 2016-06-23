@@ -2,7 +2,7 @@ extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/accountController.js")
 block content	
-	#sectionContent(ng-app="biinAppAccount" ng-controller="accountController" ngCloack)
+	#sectionContent(data-ng-app="biinAppAccount" data-ng-controller="accountController" data-ngCloack)
 		a(href="/binnies")
 
 	h2  Version Management

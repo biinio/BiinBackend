@@ -1,4 +1,4 @@
-module.exports = function(app,db, passport,multipartMiddleware){
+module.exports = function (app, db, passport, multipartMiddleware) {
 
     //Others routes
     var routes = require('../routes')();
@@ -17,36 +17,42 @@ module.exports = function(app,db, passport,multipartMiddleware){
     var blog = require('../routes/blog')();
     var mobileUser = require('../routes/mobileUser')();
     var oauthMobileAPIGrants = require('../routes/oauthMobileAPIGrants')();
-    var mobileOauthManager= require('./mobileOauthManager');
+    var mobileOauthManager = require('./mobileOauthManager');
     var stickers = require('../routes/stickers')();
     var mobileRoutes = require('../routes/mobileRoutes')();
     var sysGlobals = require('../routes/sysGlobals')();
-    var biinBiinieObjects =require('../routes/biinBiinieObjects')();
-    var venues =require('../routes/venue')();
+    var biinBiinieObjects = require('../routes/biinBiinieObjects')();
+    var venues = require('../routes/venue')();
     var mobileEndPoint = require('../routes/mobileEndPoint')();
     var roles = require('../routes/roles')();
     var ratingSites = require('../routes/ratingSites')();
     var maintenance = require('../routes/maintenance')();
-    var notices = require ('../routes/notices')();
+    var notices = require('../routes/notices')();
 
     //Sys routes
     app.post('/enviroments', sysGlobals.set);
 
     //Application routes
     app.get('/sendEmail', routes.sendEmail);
-    app.get('/login',routes.login);
-    app.post('/api/singup',clients.set);
-    app.get('/client/:identifier/activate',clients.activate);
-    app.post('/client/:identifier/activate',clients.activate);
-    app.post('/api/login',function(req, res, next) {
-        passport.authenticate('clientLocal', function(err, user, info) {
-            if (err) { return next(err); }
+    app.get('/login', routes.login);
+    app.post('/api/singup', clients.set);
+    app.get('/client/:identifier/activate', clients.activate);
+    app.post('/client/:identifier/activate', clients.activate);
+    app.post('/api/login', function (req, res, next) {
+        passport.authenticate('clientLocal', function (err, user, info) {
+            if (err) {
+                return next(err);
+            }
             // Redirect if it fails
-            if (!user) { return res.json({status:"success",url:"/accounts"}); }
-            req.logIn(user, function(err) {
-                if (err) { return next(err); }
+            if (!user) {
+                return res.json({status: "success", url: "/accounts"});
+            }
+            req.logIn(user, function (err) {
+                if (err) {
+                    return next(err);
+                }
                 // Redirect if it succeeds
-                return res.json({status:"success",url:"/accounts"});
+                return res.json({status: "success", url: "/accounts"});
             });
         })(req, res, next);
     });
@@ -60,7 +66,7 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/dashboard/mobile/newsvsreturning', dashboard.getNewVsReturningMobile);
     app.get('/api/dashboard/mobile/sharedelements', dashboard.getTotalSharedMobile);
 
-    app.get('/downloads', function(req, res) {
+    app.get('/downloads', function (req, res) {
         var path = require('path');
         res.sendFile(path.resolve('public/downloads.html'));
     });
@@ -70,119 +76,119 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/api/dashboard/local/newsvsreturning', dashboard.getNewVsReturningLocal);
 
     //Acounts Routes
-    app.get('/accounts',accounts.index);
-    app.put('/api/accounts',accounts.set);
-    app.post('/api/accounts/:organizationIdentifier/default',accounts.setDefaultOrganization);
-    app.get('/api/accounts',accounts.list);
+    app.get('/accounts', accounts.index);
+    app.put('/api/accounts', accounts.set);
+    app.post('/api/accounts/:organizationIdentifier/default', accounts.setDefaultOrganization);
+    app.get('/api/accounts', accounts.list);
 
-    app.post('/api/imageProfile',multipartMiddleware,accounts.uploadImageProfile);
+    app.post('/api/imageProfile', multipartMiddleware, accounts.uploadImageProfile);
 
     //Categories Routes
-    app.get('/api/categories',categories.list);
+    app.get('/api/categories', categories.list);
     app.get('/api/categories/set', categories.set);
 
     //Organization Routes
-    app.get('/api/organizations',organizations.list);
-    app.post('/api/organizations/:identifier',organizations.set);
-    app.put('/api/organizations/:accountIdentifier',organizations.create);
-    app.post('/api/organizations/:identifier/image',multipartMiddleware,organizations.uploadImage);
-    app.delete('/api/organizations/:identifier',organizations.markAsDeleted);
-    app.post('/organizations/imageUpload',multipartMiddleware,showcases.imagePost);
-    app.post('/organizations/imageCrop',multipartMiddleware,showcases.imageCrop);
+    app.get('/api/organizations', organizations.list);
+    app.post('/api/organizations/:identifier', organizations.set);
+    app.put('/api/organizations/:accountIdentifier', organizations.create);
+    app.post('/api/organizations/:identifier/image', multipartMiddleware, organizations.uploadImage);
+    app.delete('/api/organizations/:identifier', organizations.markAsDeleted);
+    app.post('/organizations/imageUpload', multipartMiddleware, showcases.imagePost);
+    app.post('/organizations/imageCrop', multipartMiddleware, showcases.imageCrop);
     app.get('/api/organizations/:identifier/:siteIdentifier/minor', organizations.getMinor);
     app.get('/api/organizations/:identifier/checkImage/:imageIdentifier', organizations.checkImageUse);
 
     //Save selected organization
-    app.put('/api/organizations/:accountIdentifier/:organizationIdentifier',organizations.saveSelectedOrganization);
+    app.put('/api/organizations/:accountIdentifier/:organizationIdentifier', organizations.saveSelectedOrganization);
     // Get selected organization
     app.get('/api/organizations/:accountIdentifier/selectedOrganization', organizations.getSelectedOrganization);
 
     //Showcase routes
-    app.get('/api/organizations/:identifier/showcases/id',showcases.getShowcaseId);
-    app.post('/api/organizations/:identifier/site/showcases',organizations.setShowcasesPerSite);
-    app.post('/api/organizations/:identifier/biins/showcases',biins.setShowcasesPerBiins);
+    app.get('/api/organizations/:identifier/showcases/id', showcases.getShowcaseId);
+    app.post('/api/organizations/:identifier/site/showcases', organizations.setShowcasesPerSite);
+    app.post('/api/organizations/:identifier/biins/showcases', biins.setShowcasesPerBiins);
 
     //Showcases creation
-    app.post('/api/organizations/:identifier/showcases',showcases.set);
+    app.post('/api/organizations/:identifier/showcases', showcases.set);
 
     //Showcases Update
-    app.put('/api/organizations/:identifier/showcases/:showcase',showcases.set);
-    app.post('/showcases/imageUpload',multipartMiddleware,showcases.imagePost);
-    app.post('/showcases/imageCrop',multipartMiddleware,showcases.imageCrop);
-    app.get('/api/showcases/:identifier',showcases.get);
-    app.put('/api/showcases/:showcase',showcases.set);
-    app.delete('/api/organizations/:identifier/showcases/:showcase',showcases.markAsDeleted);
-    app.get('/api/organizations/:identifier/showcases',showcases.list);
+    app.put('/api/organizations/:identifier/showcases/:showcase', showcases.set);
+    app.post('/showcases/imageUpload', multipartMiddleware, showcases.imagePost);
+    app.post('/showcases/imageCrop', multipartMiddleware, showcases.imageCrop);
+    app.get('/api/showcases/:identifier', showcases.get);
+    app.put('/api/showcases/:showcase', showcases.set);
+    app.delete('/api/organizations/:identifier/showcases/:showcase', showcases.markAsDeleted);
+    app.get('/api/organizations/:identifier/showcases', showcases.list);
 
     //Sites routes
-    app.get('/site/mapComponent',sites.mapComponent);
-    app.get('/api/organizations/:identifier/sites',sites.list);
-    app.post('/api/organizations/:orgIdentifier/sites',sites.set);
+    app.get('/site/mapComponent', sites.mapComponent);
+    app.get('/api/organizations/:identifier/sites', sites.list);
+    app.post('/api/organizations/:orgIdentifier/sites', sites.set);
 
     //Maintenance
-    app.get('/maintenance/organizations',maintenance.getOrganizationInformation);
-    app.get('/maintenance/addBiinToOrganizationModal',maintenance.addBiinToOrganizationModal);
-    app.get('/maintenance/getBiinsOrganizationInformation/:orgIdentifier',maintenance.getBiinsOrganizationInformation);
-    app.put('/maintenance/insertBiin',maintenance.biinPurchase);
-    app.post('/maintenance/insertBiin',maintenance.biinPurchase);
-    app.get('/maintenance/beaconChildren',maintenance.getBeaconChildren);
+    app.get('/maintenance/organizations', maintenance.getOrganizationInformation);
+    app.get('/maintenance/addBiinToOrganizationModal', maintenance.addBiinToOrganizationModal);
+    app.get('/maintenance/getBiinsOrganizationInformation/:orgIdentifier', maintenance.getBiinsOrganizationInformation);
+    app.put('/maintenance/insertBiin', maintenance.biinPurchase);
+    app.post('/maintenance/insertBiin', maintenance.biinPurchase);
+    app.get('/maintenance/beaconChildren', maintenance.getBeaconChildren);
 
     //Biins Purchase
-    app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/biins/',sites.biinPurchase);
+    app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/biins/', sites.biinPurchase);
 
     //Update a Site
-    app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.set);
-    app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/region',sites.addSiteToRegion);
+    app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier', sites.set);
+    app.post('/api/organizations/:orgIdentifier/sites/:siteIdentifier/region', sites.addSiteToRegion);
 
     //Create a biin
-    app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier/purchase',sites.biinPurchase);
-    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier',sites.markAsDeleted);
+    app.put('/api/organizations/:orgIdentifier/sites/:siteIdentifier/purchase', sites.biinPurchase);
+    app.delete('/api/organizations/:orgIdentifier/sites/:siteIdentifier', sites.markAsDeleted);
 
     //Biins
-    app.get('/api/biins',biins.list);
-    app.post('/api/organizations/:identifier/sites/biins',biins.updateSiteBiins);
-    app.get('/api/organizations/:identifier/biins',biins.getByOrganization);
-    app.post('/api/organizations/:identifier/biins/:biinIdentifier/objects',biins.setObjects);
-    app.post('/api/biins/:biinIdentifier/update',biins.updateBiin);
+    app.get('/api/biins', biins.list);
+    app.post('/api/organizations/:identifier/sites/biins', biins.updateSiteBiins);
+    app.get('/api/organizations/:identifier/biins', biins.getByOrganization);
+    app.post('/api/organizations/:identifier/biins/:biinIdentifier/objects', biins.setObjects);
+    app.post('/api/biins/:biinIdentifier/update', biins.updateBiin);
 
 
     //Local's notices
-    app.get('/api/notices/organizations/:identifier',notices.get);
-    app.put('/api/notices/organizations/:identifier',notices.create);
-    app.post('/api/notices/organizations/:identifier',notices.update);
-    app.delete('/api/notices/:identifier',notices.delete);
+    app.get('/api/notices/organizations/:identifier', notices.get);
+    app.put('/api/notices/organizations/:identifier', notices.create);
+    app.post('/api/notices/organizations/:identifier', notices.update);
+    app.delete('/api/notices/:identifier', notices.delete);
 
 
     //Elements
-    app.post('/elements/imageUpload',multipartMiddleware,showcases.imagePost);
-    app.post('/elements/imageCrop',multipartMiddleware,showcases.imageCrop);
+    app.post('/elements/imageUpload', multipartMiddleware, showcases.imagePost);
+    app.post('/elements/imageCrop', multipartMiddleware, showcases.imageCrop);
 
     //Element List
-    app.get('/api/organizations/:identifier/elements',elements.list);
-    app.get('/api/organizations/:identifier/readyElements',elements.listReady);
+    app.get('/api/organizations/:identifier/elements', elements.list);
+    app.get('/api/organizations/:identifier/readyElements', elements.listReady);
     //Element Creation
-    app.post('/api/organizations/:identifier/elements',elements.set);
+    app.post('/api/organizations/:identifier/elements', elements.set);
     //Element Update
-    app.put('/api/organizations/:identifier/elements/:element',elements.set);
+    app.put('/api/organizations/:identifier/elements/:element', elements.set);
     //app.delete('/api/organizations/:identifier/elements/:element',elements.delete);
-    app.delete('/api/organizations/:identifier/elements/:element',elements.markAsDeleted);
+    app.delete('/api/organizations/:identifier/elements/:element', elements.markAsDeleted);
 
 
     //Regions routes
-    app.get('/regions/add',regions.create);
-    app.post('/regions/add',regions.createPost);
-    app.get('/regions/:identifier',regions.edit);
-    app.post('/regions/:identifier',regions.editPost);
-    app.post('/mobile/regions/:identifier/:latitude/:longitude',regions.setCoordsToRegion);//Update the Coords of a region
+    app.get('/regions/add', regions.create);
+    app.post('/regions/add', regions.createPost);
+    app.get('/regions/:identifier', regions.edit);
+    app.post('/regions/:identifier', regions.editPost);
+    app.post('/mobile/regions/:identifier/:latitude/:longitude', regions.setCoordsToRegion);//Update the Coords of a region
 
     //Gallery Routes
-    app.get('/api/organizations/:identifier/gallery',gallery.list);
-    app.post('/api/organizations/:identifier/gallery', multipartMiddleware,gallery.upload);
-    app.post('/api/organizations/:identifier/gallery/upload',gallery.uploadBase64Image);
+    app.get('/api/organizations/:identifier/gallery', gallery.list);
+    app.post('/api/organizations/:identifier/gallery', multipartMiddleware, gallery.upload);
+    app.post('/api/organizations/:identifier/gallery/upload', gallery.uploadBase64Image);
 
     //Client routes
-    app.get('/client',clients.create);
-    app.get('/logout',clients.logout);
+    app.get('/client', clients.create);
+    app.get('/logout', clients.logout);
     app.post('/api/clients/verify', clients.verifyEmailAvailability);
 
     //Roles routes
@@ -192,44 +198,44 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.get('/roles/:role/getpermission', roles.getPermissions);
 
     //Stickers services
-    app.get('/api/stickers',stickers.get);
-    app.get('/api/stickers/create',stickers.set);
+    app.get('/api/stickers', stickers.get);
+    app.get('/api/stickers/create', stickers.set);
 
     //Binnies Routes
-    app.get('/biinies',mobileUser.index);
-    app.get('/api/biinies',mobileUser.get);
-    app.put('/api/biinies',mobileUser.set);
-    app.delete('/api/biinies/:identifier',mobileUser.delete);
-    app.post('/api/biinies/:identifier/image',multipartMiddleware,mobileUser.uploadImage);
+    app.get('/biinies', mobileUser.index);
+    app.get('/api/biinies', mobileUser.get);
+    app.put('/api/biinies', mobileUser.set);
+    app.delete('/api/biinies/:identifier', mobileUser.delete);
+    app.post('/api/biinies/:identifier/image', multipartMiddleware, mobileUser.uploadImage);
 
     //Mobile Binnies services
-    app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender/:birthdate',mobileUser.setMobileByURLParams);
+    app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender/:birthdate', mobileUser.setMobileByURLParams);
     app.get('/mobile/biinies/:identifier/isactivate', mobileUser.isActivate);
     app.post('/mobile/biinies/:identifier/categories', mobileUser.setCategories);
     app.get('/mobile/biinies/auth/:user/:password', mobileUser.login);
-    app.get('/mobile/biinies/:identifier',mobileUser.getProfile);
-    app.put('/mobile/biinies',mobileUser.setMobile);
-    app.post('/mobile/biinies/:identifier',mobileUser.updateMobile);
-    app.post('/mobile/biinies',mobileUser.updateMobile);
+    app.get('/mobile/biinies/:identifier', mobileUser.getProfile);
+    app.put('/mobile/biinies', mobileUser.setMobile);
+    app.post('/mobile/biinies/:identifier', mobileUser.updateMobile);
+    app.post('/mobile/biinies', mobileUser.updateMobile);
 
     //Facebook Login
     app.get('/mobile/biinies/auth/thirdparty/facebook/:user', mobileUser.loginFacebook);
-    app.get('/mobile/biinies/facebook/:firstName/:lastName/:biinName/:password/:gender/:birthdate/:facebookId',mobileUser.setMobileByURLParamsFacebook);
+    app.get('/mobile/biinies/facebook/:firstName/:lastName/:biinName/:password/:gender/:birthdate/:facebookId', mobileUser.setMobileByURLParamsFacebook);
 
     //Mobile Biinies Share
-    app.get('/mobile/biinies/:identifier/share',mobileUser.getShare);
-    app.put('/mobile/biinies/:identifier/share',mobileUser.setShare);
+    app.get('/mobile/biinies/:identifier/share', mobileUser.getShare);
+    app.put('/mobile/biinies/:identifier/share', mobileUser.setShare);
 
     //Activation Routes
-    app.get('/mobile/biinies/:identifier/isactivate',mobileUser.isActivate);
-    app.get('/biinie/:identifier/activate',mobileUser.activate);
-    app.post('/biinie/:identifier/activate',mobileUser.activate);
+    app.get('/mobile/biinies/:identifier/isactivate', mobileUser.isActivate);
+    app.get('/biinie/:identifier/activate', mobileUser.activate);
+    app.post('/biinie/:identifier/activate', mobileUser.activate);
 
-    app.get('/mobile/elements/:identifier',elements.getMobile);
-    app.get('/mobile/biinies/:identifier/highlights',elements.getMobileHighligh);
+    app.get('/mobile/elements/:identifier', elements.getMobile);
+    app.get('/mobile/biinies/:identifier/highlights', elements.getMobileHighligh);
 
     //Colections
-    app.get('/mobile/biinies/:identifier/collections',mobileUser.getCollections);
+    app.get('/mobile/biinies/:identifier/collections', mobileUser.getCollections);
     app.put('/mobile/biinies/:identifier/collections/:collectionIdentifier', mobileUser.setMobileBiinedToCollection);
 
     //collect
@@ -253,58 +259,56 @@ module.exports = function(app,db, passport,multipartMiddleware){
     app.put('/mobile/biinies/:identifier/organizations/:organizationIdentifier/loyalty/points', mobileUser.setMobileLoyaltyPoints);
 
     //Biin Biinie Object Relation setters
-    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/biined',biinBiinieObjects.setBiined);
-    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/notified',biinBiinieObjects.setNotified);
+    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/biined', biinBiinieObjects.setBiined);
+    app.put('/mobile/biinies/:biinieIdentifier/biin/:biinIdentifier/object/:objectIdentifier/notified', biinBiinieObjects.setNotified);
 
     //Biinie/ Site relation
-    app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified',mobileUser.setShowcaseNotified);
+    app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified', mobileUser.setShowcaseNotified);
 
     //Stars/Rating
-    app.post('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/rating/:rating',mobileRoutes.setSiteRating);
-    app.post('/mobile/biinies/:biinieIdentifier/elements/:elementIdentifier/rating/:rating',mobileRoutes.setElementRating);
+    app.post('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/rating/:rating', mobileRoutes.setSiteRating);
+    app.post('/mobile/biinies/:biinieIdentifier/elements/:elementIdentifier/rating/:rating', mobileRoutes.setElementRating);
 
     //Venues
-    app.get('/api/venues/search',venues.getVenueALike);
-    app.put('/api/venues/create',venues.createVenue);
+    app.get('/api/venues/search', venues.getVenueALike);
+    app.put('/api/venues/create', venues.createVenue);
 
 
     //Mobile routes
 
-    app.get('/mobile/regions',regions.listJson);
-    app.get('/mobile/:identifier/:xcord/:ycord/categories',mobileRoutes.getCategories);
+    app.get('/mobile/regions', regions.listJson);
+    app.get('/mobile/:identifier/:xcord/:ycord/categories', mobileRoutes.getCategories);
     //app.get('/mobile/biinies/:identifier/:latitude/:longitude/categories',sites.getMobileByCategories);
 
-    app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier',elements.getMobile);
+    app.get('/mobile/biinies/:biinieIdentifier/elements/:identifier', elements.getMobile);
 
-    app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier',mobileRoutes.getSite);
-    app.get('/mobile/biinies/:biinieIdentifier/showcases/:identifier',showcases.getMobileShowcase);
+    app.get('/mobile/biinies/:biinieIdentifier/sites/:identifier', mobileRoutes.getSite);
+    app.get('/mobile/biinies/:biinieIdentifier/showcases/:identifier', showcases.getMobileShowcase);
 
     //Mobile History
-    app.put('/mobile/biinies/:identifier/history',mobileRoutes.setHistory);
-    app.get('/mobile/biinies/:identifier/history',mobileRoutes.getHistory);
+    app.put('/mobile/biinies/:identifier/history', mobileRoutes.setHistory);
+    app.get('/mobile/biinies/:identifier/history', mobileRoutes.getHistory);
 
     //Utils
-    app.get('/sites/update/validation',sites.setSitesValid);
+    app.get('/sites/update/validation', sites.setSitesValid);
 
 
-    app.get('/mobile/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitialData);
-    app.get('/mobile/nextElementsInShowcaseTemp',mobileEndPoint.getNextElementInShowcase);
-    app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch',mobileEndPoint.getNextElementInShowcase);
-    app.get('/mobile/biinies/:identifier/requestElementsForCategory/:idCategory/:batch',mobileEndPoint.getNextElementsInCategory);
-    app.get('/mobile/biinies/:identifier/requestSites/:batch',mobileEndPoint.getNextSites);
-    app.get('/mobile/biinies/:identifier/requestCollection',mobileEndPoint.getCollections);
+    app.get('/mobile/initialData/:biinieId/:latitude/:longitude', mobileEndPoint.getInitialData);
+    app.get('/mobile/nextElementsInShowcaseTemp', mobileEndPoint.getNextElementInShowcase);
+    app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch', mobileEndPoint.getNextElementInShowcase);
+    app.get('/mobile/biinies/:identifier/requestElementsForCategory/:idCategory/:batch', mobileEndPoint.getNextElementsInCategory);
+    app.get('/mobile/biinies/:identifier/requestSites/:batch', mobileEndPoint.getNextSites);
+    app.get('/mobile/biinies/:identifier/requestCollection', mobileEndPoint.getCollections);
 
-    app.get('/mobile/v2/initialData/:biinieId/:latitude/:longitude',mobileEndPoint.getInitalDataFullCategories);
+    app.get('/mobile/v2/initialData/:biinieId/:latitude/:longitude', mobileEndPoint.getInitalDataFullCategories);
 
-    app.put('/mobile/rating/site',ratingSites.putRating);
-    app.get('/ratings/site',ratingSites.getRatings);
-    app.get('/ratings/organization',ratingSites.getRatingsByOrganization);
-    app.get('/ratings/nps',ratingSites.getNPSRatings);
-    app.get('/mobile/termsofservice',mobileEndPoint.getTermsOfService);
+    app.put('/mobile/rating/site', ratingSites.putRating);
+    app.get('/ratings/site', ratingSites.getRatings);
+    app.get('/ratings/organization', ratingSites.getRatingsByOrganization);
+    app.get('/ratings/nps', ratingSites.getNPSRatings);
+    app.get('/mobile/termsofservice', mobileEndPoint.getTermsOfService);
 
-    app.get('/checkversion/:version/:platform/:target', mobileRoutes.checkVersion );
-
-
+    app.get('/checkversion/:version/:platform/:target', mobileRoutes.checkVersion);
 
 
 };

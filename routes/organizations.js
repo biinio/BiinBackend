@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function () {
 
     //Common Libraries
     var util = require('util'),
@@ -8,8 +8,8 @@ module.exports = function() {
     var utils = require('../biin_modules/utils')(),
         path = require('path'),
         imageManager = require('../biin_modules/imageManager')();
-	var gm = require("gm"),imageMagick = gm.subClass({ imageMagick: true });
-	var Vibrant = require('node-vibrant');
+    var gm = require("gm"), imageMagick = gm.subClass({imageMagick: true});
+    var Vibrant = require('node-vibrant');
     //Schemas
     var organization = require('../schemas/organization'),
         site = require('../schemas/site'),
@@ -26,7 +26,7 @@ module.exports = function() {
         _uploadImageDirectory = "/workingFiles/";
 
     //GET the Main view of an Organization
-    functions.index = function(req, res) {
+    functions.index = function (req, res) {
         res.render('organization/index', {
             title: 'Organizations list',
             user: req.user
@@ -34,7 +34,7 @@ module.exports = function() {
     };
 
     //GET the list of organizations
-    functions.list = function(req, res) {
+    functions.list = function (req, res) {
         res.setHeader('Content-Type', 'application/json');
         organization.find({
             "accountIdentifier": req.user.accountIdentifier,
@@ -48,32 +48,34 @@ module.exports = function() {
             extraInfo: 1,
             media: 1,
             loyaltyEnabled: 1,
-            sites : 1,
-            isPublished : 1,
-            hasNPS : 1,
+            sites: 1,
+            isPublished: 1,
+            hasNPS: 1,
             isUsingBrandColors: 1,
-            primaryColor : 1,
-            secondaryColor:1
+            primaryColor: 1,
+            secondaryColor: 1
 
         }).lean().exec(function (err, data) {
-            if (err) { throw err }
+            if (err) {
+                throw err
+            }
             else {
-                for(var i = 0; i<data.length; i++){
+                for (var i = 0; i < data.length; i++) {
 
-                    if(!data[i].isUsingBrandColors){
+                    if (!data[i].isUsingBrandColors) {
                         data[i].isUsingBrandColors = "0";
                     }
 
-                    if(!data[i].primaryColor){
+                    if (!data[i].primaryColor) {
                         data[i].primaryColor = "rgb(170,171,171)";
-                    }else{
-                        data[i].primaryColor = "rgb("+data[i].primaryColor+")";
+                    } else {
+                        data[i].primaryColor = "rgb(" + data[i].primaryColor + ")";
                     }
 
-                    if(!data[i].secondaryColor){
+                    if (!data[i].secondaryColor) {
                         data[i].secondaryColor = "rgb(85,86,86)";
-                    }else{
-                        data[i].secondaryColor = "rgb("+data[i].secondaryColor+")";
+                    } else {
+                        data[i].secondaryColor = "rgb(" + data[i].secondaryColor + ")";
                     }
 
                 }
@@ -83,7 +85,7 @@ module.exports = function() {
     };
 
     //PUT/POST an organization
-    functions.set = function(req, res) {
+    functions.set = function (req, res) {
         //Perform an update
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
@@ -93,20 +95,21 @@ module.exports = function() {
         delete model.identifier;
         delete model.accountIdentifier;
 
-        if(!model.isUsingBrandColors){
+        if (!model.isUsingBrandColors) {
             model.isUsingBrandColors = "0";
         }
 
-        if(!model.primaryColor){
+        if (!model.primaryColor) {
             model.primaryColor = "170,171,171";
-        }else{
-            model.primaryColor = model.primaryColor.replace("rgb(","").replace(")","");
+        } else {
+            model.primaryColor = model.primaryColor.replace("rgb(", "").replace(")", "");
         }
 
-        if(!model.secondaryColor){
+        if (!model.secondaryColor) {
             model.secondaryColor = "85,86,86";
-        }else{
-            model.secondaryColor = model.secondaryColor.replace("rgb(","").replace(")","");;
+        } else {
+            model.secondaryColor = model.secondaryColor.replace("rgb(", "").replace(")", "");
+            ;
         }
 
         organization.update({
@@ -116,7 +119,7 @@ module.exports = function() {
             }, {
                 upsert: false
             },
-            function(err) {
+            function (err) {
                 if (err)
                     res.send(err, 500);
                 else
@@ -127,7 +130,7 @@ module.exports = function() {
     }
 
     //PUT an organization
-    functions.create = function(req, res) {
+    functions.create = function (req, res) {
         //Perform an update
         var accountIdentifier = req.param("accountIdentifier");
         res.setHeader('Content-Type', 'application/json');
@@ -137,7 +140,7 @@ module.exports = function() {
         newModel.primaryColor = "170,171,171";
         newModel.secondaryColor = "85,86,86";
         //Perform an create
-        newModel.save(function(err) {
+        newModel.save(function (err) {
             if (err)
                 res.send(err, 500);
             else {
@@ -148,9 +151,9 @@ module.exports = function() {
             }
         });
     }
-    
+
     //Set showcases into sites in a organization
-    functions.setShowcasesPerSite = function(req, res) {
+    functions.setShowcasesPerSite = function (req, res) {
         var organizationIdentifier = req.param("identifier");
         var model = req.body.model;
 
@@ -159,10 +162,10 @@ module.exports = function() {
         }, {
             _id: true,
             'sites': true
-        }, function(err, data) {
-            
+        }, function (err, data) {
+
             // Find the correct site to assign the showcase to
-            for (var index=0; index < model.sites.length; index++) {
+            for (var index = 0; index < model.sites.length; index++) {
                 for (var j = 0; j < data.sites.length; j++) {
                     if (model.sites[index].identifier == data.sites[j].identifier) {
                         data.sites[j].showcases = model.sites[index].showcases;
@@ -170,9 +173,9 @@ module.exports = function() {
                     }
                 }
             }
-            
+
             data.save(
-                function(err, organization) {
+                function (err, organization) {
                     if (err)
                         res.send(err, 500);
                     else
@@ -180,46 +183,46 @@ module.exports = function() {
                 })
         });
     };
-    
-    functions.getSelectedOrganization = function(req, res) {
+
+    functions.getSelectedOrganization = function (req, res) {
         var aIdentifier = req.param("accountIdentifier");
-        
+
         client.findOne({
-            accountIdentifier : aIdentifier
+            accountIdentifier: aIdentifier
         }, {
             _id: true,
-            'selectedOrganization': true 
+            'selectedOrganization': true
         }, function (err, data) {
             res.json({
                 data: data
             });
         });
     }
-    
+
     //Save selected organization to client table
-    functions.saveSelectedOrganization = function(req, res) {
+    functions.saveSelectedOrganization = function (req, res) {
         var aIdentifier = req.param("accountIdentifier");
         var oIdentifier = req.param("organizationIdentifier");
-        
+
         client.update({
             accountIdentifier: aIdentifier
-        },{
+        }, {
             selectedOrganization: oIdentifier
         }, function (err, data) {
 
-                if (err)
-                    throw err;
-                else
-                    res.json({
-                        state: "success"
-                    });
+            if (err)
+                throw err;
+            else
+                res.json({
+                    state: "success"
+                });
         });
-        
-        
+
+
     }
 
     //Test Vibrant
-    functions.testVibrant = function(req, res) {
+    functions.testVibrant = function (req, res) {
         //mueble: var file = 'http://i.imgur.com/7AQUAab.jpg';
         //zapato: var file = 'http://i.imgur.com/jbbXTUB.jpg';
         var file = 'http://i.imgur.com/miZt94c.jpg';
@@ -227,11 +230,11 @@ module.exports = function() {
         opts.quality = 5;
         var vibrant = new Vibrant(file);
         var result = {};
-        vibrant.getSwatches(function(error, swatches) {
-            var mainColorRGB =  swatches.Vibrant ? swatches.Vibrant.rgb : [0,0,0];
-            var darkVibrantRGB =  swatches.DarkVibrant ? swatches.DarkVibrant.rgb : [0,0,0];
-            var lightVibrantRGB =  swatches.LightVibrant ? swatches.LightVibrant.rgb : [255,255,255];
-        
+        vibrant.getSwatches(function (error, swatches) {
+            var mainColorRGB = swatches.Vibrant ? swatches.Vibrant.rgb : [0, 0, 0];
+            var darkVibrantRGB = swatches.DarkVibrant ? swatches.DarkVibrant.rgb : [0, 0, 0];
+            var lightVibrantRGB = swatches.LightVibrant ? swatches.LightVibrant.rgb : [255, 255, 255];
+
             result.main = mainColorRGB;
             result.dark = darkVibrantRGB;
             result.light = lightVibrantRGB;
@@ -241,7 +244,7 @@ module.exports = function() {
 
 
     //Post the Image of the Organization
-    functions.uploadImage = function(req, res) {
+    functions.uploadImage = function (req, res) {
         //Read the file
         var organizationIdentifier = req.param("identifier");
         res.setHeader('Content-Type', 'application/json');
@@ -251,32 +254,32 @@ module.exports = function() {
             var file = req.files.file;
             var imagesDirectory = userAccount;
             var systemImageName = 'media/' + userAccount + "/" + organizationIdentifier + "/media/" + utils.getGUID() + "." + utils.getExtension(file.originalFilename);
-            imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function(url) {
+            imageManager.uploadFile(file.path, imagesDirectory, systemImageName, false, function (url) {
                 var mediaObj = {
                     url: url
                 };
 
                 var tempId = utils.getUIDByLen(40) + ".";
 
-                imageMagick(file.path).format(function(err, format) {
+                imageMagick(file.path).format(function (err, format) {
 
                     var tempPath = _workingImagePath + tempId + format;
 
-                    imageMagick(file.path).size(function(err, size) {
+                    imageMagick(file.path).size(function (err, size) {
 
                         var height = size.height * 100 / 70;
                         var width = size.width * 100 / 70;
                         imageMagick(file.path)
-                            .depth(8, function(err, data) {
+                            .depth(8, function (err, data) {
                                 if (err)
                                     console.log(err);
                             })
-                            .write(tempPath, function(err, data) {
+                            .write(tempPath, function (err, data) {
                                 var vibrant = new Vibrant(tempPath);
-                                vibrant.getSwatches(function(error, swatches) {
-                                    var mainColorRGB =  swatches.Vibrant? swatches.Vibrant.rgb : [0,0,0];
-                                    var darkVibrantRGB =  swatches.DarkVibrant? swatches.DarkVibrant.rgb : [0,0,0];
-                                    var lightVibrantRGB =  swatches.LightVibrant? swatches.LightVibrant.rgb : [255,255,255];
+                                vibrant.getSwatches(function (error, swatches) {
+                                    var mainColorRGB = swatches.Vibrant ? swatches.Vibrant.rgb : [0, 0, 0];
+                                    var darkVibrantRGB = swatches.DarkVibrant ? swatches.DarkVibrant.rgb : [0, 0, 0];
+                                    var lightVibrantRGB = swatches.LightVibrant ? swatches.LightVibrant.rgb : [255, 255, 255];
 
                                     mainColor = "" + parseInt(mainColorRGB[0]) + "," + parseInt(mainColorRGB[1]) + "," + parseInt(mainColorRGB[2]);
                                     var vibrantColor = mainColor;
@@ -285,7 +288,7 @@ module.exports = function() {
 
 
                                     if (fs.existsSync(tempPath)) {
-                                        fs.unlink(tempPath, function(err) {
+                                        fs.unlink(tempPath, function (err) {
                                             console.log("The image was removed succesfully");
                                         });
                                     }
@@ -299,7 +302,7 @@ module.exports = function() {
                                         identifier: organizationIdentifier
                                     }, {
                                         media: mediaObj
-                                    }, function(err) {
+                                    }, function (err) {
                                         if (err)
                                             res.send(err, 500);
                                         else {
@@ -320,59 +323,64 @@ module.exports = function() {
         }
     }
 
-    
+
     //Mark an organization, and its showcases as deleted
-    functions.markAsDeleted = function(req, res) {
+    functions.markAsDeleted = function (req, res) {
         //Get the organization identifier
         var organizationIdentifier = req.param("identifier");
         organization.update({
-            identifier:organizationIdentifier
-        },{ 
-            $set:{"isDeleted": 1}
-        }, function(err){
-            if(err) { throw err; }
-            else { 
+            identifier: organizationIdentifier
+        }, {
+            $set: {"isDeleted": 1}
+        }, function (err) {
+            if (err) {
+                throw err;
+            }
+            else {
                 showcase.update({
                     'organizationIdentifier': organizationIdentifier
-                },{
-                    $set:{"isDeleted": 1}
-                }, function(err){
-                    if(err) { throw err; }
+                }, {
+                    $set: {"isDeleted": 1}
+                }, function (err) {
+                    if (err) {
+                        throw err;
+                    }
                     else {
-                        res.json({state:"success"}); 
+                        res.json({state: "success"});
                     }
                 });
             }
         });
     }
-    
-    
+
+
     //DELETE an specific Organization
-    functions.delete = function(req, res) {
+    functions.delete = function (req, res) {
 
         //Get the organization identifier
         var organizationIdentifier = req.param("identifier");
 
         organization.findOne({
             identifier: organizationIdentifier
-        }, function(err, data) {
+        }, function (err, data) {
             //Remove Sites and References
             for (var s = 0; s < data.sites.length; s++) {
-                var removeSite = regionRoutes.removeSiteToRegionBySite(data.sites[s].identifier, function() {});
+                var removeSite = regionRoutes.removeSiteToRegionBySite(data.sites[s].identifier, function () {
+                });
             }
 
 
             //Remove the showcases references
             showcase.remove({
                 'organizationIdentifier': organizationIdentifier
-            }, function(err, affected) {
+            }, function (err, affected) {
                 if (err)
                     throw err;
                 else {
                     //Remove the organization
                     organization.remove({
                         identifier: organizationIdentifier
-                    }, function(err) {
+                    }, function (err) {
                         if (err)
                             throw err;
                         else
@@ -386,12 +394,12 @@ module.exports = function() {
 
         });
     }
-    
+
     // Check if gallery image is being used before deleting
     functions.checkImageUse = function (req, res) {
         var organizationIdentifier = req.param('identifier');
         var imageIdentifier = req.param('imageIdentifier');
-        
+
         organization.findOne({
             identifier: organizationIdentifier,
             "isDeleted": false
@@ -403,17 +411,18 @@ module.exports = function() {
             'elements._id': true,
             'elements.media': true,
             'elements.isDeleted': true
-        }, function(err, data) {
-            if (err) { throw err; }
+        }, function (err, data) {
+            if (err) {
+                throw err;
+            }
             else {
                 var activeElements = [];
                 var activeSites = [];
                 var imageInUse = false;
-                
+
                 for (var elementIndex = 0; elementIndex < data.elements.length; elementIndex++) {
                     // Check elements that have not been deleted
-                    if (data.elements[elementIndex].isDeleted == false)
-                    {
+                    if (data.elements[elementIndex].isDeleted == false) {
                         // Check media from the element to see if image is being used
                         for (image = 0; image < data.elements[elementIndex].media.length; image++) {
                             if (data.elements[elementIndex].media[image].identifier == imageIdentifier) {
@@ -422,7 +431,7 @@ module.exports = function() {
                         }
                     }
                 }
-                
+
                 // Check that it is not being used in sites if it's not being used in elements
                 if (imageInUse == false) {
                     for (var siteIndex = 0; siteIndex < data.sites.length; siteIndex++) {
@@ -437,18 +446,18 @@ module.exports = function() {
                         }
                     }
                 }
-                
+
                 // Image still not in use, proceed to delete
                 if (imageInUse == false) {
                     //remove elements from organization.elements
                     organization.update({
-                        identifier:organizationIdentifier
-                    },{
-                        $pull:{gallery:{identifier: imageIdentifier}}
-                    },{
-                        multi:true
-                    },function(err){
-                        if(err)
+                        identifier: organizationIdentifier
+                    }, {
+                        $pull: {gallery: {identifier: imageIdentifier}}
+                    }, {
+                        multi: true
+                    }, function (err) {
+                        if (err)
                             throw err;
                         else {
                             res.json({
@@ -458,29 +467,29 @@ module.exports = function() {
                     });
                 }
                 else {
-                
-                res.json({
-                     deleted: imageInUse
-                });
+
+                    res.json({
+                        deleted: imageInUse
+                    });
                 }
             }
         });
     }
-    
+
     //Delete gallery images
-    functions.deleteImage = function(req, res) {
+    functions.deleteImage = function (req, res) {
         var organizationIdentifier = req.param('identifier');
         var imageIdentifier = req.param('imageIdentifier');
-        
+
         //remove elements from organization.elements
-		organization.update({
-            identifier:organizationIdentifier
-        },{
-            $pull:{gallery:{identifier: imageIdentifier}}
-        },{
-            multi:true
-        },function(err){
-            if(err)
+        organization.update({
+            identifier: organizationIdentifier
+        }, {
+            $pull: {gallery: {identifier: imageIdentifier}}
+        }, {
+            multi: true
+        }, function (err) {
+            if (err)
                 throw err;
             else {
                 res.json({
@@ -488,19 +497,19 @@ module.exports = function() {
                 });
             }
         });
-            
+
     }
 
     //Minor and major Functions
 
     //GET the minor of the organization context
-    functions.getMinor = function(req, res) {
+    functions.getMinor = function (req, res) {
         var organizationIdentifier = req.param('identifier');
         var siteIdentifier = req.param('siteIdentifier');
         organization.findOne({
             identifier: organizationIdentifier,
             'sites.identifier': siteIdentifier
-        }, 'sites.$.minorCounter', function(err, data) {
+        }, 'sites.$.minorCounter', function (err, data) {
             //If the site is not new
             if (data) {
                 organization.update({
@@ -510,7 +519,7 @@ module.exports = function() {
                     $inc: {
                         'sites.$.minorCounter': utils.get.minorIncrement()
                     }
-                }, function(err, raw) {
+                }, function (err, raw) {
                     if (err)
                         throw err;
                     else {
@@ -527,8 +536,8 @@ module.exports = function() {
             } else
             //Return the increment variable
                 res.json({
-                data: utils.get.minorIncrement()
-            });
+                    data: utils.get.minorIncrement()
+                });
         });
     }
 

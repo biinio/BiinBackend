@@ -12,7 +12,7 @@ module.exports = function () {
     var client = require('../schemas/client');
     var biin = require('../schemas/biin');
     var category = require('../schemas/category');
-    var notice =require('../schemas/notices');
+    var notice = require('../schemas/notices');
 
     // Config of priorities of categories
     var configPriorities = require('../config/priorities/priorities.json');
@@ -238,37 +238,37 @@ module.exports = function () {
             var currentElement = showcase.elements[i];
             var newElement = null;
 
-            if(currentElement.identifier){
+            if (currentElement.identifier) {
                 newElement = {identifier: currentElement.identifier}
             }
-            if(currentElement.elementIdentifier){
+            if (currentElement.elementIdentifier) {
                 newElement = {identifier: currentElement.elementIdentifier}
             }
-            if(newElement){
+            if (newElement) {
                 showcaseValidated.elements.push(newElement);
             }
         }
         return showcaseValidated;
     }
 
-    function  validateNoticesInitialInfo(notice){
+    function validateNoticesInitialInfo(notice) {
         var noticeValidated = {};
-        noticeValidated.identifier = notice.identifier? notice.identifier : "";
-        noticeValidated.elementIdentifier = notice.elementIdentifier? notice.elementIdentifier : "";
+        noticeValidated.identifier = notice.identifier ? notice.identifier : "";
+        noticeValidated.elementIdentifier = notice.elementIdentifier ? notice.elementIdentifier : "";
         noticeValidated.name = notice.name ? notice.name : "";
-        noticeValidated.message = notice.message? notice.message : "";
-        noticeValidated.onSunday = notice.onSunday? notice.onSunday : "0";
-        noticeValidated.onMonday = notice.onMonday? notice.onMonday : "0";
-        noticeValidated.onTuesday = notice.onTuesday? notice.onTuesday : "0";
-        noticeValidated.onWednesday = notice.onWednesday? notice.onWednesday : "0";
-        noticeValidated.onThursday = notice.onThursday? notice.onThursday : "0";
-        noticeValidated.onFriday  = notice.onFriday? notice.onFriday : "0";
-        noticeValidated.onSaturday = notice.onSaturday? notice.onSaturday : "0";
+        noticeValidated.message = notice.message ? notice.message : "";
+        noticeValidated.onSunday = notice.onSunday ? notice.onSunday : "0";
+        noticeValidated.onMonday = notice.onMonday ? notice.onMonday : "0";
+        noticeValidated.onTuesday = notice.onTuesday ? notice.onTuesday : "0";
+        noticeValidated.onWednesday = notice.onWednesday ? notice.onWednesday : "0";
+        noticeValidated.onThursday = notice.onThursday ? notice.onThursday : "0";
+        noticeValidated.onFriday = notice.onFriday ? notice.onFriday : "0";
+        noticeValidated.onSaturday = notice.onSaturday ? notice.onSaturday : "0";
 
         noticeValidated.startTime = notice.startTime ? notice.startTime : "0";
         noticeValidated.endTime = notice.endTime ? notice.endTime : "24";
         noticeValidated.isActive = notice.isActive ? notice.isActive : "0";
-        noticeValidated.isActive = notice.isActive == "1" ?  "1" : "0";
+        noticeValidated.isActive = notice.isActive == "1" ? "1" : "0";
 
 
         return noticeValidated;
@@ -304,42 +304,38 @@ module.exports = function () {
         favorites.elements = [];
 
 
-
         /*function getSitesNear(){
-            return new Promise(function(resolve,reject){
+         return new Promise(function(resolve,reject){
 
-                resolve();
-            });
-        }
+         resolve();
+         });
+         }
 
-        function getHighlights( ){
-            return new Promise(function(resolve,reject){
-                resolve();
-            });
-        }
+         function getHighlights( ){
+         return new Promise(function(resolve,reject){
+         resolve();
+         });
+         }
 
-        function getFavorites(){
-            return new Promise(function(resolve,reject){
-                resolve();
-            });
-        }
-        function getCategories(){
-            return new Promise(function(resolve,reject){
-                resolve();
-            });
-        }
+         function getFavorites(){
+         return new Promise(function(resolve,reject){
+         resolve();
+         });
+         }
+         function getCategories(){
+         return new Promise(function(resolve,reject){
+         resolve();
+         });
+         }
 
-        getSitesNear()
-        .then(getHighlights().then(
-                getCategories().then(
-                    getFavorites().then(function(){
-                    })
-                )
-            )
-        );*/
-
-
-
+         getSitesNear()
+         .then(getHighlights().then(
+         getCategories().then(
+         getFavorites().then(function(){
+         })
+         )
+         )
+         );*/
 
 
         mobileUser.findOne({'identifier': userIdentifier}, {
@@ -351,7 +347,7 @@ module.exports = function () {
             "followObjects": 1,
             "biinieCollect": 1,
             "shareObjects": 1
-        }).lean().exec( function (errBiinie, mobileUserData) {
+        }).lean().exec(function (errBiinie, mobileUserData) {
             if (errBiinie)
                 throw errBiinie;
             if (mobileUserData) {
@@ -390,7 +386,7 @@ module.exports = function () {
                             'sites.categories': 1,
                             'sites.isReady': 1,
                             'sites.siteSchedule': 1,
-                            'sites.notices':1
+                            'sites.notices': 1
                         }).lean().exec(function (error, data) {
 
                         var sitesDesnormalized = [];
@@ -498,7 +494,7 @@ module.exports = function () {
                                 "name": 1,
                                 "description": 1,
                                 "identifier": 1,
-                                "elements.elementIdentifier":1,
+                                "elements.elementIdentifier": 1,
                                 "isReady": 1
                             }).lean().exec(
                             function (showcasesError, showcasesData) {
@@ -525,8 +521,8 @@ module.exports = function () {
 
                                 showcases = showcasesData;
 
-                                for(i=0;i<showcases.length;i++){
-                                    for(j=0;j<showcases[i].elements.length;j++){
+                                for (i = 0; i < showcases.length; i++) {
+                                    for (j = 0; j < showcases[i].elements.length; j++) {
                                         showcases[i].elements[j].identifier = showcases[i].elements[j].elementIdentifier;
                                         delete showcases[i].elements[j].elementIdentifier;
                                     }
@@ -598,7 +594,7 @@ module.exports = function () {
 
                                     for (i = 0; i < showcases.length; i++) {
                                         var currentShowcase = showcases[i];
-                                        currentShowcase.elements = _.filter( currentShowcase.elements , function(element){
+                                        currentShowcase.elements = _.filter(currentShowcase.elements, function (element) {
                                             return uniqueElementsShowcase.indexOf(element.identifier) > -1;
                                         });
 
@@ -635,7 +631,6 @@ module.exports = function () {
                                     });
 
 
-
                                     for (var i = 0; i < hightlightsFiltered.length; i++) {
                                         var currentHighlight = hightlightsFiltered[i];
                                         var isHighlightFound = false;
@@ -645,13 +640,13 @@ module.exports = function () {
 
                                             for (var k = 0; k < response.sites[j].showcases.length && !isHighlightFound; k++) {
                                                 var currentShowcase = response.sites[j].showcases[k];
-                                                var showcaseData = _.find(showcases,function(showcase){
+                                                var showcaseData = _.find(showcases, function (showcase) {
                                                     return showcase.identifier == response.sites[j].showcases[k].identifier;
                                                 });
-                                                if(showcaseData){
+                                                if (showcaseData) {
                                                     for (var l = 0; l < showcaseData.elements.length && !isHighlightFound; l++) {
                                                         var currentElement = showcaseData.elements[l];
-                                                        if(currentElement.identifier == currentHighlight.identifier){
+                                                        if (currentElement.identifier == currentHighlight.identifier) {
                                                             currentHighlight.showcaseIdentifier = currentShowcase.identifier;
                                                             currentHighlight.siteIdentifier = currentSite.identifier;
                                                             isHighlightFound = true;
@@ -662,7 +657,7 @@ module.exports = function () {
                                         }
                                     }
 
-                                    hightlightsFiltered = _.filter(hightlightsFiltered, function(highlight){
+                                    hightlightsFiltered = _.filter(hightlightsFiltered, function (highlight) {
                                         return highlight.showcaseIdentifier && highlight.siteIdentifier;
                                     });
 
@@ -689,7 +684,6 @@ module.exports = function () {
 
 
                                     hightlightsFiltered = uniqueHighlights.splice(0, LIMIT_HIGHLIGHTS_TO_SENT);
-
 
 
                                     //Fill categories array
@@ -749,7 +743,7 @@ module.exports = function () {
 
                                         elementsWithCategories = elementsWithCategories.splice(0, ELEMENTS_IN_CATEGORY);
 
-                                        for( j = 0; j< elementsWithCategories.length; j++){
+                                        for (j = 0; j < elementsWithCategories.length; j++) {
                                             var newElementCategorie = {};
                                             newElementCategorie.identifier = elementsWithCategories[j].identifier;
                                             newElementCategorie.siteIdentifier = elementsWithCategories[j].siteIdentifier;
@@ -825,7 +819,7 @@ module.exports = function () {
 
 
                                     var copy = [];
-                                    for( i =0; i < favorites.sites.length; i++){
+                                    for (i = 0; i < favorites.sites.length; i++) {
                                         copy.push(JSON.parse(JSON.stringify(favorites.sites[i])));
                                     }
                                     favorites.sites = copy;
@@ -838,7 +832,7 @@ module.exports = function () {
                                         favorites.sites[i] = currentSite;
                                     }
 
-                                    favorites.sites = _.uniq(favorites.sites,false,function(site){
+                                    favorites.sites = _.uniq(favorites.sites, false, function (site) {
                                         return site.identifier;
                                     });
 
@@ -976,7 +970,7 @@ module.exports = function () {
                                                     "name": 1,
                                                     "description": 1,
                                                     "identifier": 1,
-                                                    "elements.elementIdentifier":1,
+                                                    "elements.elementIdentifier": 1,
                                                     "isReady": 1
                                                 }).lean().exec(
                                                 function (showcasesError, showcasesData) {
@@ -1003,8 +997,8 @@ module.exports = function () {
 
                                                     var showcasesLikedSite = showcasesData;
 
-                                                    for(i=0;i<showcasesLikedSite.length;i++){
-                                                        for(j=0;j<showcasesLikedSite[i].elements.length;j++){
+                                                    for (i = 0; i < showcasesLikedSite.length; i++) {
+                                                        for (j = 0; j < showcasesLikedSite[i].elements.length; j++) {
                                                             showcasesLikedSite[i].elements[j].identifier = showcasesLikedSite[i].elements[j].elementIdentifier;
                                                             delete showcasesLikedSite[i].elements[j].elementIdentifier;
                                                         }
@@ -1103,7 +1097,6 @@ module.exports = function () {
                                                     }
 
 
-
                                                     /*response.sitesToConcat = sitesLiked;
                                                      response.toConcatOrg = orgData;
                                                      response.toConcatElements = elementsfiltered;*/
@@ -1118,7 +1111,7 @@ module.exports = function () {
                                                     });
 
                                                     var copy = [];
-                                                    for( i =0; i < favorites.elements.length; i++){
+                                                    for (i = 0; i < favorites.elements.length; i++) {
                                                         copy.push(JSON.parse(JSON.stringify(favorites.elements[i])));
                                                     }
                                                     favorites.elements = copy;
@@ -1141,38 +1134,38 @@ module.exports = function () {
                                                             }) != null;
                                                     });
 
-                                                    for( i = 0; i < elementsToFindThatAreInResponse.length; i++){
+                                                    for (i = 0; i < elementsToFindThatAreInResponse.length; i++) {
                                                         var elementInResponse = elementsToFindThatAreInResponse[i];
                                                         var showcaseElement = null;
                                                         var siteElement = null;
-                                                        for( j = 0; j < showcases.length; j++ ){
+                                                        for (j = 0; j < showcases.length; j++) {
 
-                                                            for( k = 0; k < showcases[j].elements.length; k++){
-                                                                if(showcases[j].elements[k].identifier == elementInResponse.identifier){
+                                                            for (k = 0; k < showcases[j].elements.length; k++) {
+                                                                if (showcases[j].elements[k].identifier == elementInResponse.identifier) {
                                                                     showcaseElement = showcases[j];
                                                                     break;
                                                                 }
                                                             }
-                                                            if(showcaseElement){
+                                                            if (showcaseElement) {
                                                                 break;
                                                             }
                                                         }
 
-                                                        if(showcaseElement){
-                                                            for(j = 0; j < response.sites.length; j++ ) {
-                                                                for( k = 0; k < response.sites[j].showcases.length; k++){
-                                                                    if( response.sites[j].showcases[k].identifier == showcaseElement.identifier){
+                                                        if (showcaseElement) {
+                                                            for (j = 0; j < response.sites.length; j++) {
+                                                                for (k = 0; k < response.sites[j].showcases.length; k++) {
+                                                                    if (response.sites[j].showcases[k].identifier == showcaseElement.identifier) {
                                                                         siteElement = response.sites[j];
                                                                         break;
                                                                     }
                                                                 }
-                                                                if(siteElement){
+                                                                if (siteElement) {
                                                                     break;
                                                                 }
                                                             }
                                                         }
-                                                        elementInResponse.showcaseIdentifier = showcaseElement? showcaseElement.identifier : showcaseElement;
-                                                        elementInResponse.siteIdentifier = siteElement ? siteElement.identifier : siteElement ;
+                                                        elementInResponse.showcaseIdentifier = showcaseElement ? showcaseElement.identifier : showcaseElement;
+                                                        elementInResponse.siteIdentifier = siteElement ? siteElement.identifier : siteElement;
                                                         elementsToFindThatAreInResponse[i] = elementInResponse;
                                                     }
 
@@ -1188,21 +1181,23 @@ module.exports = function () {
 
                                                     elementsToFind = _.pluck(elementsToFind, "identifier");
 
-                                                    organization.find({"elements.elementIdentifier": {$in: elementsToFind}, isDeleted: false,
+                                                    organization.find({
+                                                        "elements.elementIdentifier": {$in: elementsToFind},
+                                                        isDeleted: false,
                                                         isPublished: true
                                                     }, {}).lean().exec(function (err, organizationsData) {
 
-                                                        if(err){
+                                                        if (err) {
 
-                                                        }else{
+                                                        } else {
                                                             var favElementsData = new HashTable();
                                                             var favOrganization = new HashTable();
                                                             var elementsDesnormalized = [];
-                                                            for ( i = 0; i < organizationsData.length; i++) {
+                                                            for (i = 0; i < organizationsData.length; i++) {
                                                                 favOrganization.put(organizationsData[i].identifier, organizationsData[i])
                                                                 if (organizationsData[i].elements) {
                                                                     for (var j = 0; j < organizationsData[i].elements.length; j++) {
-                                                                        if(organizationsData[i].elements[j].isReady == 1){
+                                                                        if (organizationsData[i].elements[j].isReady == 1) {
                                                                             var organization = organizationsData[i];
                                                                             var element = organization.elements[j];
                                                                             var sites = organization.sites;
@@ -1211,7 +1206,7 @@ module.exports = function () {
                                                                                 sites: sites,
                                                                                 element: element
                                                                             });
-                                                                            favElementsData.put(element.elementIdentifier,{
+                                                                            favElementsData.put(element.elementIdentifier, {
                                                                                 organization: organization,
                                                                                 sites: sites,
                                                                                 element: element
@@ -1221,38 +1216,40 @@ module.exports = function () {
                                                                 }
                                                             }
 
-                                                            var elementsTotalToFind = _.pluck(elementsDesnormalized,"element");
-                                                            elementsTotalToFind = _.pluck(elementsTotalToFind,"elementIdentifier");
+                                                            var elementsTotalToFind = _.pluck(elementsDesnormalized, "element");
+                                                            elementsTotalToFind = _.pluck(elementsTotalToFind, "elementIdentifier");
 
 
-                                                            showcase.find({"elements.elementIdentifier": {$in: elementsTotalToFind}, isDeleted: false, isReady:1
-                                                            },{}).lean().exec(function(errShowcases, showcasesData){
+                                                            showcase.find({
+                                                                "elements.elementIdentifier": {$in: elementsTotalToFind},
+                                                                isDeleted: false,
+                                                                isReady: 1
+                                                            }, {}).lean().exec(function (errShowcases, showcasesData) {
 
                                                                 var showcasesToAddToResponse = [];
                                                                 var favElementsShowcases = new HashTable();
 
 
-
-                                                                for( i = 0; i < showcasesData.length; i++){
-                                                                    favElementsShowcases.put(showcasesData[i].identifier,showcasesData[i]);
+                                                                for (i = 0; i < showcasesData.length; i++) {
+                                                                    favElementsShowcases.put(showcasesData[i].identifier, showcasesData[i]);
                                                                 }
 
-                                                                var elementsThatAreProbInShowcases = _.filter(elementsDesnormalized,function(elementtoEval){
+                                                                var elementsThatAreProbInShowcases = _.filter(elementsDesnormalized, function (elementtoEval) {
                                                                     return elementsToFind.indexOf(elementtoEval.element.elementIdentifier) == -1;
                                                                 });
 
 
-                                                                elementsDesnormalized = _.filter(elementsDesnormalized,function(elementtoEval){
+                                                                elementsDesnormalized = _.filter(elementsDesnormalized, function (elementtoEval) {
                                                                     return elementsToFind.indexOf(elementtoEval.element.elementIdentifier) > -1;
                                                                 });
 
 
-                                                                for(i = 0; i < elementsDesnormalized.length; i++){
-                                                                    elementsDesnormalized[i].sites = _.filter(elementsDesnormalized[i].sites,function(site){
+                                                                for (i = 0; i < elementsDesnormalized.length; i++) {
+                                                                    elementsDesnormalized[i].sites = _.filter(elementsDesnormalized[i].sites, function (site) {
                                                                         return site.isReady == "1";
                                                                     });
 
-                                                                    for(j=0; j< elementsDesnormalized[i].sites.length;j++){
+                                                                    for (j = 0; j < elementsDesnormalized[i].sites.length; j++) {
                                                                         elementsDesnormalized[i].sites[j].proximity = utils.getProximity(userLat, userLng, elementsDesnormalized[i].sites[j].lat, elementsDesnormalized[i].sites[j].lng);
                                                                     }
 
@@ -1262,18 +1259,18 @@ module.exports = function () {
 
                                                                 }
 
-                                                                for(i = 0; i < elementsDesnormalized.length; i++){
+                                                                for (i = 0; i < elementsDesnormalized.length; i++) {
                                                                     var site = null;
                                                                     var showcase = null;
 
-                                                                    for(j=0; j< elementsDesnormalized[i].sites.length && !site;j++){
+                                                                    for (j = 0; j < elementsDesnormalized[i].sites.length && !site; j++) {
 
-                                                                        for(k=0; k<elementsDesnormalized[i].sites[j].showcases.length && !showcase;k++){
+                                                                        for (k = 0; k < elementsDesnormalized[i].sites[j].showcases.length && !showcase; k++) {
 
                                                                             var showcaseData = favElementsShowcases.get(elementsDesnormalized[i].sites[j].showcases[k].showcaseIdentifier);
-                                                                            if(showcaseData){
-                                                                                for(var l=0; l<showcaseData.elements.length;l++){
-                                                                                    if(elementsDesnormalized[i].element.elementIdentifier == showcaseData.elements[l].elementIdentifier){
+                                                                            if (showcaseData) {
+                                                                                for (var l = 0; l < showcaseData.elements.length; l++) {
+                                                                                    if (elementsDesnormalized[i].element.elementIdentifier == showcaseData.elements[l].elementIdentifier) {
                                                                                         site = elementsDesnormalized[i].sites[j];
                                                                                         showcase = showcaseData;
                                                                                         break;
@@ -1282,40 +1279,40 @@ module.exports = function () {
                                                                             }
                                                                         }
                                                                     }
-                                                                    if(site && showcase){
+                                                                    if (site && showcase) {
                                                                         elementsDesnormalized[i].site = site;
                                                                         elementsDesnormalized[i].showcase = showcase;
                                                                         delete elementsDesnormalized[i].sites;
                                                                     }
                                                                 }
 
-                                                                elementsDesnormalized = _.filter(elementsDesnormalized, function(element){
+                                                                elementsDesnormalized = _.filter(elementsDesnormalized, function (element) {
                                                                     return element.site && element.showcase;
                                                                 });
 
-                                                                for(i = 0; i < elementsDesnormalized.length; i++){
+                                                                for (i = 0; i < elementsDesnormalized.length; i++) {
                                                                     for (j = 0; j < elementsDesnormalized[i].site.showcases.length; j++) {
                                                                         var showcase = favElementsShowcases.get(elementsDesnormalized[i].site.showcases[j].showcaseIdentifier);
-                                                                        if(showcase){
+                                                                        if (showcase) {
                                                                             for (var k = 0; k < showcase.elements.length; k++) {
                                                                                 var currentElement = showcase.elements[k];
                                                                                 var elementData = favElementsData.get(currentElement.elementIdentifier);
-                                                                                if(!elementData){
-                                                                                    showcase.elements.splice(k,1);
-                                                                                    k --;
+                                                                                if (!elementData) {
+                                                                                    showcase.elements.splice(k, 1);
+                                                                                    k--;
                                                                                 }
                                                                             }
-                                                                            favElementsShowcases.put(elementsDesnormalized[i].site.showcases[j].showcaseIdentifier,showcase);
+                                                                            favElementsShowcases.put(elementsDesnormalized[i].site.showcases[j].showcaseIdentifier, showcase);
                                                                         }
-                                                                        if(!showcase || showcase.elements.length == 0){
-                                                                            elementsDesnormalized[i].site.showcases.splice(j,1);
+                                                                        if (!showcase || showcase.elements.length == 0) {
+                                                                            elementsDesnormalized[i].site.showcases.splice(j, 1);
                                                                             j--;
                                                                         } else {
                                                                             showcasesToAddToResponse.push(showcase);
                                                                         }
                                                                     }
-                                                                    if(elementsDesnormalized[i].site.showcases.length == 0){
-                                                                        elementsDesnormalized.splice(i,1);
+                                                                    if (elementsDesnormalized[i].site.showcases.length == 0) {
+                                                                        elementsDesnormalized.splice(i, 1);
                                                                         i--;
                                                                     }
                                                                 }
@@ -1325,7 +1322,7 @@ module.exports = function () {
                                                                     var currentShowcase = showcasesToAddToResponse[i];
                                                                     for (var j = 0; j < currentShowcase.elements.length; j++) {
                                                                         var currentElement = favElementsData.get(currentShowcase.elements[j].elementIdentifier);
-                                                                        if(currentElement) {
+                                                                        if (currentElement) {
                                                                             elementsToAddToResponse.push(currentElement);
                                                                         }
                                                                     }
@@ -1336,28 +1333,28 @@ module.exports = function () {
                                                                     elementsDesnormalized[i] = currentElement;
                                                                 }
 
-                                                                for(i = 0; i < elementsDesnormalized.length; i++){
-                                                                    var site = _.find(response.sites,function(site){
-                                                                        return  elementsDesnormalized[i].site  && site.identifier == elementsDesnormalized[i].site.identifier;
+                                                                for (i = 0; i < elementsDesnormalized.length; i++) {
+                                                                    var site = _.find(response.sites, function (site) {
+                                                                        return elementsDesnormalized[i].site && site.identifier == elementsDesnormalized[i].site.identifier;
                                                                     });
 
-                                                                    if(site != null){
+                                                                    if (site != null) {
 
-                                                                        var userShare = _.findWhere( mobileUserData.shareObjects, {
+                                                                        var userShare = _.findWhere(mobileUserData.shareObjects, {
                                                                             identifier: site.identifier,
                                                                             type: "site"
                                                                         });
 
-                                                                        var userCollected = _.findWhere( mobileUserData.biinieCollections.sites, {
+                                                                        var userCollected = _.findWhere(mobileUserData.biinieCollections.sites, {
                                                                             identifier: site.identifier
                                                                         });
 
-                                                                        var userFollowed = _.findWhere( mobileUserData.followObjects, {
+                                                                        var userFollowed = _.findWhere(mobileUserData.followObjects, {
                                                                             identifier: site.identifier,
                                                                             type: "site"
                                                                         });
 
-                                                                        var userLiked = _.findWhere( mobileUserData.likeObjects, {
+                                                                        var userLiked = _.findWhere(mobileUserData.likeObjects, {
                                                                             identifier: site.identifier,
                                                                             type: "site"
                                                                         });
@@ -1373,17 +1370,17 @@ module.exports = function () {
                                                                     }
                                                                 }
 
-                                                                for(i = 0; i < favorites.elements.length; i++){
-                                                                    var elementData = _.find(elementsDesnormalized, function(element){
+                                                                for (i = 0; i < favorites.elements.length; i++) {
+                                                                    var elementData = _.find(elementsDesnormalized, function (element) {
                                                                         return element.element.elementIdentifier == favorites.elements[i].identifier;
                                                                     });
-                                                                    if(elementData){
+                                                                    if (elementData) {
                                                                         favorites.elements[i].showcaseIdentifier = elementData.showcase.identifier;
                                                                         favorites.elements[i].siteIdentifier = elementData.site.identifier;
                                                                     }
                                                                 }
 
-                                                                for(i = 0; i < elementsDesnormalized.length; i++){
+                                                                for (i = 0; i < elementsDesnormalized.length; i++) {
 
                                                                     var isUserCollect = false;
                                                                     for (var j = 0; j < mobileUserData.biinieCollections.length && !isUserCollect; j++) {
@@ -1424,23 +1421,23 @@ module.exports = function () {
 
                                                                 }
 
-                                                                favorites.elements = _.filter(favorites.elements,function(element){
+                                                                favorites.elements = _.filter(favorites.elements, function (element) {
                                                                     return element.siteIdentifier && element.showcaseIdentifier;
                                                                 });
 
                                                                 //TODO: DELETE DUPLICATED SHOWCASES AND ELEMENTS
 
-                                                                var organizationsToAddToResponse = _.pluck(elementsToAddToResponse,"organization");
-                                                                organizationsToAddToResponse = _.uniq(organizationsToAddToResponse,false,function(organization){
+                                                                var organizationsToAddToResponse = _.pluck(elementsToAddToResponse, "organization");
+                                                                organizationsToAddToResponse = _.uniq(organizationsToAddToResponse, false, function (organization) {
                                                                     return organization.identifier;
                                                                 });
 
-                                                                elementsToAddToResponse = _.pluck(elementsToAddToResponse,"element");
-                                                                elementsToAddToResponse = _.uniq(elementsToAddToResponse,false,function(element){
+                                                                elementsToAddToResponse = _.pluck(elementsToAddToResponse, "element");
+                                                                elementsToAddToResponse = _.uniq(elementsToAddToResponse, false, function (element) {
                                                                     return element.elementIdentifier;
                                                                 });
 
-                                                                for ( i = 0; i < elementsToAddToResponse.length; i++) {
+                                                                for (i = 0; i < elementsToAddToResponse.length; i++) {
                                                                     var currentElement = elementsToAddToResponse[i];
                                                                     var isUserCollect = false;
                                                                     for (var j = 0; j < mobileUserData.biinieCollections.length && !isUserCollect; j++) {
@@ -1481,7 +1478,7 @@ module.exports = function () {
 
                                                                 }
 
-                                                                showcasesToAddToResponse = _.uniq(showcasesToAddToResponse,false,function(showcase){
+                                                                showcasesToAddToResponse = _.uniq(showcasesToAddToResponse, false, function (showcase) {
                                                                     return showcase.identifier;
                                                                 });
 
@@ -1489,16 +1486,16 @@ module.exports = function () {
 
                                                                 showcases = showcases.concat(showcasesToAddToResponse);
 
-                                                                for ( i = 0; i < showcases.length; i++) {
+                                                                for (i = 0; i < showcases.length; i++) {
                                                                     var currentShowcase = showcases[i];
                                                                     currentShowcase = validateShowcaseInitialInfo(currentShowcase);
                                                                     showcases[i] = currentShowcase;
                                                                 }
 
-                                                                for ( i = 0; i < organizationsToAddToResponse.length; i++) {
+                                                                for (i = 0; i < organizationsToAddToResponse.length; i++) {
                                                                     var currentOrganization = organizationsToAddToResponse[i];
                                                                     currentOrganization = validateOrganizationInitialInfo(currentOrganization);
-                                                                    organizationsToAddToResponse[i] =currentOrganization;
+                                                                    organizationsToAddToResponse[i] = currentOrganization;
                                                                 }
 
                                                                 organizations = organizations.concat(organizationsToAddToResponse);
@@ -1523,13 +1520,16 @@ module.exports = function () {
 
                                                                 noticesToFind = _.uniq(noticesToFind);
                                                                 //TODO: CHECK IS READY
-                                                                notice.find({"identifier":{$in:noticesToFind}, isDeleted:false },{},function(err, notices){
-                                                                    if(err) {
+                                                                notice.find({
+                                                                    "identifier": {$in: noticesToFind},
+                                                                    isDeleted: false
+                                                                }, {}, function (err, notices) {
+                                                                    if (err) {
 
                                                                     } else {
-                                                                        var noticesIdentifierFound = _.pluck(notices,"identifier");
-                                                                        var noticesNotFound = _.difference(noticesToFind,noticesIdentifierFound);
-                                                                        for ( i = 0; i < notices.length; i++) {
+                                                                        var noticesIdentifierFound = _.pluck(notices, "identifier");
+                                                                        var noticesNotFound = _.difference(noticesToFind, noticesIdentifierFound);
+                                                                        for (i = 0; i < notices.length; i++) {
                                                                             var notice = notices[i];
                                                                             noticesValidated.push(validateNoticesInitialInfo(notice));
                                                                         }
@@ -1543,7 +1543,11 @@ module.exports = function () {
                                                                         response.notices = noticesValidated;
 
 
-                                                                        res.json({data: response, status: "0", result: "1"});
+                                                                        res.json({
+                                                                            data: response,
+                                                                            status: "0",
+                                                                            result: "1"
+                                                                        });
 
                                                                         var elementsByCategoriesSent = [];
                                                                         for (var i = 0; i < categories.length; i++) {
@@ -1800,8 +1804,8 @@ module.exports = function () {
                                         //getting only the elements without copy
                                         elementsDesnormalized = _.uniq(elementsDesnormalized);
 
-                                        for ( i = 0; i < sitesDesnormalized.length; i++) {
-                                            for ( j = 0; j < sitesDesnormalized[i].showcases.length; j++) {
+                                        for (i = 0; i < sitesDesnormalized.length; i++) {
+                                            for (j = 0; j < sitesDesnormalized[i].showcases.length; j++) {
                                                 sitesDesnormalized[i].showcases[j].identifier = sitesDesnormalized[i].showcases[j].showcaseIdentifier;
                                                 delete sitesDesnormalized[i].showcases[j].showcaseIdentifier;
 
@@ -1870,16 +1874,17 @@ module.exports = function () {
                                                 'elementIdentifier': availableElementsToSent[i],
                                                 'isReady': 1
                                             });
-                                            var elementExtraData = _.findWhere(elementsInShowcase,{
-                                               'identifier' : availableElementsToSent[i]
+                                            var elementExtraData = _.findWhere(elementsInShowcase, {
+                                                'identifier': availableElementsToSent[i]
                                             });
                                             if (elementData && elementExtraData) {
                                                 for (j = 0; j < elementData.categories.length; j++) {
                                                     if (elementData.categories[j].identifier == categoryId) {
                                                         elementsWithinCategory.push({
-                                                            identifier:elementData.elementIdentifier,
+                                                            identifier: elementData.elementIdentifier,
                                                             siteIdentifier: elementExtraData.siteIdentifier,
-                                                            showcaseIdentifier: elementExtraData.showcaseIdentifier });
+                                                            showcaseIdentifier: elementExtraData.showcaseIdentifier
+                                                        });
                                                         break;
                                                     }
                                                 }
@@ -1893,21 +1898,20 @@ module.exports = function () {
                                             var elementsForCategory = elementsWithinCategory;
 
 
-
                                             /*var elementsForCategory = [];
-                                            for (i = 0; i < elementsWithinCategory.length; i++) {
-                                                for (j = 0; j < elementsInShowcase.length; j++) {
-                                                    if (elementsWithinCategory[i].elementIdentifier == elementsInShowcase[j].identifier) {
-                                                        elementsForCategory.push({
-                                                            showcase_id: elementsInShowcase[j].showcase_id,
-                                                            _id: elementsInShowcase[j]._id,
-                                                            identifier: elementsWithinCategory[i].elementIdentifier
-                                                        });
-                                                        response.elements.push(elementsWithinCategory[i]);
-                                                        break;
-                                                    }
-                                                }
-                                            }*/
+                                             for (i = 0; i < elementsWithinCategory.length; i++) {
+                                             for (j = 0; j < elementsInShowcase.length; j++) {
+                                             if (elementsWithinCategory[i].elementIdentifier == elementsInShowcase[j].identifier) {
+                                             elementsForCategory.push({
+                                             showcase_id: elementsInShowcase[j].showcase_id,
+                                             _id: elementsInShowcase[j]._id,
+                                             identifier: elementsWithinCategory[i].elementIdentifier
+                                             });
+                                             response.elements.push(elementsWithinCategory[i]);
+                                             break;
+                                             }
+                                             }
+                                             }*/
 
                                             var amountOfExtraElementsNeeded = ELEMENTS_IN_CATEGORY - elementsWithinCategory.length;
 
@@ -1915,7 +1919,7 @@ module.exports = function () {
                                             var elementsHashTable = new HashTable();
                                             var organizationHashTable = new HashTable();
                                             var showcasesHashTable = new HashTable();
-                                            
+
                                             //Get extra site informmation
                                             organization.find({
                                                 'sites.identifier': {$nin: sitesInUserCellphone},
@@ -1951,14 +1955,14 @@ module.exports = function () {
                                                     }
                                                 }
 
-                                                for ( i = 0; i < elementsDesnormalized.length; i++) {
+                                                for (i = 0; i < elementsDesnormalized.length; i++) {
                                                     var currentElement = elementsDesnormalized[i];
-                                                    elementsHashTable.put(currentElement.elementIdentifier,currentElement);
+                                                    elementsHashTable.put(currentElement.elementIdentifier, currentElement);
                                                 }
-                                                for ( i = 0; i < sitesDesnormalized.length; i++) {
+                                                for (i = 0; i < sitesDesnormalized.length; i++) {
                                                     var currentSite = sitesDesnormalized[i];
-                                                    sitesHashTable.put(currentSite.site.identifier,currentSite.site);
-                                                    organizationHashTable.put(currentSite.organization.identifier,currentSite.organization);
+                                                    sitesHashTable.put(currentSite.site.identifier, currentSite.site);
+                                                    organizationHashTable.put(currentSite.organization.identifier, currentSite.organization);
                                                 }
 
                                                 for (i = 0; i < sitesInUserCellphone.length; i++) {
@@ -1966,8 +1970,6 @@ module.exports = function () {
                                                 }
 
                                                 elementsDesnormalized = _.uniq(elementsDesnormalized);
-                                                
-                                                
 
 
                                                 //Filter sites which are not in the sites array that were sent to the user
@@ -2018,13 +2020,13 @@ module.exports = function () {
                                                         "name": 1,
                                                         "description": 1,
                                                         "identifier": 1,
-                                                        "elements.elementIdentifier":1,
+                                                        "elements.elementIdentifier": 1,
                                                         "isReady": 1
                                                     }).lean().exec(function (showcaseError, showcaseDataFromSitesToSent) {
 
                                                     for (var i = 0; i < showcaseDataFromSitesToSent.length; i++) {
                                                         var currentShowcase = showcaseDataFromSitesToSent[i];
-                                                        showcasesHashTable.put(currentShowcase.identifier,currentShowcase);
+                                                        showcasesHashTable.put(currentShowcase.identifier, currentShowcase);
                                                     }
 
 
@@ -2044,8 +2046,6 @@ module.exports = function () {
                                                             return showcase.isReady == 1;
                                                         });
                                                     }
-
-
 
 
                                                     for (i = 0; i < sortByProximity.length; i++) {
@@ -2151,7 +2151,7 @@ module.exports = function () {
 
 
                                                     for (i = 0; i < sortByProximity.length; i++) {
-                                                        if(sortByProximity[i].site.showcases){
+                                                        if (sortByProximity[i].site.showcases) {
                                                             showcasesToFind = showcasesToFind.concat(sortByProximity[i].site.showcases);
                                                             for (var j = 0; j < sortByProximity[i].site.showcases.length; j++) {
                                                                 var elementsToConcat = sortByProximity[i].site.showcases[j].elements;
@@ -2161,10 +2161,10 @@ module.exports = function () {
                                                         }
                                                     }
 
-                                                    for ( i = 0; i < showcasesToFind.length; i++) {
+                                                    for (i = 0; i < showcasesToFind.length; i++) {
                                                         var currentShowcase = showcasesToFind[i];
                                                         var showcaseData = showcasesHashTable.get(currentShowcase.identifier);
-                                                        if(showcaseData){
+                                                        if (showcaseData) {
                                                             currentShowcase.name = showcaseData.name;
                                                             showcasesToFind[i] = currentShowcase;
                                                         }
@@ -2222,7 +2222,7 @@ module.exports = function () {
 
                                                     response.elements = response.elements.concat(elements);
 
-                                                    for ( i = 0; i < response.elements.length; i++) {
+                                                    for (i = 0; i < response.elements.length; i++) {
 
                                                         var isUserCollect = false;
                                                         for (var j = 0; j < data.biinieCollections.length && !isUserCollect; j++) {
@@ -2258,12 +2258,12 @@ module.exports = function () {
                                                         response.elements[i].userViewed = isUserViewedElement ? "1" : "0";
                                                     }
 
-                                                    for ( i = 0; i < response.elements.length; i++) {
+                                                    for (i = 0; i < response.elements.length; i++) {
                                                         response.elements[i] = validateElementInitialInfo(response.elements[i]);
                                                         elementsSent.push({identifier: response.elements[i].identifier});
                                                     }
 
-                                                    for ( i = 0; i < response.showcases.length; i++) {
+                                                    for (i = 0; i < response.showcases.length; i++) {
                                                         var currentValidatedShowcae = validateShowcaseInitialInfo(response.showcases[i]);
                                                         response.showcases[i] = currentValidatedShowcae;
                                                     }
@@ -2283,13 +2283,16 @@ module.exports = function () {
 
                                                     noticesToFind = _.uniq(noticesToFind);
                                                     //TODO: CHECK IS READY
-                                                    notice.find({"identifier":{$in:noticesToFind}, isDeleted:false },{},function(err, notices){
-                                                        if(err) {
+                                                    notice.find({
+                                                        "identifier": {$in: noticesToFind},
+                                                        isDeleted: false
+                                                    }, {}, function (err, notices) {
+                                                        if (err) {
 
                                                         } else {
-                                                            var noticesIdentifierFound = _.pluck(notices,"identifier");
-                                                            var noticesNotFound = _.difference(noticesToFind,noticesIdentifierFound);
-                                                            for ( i = 0; i < notices.length; i++) {
+                                                            var noticesIdentifierFound = _.pluck(notices, "identifier");
+                                                            var noticesNotFound = _.difference(noticesToFind, noticesIdentifierFound);
+                                                            for (i = 0; i < notices.length; i++) {
                                                                 var notice = notices[i];
                                                                 noticesValidated.push(validateNoticesInitialInfo(notice));
                                                             }
@@ -2321,19 +2324,19 @@ module.exports = function () {
 
                                             // Obtaining _id for the nearest Showcase and adding into the group id
                                             /*var elementsForCategory = [];
-                                            for (i = 0; i < elementsToSend.length; i++) {
-                                                for (j = 0; j < elementsInShowcase.length; j++) {
-                                                    if (elementsToSend[i].elementIdentifier == elementsInShowcase[j].identifier) {
-                                                        elementsForCategory.push({
-                                                            siteIdentifier: elementsInShowcase[j].showcase_id,
-                                                            showcaseIdentifier: elementsInShowcase[j]._id,
-                                                            identifier: elementsToSend[i].elementIdentifier
-                                                        });
-                                                        response.elements.push(elementsToSend[i]);
-                                                        break;
-                                                    }
-                                                }
-                                            }*/
+                                             for (i = 0; i < elementsToSend.length; i++) {
+                                             for (j = 0; j < elementsInShowcase.length; j++) {
+                                             if (elementsToSend[i].elementIdentifier == elementsInShowcase[j].identifier) {
+                                             elementsForCategory.push({
+                                             siteIdentifier: elementsInShowcase[j].showcase_id,
+                                             showcaseIdentifier: elementsInShowcase[j]._id,
+                                             identifier: elementsToSend[i].elementIdentifier
+                                             });
+                                             response.elements.push(elementsToSend[i]);
+                                             break;
+                                             }
+                                             }
+                                             }*/
 
                                             response.elementsForCategory = elementsToSend;
 
@@ -2389,13 +2392,16 @@ module.exports = function () {
 
                                             noticesToFind = _.uniq(noticesToFind);
                                             //TODO: CHECK IS READY
-                                            notice.find({"identifier":{$in:noticesToFind}, isDeleted:false },{},function(err, notices){
-                                                if(err) {
+                                            notice.find({
+                                                "identifier": {$in: noticesToFind},
+                                                isDeleted: false
+                                            }, {}, function (err, notices) {
+                                                if (err) {
 
                                                 } else {
-                                                    var noticesIdentifierFound = _.pluck(notices,"identifier");
-                                                    var noticesNotFound = _.difference(noticesToFind,noticesIdentifierFound);
-                                                    for ( i = 0; i < notices.length; i++) {
+                                                    var noticesIdentifierFound = _.pluck(notices, "identifier");
+                                                    var noticesNotFound = _.difference(noticesToFind, noticesIdentifierFound);
+                                                    for (i = 0; i < notices.length; i++) {
                                                         var notice = notices[i];
                                                         noticesValidated.push(validateNoticesInitialInfo(notice));
                                                     }
@@ -2670,7 +2676,7 @@ module.exports = function () {
 
                                         for (i = 0; i < showcases.length; i++) {
                                             var currentShowcase = showcases[i];
-                                            currentShowcase.elements = _.filter( currentShowcase.elements , function(element){
+                                            currentShowcase.elements = _.filter(currentShowcase.elements, function (element) {
                                                 return uniqueElementsShowcase.indexOf(element.identifier) > -1;
                                             });
 
@@ -2752,13 +2758,16 @@ module.exports = function () {
 
                                         noticesToFind = _.uniq(noticesToFind);
                                         //TODO: CHECK IS READY
-                                        notice.find({"identifier":{$in:noticesToFind}, isDeleted:false },{},function(err, notices){
-                                            if(err) {
+                                        notice.find({
+                                            "identifier": {$in: noticesToFind},
+                                            isDeleted: false
+                                        }, {}, function (err, notices) {
+                                            if (err) {
 
                                             } else {
-                                                var noticesIdentifierFound = _.pluck(notices,"identifier");
-                                                var noticesNotFound = _.difference(noticesToFind,noticesIdentifierFound);
-                                                for ( i = 0; i < notices.length; i++) {
+                                                var noticesIdentifierFound = _.pluck(notices, "identifier");
+                                                var noticesNotFound = _.difference(noticesToFind, noticesIdentifierFound);
+                                                for (i = 0; i < notices.length; i++) {
                                                     var notice = notices[i];
                                                     noticesValidated.push(validateNoticesInitialInfo(notice));
                                                 }

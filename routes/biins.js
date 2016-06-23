@@ -179,24 +179,24 @@ module.exports = function () {
                     biinType: "3"
                 },
                 {_id: 0, minor: 1}).exec(function (err, data) {
-                    if (err) {
-                        return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}", 500);
-                    } else {
-                        var children = [];
-                        for (var i = 0; i < data.length; i++) {
-                            children.push(data[i].minor)
-                        }
-                        ;
-                        biin.children = children;
-                        biins.update({identifier: biin.identifier}, {$set: biin}, function (error, raw) {
-                            if (error == null) {
-                                return res.send("{\"success\":\"true\"}", 200);
-                            } else {
-                                return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}", 500);
-                            }
-                        });
+                if (err) {
+                    return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}", 500);
+                } else {
+                    var children = [];
+                    for (var i = 0; i < data.length; i++) {
+                        children.push(data[i].minor)
                     }
-                });
+                    ;
+                    biin.children = children;
+                    biins.update({identifier: biin.identifier}, {$set: biin}, function (error, raw) {
+                        if (error == null) {
+                            return res.send("{\"success\":\"true\"}", 200);
+                        } else {
+                            return res.send("{\"success\":\"false\", \"message\":\"Update biin info failed.\"}", 500);
+                        }
+                    });
+                }
+            });
         }
         else if (biin.biinType == "3") {
             var beaconMinor = biin.minor + "";

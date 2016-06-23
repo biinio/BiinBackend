@@ -13,12 +13,12 @@ var server = oauth2orize.createServer();
 
 //Resource owner password
 server.exchange(oauth2orize.exchange.password(function (client, biinName, password, scope, done) {
-    mobileUser.findOne({biinName:biinName}, function (err, mobUser) {
+    mobileUser.findOne({biinName: biinName}, function (err, mobUser) {
         if (err) return done(err);
         if (!mobUser) return done(null, false);
         bcrypt.compare(password, mobUser.password, function (err, res) {
             if (!res) return done(null, false);
-            
+
             var token = utils.getUIDByLen(256);
             var refreshToken = utils.getUIDByLen(256);
 
@@ -26,10 +26,20 @@ server.exchange(oauth2orize.exchange.password(function (client, biinName, passwo
             var refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex');
 
             var expirationDate = new Date(new Date().getTime() + (3600 * 1000));
-            var newTokenModel = new oauthMobileAccessTokens({token: tokenHash, expirationDate: expirationDate, clientId: client.clientId, biinName: biinName, scope: scope});
+            var newTokenModel = new oauthMobileAccessTokens({
+                token: tokenHash,
+                expirationDate: expirationDate,
+                clientId: client.clientId,
+                biinName: biinName,
+                scope: scope
+            });
             newTokenModel.save(function (err) {
                 if (err) return done(err)
-                var newrefreshTokenModel = new oauthMobileRefreshTokens({refreshToken: refreshTokenHash, clientId: client.clientId, biinName: biinName});
+                var newrefreshTokenModel = new oauthMobileRefreshTokens({
+                    refreshToken: refreshTokenHash,
+                    clientId: client.clientId,
+                    biinName: biinName
+                });
                 newrefreshTokenModel.save(function (err) {
                     if (err) return done(err)
                     done(null, token, refreshToken, {expires_in: expirationDate})
@@ -47,13 +57,19 @@ server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken
         if (err) return done(err);
         if (!token) return done(null, false);
         if (client.clientId !== token.clientId) return done(null, false);
-        
+
         var newAccessToken = utils.getUIDByLen(256);
         var accessTokenHash = crypto.createHash('sha1').update(newAccessToken).digest('hex');
-        
+
         var expirationDate = new Date(new Date().getTime() + (3600 * 1000));
-    
-        oauthMobileAccessTokens.update({userId: token.userId}, {$set: {token: accessTokenHash, scope: scope, expirationDate: expirationDate}}, function (err) {
+
+        oauthMobileAccessTokens.update({userId: token.userId}, {
+            $set: {
+                token: accessTokenHash,
+                scope: scope,
+                expirationDate: expirationDate
+            }
+        }, function (err) {
             if (err) return done(err)
             done(null, newAccessToken, refreshToken, {expires_in: expirationDate});
         })
@@ -62,7 +78,7 @@ server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken
 
 // token endpoint
 exports.token = [
-    passport.authenticate(['mobileClientBasic', 'mobileClientPassword'], { session: false }),
+    passport.authenticate(['mobileClientBasic', 'mobileClientPassword'], {session: false}),
     server.token(),
     server.errorHandler()
 ]

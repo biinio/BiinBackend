@@ -116,7 +116,7 @@ var siteObj = {
     usercomments: [{position: Number, biinieIdentifier: String, comment: String, date: String}],
     isValid: {type: Boolean, default: false},
     isDeleted: {type: Boolean, default: false},
-    notices: {type:[String], default:[]},
+    notices: {type: [String], default: []},
     region: {type: String, default: ""},
     rating: [
         {

@@ -63,8 +63,8 @@ module.exports = function () {
             "followers": 1,
             "categories": 1,
             "facebookId": 1,
-            "facebookAvatarUrl":1,
-            "facebookFriends":1
+            "facebookAvatarUrl": 1,
+            "facebookFriends": 1
         }, function (err, foundBinnie) {
             if (err)
                 res.json({data: {}, status: "5", result: "0"});
@@ -953,7 +953,7 @@ module.exports = function () {
         var model = req.body.model;
         var identifier = req.params.identifier;
 
-        var createNewUser = function(model){
+        var createNewUser = function (model) {
             bcrypt.hash(model.password, 11, function (err, hash) {
                 var joinDate = utils.getDateNow();
                 var identifier = utils.getGUID();
@@ -968,12 +968,12 @@ module.exports = function () {
                     sites: []
                 }];
 
-                model.birthDate = model.birthDate? model.birthDate : joinDate;
+                model.birthDate = model.birthDate ? model.birthDate : joinDate;
 
 
                 model.facebookId = model.facebook_id || "";
-                model.facebookFriends= model.facebookFriends || [];
-                model.facebookAvatarUrl= model.facebookAvatarUrl || "";
+                model.facebookFriends = model.facebookFriends || [];
+                model.facebookAvatarUrl = model.facebookAvatarUrl || "";
 
                 var newModel = new mobileUser({
                     identifier: identifier,
@@ -1020,8 +1020,8 @@ module.exports = function () {
             var facebookId = model.facebook_id || "";
             var accountState = model.facebook_id != "";
 
-            model.facebookFriends= model.facebookFriends || [];
-            model.facebookAvatarUrl= model.facebookAvatarUrl || "";
+            model.facebookFriends = model.facebookFriends || [];
+            model.facebookAvatarUrl = model.facebookAvatarUrl || "";
 
             mobileUser.update({'identifier': identifier}, {
                 biinName: model.email,
@@ -1030,7 +1030,7 @@ module.exports = function () {
                 email: model.email,
                 gender: model.gender,
                 birthDate: birthDate,
-                accountState : accountState,
+                accountState: accountState,
                 facebookId: facebookId,
                 facebookFriends: model.facebookFriends,
                 facebookAvatarUrl: model.facebookAvatarUrl
@@ -1053,16 +1053,16 @@ module.exports = function () {
                 }
             })
         };
-        
 
-        if(model){
+
+        if (model) {
             mobileUser.findOne({'biinName': model.email}, function (err, foundEmail) {
                 if (err)
                     res.json({data: {}, status: "5", result: "0"});
                 else if (typeof(foundEmail) === "undefined" || foundEmail === null) {
                     createNewUser(model);
                 } else {
-                    if(identifier == "none")
+                    if (identifier == "none")
                         identifier = foundEmail.identifier;
                     updateModel(model);
                 }
@@ -1169,16 +1169,15 @@ module.exports = function () {
         });
 
 
-
         var url = req.protocol + '://' + req.get('host') + "/biinie/" + model.identifier + "/activate";
         var subject = "Bienvenido a Biin 😀";
 
         var path = require('path');
 
 
-        var htmlEmailTemplate = fs.readFileSync(__dirname + '/../config/email.html',"utf-8");
+        var htmlEmailTemplate = fs.readFileSync(__dirname + '/../config/email.html', "utf-8");
 
-        htmlEmailTemplate = htmlEmailTemplate.replace(/\/\/\/\/\//g,url);
+        htmlEmailTemplate = htmlEmailTemplate.replace(/\/\/\/\/\//g, url);
         // setup e-mail data with unicode symbols
         var mailOptions = {
             // sender address

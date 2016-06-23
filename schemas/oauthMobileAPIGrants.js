@@ -5,9 +5,9 @@
 
 var moongose = require('mongoose');
 
-module.exports = moongose.model('oauthMobileAPIGrants',{
-	clientIdentifier:{type:String, index:true},
-	clientSecret:{type:String},
-	trustedClient:{type:Number, default:1},
-	creationDate:{type:Date}
+module.exports = moongose.model('oauthMobileAPIGrants', {
+    clientIdentifier: {type: String, index: true},
+    clientSecret: {type: String},
+    trustedClient: {type: Number, default: 1},
+    creationDate: {type: Date}
 });

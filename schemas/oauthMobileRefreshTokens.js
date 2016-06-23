@@ -5,9 +5,9 @@
 
 var moongose = require('mongoose');
 
-module.exports = moongose.model('oauthMobileRefreshTokens',{
-	refreshToken:{type:String, index:true},
-	clientId:{type:String},
-	biinName:{type:String},
-	creationDate:{type:Date}
+module.exports = moongose.model('oauthMobileRefreshTokens', {
+    refreshToken: {type: String, index: true},
+    clientId: {type: String},
+    biinName: {type: String},
+    creationDate: {type: Date}
 });

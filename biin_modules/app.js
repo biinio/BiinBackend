@@ -1,32 +1,32 @@
 module.exports = function (db) {
     var express = require('express')
-    , session = require('express-session')
-    , MongoStore = require('connect-mongo')(session)
-    , passport = require('./auth')
-    , fs = require('fs')
-    , http = require('http')
-    , https = require('https')
-    , path = require('path')
-    , app = express()
-    , favicon = require('serve-favicon')
-    , logger = require('morgan')
-    , cookieParser = require('cookie-parser')
-    , bodyParser = require('body-parser')
-    , crypto = require('crypto')
-    , multipart = require('connect-multiparty')
-    , multipartMiddleware = multipart()
-    , lessMiddleware = require('less-middleware')
-    , methodOverride = require('method-override')
-    , cors = require('cors')
-    , expressValidator = require('express-validator');
+        , session = require('express-session')
+        , MongoStore = require('connect-mongo')(session)
+        , passport = require('./auth')
+        , fs = require('fs')
+        , http = require('http')
+        , https = require('https')
+        , path = require('path')
+        , app = express()
+        , favicon = require('serve-favicon')
+        , logger = require('morgan')
+        , cookieParser = require('cookie-parser')
+        , bodyParser = require('body-parser')
+        , crypto = require('crypto')
+        , multipart = require('connect-multiparty')
+        , multipartMiddleware = multipart()
+        , lessMiddleware = require('less-middleware')
+        , methodOverride = require('method-override')
+        , cors = require('cors')
+        , expressValidator = require('express-validator');
 
 
     var isDevelopment = process.env.NODE_ENV === 'development';
     var isQA = process.env.NODE_ENV === 'qa';
     var isDemo = process.env.NODE_ENV === 'demo';
     var isProduction = process.env.NODE_ENV === 'production';
-    if(process.env.DONT_TRACK != 'YES'){
-    var rollbar = require("rollbar");
+    if (process.env.DONT_TRACK != 'YES') {
+        var rollbar = require("rollbar");
         rollbar.init("bccc96a9f2794cdd835f2cf9f498a381");
 
         app.use(rollbar.errorHandler('bccc96a9f2794cdd835f2cf9f498a381'));
@@ -50,7 +50,7 @@ module.exports = function (db) {
 
     app.use(cors());
 
-    app.use(function(req, res, next) {
+    app.use(function (req, res, next) {
         res.setHeader("code-version", "1.0.11");
         return next();
     });
@@ -68,21 +68,20 @@ module.exports = function (db) {
     };
 
     // Less configuration
-    if(isDevelopment || isQA || isDemo){
-        app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
-            force:true,
-            debug:true,
-            compress:false
+    if (isDevelopment || isQA || isDemo) {
+        app.use(lessMiddleware(path.join(process.env.PWD, 'public'), {
+            force: true,
+            debug: true,
+            compress: false
         }));
     }
-    else
-    {
+    else {
         //Less middleware use in production
-        app.use(lessMiddleware(path.join(process.env.PWD , 'public'),{
-            force:false,
-            debug:false,
-            once:true,//Set to compile once when the application start
-            compress:true
+        app.use(lessMiddleware(path.join(process.env.PWD, 'public'), {
+            force: false,
+            debug: false,
+            once: true,//Set to compile once when the application start
+            compress: true
         }));
 
         //SSL configuration
@@ -95,8 +94,8 @@ module.exports = function (db) {
     app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
     app.set('view engine', 'jade');
 
-    app.use(express.static(path.join(process.env.PWD , 'public')));
-    app.use(express.static(path.join(process.env.PWD,'bower_components')));
+    app.use(express.static(path.join(process.env.PWD, 'public')));
+    app.use(express.static(path.join(process.env.PWD, 'bower_components')));
     app.use(favicon(__dirname + '/../public/favicon.ico'));
     app.use(logger('dev'));
     app.use(bodyParser.json({limit: '50mb'}));
@@ -118,6 +117,6 @@ module.exports = function (db) {
     app.use(bodyParser.json());
 
     //Routes
-    var routes = require("./routes.js")(app,db,passport,multipartMiddleware);
+    var routes = require("./routes.js")(app, db, passport, multipartMiddleware);
     return app;
 };
