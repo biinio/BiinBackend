@@ -3,10 +3,10 @@ var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     clientSchema = require('../schemas/client');
 
-var BasicStrategy = require('passport-http').BasicStrategy
-    , ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy
-    , BearerStrategy = require('passport-http-bearer').Strategy
-    , crypto = require('crypto')
+var BasicStrategy = require('passport-http').BasicStrategy,
+    ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy,
+    BearerStrategy = require('passport-http-bearer').Strategy,
+    crypto = require('crypto');
 
 var oauthMobileAccesTokens = require('../schemas/oauthMobileAccesTokens'),
     oauthMobileAPIGrants = require('../schemas/oauthMobileAPIGrants'),

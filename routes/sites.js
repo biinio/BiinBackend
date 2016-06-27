@@ -32,10 +32,6 @@ module.exports = function () {
         routesUtils.getOrganization(req.param("identifier"), req, res, {name: true, identifier: true}, callback)
     };
 
-    functions.mapComponent = function (req, res) {
-        res.render('site/_partials/mapComponent');
-    };
-
     //GET the list of sites by organization Identifier
     functions.get = function (req, res) {
 

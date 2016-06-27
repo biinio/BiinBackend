@@ -3,10 +3,21 @@
 var fs = require('fs'),
     http = require('http'),
     https = require('https'),
-    util = require('util');
+    util = require('util'),
+    chalk = require('chalk');
+var mongoose = require('mongoose');
+
+var connectionString = process.env.DB_CONNECTION;
+
+// Bootstrap db connection
+var db = mongoose.connect(connectionString, function(err) {
+    if (err) {
+        console.error(chalk.red('Could not connect to MongoDB!'));
+        console.log(chalk.red(err));
+    }
+});
 
 var debug = require('debug')('BinnCMS'),
-    db = require('./biin_modules/db'),
     app = require('./biin_modules/app')(db);
 
 //Define local vars

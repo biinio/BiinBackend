@@ -16,8 +16,6 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     var gallery = require('../routes/gallery')();
     var blog = require('../routes/blog')();
     var mobileUser = require('../routes/mobileUser')();
-    var oauthMobileAPIGrants = require('../routes/oauthMobileAPIGrants')();
-    var mobileOauthManager = require('./mobileOauthManager');
     var stickers = require('../routes/stickers')();
     var mobileRoutes = require('../routes/mobileRoutes')();
     var sysGlobals = require('../routes/sysGlobals')();
@@ -28,6 +26,7 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     var ratingSites = require('../routes/ratingSites')();
     var maintenance = require('../routes/maintenance')();
     var notices = require('../routes/notices')();
+    var gifts = require('../routes/gifts')();
 
     //Sys routes
     app.post('/enviroments', sysGlobals.set);
@@ -121,7 +120,6 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.get('/api/organizations/:identifier/showcases', showcases.list);
 
     //Sites routes
-    app.get('/site/mapComponent', sites.mapComponent);
     app.get('/api/organizations/:identifier/sites', sites.list);
     app.post('/api/organizations/:orgIdentifier/sites', sites.set);
 
@@ -207,6 +205,16 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.put('/api/biinies', mobileUser.set);
     app.delete('/api/biinies/:identifier', mobileUser.delete);
     app.post('/api/biinies/:identifier/image', multipartMiddleware, mobileUser.uploadImage);
+
+    //Gifts
+    app.get('/api/organizations/:identifier/gifts',gifts.get);
+    app.put('/api/organizations/:identifier/gifts/:giftidentifier',gifts.update);
+    app.post('/api/organizations/:identifier/gifts',gifts.create);
+    app.delete('/api/organizations/:identifier/gifts',gifts.remove);
+
+
+
+
 
     //Mobile Binnies services
     app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender/:birthdate', mobileUser.setMobileByURLParams);

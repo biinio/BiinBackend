@@ -1,7 +1,7 @@
 module.exports = function (db) {
     var express = require('express')
         , session = require('express-session')
-        , MongoStore = require('connect-mongo')(session)
+        , mongoStore = require('connect-mongo')(session)
         , passport = require('./auth')
         , fs = require('fs')
         , http = require('http')
@@ -16,7 +16,6 @@ module.exports = function (db) {
         , multipart = require('connect-multiparty')
         , multipartMiddleware = multipart()
         , lessMiddleware = require('less-middleware')
-        , methodOverride = require('method-override')
         , cors = require('cors')
         , expressValidator = require('express-validator');
 
@@ -44,16 +43,7 @@ module.exports = function (db) {
     var compress = require('compression');
     app.use(compress());
 
-
-    schemasValidations = {};
-
-
     app.use(cors());
-
-    app.use(function (req, res, next) {
-        res.setHeader("code-version", "1.0.11");
-        return next();
-    });
 
     // At the top of your web.js
     process.env.PWD = process.cwd();
@@ -103,8 +93,8 @@ module.exports = function (db) {
     app.use(cookieParser());
     app.use(session({
         secret: 'ludusy secret',
-        store: new MongoStore({
-            mongooseConnection: db
+        store: new mongoStore({
+            mongooseConnection: db.connection
         }),
         resave: true,
         saveUninitialized: true
