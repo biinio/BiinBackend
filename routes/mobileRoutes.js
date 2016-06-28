@@ -549,9 +549,9 @@ module.exports = function () {
                         var elementExtraInfo = _.find(siteData, function (org) {
                             return _.findWhere(org.elements, {elementIdentifier: filteredActions[i].to}) != null;
                         });
-
+                        var action = {};
                         if (siteExtraInfo) {
-                            var action = {};
+
                             action.userIdentifier = userIdentifier;
                             action.organizationIdentifier = org.identifier;
                             action.siteIdentifier = filteredActions[i].to;
@@ -560,27 +560,13 @@ module.exports = function () {
                             actionsToInsert.push(action);
 
                         } else if (elementExtraInfo) {
-
-                            for (var j = 0; j < elementExtraInfo.sites.length; j++) {
-                                var currentSite = elementExtraInfo.sites[j];
-                                for (var k = 0; k < currentSite.showcases.length; k++) {
-                                    var currentShowcase = currentSite.showcases[k];
-
-                                    for (var l = 0; l < currentShowcase.elements.length; l++) {
-                                        var currentElement = currentShowcase.elements[l];
-                                        if (currentElement.identifier == filteredActions[i].to) {
-                                            var action = {};
-                                            action.userIdentifier = userIdentifier;
-                                            action.organizationIdentifier = org.identifier;
-                                            action.elementIdentifier = filteredActions[i].to;
-                                            action.siteIdentifier = currentSite.identifier;
-                                            action.date = new Date(filteredActions[i].at);
-                                            action.action = filteredActions[i].did;
-                                            actionsToInsert.push(action);
-                                        }
-                                    }
-                                }
-                            }
+                            action.userIdentifier = userIdentifier;
+                            action.organizationIdentifier = org.identifier;
+                            action.elementIdentifier = filteredActions[i].to;
+                            action.siteIdentifier = filteredActions[i].by;
+                            action.date = new Date(filteredActions[i].at);
+                            action.action = filteredActions[i].did;
+                            actionsToInsert.push(action);
                         }
                     }
                     if (actionsToInsert.length == 0)
