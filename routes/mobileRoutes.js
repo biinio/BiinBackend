@@ -553,7 +553,7 @@ module.exports = function () {
                         if (siteExtraInfo) {
 
                             action.userIdentifier = userIdentifier;
-                            action.organizationIdentifier = org.identifier;
+                            action.organizationIdentifier = siteExtraInfo.identifier;
                             action.siteIdentifier = filteredActions[i].to;
                             action.date = new Date(filteredActions[i].at);
                             action.action = filteredActions[i].did;
@@ -561,7 +561,7 @@ module.exports = function () {
 
                         } else if (elementExtraInfo) {
                             action.userIdentifier = userIdentifier;
-                            action.organizationIdentifier = org.identifier;
+                            action.organizationIdentifier = elementExtraInfo.identifier;
                             action.elementIdentifier = filteredActions[i].to;
                             action.siteIdentifier = filteredActions[i].by;
                             action.date = new Date(filteredActions[i].at);
