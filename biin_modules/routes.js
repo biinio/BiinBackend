@@ -319,4 +319,7 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.get('/checkversion/:version/:platform/:target', mobileRoutes.checkVersion);
 
 
+    app.put('/test/notifications', routes.testNotification)
+
+
 };

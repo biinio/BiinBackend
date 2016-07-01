@@ -7,6 +7,7 @@ module.exports = function () {
     var client = require('../schemas/client');
     var utils = require('../biin_modules/utils')(),
         routesUtils = require('../biin_modules/routesUtils')();
+    var notification = require('../biin_modules/notificationsManager')();
 
     //Get the index page
     functions.index = function (req, res) {
@@ -133,6 +134,14 @@ module.exports = function () {
             });
         });
 
+    };
+
+    functions.testNotification = function(req,res){
+        var to = req.body.to;
+        var message = req.body.message;
+        var title = req.body.title;
+        notification.sendNotificationToUser( message, title, to );
+        res.json({});
     };
 
     return functions;
