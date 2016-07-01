@@ -1072,9 +1072,9 @@ module.exports = function () {
             }
         }, {upsert: true}, function (err) {
             if(err){
-                res.send({resolve:0,status:1,data:{}});
+                res.send({result:0,status:1,data:{}});
             } else {
-                res.send({resolve:1,status:0,data:{}});
+                res.send({result:1,status:0,data:{}});
             }
         });
     };
