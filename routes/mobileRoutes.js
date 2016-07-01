@@ -14,7 +14,8 @@ module.exports = function () {
         region = require('../schemas/region'),
         biin = require('../schemas/biin'),
         mobileHistory = require('../schemas/tempHistory'),
-        siteCategory = require('../schemas/searchSiteCategory');
+        siteCategory = require('../schemas/searchSiteCategory'),
+        biinieDevice = require('../schemas/biiniesDevice');
 
     var biinBiinieObject = require('../schemas/biinBiinieObject');
 
@@ -1057,6 +1058,25 @@ module.exports = function () {
 
         res.json(response);
 
+    };
+
+    functions.registerForNotifications = function (req, res) {
+        var biinieIdentifier = req.param(["identifier"]);
+        var platform = req.body.model.platform;
+        var tokenId = req.body.model.tokenId;
+        biinieDevice.findOneAndUpdate({biinieIdentifier: biinieIdentifier}, {
+            $set: {
+                biinieIdentifier: biinieIdentifier,
+                deviceIdentifier: tokenId,
+                platform: platform
+            }
+        }, {upsert: true}, function (err) {
+            if(err){
+                res.send({resolve:0,status:1,data:{}});
+            } else {
+                res.send({resolve:1,status:0,data:{}});
+            }
+        });
     };
 
     return functions;

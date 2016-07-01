@@ -321,5 +321,7 @@ module.exports = function (app, db, passport, multipartMiddleware) {
 
     app.put('/test/notifications', routes.testNotification)
 
+    app.put('/mobile/biinies/:identifier/registerfornotifications', mobileRoutes.registerForNotifications)
+
 
 };
