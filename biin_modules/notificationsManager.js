@@ -30,7 +30,9 @@ module.exports = function () {
                 "priority":"high",
                 "notification": {
                     "title": title,
-                    "text": message
+                    "text": message,
+                    "sound": sound,
+                    "badge": badge
                 },
                 "to": to
             },

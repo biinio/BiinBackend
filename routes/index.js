@@ -138,9 +138,11 @@ module.exports = function () {
 
     functions.testNotification = function(req,res){
         var to = req.body.to;
-        var message = req.body.message;
-        var title = req.body.title;
-        notification.sendNotificationToUser( message, title, to );
+        var message = req.body.message || "Mensaje";
+        var title = req.body.title || "Biin";
+        var sound = req.body.sound || "";
+        var badge = req.body.badge || "";
+        notification.sendNotificationToUser( message, title, to, sound, badge );
         res.json({});
     };
 
