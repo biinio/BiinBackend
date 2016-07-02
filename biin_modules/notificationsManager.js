@@ -10,7 +10,7 @@ module.exports = function () {
     var serverID = "323383814519";
     var serverURL = "https://fcm.googleapis.com/fcm/send";
 
-    functions.sendNotificationToUser = function (message, title, to, sound, badge) {
+    functions.sendNotificationToUser = function (message, title, to, sound, badge, data) {
         function callback(error, incomingMessage, body){
             if(error){
                 throw  error;
@@ -19,7 +19,12 @@ module.exports = function () {
                 //console.log(incomingMessage);
             }
         }
-
+        var dataToSend;
+        if(data){
+            dataToSend = data;
+        }else {
+            dataToSend = {};
+        }
         var baseRequest = request.defaults({
             'url': serverURL,
             'headers': {
@@ -34,6 +39,7 @@ module.exports = function () {
                     "sound": sound,
                     "badge": badge
                 },
+                data:dataToSend,
                 "to": to
             },
             'callback':callback

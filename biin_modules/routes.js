@@ -38,7 +38,7 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.get('/client/:identifier/activate', clients.activate);
     app.post('/client/:identifier/activate', clients.activate);
     app.post('/api/login', function (req, res, next) {
-        passport.authenticate('clientLocal', function (err, user, info) {
+        passport.authenticate('clientLocal', function (err, user) {
             if (err) {
                 return next(err);
             }
@@ -207,13 +207,10 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.post('/api/biinies/:identifier/image', multipartMiddleware, mobileUser.uploadImage);
 
     //Gifts
-    app.get('/api/organizations/:identifier/gifts',gifts.get);
-    app.put('/api/organizations/:identifier/gifts/:giftidentifier',gifts.update);
-    app.post('/api/organizations/:identifier/gifts',gifts.create);
-    app.delete('/api/organizations/:identifier/gifts',gifts.remove);
-
-
-
+    app.get('/api/organizations/:identifier/gifts', gifts.get);
+    app.put('/api/organizations/:identifier/gifts/:giftidentifier', gifts.update);
+    app.post('/api/organizations/:identifier/gifts', gifts.create);
+    app.delete('/api/organizations/:identifier/gifts', gifts.remove);
 
 
     //Mobile Binnies services
@@ -319,9 +316,9 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.get('/checkversion/:version/:platform/:target', mobileRoutes.checkVersion);
 
 
-    app.put('/test/notifications', routes.testNotification)
+    app.put('/test/notifications', routes.testNotification);
 
-    app.put('/mobile/biinies/:identifier/registerfornotifications', mobileRoutes.registerForNotifications)
+    app.put('/mobile/biinies/:identifier/registerfornotifications', mobileRoutes.registerForNotifications);
 
 
 };
