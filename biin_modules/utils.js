@@ -2,9 +2,7 @@ var path = require("path"), uuid = require('node-uuid'),
     fs = require('fs'),
     util = require('util'),
     math = require('mathjs'),
-//FTP Package
-    ftp = require("ftp")
-moment = require('moment');
+    moment = require('moment');
 
 //Constants
 var dateFormat = 'YYYY-MM-DD HH:mm:ss';

@@ -319,6 +319,15 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.put('/test/notifications', routes.testNotification);
 
     app.put('/mobile/biinies/:identifier/registerfornotifications', mobileRoutes.registerForNotifications);
+    app.put('/mobile/biinies/:identifier/site/enter', mobileRoutes.registerForNotifications);
+
+
+    //app.post('/mobile/biinies/:identifier/gifts/assign', mobileRoutes.registerForNotifications);
+    app.get('/mobile/biinies/:identifier/gifts', gifts.getGifts);
+    app.post('/mobile/biinies/:identifier/gifts/share', gifts.share);
+    app.post('/mobile/biinies/:identifier/gifts/claim', gifts.claim);
+
+
 
 
 };

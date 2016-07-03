@@ -7,6 +7,11 @@ module.exports = function(){
 
     var functions = {};
 
+
+    /**
+     *  Gifts calls for api
+     */
+
     functions.get = function(req, res){
         var orgID = req.params["identifier"];
         gifts.find({organizationIdentifier:orgID,isDeleted:false},{},function(err,giftsToSend){
@@ -74,5 +79,22 @@ module.exports = function(){
             }
         });
     };
+
+    /**
+     *  Gifts calls for mobile
+     */
+
+    functions.getGifts = function(req,res){
+
+    };
+
+    functions.share = function(req,res){
+
+    };
+
+    functions.claim = function(req,res){
+
+    };
+
     return functions;
 };
