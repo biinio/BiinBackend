@@ -295,7 +295,7 @@ module.exports = function () {
                                     organization.update({
                                         identifier: organizationIdentifier
                                     }, {
-                                        media: mediaObj
+                                        media: [mediaObj]
                                     }, function (err) {
                                         if (err)
                                             res.send(err, 500);
