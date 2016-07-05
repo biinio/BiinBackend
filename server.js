@@ -24,7 +24,7 @@ var debug = require('debug')('BinnCMS'),
 var isDevelopment = process.env.NODE_ENV === 'development';
 var isQA = process.env.NODE_ENV === 'qa';
 var isDemo = process.env.NODE_ENV === 'demo';
-var isProduction = process.env.NODE_ENV === 'production';
+//var isProduction = process.env.NODE_ENV === 'production';
 
 var httpPort = process.env.PORT || 3000;
 var httpsPort = 8443;
@@ -37,13 +37,13 @@ var certificate = fs.readFileSync('sslcert/bundle.crt', 'utf8').toString();
 var credentials = {key: privateKey, cert: certificate};
 
 //Http Server instance
-var httpServer = http.createServer(app).listen(httpPort, function () {
+http.createServer(app).listen(httpPort, function () {
     console.log("Listing server");
 });
 
 //Https Server instance
 if (!isDevelopment && !isQA && !isDemo) {
-    var httpsServer = https.createServer(credentials, app).listen(httpsPort, function () {
+    https.createServer(credentials, app).listen(httpsPort, function () {
         console.log("Listing https server");
     });
 }

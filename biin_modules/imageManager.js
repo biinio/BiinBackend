@@ -4,14 +4,11 @@
 module.exports = function () {
     var path = require("path"), fs = require("fs"), uuid = require("node-uuid");
     var gm = require("gm"), imageMagick = gm.subClass({imageMagick: true});
-    var im = require('imagemagick');
     var utils = require("./utils")(), util = require("util");
     var azureManager = require("./azureManager")();
     var vibrant = require('node-vibrant');
     var functions = {},
-        _quality = 100,
-        _workingImagePath = './public/workingFiles/',
-        _uploadImageDirectory = "/workingFiles/";
+        _workingImagePath = './public/workingFiles/';
 
     //*************** Region Methods **************
 
@@ -25,7 +22,7 @@ module.exports = function () {
                 // obtain the size of an image
                 imageMagick(succes.localPath).size(function (err, value) {
 
-                    if (err) throw err
+                    if (err) throw err;
                     succes.width = value.width;
                     succes.height = value.height;
 
@@ -34,7 +31,7 @@ module.exports = function () {
                 });
             }
         });
-    }
+    };
 
     //Crop an Image
     functions.cropImage = function (pixelEquival, moduleOwner, imageUrl, resizeW, resizeH, cropW, cropH, positionX, positionY, callback) {
@@ -63,7 +60,7 @@ module.exports = function () {
             //.quality(_quality)
             .write(pathImage, function (err, data) {
                 if (err)
-                    callback(err)
+                    callback(err);
                 else {
                     that.copyToFtp(pathImage, imageFTPPath, imageName, function (err) {
                         if (err)
@@ -72,21 +69,21 @@ module.exports = function () {
                             var jsonObj = {
                                 status: "success",
                                 url: "http://" + process.env.FTP_HOST + imageFTPPath + imageName
-                            }
+                            };
                         callback(err, jsonObj);
                     });
                 }
             });
-    }
+    };
 
     //Uploads an imag
     functions.uploadFile = function (imagePath, directory, imageName, callback) {
         this.uploadFileAzure(imagePath, directory, imageName, true, callback);
-    }
+    };
 
     functions.uploadFile = function (imagePath, directory, imageName, generateName, callback) {
         this.uploadFileAzure(imagePath, directory, imageName, generateName, callback);
-    }
+    };
 
     //Uploads an imag
     functions.uploadFileAzure = function (imagePath, directory, imageName, generateName, callback) {
@@ -101,22 +98,21 @@ module.exports = function () {
             systemImageName = path.join(directory, imageName);
 
         var newPath = process.env.IMAGES_REPOSITORY_AZURE + "/" + systemImageName;
-        var sizeExtend = process.env.STANDARD_IMAGE_HEIGHT + "x" + process.env.STANDARD_IMAGE_WIDTH;
         var fileBuffer = fs.readFileSync(imagePath);
         azureManager.uploadObjectToContainer(mainContainer, systemImageName, fileBuffer, imageFormat, function (data) {
             callback(newPath);
         });
-    }
+    };
 
     //Copy a image to a FTP server
     functions.copyToFtp = function (localPath, ftpPath, systemImageName, callback) {
         var remotePath = ftpPath + systemImageName;
         utils.FTPUpload(localPath, remotePath, callback);
-    }
+    };
 
     functions.copyPackToFTP = function (gallery, callback) {
         utils.FTPUpload(gallery, callback)
-    }
+    };
 
     return functions;
-}
+};

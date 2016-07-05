@@ -212,6 +212,8 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.post('/api/organizations/:identifier/gifts', gifts.create);
     app.delete('/api/organizations/:identifier/gifts', gifts.remove);
 
+    app.post('/api/gift/assign', gifts.assign);
+
 
     //Mobile Binnies services
     app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender/:birthdate', mobileUser.setMobileByURLParams);
@@ -326,6 +328,10 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.get('/mobile/biinies/:identifier/gifts', gifts.getGifts);
     app.post('/mobile/biinies/:identifier/gifts/share', gifts.share);
     app.post('/mobile/biinies/:identifier/gifts/claim', gifts.claim);
+
+
+
+
 
 
 

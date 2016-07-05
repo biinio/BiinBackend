@@ -15,6 +15,6 @@ module.exports = moongose.model('gifts', {
     isActive:{type:Boolean,default:false},
     isDeleted:{type:Boolean,default:false},
     isValid:{type:Boolean,default:false},
-    siteAssignedTo:{type:String,default:""},
+    sites:{type:[String],default:[]},
     organizationIdentifier:{type:String,default:""}
 });

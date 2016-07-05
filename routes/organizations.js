@@ -12,18 +12,14 @@ module.exports = function () {
     var Vibrant = require('node-vibrant');
     //Schemas
     var organization = require('../schemas/organization'),
-        site = require('../schemas/site'),
         showcase = require('../schemas/showcase'),
         client = require('../schemas/client');
 
     //Other Routes
-    var regionRoutes = require('./regions')(),
-        elementRoutes = require('./elements')();
+    var regionRoutes = require('./regions')();
 
     var functions = {},
-        _quality = 100,
-        _workingImagePath = './public/workingFiles/',
-        _uploadImageDirectory = "/workingFiles/";
+        _workingImagePath = './public/workingFiles/';
 
     //GET the Main view of an Organization
     functions.index = function (req, res) {
@@ -36,8 +32,9 @@ module.exports = function () {
     //GET the list of organizations
     functions.list = function (req, res) {
         res.setHeader('Content-Type', 'application/json');
+        var accountIdentifier  = req.headers.user;
         organization.find({
-            "accountIdentifier": req.user.accountIdentifier,
+            "accountIdentifier": accountIdentifier,
             "isDeleted": false
         }, {
             _id: 0,
@@ -109,7 +106,6 @@ module.exports = function () {
             model.secondaryColor = "85,86,86";
         } else {
             model.secondaryColor = model.secondaryColor.replace("rgb(", "").replace(")", "");
-            ;
         }
 
         organization.update({
@@ -127,7 +123,7 @@ module.exports = function () {
                     res.send(model, 200);
             }
         );
-    }
+    };
 
     //PUT an organization
     functions.create = function (req, res) {
@@ -150,7 +146,7 @@ module.exports = function () {
                 res.send(newModel, 201);
             }
         });
-    }
+    };
 
     //Set showcases into sites in a organization
     functions.setShowcasesPerSite = function (req, res) {
@@ -197,7 +193,7 @@ module.exports = function () {
                 data: data
             });
         });
-    }
+    };
 
     //Save selected organization to client table
     functions.saveSelectedOrganization = function (req, res) {
@@ -219,7 +215,7 @@ module.exports = function () {
         });
 
 
-    }
+    };
 
     //Test Vibrant
     functions.testVibrant = function (req, res) {
@@ -240,7 +236,7 @@ module.exports = function () {
             result.light = lightVibrantRGB;
             res.json(result);
         });
-    }
+    };
 
 
     //Post the Image of the Organization
@@ -267,8 +263,6 @@ module.exports = function () {
 
                     imageMagick(file.path).size(function (err, size) {
 
-                        var height = size.height * 100 / 70;
-                        var width = size.width * 100 / 70;
                         imageMagick(file.path)
                             .depth(8, function (err, data) {
                                 if (err)
@@ -321,7 +315,7 @@ module.exports = function () {
         } else {
             res.send(err, 500);
         }
-    }
+    };
 
 
     //Mark an organization, and its showcases as deleted
@@ -351,7 +345,7 @@ module.exports = function () {
                 });
             }
         });
-    }
+    };
 
 
     //DELETE an specific Organization
@@ -393,7 +387,7 @@ module.exports = function () {
 
 
         });
-    }
+    };
 
     // Check if gallery image is being used before deleting
     functions.checkImageUse = function (req, res) {
@@ -416,8 +410,6 @@ module.exports = function () {
                 throw err;
             }
             else {
-                var activeElements = [];
-                var activeSites = [];
                 var imageInUse = false;
 
                 for (var elementIndex = 0; elementIndex < data.elements.length; elementIndex++) {
@@ -474,7 +466,7 @@ module.exports = function () {
                 }
             }
         });
-    }
+    };
 
     //Delete gallery images
     functions.deleteImage = function (req, res) {
@@ -498,7 +490,7 @@ module.exports = function () {
             }
         });
 
-    }
+    };
 
     //Minor and major Functions
 
@@ -539,7 +531,7 @@ module.exports = function () {
                     data: utils.get.minorIncrement()
                 });
         });
-    }
+    };
 
     return functions;
-}
+};

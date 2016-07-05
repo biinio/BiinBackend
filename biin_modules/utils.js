@@ -44,21 +44,21 @@ module.exports = function () {
             errors = modelObject.validationErrors();
         }
         return errors;
-    }
+    };
 
     //Get a random UIID
     functions.getGUID = function () {
         return uuid.v4();
-    }
+    };
 
     functions.getDateNow = function () {
         return moment().format(dateFormat);
-    }
+    };
 
 
     functions.getDate = function (pdate) {
         return moment(pdate).format(dateFormat);
-    }
+    };
 
 
     /*
@@ -87,7 +87,7 @@ module.exports = function () {
     functions.getExtension = function (filename) {
         var ext = path.extname(filename || '').split('.');
         return ext[ext.length - 1];
-    }
+    };
 
     //Return a new name for an image
     functions.getImageName = function (filename, toPath) {
@@ -104,18 +104,18 @@ module.exports = function () {
          }
          });*/
         return newName;
-    }
+    };
 
     //Misselanious Properties
     functions.get = {};
 
     functions.get.majorIncrement = function () {
         return 1;
-    }
+    };
 
     functions.get.minorIncrement = function () {
         return 1;
-    }
+    };
 
     /**
      * Return a random int, used by `utils.uid()`
@@ -135,10 +135,10 @@ module.exports = function () {
         var resultLong = startLng - endLng;
 
         return math.sqrt((resultLat * resultLat) + (resultLong * resultLong));
-    }
+    };
     //Return a radious in meter to radians
     functions.metersToRadians = function (radious) {
         return ((process.env.STANDARD_RADIOUS / 1000) * 360) / process.env.EARTH_CIRCUMFERENCE;
-    }
+    };
     return functions;
-}
+};

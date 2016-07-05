@@ -23,7 +23,7 @@ module.exports = function (db) {
     var isDevelopment = process.env.NODE_ENV === 'development';
     var isQA = process.env.NODE_ENV === 'qa';
     var isDemo = process.env.NODE_ENV === 'demo';
-    var isProduction = process.env.NODE_ENV === 'production';
+    //var isProduction = process.env.NODE_ENV === 'production';
     if (process.env.DONT_TRACK != 'YES') {
         var rollbar = require("rollbar");
         rollbar.init("bccc96a9f2794cdd835f2cf9f498a381");

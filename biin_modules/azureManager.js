@@ -21,7 +21,7 @@ module.exports = function () {
             }
 
         });
-    }
+    };
 
     //
     //Put the Object in to a buquet
@@ -44,15 +44,13 @@ module.exports = function () {
                     throw err;
                 }
             });
-    }
+    };
 
     //Readable buffer
     var ReadableStreamBuffer = function (fileBuffer) {
 
         var that = this;
         stream.Stream.call(this);
-        this.readable = true;
-        this.writable = false;
 
         var frequency = 50;
         var chunkSize = 1024;
@@ -69,8 +67,7 @@ module.exports = function () {
             }
 
             var amount = Math.min(chunkSize, size);
-            var chunk = null;
-            chunk = new Buffer(amount);
+            var chunk = new Buffer(amount);
             buffer.copy(chunk, 0, position, position + amount);
             position += amount;
             size -= amount;
@@ -107,12 +104,9 @@ module.exports = function () {
             that.emit("close");
         };
 
-        this.setEncoding = function (_encoding) {
-        };
-
         this.resume();
     };
 
     util.inherits(ReadableStreamBuffer, stream.Stream);
     return functions;
-}
+};
