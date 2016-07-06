@@ -16,7 +16,6 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     var gallery = require('../routes/gallery')();
     var blog = require('../routes/blog')();
     var mobileUser = require('../routes/mobileUser')();
-    var stickers = require('../routes/stickers')();
     var mobileRoutes = require('../routes/mobileRoutes')();
     var sysGlobals = require('../routes/sysGlobals')();
     var biinBiinieObjects = require('../routes/biinBiinieObjects')();
@@ -194,10 +193,6 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.post('/roles/:role/:permission/addpermission', roles.addPermissionToRole);
     app.put('/roles/:accountIdentifier/:role/setrole', roles.setUserRole);
     app.get('/roles/:role/getpermission', roles.getPermissions);
-
-    //Stickers services
-    app.get('/api/stickers', stickers.get);
-    app.get('/api/stickers/create', stickers.set);
 
     //Binnies Routes
     app.get('/biinies', mobileUser.index);

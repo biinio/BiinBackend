@@ -6,8 +6,7 @@ module.exports = moongose.model('giftsPerBiinie', {
     gift:{
         identifier: {type: String, index: true, default: ""},
         name: {type: String, default: ""},
-        messages:{type:String, default:""},
-        productToGift:{type:String,default:""},
+        message:{type:String, default:""},
         startDate:{type:Date,default:Date.now},
         endDate:{type:Date,default:Date.now},
         expireTime:{type:Number,default:1},
@@ -16,9 +15,12 @@ module.exports = moongose.model('giftsPerBiinie', {
         isAutomatic:{type:Boolean,default:false},
         availableIn:{type:[String],default:[]},
         isActive:{type:Boolean,default:false},
+        isDeleted:{type:Boolean,default:false},
         isValid:{type:Boolean,default:false},
-        siteAssignedTo:{type:String,default:""},
-        organizationIdentifier:{type:String,default:""}
+        sites:{type:[String],default:[]},
+        productIdentifier:{type:String,default:""},
+        organizationIdentifier:{type:String,default:""},
+        hasAvailablePeriod:{type:Boolean,default:false}
     },
     isClaimed:{type:Boolean, default: false},
     isDeleted:{type:Boolean, default: false},
