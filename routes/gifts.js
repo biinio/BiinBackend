@@ -33,7 +33,7 @@ module.exports = function(){
            if(err){
                res.status(500).json(err);
            }else{
-               res.json(gift);
+               res.status(201).json(gift);
            }
         });
     };
