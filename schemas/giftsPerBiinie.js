@@ -24,5 +24,6 @@ module.exports = moongose.model('giftsPerBiinie', {
     },
     isClaimed:{type:Boolean, default: false},
     isDeleted:{type:Boolean, default: false},
+    recievedDate:{type:Date,default:Date.now},
     status:{type:String, default: "Sent"}
 });

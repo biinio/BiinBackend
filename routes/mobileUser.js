@@ -95,6 +95,8 @@ module.exports = function () {
                         res.json({data: result, status: "0", result: "1"});
                     });
 
+
+
                 }
             }
         });
@@ -102,26 +104,19 @@ module.exports = function () {
         function validateGiftInfo(giftToValidate){
 
             var validatedGift = {};
-            validatedGift.biinieIdentifier = giftToValidate.biinieIdentifier;
             validatedGift.identifier = giftToValidate.identifier;
-            validatedGift.isClaimed = giftToValidate.isClaimed ? "1":"0";
+            validatedGift.productIdentifier = giftToValidate.gift.productIdentifier;
+            validatedGift.organizationIdentifier = giftToValidate.gift.organizationIdentifier;
+            validatedGift.name = giftToValidate.gift.name;
+            validatedGift.message = giftToValidate.gift.message;
             validatedGift.status = giftToValidate.status;
-
-            var validateMetaDataGift = {};
-            validateMetaDataGift.identifier = giftToValidate.gift.identifier;
-            validateMetaDataGift.name = giftToValidate.gift.name;
-            validateMetaDataGift.message = giftToValidate.gift.message;
-            validateMetaDataGift.startDate = giftToValidate.gift.startDate;
-            validateMetaDataGift.endDate = giftToValidate.gift.endDate;
-            validateMetaDataGift.expireTime = giftToValidate.gift.expireTime + "";
-            validateMetaDataGift.amount = giftToValidate.gift.amount + "";
-            validateMetaDataGift.amountSpent = giftToValidate.gift.amountSpent + "";
-            validateMetaDataGift.sites = giftToValidate.gift.sites;
-            validateMetaDataGift.productIdentifier = giftToValidate.gift.productIdentifier;
-            validateMetaDataGift.organizationIdentifier = giftToValidate.gift.organizationIdentifier;
-            validateMetaDataGift.hasAvailablePeriod = giftToValidate.gift.amountSpent ? "1" : "0";
-            validateMetaDataGift.media = giftToValidate.gift.media;
-            validatedGift.gift = validateMetaDataGift;
+            validatedGift.receivedDate = giftToValidate.gift.endDate;
+            validatedGift.expirationDate = giftToValidate.gift.endDate;
+            validatedGift.hasExpireDate = giftToValidate.gift.hasAvailablePeriod ?  "1" : "0";
+            validatedGift.sites = giftToValidate.gift.sites;
+            validatedGift.media = giftToValidate.gift.media;
+            validatedGift.primaryColor = giftToValidate.gift.primaryColor ? giftToValidate.gift.primaryColor : "170,171,171";
+            validatedGift.secondaryColor = giftToValidate.gift.secondaryColor ? giftToValidate.gift.secondaryColor : "85,86,86";
             return validatedGift;
         }
     };

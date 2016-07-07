@@ -58,7 +58,7 @@ module.exports = function () {
                         });
                         elementsToFind = _.uniq(elementsToFind);
 
-                        organization.find( {"elements.elementIdentifier" : {$in : elementsToFind}} , {elements:1} ,function(err,organizations){
+                        organization.find( {"elements.elementIdentifier" : {$in : elementsToFind}} , {identifier:1, elements:1, primaryColor:1, secondaryColor:1} ,function(err,organizations){
                             if(err){
                                 reject(err);
                             } else {
@@ -71,8 +71,11 @@ module.exports = function () {
                                 for (var i = 0; i < giftsFound.length; i++) {
                                     var gift = giftsFound[i];
                                     var element = _.findWhere(elements,{elementIdentifier : gift.gift.productIdentifier});
-                                    if(element){
+                                    var org = _.findWhere(organizations,{identifier : gift.gift.organizationIdentifier});
+                                    if(element && org){
                                         gift.gift.media = element.media;
+                                        gift.gift.primaryColor = org.primaryColor;
+                                        gift.gift.secondaryColor = org.secondaryColor;
                                     } else {
                                         giftsFound = giftsFound.splice(i,1);
                                         i--;
