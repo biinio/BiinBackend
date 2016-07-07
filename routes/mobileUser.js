@@ -9,8 +9,10 @@ module.exports = function () {
         bcrypt = require('bcrypt'),
         imageManager = require('../biin_modules/imageManager')(),
         category = require('../schemas/category'),
+        moment = require('moment'),
         utils = require("../biin_modules/utils")();
     var organization = require('../schemas/organization');
+    var dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
     var gifts = require('../routes/gifts')();
 
@@ -110,8 +112,8 @@ module.exports = function () {
             validatedGift.name = giftToValidate.gift.name;
             validatedGift.message = giftToValidate.gift.message;
             validatedGift.status = giftToValidate.status;
-            validatedGift.receivedDate = giftToValidate.gift.endDate;
-            validatedGift.expirationDate = giftToValidate.gift.endDate;
+            validatedGift.receivedDate = moment.utc(giftToValidate.recievedDate).format(dateFormat)+"Z";
+            validatedGift.expirationDate = moment.utc(giftToValidate.gift.endDate).format(dateFormat) +"Z";
             validatedGift.hasExpireDate = giftToValidate.gift.hasAvailablePeriod ?  "1" : "0";
             validatedGift.sites = giftToValidate.gift.sites;
             validatedGift.media = giftToValidate.gift.media;
