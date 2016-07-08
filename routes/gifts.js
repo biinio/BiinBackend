@@ -7,6 +7,8 @@ module.exports = function () {
     var utils = require('../biin_modules/utils')();
     var organization = require('../schemas/organization');
     var _ = require('underscore');
+    var giftsStatus = require('../biin_modules/giftstatusenum');
+    var notificationsManager = require('../biin_modules/notificationsManager')();
 
     var functions = {};
 
@@ -46,7 +48,8 @@ module.exports = function () {
             giftsPerBiinie.find({
                 "biinieIdentifier": biinieIdentifier,
                 "gift.productIdentifier": { $ne: "" },
-                "gift.sites": { $ne: [] }
+                "gift.sites": { $ne: [] },
+                "status": {$ne : giftsStatus.REFUSED }
             }, {}).lean().exec(function (err, giftsFound) {
                 if (err) {
                     reject(err);
@@ -163,8 +166,10 @@ module.exports = function () {
                                 gift.save(function (err) {
                                     if (err)
                                         res.status(500).json(err);
-                                    else
+                                    else {
+                                        notificationsManager.sendNotificationToUser(biinieIdentifier);
                                         res.status(200).json({});
+                                    }
                                 });
                         });
                     }
@@ -190,6 +195,28 @@ module.exports = function () {
                 res.json({status: "1", result: "0", data: {}});
             } else {
                 res.json(biiniesGifts)
+            }
+        });
+    };
+
+    functions.share = function (req, res) {
+        res.json({status: "1", result: "0", data: {}});
+    };
+
+    functions.refuse = function (req, res) {
+        var biinieGiftIdentifier = req.body.model.giftIdentifier;
+        giftsPerBiinie.findOne({identifier: biinieGiftIdentifier},{}, function (err, biinieGift) {
+            if(err){
+                res.json({status: "1", result: "0", data: {}});
+            } else {
+                biinieGift.status = giftsStatus.REFUSED;
+                biinieGift.save(function (err) {
+                    if(err){
+                        res.json({status: "1", result: "0", data: {}});
+                    } else {
+                        res.json({status: "0", result: "1", data: {}});
+                    }
+                })
             }
         });
     };

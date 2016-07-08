@@ -324,6 +324,8 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.post('/mobile/biinies/:identifier/gifts/share', gifts.share);
     app.post('/mobile/biinies/:identifier/gifts/claim', gifts.claim);
 
+    app.post('/mobile/biinies/:identifier/gifts/refuse', gifts.refuse);
+
 
 
 
