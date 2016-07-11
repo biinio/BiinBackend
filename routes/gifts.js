@@ -122,19 +122,23 @@ module.exports = function () {
     };
 
     functions.remove = function (req, res) {
-        var objectToDelete = req.body;
-        gifts.findOne({identifier: objectToDelete.identifier}, {}, function (err, gift) {
+        var giftIdentifier = req.params.giftidentifier;
+        gifts.findOne({identifier: giftIdentifier}, {}, function (err, gift) {
             if (err) {
                 res.status(500).json(err);
             } else {
-                gift.isDeleted = true;
-                gift.save(function (err) {
-                    if (err) {
-                        res.status(500).json(err);
-                    } else {
-                        res.status(204).send();
-                    }
-                })
+                if(gift) {
+                    gift.isDeleted = true;
+                    gift.save(function (err) {
+                        if (err) {
+                            res.status(500).json(err);
+                        } else {
+                            res.status(204).send();
+                        }
+                    })
+                } else {
+                    res.status(500).json({message:"gift not found"});
+                }
             }
         });
     };

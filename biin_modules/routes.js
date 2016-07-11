@@ -205,7 +205,7 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.get('/api/organizations/:identifier/gifts', gifts.get);
     app.put('/api/organizations/:identifier/gifts/:giftidentifier', gifts.update);
     app.post('/api/organizations/:identifier/gifts', gifts.create);
-    app.delete('/api/organizations/:identifier/gifts', gifts.remove);
+    app.delete('/api/organizations/:identifier/gifts/:giftidentifier', gifts.remove);
 
     app.post('/api/gift/assign', gifts.assign);
 
