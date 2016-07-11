@@ -69,7 +69,6 @@ module.exports = function (app, db, passport, multipartMiddleware) {
         res.sendFile(path.resolve('public/downloads.html'));
     });
 
-
     //Dashboard Locals
     app.get('/api/dashboard/local/newsvsreturning', dashboard.getNewVsReturningLocal);
 
@@ -316,21 +315,15 @@ module.exports = function (app, db, passport, multipartMiddleware) {
     app.put('/test/notifications', routes.testNotification);
 
     app.put('/mobile/biinies/:identifier/registerfornotifications', mobileRoutes.registerForNotifications);
-    app.put('/mobile/biinies/:identifier/site/enter', mobileRoutes.registerForNotifications);
+    //app.put('/mobile/biinies/:identifier/site/enter', mobileRoutes.registerForNotifications);
 
 
-    //app.post('/mobile/biinies/:identifier/gifts/assign', mobileRoutes.registerForNotifications);
+
+
     app.get('/mobile/biinies/:identifier/gifts', gifts.getGifts);
+
     app.post('/mobile/biinies/:identifier/gifts/share', gifts.share);
     app.post('/mobile/biinies/:identifier/gifts/claim', gifts.claim);
-
     app.post('/mobile/biinies/:identifier/gifts/refuse', gifts.refuse);
-
-
-
-
-
-
-
-
+    app.post('/mobile/biinies/:identifier/gifts/deliver', gifts.deliver);
 };

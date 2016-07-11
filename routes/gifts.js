@@ -168,8 +168,12 @@ module.exports = function () {
                                     if (err)
                                         res.status(500).json(err);
                                     else {
-                                        notificationsManager.sendNotificationToUser(biinieIdentifier);
-                                        res.status(200).json({});
+                                        notificationsManager.sendToUser(biinieIdentifier,"Has obtenido un nuevo regalo","Tienes un nuevo regalo en tu baul.").then(function(){
+                                            res.status(200).json({});
+                                        }).catch(function(){
+                                            res.status(500).json({});
+                                        });
+
                                     }
                                 });
                         });
@@ -262,5 +266,23 @@ module.exports = function () {
         });
     };
 
+    functions.deliver = function (req, res) {
+        var biiniesGift = req.body.model.giftIdentifier;
+        giftsPerBiinie.findOne({identifier: biiniesGift}, {}, function (err, gift) {
+            if (err) {
+                res.json({status: "1", result: "0", data: {}});
+            } else {
+                gift.isClaimed = true;
+                gift.status = giftsStatus.CLAIMED;
+                gift.save(function (err) {
+                    if (err)
+                        res.json({status: "1", result: "0", data: {}});
+                    else {
+                        res.json({status: "0", result: "1", data: {}});
+                    }
+                });
+            }
+        });
+    };
     return functions;
 };
