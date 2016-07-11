@@ -55,8 +55,7 @@ module.exports = function () {
                     reject(err);
                 } else {
                     if(giftsFound.length > 0) {
-                        var elementsToFind = [];
-                        elementsToFind = _.map(giftsFound,function(gift){
+                        var elementsToFind = _.map(giftsFound,function(gift){
                             return gift.gift.productIdentifier;
                         });
                         elementsToFind = _.uniq(elementsToFind);
@@ -66,15 +65,15 @@ module.exports = function () {
                                 reject(err);
                             } else {
                                 var elements = [];
-
+                                var org = {};
                                 for (var i = 0; i < organizations.length; i++) {
-                                    var org = organizations[i];
+                                    org = organizations[i];
                                     elements = elements.concat(org.elements);
                                 }
-                                for (var i = 0; i < giftsFound.length; i++) {
+                                for ( i = 0; i < giftsFound.length; i++) {
                                     var gift = giftsFound[i];
                                     var element = _.findWhere(elements,{elementIdentifier : gift.gift.productIdentifier});
-                                    var org = _.findWhere(organizations,{identifier : gift.gift.organizationIdentifier});
+                                    org = _.findWhere(organizations,{identifier : gift.gift.organizationIdentifier});
                                     if(element && org){
                                         gift.gift.media = element.media;
                                         gift.gift.primaryColor = org.primaryColor;
@@ -92,8 +91,6 @@ module.exports = function () {
                     } else {
                         resolve(giftsFound);
                     }
-
-
                 }
             });
         });
@@ -199,10 +196,6 @@ module.exports = function () {
         });
     };
 
-    functions.share = function (req, res) {
-        res.json({status: "1", result: "0", data: {}});
-    };
-
     functions.refuse = function (req, res) {
         var biinieGiftIdentifier = req.body.model.giftIdentifier;
         giftsPerBiinie.findOne({identifier: biinieGiftIdentifier},{}, function (err, biinieGift) {
@@ -222,16 +215,38 @@ module.exports = function () {
     };
 
     functions.share = function (req, res) {
-        res.json({status: "1", result: "0", data: {}});
+        var model = req.body.model;
+        var biinieIdentifier = req.params.identifier;
+        var giftIdentifier = model.giftIdentifier;
+        var to = model.biinieReciever;
+        giftsPerBiinie.findOne({identifier:giftIdentifier},{},function(err, biinieGift){
+            if(err){
+                res.json({status: "1", result: "0", data: {}});
+            } else {
+                biinieGift.status = giftsStatus.SHARED;
+                biinieGift.biinieIdentifier = to;
+                //SEND NOTIFICATION TO THE NEW BIINIE
+                biinieGift.save(function (err) {
+                    if(err){
+                        res.json({status: "1", result: "0", data: {}});
+                    } else {
+                        res.json({status: "0", result: "1", data: {}});
+                    }
+                });
+            }
+
+        });
+
     };
 
     functions.claim = function (req, res) {
-        var biiniesGift = req.body.biinieGiftIdentifier;
+        var biiniesGift = req.body.model.giftIdentifier;
         giftsPerBiinie.findOne({identifier: biiniesGift}, {}, function (err, gift) {
             if (err) {
                 res.json({status: "1", result: "0", data: {}});
             } else {
                 gift.isClaimed = true;
+                gift.status = giftsStatus.CLAIMED;
                 gift.save(function (err) {
                     if (err)
                         res.json({status: "1", result: "0", data: {}});
