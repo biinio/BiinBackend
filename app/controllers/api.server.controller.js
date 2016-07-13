@@ -10,6 +10,7 @@ var _ = require('lodash');
  */
 module.exports = _.extend(
     require('./api/accounts.api.server.controller.js'),
+    require('./api/categories.api.server.controller'),
     require('./api/biins.api.server.controller.js'),
     require('./api/biinies.api.server.controller'),
     require('./api/clients.api.server.controller.js'),
