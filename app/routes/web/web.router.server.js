@@ -9,6 +9,9 @@ module.exports = function (app) {
     var web = require('../../controllers/web.server.controller');
     var passport = require('../../controllers/auth.server.controller');
 
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     app.route('/accounts').get(web.accounts);
 
     app.route('/login').get(web.login);
@@ -18,6 +21,7 @@ module.exports = function (app) {
     app.post('/api/singup', web.setClient);
     app.get('/client/:identifier/activate', web.activateClient);
     app.post('/client/:identifier/activate', web.activateClient);
+
 
     app.post('/api/login', function (req, res, next) {
         passport.authenticate('clientLocal', function (err, user) {
