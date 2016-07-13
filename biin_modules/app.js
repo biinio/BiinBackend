@@ -1,23 +1,21 @@
 module.exports = function (db) {
-    var express = require('express')
-        , session = require('express-session')
-        , mongoStore = require('connect-mongo')(session)
-        , passport = require('./auth')
-        , fs = require('fs')
-        , http = require('http')
-        , https = require('https')
-        , path = require('path')
-        , app = express()
-        , favicon = require('serve-favicon')
-        , logger = require('morgan')
-        , cookieParser = require('cookie-parser')
-        , bodyParser = require('body-parser')
-        , crypto = require('crypto')
-        , multipart = require('connect-multiparty')
-        , multipartMiddleware = multipart()
-        , lessMiddleware = require('less-middleware')
-        , cors = require('cors')
-        , expressValidator = require('express-validator');
+    var express = require('express'),
+        session = require('express-session'),
+        mongoStore = require('connect-mongo')(session),
+        fs = require('fs'),
+        http = require('http'),
+        https = require('https'),
+        path = require('path'),
+        app = express(),
+        favicon = require('serve-favicon'),
+        logger = require('morgan'),
+        cookieParser = require('cookie-parser'),
+        bodyParser = require('body-parser'),
+        crypto = require('crypto'),
+        lessMiddleware = require('less-middleware'),
+        cors = require('cors'),
+        expressValidator = require('express-validator');
+    var config = require('../config/config');
 
 
     var isDevelopment = process.env.NODE_ENV === 'development';
@@ -101,12 +99,18 @@ module.exports = function (db) {
     }));
 
     //Logger
-    app.use(passport.initialize());
-    app.use(passport.session());
+    //app.use(passport.initialize());
+    //app.use(passport.session());
     app.use(expressValidator());//Express Validator
     app.use(bodyParser.json());
 
     //Routes
-    var routes = require("./routes.js")(app, db, passport, multipartMiddleware);
+    console.log("routing.....");
+    // Globbing routing files
+    config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+        console.log(routePath);
+        require(path.resolve(routePath))(app);
+    });
+
     return app;
 };

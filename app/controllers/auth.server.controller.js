@@ -1,16 +1,16 @@
 //Passport Login
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    clientSchema = require('../schemas/client');
+    clientSchema = require('../models/client');
 
 var BasicStrategy = require('passport-http').BasicStrategy,
     ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy,
     BearerStrategy = require('passport-http-bearer').Strategy,
     crypto = require('crypto');
 
-var oauthMobileAccesTokens = require('../schemas/oauthMobileAccesTokens'),
-    oauthMobileAPIGrants = require('../schemas/oauthMobileAPIGrants'),
-    mobileUser = require('../schemas/mobileUser');
+var oauthMobileAccesTokens = require('../models/oauthMobileAccesTokens'),
+    oauthMobileAPIGrants = require('../models/oauthMobileAPIGrants'),
+    mobileUser = require('../models/mobileUser');
 
 var util = require('util');
 
