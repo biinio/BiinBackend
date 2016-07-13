@@ -12,7 +12,7 @@ var mobileUser = require('../../models/mobileUser'),
 var organization = require('../../models/organization');
 var dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
-var gifts = require('../api/gifts.api.server.controller');
+var gifts = require('../mobile/gifts.mobile.server.controller');
 
 // Default image for organizations
 var ORGANIZATION_DEFAULT_IMAGE = {
