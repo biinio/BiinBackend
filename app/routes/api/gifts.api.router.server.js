@@ -15,6 +15,8 @@ module.exports = function (app) {
     app.route('/api/organizations/:identifier/gifts').post(api.createGift);
     app.route('/api/organizations/:identifier/gifts/:giftidentifier').delete( api.removeGift);
 
+    app.route('/api/organizations/:identifier/sites/:sitesidentifier/getavailablegifts/:typegift/:automatic').get( api.getGiftsAvailable );
+
     app.route('/api/gift/assign').post(api.assignGift);
 
 };

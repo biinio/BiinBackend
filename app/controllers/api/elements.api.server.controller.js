@@ -50,9 +50,11 @@ exports.listReadyElements = function (req, res) {
     }, function (err, data) {
 
         var elementList = [];
-        for (var index = 0; index < data.elements.length; index++) {
-            if (data.elements[index].isDeleted == 0 && data.elements[index].isReady != 0) {
-                elementList.push(data.elements[index]);
+        if(data) {
+            for (var index = 0; index < data.elements.length; index++) {
+                if (data.elements[index].isDeleted == 0 && data.elements[index].isReady != 0) {
+                    elementList.push(data.elements[index]);
+                }
             }
         }
 

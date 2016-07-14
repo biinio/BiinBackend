@@ -129,6 +129,19 @@ exports.assignGift = function (req, res) {
     });
 };
 
-/**
- *  Gifts calls for mobile
- */
+
+exports.getGiftsAvailable = function (req, res){
+    var siteIdentifier = req.params.sitesidentifier;
+    var typeIdentifier = req.params.typegift;
+    var automatic = req.params.automatic;
+    var isAutomatic = automatic == "true";
+    
+    gifts.find({sites:siteIdentifier,availableIn:typeIdentifier,isAutomatic:isAutomatic},{}, function (err,giftsFound) {
+        if(err)
+            res.status(500).json(err);
+        else{
+            res.status(200).json(giftsFound);
+        }
+    })
+
+};
