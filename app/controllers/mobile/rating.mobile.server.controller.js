@@ -21,6 +21,8 @@ exports.putRating = function (req, res) {
     objectToSave.rating = parseInt(rating);
     objectToSave.comment = comment;
     objectToSave.date = date;
+    objectToSave.gift = null;
+
 
     ratingSites.create(objectToSave, function (err, objectToSave) {
         if (err)
