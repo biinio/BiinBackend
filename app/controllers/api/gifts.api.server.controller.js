@@ -193,6 +193,35 @@ exports.assignGiftNPS = function (req, res) {
         }
     });
 };
+exports.deliverGiftNPS = function (req, res) {
+    var npsCommentIdentifier = req.body.npsCommentIdentifier;
+    var biinieIdentifier = req.body.biinieIdentifier;
+    ratingsSites.findOne({identifier:npsCommentIdentifier},{},function(err,comment){
+        if(err){
+            res.status(500).json(err);
+        } else {
+            giftsPerBiinie.findOne({_id:comment.gift},{}, function (err,giftPerBiinie) {
+                if(err){
+                    res.status(500).json(err);
+                }else{
+                    giftPerBiinie.status = giftsStatus.APPROVED;
+                    giftPerBiinie.save(function(err){
+                        if(err){
+                            res.status(500).json(err);
+                        } else {
+                            notificationsManager.sendToUser(biinieIdentifier, "Tu regalo ha sido aceptado", "Pronto recibirás el regalo que has reclamado.").then(function () {
+                                res.status(200).json({});
+                            }).catch(function () {
+                                res.status(500).json({});
+                            });
+                        }
+                    })
+
+                }
+            })
+        }
+    });
+};
 
 
 exports.getGiftsAvailable = function (req, res){
