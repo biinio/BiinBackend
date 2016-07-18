@@ -64,7 +64,7 @@ exports.getNPSRatings = function (req, res) {
     var offset = req.headers.offset || 0;
     var siteId = filters.siteId;
 
-    ratingSites.find({siteIdentifier: siteId}, {}).lean().exec(function (err, ratings) {
+    ratingSites.find({siteIdentifier: siteId}, {}).populate('gift').lean().exec(function (err, ratings) {
         if (err)
             res.status(200).json({data: {}, status: "1", result: "0"});
         else {

@@ -1,5 +1,6 @@
 var gifts = require('../../models/gifts');
 var giftsPerBiinie = require('../../models/giftsPerBiinie');
+var ratingsSites = require('../../models/ratingSites');
 var utils = require('../utils.server.controller');
 var organization = require('../../models/organization');
 var _ = require('underscore');
@@ -114,6 +115,70 @@ exports.assignGift = function (req, res) {
                                         res.status(500).json({});
                                     });
 
+                                }
+                            });
+                    });
+                }
+                else {
+                    res.status(500).json({message: "Gift has reached its max amount of gifts allowed"});
+                }
+            } else {
+                res.status(500).json({message: "There is no gift"});
+            }
+
+        }
+    });
+};
+
+exports.assignGiftNPS = function (req, res) {
+    var biinieIdentifier = req.body.biinieIdentifier;
+    var giftIdentifier = req.body.giftIdentifier;
+    var npsCommentIdentifier = req.body.npsCommentIdentifier;
+
+    gifts.findOne({identifier: giftIdentifier}, {}, function (err, gift) {
+        if (err)
+            res.status(500).json(err);
+        else {
+            if (gift) {
+                if (gift.amountSpent < gift.amount || gift.amount == -1) {
+
+                    gift.amountSpent = gift.amountSpent + 1;
+
+                    var newBiinieGift = new giftsPerBiinie();
+                    newBiinieGift.gift = gift;
+                    newBiinieGift.identifier = utils.getGUID();
+                    newBiinieGift.biinieIdentifier = biinieIdentifier;
+                    newBiinieGift.save(function (err, binnieGiftSaved) {
+                        if (err)
+                            res.status(500).json(err);
+                        else
+                            gift.save(function (err) {
+                                if (err)
+                                    res.status(500).json(err);
+                                else {
+                                    if(binnieGiftSaved){
+                                        ratingsSites.findOne({identifier:npsCommentIdentifier},{},function(err,comment){
+                                            if(err){
+                                                res.status(500).json(err);
+                                            } else {
+                                                comment.gift = binnieGiftSaved;
+                                                comment.save(function(err){
+                                                    if(err){
+                                                        res.status(500).json(err);
+                                                    }else{
+                                                        notificationsManager.sendToUser(biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.").then(function () {
+                                                            res.status(200).json({});
+                                                        }).catch(function () {
+                                                            res.status(500).json({});
+                                                        });
+                                                    }
+                                                })
+                                            }
+                                        });
+
+                                    } else {
+                                        res.status(500).json(err);
+                                    }
                                 }
                             });
                     });
