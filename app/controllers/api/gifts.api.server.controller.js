@@ -1,5 +1,6 @@
 var gifts = require('../../models/gifts');
 var giftsPerBiinie = require('../../models/giftsPerBiinie');
+var giftsPerSites = require('../../models/giftsPerSite');
 var ratingsSites = require('../../models/ratingSites');
 var utils = require('../utils.server.controller');
 var organization = require('../../models/organization');
@@ -204,6 +205,61 @@ exports.assignGiftNPS = function (req, res) {
         }
     });
 };
+
+exports.assignAutoGiftNPS = function (req,res) {
+    var giftIdentifier = req.body.giftIdentifier;
+    var siteIdentifier = req.body.siteIdentifier;
+
+    gifts.findOne({identifier:giftIdentifier},{},function(err,giftToAssign){
+        if(err){
+            res.status(500).json(err);
+        } else if(giftToAssign){
+            var giftPerSite = new giftsPerSites();
+            giftPerSite.siteIdentifier = siteIdentifier;
+            giftPerSite.identifier = utils.getGUID();
+            giftPerSite.gift = giftToAssign;
+
+            giftPerSite.save(function(err){
+                if(err){
+                    res.status(500).json(err);
+                } else {
+                    res.sratus(200).json({})
+                }
+            });
+
+        } else{
+            {message: "There is no gift"}
+        }
+    });
+
+};
+
+
+exports.cancelAutoGiftNPS = function(req,res) {
+    var giftIdentifier = req.body.giftIdentifier;
+    var siteIdentifier = req.body.siteIdentifier;
+    var relationIdentifier = req.body.relationIdentifier;
+
+    giftsPerSites.findOne({identifier:relationIdentifier},{}, function (err, giftPerSite) {
+        if(err){
+            res.status(500).json(err);
+        } else {
+            giftPerSite.status = "CANCELED";
+            giftPerSite.save(function(err){
+                if(err){
+                    res.status(500).json(err);
+                } else {
+                    res.status(200).json({});
+                }
+            });
+
+        }
+    })
+
+
+
+};
+
 exports.deliverGiftNPS = function (req, res) {
     var npsCommentIdentifier = req.body.npsCommentIdentifier;
     var biinieIdentifier = req.body.biinieIdentifier;
@@ -233,7 +289,6 @@ exports.deliverGiftNPS = function (req, res) {
         }
     });
 };
-
 
 exports.getGiftsAvailable = function (req, res){
     var siteIdentifier = req.params.sitesidentifier;

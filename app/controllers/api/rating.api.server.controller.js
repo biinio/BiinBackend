@@ -1,5 +1,6 @@
 var math = require('mathjs');
 var ratingSites = require('../../models/ratingSites');
+var giftsPerSites = require('../../models/giftsPerSite');
 var organization = require('../../models/organization');
 var mobileUser = require('../../models/mobileUser');
 var _ = require('underscore');
@@ -64,6 +65,8 @@ exports.getNPSRatings = function (req, res) {
     var offset = req.headers.offset || 0;
     var siteId = filters.siteId;
 
+
+
     ratingSites.find({siteIdentifier: siteId}, {}).populate('gift').lean().exec(function (err, ratings) {
         if (err)
             res.status(200).json({data: {}, status: "1", result: "0"});
@@ -84,18 +87,26 @@ exports.getNPSRatings = function (req, res) {
                 if (err)
                     res.status(200).json({data: {}, status: "1", result: "0"});
                 else {
+                    giftsPerSites.findOne({siteIdentifier: siteId, status:"ACTIVE"},{}).populate("gift").exec(function(err,autoGiftAssigned){
+                       if(err){
+                           res.status(200).json({data: {}, status: "1", result: "0"});
+                       } else {
+                           var users = {};
+                           for (i = 0; i < usersData.length; i++) {
+                               users[usersData[i].identifier] = {};
+                               users[usersData[i].identifier].name = usersData[i].firstName + " " + usersData[i].lastName;
+                               users[usersData[i].identifier].facebookAvatarUrl = usersData[i].facebookAvatarUrl;
+                               users[usersData[i].identifier].url = usersData[i].url;
+                           }
+                           for (i = 0; i < ratings.length; i++) {
+                               ratings[i].user = users[ratings[i].userIdentifier];
+                           }
+                           ratings.autoGift = autoGiftAssigned;
+                           res.status(200).json({data: ratings, status: "0", result: "1", test: users});
+                       }
 
-                    var users = {};
-                    for (i = 0; i < usersData.length; i++) {
-                        users[usersData[i].identifier] = {};
-                        users[usersData[i].identifier].name = usersData[i].firstName + " " + usersData[i].lastName;
-                        users[usersData[i].identifier].facebookAvatarUrl = usersData[i].facebookAvatarUrl;
-                        users[usersData[i].identifier].url = usersData[i].url;
-                    }
-                    for (i = 0; i < ratings.length; i++) {
-                        ratings[i].user = users[ratings[i].userIdentifier];
-                    }
-                    res.status(200).json({data: ratings, status: "0", result: "1", test: users});
+                    });
+
                 }
             });
 
