@@ -76,7 +76,7 @@ function assignIfItsAbleGift(siteId,biinieIdentifier,npsCommentIdentifier) {
                                         if (err)
                                             reject({message: err, code: 3});
                                         else
-                                            gifts.update({_id: autoGiftAssigned.gift._id}, autoGiftAssigned.gift,(function (err) {
+                                            gifts.update({_id: autoGiftAssigned.gift._id}, autoGiftAssigned.gift, function (err) {
                                                 if (err)
                                                     reject({message: err, code: 4});
                                                 else {
