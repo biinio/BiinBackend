@@ -102,7 +102,10 @@ exports.getNPSRatings = function (req, res) {
                                ratings[i].user = users[ratings[i].userIdentifier];
                            }
                            ratings.autoGift = autoGiftAssigned;
-                           res.status(200).json({data: ratings, status: "0", result: "1", test: users});
+                           var response = {};
+                           response.gift = autoGiftAssigned;
+                           response.ratings = ratings;
+                           res.status(200).json({data: response, status: "0", result: "1", test: users});
                        }
 
                     });
