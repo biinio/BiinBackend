@@ -234,7 +234,6 @@ exports.assignAutoGiftNPS = function (req,res) {
 
 };
 
-
 exports.cancelAutoGiftNPS = function(req,res) {
     var giftIdentifier = req.body.giftIdentifier;
     var siteIdentifier = req.body.siteIdentifier;
