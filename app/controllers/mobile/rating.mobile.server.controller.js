@@ -5,6 +5,7 @@ var mobileUser = require('../../models/mobileUser');
 var gifts = require('../../models/gifts');
 var giftsPerBiinie = require('../../models/giftsPerBiinie');
 var giftsPerSites = require('../../models/giftsPerSite');
+var giftsStatus = require('../enums/giftstatusenum');
 var _ = require('underscore');
 var utils = require('../utils.server.controller');
 
