@@ -223,7 +223,7 @@ exports.assignAutoGiftNPS = function (req,res) {
                 if(err){
                     res.status(500).json(err);
                 } else {
-                    res.sratus(200).json({})
+                    res.status(200).json({})
                 }
             });
 
