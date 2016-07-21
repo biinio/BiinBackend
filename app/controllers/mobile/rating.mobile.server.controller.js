@@ -8,6 +8,7 @@ var giftsPerSites = require('../../models/giftsPerSite');
 var giftsStatus = require('../enums/giftstatusenum');
 var _ = require('underscore');
 var utils = require('../utils.server.controller');
+var notificationsManager = require('../notifications.server.controller');
 
 exports.putRating = function (req, res) {
     var reqData = req.body.model;
@@ -81,7 +82,7 @@ function assignIfItsAbleGift(siteId,biinieIdentifier,npsCommentIdentifier) {
                                                     reject({message: err, code: 4});
                                                 else {
                                                     if (binnieGiftSaved) {
-                                                        ratingsSites.findOne({identifier: npsCommentIdentifier}, {}, function (err, comment) {
+                                                        ratingSites.findOne({identifier: npsCommentIdentifier}, {}, function (err, comment) {
                                                             if (err) {
                                                                 reject({message: err, code: 5});
                                                             } else {
