@@ -137,6 +137,7 @@ exports.testNotification = function (req, res) {
     var title = req.body.title || "Biin";
     var sound = req.body.sound || "";
     var badge = req.body.badge || "";
-    notification.sendNotificationToUser(message, title, to, sound, badge);
+    var data = req.body.data;
+    notification.sendNotificationToUser(message, title, to, sound, badge, data);
     res.json({});
 };
