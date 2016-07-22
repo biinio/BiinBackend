@@ -43,7 +43,6 @@ exports.sendNotificationToUser = function (message, title, to, sound, badge, dat
     baseRequest.post();
 };
 
-
 /**
  *
  * @param to

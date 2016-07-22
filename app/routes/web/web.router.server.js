@@ -45,5 +45,9 @@ module.exports = function (app) {
         var path = require('path');
         res.sendFile(path.resolve('public/downloads.html'));
     });
+
+
+
+    app.put('/test/notifications',web.testNotification);
 };
 
