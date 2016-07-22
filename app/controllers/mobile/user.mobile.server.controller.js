@@ -1073,7 +1073,16 @@ exports.updateMobile = function (req, res) {
             else {
                 model.identifier = identifier;
                 model.biinName = model.email;
-                sendVerificationMail(req, model, function () {
+
+                var modelToReturn = model;
+                modelToReturn.birthDate = birthDate.replace("T", " ").replace("Z", "");
+                modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                modelToReturn.facebook_id = facebookId;
+                delete modelToReturn.facebookId;
+                delete modelToReturn.accountState;
+                res.json({data: modelToReturn, status: "0", result: "1"});
+
+                /*sendVerificationMail(req, model, function () {
                     var modelToReturn = model;
                     modelToReturn.birthDate = birthDate.replace("T", " ").replace("Z", "");
                     modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
@@ -1081,7 +1090,7 @@ exports.updateMobile = function (req, res) {
                     delete modelToReturn.facebookId;
                     delete modelToReturn.accountState;
                     res.json({data: modelToReturn, status: "0", result: "1"});
-                })
+                })*/
             }
         })
     };
@@ -1207,7 +1216,7 @@ function sendVerificationMail(req, model, callback) {
     var path = require('path');
 
 
-    var htmlEmailTemplate = fs.readFileSync(__dirname + '/../config/email.html', "utf-8");
+    var htmlEmailTemplate = fs.readFileSync(__dirname + '/../../../config/email.html', "utf-8");
 
     htmlEmailTemplate = htmlEmailTemplate.replace(/\/\/\/\/\//g, url);
     // setup e-mail data with unicode symbols
