@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-module.exports = moongose.model('cards', {
+module.exports = mongoose.model('cards', {
     identifier: { type: String, index: true, default: ""},
     title: { type: String, default: ""},
     description:{ type:String, default:""},
