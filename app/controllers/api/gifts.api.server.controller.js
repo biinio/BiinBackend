@@ -293,7 +293,7 @@ exports.getGiftsAvailable = function (req, res){
     var automatic = req.params.automatic;
     var isAutomatic = automatic == "true";
     
-    gifts.find({sites:siteIdentifier,availableIn:typeIdentifier,isAutomatic:isAutomatic},{}, function (err,giftsFound) {
+    gifts.find({sites:siteIdentifier,availableIn:typeIdentifier,isAutomatic:isAutomatic,isActive:true,isDeleted:false},{}, function (err,giftsFound) {
         if(err)
             res.status(500).json(err);
         else{
