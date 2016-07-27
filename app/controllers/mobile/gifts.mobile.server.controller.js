@@ -119,6 +119,7 @@ exports.claimGift = function (req, res) {
         } else {
             gift.isClaimed = true;
             gift.status = giftsStatus.CLAIMED;
+            gift.claimedDate = Date.now();
             gift.save(function (err) {
                 if (err)
                     res.json({status: "1", result: "0", data: {}});
@@ -137,7 +138,8 @@ exports.deliverGift = function (req, res) {
             res.json({status: "1", result: "0", data: {}});
         } else {
             gift.isClaimed = true;
-            gift.status = giftsStatus.CLAIMED;
+            gift.status = giftsStatus.DELIVERED;
+            gift.deliveredDate = Date.now();
             gift.save(function (err) {
                 if (err)
                     res.json({status: "1", result: "0", data: {}});

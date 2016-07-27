@@ -268,7 +268,8 @@ exports.deliverGiftNPS = function (req, res) {
                 if(err){
                     res.status(500).json(err);
                 }else{
-                    giftPerBiinie.status = giftsStatus.APPROVED;
+                    giftPerBiinie.status = giftsStatus.PENDING;
+                    giftPerBiinie.approvedDate = Date.now();
                     giftPerBiinie.save(function(err){
                         if(err){
                             res.status(500).json(err);
@@ -301,4 +302,15 @@ exports.getGiftsAvailable = function (req, res){
         }
     })
 
+};
+
+exports.getUpdatedAmount = function (req, res){
+    var orgID = req.params["identifier"];
+    gifts.find({organizationIdentifier: orgID, isDeleted: false}, { identifier : 1, amountSpent:1 }, function (err, giftsToSend) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            res.json(giftsToSend);
+        }
+    });
 };

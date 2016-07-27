@@ -23,5 +23,6 @@ module.exports = function (app) {
     app.route('/api/gift/assign/nps').post(api.assignGiftNPS);
     app.route('/api/gift/deliver/nps').post(api.deliverGiftNPS);
 
+    app.route('/api/organizations/:identifier/gifts').get( api.getUpdatedAmount);
 
 };
