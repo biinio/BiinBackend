@@ -25,5 +25,6 @@ module.exports = _.extend(
     require('./api/rating.api.server.controller.js'),
     require('./api/roles.api.server.controller.js'),
     require('./api/showcases.api.server.controller.js'),
-    require('./api/sites.api.server.controller.js')
+    require('./api/sites.api.server.controller.js'),
+    require('./api/cards.api.server.controller.js')
 );
