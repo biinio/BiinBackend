@@ -62,7 +62,7 @@ exports.sendToUser = function (to, title, message, sound, badge, data) {
     return new Promise(function (resolve, reject) {
         function callback(error, incomingMessage, body) {
             if (error) {
-                throw  error;
+                reject(error)
             } else {
                 console.log(body);
                 console.log(incomingMessage);
@@ -79,7 +79,7 @@ exports.sendToUser = function (to, title, message, sound, badge, data) {
 
         biiniesDevice.findOne({biinieIdentifier: to}, {}, function (err, biinieDevice) {
             if (err) {
-                reject();
+                reject(err);
             }
             else {
                 if (biinieDevice) {
@@ -104,7 +104,7 @@ exports.sendToUser = function (to, title, message, sound, badge, data) {
                     });
                     baseRequest.post();
                 } else {
-                    reject();
+                    reject("Biinie doesn't exist");
                 }
             }
         });

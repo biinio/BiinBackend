@@ -276,8 +276,8 @@ exports.deliverGiftNPS = function (req, res) {
                         } else {
                             notificationsManager.sendToUser(biinieIdentifier, "Tu regalo ha sido aceptado", "Pronto recibirás el regalo que has reclamado.").then(function () {
                                 res.status(200).json({});
-                            }).catch(function () {
-                                res.status(500).json({});
+                            }).catch(function (err) {
+                                res.status(500).json(err);
                             });
                         }
                     })
