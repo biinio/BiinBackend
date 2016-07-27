@@ -16,7 +16,28 @@ exports.getCardsList = function(req,res){
 };
 
 exports.updateCard = function(){
+    var orgID = req.params["identifier"];
+    var cardIdenfifier = req.params["giftidentifier"];
+    var cardData = req.body;
 
+    var set = {};
+    for (var field in cardData) {
+        set[field] = cardData[field];
+    }
+
+    cards.findOneAndUpdate(
+        {identifier: cardIdenfifier},
+        {$set: set},
+        {upsert: false, new: true},
+        function (err, document) {
+            if (err) {
+                res.status(500).json(err);
+            }
+            else {
+                res.status(200).json(document);
+            }
+        }
+    );
 };
 
 exports.deleteCard = function(){
@@ -43,7 +64,7 @@ exports.deleteCard = function(){
 
 exports.createCard = function(){
     var newCard = new cards();
-    var orgID = req.params["identifier"];
+    var orgID = req.params.identifier;
     newCard.identifier = utils.getGUID();
     newCard.organizationIdentifier = orgID;
     newCard.save(function (err, card) {
