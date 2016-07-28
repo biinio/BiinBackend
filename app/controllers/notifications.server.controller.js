@@ -55,7 +55,7 @@ exports.sendNotificationToUser = function (message, title, to, sound, badge, dat
  */
 exports.sendToUser = function (to, title, message, sound, badge, data) {
     sound = sound ? sound : "notification.wav";
-    badge = badge ? badge : "0";
+    badge = badge ? badge : "1";
     title = title ? title : "Biin";
     message = message ? message : "Tienes un mensaje nuevo.";
 
