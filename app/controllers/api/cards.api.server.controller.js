@@ -62,7 +62,7 @@ exports.deleteCard = function(){
     });
 };
 
-exports.createCard = function(){
+exports.createCard = function(req,res){
     var newCard = new cards();
     var orgID = req.params.identifier;
     newCard.identifier = utils.getGUID();
