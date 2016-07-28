@@ -15,7 +15,7 @@ exports.getCardsList = function(req,res){
     });
 };
 
-exports.updateCard = function(){
+exports.updateCard = function(req,res){
     var orgID = req.params["identifier"];
     var cardIdenfifier = req.params["giftidentifier"];
     var cardData = req.body;
@@ -40,7 +40,7 @@ exports.updateCard = function(){
     );
 };
 
-exports.deleteCard = function(){
+exports.deleteCard = function(req,res){
     var cardIdentifier = req.params.cardidentifier;
     cards.findOne({identifier: cardIdentifier}, {}, function (err, card) {
         if (err) {

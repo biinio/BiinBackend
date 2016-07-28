@@ -268,7 +268,7 @@ exports.deliverGiftNPS = function (req, res) {
                 if(err){
                     res.status(500).json(err);
                 }else{
-                    giftPerBiinie.status = giftsStatus.APPROVED;
+                    giftPerBiinie.status = giftsStatus.DELIVERED;
                     giftPerBiinie.approvedDate = Date.now();
                     giftPerBiinie.save(function(err){
                         if(err){
