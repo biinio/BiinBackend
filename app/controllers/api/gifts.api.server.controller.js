@@ -7,6 +7,8 @@ var organization = require('../../models/organization');
 var _ = require('underscore');
 var giftsStatus = require('../enums/giftstatusenum');
 var notificationsManager = require('../notifications.server.controller');
+var mobileGiftCalls = require('../mobile/gifts.mobile.server.controller');
+var validations = require('../validations.server.controller');
 
 
 /**
@@ -63,7 +65,7 @@ exports.updateGift = function (req, res) {
     );
 };
 
-exports.removeGift= function (req, res) {
+exports.removeGift = function (req, res) {
     var giftIdentifier = req.params.giftidentifier;
     gifts.findOne({identifier: giftIdentifier}, {}, function (err, gift) {
         if (err) {
@@ -143,55 +145,73 @@ exports.assignGiftNPS = function (req, res) {
             if (gift) {
                 if (gift.amountSpent < gift.amount || gift.amount == -1) {
 
-                    giftsPerBiinie.findOne({"gift.identifier": giftIdentifier, "biinieIdentifier":biinieIdentifier, status:{$in:[giftsStatus.SENT,giftsStatus.APPROVED,giftsStatus.CLAIMED]}},{},function(err,actualgift){
-                       if(err){
-                           res.status(500).json(err);
-                       } else{
-                           if( actualgift){
-                               res.status(500).json({message: "There is a gift pending to claimed"});
-                           } else {
-                               gift.amountSpent = gift.amountSpent + 1;
+                    giftsPerBiinie.findOne({
+                        "gift.identifier": giftIdentifier,
+                        "biinieIdentifier": biinieIdentifier,
+                        status: {$in: [giftsStatus.SENT, giftsStatus.APPROVED, giftsStatus.CLAIMED]}
+                    }, {}, function (err, actualgift) {
+                        if (err) {
+                            res.status(500).json(err);
+                        } else {
+                            if (actualgift) {
+                                res.status(500).json({message: "There is a gift pending to claimed"});
+                            } else {
+                                gift.amountSpent = gift.amountSpent + 1;
 
-                               var newBiinieGift = new giftsPerBiinie();
-                               newBiinieGift.gift = gift;
-                               newBiinieGift.identifier = utils.getGUID();
-                               newBiinieGift.biinieIdentifier = biinieIdentifier;
-                               newBiinieGift.save(function (err, binnieGiftSaved) {
-                                   if (err)
-                                       res.status(500).json(err);
-                                   else
-                                       gift.save(function (err) {
-                                           if (err)
-                                               res.status(500).json(err);
-                                           else {
-                                               if(binnieGiftSaved){
-                                                   ratingsSites.findOne({identifier:npsCommentIdentifier},{},function(err,comment){
-                                                       if(err){
-                                                           res.status(500).json(err);
-                                                       } else {
-                                                           comment.gift = binnieGiftSaved;
-                                                           comment.save(function(err){
-                                                               if(err){
-                                                                   res.status(500).json(err);
-                                                               }else{
-                                                                   notificationsManager.sendToUser(biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.").then(function () {
-                                                                       res.status(200).json({});
-                                                                   }).catch(function () {
-                                                                       res.status(500).json({});
-                                                                   });
-                                                               }
-                                                           })
-                                                       }
-                                                   });
+                                var newBiinieGift = new giftsPerBiinie();
+                                newBiinieGift.gift = gift;
+                                newBiinieGift.identifier = utils.getGUID();
+                                newBiinieGift.biinieIdentifier = biinieIdentifier;
+                                newBiinieGift.save(function (err, binnieGiftSaved) {
+                                    if (err)
+                                        res.status(500).json(err);
+                                    else
+                                        gift.save(function (err) {
+                                            if (err)
+                                                res.status(500).json(err);
+                                            else {
+                                                if (binnieGiftSaved) {
+                                                    ratingsSites.findOne({identifier: npsCommentIdentifier}, {}, function (err, comment) {
+                                                        if (err) {
+                                                            res.status(500).json(err);
+                                                        } else {
+                                                            comment.gift = binnieGiftSaved;
+                                                            comment.save(function (err) {
+                                                                if (err) {
+                                                                    res.status(500).json(err);
+                                                                } else {
+                                                                    mobileGiftCalls.getBiiniesGifts(biinieIdentifier).then( function(userGifts){
 
-                                               } else {
-                                                   res.status(500).json(err);
-                                               }
-                                           }
-                                       });
-                               });
-                           }
-                       }
+                                                                        var giftToSendNotification = _.findWhere(userGifts,{identifier:newBiinieGift.identifier});
+                                                                        var data = {};
+                                                                        data.type = "GIFTASSIGNED";
+                                                                        data.gift = validations.validateGiftInfo(giftToSendNotification);
+                                                                        var dataContainer = {};
+                                                                        dataContainer.data = data;
+
+                                                                        notificationsManager.sendToUser(biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.",null,null,dataContainer).then( function () {
+                                                                                res.status(200).json({});
+                                                                            }, function (err) {
+                                                                                res.status(500).json(err);
+                                                                            });
+                                                                    }, function(err){
+                                                                        res.status(500).json(err);
+                                                                    });
+
+
+                                                                }
+                                                            })
+                                                        }
+                                                    });
+
+                                                } else {
+                                                    res.status(500).json(err);
+                                                }
+                                            }
+                                        });
+                                });
+                            }
+                        }
                     });
 
                 }
@@ -206,44 +226,46 @@ exports.assignGiftNPS = function (req, res) {
     });
 };
 
-exports.assignAutoGiftNPS = function (req,res) {
+exports.assignAutoGiftNPS = function (req, res) {
     var giftIdentifier = req.body.giftIdentifier;
     var siteIdentifier = req.body.siteIdentifier;
 
-    gifts.findOne({identifier:giftIdentifier},{},function(err,giftToAssign){
-        if(err){
+    gifts.findOne({identifier: giftIdentifier}, {}, function (err, giftToAssign) {
+        if (err) {
             res.status(500).json(err);
-        } else if(giftToAssign){
+        } else if (giftToAssign) {
             var giftPerSite = new giftsPerSites();
             giftPerSite.siteIdentifier = siteIdentifier;
             giftPerSite.identifier = utils.getGUID();
             giftPerSite.gift = giftToAssign;
 
-            giftPerSite.save(function(err){
-                if(err){
+            giftPerSite.save(function (err) {
+                if (err) {
                     res.status(500).json(err);
                 } else {
                     res.status(200).json({})
                 }
             });
 
-        } else{
-            {message: "There is no gift"}
+        } else {
+            {
+                message: "There is no gift"
+            }
         }
     });
 
 };
 
-exports.cancelAutoGiftNPS = function(req,res) {
+exports.cancelAutoGiftNPS = function (req, res) {
     var relationIdentifier = req.body.relationIdentifier;
 
-    giftsPerSites.findOne({identifier:relationIdentifier},{}, function (err, giftPerSite) {
-        if(err){
+    giftsPerSites.findOne({identifier: relationIdentifier}, {}, function (err, giftPerSite) {
+        if (err) {
             res.status(500).json(err);
         } else {
             giftPerSite.status = "CANCELED";
-            giftPerSite.save(function(err){
-                if(err){
+            giftPerSite.save(function (err) {
+                if (err) {
                     res.status(500).json(err);
                 } else {
                     res.status(200).json({});
@@ -254,24 +276,23 @@ exports.cancelAutoGiftNPS = function(req,res) {
     })
 
 
-
 };
 
 exports.deliverGiftNPS = function (req, res) {
     var npsCommentIdentifier = req.body.npsCommentIdentifier;
     var biinieIdentifier = req.body.biinieIdentifier;
-    ratingsSites.findOne({identifier:npsCommentIdentifier},{},function(err,comment){
-        if(err){
+    ratingsSites.findOne({identifier: npsCommentIdentifier}, {}, function (err, comment) {
+        if (err) {
             res.status(500).json(err);
         } else {
-            giftsPerBiinie.findOne({_id:comment.gift},{}, function (err,giftPerBiinie) {
-                if(err){
+            giftsPerBiinie.findOne({_id: comment.gift}, {}, function (err, giftPerBiinie) {
+                if (err) {
                     res.status(500).json(err);
-                }else{
+                } else {
                     giftPerBiinie.status = giftsStatus.DELIVERED;
                     giftPerBiinie.deliveredDate = Date.now();
-                    giftPerBiinie.save(function(err){
-                        if(err){
+                    giftPerBiinie.save(function (err) {
+                        if (err) {
                             res.status(500).json(err);
                         } else {
                             notificationsManager.sendToUser(biinieIdentifier, "Tu regalo ha sido aceptado", "Pronto recibirás el regalo que has reclamado.").then(function () {
@@ -288,25 +309,34 @@ exports.deliverGiftNPS = function (req, res) {
     });
 };
 
-exports.getGiftsAvailable = function (req, res){
+exports.getGiftsAvailable = function (req, res) {
     var siteIdentifier = req.params.sitesidentifier;
     var typeIdentifier = req.params.typegift;
     var automatic = req.params.automatic;
     var isAutomatic = automatic == "true";
-    
-    gifts.find({sites:siteIdentifier,availableIn:typeIdentifier,isAutomatic:isAutomatic,isActive:true,isDeleted:false},{}, function (err,giftsFound) {
-        if(err)
+
+    gifts.find({
+        sites: siteIdentifier,
+        availableIn: typeIdentifier,
+        isAutomatic: isAutomatic,
+        isActive: true,
+        isDeleted: false
+    }, {}, function (err, giftsFound) {
+        if (err)
             res.status(500).json(err);
-        else{
+        else {
             res.status(200).json(giftsFound);
         }
     })
 
 };
 
-exports.getUpdatedAmount = function (req, res){
+exports.getUpdatedAmount = function (req, res) {
     var orgID = req.params["identifier"];
-    gifts.find({organizationIdentifier: orgID, isDeleted: false}, { identifier : 1, amountSpent:1 }, function (err, giftsToSend) {
+    gifts.find({organizationIdentifier: orgID, isDeleted: false}, {
+        identifier: 1,
+        amountSpent: 1
+    }, function (err, giftsToSend) {
         if (err) {
             res.status(500).json(err);
         } else {
