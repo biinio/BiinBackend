@@ -297,7 +297,7 @@ exports.deliverGiftNPS = function (req, res) {
                         } else {
                             var dataContainer = {};
                             var data = {};
-                            data.type = "giftapproved";
+                            data.type = "giftdelivered";
                             data.giftIdentifier = giftPerBiinie.identifier;
                             dataContainer.data = data;
 
