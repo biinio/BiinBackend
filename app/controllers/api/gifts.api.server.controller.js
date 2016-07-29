@@ -184,7 +184,7 @@ exports.assignGiftNPS = function (req, res) {
 
                                                                         var giftToSendNotification = _.findWhere(userGifts,{identifier:newBiinieGift.identifier});
                                                                         var data = {};
-                                                                        data.type = "GIFTASSIGNED";
+                                                                        data.type = "giftassigned";
                                                                         data.gift = validations.validateGiftInfo(giftToSendNotification);
                                                                         var dataContainer = {};
                                                                         dataContainer.data = data;

@@ -91,10 +91,22 @@ function assignIfItsAbleGift(siteId,biinieIdentifier,npsCommentIdentifier) {
                                                                     if (err) {
                                                                         reject({message: err, code: 6});
                                                                     } else {
-                                                                        notificationsManager.sendToUser(biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.").then(function () {
-                                                                            resolve({isAssign: true});
-                                                                        }).catch(function () {
-                                                                            reject({message: err, code: 7});
+                                                                        mobileGiftCalls.getBiiniesGifts(biinieIdentifier).then( function(userGifts){
+
+                                                                            var giftToSendNotification = _.findWhere(userGifts,{identifier:newBiinieGift.identifier});
+                                                                            var data = {};
+                                                                            data.type = "giftassigned";
+                                                                            data.gift = validations.validateGiftInfo(giftToSendNotification);
+                                                                            var dataContainer = {};
+                                                                            dataContainer.data = data;
+
+                                                                            notificationsManager.sendToUser(biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.",null,null,dataContainer).then( function () {
+                                                                                res.status(200).json({});
+                                                                            }, function (err) {
+                                                                                res.status(500).json(err);
+                                                                            });
+                                                                        }, function(err){
+                                                                            res.status(500).json(err);
                                                                         });
                                                                     }
                                                                 })
