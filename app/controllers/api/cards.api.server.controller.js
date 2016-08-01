@@ -41,7 +41,7 @@ exports.updateCard = function(req,res){
 };
 
 exports.deleteCard = function(req,res){
-    var cardIdentifier = req.params.cardidentifier;
+    var cardIdentifier = req.params.cardsidentifier;
     cards.findOne({identifier: cardIdentifier}, {}, function (err, card) {
         if (err) {
             res.status(500).json(err);
