@@ -67,6 +67,7 @@ exports.createCard = function(req,res){
     var orgID = req.params.identifier;
     newCard.identifier = utils.getGUID();
     newCard.organizationIdentifier = orgID;
+    newCard.gift = null;
     newCard.save(function (err, card) {
         if (err) {
             res.status(500).json(err);
