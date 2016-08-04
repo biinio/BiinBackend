@@ -6,7 +6,7 @@ var utils = require('../utils.server.controller');
 
 exports.getCardsList = function(req,res){
     var organizationIdentifier = req.params.identifier;
-    cards.find({organizationIdentifier:organizationIdentifier, isDeleted:false},{},function(err,cardsFound){
+    cards.find({organizationIdentifier:organizationIdentifier, isDeleted:false},{}).populate("gift").exec(function(err,cardsFound){
        if(err){
            res.status(500).json(err);
        } else {
