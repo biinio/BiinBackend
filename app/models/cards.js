@@ -17,5 +17,6 @@ module.exports = mongoose.model('cards', {
     quantity:{type:Number, default:10},
     isDeleted:{type:Boolean, default:false},
     isActive:{type:Boolean, default:false},
-    organizationIdentifier:{type: String, index: true, default: ""}
+    organizationIdentifier:{type: String, index: true, default: ""},
+    amountAssigned:{type:Number, default : 0}
 });
