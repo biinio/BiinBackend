@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 module.exports = mongoose.model('cards', {
     identifier: { type: String, index: true, default: ""},
     title: { type: String, default: ""},
-    description:{ type:String, default:""},
+    goal:{ type:String, default:""},
+    rule:{ type:String, default:""},
     type:{ type:String, default:"SLOTS"},
     slots:{ type:Number, default:10},
     gift: { type: mongoose.Schema.Types.ObjectId, ref: 'gifts' },

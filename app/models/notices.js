@@ -16,8 +16,8 @@ module.exports = moongose.model('notices', {
     onThursday: {type: String, default: "0"},
     onFriday: {type: String, default: "0"},
     onSaturday: {type: String, default: "0"},
-    startTime: {type: String, default: "00:00"},
-    endTime: {type: String, default: "23:59"},
+    startTime: {type: String, default: "0"},
+    endTime: {type: String, default: "24"},
     isDeleted: {type: Boolean, default: false},
     isReady: {type: Boolean, default: false},
     isActive: {type: Boolean, default: false}

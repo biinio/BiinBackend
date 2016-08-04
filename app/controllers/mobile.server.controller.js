@@ -17,5 +17,6 @@ module.exports = _.extend(
     require('./mobile/gifts.mobile.server.controller'),
     require('./mobile/rating.mobile.server.controller'),
     require('./mobile/user.mobile.server.controller'),
-    require('./mobile/showcases.mobile.server.controller')
+    require('./mobile/showcases.mobile.server.controller'),
+    require('./mobile/sites.mobile.server.controller.js')
 );
