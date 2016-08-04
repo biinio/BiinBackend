@@ -17,7 +17,7 @@ exports.getCardsList = function(req,res){
 
 exports.updateCard = function(req,res){
     var orgID = req.params["identifier"];
-    var cardIdenfifier = req.params["giftidentifier"];
+    var cardIdenfifier = req.params["cardsidentifier"];
     var cardData = req.body;
 
     var set = {};
