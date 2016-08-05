@@ -28,8 +28,9 @@ exports.updateCard = function(req,res){
     cards.findOneAndUpdate(
         {identifier: cardIdenfifier},
         {$set: set},
-        {upsert: false, new: true},
-        function (err, document) {
+        {upsert: false, new: true})
+        .populate("gift")
+        .exec( function (err, document) {
             if (err) {
                 res.status(500).json(err);
             }
