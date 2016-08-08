@@ -111,7 +111,7 @@ exports.onEnterSite = function (req, res) {
 
     organizations.findOne({"sites.identifier":siteId},{},function (err,organization) {
         if(err){
-            res.json(err);
+            res.json({data: {}, status: "1", result: "0"});
         } else {
             if(organization){
                 var site = _.findWhere(organization.sites,{identifier:siteId});
@@ -119,15 +119,16 @@ exports.onEnterSite = function (req, res) {
                     return checkNotices(result, biinnieId, site.notices, clientTime);
                 },function (err) {
                     console.log(err);
-                    res.json({message:"error on gifts"});
+                    res.json({data: {}, status: "1", result: "0"});
+                    console.log("error on gifts");
                 }).then(function () {
-                    res.json({message:"sent notification"});
+                    res.json({data: {}, status: "0", result: "1"});
                 },function (err) {
-                    console.log(err);
-                    res.json({message:"error on notices"});
+                    console.log("error on notices");
+                    res.json({data: {}, status: "2", result: "0"});
                 });
             }else{
-                res.json({message:"no organzation founded"});
+                res.json({data: {}, status: "3", result: "0"});
             }
         }
     });
@@ -143,5 +144,5 @@ exports.onEnterSite = function (req, res) {
 
 
 exports.onExitSite = function (req, res) {
-    res.json({});
+    res.json({data: {}, status: "0", result: "1"});
 };
