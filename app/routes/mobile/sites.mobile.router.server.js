@@ -9,5 +9,6 @@ module.exports = function (app) {
     var mobile = require('../../controllers/mobile.server.controller');
 
     app.post('/mobile/biinies/:biinieIdentifier/onentersite/:siteIdentifier', mobile.onEnterSite);
+    app.post('/mobile/biinies/:biinieIdentifier/onexitsite/:siteIdentifier', mobile.onExitSite);
 
 };

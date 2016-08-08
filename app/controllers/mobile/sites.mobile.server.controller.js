@@ -23,7 +23,7 @@ exports.onEnterSite = function (req, res) {
 
         return new Promise( function( resolve, reject ) {
             if(!result.wasNotificationSent){
-                notices.find({identifier:{$in:noticesId}, isDeleted: false, isReady:true, isActive:true},{},function(err,noticesFound){
+                notices.find({identifier:{$in:noticesId}, isDeleted: false, isActive:true},{},function(err,noticesFound){
                     if(err){
                         resolve({wasNotificationSent: false});
                     } else {
@@ -139,4 +139,9 @@ exports.onEnterSite = function (req, res) {
 
         });
     }*/
+};
+
+
+exports.onExitSite = function (req, res) {
+    res.json({});
 };
