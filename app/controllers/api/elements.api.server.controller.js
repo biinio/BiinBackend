@@ -48,20 +48,23 @@ exports.listReadyElements = function (req, res) {
         name: true,
         identifier: true
     }, function (err, data) {
-
-        var elementList = [];
-        if(data) {
-            for (var index = 0; index < data.elements.length; index++) {
-                if (data.elements[index].isDeleted == 0 && data.elements[index].isReady != 0) {
-                    elementList.push(data.elements[index]);
+        if(err){
+            res.status(500).json(err);
+        }else{
+            var elementList = [];
+            if(data) {
+                for (var index = 0; index < data.elements.length; index++) {
+                    if (data.elements[index].isDeleted == 0 && data.elements[index].isReady != 0) {
+                        elementList.push(data.elements[index]);
+                    }
                 }
             }
+
+            data.elements = elementList;
+
+            req.session.selectedOrganization = data;
+            res.json({data: data});
         }
-
-        data.elements = elementList;
-
-        req.session.selectedOrganization = data;
-        res.json({data: data});
     });
 };
 

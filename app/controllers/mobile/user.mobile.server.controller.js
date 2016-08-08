@@ -13,6 +13,7 @@ var organization = require('../../models/organization');
 var dateFormat = "YYYY-MM-DDTHH:mm:ss";
 
 var gifts = require('../mobile/gifts.mobile.server.controller');
+var cards = require('../mobile/cards.mobile.server.controller');
 
 // Default image for organizations
 var ORGANIZATION_DEFAULT_IMAGE = {
@@ -89,7 +90,12 @@ exports.getProfile = function (req, res) {
                         biiniesGift[i] = validateGiftInfo(biiniesGift[i]);
                     }
                     result.gifts = biiniesGift;
-                    res.json({data: result, status: "0", result: "1"});
+                    cards.getUserCards(result.identifier).then(function (biiniesCards) {
+                        result.loyaltyCards = biiniesCards;
+                        res.json({data: result, status: "0", result: "1"});
+                    },function () {
+                        res.json({data: result, status: "0", result: "1"});
+                    });
                 }).catch(function () {
                     res.json({data: result, status: "0", result: "1"});
                 });

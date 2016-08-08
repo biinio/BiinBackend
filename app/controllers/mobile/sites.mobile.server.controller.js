@@ -19,29 +19,8 @@ exports.onEnterSite = function (req, res) {
     var clientTime = req.body.model.timeClient;
     clientTime = new Date(clientTime);
 
-
-    organizations.findOne({"sites.identifier":siteId},{},function (err,organization) {
-        if(err){
-            res.json(err);
-        } else {
-            if(organization){
-                var site = _.findWhere(organization.sites,{identifier:siteId});
-                checkGifts(biinnieId,siteId,organization).then(function (result) {
-                     return checkNotices(result, userId, site.notices, clientTime).then(function () {
-                         res.json({message:"sent notification"});
-                    }).catch(function () {
-                         res.json({message:"error on notices"});
-                    });
-                }).catch(function () {
-                    res.json({message:"error on gifts"});
-                })
-            }else{
-                res.json({message:"no organzation founded"});
-            }
-        }
-    });
-
     function checkNotices( result, userId, noticesId, clientTime ){
+
         return new Promise( function( resolve, reject ) {
             if(!result.wasNotificationSent){
                 notices.find({identifier:{$in:noticesId}, isDeleted: false, isReady:true, isActive:true},{},function(err,noticesFound){
@@ -50,12 +29,12 @@ exports.onEnterSite = function (req, res) {
                     } else {
                         let noticesFilteredByDay = _.filter(noticesFound,function ( notice ) {
                             return (notice.onSunday == "1" && clientTime.getDay() == 0) ||
-                            (notice.onMonday == "1" && clientTime.getDay() == 1) ||
-                            (notice.onTuesday == "1" && clientTime.getDay() == 2) ||
-                            (notice.onWednesday == "1" && clientTime.getDay() == 3) ||
-                            (notice.onThursday == "1" && clientTime.getDay() == 4) ||
-                            (notice.onFriday == "1" && clientTime.getDay() == 5) ||
-                            (notice.onSaturday == "1" && clientTime.getDay() == 6);
+                                (notice.onMonday == "1" && clientTime.getDay() == 1) ||
+                                (notice.onTuesday == "1" && clientTime.getDay() == 2) ||
+                                (notice.onWednesday == "1" && clientTime.getDay() == 3) ||
+                                (notice.onThursday == "1" && clientTime.getDay() == 4) ||
+                                (notice.onFriday == "1" && clientTime.getDay() == 5) ||
+                                (notice.onSaturday == "1" && clientTime.getDay() == 6);
 
                         });
                         let noticesFilteredByHour = _.filter(noticesFilteredByDay,function (notice) {
@@ -69,7 +48,10 @@ exports.onEnterSite = function (req, res) {
                         });
 
                         if(noticesSortedByClosestTime.length > 0 ){
-                            notificationsManager.sendToUser(userId,"",noticesSortedByClosestTime[0].message).then(function(){
+                            let dataContainer = {};
+                            dataContainer.data = {};
+                            dataContainer.data.type = "notice";
+                            notificationsManager.sendToUser(userId,"",noticesSortedByClosestTime[0].message,null,null, dataContainer ).then(function(){
                                 resolve({wasNotificationSent:true});
                             }).catch(function () {
                                 resolve({wasNotificationSent:false});
@@ -85,7 +67,7 @@ exports.onEnterSite = function (req, res) {
         });
     }
 
-    function checkGifts(userId, siteId, organization){
+    function checkGifts( userId, siteId, organization ){
 
         return new Promise( function( resolve, reject) {
             let organizationName = organization.brand;
@@ -100,12 +82,15 @@ exports.onEnterSite = function (req, res) {
                             if(giftsMetaData){
                                 let giftsMetaDataID = _.map(giftsMetaData,"identifier");
 
-                                 let shouldSendNotification = _.filter(giftsFound, function (giftBiinie) {
-                                   return  giftsMetaDataID.indexOf(giftBiinie.gift.identifier)
-                                 }).length > 1;
+                                let shouldSendNotification = _.filter(giftsFound, function (giftBiinie) {
+                                        return  giftsMetaDataID.indexOf(giftBiinie.gift.identifier)
+                                    }).length > 1;
 
                                 if(shouldSendNotification){
-                                    notificationsManager.sendToUser(userId,"Un regalo de " + organizationName, "Tienes un regalo por reclamar en " + organizationName).then(function() {
+                                    let dataContainer = {};
+                                    dataContainer.data = {};
+                                    dataContainer.data.type = "giftreminder";
+                                    notificationsManager.sendToUser(userId,"Un regalo de " + organizationName, "Tienes un regalo por reclamar en " + organizationName,null,null,dataContainer).then(function() {
                                         resolve({wasNotificationSent: true});
                                     }).catch(function(){
                                         resolve({wasNotificationSent:false});
@@ -123,15 +108,35 @@ exports.onEnterSite = function (req, res) {
         });
     }
 
+
+    organizations.findOne({"sites.identifier":siteId},{},function (err,organization) {
+        if(err){
+            res.json(err);
+        } else {
+            if(organization){
+                var site = _.findWhere(organization.sites,{identifier:siteId});
+                checkGifts(biinnieId,siteId,organization).then(function (result) {
+                    return checkNotices(result, biinnieId, site.notices, clientTime);
+                },function (err) {
+                    console.log(err);
+                    res.json({message:"error on gifts"});
+                }).then(function () {
+                    res.json({message:"sent notification"});
+                },function (err) {
+                    console.log(err);
+                    res.json({message:"error on notices"});
+                });
+            }else{
+                res.json({message:"no organzation founded"});
+            }
+        }
+    });
+
+
+
     /*function checkCards(){
         return new Promise( function( resolve, reject){
 
         });
     }*/
-
-
-
-
-
-    res.json({});
 };
