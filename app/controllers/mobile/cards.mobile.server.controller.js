@@ -168,7 +168,7 @@ function mobileseBiiniesCards(card){
     newCard.endDate = "";
     newCard.enrolledDate = "";
     newCard.slots = card.card.slots;
-    newCard.usedSlots = 0;
+    newCard.usedSlots = card.usedSlots;
     newCard.organizationIdentifier = card.card.organizationIdentifier;
 
     return newCard;
