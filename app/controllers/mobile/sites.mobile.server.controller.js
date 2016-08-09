@@ -17,6 +17,7 @@ exports.onEnterSite = function (req, res) {
     var biinnieId = req.params.biinieIdentifier;
     var siteId = req.params.siteIdentifier;
     var clientTime = req.body.model.timeClient;
+    clientTime = clientTime.replace(/ +/g, "");
     clientTime = new Date(clientTime);
 
     function checkNotices( result, userId, noticesId, clientTime ){
@@ -44,7 +45,7 @@ exports.onEnterSite = function (req, res) {
                         let noticesSortedByClosestTime = _.sortBy(noticesFilteredByHour, function( notice ){
                             let noticeStartTime = parseFloat(notice.startTime);
                             let noticeEndTime = parseFloat(notice.endTime);
-                            return noticeEndTime - noticeTime;
+                            return noticeEndTime - noticeStartTime;
                         });
 
                         if(noticesSortedByClosestTime.length > 0 ){
