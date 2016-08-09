@@ -91,7 +91,7 @@ exports.getProfile = function (req, res) {
                     }
                     result.gifts = biiniesGift;
                     cards.getUserCards(result.identifier).then(function (biiniesCards) {
-                        result.loyaltyCards = biiniesCards;
+                        result.loyalty = biiniesCards;
                         res.json({data: result, status: "0", result: "1"});
                     },function () {
                         res.json({data: result, status: "0", result: "1"});

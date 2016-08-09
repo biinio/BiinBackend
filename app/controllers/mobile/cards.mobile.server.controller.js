@@ -6,6 +6,7 @@
 var cards = require('../../models/cards');
 var cardsPerBiinie = require('../../models/cardsPerBiinie');
 var gifts = require('../../models/gifts');
+var _ = require('underscore');
 
 
 exports.cardEnroll = function (req, res) {
@@ -79,26 +80,48 @@ exports.getUserCards = function (biinieIdentifier) {
                 gifts.populate(biinieCards, {
                     path: 'card.gift'
                 },function(err,biinieCards){
-
-                for (var i = 0; i < biinieCards.length; i++) {
-                    biinieCards[i] =  mobileseBiiniesCards(biinieCards[i]);
-                }
-
-
-                cards.find({isActive: true, isDeleted: false}, {}).lean().exec(function (err, availableCards) {
                     if (err) {
                         reject();
                     } else {
+                        cards.find({isActive: true, isDeleted: false}, {}).populate("gift").lean().exec(function (err, availableCards) {
+                            if (err) {
+                                reject();
+                            } else {
 
-                        for (var i = 0; i < availableCards.length; i++) {
-                            availableCards[i] = mobileseCard(availableCards[i]);
-                        }
+                                var convertedBiinieCards = JSON.parse(JSON.stringify(biinieCards));
 
-                        var cardsToSend = biinieCards.concat(availableCards);
-                        resolve(cardsToSend);
+                                var filteredCardsAvailable = _.filter(availableCards, function(card){
+                                    let result  = _.find(convertedBiinieCards,function(biinieCard){
+                                        return biinieCard.card.identifier == card.identifier;
+                                    });
+                                    return result == null;
+                                });
+
+
+
+                                for (var i = 0; i < biinieCards.length; i++) {
+                                    biinieCards[i] =  mobileseBiiniesCards(biinieCards[i]);
+                                }
+
+                                for ( i = 0; i < filteredCardsAvailable.length; i++) {
+                                    filteredCardsAvailable[i] = mobileseCard(filteredCardsAvailable[i]);
+                                }
+
+                                var cardsToSend = biinieCards.concat(filteredCardsAvailable);
+
+
+                                let organizationsIdentifier = _.map(cardsToSend,"organizationIdentifier");
+                                let objectsToSend = [];
+                                organizationsIdentifier.forEach(function (organizationIdentifier) {
+                                    let loyaltyObject = {};
+                                    loyaltyObject.organizationIdentifier = organizationIdentifier;
+                                    loyaltyObject.loyaltyCards = _.where(cardsToSend,{"organizationIdentifier":organizationIdentifier});
+                                    objectsToSend.push(loyaltyObject);
+                                });
+                                resolve(objectsToSend);
+                            }
+                        })
                     }
-
-                })
              });
             }
         });
@@ -116,13 +139,14 @@ function mobileseCard(card) {
     newCard.conditions = card.conditions;
     newCard.isCompleted = false;
     newCard.isBiinieEnrolled = false;
-    newCard.elementIdentifier = "";
+    newCard.elementIdentifier = card.gift.productIdentifier;
     newCard.isUnavailable = false;
     newCard.startDate = "";
     newCard.endDate = "";
     newCard.enrolledDate = "";
     newCard.slots = card.slots;
     newCard.usedSlots = 0;
+    newCard.organizationIdentifier = card.organizationIdentifier;
 
     return newCard;
 
@@ -145,6 +169,7 @@ function mobileseBiiniesCards(card){
     newCard.enrolledDate = "";
     newCard.slots = card.card.slots;
     newCard.usedSlots = 0;
+    newCard.organizationIdentifier = card.card.organizationIdentifier;
 
     return newCard;
 
