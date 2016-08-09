@@ -1,6 +1,7 @@
 /**
  * Created by Ivan on 8/6/16.
  */
+"use strict";
 
 var cards = require('../../models/cards');
 var cardsPerBiinie = require('../../models/cardsPerBiinie');
@@ -28,6 +29,39 @@ exports.cardEnroll = function (req, res) {
                 });
             } else {
                 res.status(500).json({});
+            }
+        }
+    });
+};
+
+exports.cardSetStar = function ( req, res){
+    let biinieIdentifier = req.params.identifier;
+    let cardIdentifier = req.params.cardidentifier;
+
+    cardsPerBiinie.findOne({userIdentifier:biinieIdentifier, identifier : cardIdentifier }, {})
+        .populate("card")
+        .exec(function ( err, card) {
+        if(err){
+            res.json({data:{}, status:"1", result:"0"});
+        } else {
+            if(card){
+                if(card.usedSlots < card.card.slots){
+                    card.usedSlots++;
+                    card.isCompleted = card.usedSlots == card.card.slots;
+                    card.save(function (err, card) {
+                        if(err){
+                            res.json({data:{}, status:"4", result:"0"});
+                        } else {
+                            res.json({data:{}, status:"0", result:"1"});
+                        }
+                    })
+
+                } else {
+                    res.json({data:{}, status:"3", result:"0"});
+                }
+
+            } else {
+                res.json({data:{}, status:"2", result:"0"});
             }
         }
     });

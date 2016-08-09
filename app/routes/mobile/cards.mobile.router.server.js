@@ -9,5 +9,6 @@ module.exports = function (app) {
     var mobile = require('../../controllers/mobile.server.controller');
 
     app.get('/mobile/biinies/:identifier/cards/enroll/:cardidentifier',mobile.cardEnroll);
+    app.post('/mobile/biinies/:identifier/cards/getStar/:cardidentifier',mobile.cardSetStar);
 
 };
