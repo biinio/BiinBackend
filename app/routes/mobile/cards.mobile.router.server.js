@@ -10,5 +10,6 @@ module.exports = function (app) {
 
     app.get('/mobile/biinies/:identifier/cards/enroll/:cardidentifier',mobile.cardEnroll);
     app.get('/mobile/biinies/:identifier/cards/setStar/:cardidentifier',mobile.cardSetStar);
+    app.get('/mobile/biinies/:identifier/cards/setCompleted/:cardidentifier',mobile.cardSetComplete);
 
 };

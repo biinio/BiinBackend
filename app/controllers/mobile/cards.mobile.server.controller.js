@@ -174,3 +174,8 @@ function mobileseBiiniesCards(card){
     return newCard;
 
 }
+
+exports.cardSetComplete = function (req, res) {
+
+    res.json({data:{}, status:"0", result:"1"});
+};
