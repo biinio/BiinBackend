@@ -17,6 +17,7 @@ module.exports = moongose.model('giftsPerBiinie', {
         isActive:{type:Boolean,default:false},
         isDeleted:{type:Boolean,default:false},
         isValid:{type:Boolean,default:false},
+        isUnlimited:{type:Boolean,default:false},
         sites:{type:[String],default:[]},
         productIdentifier:{type:String,default:""},
         organizationIdentifier:{type:String,default:""},

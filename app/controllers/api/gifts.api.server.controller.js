@@ -96,7 +96,7 @@ exports.assignGift = function (req, res) {
             res.status(500).json(err);
         else {
             if (gift) {
-                if (gift.amountSpent < gift.amount || gift.amount == -1) {
+                if (gift.amountSpent < gift.amount || gift.isUnlimited) {
 
                     gift.amountSpent = gift.amountSpent + 1;
 
@@ -143,7 +143,7 @@ exports.assignGiftNPS = function (req, res) {
             res.status(500).json(err);
         else {
             if (gift) {
-                if (gift.amountSpent < gift.amount || gift.amount == -1) {
+                if (gift.amountSpent < gift.amount || gift.isUnlimited) {
 
                     giftsPerBiinie.findOne({
                         "gift.identifier": giftIdentifier,
