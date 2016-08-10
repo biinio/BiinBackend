@@ -48,7 +48,6 @@ exports.cardSetStar = function ( req, res){
             if(card){
                 if(card.usedSlots < card.card.slots){
                     card.usedSlots++;
-                    card.isCompleted = card.usedSlots == card.card.slots;
                     card.save(function (err, card) {
                         if(err){
                             res.json({data:{}, status:"4", result:"0"});
@@ -176,6 +175,44 @@ function mobileseBiiniesCards(card){
 }
 
 exports.cardSetComplete = function (req, res) {
+
+
+    let biinieIdentifier = req.params.identifier;
+    let cardIdentifier = req.params.cardidentifier;
+
+    cardsPerBiinie.findOne({userIdentifier:biinieIdentifier, identifier : cardIdentifier }, {})
+        .populate("card")
+        .exec(function ( err, card) {
+            if(err){
+                res.json({data:{}, status:"1", result:"0"});
+            } else {
+                card.populate("card.gift",function ( err, card) {
+                    if(err){
+                        res.json({data:{}, status:"2", result:"0"});
+                    } else {
+                        if(card){
+                            if(card.usedSlots == card.card.slots){
+                                card.isCompleted = card.usedSlots == card.card.slots;
+                                card.save(function (err, card) {
+                                    if(err){
+                                        res.json({data:{}, status:"3", result:"0"});
+                                    } else {
+                                        res.json({data:{}, status:"0", result:"1"});
+                                    }
+                                })
+
+                            } else {
+                                res.json({data:{}, status:"4", result:"0"});
+                            }
+                        } else {
+                            res.json({data:{}, status:"5", result:"0"});
+                        }
+                    }
+                });
+            }
+        });
+
+
 
     res.json({data:{}, status:"0", result:"1"});
 };

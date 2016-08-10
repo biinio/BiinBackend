@@ -2,6 +2,9 @@ var _ = require('underscore');
 var utils = require('../utils.server.controller');
 var HashTable = require('hashtable');
 
+// Controllers
+var cards = require('../mobile/cards.mobile.server.controller');
+var validations = require('../validations.server.controller');
 
 //Schemas
 var organization = require('../../models/organization');
@@ -12,6 +15,7 @@ var client = require('../../models/client');
 var biin = require('../../models/biin');
 var category = require('../../models/category');
 var notice = require('../../models/notices');
+
 
 // Config of priorities of categories
 var configPriorities = require('../../../config/priorities/priorities.json');
@@ -298,40 +302,6 @@ exports.getInitialData = function (req, res) {
     var favorites = {};
     favorites.sites = [];
     favorites.elements = [];
-
-
-    /*function getSitesNear(){
-     return new Promise(function(resolve,reject){
-
-     resolve();
-     });
-     }
-
-     function getHighlights( ){
-     return new Promise(function(resolve,reject){
-     resolve();
-     });
-     }
-
-     function getFavorites(){
-     return new Promise(function(resolve,reject){
-     resolve();
-     });
-     }
-     function getCategories(){
-     return new Promise(function(resolve,reject){
-     resolve();
-     });
-     }
-
-     getSitesNear()
-     .then(getHighlights().then(
-     getCategories().then(
-     getFavorites().then(function(){
-     })
-     )
-     )
-     );*/
 
 
     mobileUser.findOne({'identifier': userIdentifier}, {
@@ -1537,6 +1507,14 @@ exports.getInitialData = function (req, res) {
                                                                     }
 
                                                                     response.notices = noticesValidated;
+
+
+                                                                    /*cards.getUserCards(result.identifier).then(function (biiniesCards) {
+                                                                     result.loyalty = biiniesCards;
+
+                                                                     },function () {
+                                                                     res.json({data: result, status: "0", result: "1"});
+                                                                     });*/
 
 
                                                                     res.json({
@@ -3123,33 +3101,351 @@ function saveInfoIntoUserMobileSession(userIdentifier, sitesArray, elementsSent,
 }
 
 exports.getInitalDataFullCategories = function (req, res) {
+    var userIdentifier = req.params.biinieId;
+    var userLat = eval(req.params.latitude);
+    var userLng = eval(req.params.longitude);
+
+    var MAX_SITES = process.env.SITES_INITIAL_DATA || 10;
+    var ELEMENTS_IN_CATEGORY = process.env.ELEMENTS_IN_CATEGORY || 7;
+    var LIMIT_HIGHLIGHTS_TO_SENT = process.env.LIMIT_HIGHLIGHTS_TO_SENT || 6;
+    var LIMIT_ELEMENTS_IN_SHOWCASE = process.env.LIMIT_ELEMENTS_IN_SHOWCASE || 6;
+    var DEFAULT_COLLECTION = 0;
+
+    var response = {};
+
+    var organizations = [];
+    var elements = [];
+    var sites = [];
+    var notices = [];
+    var showcases = [];
+
+    var highlights = [];
+    var categories = [];
+    var nearbySites = [];
+
+
+    var organizationsHash = new HashTable();
+    var elementsHash = new HashTable();
+    var sitesHash = new HashTable();
+    var showcasesHash = new HashTable();
+    var noticesHash = new HashTable();
+
+    var userBiinieData = null;
+
+    var favorites = {};
+    favorites.sites = [];
+    favorites.elements = [];
+
+    var categoriesInDB = [];
+
+    var fillSitesHash = function () {
+        return new Promise(function (resolve, reject) {
+            organization.find({isDeleted: false, isPublished: true}, {identifier: 1, sites: 1})
+                .lean()
+                .exec(function (err, orgsData) {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        orgsData.forEach(function (organizationData) {
+                            organizationData.sites.forEach(function (site) {
+                                if (!site.isDeleted && site.isReady == 1) {
+                                    site.organizationIdentifier = organizationData.identifier;
+                                    sitesHash.put(site.identifier, site);
+                                }
+                            });
+                        });
+                        resolve();
+                    }
+                });
+        });
+    };
+
+    var fillOrganizationHash = function () {
+        return new Promise(function (resolve, reject) {
+            organization.find({isDeleted: false, isPublished: true}, { elements: 0, sites: 0})
+                .lean()
+                .exec(function (err, orgsData) {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        orgsData.forEach(function (organizationData) {
+                            organizationsHash.put(organizationData.identifier, organizationData);
+                        });
+                        resolve();
+                    }
+                });
+        });
+    };
+
+    var fillElementsHash = function () {
+        return new Promise(function (resolve, reject) {
+            organization.find({isDeleted: false, isPublished: true}, {elements: 1})
+                .lean()
+                .exec(function (err, orgsData) {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        orgsData.forEach(function (organizationData) {
+                            organizationData.elements.forEach(function (element) {
+                                if (!element.isDeleted && element.isReady == 1)
+                                    elementsHash.put(element.elementIdentifier, element);
+                            });
+                        });
+                        resolve();
+                    }
+                });
+        });
+    };
+
+    var fillShowcasesHash = function () {
+        return new Promise(function (resolve, reject) {
+            showcase.find({"isReady": 1, isDeleted: false},
+                {}).lean().exec(
+                function (err, showcases) {
+                    if (err)
+                        reject(err);
+                    else {
+                        showcases.forEach(function (showcaseData) {
+                            showcasesHash.put(showcaseData.identifier, showcaseData);
+                        });
+                        resolve();
+                    }
+                });
+        });
+
+    };
+
+    var fillNoticesHash = function () {
+        return new Promise(function (resolve, reject) {
+            notice.find({isActive: true, isDeleted: false},
+                {}).lean().exec(
+                function (err, notices) {
+                    if (err)
+                        reject(err);
+                    else {
+                        notices.forEach(function (noticeData) {
+                            noticesHash.put(noticeData.identifier, noticeData);
+                        });
+                        resolve();
+                    }
+                });
+        });
+
+    };
+
+    var getUserInfo = function () {
+        return new Promise(function (resolve, reject) {
+            mobileUser.findOne({'identifier': userIdentifier}, {
+                'gender': 1,
+                'showcaseNotified': 1,
+                'biinieCollections': 1,
+                'loyalty': 1,
+                "likeObjects": 1,
+                "followObjects": 1,
+                "biinieCollect": 1,
+                "shareObjects": 1
+            }).lean().exec(function (err, mobileUserData) {
+                if (err)
+                    reject(err);
+                if (mobileUserData) {
+                    userBiinieData = mobileUserData;
+                    resolve();
+                } else {
+                    reject("No biinie found");
+                }
+            });
+
+        });
+    };
+
+    var getCategoriesIdentifier = function(){
+        return new Promise(function (resolve, reject) {
+            category.find({},{identifier:1}).lean().exec(function(err, categoriesFound){
+                if(err)
+                    reject();
+                else {
+                    categoriesInDB = categoriesFound;
+                    resolve()
+                }
+
+            })
+        });
+    };
+
+    var fillElementRelationalInfo = function( element ){
+        var elementIdentifier = element.elementIdentifier;
+        var siteIdentifier = null;
+        var showcaseIdentifier = null;
+
+        let sitesFiltered = _.where(sites,{organizationIdentifier:element.organizationIdentifier});
+
+        sitesFiltered = _.sortBy(sitesFiltered,"proximity");
+
+        for (var i = 0; i < sitesFiltered.length && siteIdentifier == null; i++) {
+            var site = sitesFiltered[i];
+            for (var j = 0; j < site.showcases.length && showcaseIdentifier == null; j++) {
+                var showcase = showcasesHash.get(site.showcases[j].showcaseIdentifier);
+                if(showcase){
+                    let hasTheElement = _.findWhere(showcase.elements,{elementIdentifier:elementIdentifier}) != null;
+                    if(hasTheElement){
+                        showcaseIdentifier = showcase.identifier;
+                        siteIdentifier = site.identifier;
+                    }
+                }
+            }
+        }
+
+        var relationalObject = {};
+        relationalObject.identifier = elementIdentifier;
+        relationalObject.siteIdentifier = siteIdentifier;
+        relationalObject.showcaseIdentifier = showcaseIdentifier;
+        relationalObject.categories = element.categories;
+        return relationalObject;
+
+    };
+
+    var onError = function ( err ) {
+        console.log(err);
+
+        var response = {};
+        response.sites = [];
+        response.organizations = [];
+        response.elements = [];
+        response.highlights = [];
+        response.categories = [];
+        response.favorites = [];
+        response.notices = [];
+        res.json({data: response, status: "0", result: "1"});
+
+    };
+
+    fillOrganizationHash().then(function () {
+        return fillSitesHash();
+    }, onError).then(function () {
+        return fillElementsHash();
+    }, onError).then(function () {
+        return fillShowcasesHash();
+    }, onError).then(function () {
+        return fillNoticesHash();
+    }, onError).then(function () {
+        return getUserInfo();
+    }, onError).then(function () {
+        return getCategoriesIdentifier();
+    }, onError).then(function () {
+
+        organizationsHash.forEach(function (key, organization) {
+            organizations.push(organization);
+        });
+        sitesHash.forEach(function (key, site) {
+            site.proximity = utils.getProximity(userLat, userLng, site.lat, site.lng);
+            sites.push(site);
+        });
+        elementsHash.forEach(function (key, element) {
+            elements.push(element);
+        });
+        showcasesHash.forEach(function (key, showcase) {
+            showcases.push(showcase);
+        });
+        noticesHash.forEach(function (key, notice) {
+            notices.push(notice);
+        });
+
+        //Setting closest sites from the biinie
+        _.pluck(_.sortBy(sites,"proximity"),"identifier").forEach(function(siteIdentifier){
+            nearbySites.push({identifier:siteIdentifier});
+        });
+
+        //Setting Highlights
+
+
+        let highlightsElements  = _.where(elements,{"isHighlight":"1"});
+        let relationalHighLights = [];
+        highlightsElements.forEach(function (highlight) {
+            relationalHighLights.push(fillElementRelationalInfo(highlight));
+        });
+
+        relationalHighLights = _.filter(relationalHighLights,function (relationHighlight) {
+            return relationHighlight.siteIdentifier && relationHighlight.showcaseIdentifier;
+        });
+
+        //Setting Categories
+        for (var i = 0; i < categoriesInDB.length; i++) {
+            var categoryIdentifier = categoriesInDB[i].identifier;
+            let elementsInCategory =_.filter(relationalHighLights, function (relationHighlight) {
+                return _.findWhere(relationHighlight.categories,{identifier:categoryIdentifier})
+            });
+            categories.push({
+                identifier : categoryIdentifier,
+                elements: elementsInCategory
+            })
+        }
+        //filtering categories that are empty
+
+        categories = _.filter(categories,function(category){
+            return category.elements.length > 0;
+        });
+
+        categories.forEach(function(category){
+            category.elements = _.map(category.elements, function(element){
+                let mappedElement = {};
+                mappedElement.identifier = element.identifier;
+                mappedElement.siteIdentifier = element.siteIdentifier;
+                mappedElement.showcaseIdentifier = element.showcaseIdentifier;
+                return mappedElement;
+            });
+        });
+
+
+        //mapping highlights
+        relationalHighLights = _.map(relationalHighLights, function(element){
+            let mappedElement = {};
+            mappedElement.identifier = element.identifier;
+            mappedElement.siteIdentifier = element.siteIdentifier;
+            mappedElement.showcaseIdentifier = element.showcaseIdentifier;
+            return mappedElement;
+        });
+
+
+
+        //VALIDATIONS
+        for (let i = 0; i < organizations.length; i++) {
+            organizations[i] = validations.validateOrganizationInitialInfo(organizations[i]);
+        }
+
+        for (let i = 0; i < sites.length; i++) {
+            sites[i] = validations.validateSiteInitialInfo(sites[i]);
+        }
+
+        for (let i = 0; i < showcases.length; i++) {
+            showcases[i] = validations.validateShowcaseInitialInfo(showcases[i]);
+        }
+
+        for (let i = 0; i < elements.length; i++) {
+            elements[i] = validations.validateElementInitialInfo(elements[i]);
+        }
+
+        for (let i = 0; i < notices.length; i++) {
+            notices[i] = validations.validateNoticesInitialInfo(notices[i]);
+        }
+
+
+
+        res.json({
+            organizations: organizations,
+            sites: sites,
+            nearbySites : nearbySites,
+            elements: elements,
+            showcases: showcases,
+            notices: notices,
+            highlights : relationalHighLights,
+            categories : categories
+
+        });
+    }, onError).catch(function () {
+        console.log(err);
+    });
 
 };
-
-function getSites() {
-
-}
-
-function getElements() {
-
-}
-
-function getUserData(userIdentifier) {
-    return mobileUser.findOne({'identifier': userIdentifier}, {
-        'gender': 1,
-        'showcaseNotified': 1,
-        'biinieCollections': 1,
-        'loyalty': 1,
-        "likeObjects": 1,
-        "followObjects": 1,
-        "biinieCollect": 1,
-        "shareObjects": 1
-    }).lean();
-}
-
-function getCategories() {
-
-}
 
 exports.getTermsOfService = function (req, res) {
     res.json({data: configPrivacy, status: "0", result: "1"});

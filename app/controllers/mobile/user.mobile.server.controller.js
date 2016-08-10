@@ -90,12 +90,7 @@ exports.getProfile = function (req, res) {
                         biiniesGift[i] = validateGiftInfo(biiniesGift[i]);
                     }
                     result.gifts = biiniesGift;
-                    cards.getUserCards(result.identifier).then(function (biiniesCards) {
-                        result.loyalty = biiniesCards;
-                        res.json({data: result, status: "0", result: "1"});
-                    },function () {
-                        res.json({data: result, status: "0", result: "1"});
-                    });
+                    res.json({data: result, status: "0", result: "1"});
                 }).catch(function () {
                     res.json({data: result, status: "0", result: "1"});
                 });
