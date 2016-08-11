@@ -3469,6 +3469,8 @@ exports.getInitalDataFullCategories = function (req, res) {
             return mappedElement;
         });
 
+        relationalHighLights = relationalHighLights.splice(0,LIMIT_HIGHLIGHTS_TO_SENT);
+
 
         //VALIDATIONS
         for (let i = 0; i < organizations.length; i++) {
