@@ -32,9 +32,11 @@ var httpsPort = 8443;
 app.set('port', httpPort);
 
 //Https credentials
-var privateKey = fs.readFileSync('sslcert/server.key', 'utf8').toString();
-var certificate = fs.readFileSync('sslcert/bundle.crt', 'utf8').toString();
-var credentials = {key: privateKey, cert: certificate};
+var privateKey = fs.readFileSync('sslcert/biin.io.key', 'utf8').toString();
+var certificate = fs.readFileSync('sslcert/biin.io.crt', 'utf8').toString();
+var ca1 = fs.readFileSync('sslcert/gd-biin.io-01.crt').toString();
+var ca2 = fs.readFileSync('sslcert/gd-biin.io-01.crt').toString();
+var credentials = {key: privateKey, cert: certificate, ca: [ca1,ca2]};
 
 //Http Server instance
 http.createServer(app).listen(httpPort, function () {
