@@ -3525,7 +3525,7 @@ exports.getInitalDataFullCategories = function (req, res) {
         }
 
 
-        res.json({
+        res.json({data:{
             organizations: organizations,
             sites: sites,
             nearbySites : nearbySites,
@@ -3535,8 +3535,7 @@ exports.getInitalDataFullCategories = function (req, res) {
             highlights : relationalHighLights,
             categories : categories,
             favorites : favorites
-
-        });
+        }, status: "0", result: "1"});
     }, onError).catch(function (err) {
         console.log(err);
     });
