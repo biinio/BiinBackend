@@ -3406,7 +3406,6 @@ exports.getInitalDataFullCategories = function (req, res) {
         });
 
 
-
         //VALIDATIONS
         for (let i = 0; i < organizations.length; i++) {
             organizations[i] = validations.validateOrganizationInitialInfo(organizations[i]);
@@ -3428,7 +3427,10 @@ exports.getInitalDataFullCategories = function (req, res) {
             notices[i] = validations.validateNoticesInitialInfo(notices[i]);
         }
 
+        //REMOVING SHOWCASES FROM SITE THAT ARE INVALID AND THEY ARE NOT IN THE HASHTABLE
 
+
+        //REMOVING ELEMENTS FROM SHOWCASE THAT ARE INVALID AND THEY ARE NOT IN THE HASHTABLE
 
         res.json({
             organizations: organizations,
