@@ -8,7 +8,7 @@ module.exports = function (app) {
     // Organization Routes
     var mobile = require('../../controllers/mobile.server.controller');
 
-    app.get('/mobile/initialData/:biinieId/:latitude/:longitude', mobile.getInitialData);
+    app.get('/mobile/initialData/:biinieId/:latitude/:longitude', mobile.getInitalDataFullCategories);
     app.get('/mobile/nextElementsInShowcaseTemp', mobile.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForShowcase/:siteIdentifier/:showcaseIdentifier/:batch', mobile.getNextElementInShowcase);
     app.get('/mobile/biinies/:identifier/requestElementsForCategory/:idCategory/:batch', mobile.getNextElementsInCategory);

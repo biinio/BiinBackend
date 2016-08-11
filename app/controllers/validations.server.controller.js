@@ -1,6 +1,7 @@
 var moment = require('moment');
 var dateFormat = "YYYY-MM-DDTHH:mm:ss";
 var utils = require('./utils.server.controller');
+var _ = require('underscore');
 
 var BIIN_DEFAULT_IMAGE = {
     domainColor: '170, 171, 171',
@@ -33,7 +34,7 @@ exports.validateGiftInfo = function(giftToValidate) {
 
 
 
-exports.validateSiteInitialInfo = function(site) {
+exports.validateSiteInitialInfo = function(site, userData) {
     var siteValidated = {};
     siteValidated.identifier = site.identifier ? site.identifier : "";
     siteValidated.organizationIdentifier = site.organizationIdentifier ? site.organizationIdentifier : "";
@@ -58,9 +59,26 @@ exports.validateSiteInitialInfo = function(site) {
     siteValidated.neighbors = site.neighbors ? site.neighbors : [];
     siteValidated.showcases = site.showcases ? site.showcases : [];
     siteValidated.biins = site.biins ? site.biins : [];
-    siteValidated.userShared = site.userShared ? site.userShared : "0";
-    siteValidated.userFollowed = site.userShared ? site.userFollowed : "0";
-    siteValidated.userLiked = site.userShared ? site.userLiked : "0";
+
+
+    let userShare = _.findWhere(userData.shareObjects, {
+        identifier: siteValidated.identifier,
+        type: "site"
+    });
+    //let userCollected = _.findWhere(userData.biinieCollections.sites, {identifier: siteValidated.identifier});
+    let userFollowed = _.findWhere(userData.followObjects, {
+        identifier: siteValidated.identifier,
+        type: "site"
+    });
+    let userLiked = _.findWhere(userData.likeObjects, {
+        identifier: siteValidated.identifier,
+        type: "site"
+    });
+
+    siteValidated.userShared  = typeof(userShare) !== "undefined" ? "1" : "0";
+    siteValidated.userFollowed = typeof(userFollowed) !== "undefined" ? "1" : "0";
+    siteValidated.userLiked = typeof(userLiked) !== "undefined" ? "1" : "0";
+
     siteValidated.siteSchedule = site.siteSchedule ? site.siteSchedule : "";
     siteValidated.proximity = site.proximity ? site.proximity.toFixed(14) + "" : "999999999999";
 
@@ -114,7 +132,7 @@ exports.validateOrganizationInitialInfo = function(organization) {
     return organizationValidated;
 };
 
-exports.validateElementInitialInfo = function(element) {
+exports.validateElementInitialInfo = function(element, userData) {
     var elementValidated = {};
     elementValidated._id = element._id ? element._id : "";
     elementValidated.identifier = element.elementIdentifier ? element.elementIdentifier : "";
@@ -158,11 +176,35 @@ exports.validateElementInitialInfo = function(element) {
     elementValidated.actualQuantity = element.actualQuantity ? element.actualQuantity : "0";
     elementValidated.media = element.media && element.media.length != 0 ? element.media : [BIIN_DEFAULT_IMAGE];
 
-    //this fields need to be get from userHistory
-    elementValidated.userShared = element.userShared ? element.userShared : "0";
-    elementValidated.userLiked = element.userLiked ? element.userLiked : "0";
-    elementValidated.userCollected = element.userCollected ? element.userCollected : "0";
-    elementValidated.userViewed = element.userViewed ? element.userViewed : "0";
+
+    let isUserCollect = false;
+    for (let j = 0; j < userData.biinieCollections.length && !isUserCollect; j++) {
+        var elUserCollect = _.findWhere(userData.biinieCollections[j].elements, {identifier: elementValidated.identifier});
+        isUserCollect = elUserCollect != null;
+    }
+
+    var userShareElements = _.filter(userData.shareObjects, function (like) {
+        return like.type === "element"
+    });
+    var elUserShared = _.findWhere(userShareElements, {identifier: elementValidated.identifier});
+    var isUserShared = elUserShared != null;
+
+    var userLikeElements = _.filter(userData.likeObjects, function (like) {
+        return like.type === "element"
+    });
+
+    var elUserLike = _.findWhere(userLikeElements, {identifier: elementValidated.identifier});
+    var isUserLike = elUserLike != null;
+
+    var elUserViewed = _.findWhere(userData.seenElements, {elementIdentifier: elementValidated.identifier});
+    var isUserViewedElement = elUserViewed != null;
+
+    elementValidated.userShared = isUserShared ? "1" : "0";
+    elementValidated.userLiked = isUserLike ? "1" : "0";
+    elementValidated.userCollected = isUserCollect ? "1" : "0";
+    elementValidated.userViewed = isUserViewedElement ? "1" : "0";
+
+
     if (!element.hasCallToAction) {
         elementValidated.hasCallToAction = "0";
     } else {
@@ -170,7 +212,6 @@ exports.validateElementInitialInfo = function(element) {
     }
     elementValidated.callToActionURL = element.callToActionURL ? element.callToActionURL : "";
     elementValidated.callToActionTitle = element.callToActionTitle ? element.callToActionTitle : "";
-
 
     return elementValidated;
 };

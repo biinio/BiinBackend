@@ -3119,7 +3119,6 @@ exports.getInitalDataFullCategories = function (req, res) {
     var notices = [];
     var showcases = [];
 
-    var highlights = [];
     var categories = [];
     var nearbySites = [];
 
@@ -3304,6 +3303,80 @@ exports.getInitalDataFullCategories = function (req, res) {
 
     };
 
+    var fillFavoritesSites = function(){
+        return new Promise(function (resolve) {
+            let sitesLiked = [];
+            sitesHash.forEach(function(key){
+                let userLiked = _.findWhere(userBiinieData.likeObjects, {
+                    identifier: key,
+                    type: "site"
+                });
+                if(userLiked){
+                    sitesLiked.push({identifier:key});
+                }
+            });
+            favorites.sites = sitesLiked;
+            resolve();
+        });
+    };
+
+    var fillFavoritesElements = function(){
+        return new Promise(function (resolve) {
+
+            let userLikeElements = _.filter(userBiinieData.likeObjects, function (like) {
+                return like.type === "element"
+            });
+
+            let elementsLiked = [];
+
+            elementsHash.forEach(function(key,value){
+                var elUserLike = _.findWhere(userLikeElements, {identifier: key});
+                if( elUserLike != null ){
+                    elementsLiked.push(value);
+                }
+            });
+
+            let relationalElements =[];
+
+            elementsLiked.forEach(function (element) {
+                relationalElements.push(fillElementRelationalInfo(element));
+            });
+
+            favorites.elements = _.map(relationalElements, function(element){
+                let mappedElement = {};
+                mappedElement.identifier = element.identifier;
+                mappedElement.siteIdentifier = element.siteIdentifier;
+                mappedElement.showcaseIdentifier = element.showcaseIdentifier;
+                return mappedElement;
+            });
+
+            resolve();
+        });
+    };
+
+    var fillArrays = function(){
+        return new Promise(function (resolve) {
+            organizationsHash.forEach(function (key, organization) {
+                organizations.push(organization);
+            });
+            sitesHash.forEach(function (key, site) {
+                site.proximity = utils.getProximity(userLat, userLng, site.lat, site.lng);
+                sites.push(site);
+            });
+            elementsHash.forEach(function (key, element) {
+                elements.push(element);
+            });
+            showcasesHash.forEach(function (key, showcase) {
+                showcases.push(showcase);
+            });
+            noticesHash.forEach(function (key, notice) {
+                notices.push(notice);
+            });
+
+            resolve();
+        });
+    }
+
     var onError = function ( err ) {
         console.log(err);
 
@@ -3332,23 +3405,14 @@ exports.getInitalDataFullCategories = function (req, res) {
     }, onError).then(function () {
         return getCategoriesIdentifier();
     }, onError).then(function () {
+        return fillFavoritesSites();
+    }, onError).then(function () {
+        return fillArrays();
+    }, onError).then(function () {
+        return fillFavoritesElements();
+    }, onError).then(function () {
 
-        organizationsHash.forEach(function (key, organization) {
-            organizations.push(organization);
-        });
-        sitesHash.forEach(function (key, site) {
-            site.proximity = utils.getProximity(userLat, userLng, site.lat, site.lng);
-            sites.push(site);
-        });
-        elementsHash.forEach(function (key, element) {
-            elements.push(element);
-        });
-        showcasesHash.forEach(function (key, showcase) {
-            showcases.push(showcase);
-        });
-        noticesHash.forEach(function (key, notice) {
-            notices.push(notice);
-        });
+
 
         //Setting closest sites from the biinie
         _.pluck(_.sortBy(sites,"proximity"),"identifier").forEach(function(siteIdentifier){
@@ -3412,25 +3476,54 @@ exports.getInitalDataFullCategories = function (req, res) {
         }
 
         for (let i = 0; i < sites.length; i++) {
-            sites[i] = validations.validateSiteInitialInfo(sites[i]);
+            sites[i] = validations.validateSiteInitialInfo(sites[i], userBiinieData);
         }
 
         for (let i = 0; i < showcases.length; i++) {
-            showcases[i] = validations.validateShowcaseInitialInfo(showcases[i]);
+            showcases[i] = validations.validateShowcaseInitialInfo(showcases[i],userBiinieData);
         }
 
         for (let i = 0; i < elements.length; i++) {
-            elements[i] = validations.validateElementInitialInfo(elements[i]);
+            elements[i] = validations.validateElementInitialInfo(elements[i],userBiinieData);
         }
 
         for (let i = 0; i < notices.length; i++) {
-            notices[i] = validations.validateNoticesInitialInfo(notices[i]);
+            notices[i] = validations.validateNoticesInitialInfo(notices[i],userBiinieData);
         }
+
+        //REMOVING ELEMENTS FROM SHOWCASE THAT ARE INVALID AND THEY ARE NOT IN THE HASHTABLE
+        for (let i = 0; i < showcases.length; i++) {
+            var showcase = showcases[i];
+            showcase.elements = _.filter(showcase.elements, function(element){
+                return elementsHash.has(element.identifier);
+            });
+        }
+
+        let deletedShowcases = [];
+        showcases = _.filter(showcases,function (showcase) {
+            if (showcase.length <= 0) {
+                deletedShowcases.push(showcase.identifier);
+                return false;
+            }
+            return true;
+        });
+
+        for (let i = 0; i < deletedShowcases.length; i++) {
+            let showcaseId = deletedShowcases[i];
+            showcasesHash.remove(showcaseId);
+        }
+
+
 
         //REMOVING SHOWCASES FROM SITE THAT ARE INVALID AND THEY ARE NOT IN THE HASHTABLE
 
+        for (let i = 0; i < sites.length; i++) {
+            var site = sites[i];
+            site.showcases = _.filter(site.showcases, function(showcase){
+                return showcasesHash.has(showcase.identifier);
+            });
+        }
 
-        //REMOVING ELEMENTS FROM SHOWCASE THAT ARE INVALID AND THEY ARE NOT IN THE HASHTABLE
 
         res.json({
             organizations: organizations,
@@ -3440,10 +3533,11 @@ exports.getInitalDataFullCategories = function (req, res) {
             showcases: showcases,
             notices: notices,
             highlights : relationalHighLights,
-            categories : categories
+            categories : categories,
+            favorites : favorites
 
         });
-    }, onError).catch(function () {
+    }, onError).catch(function (err) {
         console.log(err);
     });
 
