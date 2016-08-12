@@ -114,9 +114,9 @@ exports.validateOrganizationInitialInfo = function(organization) {
             newloyaltyCard.isUnavailable = loyaltyCard.isUnavailable ? "1" : "0";
             newloyaltyCard.elementIdentifier = loyaltyCard.elementIdentifier ? loyaltyCard.elementIdentifier : "";
             newloyaltyCard.organizationIdentifier = loyaltyCard.organizationIdentifier ? loyaltyCard.organizationIdentifier : "";
-            newloyaltyCard.startDate = loyaltyCard.startDate == "" ? utils.getDateNow() : utils.getDate(loyaltyCard.initialDate);
-            newloyaltyCard.endDate = loyaltyCard.endDate == "" ? utils.getDateNow() : utils.getDate(loyaltyCard.endDate);
-            newloyaltyCard.enrolledDate = loyaltyCard.enrolledDate == "" ? utils.getDateNow() : utils.getDate(loyaltyCard.enrolledDate);
+            newloyaltyCard.startDate = loyaltyCard.startDate == "" ? loyaltyCard.startDate : utils.getDate(loyaltyCard.initialDate);
+            newloyaltyCard.endDate = loyaltyCard.endDate == "" ? loyaltyCard.endDate : utils.getDate(loyaltyCard.endDate);
+            newloyaltyCard.enrolledDate = loyaltyCard.enrolledDate == "" ? loyaltyCard.enrolledDate : utils.getDate(loyaltyCard.enrolledDate);
             newloyaltyCard.slots = loyaltyCard.slots ? loyaltyCard.slots + "" : "0";
             newloyaltyCard.slots = loyaltyCard.usedSlots ? loyaltyCard.usedSlots + "" : "0";
             return newloyaltyCard;
