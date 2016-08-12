@@ -15,7 +15,7 @@ exports.cardEnroll = function (req, res) {
 
     cards.findOne({identifier: cardIdentifier}, {}, function (err, card) {
         if (err) {
-            res.status(500).json({});
+            res.json({data:{}, status:"1", result:"0"});
         } else {
             if (card) {
                 let cardPerBiinie = new cardsPerBiinie();
@@ -23,13 +23,13 @@ exports.cardEnroll = function (req, res) {
                 cardPerBiinie.userIdentifier = biinieIdentifier;
                 cardPerBiinie.save(function (err, card) {
                     if (err) {
-                        res.status(500).json({});
+                        res.json({data:{}, status:"2", result:"0"});
                     } else {
-                        res.json(card);
+                        res.json({data:{identifier:card.identifier}, status:"0", result:"1"});
                     }
                 });
             } else {
-                res.status(500).json({});
+                res.json({data:{}, status:"3", result:"0"});
             }
         }
     });
