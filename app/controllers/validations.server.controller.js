@@ -161,6 +161,7 @@ exports.validateOrganizationInitialInfo = function(organization) {
     }
 
     organizationValidated.loyalty = validateLoyaltyOrganization(organizationValidated.loyalty);
+    organizationValidated.isLoyaltyEnabled = organizationValidated.loyalty == {} ? "0" : "1";
     
 
 

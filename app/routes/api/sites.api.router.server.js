@@ -19,4 +19,7 @@ module.exports = function (app) {
 
     app.route('/api/organizations/:orgIdentifier/sites/:siteIdentifier').delete( api.markAsDeletedSites);
 
+    app.route('/api/organizations/:orgIdentifier/sites/:siteIdentifier/getqrcode').get( api.getQRCode);
+    app.route('/api/organizations/:orgIdentifier/sites/:siteIdentifier/refreshqrcode').post( api.setNewSiteQRCode);
+
 };

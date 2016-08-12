@@ -8,7 +8,8 @@ var utils = require('../utils.server.controller'),
 var organization = require('../../models/organization'),
     site = require('../../models/site'),
     neighbour = require('../../models/neighbour'),
-    biin = require('../../models/biin');
+    biin = require('../../models/biin'),
+    qrCodePerSite = require('../../models/qrCodePerSite');
 
 var sysGlobalsRoutes = require('./globals.api.server.controller');
 
@@ -277,5 +278,44 @@ exports.setSitesValid = function (req, res) {
             })
         }
 
+    })
+};
+
+
+exports.setNewSiteQRCode = function(req, res){
+    var organizationIdentifier = req.params.orgIdentifier;
+    var siteIdentifier = req.params.siteIdentifier;
+    qrCodePerSite.update({siteIdentifier:siteIdentifier},{$set:{isActive:false}},{multi:true},function(err){
+        if(err){
+            res.status(500).json(err);
+        } else {
+            let newQR = new qrCodePerSite();
+            newQR.siteIdentifier = siteIdentifier;
+            newQR.save(function (err, newQR) {
+               if(err){
+                   res.status(500).json(err);
+               } else {
+                   res.json(newQR);
+               }
+            });
+        }
+    })
+
+};
+
+exports.getQRCode = function(req, res){
+    var organizationIdentifier = req.params.orgIdentifier;
+    var siteIdentifier = req.params.siteIdentifier;
+
+    qrCodePerSite.findOne({siteIdentifier:siteIdentifier, isActive:true},{},function (err,qrCode) {
+        if(err){
+            res.status(500).json(err);
+        } else {
+            if(qrCode){
+                res.json(qrCode);
+            } else {
+                res.status(404).json({message:"No QR code found."})
+            }
+        }
     })
 };
