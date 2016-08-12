@@ -121,7 +121,7 @@ exports.validateOrganizationInitialInfo = function(organization) {
             return newloyaltyCard;
         }
 
-        if( loyalty == {} ){
+        if( _.isEmpty( loyalty )){
             return {};
         } else {
             let newLoyalty = {};
@@ -161,7 +161,7 @@ exports.validateOrganizationInitialInfo = function(organization) {
     }
 
     organizationValidated.loyalty = validateLoyaltyOrganization(organizationValidated.loyalty);
-    organizationValidated.isLoyaltyEnabled = organizationValidated.loyalty == {} ? "0" : "1";
+    organizationValidated.isLoyaltyEnabled = _.isEmpty(organizationValidated.loyalty) ? "0" : "1";
     
 
 
