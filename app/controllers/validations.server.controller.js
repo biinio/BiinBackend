@@ -109,6 +109,7 @@ exports.validateOrganizationInitialInfo = function(organization) {
             newloyaltyCard.title = loyaltyCard.title ? loyaltyCard.title : "";
             newloyaltyCard.rule = loyaltyCard.rule ? loyaltyCard.rule : "";
             newloyaltyCard.goal = loyaltyCard.goal ? loyaltyCard.goal : "";
+            newloyaltyCard.conditions = loyaltyCard.conditions ? loyaltyCard.conditions : "";
             newloyaltyCard.isCompleted = loyaltyCard.isCompleted ? "1" : "0";
             newloyaltyCard.isBiinieEnrolled = loyaltyCard.isBiinieEnrolled ? "1" : "0";
             newloyaltyCard.isUnavailable = loyaltyCard.isUnavailable ? "1" : "0";
