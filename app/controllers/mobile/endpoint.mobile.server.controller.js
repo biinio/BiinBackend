@@ -3375,7 +3375,21 @@ exports.getInitalDataFullCategories = function (req, res) {
 
             resolve();
         });
-    }
+    };
+
+    var assignCards = function(cards){
+        return new Promise(function (resolve) {
+            cards.forEach(function(cardsByOrg){
+                let org = organizationsHash.get(cardsByOrg.organizationIdentifier);
+                if(org){
+                    org.loyalty = {};
+                    org.loyalty.loyaltyCards = cardsByOrg.loyaltyCards;
+                    organizationsHash.put(cardsByOrg.organizationIdentifier,org);
+                }
+            });
+            resolve();
+        });
+    };
 
     var onError = function ( err ) {
         console.log(err);
@@ -3405,14 +3419,16 @@ exports.getInitalDataFullCategories = function (req, res) {
     }, onError).then(function () {
         return getCategoriesIdentifier();
     }, onError).then(function () {
+        return cards.getUserCards(userIdentifier);
+    }, onError).then(function (biinieCards) {
+        return assignCards(biinieCards);
+    }, onError).then(function () {
         return fillFavoritesSites();
     }, onError).then(function () {
         return fillArrays();
     }, onError).then(function () {
         return fillFavoritesElements();
     }, onError).then(function () {
-
-
 
         //Setting closest sites from the biinie
         _.pluck(_.sortBy(sites,"proximity"),"identifier").forEach(function(siteIdentifier){
