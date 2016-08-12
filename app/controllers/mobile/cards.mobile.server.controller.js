@@ -70,7 +70,7 @@ exports.cardSetStar = function ( req, res){
 
 exports.getUserCards = function (biinieIdentifier) {
     return new Promise(function (resolve, reject) {
-        cardsPerBiinie.find({userIdentifier: biinieIdentifier}, {})
+        cardsPerBiinie.find({userIdentifier: biinieIdentifier, isComplete:false }, {})
             .populate("card")
             .exec(function (err, biinieCards) {
             if (err) {
@@ -114,7 +114,7 @@ exports.getUserCards = function (biinieIdentifier) {
                                 organizationsIdentifier.forEach(function (organizationIdentifier) {
                                     let loyaltyObject = {};
                                     loyaltyObject.organizationIdentifier = organizationIdentifier;
-                                    loyaltyObject.loyaltyCards = _.where(cardsToSend,{"organizationIdentifier":organizationIdentifier});
+                                    loyaltyObject.loyaltyCard = _.findWhere(cardsToSend,{"organizationIdentifier":organizationIdentifier});
                                     objectsToSend.push(loyaltyObject);
                                 });
                                 resolve(objectsToSend);

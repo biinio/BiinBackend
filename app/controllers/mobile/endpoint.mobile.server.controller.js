@@ -3383,7 +3383,7 @@ exports.getInitalDataFullCategories = function (req, res) {
                 let org = organizationsHash.get(cardsByOrg.organizationIdentifier);
                 if(org){
                     org.loyalty = {};
-                    org.loyalty.loyaltyCards = cardsByOrg.loyaltyCards;
+                    org.loyalty.loyaltyCard = cardsByOrg.loyaltyCard;
                     organizationsHash.put(cardsByOrg.organizationIdentifier,org);
                 }
             });
@@ -3430,14 +3430,15 @@ exports.getInitalDataFullCategories = function (req, res) {
         return fillFavoritesElements();
     }, onError).then(function () {
 
+
+
         //Setting closest sites from the biinie
         _.pluck(_.sortBy(sites,"proximity"),"identifier").forEach(function(siteIdentifier){
             nearbySites.push({identifier:siteIdentifier});
         });
 
+
         //Setting Highlights
-
-
         let highlightsElements  = _.where(elements,{"isHighlight":"1"});
         let relationalHighLights = [];
         highlightsElements.forEach(function (highlight) {
@@ -3447,6 +3448,8 @@ exports.getInitalDataFullCategories = function (req, res) {
         relationalHighLights = _.filter(relationalHighLights,function (relationHighlight) {
             return relationHighlight.siteIdentifier && relationHighlight.showcaseIdentifier;
         });
+
+
 
         //Setting Categories
         for (var i = 0; i < categoriesInDB.length; i++) {
@@ -3459,8 +3462,8 @@ exports.getInitalDataFullCategories = function (req, res) {
                 elements: elementsInCategory
             })
         }
-        //filtering categories that are empty
 
+        //Filtering categories that are empty
         categories = _.filter(categories,function(category){
             return category.elements.length > 0;
         });
@@ -3476,7 +3479,7 @@ exports.getInitalDataFullCategories = function (req, res) {
         });
 
 
-        //mapping highlights
+        //Mapping Highlights
         relationalHighLights = _.map(relationalHighLights, function(element){
             let mappedElement = {};
             mappedElement.identifier = element.identifier;
@@ -3488,7 +3491,7 @@ exports.getInitalDataFullCategories = function (req, res) {
         relationalHighLights = relationalHighLights.splice(0,LIMIT_HIGHLIGHTS_TO_SENT);
 
 
-        //VALIDATIONS
+        //Validations
         for (let i = 0; i < organizations.length; i++) {
             organizations[i] = validations.validateOrganizationInitialInfo(organizations[i]);
         }
@@ -3557,7 +3560,6 @@ exports.getInitalDataFullCategories = function (req, res) {
     }, onError).catch(function (err) {
         console.log(err);
     });
-
 };
 
 exports.getTermsOfService = function (req, res) {

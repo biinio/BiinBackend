@@ -102,14 +102,46 @@ exports.validateSiteInitialInfo = function(site, userData) {
 
 exports.validateOrganizationInitialInfo = function(organization) {
 
+    function validateLoyaltyOrganization(loyalty){
+        function validateLoyaltyCard(loyaltyCard) {
+            let newloyaltyCard = {};
+            newloyaltyCard.identifier = loyaltyCard.identifier ? loyaltyCard.identifier : "";
+            newloyaltyCard.title = loyaltyCard.title ? loyaltyCard.title : "";
+            newloyaltyCard.rule = loyaltyCard.rule ? loyaltyCard.rule : "";
+            newloyaltyCard.goal = loyaltyCard.goal ? loyaltyCard.goal : "";
+            newloyaltyCard.isCompleted = loyaltyCard.isCompleted ? "1" : "0";
+            newloyaltyCard.isBiinieEnrolled = loyaltyCard.isBiinieEnrolled ? "1" : "0";
+            newloyaltyCard.isUnavailable = loyaltyCard.isUnavailable ? "1" : "0";
+            newloyaltyCard.elementIdentifier = loyaltyCard.elementIdentifier ? loyaltyCard.elementIdentifier : "";
+            newloyaltyCard.organizationIdentifier = loyaltyCard.organizationIdentifier ? loyaltyCard.organizationIdentifier : "";
+            newloyaltyCard.startDate = loyaltyCard.startDate == "" ? utils.getDateNow() : utils.getDate(loyaltyCard.initialDate);
+            newloyaltyCard.endDate = loyaltyCard.endDate == "" ? utils.getDateNow() : utils.getDate(loyaltyCard.endDate);
+            newloyaltyCard.enrolledDate = loyaltyCard.enrolledDate == "" ? utils.getDateNow() : utils.getDate(loyaltyCard.enrolledDate);
+            newloyaltyCard.slots = loyaltyCard.slots ? loyaltyCard.slots + "" : "0";
+            newloyaltyCard.slots = loyaltyCard.usedSlots ? loyaltyCard.usedSlots + "" : "0";
+            return newloyaltyCard;
+        }
+
+        if( loyalty == {} ){
+            return {};
+        } else {
+            let newLoyalty = {};
+            if(loyalty.loyaltyCard){
+                newLoyalty.loyaltyCard = validateLoyaltyCard(loyalty.loyaltyCard);
+            }
+            return newLoyalty
+        }
+
+    }
+
     var organizationValidated = {};
     organizationValidated.identifier = organization.identifier ? organization.identifier : "";
     //organizationValidated._id = organization._id ? organization._id : "";
     organizationValidated.media = organization.media && organization.media.length != 0 ? organization.media : [BIIN_DEFAULT_IMAGE];
-    organizationValidated.extraInfo = organization.extraInfo ? organization.extraInfo : "";
-    organizationValidated.description = organization.description ? organization.description : "";
+    //organizationValidated.extraInfo = organization.extraInfo ? organization.extraInfo : "";
+    //organizationValidated.description = organization.description ? organization.description : "";
     organizationValidated.brand = organization.brand ? organization.brand : "";
-    organizationValidated.name = organization.name ? organization.name : "";
+    //organizationValidated.name = organization.name ? organization.name : "";
     organizationValidated.isLoyaltyEnabled = "1";//organization.isLoyaltyEnabled ? organization.isLoyaltyEnabled : "0";
     organizationValidated.loyalty = organization.loyalty ? organization.loyalty : {};
     organizationValidated.hasNPS = organization.hasNPS ? organization.hasNPS : "0";
@@ -128,6 +160,10 @@ exports.validateOrganizationInitialInfo = function(organization) {
         newOrganization.url = organizationValidated.media[i].url;
         organizationValidated.media[i] = newOrganization;
     }
+
+    organizationValidated.loyalty = validateLoyaltyOrganization(organizationValidated.loyalty);
+    
+
 
     return organizationValidated;
 };
