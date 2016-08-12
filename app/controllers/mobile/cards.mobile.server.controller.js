@@ -70,7 +70,7 @@ exports.cardSetStar = function ( req, res){
 
 exports.getUserCards = function (biinieIdentifier) {
     return new Promise(function (resolve, reject) {
-        cardsPerBiinie.find({userIdentifier: biinieIdentifier, isComplete:false }, {})
+        cardsPerBiinie.find({userIdentifier: biinieIdentifier, isCompleted:false }, {})
             .populate("card")
             .exec(function (err, biinieCards) {
             if (err) {
