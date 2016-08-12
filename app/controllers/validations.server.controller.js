@@ -117,7 +117,7 @@ exports.validateOrganizationInitialInfo = function(organization) {
             newloyaltyCard.endDate = loyaltyCard.endDate == "" ? loyaltyCard.endDate : utils.getDate(loyaltyCard.endDate);
             newloyaltyCard.enrolledDate = loyaltyCard.enrolledDate == "" ? loyaltyCard.enrolledDate : utils.getDate(loyaltyCard.enrolledDate);
             newloyaltyCard.slots = loyaltyCard.slots ? loyaltyCard.slots + "" : "0";
-            newloyaltyCard.slots = loyaltyCard.usedSlots ? loyaltyCard.usedSlots + "" : "0";
+            newloyaltyCard.usedSlots = loyaltyCard.usedSlots ? loyaltyCard.usedSlots + "" : "0";
             return newloyaltyCard;
         }
 
