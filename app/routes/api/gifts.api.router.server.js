@@ -26,6 +26,9 @@ module.exports = function (app) {
     app.route('/api/organizations/:identifier/giftsamountupdate').get( api.getUpdatedAmount);
 
 
-    app.route('/api/organizations/:identifier/dashboard').get(api.getGiftsDashboard)
+    app.route('/api/organizations/:identifier/dashboard').get(api.getGiftsDashboard);
+
+    app.route('/api/organizations/:identifier/dashboard/gift/:giftidentifier/claim').post(api.claimGiftDashboard);
+    app.route('/api/organizations/:identifier/dashboard/gift/:giftidentifier/deliver').post(api.deliverGiftDashboard);
 
 };

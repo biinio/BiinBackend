@@ -377,3 +377,44 @@ exports.getGiftsDashboard = function (req, res) {
         }
     });
 };
+
+
+exports.claimGiftDashboard = function (req, res) {
+    var biiniesGift = req.params.giftidentifier;
+    giftsPerBiinie.findOne({identifier: biiniesGift}, {}, function (err, gift) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            gift.isClaimed = true;
+            gift.status = giftsStatus.CLAIMED;
+            gift.claimedDate = Date.now();
+            gift.save(function (err) {
+                if (err)
+                    res.status(500).json(err);
+                else {
+                    res.status(200).json(gift);
+                }
+            });
+        }
+    });
+};
+
+exports.deliverGiftDashboard = function (req, res) {
+    var biiniesGift = req.params.giftidentifier;
+    giftsPerBiinie.findOne({identifier: biiniesGift}, {}, function (err, gift) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            gift.isClaimed = true;
+            gift.status = giftsStatus.DELIVERED;
+            gift.deliveredDate = Date.now();
+            gift.save(function (err) {
+                if (err)
+                    res.status(500).json(err);
+                else {
+                    res.status(200).json(gift);
+                }
+            });
+        }
+    });
+};
