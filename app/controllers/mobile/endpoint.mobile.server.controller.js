@@ -3430,8 +3430,6 @@ exports.getInitalDataFullCategories = function (req, res) {
         return fillFavoritesElements();
     }, onError).then(function () {
 
-
-
         //Setting closest sites from the biinie
         _.pluck(_.sortBy(sites,"proximity"),"identifier").forEach(function(siteIdentifier){
             nearbySites.push({identifier:siteIdentifier});
@@ -3448,7 +3446,6 @@ exports.getInitalDataFullCategories = function (req, res) {
         relationalHighLights = _.filter(relationalHighLights,function (relationHighlight) {
             return relationHighlight.siteIdentifier && relationHighlight.showcaseIdentifier;
         });
-
 
 
         //Setting Categories

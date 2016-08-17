@@ -25,4 +25,7 @@ module.exports = function (app) {
 
     app.route('/api/organizations/:identifier/giftsamountupdate').get( api.getUpdatedAmount);
 
+
+    app.route('/api/organizations/:identifier/dashboard').get(api.getGiftsDashboard)
+
 };

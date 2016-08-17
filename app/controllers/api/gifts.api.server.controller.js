@@ -9,6 +9,7 @@ var giftsStatus = require('../enums/giftstatusenum');
 var notificationsManager = require('../notifications.server.controller');
 var mobileGiftCalls = require('../mobile/gifts.mobile.server.controller');
 var validations = require('../validations.server.controller');
+var mobileUser = require('../../models/mobileUser');
 
 
 /**
@@ -347,6 +348,32 @@ exports.getUpdatedAmount = function (req, res) {
             res.status(500).json(err);
         } else {
             res.json(giftsToSend);
+        }
+    });
+};
+
+
+exports.getGiftsDashboard = function (req, res) {
+    let orgID = req.params.identifier;
+    giftsPerBiinie.find({"gift.organizationIdentifier":orgID, isDeleted: false},{}).lean().exec( function(err, orgGifts) {
+        if(err){
+            res.status(500).json(err);
+        } else if(orgGifts){
+            let binnies = _.map(orgGifts,"biinieIdentifier");
+            mobileUser.find({identifier:{$in:binnies}},{identifier: 1, firstName: 1, lastName: 1, biinName: 1, email: 1, facebookAvatarUrl: 1}).lean().exec(function (err, biinies) {
+                if(err){
+                    res.status(500).json(err);
+                } else {
+                    for (let i = 0; i < orgGifts.length; i++) {
+                        var orgGift = orgGifts[i];
+                        let userInfo = _.findWhere(biinies,{identifier:orgGift.biinieIdentifier});
+                        orgGift.user = userInfo;
+                    }
+                    res.status(200).json(orgGifts);
+                }
+            });
+        } else {
+            res.status(200).json([]);
         }
     });
 };

@@ -6,6 +6,7 @@
 var cards = require('../../models/cards');
 var cardsPerBiinie = require('../../models/cardsPerBiinie');
 var gifts = require('../../models/gifts');
+var codeQRPerSite = require('../../models/qrCodePerSite');
 var _ = require('underscore');
 
 
@@ -38,31 +39,43 @@ exports.cardEnroll = function (req, res) {
 exports.cardSetStar = function ( req, res){
     let biinieIdentifier = req.params.identifier;
     let cardIdentifier = req.params.cardidentifier;
+    let qrcodeidentifier = req.params.qrcodeidentifier;
+    let siteIdentifier = req.params.siteIdentifier;
 
-    cardsPerBiinie.findOne({userIdentifier:biinieIdentifier, identifier : cardIdentifier }, {})
-        .populate("card")
-        .exec(function ( err, card) {
+
+    codeQRPerSite.findOne({identifier:qrcodeidentifier, siteIdentifier: siteIdentifier, isActive:true},{}, function (err, qrCodeStatus) {
         if(err){
-            res.json({data:{}, status:"1", result:"0"});
-        } else {
-            if(card){
-                if(card.usedSlots < card.card.slots){
-                    card.usedSlots++;
-                    card.save(function (err, card) {
-                        if(err){
-                            res.json({data:{}, status:"4", result:"0"});
+            res.json({data:{}, status:"4", result:"0"});
+        } else if(qrCodeStatus){
+
+            cardsPerBiinie.findOne({userIdentifier:biinieIdentifier, identifier : cardIdentifier }, {})
+                .populate("card")
+                .exec(function ( err, card) {
+                    if(err){
+                        res.json({data:{}, status:"1", result:"0"});
+                    } else {
+                        if(card){
+                            if(card.usedSlots < card.card.slots){
+                                card.usedSlots++;
+                                card.save(function (err, card) {
+                                    if(err){
+                                        res.json({data:{}, status:"4", result:"0"});
+                                    } else {
+                                        res.json({data:{}, status:"0", result:"1"});
+                                    }
+                                })
+
+                            } else {
+                                res.json({data:{}, status:"3", result:"0"});
+                            }
+
                         } else {
-                            res.json({data:{}, status:"0", result:"1"});
+                            res.json({data:{}, status:"2", result:"0"});
                         }
-                    })
-
-                } else {
-                    res.json({data:{}, status:"3", result:"0"});
-                }
-
-            } else {
-                res.json({data:{}, status:"2", result:"0"});
-            }
+                    }
+                });
+        } else {
+            res.json({data:{}, status:"5", result:"0"});
         }
     });
 };
