@@ -72,7 +72,7 @@ exports.onEnterSite = function (req, res) {
 
         return new Promise( function( resolve, reject) {
             let organizationName = organization.brand;
-            giftsPerBiinie.find({userIdentifier:biinnieId, status:giftEnum.SENT},{},function (err,giftsFound) {
+            giftsPerBiinie.find({biinieIdentifier:biinnieId, status:giftEnum.SENT},{},function (err,giftsFound) {
                 if(err){
                     resolve({wasNotificationSent:false});
                 }else{
