@@ -89,17 +89,13 @@ exports.getProfile = function (req, res) {
                 if(result.facebook_id != ""){
                 var accesstoken = "";
                 https.get('https://graph.facebook.com/oauth/access_token?client_id=832430170216826&client_secret=6f78a1b2060e8c8cfd9b05aff98ba668&grant_type=client_credentials',function(res1){
-                    //console.log(res);
                     res1.on("data", function(body) {
+                        
                         accesstoken = body.toString();
-                        let headers = {};
-                        headers.Authorization = "Auth " + accesstoken;
                         let url = 'https://graph.facebook.com/v2.7/'+result.facebook_id+'/friends?'+accesstoken;
 
                         https.get(url,function(res2){
-                            //console.log(res);
                             res2.on("data", function(body) {
-                                console.log(body.toString());
                                 var responseObject = JSON.parse(body.toString());
                                 var friends = [];
                                 responseObject.data.forEach(function (friend) {
