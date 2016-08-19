@@ -84,7 +84,7 @@ exports.onEnterSite = function (req, res) {
                                 let giftsMetaDataID = _.map(giftsMetaData,"identifier");
 
                                 let shouldSendNotification = _.filter(giftsFound, function (giftBiinie) {
-                                        return  giftsMetaDataID.indexOf(giftBiinie.gift.identifier)
+                                        return  giftsMetaDataID.indexOf(giftBiinie.gift.identifier) > -1
                                     }).length > 0;
 
                                 if(shouldSendNotification){
