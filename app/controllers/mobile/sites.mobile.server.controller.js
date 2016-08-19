@@ -85,7 +85,7 @@ exports.onEnterSite = function (req, res) {
 
                                 let shouldSendNotification = _.filter(giftsFound, function (giftBiinie) {
                                         return  giftsMetaDataID.indexOf(giftBiinie.gift.identifier)
-                                    }).length > 1;
+                                    }).length > 0;
 
                                 if(shouldSendNotification){
                                     let dataContainer = {};
