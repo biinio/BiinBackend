@@ -102,7 +102,7 @@ exports.getProfile = function (req, res) {
                                     let newFriend = {};
                                     newFriend.name = friend.name;
                                     newFriend.facebookId = friend.id;
-                                    newFriend.url = "https://graph.facebook.com/v2.7/"+newFriend.id+"/picture?type=large";
+                                    newFriend.url = "https://graph.facebook.com/v2.7/"+newFriend.facebookId+"/picture?type=large";
                                     friends.push(newFriend);
                                 });
 
