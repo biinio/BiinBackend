@@ -101,7 +101,7 @@ exports.getProfile = function (req, res) {
                                 responseObject.data.forEach(function (friend) {
                                     let newFriend = {};
                                     newFriend.name = friend.name;
-                                    newFriend.id = friend.id;
+                                    newFriend.facebookId = friend.id;
                                     newFriend.url = "https://graph.facebook.com/v2.7/"+newFriend.id+"/picture?type=large";
                                     friends.push(newFriend);
                                 });
