@@ -11,5 +11,6 @@ module.exports = mongoose.model('cardsPerBiinie', {
     endDate:{ type:Date, default: null},
     isCompleted:{ type: Boolean, default: false},
     isBiinieEnrolled:{ type:Boolean, default: true},
-    isUnavailable:{ type:Boolean, default: false }
+    isUnavailable:{ type:Boolean, default: false },
+    availableAgain:{ type:Date, default: null}
 });

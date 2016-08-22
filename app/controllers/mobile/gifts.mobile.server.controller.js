@@ -1,10 +1,15 @@
+var _ = require('underscore');
+
 var gifts = require('../../models/gifts');
 var giftsPerBiinie = require('../../models/giftsPerBiinie');
-var utils = require('../utils.server.controller');
 var organization = require('../../models/organization');
-var _ = require('underscore');
+var biinies = require('../../models/mobileUser');
+
 var giftsStatus = require('../enums/giftstatusenum');
+
+var utils = require('../utils.server.controller');
 var notificationsManager = require('../notifications.server.controller');
+var validations = require('../validations.server.controller');
 
 exports.getBiiniesGifts = function (biinieIdentifier) {
     return new Promise(function (resolve, reject) {
@@ -96,15 +101,37 @@ exports.shareGift = function (req, res) {
             res.json({status: "1", result: "0", data: {}});
         } else {
             biinieGift.status = giftsStatus.SHARED;
-            biinieGift.biinieIdentifier = to;
-            //SEND NOTIFICATION TO THE NEW BIINIE
-            biinieGift.save(function (err) {
-                if (err) {
-                    res.json({status: "1", result: "0", data: {}});
+            biinies.findOne({facebookId:to},{identifier:"1"},function(err, biinnie){
+                if(err){
+                    res.json({status: "2", result: "0", data: {}});
                 } else {
-                    res.json({status: "0", result: "1", data: {}});
+                    biinieGift.biinieIdentifier = biinnie.identifier;
+                    //SEND NOTIFICATION TO THE NEW BIINIE
+                    biinieGift.save(function (err) {
+                        if (err) {
+                            res.json({status: "3", result: "0", data: {}});
+                        } else if(biinnie){
+
+                            var data = {};
+                            data.type = "giftassigned";
+                            data.gift = validations.validateGiftInfo(biinieGift);
+                            var dataContainer = {};
+                            dataContainer.data = data;
+
+                            notificationsManager.sendToUser(biinieGift.biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.",null,null,dataContainer).then( function () {
+                                res.json({status: "0", result: "1", data: {}});
+                            }, function () {
+                                res.json({status: "5", result: "0", data: {}});
+                            })
+
+                        } else {
+                            res.json({status: "4", result: "0", data: {}});
+                        }
+                    });
                 }
-            });
+
+            })
+
         }
 
     });

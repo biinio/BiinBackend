@@ -241,6 +241,7 @@ exports.cardSetComplete = function (req, res) {
                                         card.usedSlots++;
                                         card.isCompleted = card.usedSlots == card.card.slots;
                                         card.endDate = Date.now();
+                                        card.availableAgain = Date.now() + (card.card.waitTime * 24 * 60 * 60 * 1000);
                                         cardInfo = card;
 
                                         card.save(function (err, card) {
