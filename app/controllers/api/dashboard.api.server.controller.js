@@ -396,3 +396,12 @@ exports.getNewVsReturningLocal = function (req, res) {
     });
 };
 
+exports.getloyaltyCardDashboard = function (req,res) {
+    res.json(
+        {
+            activeCard:{},
+            usersCard:[]
+        }
+    )
+};
+

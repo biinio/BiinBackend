@@ -19,4 +19,6 @@ module.exports = function (app) {
 
     //Dashboard Locals
     app.route('/api/dashboard/local/newsvsreturning').get(api.getNewVsReturningLocal);
+
+    app.route('/api/dashboard/loyaltycard/active').get(api.getloyaltyCardDashboard)
 };
