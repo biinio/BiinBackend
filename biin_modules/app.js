@@ -95,8 +95,8 @@ module.exports = function (db) {
         store: new mongoStore({
             mongooseConnection: db.connection
         }),
-        resave: true,
-        saveUninitialized: true
+        //resave: true,
+        //saveUninitialized: true
     }));
 
     //Logger
