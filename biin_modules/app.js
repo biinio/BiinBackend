@@ -14,7 +14,8 @@ module.exports = function (db) {
         crypto = require('crypto'),
         lessMiddleware = require('less-middleware'),
         cors = require('cors'),
-        expressValidator = require('express-validator');
+        expressValidator = require('express-validator'),
+        passport = require('passport');
     var config = require('../config/config');
 
 
@@ -99,15 +100,15 @@ module.exports = function (db) {
     }));
 
     //Logger
-    //app.use(passport.initialize());
-    //app.use(passport.session());
+    app.use(passport.initialize());
+    app.use(passport.session());
     app.use(expressValidator());//Express Validator
     app.use(bodyParser.json());
 
     //Routes
     console.log("routing.....");
     // Globbing routing files
-    config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+    config.getGlobbedFiles('./app/routes/**/*.js').forEach(function (routePath) {
         console.log(routePath);
         require(path.resolve(routePath))(app);
     });
