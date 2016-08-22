@@ -9,7 +9,7 @@ module.exports = function (db) {
         app = express(),
         favicon = require('serve-favicon'),
         logger = require('morgan'),
-        cookieParser = require('cookie-parser'),
+        //cookieParser = require('cookie-parser'),
         bodyParser = require('body-parser'),
         crypto = require('crypto'),
         lessMiddleware = require('less-middleware'),
@@ -88,7 +88,7 @@ module.exports = function (db) {
     app.use(logger('dev'));
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-    app.use(cookieParser());
+    //app.use(cookieParser());
     app.use(session({
         secret: 'ludusy secret',
         store: new mongoStore({
