@@ -5,16 +5,20 @@ var _ = require('underscore');
 //Custom Utils
 var utils = require('../utils.server.controller');
 
-var client                = require('../../models/client');
-var organization          = require('../../models/organization');
-var biin                  = require('../../models/biin');
-var visits                = require('../../models/visits');
+var client = require('../../models/client');
+var organization = require('../../models/organization');
+var biin = require('../../models/biin');
+var visits = require('../../models/visits');
+var cards = require('../../models/cards');
+var cardsPerBiinie = require('../../models/cardsPerBiinie');
+var mobileUsers = require('../../models/mobileUser');
+
 
 //Tracking schemas
-var trackingBeacon        = require('../../models/trackingbeacon'),
-    trackingSites         = require('../../models/trackingsites'),
-    trackingBiined        = require('../../models/trackingbiined'),
-    trackingShares        = require('../../models/trackingshares'),
+var trackingBeacon = require('../../models/trackingbeacon'),
+    trackingSites = require('../../models/trackingsites'),
+    trackingBiined = require('../../models/trackingbiined'),
+    trackingShares = require('../../models/trackingshares'),
     trackingNotifications = require('../../models/trackingnotifications');
 
 var actionsEnum = require('../enums/actionsenum');
@@ -396,12 +400,63 @@ exports.getNewVsReturningLocal = function (req, res) {
     });
 };
 
-exports.getloyaltyCardDashboard = function (req,res) {
-    res.json(
-        {
-            activeCard:{},
-            usersCard:[]
-        }
-    )
+exports.getloyaltyCardDashboard = function (req, res) {
+    var filters = JSON.parse(req.headers.filters);
+    var dateRange = filters.dateRange;
+    var organizationId = filters.organizationId;
+    var siteId = filters.siteId;
+    var offset = req.headers.offset || 0;
+    offset = parseInt(offset);
+
+    cards.findOne({organizationIdentifier: organizationId, isActive: true}, {
+        _id: 1,
+        identifier: 1,
+        isUnlimited: 1,
+        goal: 1,
+        rule: 1,
+        title: 1,
+        quantity:1,
+        amountAssigned:1,
+        gift:1,
+        slots:1
+    })
+        .populate("gift")
+        .exec(function (err, card) {
+            if (err) {
+                res.status(500).json(err);
+            } else if (card) {
+                cardsPerBiinie.find({card: card._id}, {userIdentifier:1, usedSlots:1, card:1}).lean().exec(function (err, cardPerBiinie) {
+                    if (err) {
+                        res.status(500).json(err);
+                    } else {
+                        var idBiinies = _.map(cardPerBiinie, "userIdentifier");
+                        mobileUsers.find({identifier: {$in: idBiinies}}, { identifier:1, firstName:1,lastName:1, biinName:1, email:1, facebookAvatarUrl:1}).lean().exec(function (err, biinies) {
+                            if (err) {
+                                res.status(500).json(err);
+                            } else {
+                                for (var i = 0; i < cardPerBiinie.length; i++) {
+                                    var tempCard = cardPerBiinie[i];
+                                    let biinie = _.findWhere(biinies, {identifier: tempCard.userIdentifier});
+                                    tempCard.biinie = biinie;
+                                    cardPerBiinie[i] = tempCard;
+                                }
+                                res.json({
+                                        activeCard: card,
+                                        usersCard: cardPerBiinie
+                                    }
+                                )
+                            }
+                        });
+                    }
+                })
+            } else {
+                res.json(
+                    {
+                        activeCard: {},
+                        usersCard: []
+                    }
+                )
+            }
+        })
 };
 
