@@ -408,7 +408,7 @@ exports.getloyaltyCardDashboard = function (req, res) {
     var offset = req.headers.offset || 0;
     offset = parseInt(offset);
 
-    cards.findOne({organizationIdentifier: organizationId, isActive: true}, {
+    cards.findOne({organizationIdentifier: organizationId, isActive: true, isDeleted:false}, {
         _id: 1,
         identifier: 1,
         isUnlimited: 1,
