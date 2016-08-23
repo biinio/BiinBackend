@@ -314,7 +314,7 @@ exports.getQRCode = function(req, res){
             if(qrCode){
                 res.json(qrCode);
             } else {
-                res.status(404).json({message:"No QR code found."})
+                res.status(200).json(null)
             }
         }
     })
