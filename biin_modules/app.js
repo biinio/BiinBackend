@@ -113,5 +113,12 @@ module.exports = function (db) {
         require(path.resolve(routePath))(app);
     });
 
+
+    app.use( function(req, res, next) {
+        res.locals.user = req.user || null;
+        res.locals.request = req;
+        next();
+    });
+
     return app;
 };
