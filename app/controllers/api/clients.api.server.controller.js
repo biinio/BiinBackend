@@ -1,8 +1,9 @@
 //Schemas
 var client = require('../../models/client'),
     organization = require('../../models/organization'),
-    role = require('../../models/roles');
+    roles = require('../../models/roles');
 var utils = require('../utils.server.controller');
+var passport = require('passport');
 
 //Get Client Creates
 exports.createView = function (req, res) {
@@ -226,6 +227,46 @@ function createDefaultOrganization(accountIdentifier, organizationIdentifier, co
         }
     });
 }
+
+
+exports.loginCMS = function (req,res,next) {
+    passport.authenticate('clientLocal', function (err, user) {
+            if (err) {
+                return next(err);
+            }
+            if (!user) {
+                return res.status(401).send({
+                    "message":"Wrong credentials"
+                });
+            }
+            req.logIn(user, function (err) {
+                if (err) {
+                    return next(err);
+                }
+                //Get role permission
+                else if(user.role) {
+                    user = user.toObject();
+                    roles.find({
+                        "role": user.role
+                    }, {
+                        permission: 1
+                    }).lean().exec(function(err, data) {
+                        if(err)
+                            res.send(err, 500);
+                        else {
+                            user.permissions = data;
+                            return res.status(200).send({
+                                "account": user
+                            });
+                        }
+
+                    });
+                }
+            });
+        }
+    )
+    (req, res, next);
+};
 
 
 

@@ -41,6 +41,8 @@ module.exports = function (app) {
             });
         })(req, res, next);
     });
+
+
     app.get('/downloads', function (req, res) {
         var path = require('path');
         res.sendFile(path.resolve('public/downloads.html'));

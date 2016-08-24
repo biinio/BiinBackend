@@ -57,3 +57,13 @@ exports.setUserRole = function (req, res) {
             });
     });
 };
+
+exports.getRoles = function( req, res) {
+    roles.find({},{},function (err, rolesFound) {
+        res.json(rolesFound);
+    })
+};
+
+exports.saveRoles = function (req, res) {
+    res.json();
+};

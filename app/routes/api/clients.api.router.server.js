@@ -14,4 +14,6 @@ module.exports = function (app) {
     app.route('/logout').get(api.logoutClient);
     app.route('/api/clients/verify').post(api.verifyEmailAvailability);
 
+    app.post('/api/loginCMS', api.loginCMS);
+
 };

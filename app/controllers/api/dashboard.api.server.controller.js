@@ -1,27 +1,27 @@
 //Schemas
-var util = require('util');
-var fs = require('fs');
-var _ = require('underscore');
+var util                  = require('util');
+var fs                    = require('fs');
+var _                     = require('underscore');
 //Custom Utils
-var utils = require('../utils.server.controller');
+var utils                 = require('../utils.server.controller');
 
-var client = require('../../models/client');
-var organization = require('../../models/organization');
-var biin = require('../../models/biin');
-var visits = require('../../models/visits');
-var cards = require('../../models/cards');
-var cardsPerBiinie = require('../../models/cardsPerBiinie');
-var mobileUsers = require('../../models/mobileUser');
+var client                = require('../../models/client');
+var organization          = require('../../models/organization');
+var biin                  = require('../../models/biin');
+var visits                = require('../../models/visits');
+var cards                 = require('../../models/cards');
+var cardsPerBiinie        = require('../../models/cardsPerBiinie');
+var mobileUsers           = require('../../models/mobileUser');
 
 
 //Tracking schemas
-var trackingBeacon = require('../../models/trackingbeacon'),
-    trackingSites = require('../../models/trackingsites'),
-    trackingBiined = require('../../models/trackingbiined'),
-    trackingShares = require('../../models/trackingshares'),
+var trackingBeacon        = require('../../models/trackingbeacon'),
+    trackingSites         = require('../../models/trackingsites'),
+    trackingBiined        = require('../../models/trackingbiined'),
+    trackingShares        = require('../../models/trackingshares'),
     trackingNotifications = require('../../models/trackingnotifications');
 
-var actionsEnum = require('../enums/actionsenum');
+var actionsEnum           = require('../enums/actionsenum');
 
 var DAY_IN_MILLISECONDS = 24 * 3600 * 1000;
 
