@@ -98,6 +98,8 @@ module.exports = function (db) {
     }));
 
     //Logger
+    var passport = require('../app/controllers/auth.server.controller');
+
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(expressValidator());//Express Validator

@@ -3,7 +3,7 @@ var client = require('../../models/client'),
     organization = require('../../models/organization'),
     roles = require('../../models/roles');
 var utils = require('../utils.server.controller');
-var passport = require('passport');
+var passport = require('../auth.server.controller');
 
 //Get Client Creates
 exports.createView = function (req, res) {
@@ -145,60 +145,6 @@ exports.activateClient = function (req, res) {
         }
     })
 
-}
-
-
-//Post Creation of a Client
-exports.createClient = function (req, res) {
-    // create a Client
-    /*var admin = new client({
-     name: 'epadilla@biinapp.com',
-     password: 'abc1236',
-     displayName:'Esteban Padilla',
-     accountIdentifier:'1002',
-     emails:['epadilla@biinapp.com']
-     });
-     */
-
-    var admin = new client({
-        name: 'cdominguez@biinapp.com',
-        password: 'abc1236',
-        displayName: 'Carlos Dominguez',
-        accountIdentifier: '1004',
-        emails: ['cdominguez@biinapp.com']
-    });
-    // save a client to the database
-    admin.save(function (err) {
-        console.log(err);
-        console.log('saved');
-    });
-
-    var admin1 = new client({
-        name: 'carce@biinapp.com',
-        password: 'abc1236',
-        displayName: 'Cesar Arce',
-        accountIdentifier: '1005',
-        emails: ['cdominguez@biinapp.com']
-    });
-    // save a client to the database
-    admin1.save(function (err) {
-        console.log(err);
-        console.log('saved');
-    });
-
-    var admin2 = new client({
-        name: 'lbonilla@biinapp.com',
-        password: 'abc1236',
-        displayName: 'Luis Bonilla',
-        accountIdentifier: '1006',
-        emails: ['lbonilla@biinapp.com']
-    });
-    // save a client to the database
-    admin2.save(function (err) {
-        console.log(err);
-        console.log('saved');
-    });
-    res.render('client/create', req.client);
 }
 
 //Logout the client
