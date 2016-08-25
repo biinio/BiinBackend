@@ -452,7 +452,7 @@ exports.getloyaltyCardDashboard = function (req, res) {
             } else {
                 res.json(
                     {
-                        activeCard: {},
+                        activeCard: null,
                         usersCard: []
                     }
                 )
