@@ -112,6 +112,15 @@ exports.getUserCards = function (biinieIdentifier) {
 
                                     var convertedBiinieCards = JSON.parse(JSON.stringify(biinieCards));
 
+
+                                    biinieCards = _.filter(biinieCards,function (biinieCard) {
+                                        return biinieCard.card != null;
+                                    });
+
+                                    convertedBiinieCards = _.filter(convertedBiinieCards,function (biinieCard) {
+                                        return biinieCard.card != null;
+                                    });
+
                                     var filteredCardsAvailable = _.filter(availableCards, function (card) {
                                         let result = _.find(convertedBiinieCards, function (biinieCard) {
                                             return biinieCard.card.identifier == card.identifier;

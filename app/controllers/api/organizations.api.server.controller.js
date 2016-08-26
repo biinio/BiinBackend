@@ -125,7 +125,7 @@ exports.setOrganization = function (req, res) {
 exports.createOrganization = function (req, res) {
     //Perform an update
     var accountIdentifier = req.param("accountIdentifier");
-    let userIdentifier = req.header.user;
+    let userIdentifier = accountIdentifier;
     res.setHeader('Content-Type', 'application/json');
     var newModel = new organization();
     newModel.accountIdentifier = accountIdentifier;

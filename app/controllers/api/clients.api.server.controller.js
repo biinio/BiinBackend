@@ -6,6 +6,7 @@ var utils = require('../utils.server.controller');
 var passport = require('../auth.server.controller');
 var rolesEnum = require('../enums/roles.enum');
 var passwordGenerator = require('password-generator');
+var emailSender = require('../emailsender.server.controller');
 var _ = require('underscore');
 
 
@@ -41,7 +42,7 @@ exports.setClient = function (req, res) {
                         throw err;
                     else {
                         //Sent the e-mail verification
-                        sendVerificationMail(req, newModel, function (err) {
+                        emailSender.sendVerificationMail(req, newModel, function (err) {
                             if (err)
                                 res.send(500);
                             else
@@ -65,48 +66,6 @@ exports.setClient = function (req, res) {
         }
     });
 };
-
-//Send an e-mail verification
-function sendVerificationMail(req, model, callback) {
-
-    var transporter = require('nodemailer').createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_ACCOUNT,
-            pass: process.env.EMAIL_PASSWORD
-        }
-    });
-
-    var url = req.protocol + '://' + req.get('host') + "/client/" + model.accountIdentifier + "/activate";
-    var subject = "Welcome to Biin";
-    var htmlBody = "<h3>" + subject + "</h3>" +
-        "<b>Hi</b>: <pre style='font-size: 14px'>" + model.displayName + "</pre>" +
-        "<b>Thanks for join Biin</b>" +
-        "<b>Your user is </b>: <pre style='font-size: 14px'>" + model.name + "</pre>" +
-        "<b>In order to complete your registration please visit the following link</b><a href='" + url + "'> BIIN USER ACTIVATION </a>";
-
-    // setup e-mail data with unicode symbols
-    var mailOptions = {
-        // sender address
-        from: "[ BIIN NO REPLY] <" + process.env.EMAIL_ACCOUNT + ">",
-
-        // list of receivers
-        to: model.emails[0],
-
-        // Subject line
-        subject: subject,
-
-        // plaintext body
-        text: "",
-
-        // html body
-        html: htmlBody
-    };
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function (error, info) {
-        callback();
-    });
-}
 
 //GET verify a e-mail availability
 exports.verifyEmailAvailability = function (req, res) {
@@ -242,12 +201,13 @@ exports.inviteNewClient = function(req,res){
                             res.json(updatedClient);
                     });
                 } else {
+                    let password = passwordGenerator();
                     var newModel = new client({
                         displayName : displayName,
                         lastName : lastName,
                         accountIdentifier: accountIdentifier,
                         name: email,
-                        password: passwordGenerator(),
+                        password: password,
                         accountState: false,
                         defaultOrganization: organizationId,
                         emails: [email],
@@ -260,7 +220,7 @@ exports.inviteNewClient = function(req,res){
                             res.status(500).json(err);
                         else {
                             //Sent the e-mail verification
-                            sendVerificationMail(req, newModel, function (err) {
+                            emailSender.sendInvitationMail(req, newModel,password, function (err) {
                                 if (err)
                                     res.status(500).json(err);
                                 else
