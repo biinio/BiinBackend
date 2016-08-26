@@ -9,15 +9,14 @@ var clientSchema = new Schema({
     displayName: {type: String, default: ""},
     lastName: {type: String, default: ""},
     phoneNumber: {type: String, default: ""},
-    addres: {type: String, default: ""},
     accountIdentifier: {type: String, default: ""},
     emails: [],
-    joinDate: {type: Date, default: ""},
+    joinDate: {type: Date, default: Date.now},
     profilePhoto: {type: String, default: ""},
-    defaultOrganization: {type: String, default: ""},
     accountState: {type: Boolean, default: false},
     selectedOrganization: {type: String, default: ""},
-    role: {type: String, default: "client"}
+    role: {type: String, default: "client"},
+    organizations: {type: [mongoose.Schema.Types.ObjectId], ref: 'organizations'}
 });
 
 //Generation of Salt Password

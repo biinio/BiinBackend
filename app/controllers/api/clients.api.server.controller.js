@@ -4,11 +4,10 @@ var client = require('../../models/client'),
     roles = require('../../models/roles');
 var utils = require('../utils.server.controller');
 var passport = require('../auth.server.controller');
+var rolesEnum = require('../enums/roles.enum');
+var passwordGenerator = require('password-generator');
+var _ = require('underscore');
 
-//Get Client Creates
-exports.createView = function (req, res) {
-    res.render('client/create', req.client);
-}
 
 exports.setClient = function (req, res) {
     var model = req.body.model;
@@ -20,24 +19,27 @@ exports.setClient = function (req, res) {
         } else {
 
             var organizationIdentifier = utils.getGUID();
-
             var accountIdentifier = utils.getGUID();
+
             var newModel = new client({
                 accountIdentifier: accountIdentifier,
                 name: model.name,
                 password: model.password,
                 accountState: false,
                 defaultOrganization: organizationIdentifier,
-                emails: [model.name]
+                emails: [model.name],
+                selectedOrganization: organizationIdentifier,
+                role: rolesEnum.ADMINISTRATOR
             });
 
-            //Save The Model
-            newModel.save(function (err) {
-                if (err)
-                    throw err;
-                else {
-                    //Create the default Organization and then send the e-mail verification
-                    createDefaultOrganization(accountIdentifier, organizationIdentifier, company, function (organization) {
+            //Create the default Organization and then send the e-mail verification
+            createDefaultOrganization(accountIdentifier, organizationIdentifier, company, function (organization) {
+                //Save The Model
+                newModel.organizations = [organization._id];
+                newModel.save(function (err) {
+                    if (err)
+                        throw err;
+                    else {
                         //Sent the e-mail verification
                         sendVerificationMail(req, newModel, function (err) {
                             if (err)
@@ -46,20 +48,23 @@ exports.setClient = function (req, res) {
                             //login with the client
                                 req.logIn(newModel, function (err) {
                                     if (err)
-                                        res.json({status: 1})
+                                        res.json({status: 1});
                                     else {
-                                        req.session.defaultOrganization = organization;
                                         //Return the state and the object
                                         res.json({status: 0, redirect: "/home"});
                                     }
                                 })
                         });
-                    })
-                }
+                    }
+                });
+
+
             });
+
+
         }
     });
-}
+};
 
 //Send an e-mail verification
 function sendVerificationMail(req, model, callback) {
@@ -116,7 +121,7 @@ exports.verifyEmailAvailability = function (req, res) {
         res.json({result: false});
     }
 
-}
+};
 
 //Set the activation of an user
 exports.activateClient = function (req, res) {
@@ -145,21 +150,21 @@ exports.activateClient = function (req, res) {
         }
     })
 
-}
+};
 
 //Logout the client
 exports.logoutClient = function (req, res) {
     req.session.destroy();
     req.logout();
     res.redirect('/');
-}
+};
 
 //Other exports
 function createDefaultOrganization(accountIdentifier, organizationIdentifier, companyName, callback) {
     var newModel = new organization();
 
     //Set the account and de user identifier
-    newModel.identifier = organizationIdentifier
+    newModel.identifier = organizationIdentifier;
     newModel.accountIdentifier = accountIdentifier;
     newModel.name = companyName;
 
@@ -173,7 +178,6 @@ function createDefaultOrganization(accountIdentifier, organizationIdentifier, co
         }
     });
 }
-
 
 exports.loginCMS = function (req,res,next) {
     passport.authenticate('clientLocal', function (err, user) {
@@ -214,5 +218,128 @@ exports.loginCMS = function (req,res,next) {
     (req, res, next);
 };
 
+exports.inviteNewClient = function(req,res){
 
+    let email = req.body.email;
+    let displayName = req.body.displayName;
+    let lastName = req.body.lastName;
+    let accountIdentifier = utils.getGUID();
+    let organizationId = req.body.organizationId;
+    let organization_id = "";
+
+    organization.findOne({identifier:organizationId},{_id:1},function (err,org) {
+        if(err){
+            res.status(500).json(err);
+        } else if(org){
+            organization_id = org._id;
+            client.findOne({name: email}, function (err, foundClient) {
+                if (foundClient) {
+                    foundClient.organizations.push(organization_id);
+                    foundClient.save(function (err, updatedClient) {
+                        if(err)
+                            res.status(500).json(err);
+                        else
+                            res.json(updatedClient);
+                    });
+                } else {
+                    var newModel = new client({
+                        displayName : displayName,
+                        lastName : lastName,
+                        accountIdentifier: accountIdentifier,
+                        name: email,
+                        password: passwordGenerator(),
+                        accountState: false,
+                        defaultOrganization: organizationId,
+                        emails: [email],
+                        selectedOrganization: organizationId,
+                        role: rolesEnum.MANAGER
+                    });
+                    newModel.organizations = [organization_id];
+                    newModel.save(function (err) {
+                        if (err)
+                            res.status(500).json(err);
+                        else {
+                            //Sent the e-mail verification
+                            sendVerificationMail(req, newModel, function (err) {
+                                if (err)
+                                    res.status(500).json(err);
+                                else
+                                    res.json(newModel);
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            res.status(500).json('No organization Found');
+        }
+    });
+};
+
+exports.getClientsByOrganization = function(req,res){
+    let organizationId = req.params.idorganization;
+    organization.findOne({identifier:organizationId},{_id:1},function (err,org) {
+        if(err){
+            res.status(500).json(err);
+        } else if(org){
+            organization_id = org._id;
+            client.find({organizations:organization_id}, function (err, foundClients) {
+                if(err){
+                    res.status(500).json(err);
+                } else {
+                    res.json(foundClients);
+                }
+            });
+        } else {
+            res.status(500).json('No organization Found');
+        }
+    });
+};
+
+
+exports.upgradeOrganizationManagement = function(req,res){
+    var clientsToUpdate = [];
+
+    function updateClient(clientId){
+        return new Promise(function (resolve, reject) {
+           organization.find({accountIdentifier:clientId},{_id:1},function (err,organizationsFound) {
+               if(err) {
+                   reject(err);
+               } else {
+                   let orgsIDs = _.map(organizationsFound, "_id");
+                    client.findOne({accountIdentifier:clientId},{},function (err,clientFound) {
+                        if(err){
+                            reject(err);
+                        } else {
+                            clientFound.organizations = orgsIDs;
+                            clientFound.save(function (err) {
+                                if(err)
+                                    reject(err);
+                                else
+                                    resolve();
+                            })
+                        }
+                    })
+               }
+           })
+        });
+    }
+
+    client.find({},{},function (err, clients) {
+        if(err){
+            throw err;
+        } else {
+            clientsToUpdate = clients;
+            let promiseArray = [];
+            clientsToUpdate.forEach(function (clientToPromise) {
+                promiseArray.push(updateClient(clientToPromise.accountIdentifier));
+            });
+            Promise.all(promiseArray).then(function () {
+                res.json("All good");
+            },function (err) {
+                res.status(500).json(err);
+            })
+        }
+    })
+}
 

@@ -15,4 +15,11 @@ module.exports = function (app) {
 
     app.post('/api/loginCMS', api.loginCMS);
 
+
+    app.route('/api/clients/invite').post(api.inviteNewClient);
+    app.route('/api/clients/organization/:idorganization').get(api.getClientsByOrganization);
+
+
+    app.route('/api/clients/upgrade/organization').get(api.upgradeOrganizationManagement);
+
 };

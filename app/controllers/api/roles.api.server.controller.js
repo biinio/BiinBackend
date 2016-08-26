@@ -5,8 +5,8 @@ var client = require('../../models/client'),
 // Add permission to role
 exports.addPermissionToRole = function (req, res) {
     //Perform an update
-    var roleId = req.param("role");
-    var permissionId = req.param("permission");
+    var roleId = req.params.role;
+    var permissionId = req.params.permission;
     res.setHeader('Content-Type', 'application/json');
     var newModel = new roles();
     newModel.role = roleId;
@@ -60,7 +60,7 @@ exports.setUserRole = function (req, res) {
 
 exports.getRoles = function( req, res) {
     roles.find({},{},function (err, rolesFound) {
-        res.json(rolesFound);
+        res.json(['administrator','manager']);
     })
 };
 

@@ -8,14 +8,14 @@ module.exports = function (app) {
     // Organization Routes
     var web = require('../../controllers/web.server.controller');
     var passport = require('../../controllers/auth.server.controller');
-
+    var api = require('../../controllers/api.server.controller');
     app.route('/accounts').get(web.accounts);
 
     app.route('/login').get(web.login);
 
     app.get('/sendEmail', web.sendEmail);
 
-    app.post('/api/singup', web.setClient);
+    app.post('/api/singup', api.setClient);
     app.get('/client/:identifier/activate', web.activateClient);
     app.post('/client/:identifier/activate', web.activateClient);
 

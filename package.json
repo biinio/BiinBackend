@@ -54,6 +54,7 @@
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "passport-oauth2-client-password": "^0.1.2",
+    "password-generator": "^2.0.2",
     "request": "^2.72.0",
     "rollbar": "^0.6.2",
     "serve-favicon": "^2.3.0",
