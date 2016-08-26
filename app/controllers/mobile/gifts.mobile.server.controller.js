@@ -112,17 +112,24 @@ exports.shareGift = function (req, res) {
                             res.json({status: "3", result: "0", data: {}});
                         } else if(biinnie){
 
-                            var data = {};
-                            data.type = "giftassigned";
-                            data.gift = validations.validateGiftInfo(biinieGift);
-                            var dataContainer = {};
-                            dataContainer.data = data;
+                            exports.getBiiniesGifts(biinieGift.biinieIdentifier).then( function(userGifts) {
+                                var giftToSendNotification = _.findWhere(userGifts, {identifier: biinieGift.identifier});
+                                var data = {};
+                                data.type = "giftassigned";
+                                data.gift = validations.validateGiftInfo(giftToSendNotification);
+                                var dataContainer = {};
+                                dataContainer.data = data;
 
-                            notificationsManager.sendToUser(biinieGift.biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.",null,null,dataContainer).then( function () {
-                                res.json({status: "0", result: "1", data: {}});
+                                notificationsManager.sendToUser(biinieGift.biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.",null,null,dataContainer).then( function () {
+                                    res.json({status: "0", result: "1", data: {}});
+                                }, function () {
+                                    res.json({status: "5", result: "0", data: {}});
+                                })
                             }, function () {
-                                res.json({status: "5", result: "0", data: {}});
-                            })
+                                res.json({status: "6", result: "0", data: {}});
+                            });
+
+
 
                         } else {
                             res.json({status: "4", result: "0", data: {}});
