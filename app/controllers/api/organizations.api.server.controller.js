@@ -19,52 +19,62 @@ var _workingImagePath = './public/workingFiles/';
 exports.listOrganizations = function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     var accountIdentifier = req.headers.user;
-    organization.find({
-        "accountIdentifier": accountIdentifier,
-        "isDeleted": false
-    }, {
-        _id: 0,
-        identifier: 1,
-        name: 1,
-        brand: 1,
-        description: 1,
-        extraInfo: 1,
-        media: 1,
-        loyaltyEnabled: 1,
-        sites: 1,
-        isPublished: 1,
-        hasNPS: 1,
-        isUsingBrandColors: 1,
-        primaryColor: 1,
-        secondaryColor: 1
-
-    }).lean().exec(function (err, data) {
-        if (err) {
+    client.findOne({accountIdentifier: accountIdentifier}, {organizations:1},function(err, clientInfo){
+        if(err){
             throw err
-        }
-        else {
-            for (var i = 0; i < data.length; i++) {
+        } else if(clientInfo) {
 
-                if (!data[i].isUsingBrandColors) {
-                    data[i].isUsingBrandColors = "0";
+            organization.find({
+                "_id": {$in:clientInfo.organizations},
+                "isDeleted": false
+            }, {
+                _id: 0,
+                identifier: 1,
+                name: 1,
+                brand: 1,
+                description: 1,
+                extraInfo: 1,
+                media: 1,
+                loyaltyEnabled: 1,
+                sites: 1,
+                isPublished: 1,
+                hasNPS: 1,
+                isUsingBrandColors: 1,
+                primaryColor: 1,
+                secondaryColor: 1
+
+            }).lean().exec(function (err, data) {
+                if (err) {
+                    throw err
                 }
+                else {
+                    for (var i = 0; i < data.length; i++) {
 
-                if (!data[i].primaryColor) {
-                    data[i].primaryColor = "rgb(170,171,171)";
-                } else {
-                    data[i].primaryColor = "rgb(" + data[i].primaryColor + ")";
+                        if (!data[i].isUsingBrandColors) {
+                            data[i].isUsingBrandColors = "0";
+                        }
+
+                        if (!data[i].primaryColor) {
+                            data[i].primaryColor = "rgb(170,171,171)";
+                        } else {
+                            data[i].primaryColor = "rgb(" + data[i].primaryColor + ")";
+                        }
+
+                        if (!data[i].secondaryColor) {
+                            data[i].secondaryColor = "rgb(85,86,86)";
+                        } else {
+                            data[i].secondaryColor = "rgb(" + data[i].secondaryColor + ")";
+                        }
+
+                    }
+                    res.json({data: data});
                 }
-
-                if (!data[i].secondaryColor) {
-                    data[i].secondaryColor = "rgb(85,86,86)";
-                } else {
-                    data[i].secondaryColor = "rgb(" + data[i].secondaryColor + ")";
-                }
-
-            }
-            res.json({data: data});
+            });
+        } else {
+            res.status(404).json("No client found");
         }
     });
+
 };
 
 //PUT/POST an organization
@@ -115,6 +125,7 @@ exports.setOrganization = function (req, res) {
 exports.createOrganization = function (req, res) {
     //Perform an update
     var accountIdentifier = req.param("accountIdentifier");
+    let userIdentifier = req.header.user;
     res.setHeader('Content-Type', 'application/json');
     var newModel = new organization();
     newModel.accountIdentifier = accountIdentifier;
@@ -122,14 +133,30 @@ exports.createOrganization = function (req, res) {
     newModel.primaryColor = "170,171,171";
     newModel.secondaryColor = "85,86,86";
     //Perform an create
-    newModel.save(function (err) {
+    newModel.save(function (err, newOrganization) {
         if (err)
             res.send(err, 500);
         else {
             newModel.primaryColor = "rgb(170,171,171)";
             newModel.secondaryColor = "rgb(85,86,86)";
-            //Return the state and the object
-            res.send(newModel, 201);
+            client.findOne({accountIdentifier:userIdentifier},{},function(err,clientInfo){
+                if(err) {
+                    res.send(err, 500);
+                } else if(clientInfo){
+                    clientInfo.organizations.push(newOrganization._id);
+                    clientInfo.save(function (err) {
+                        if(err){
+                            res.send(err, 500);
+                        } else {
+                            //Return the state and the object
+                            res.send(newModel, 201);
+                        }
+                    })
+                } else {
+                    res.send("No user found", 500);
+                }
+            });
+
         }
     });
 };

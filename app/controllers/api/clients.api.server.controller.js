@@ -297,6 +297,7 @@ exports.getClientsByOrganization = function(req,res){
 };
 
 
+//THIS FUNCTION SHOULD BE CALLED ONCE ONLY
 exports.upgradeOrganizationManagement = function(req,res){
     var clientsToUpdate = [];
 
@@ -341,5 +342,5 @@ exports.upgradeOrganizationManagement = function(req,res){
             })
         }
     })
-}
+};
 
