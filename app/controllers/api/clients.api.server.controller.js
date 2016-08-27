@@ -89,7 +89,7 @@ exports.listClient = function(req,res){
 
 exports.updateClient =function(req,res){
     var model =req.body.model;
-    if(!req.user || !model.name)
+    if(!model.name)
     {
         res.send("Error",500);
     }
