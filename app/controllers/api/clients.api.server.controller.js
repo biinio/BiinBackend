@@ -111,11 +111,6 @@ exports.updateClient =function(req,res){
                 res.send(err, 500);
             else
             {
-                req.user.name = updateModel.name;
-                req.user.displayName=updateModel.displayName;
-                req.user.lastName=updateModel.lastName;
-                req.user.emails=updateModel.emails;
-                req.user.phoneNumber=updateModel.phoneNumber;
                 if(identifier == updateModel.name)
                     res.status(200).send({needToRelog:false});
                 else {
