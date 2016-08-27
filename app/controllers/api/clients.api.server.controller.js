@@ -74,11 +74,12 @@ exports.setClient = function (req, res) {
  * Get user information
  */
 exports.listClient = function(req,res){
+    let username = req.get('user');
     res.setHeader('Content-Type', 'application/json');
     var data= {};
 
     //Get the Profile Information
-    client.findOne({name:req.user.name},{profilePhoto:1,displayName:1,lastName:1,name:1,emails:1,phoneNumber:1, defaultOrganization:1, accountIdentifier:1, selectedOrganization:1, role:1},function(err,data){
+    client.findOne({name:username},{profilePhoto:1,displayName:1,lastName:1,name:1,emails:1,phoneNumber:1, defaultOrganization:1, accountIdentifier:1, selectedOrganization:1, role:1},function(err,data){
         if(err)
             res.send(err, 500);
         else
@@ -93,7 +94,7 @@ exports.updateClient =function(req,res){
         res.send("Error",500);
     }
     else{
-        var identifier= req.user.name;
+        var identifier= model.name;
 
         var updateModel =
         {
