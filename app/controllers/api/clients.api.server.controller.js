@@ -67,6 +67,65 @@ exports.setClient = function (req, res) {
     });
 };
 
+
+
+
+/**
+ * Get user information
+ */
+exports.listClient = function(req,res){
+    res.setHeader('Content-Type', 'application/json');
+    var data= {};
+
+    //Get the Profile Information
+    client.findOne({name:req.user.name},{profilePhoto:1,displayName:1,lastName:1,name:1,emails:1,phoneNumber:1, defaultOrganization:1, accountIdentifier:1, selectedOrganization:1, role:1},function(err,data){
+        if(err)
+            res.send(err, 500);
+        else
+            res.json({data:data});
+    });
+};
+
+exports.updateClient =function(req,res){
+    var model =req.body.model;
+    if(!req.user || !model.name)
+    {
+        res.send("Error",500);
+    }
+    else{
+        var identifier= req.user.name;
+
+        var updateModel =
+        {
+            name:model.name,
+            displayName:model.displayName? model.displayName:"",
+            lastName:model.lastName?model.lastName:"",
+            emails:model.emails?model.emails:[],
+            phoneNumber:model.phoneNumber ?model.phoneNumber:""
+        };
+
+        //Update the client data
+        client.update({name: identifier },updateModel,function(err){
+            if(err)
+                res.send(err, 500);
+            else
+            {
+                req.user.name = updateModel.name;
+                req.user.displayName=updateModel.displayName;
+                req.user.lastName=updateModel.lastName;
+                req.user.emails=updateModel.emails;
+                req.user.phoneNumber=updateModel.phoneNumber;
+                if(identifier == updateModel.name)
+                    res.status(200).send({needToRelog:false});
+                else {
+                    res.status(200).send({needToRelog:true});
+                }
+            }
+        });
+    }
+};
+
+
 //GET verify a e-mail availability
 exports.verifyEmailAvailability = function (req, res) {
     var value = req.body.value;
