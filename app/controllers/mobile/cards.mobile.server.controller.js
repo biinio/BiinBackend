@@ -12,7 +12,7 @@ var giftsPerBiinie = require('../../models/giftsPerBiinie');
 var utils = require('../utils.server.controller');
 var notificationsManager = require('../notifications.server.controller');
 var validations = require('../validations.server.controller');
-var mobileController = require('../mobile.server.controller');
+var giftMobileController = require('../mobile/gifts.mobile.server.controller');
 var _ = require('underscore');
 
 
@@ -276,7 +276,7 @@ exports.cardSetComplete = function (req, res) {
                                                         reject({data: {}, status: "6", result: "0"});
                                                     else {
 
-                                                        mobileController.getBiiniesGifts(biinieIdentifier).then( function(userGifts) {
+                                                        giftMobileController.getBiiniesGifts(biinieIdentifier).then( function(userGifts) {
                                                             var giftToSendNotification = _.findWhere(userGifts, {identifier: newBiinieGift.identifier});
                                                             var data = {};
                                                             data.type = "giftassigned";
@@ -284,7 +284,7 @@ exports.cardSetComplete = function (req, res) {
                                                             var dataContainer = {};
                                                             dataContainer.data = data;
 
-                                                            notificationsManager.sendToUser(biinieGift.biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.",null,null,dataContainer).then( function () {
+                                                            notificationsManager.sendToUser(biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.",null,null,dataContainer).then( function () {
                                                                 res.json({status: "0", result: "1", data: {}});
                                                             }, function () {
                                                                 res.json({status: "7", result: "0", data: {}});
