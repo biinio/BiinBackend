@@ -90,7 +90,7 @@ exports.cardSetStar = function (req, res) {
 
 exports.getUserCards = function (biinieIdentifier) {
     return new Promise(function (resolve, reject) {
-        cardsPerBiinie.find({userIdentifier: biinieIdentifier, isCompleted: false}, {})
+        cardsPerBiinie.find({userIdentifier: biinieIdentifier }, {})
             .populate("card")
             .exec(function (err, biinieCards) {
                 if (err) {
@@ -110,24 +110,32 @@ exports.getUserCards = function (biinieIdentifier) {
                                     reject();
                                 } else {
 
-                                    var convertedBiinieCards = JSON.parse(JSON.stringify(biinieCards));
+                                    biinieCards = JSON.parse(JSON.stringify(biinieCards));
 
 
-                                    biinieCards = _.filter(biinieCards,function (biinieCard) {
-                                        return biinieCard.card != null;
+                                    let cardsOnWaiting  = _.filter(biinieCards,function(biiniesCard){
+                                        return biiniesCard.isCompleted && biiniesCard.availableAgain && new Date(biiniesCard.availableAgain) >= Date.now();
                                     });
 
-                                    convertedBiinieCards = _.filter(convertedBiinieCards,function (biinieCard) {
-                                        return biinieCard.card != null;
-                                    });
-
-                                    var filteredCardsAvailable = _.filter(availableCards, function (card) {
-                                        let result = _.find(convertedBiinieCards, function (biinieCard) {
-                                            return biinieCard.card.identifier == card.identifier;
+                                    //Removing cards that needs to wait to enroll again
+                                    availableCards = _.filter(availableCards,function (availableCard) {
+                                        let result = _.find(cardsOnWaiting, function (biinieCard) {
+                                            return biinieCard.card.identifier == availableCard.identifier;
                                         });
                                         return result == null;
                                     });
 
+                                    biinieCards = _.filter(biinieCards,function(biiniesCard){
+                                        return (!biiniesCard.isCompleted || biiniesCard.availableAgain == null) && biiniesCard.card != null;
+                                    });
+
+
+                                    var filteredCardsAvailable = _.filter(availableCards, function (card) {
+                                        let result = _.find(biinieCards, function (biinieCard) {
+                                            return biinieCard.card.identifier == card.identifier;
+                                        });
+                                        return result == null;
+                                    });
 
                                     for (var i = 0; i < biinieCards.length; i++) {
                                         biinieCards[i] = mobileseBiiniesCards(biinieCards[i]);
