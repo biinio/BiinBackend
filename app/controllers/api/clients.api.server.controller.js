@@ -297,7 +297,7 @@ exports.getClientsByOrganization = function(req,res){
         if(err){
             res.status(500).json(err);
         } else if(org){
-            organization_id = org._id;
+            let organization_id = org._id;
             client.find({organizations:organization_id}, function (err, foundClients) {
                 if(err){
                     res.status(500).json(err);
@@ -311,6 +311,41 @@ exports.getClientsByOrganization = function(req,res){
     });
 };
 
+exports.removeClientFromOrganization = function (req, res) {
+    let organizationId = req.params.idorganization;
+    let userId = req.params.idorganization;
+    organization.findOne({identifier:organizationId},{_id:1},function (err,org) {
+        if(err){
+            res.status(500).json(err);
+        } else if(org){
+            let organization_id = org._id;
+            client.findOne({accountIdentifier:userId}, function (err, foundClient) {
+                if(err){
+                    res.status(500).json(err);
+                } else if(foundClient){
+                    let index = foundClient.organizations.indexOf(organization_id);
+                    if(index > -1){
+                        foundClient.organizations.splice(index,1);
+                        foundClient.save(function (err) {
+                            if(err){
+                                res.status(500).json(err);
+                            } else {
+                                res.json({message:"done"});
+                            }
+                        })
+                    } else {
+                        res.json({message:"done"});
+                    }
+
+                } else {
+                    res.status(500).json("Client not found");
+                }
+            });
+        } else {
+            res.status(500).json('No organization Found');
+        }
+    });
+}
 
 //THIS FUNCTION SHOULD BE CALLED ONCE ONLY
 exports.upgradeOrganizationManagement = function(req,res){

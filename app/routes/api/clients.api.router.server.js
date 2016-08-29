@@ -28,6 +28,7 @@ module.exports = function (app) {
 
     app.route('/api/clients/invite').post(api.inviteNewClient);
     app.route('/api/clients/organization/:idorganization').get(api.getClientsByOrganization);
+    app.route('/api/clients/:identifier/organization/:idorganization').delete(api.removeClientFromOrganization);
 
 
     app.route('/api/clients/upgrade/organization').get(api.upgradeOrganizationManagement);
