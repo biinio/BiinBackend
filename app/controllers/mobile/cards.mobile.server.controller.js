@@ -8,9 +8,11 @@ var cardsPerBiinie = require('../../models/cardsPerBiinie');
 var gifts = require('../../models/gifts');
 var codeQRPerSite = require('../../models/qrCodePerSite');
 var giftsPerBiinie = require('../../models/giftsPerBiinie');
+
 var utils = require('../utils.server.controller');
 var notificationsManager = require('../notifications.server.controller');
 var validations = require('../validations.server.controller');
+var mobileController = require('../mobile.server.controller');
 var _ = require('underscore');
 
 
@@ -273,17 +275,22 @@ exports.cardSetComplete = function (req, res) {
                                                     if (err)
                                                         reject({data: {}, status: "6", result: "0"});
                                                     else {
-                                                        var data = {};
-                                                        data.type = "giftassigned";
-                                                        data.gift = validations.validateGiftInfo(newBiinieGift);
-                                                        data.gift = JSON.parse(JSON.stringify(data.gift));
-                                                        var dataContainer = {};
-                                                        dataContainer.data = data;
 
-                                                        notificationsManager.sendToUser(biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.", null, null, dataContainer).then(function () {
-                                                            resolve();
-                                                        }, function (err) {
-                                                            reject({data: {}, status: "7", result: "0"});
+                                                        mobileController.getBiiniesGifts(biinieIdentifier).then( function(userGifts) {
+                                                            var giftToSendNotification = _.findWhere(userGifts, {identifier: newBiinieGift.identifier});
+                                                            var data = {};
+                                                            data.type = "giftassigned";
+                                                            data.gift = validations.validateGiftInfo(giftToSendNotification);
+                                                            var dataContainer = {};
+                                                            dataContainer.data = data;
+
+                                                            notificationsManager.sendToUser(biinieGift.biinieIdentifier, "Has obtenido un nuevo regalo", "Tienes un nuevo regalo en tu baul.",null,null,dataContainer).then( function () {
+                                                                res.json({status: "0", result: "1", data: {}});
+                                                            }, function () {
+                                                                res.json({status: "7", result: "0", data: {}});
+                                                            })
+                                                        }, function () {
+                                                            res.json({status: "8", result: "0", data: {}});
                                                         });
                                                     }
                                                 });
