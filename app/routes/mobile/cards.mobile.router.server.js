@@ -9,7 +9,7 @@ module.exports = function (app) {
     var mobile = require('../../controllers/mobile.server.controller');
 
     app.get('/mobile/biinies/:identifier/cards/enroll/:cardidentifier',mobile.cardEnroll);
-    app.get('/mobile/biinies/:identifier/cards/setStar/:cardidentifier/biin/:qrcodeidentifier/:siteIdentifier',mobile.cardSetStar);
+    app.get('/mobile/biinies/:identifier/cards/setStar/:cardidentifier/biin/:siteIdentifier/:qrcodeidentifier',mobile.cardSetStar);
     app.get('/mobile/biinies/:identifier/cards/setCompleted/:cardidentifier',mobile.cardSetComplete);
 
 };
