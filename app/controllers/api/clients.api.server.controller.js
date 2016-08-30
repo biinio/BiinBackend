@@ -246,7 +246,7 @@ exports.inviteNewClient = function(req,res){
             res.status(500).json(err);
         } else if(org){
             organization_id = org._id;
-            client.findOne({name: email}, function (err, foundClient) {
+            client.findOne({name: email},{}, function (err, foundClient) {
                 if (foundClient) {
                     foundClient.organizations.push(organization_id);
                     foundClient.save(function (err, updatedClient) {
