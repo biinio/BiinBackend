@@ -30,7 +30,7 @@ exports.listOrganizations = function (req, res) {
                 "isDeleted": false
             };
             if(clientInfo.role == roleEnum.DEVELOPER || clientInfo.role == roleEnum.SYS_ADMINISTRATOR){
-                searchQuery.delete("_id");
+                delete searchQuery._id;
             }
             organization.find( searchQuery, {
                 _id: 0,
