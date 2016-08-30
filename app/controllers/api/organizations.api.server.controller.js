@@ -15,19 +15,24 @@ var organization = require('../../models/organization'),
     client = require('../../models/client');
 var _workingImagePath = './public/workingFiles/';
 
+var roleEnum = require('../enums/roles.enum');
+
 //GET the list of organizations
 exports.listOrganizations = function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     var accountIdentifier = req.headers.user;
-    client.findOne({accountIdentifier: accountIdentifier}, {organizations:1},function(err, clientInfo){
+    client.findOne({accountIdentifier: accountIdentifier}, {role:1,organizations:1},function(err, clientInfo){
         if(err){
             throw err
         } else if(clientInfo) {
-
-            organization.find({
+            let searchQuery = {
                 "_id": {$in:clientInfo.organizations},
                 "isDeleted": false
-            }, {
+            };
+            if(clientInfo.role == roleEnum.DEVELOPER || clientInfo.role == roleEnum.SYS_ADMINISTRATOR){
+                searchQuery.delete("_id");
+            }
+            organization.find( searchQuery, {
                 _id: 0,
                 identifier: 1,
                 name: 1,
