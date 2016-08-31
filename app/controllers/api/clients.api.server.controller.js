@@ -168,7 +168,7 @@ exports.activateClient = function (req, res) {
 
 //Logout the client
 exports.logoutClient = function (req, res) {
-    req.session.destroy();
+    //req.session.destroy();
     req.logout();
     res.redirect('/');
 };

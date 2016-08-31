@@ -75,8 +75,8 @@ exports.setDefaultOrganization = function (req, res) {
                     "identifier": orgIdentifier
                 }, {name: true, identifier: true}, function (err, data) {
                     //set the first time for the data
-                    req.session.defaultOrganization = data;
-                    req.user.defaultOrganization = data;
+                    //req.session.defaultOrganization = data;
+                    //req.user.defaultOrganization = data;
                     res.send({status: 200});
                 });
             }

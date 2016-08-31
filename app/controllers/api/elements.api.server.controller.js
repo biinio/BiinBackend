@@ -36,7 +36,7 @@ exports.listElements = function (req, res) {
 
         data.elements = elementList;
 
-        req.session.selectedOrganization = data;
+        //req.session.selectedOrganization = data;
         res.header("Content-Type", "application/json; charset=utf-8");
         res.json({data: data});
     });

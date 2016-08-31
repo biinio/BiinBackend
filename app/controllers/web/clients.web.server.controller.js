@@ -42,7 +42,7 @@ exports.setClient = function (req, res) {
                                     if (err)
                                         res.json({status: 1})
                                     else {
-                                        req.session.defaultOrganization = organization;
+                                        //req.session.defaultOrganization = organization;
                                         //Return the state and the object
                                         res.json({status: 0, redirect: "/home"});
                                     }
