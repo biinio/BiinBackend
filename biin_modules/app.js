@@ -90,18 +90,18 @@ module.exports = function (db) {
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
     //app.use(cookieParser());
-    app.use(session({
-        secret: 'ludusy secret',
-        store: new mongoStore({
-            mongooseConnection: db.connection
-        }),
-    }));
+    //app.use(session({
+    //    secret: 'ludusy secret',
+    //    store: new mongoStore({
+    //        mongooseConnection: db.connection
+    //    }),
+    //}));
 
     //Logger
     var passport = require('../app/controllers/auth.server.controller');
 
     app.use(passport.initialize());
-    app.use(passport.session());
+    //app.use(passport.session());
     app.use(expressValidator());//Express Validator
     app.use(bodyParser.json());
 

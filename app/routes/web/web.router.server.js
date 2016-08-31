@@ -29,13 +29,7 @@ module.exports = function (app) {
             if (!user) {
                 return res.json({status: "success", url: "/accounts"});
             }
-            req.logIn(user, function (err) {
-                if (err) {
-                    return next(err);
-                }
-                // Redirect if it succeeds
-                return res.json({status: "success", url: "/accounts"});
-            });
+            return res.json({status: "success", url: "/accounts"});
         })(req, res, next);
     });
 

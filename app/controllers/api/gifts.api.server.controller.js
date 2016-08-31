@@ -352,7 +352,6 @@ exports.getUpdatedAmount = function (req, res) {
     });
 };
 
-
 exports.getGiftsDashboard = function (req, res) {
     let orgID = req.params.identifier;
     giftsPerBiinie.find({"gift.organizationIdentifier":orgID, isDeleted: false},{}).lean().exec( function(err, orgGifts) {
@@ -377,7 +376,6 @@ exports.getGiftsDashboard = function (req, res) {
         }
     });
 };
-
 
 exports.claimGiftDashboard = function (req, res) {
     var biiniesGift = req.params.giftidentifier;
