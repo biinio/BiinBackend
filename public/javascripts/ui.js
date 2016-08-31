@@ -74,58 +74,6 @@ jQuery(function ($) {
 
 });
 
-//Organizations Loader
-jQuery(function ($) {
-    //Get the organizations list
-    $.get( "/api/organizations", function(data) {
-      var dropDown = $('.dropdown-menu','#organizationMenu');      
-      var defaultOrganization = selectedOrganization();
-      for(var i =0; i<data.data.length; i++){
-        dropDown.append('<li><a organization-name="'+data.data[i].name+'" organization-identifier="'+data.data[i].identifier+'"><div class="circleOrganization">'+data.data[i].name+'</div><span>'+data.data[i].name+'</span></a></li>');
-      }
-      
-      //isDefault
-      $('.circleOrganization','a[organization-identifier="'+defaultOrganization+'"]').addClass('isDefault');
-
-      //Subscribe de click listener
-      $('a',dropDown).on('touch click',function(e){
-            e.preventDefault();
-            var orgName = $(this).attr('organization-name');
-            var orgIdentifier = $(this).attr('organization-identifier');
-            $('.circleOrganization.isDefault').removeClass('isDefault');
-            $('.circleOrganization','a[organization-identifier="'+orgIdentifier+'"]').addClass('isDefault');            
-            setOrganizationMenu(orgIdentifier,orgName,function(){
-              //$('a','organizationNav li.active').click();
-              if($('a','#organizationNav li.active')[0])
-                $('a','#organizationNav li.active')[0].click();
-              else{
-                var graphs = document.getElementsByClassName('listenOrgChange');
-                for (var i = 0; i < graphs.length; i++) {
-                  var scope = angular.element(graphs[i]).scope();
-                  scope.$apply(function(){
-                    scope.organizationId = selectedOrganization();
-                    scope.$broadcast("organizationsChanged",{data:selectedOrganization()});
-                  });
-                  
-                };
-              }
-            })
-            
-      });
-    })
-      .done(function() {
-        //Second Done
-      })
-      .fail(function() {
-        //Fail Function
-      })
-      .always(function() {
-        //Finished Function
-      });
-
-     
-});
-
 jQuery(function($){  
 
     $('.hideButton','.left-section-content').click(function(){
@@ -241,14 +189,4 @@ turnLoaderOff= function(){
     $('.left-section-content').show();
     $('.right-section-content').show();
 }
-//Angular Custom Directives
-/*
-angular.module('biin.alertManager', []).directive('alertManager', function() {
-  return {
-    restrict: 'E',
-    link: function($scope, $elem, $attr) {
-        //Todo finish  the directive
-    }
-  };
-  */
 

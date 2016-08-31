@@ -18,4 +18,7 @@ module.exports = function (app) {
     app.route('/roles').get( api.getRoles);
     app.route('/roles').put( api.saveRoles);
 
+    app.route('/roles/:role/:idpermission/deletepermission').delete(api.deletePermissionToRole);
+
+
 };

@@ -1,14 +1,55 @@
 extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/accountController.js")
+	script(src="/javascripts/angular/roles.public.controller.js")
 block content	
-	#sectionContent(data-ng-app="biinAppAccount" data-ng-controller="accountController" data-ngCloack)
+	//#sectionContent(data-ng-app="biinAppAccount" data-ng-controller="accountController" data-ngCloack)
 		a(href="/binnies")
 
 	h2 Version Management
 
 	h2 Analytics
-	section
-		h2 Role Management
-		div(data-ng-app="biinAppAccount" data-ng-controller="accountController" data-ngCloack)
+
+	h2.col-sm-12 Role Management
+		div(data-ng-app="roles" data-ng-controller="rolesController" data-ngCloack)
+			h3 System Administrator
+			.row
+				.col-sm-3(data-ng-repeat="permission in sys_adminPermission")
+					.col-sm-10
+						h4 {{permission.permission}}
+					.col-sm-2
+						button(data-ng-click="deletePermission(permission,'sys_admin')") X
+			.row
+				input(ng-model="sys_adminNewPermissionText" novalidate)
+				button(ng-click="addPermission('sys_admin')") Add new permission
+			h3 Developer
+			.row
+				.col-md-3(data-ng-repeat="permission in developerPermission")
+					.col-sm-10
+						h4 {{permission.permission}}
+					.col-sm-2
+						button(data-ng-click="deletePermission(permission,'developer')") X
+			.row
+				input(ng-model="developerNewPermissionText" novalidate)
+				button(ng-click="addPermission('developer')") Add new permission
+			h3 Client Administrator
+			.row
+				.col-md-3(data-ng-repeat="permission in administratorPermission")
+					.col-sm-10
+						h4 {{permission.permission}}
+					.col-sm-2
+						button(data-ng-click="deletePermission(permission,'administrator')") X
+			.row
+				input(ng-model="administratorNewPermissionText" novalidate)
+				button(ng-click="addPermission('administrator')") Add new permission
+			h3 Client Manager
+			.row
+				.col-md-3(data-ng-repeat="permission in managersPermission")
+					.col-sm-10
+						h4 {{permission.permission}}
+					.col-sm-2
+						button(data-ng-click="deletePermission(permission,'manager')") X
+			.row
+				input(ng-model="managerNewPermissionText" novalidate)
+				button(ng-click="addPermission('manager')") Add new permission
 

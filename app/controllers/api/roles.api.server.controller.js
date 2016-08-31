@@ -67,3 +67,16 @@ exports.getRoles = function( req, res) {
 exports.saveRoles = function (req, res) {
     res.json();
 };
+
+
+exports.deletePermissionToRole = function (req, res) {
+    let role = req.params.role;
+    let id = req.params.idpermission;
+    roles.remove({role:role, _id : id},function (err) {
+        if(err){
+            res.status(err)
+        } else {
+            res.json("All fine");
+        }
+    });
+};

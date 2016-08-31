@@ -54,6 +54,4 @@ module.exports = function (app) {
     app.get('/mobile/biinies/:identifier/organizations/:organizationIdentifier', mobile.getOrganizationInformation);
     app.put('/mobile/biinies/:identifier/organizations/:organizationIdentifier/loyalty/points', mobile.setMobileLoyaltyPoints);
     app.put('/mobile/biinies/:biinieIdentifier/sites/:siteIdentifier/showcase/:showcaseIdentifier/notified', mobile.setShowcaseNotified);
-
-
 };
