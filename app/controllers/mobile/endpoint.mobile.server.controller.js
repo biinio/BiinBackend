@@ -7,14 +7,14 @@ var cards = require('../mobile/cards.mobile.server.controller');
 var validations = require('../validations.server.controller');
 
 //Schemas
-var organization = require('../../models/organization');
-var showcase = require('../../models/showcase');
-var mobileUser = require('../../models/mobileUser');
-var mobileSession = require('../../models/mobileSession');
-var client = require('../../models/client');
-var biin = require('../../models/biin');
-var category = require('../../models/category');
-var notice = require('../../models/notices');
+var organization            = require('../../models/organization');
+var showcase                = require('../../models/showcase');
+var mobileUser              = require('../../models/mobileUser');
+var mobileSession           = require('../../models/mobileSession');
+var client                  = require('../../models/client');
+var biin                    = require('../../models/biin');
+var categoryModel           = require('../../models/category');
+var notice                  = require('../../models/notices');
 
 
 // Config of priorities of categories
@@ -780,7 +780,7 @@ exports.getNextElementsInCategory = function (req, res) {
                                                         return element.elementIdentifier == elementsThatAreHightlights[i].identifier;
                                                     });
                                                     if (element) {
-                                                        category = _.find(element.categories, function (category) {
+                                                        let category = _.find(element.categories, function (category) {
                                                             return category.identifier == categoryId;
                                                         });
                                                         if (category) {
@@ -1948,7 +1948,7 @@ exports.getInitalDataFullCategories = function (req, res) {
 
     var getCategoriesIdentifier = function(){
         return new Promise(function (resolve, reject) {
-            category.find({},{identifier:1}).lean().exec(function(err, categoriesFound){
+            categoryModel.find({},{identifier:1}).lean().exec(function(err, categoriesFound){
                 if(err)
                     reject();
                 else {

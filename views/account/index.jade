@@ -2,15 +2,16 @@ extends ../layout_dashboard
 block head_scripts
 	script(src="/javascripts/angular/accountController.js")
 	script(src="/javascripts/angular/roles.public.controller.js")
-block content	
-	//#sectionContent(data-ng-app="biinAppAccount" data-ng-controller="accountController" data-ngCloack)
-		a(href="/binnies")
-	uib-accordion
-		h2.col-md-12(uib-accordion-group='') Version Management
+	script(src="/javascripts/angular/versions.public.controller.js")
+block content
+	.col-md-12
+		h2 Version Management
+		div(data-ng-app="versions" data-ng-controller="versionsController" data-ngCloack)
 
-		h2.col-md-12(uib-accordion-group='') Analytics
-
-		h2.col-sm-12(uib-accordion-group='') Role Management
+	.col-md-12
+		h2 Analytics
+	.col-md-12
+		h2 Role Management
 		div(data-ng-app="roles" data-ng-controller="rolesController" data-ngCloack)
 			h3 System Administrator
 			.row
