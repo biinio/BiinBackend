@@ -313,7 +313,7 @@ exports.getClientsByOrganization = function(req,res){
 
 exports.removeClientFromOrganization = function (req, res) {
     let organizationId = req.params.idorganization;
-    let userId = req.params.idorganization;
+    let userId = req.params.identifier;
     organization.findOne({identifier:organizationId},{_id:1},function (err,org) {
         if(err){
             res.status(500).json(err);
