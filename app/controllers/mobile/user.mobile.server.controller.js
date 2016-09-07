@@ -1029,66 +1029,155 @@ exports.updateMobile = function (req, res) {
     var identifier = req.params.identifier;
 
     var createNewUser = function (model) {
-        bcrypt.hash(model.password, 11, function (err, hash) {
-            var joinDate = utils.getDateNow();
-            var identifier = utils.getGUID();
 
-            //Build the default Biined Collection
-            var collectionIdentifier = utils.getGUID();
-            var defBiinedCollection = [{
-                identifier: collectionIdentifier,
-                subTitle: "This is a list of all your biined elements and sites.",
-                title: "Biined elements and sites",
-                elements: [],
-                sites: []
-            }];
-
-            model.birthDate = model.birthDate ? model.birthDate : joinDate;
-
-
-            model.facebookId = model.facebook_id || "";
-            model.facebookFriends = model.facebookFriends || [];
-            model.facebookAvatarUrl = model.facebookAvatarUrl || "";
-
-            var newModel = new mobileUser({
-                identifier: identifier,
-                firstName: model.firstName,
-                lastName: model.lastName,
-                biinName: model.email,
-                email: model.email,
-                password: hash,
-                birthDate: model.birthDate,
-                tempPassword: model.password,
-                gender: model.gender,
-                joinDate: joinDate,
-                accountState: model.facebookId != "",
-                biinieCollections: defBiinedCollection,
-                facebookId: model.facebookId,
-                facebookFriends: model.facebookFriends,
-                facebookAvatarUrl: model.facebookAvatarUrl
-            });
-
-            //Save The Model
-            newModel.save(function (err) {
-                if (err)
+        if(model.facebook_id && model.facebook_id != "none" && model.facebook_id !=""){
+            mobileUser.findOne({biinName:model.email},{},function (err,user) {
+                if(err){
                     res.json({data: {identifier: ""}, status: "5", result: "0"});
-                else {
+                } else if(user){
+                    user.facebookId = model.facebook_id;
+                    user.facebookFriends = model.facebookFriends || [];
+                    user.facebookAvatarUrl = model.facebookAvatarUrl || "";
+                    user.save(function (err, savedBiinie) {
+                        if(err)
+                            res.json({data: {identifier: ""}, status: "5", result: "0"});
+                        else{
+                            var modelToReturn = savedBiinie.toObject();
+                            modelToReturn.facebook_id = modelToReturn.facebookId;
+                            modelToReturn.birthDate = modelToReturn.birthDate.replace("T", " ").replace("Z", "");
+                            modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                            delete modelToReturn.facebookId;
+                            delete modelToReturn.accountState;
+                            res.json({data: modelToReturn, status: "0", result: "1"});
+                        }
+                    })
 
-                    //Send the verification of the e-mail
-                    sendVerificationMail(req, newModel, function () {
-                        //callback of mail verification
-                        var modelToReturn = newModel.toObject();
-                        modelToReturn.facebook_id = modelToReturn.facebookId;
-                        modelToReturn.birthDate = modelToReturn.birthDate.replace("T", " ").replace("Z", "");
-                        modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
-                        delete modelToReturn.facebookId;
-                        delete modelToReturn.accountState;
-                        res.json({data: modelToReturn, status: "0", result: "1"});
+                } else {
+                    bcrypt.hash(model.password, 11, function (err, hash) {
+                        var joinDate = utils.getDateNow();
+                        var identifier = utils.getGUID();
+
+                        //Build the default Biined Collection
+                        var collectionIdentifier = utils.getGUID();
+                        var defBiinedCollection = [{
+                            identifier: collectionIdentifier,
+                            subTitle: "This is a list of all your biined elements and sites.",
+                            title: "Biined elements and sites",
+                            elements: [],
+                            sites: []
+                        }];
+
+                        model.birthDate = model.birthDate ? model.birthDate : joinDate;
+
+
+                        model.facebookId = model.facebook_id || "";
+                        model.facebookFriends = model.facebookFriends || [];
+                        model.facebookAvatarUrl = model.facebookAvatarUrl || "";
+
+                        var newModel = new mobileUser({
+                            identifier: identifier,
+                            firstName: model.firstName,
+                            lastName: model.lastName,
+                            biinName: model.email,
+                            email: model.email,
+                            password: hash,
+                            birthDate: model.birthDate,
+                            tempPassword: model.password,
+                            gender: model.gender,
+                            joinDate: joinDate,
+                            accountState: model.facebookId != "",
+                            biinieCollections: defBiinedCollection,
+                            facebookId: model.facebookId,
+                            facebookFriends: model.facebookFriends,
+                            facebookAvatarUrl: model.facebookAvatarUrl
+                        });
+
+                        //Save The Model
+                        newModel.save(function (err) {
+                            if (err)
+                                res.json({data: {identifier: ""}, status: "5", result: "0"});
+                            else {
+
+                                //Send the verification of the e-mail
+                                sendVerificationMail(req, newModel, function () {
+                                    //callback of mail verification
+                                    var modelToReturn = newModel.toObject();
+                                    modelToReturn.facebook_id = modelToReturn.facebookId;
+                                    modelToReturn.birthDate = modelToReturn.birthDate.replace("T", " ").replace("Z", "");
+                                    modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                                    delete modelToReturn.facebookId;
+                                    delete modelToReturn.accountState;
+                                    res.json({data: modelToReturn, status: "0", result: "1"});
+                                });
+                            }
+
+                        });
                     });
                 }
+            })
+        } else {
+            bcrypt.hash(model.password, 11, function (err, hash) {
+                var joinDate = utils.getDateNow();
+                var identifier = utils.getGUID();
 
+                //Build the default Biined Collection
+                var collectionIdentifier = utils.getGUID();
+                var defBiinedCollection = [{
+                    identifier: collectionIdentifier,
+                    subTitle: "This is a list of all your biined elements and sites.",
+                    title: "Biined elements and sites",
+                    elements: [],
+                    sites: []
+                }];
+
+                model.birthDate = model.birthDate ? model.birthDate : joinDate;
+
+
+                model.facebookId = model.facebook_id || "";
+                model.facebookFriends = model.facebookFriends || [];
+                model.facebookAvatarUrl = model.facebookAvatarUrl || "";
+
+                var newModel = new mobileUser({
+                    identifier: identifier,
+                    firstName: model.firstName,
+                    lastName: model.lastName,
+                    biinName: model.email,
+                    email: model.email,
+                    password: hash,
+                    birthDate: model.birthDate,
+                    tempPassword: model.password,
+                    gender: model.gender,
+                    joinDate: joinDate,
+                    accountState: model.facebookId != "",
+                    biinieCollections: defBiinedCollection,
+                    facebookId: model.facebookId,
+                    facebookFriends: model.facebookFriends,
+                    facebookAvatarUrl: model.facebookAvatarUrl
+                });
+
+                //Save The Model
+                newModel.save(function (err) {
+                    if (err)
+                        res.json({data: {identifier: ""}, status: "5", result: "0"});
+                    else {
+
+                        //Send the verification of the e-mail
+                        sendVerificationMail(req, newModel, function () {
+                            //callback of mail verification
+                            var modelToReturn = newModel.toObject();
+                            modelToReturn.facebook_id = modelToReturn.facebookId;
+                            modelToReturn.birthDate = modelToReturn.birthDate.replace("T", " ").replace("Z", "");
+                            modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                            delete modelToReturn.facebookId;
+                            delete modelToReturn.accountState;
+                            res.json({data: modelToReturn, status: "0", result: "1"});
+                        });
+                    }
+
+                });
             });
-        });
+        }
+
     };
     var updateModel = function (model) {
         var birthDate = utils.getDate(model.birthDate);
