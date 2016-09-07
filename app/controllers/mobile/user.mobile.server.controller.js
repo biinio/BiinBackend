@@ -1106,6 +1106,8 @@ exports.updateMobile = function (req, res) {
                     oldProfile.facebookId = "none";
                     oldProfile.facebookFriends = [];
                     oldProfile.facebookAvatarUrl = "";
+                    oldProfile.biinName = "";
+                    oldProfile.email = "";
                     oldProfile.save(function (err) {
                         if (err) {
                             res.json({data: {}, status: "5", result: "0"});
