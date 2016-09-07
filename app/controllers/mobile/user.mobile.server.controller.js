@@ -1298,16 +1298,7 @@ exports.updateMobile = function (req, res) {
 
     if (model) {
         if(identifier=="none"){
-            //Crear Usuario
-            mobileUser.findOne({'biinName': model.email}, function (err, foundEmail) {
-                if (err)
-                    res.json({data: {}, status: "5", result: "0"});
-                else if (typeof(foundEmail) === "undefined" || foundEmail === null) {
-                    createNewUser(model);
-                } else {
-                    res.json({data: {}, status: "5", result: "0"});
-                }
-            });
+            createNewUser(model);
         } else {
             updateModel(model);
         }
