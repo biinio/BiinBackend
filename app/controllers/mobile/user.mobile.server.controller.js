@@ -1267,3 +1267,47 @@ exports.uploadImage = function (req, res) {
     }
 }
 
+//Get the authentication of the user **To change **Deprecated
+exports.login = function (req, res) {
+    var user = req.params.user;
+    var password = req.params.password;
+
+    mobileUser.findOne({'biinName': user}, function (err, foundBinnie) {
+        if (err)
+            res.json({data: {identifier: ""}, status: "5", result: "0"});
+        else {
+            var result = typeof(foundBinnie) !== 'undefined' && foundBinnie !== null;
+            var identifier = "";
+            if (result) {
+                foundBinnie.comparePassword(password, function (err, isMath) {
+                    identifier = foundBinnie.identifier;
+                    var isMathToString = isMath ? "1" : "0";
+                    var code = isMath ? "0" : "8";
+                    res.json({data: {identifier: identifier}, status: code, result: isMathToString});
+                });
+            } else {
+                res.json({data: {identifier: identifier}, status: "7", result: "0"});
+            }
+        }
+    });
+};
+
+//Get the authentication of the user **To change **Deprecated
+exports.loginFacebook = function (req, res) {
+    var user = req.params.user;
+
+    mobileUser.findOne({'biinName': user}, function (err, foundBinnie) {
+        if (err)
+            res.json({data: {identifier: ""}, status: "5", result: "0"});
+        else {
+            var result = typeof(foundBinnie) !== 'undefined' && foundBinnie !== null;
+            var identifier = "";
+            if (result) {
+                identifier = foundBinnie.identifier;
+                res.json({data: {identifier: identifier}, status: "0", result: "1"});
+            } else {
+                res.json({data: {identifier: identifier}, status: "7", result: "0"});
+            }
+        }
+    });
+};
