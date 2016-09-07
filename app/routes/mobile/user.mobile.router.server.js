@@ -11,14 +11,14 @@ module.exports = function (app) {
     app.get('/mobile/biinies/:firstName/:lastName/:biinName/:password/:gender/:birthdate', mobile.setMobileByURLParams);
     app.get('/mobile/biinies/:identifier/isactivate', mobile.isActivate);
     app.post('/mobile/biinies/:identifier/categories', mobile.setCategories);
-    app.get('/mobile/biinies/auth/:user/:password', mobile.login);
+    //app.get('/mobile/biinies/auth/:user/:password', mobile.login);
     app.get('/mobile/biinies/:identifier', mobile.getProfile);
     app.put('/mobile/biinies', mobile.setMobile);
     app.post('/mobile/biinies/:identifier', mobile.updateMobile);
     app.post('/mobile/biinies', mobile.updateMobile);
 
     //Facebook Login
-    app.get('/mobile/biinies/auth/thirdparty/facebook/:user', mobile.loginFacebook);
+    //app.get('/mobile/biinies/auth/thirdparty/facebook/:user', mobile.loginFacebook);
     app.get('/mobile/biinies/facebook/:firstName/:lastName/:biinName/:password/:gender/:birthdate/:facebookId', mobile.setMobileByURLParamsFacebook);
 
     //Mobile Biinies Share
