@@ -86,7 +86,7 @@ exports.getProfile = function (req, res) {
                 delete result.facebookId;
                 delete result.accountState;
                 result.gifts = [];
-                if(result.facebook_id != ""){
+                if(result.facebook_id && result.facebook_id != "none" && result.facebook_id != ""){
                 var accesstoken = "";
                 https.get('https://graph.facebook.com/oauth/access_token?client_id=832430170216826&client_secret=6f78a1b2060e8c8cfd9b05aff98ba668&grant_type=client_credentials',function(res1){
                     res1.on("data", function(body) {
