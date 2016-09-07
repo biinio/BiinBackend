@@ -1098,34 +1098,111 @@ exports.updateMobile = function (req, res) {
         model.facebookFriends = model.facebookFriends || [];
         model.facebookAvatarUrl = model.facebookAvatarUrl || "";
 
-        mobileUser.update({'identifier': identifier}, {
-            biinName: model.email,
-            firstName: model.firstName,
-            lastName: model.lastName,
-            email: model.email,
-            gender: model.gender,
-            birthDate: birthDate,
-            accountState: accountState,
-            facebookId: facebookId,
-            facebookFriends: model.facebookFriends,
-            facebookAvatarUrl: model.facebookAvatarUrl
+        if(facebookId != "none" || ""){
+            mobileUser.findOne({facebookId:facebookId},{},function (err, oldProfile) {
+                if(err)
+                    res.json({data: {}, status: "5", result: "0"});
+                else if(oldProfile){
+                    oldProfile.facebookId = "none";
+                    oldProfile.facebookFriends = [];
+                    oldProfile.facebookAvatarUrl = "";
+                    oldProfile.save(function (err) {
+                        if (err) {
+                            res.json({data: {}, status: "5", result: "0"});
+                        } else {
+                            mobileUser.update({'identifier': identifier}, {
+                                biinName: model.email,
+                                firstName: model.firstName,
+                                lastName: model.lastName,
+                                email: model.email,
+                                gender: model.gender,
+                                birthDate: birthDate,
+                                accountState: accountState,
+                                facebookId: facebookId,
+                                facebookFriends: model.facebookFriends,
+                                facebookAvatarUrl: model.facebookAvatarUrl
 
-        }, function (err, raw) {
-            if (err)
-                res.json({data: {}, status: "5", result: "0"});
-            else {
-                model.identifier = identifier;
-                model.biinName = model.email;
+                            }, function (err, raw) {
+                                if (err)
+                                    res.json({data: {}, status: "5", result: "0"});
+                                else {
+                                    model.identifier = identifier;
+                                    model.biinName = model.email;
 
-                var modelToReturn = model;
-                modelToReturn.birthDate = birthDate.replace("T", " ").replace("Z", "");
-                modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
-                modelToReturn.facebook_id = facebookId;
-                delete modelToReturn.facebookId;
-                delete modelToReturn.accountState;
-                res.json({data: modelToReturn, status: "0", result: "1"});
-            }
-        })
+                                    var modelToReturn = model;
+                                    modelToReturn.birthDate = birthDate.replace("T", " ").replace("Z", "");
+                                    modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                                    modelToReturn.facebook_id = facebookId;
+                                    delete modelToReturn.facebookId;
+                                    delete modelToReturn.accountState;
+                                    res.json({data: modelToReturn, status: "0", result: "1"});
+                                }
+                            })
+                        }
+                    })
+                } else {
+                    mobileUser.update({'identifier': identifier}, {
+                        biinName: model.email,
+                        firstName: model.firstName,
+                        lastName: model.lastName,
+                        email: model.email,
+                        gender: model.gender,
+                        birthDate: birthDate,
+                        accountState: accountState,
+                        facebookId: facebookId,
+                        facebookFriends: model.facebookFriends,
+                        facebookAvatarUrl: model.facebookAvatarUrl
+
+                    }, function (err, raw) {
+                        if (err)
+                            res.json({data: {}, status: "5", result: "0"});
+                        else {
+                            model.identifier = identifier;
+                            model.biinName = model.email;
+
+                            var modelToReturn = model;
+                            modelToReturn.birthDate = birthDate.replace("T", " ").replace("Z", "");
+                            modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                            modelToReturn.facebook_id = facebookId;
+                            delete modelToReturn.facebookId;
+                            delete modelToReturn.accountState;
+                            res.json({data: modelToReturn, status: "0", result: "1"});
+                        }
+                    })
+                }
+            })
+        } else{
+            mobileUser.update({'identifier': identifier}, {
+                biinName: model.email,
+                firstName: model.firstName,
+                lastName: model.lastName,
+                email: model.email,
+                gender: model.gender,
+                birthDate: birthDate,
+                accountState: accountState,
+                facebookId: facebookId,
+                facebookFriends: model.facebookFriends,
+                facebookAvatarUrl: model.facebookAvatarUrl
+
+            }, function (err, raw) {
+                if (err)
+                    res.json({data: {}, status: "5", result: "0"});
+                else {
+                    model.identifier = identifier;
+                    model.biinName = model.email;
+
+                    var modelToReturn = model;
+                    modelToReturn.birthDate = birthDate.replace("T", " ").replace("Z", "");
+                    modelToReturn.isEmailVerified = modelToReturn.accountState ? "1" : "0";
+                    modelToReturn.facebook_id = facebookId;
+                    delete modelToReturn.facebookId;
+                    delete modelToReturn.accountState;
+                    res.json({data: modelToReturn, status: "0", result: "1"});
+                }
+            })
+        }
+
+
     };
 
     if (model) {
