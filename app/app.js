@@ -1,7 +1,6 @@
-module.exports = function (db) {
+module.exports = function () {
     var express = require('express'),
         session = require('express-session'),
-        mongoStore = require('connect-mongo')(session),
         fs = require('fs'),
         http = require('http'),
         https = require('https'),
@@ -9,7 +8,6 @@ module.exports = function (db) {
         app = express(),
         favicon = require('serve-favicon'),
         logger = require('morgan'),
-        //cookieParser = require('cookie-parser'),
         bodyParser = require('body-parser'),
         crypto = require('crypto'),
         lessMiddleware = require('less-middleware'),
@@ -22,7 +20,7 @@ module.exports = function (db) {
     var isDevelopment = process.env.NODE_ENV === 'development';
     var isQA = process.env.NODE_ENV === 'qa';
     var isDemo = process.env.NODE_ENV === 'demo';
-    //var isProduction = process.env.NODE_ENV === 'production';
+
     if (process.env.DONT_TRACK != 'YES') {
         var rollbar = require("rollbar");
         rollbar.init("bccc96a9f2794cdd835f2cf9f498a381");
@@ -80,7 +78,7 @@ module.exports = function (db) {
 
 
     // View engine setup
-    app.set('views', path.join(process.env.PWD, 'views'));//Replace --dirname
+    app.set('views', path.join(process.env.PWD, 'app/views'));//Replace --dirname
     app.set('view engine', 'jade');
 
     app.use(express.static(path.join(process.env.PWD, 'public')));
@@ -89,27 +87,17 @@ module.exports = function (db) {
     app.use(logger('dev'));
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-    //app.use(cookieParser());
-    //app.use(session({
-    //    secret: 'ludusy secret',
-    //    store: new mongoStore({
-    //        mongooseConnection: db.connection
-    //    }),
-    //}));
 
     //Logger
-    var passport = require('../app/controllers/auth.server.controller');
+    var passport = require('./controllers/auth.server.controller.js');
 
     app.use(passport.initialize());
-    //app.use(passport.session());
     app.use(expressValidator());//Express Validator
     app.use(bodyParser.json());
 
     //Routes
-    console.log("routing.....");
     // Globbing routing files
     config.getGlobbedFiles('./app/routes/**/*.js').forEach(function (routePath) {
-        console.log(routePath);
         require(path.resolve(routePath))(app);
     });
 

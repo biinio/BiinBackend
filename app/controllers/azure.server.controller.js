@@ -1,6 +1,6 @@
 var azure = require('azure-storage');
-var util = require('util'), path = require('path');
-var functions = {};
+var util = require('util'),
+    path = require('path');
 var stream = require('stream');
 //
 //Create a buquet credentials

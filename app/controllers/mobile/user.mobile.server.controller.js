@@ -1,21 +1,29 @@
-var _ = require('underscore');
-var fs = require('fs');
+/**
+ * Globals variables
+ */
 
-//Schemas
-var mobileUser = require('../../models/mobileUser'),
-    util = require('util'),
-    bcrypt = require('bcrypt'),
-    imageManager = require('../image.server.controller'),
-    category = require('../../models/category'),
-    moment = require('moment'),
-    utils = require("../utils.server.controller");
-var organization = require('../../models/organization');
-var dateFormat = "YYYY-MM-DDTHH:mm:ss";
+//Plugins
+var util            = require('util'),
+    bcrypt          = require('bcrypt'),
+    moment          = require('moment'),
+    _               = require('underscore'),
+    fs              = require('fs'),
+    https           = require('https');
 
-var gifts = require('../mobile/gifts.mobile.server.controller');
-var cards = require('../mobile/cards.mobile.server.controller');
+//Models
+var mobileUser      = require('../../models/mobileUser'),
+    category        = require('../../models/category'),
+    organization    = require('../../models/organization');
 
-var https = require('https');
+//Biin Controllers
+var imageManager    = require('../image.server.controller'),
+    utils           = require("../utils.server.controller"),
+    cards           = require('../mobile/cards.mobile.server.controller'),
+    gifts           = require('../mobile/gifts.mobile.server.controller');
+
+
+//Constants
+var dateFormat      = "YYYY-MM-DDTHH:mm:ss";
 
 // Default image for organizations
 var ORGANIZATION_DEFAULT_IMAGE = {
@@ -28,6 +36,9 @@ var ORGANIZATION_DEFAULT_IMAGE = {
     vibrantLightColor: '170, 171, 171'
 };
 
+/**
+ * Functions
+ */
 
 //GET the Main view of an Binnies
 exports.index = function (req, res) {
@@ -37,7 +48,6 @@ exports.index = function (req, res) {
 //Get the list of Binnies
 exports.get = function (req, res) {
     var prototype = new mobileUser();
-
     res.setHeader('Content-Type', 'application/json');
     mobileUser.find({}, function (err, binnies) {
         if (err)
@@ -218,8 +228,8 @@ exports.getOrganizationInformation = function (req, res) {
                     //var loyalty = loyaltyModel;
 
                     if (typeof(org.media) != 'undefined') {
+                        var newMedia = [];
                         if (typeof(org.media) == "object" && !Array.isArray(org.media)) {
-                            var newMedia = [];
                             newMedia[0] = {};
                             newMedia[0].domainColor = org.media.mainColor ? org.media.mainColor.replace("rgb(", "").replace(")") : "0,0,0";
                             newMedia[0].mediaType = "1";
@@ -228,10 +238,9 @@ exports.getOrganizationInformation = function (req, res) {
                             newMedia[0].vibrantColor = org.media.vibrantColor ? org.media.vibrantColor : "0,0,0";
                             newMedia[0].vibrantDarkColor = org.media.vibrantDarkColor ? org.media.vibrantDarkColor : "0,0,0";
                             newMedia[0].vibrantLightColor = org.media.vibrantLightColor ? org.media.vibrantLightColor : "0,0,0";
-                        }
-                        else if (Array.isArray(org.media)) {
 
-                            var newMedia = [];
+                        } else if (Array.isArray(org.media)) {
+
                             if (org.media.length == 0) {
                                 newMedia.push(ORGANIZATION_DEFAULT_IMAGE);
                             }
@@ -316,7 +325,7 @@ exports.set = function (req, res) {
                 categories: model.categories ? model.categories : [],
                 url: model.url ? model.url : ""
             },
-            function (err, raw) {
+            function (err) {
                 if (err)
                     res.send(err, 500);
                 else
@@ -331,7 +340,7 @@ exports.set = function (req, res) {
      } else {
 
      }	*/
-}
+};
 
 //POST the Categories of an Mobile User
 exports.setCategories = function (req, res) {
@@ -340,21 +349,21 @@ exports.setCategories = function (req, res) {
 
     var categoriesModel = req.body['model'];
 
-    var catArray = _.pluck(categoriesModel, 'identifier')
+    var catArray = _.pluck(categoriesModel, 'identifier');
     category.find({'identifier': {$in: catArray}}, function (err, data) {
         if (err)
             res.json({data: {}, status: "5", result: "0"});
         else {
             mobileUser.update({'identifier': identifier}, {categories: data}, function (err, raw) {
                 if (err)
-                    res.json({data: {}, status: "7", result: ""})
+                    res.json({data: {}, status: "7", result: ""});
                 else {
                     res.json({data: {}, status: "0", result: raw.n ? "1" : "0"});
                 }
             })
         }
     });
-}
+};
 
 //SET a new Mobile user Takin the params from the URL **To change **Deprecated
 exports.setMobileByURLParams = function (req, res) {
@@ -526,7 +535,7 @@ exports.setMobile = function (req, res) {
     else {
         res.send({data: {errors: errors}, status: "6", result: "0"});
     }
-}
+};
 
 //POST a new item to a collection
 exports.setMobileBiinedToCollection = function (req, res) {
@@ -539,13 +548,13 @@ exports.setMobileBiinedToCollection = function (req, res) {
     if (objType !== 'site') {
         if (identifier && model) {
             //Update the collection
-            var updateCollectionCount = function (elId) {
+            let updateCollectionCount = function (elId) {
                 organization.findOne({'elements.elementIdentifier': elId}, {'elements.$': 1}, function (err, el) {
                     if (err)
                         throw err;
                     else {
                         if (el && el.elements && el.elements.length > 0) {
-                            organization.update({'elements._id': el.elements[0]._id}, {$inc: {'elements.$.biinedCount': 1}}, function (err, raw) {
+                            organization.update({'elements._id': el.elements[0]._id}, {$inc: {'elements.$.biinedCount': 1}}, function (err) {
                                 if (err)
                                     throw err;
                             });
@@ -553,9 +562,9 @@ exports.setMobileBiinedToCollection = function (req, res) {
                     }
 
                 })
-            }
+            };
 
-            var obj = {identifier: model.identifier, "_id": model._id};
+            let obj = {identifier: model.identifier, "_id": model._id};
             updateCollectionCount(model.identifier);
             mobileUser.update({
                     'identifier': identifier,
@@ -575,7 +584,7 @@ exports.setMobileBiinedToCollection = function (req, res) {
     } else {
         if (identifier && model) {
 
-            var obj = {identifier: model.identifier};
+            let obj = {identifier: model.identifier};
             mobileUser.update({
                     'identifier': identifier,
                     "biinieCollections.identifier": collectionIdentifier
@@ -592,7 +601,7 @@ exports.setMobileBiinedToCollection = function (req, res) {
                 });
         }
     }
-}
+};
 
 //POST User Collect some object
 exports.setMobileCollect = function (req, res) {
@@ -605,13 +614,13 @@ exports.setMobileCollect = function (req, res) {
     if (objType !== 'site') {
         if (identifier && model) {
             //Update the collection
-            var updateCollectionCount = function (elId) {
+            let updateCollectionCount = function (elId) {
                 organization.findOne({'elements.elementIdentifier': elId}, {'elements.$': 1}, function (err, el) {
                     if (err)
                         throw err;
                     else {
                         if (el && el.elements && el.elements.length > 0) {
-                            organization.update({'elements._id': el.elements[0]._id}, {$inc: {'elements.$.collectCount': 1}}, function (err, raw) {
+                            organization.update({'elements._id': el.elements[0]._id}, {$inc: {'elements.$.collectCount': 1}}, function (err) {
                                 if (err)
                                     throw err;
                             });
@@ -619,9 +628,9 @@ exports.setMobileCollect = function (req, res) {
                     }
 
                 })
-            }
+            };
 
-            var obj = {identifier: model.identifier, "_id": model._id};
+            let obj = {identifier: model.identifier, "_id": model._id};
             updateCollectionCount(model.identifier);
             mobileUser.update({
                     'identifier': identifier,
@@ -648,7 +657,7 @@ exports.setMobileCollect = function (req, res) {
                         throw err;
                     else {
                         if (site && site.sites && site.sites.length > 0) {
-                            organization.update({'sites._id': site.sites[0]._id}, {$inc: {'sites.$.collectCount': 1}}, function (err, raw) {
+                            organization.update({'sites._id': site.sites[0]._id}, {$inc: {'sites.$.collectCount': 1}}, function (err) {
                                 if (err)
                                     throw err;
                             });
@@ -656,7 +665,7 @@ exports.setMobileCollect = function (req, res) {
                     }
 
                 })
-            }
+            };
 
             var obj = {identifier: model.identifier};
             updateCollectionCount(model.identifier);
@@ -676,7 +685,7 @@ exports.setMobileCollect = function (req, res) {
                 });
         }
     }
-}
+};
 
 //PUT Site Notified
 exports.setShowcaseNotified = function (req, res) {
@@ -712,7 +721,7 @@ exports.setShowcaseNotified = function (req, res) {
             }
         }
     });
-}
+};
 
 //PUT Share object
 exports.setShare = function (req, res) {
@@ -728,7 +737,7 @@ exports.setShare = function (req, res) {
         else
             res.json({status: "1", result: "0", data: {}});
     });
-}
+};
 
 //PUT Share object
 exports.setFollow = function (req, res) {
@@ -744,7 +753,7 @@ exports.setFollow = function (req, res) {
         else
             res.json({status: "1", result: "0", data: {}});
     });
-}
+};
 
 //PUT Share object
 exports.setLiked = function (req, res) {
@@ -761,7 +770,7 @@ exports.setLiked = function (req, res) {
             res.json({status: "1", result: "0", data: {}});
     });
 
-}
+};
 
 //PUT Share object
 exports.setUnfollow = function (req, res) {
@@ -777,7 +786,7 @@ exports.setUnfollow = function (req, res) {
         else
             res.json({status: "1", result: "0", data: {}});
     });
-}
+};
 
 //PUT Share object
 exports.setUnliked = function (req, res) {
@@ -794,7 +803,7 @@ exports.setUnliked = function (req, res) {
         else
             res.json({status: "1", result: "0", data: {}});
     });
-}
+};
 
 //Put Mobile Point
 exports.setMobileLoyaltyPoints = function (req, res) {
@@ -802,14 +811,13 @@ exports.setMobileLoyaltyPoints = function (req, res) {
     var organizationIdentifier = req.params.organizationIdentifier;
     var points = req.body.model.points;
 
-    var hasLoyalty = false;
     var loyaltyModel = {
         organizationIdentifier: organizationIdentifier,
         isSubscribed: '1',
         subscriptionDate: utils.getDateNow(),
         points: "" + points,
         level: '0'
-    }
+    };
 
     mobileUser.findOne({"identifier": identifier}, {'loyalty': 1}, function (err, foundModel) {
         if ('loyalty' in foundModel) {
@@ -817,7 +825,7 @@ exports.setMobileLoyaltyPoints = function (req, res) {
             var loyaltyModelSearch = _.findWhere(foundModel.loyalty, {organizationIdentifier: organizationIdentifier});
             if (typeof(loyaltyModelSearch) !== 'undefined') {
                 loyaltyModel = loyaltyModelSearch;
-                loyaltyModel.points = eval(loyaltyModel.points) + points
+                loyaltyModel.points = eval(loyaltyModel.points) + points;
                 hasLoyalty = true;
             }
         } else {
@@ -835,7 +843,7 @@ exports.setMobileLoyaltyPoints = function (req, res) {
             }
         })
     })
-}
+};
 
 //GET the share informatin of a biinie
 exports.getShare = function (req, res) {
@@ -850,7 +858,7 @@ exports.getShare = function (req, res) {
             res.json({status: "1", result: "0"});
         }
     })
-}
+};
 
 //DELETE a object to a Biined Collection
 exports.deleteMobileBiinedElementToCollection = function (req, res) {
@@ -866,7 +874,7 @@ exports.deleteMobileBiinedElementToCollection = function (req, res) {
                 throw err;
             else {
                 if (el && el.elements && el.elements.length > 0) {
-                    organization.update({'elements._id': el.elements[0]._id}, {$inc: {'elements.$.biinedCount': -1}}, function (err, raw) {
+                    organization.update({'elements._id': el.elements[0]._id}, {$inc: {'elements.$.biinedCount': -1}}, function (err) {
                         if (err)
                             throw err;
                     });
@@ -874,7 +882,7 @@ exports.deleteMobileBiinedElementToCollection = function (req, res) {
             }
 
         })
-    }
+    };
 
     updateCollectionCount(objIdentifier);
     mobileUser.findOne({
@@ -897,7 +905,7 @@ exports.deleteMobileBiinedElementToCollection = function (req, res) {
 
         }
     })
-}
+};
 
 //DELETE a object to a Biined Collection
 exports.deleteMobileBiinedSiteToCollection = function (req, res) {
@@ -925,7 +933,7 @@ exports.deleteMobileBiinedSiteToCollection = function (req, res) {
 
         }
     })
-}
+};
 
 //DELETE a object to a Collect Collection
 exports.deleteMobileCollectElementToCollection = function (req, res) {
@@ -941,7 +949,7 @@ exports.deleteMobileCollectElementToCollection = function (req, res) {
                 throw err;
             else {
                 if (el && el.elements && el.elements.length > 0) {
-                    organization.update({'elements._id': el.elements[0]._id}, {$inc: {'elements.$.collectCount': -1}}, function (err, raw) {
+                    organization.update({'elements._id': el.elements[0]._id}, {$inc: {'elements.$.collectCount': -1}}, function (err) {
                         if (err)
                             throw err;
                     });
@@ -949,7 +957,7 @@ exports.deleteMobileCollectElementToCollection = function (req, res) {
             }
 
         })
-    }
+    };
 
     updateCollectionCount(objIdentifier);
     mobileUser.findOne({
@@ -972,7 +980,7 @@ exports.deleteMobileCollectElementToCollection = function (req, res) {
 
         }
     })
-}
+};
 
 //DELETE a object to a collect Collection
 exports.deleteMobileCollectSiteToCollection = function (req, res) {
@@ -987,7 +995,7 @@ exports.deleteMobileCollectSiteToCollection = function (req, res) {
                 throw err;
             else {
                 if (sites && sites.sites && sites.sites.length > 0) {
-                    organization.update({'sites._id': sites.sites[0]._id}, {$inc: {'sites.$.collectCount': -1}}, function (err, raw) {
+                    organization.update({'sites._id': sites.sites[0]._id}, {$inc: {'sites.$.collectCount': -1}}, function (err) {
                         if (err)
                             throw err;
                     });
@@ -995,7 +1003,7 @@ exports.deleteMobileCollectSiteToCollection = function (req, res) {
             }
 
         })
-    }
+    };
 
     updateCollectionCount(objIdentifier);
 
@@ -1019,7 +1027,7 @@ exports.deleteMobileCollectSiteToCollection = function (req, res) {
 
         }
     })
-}
+};
 
 //Update by mobile Id
 exports.updateMobile = function (req, res) {
@@ -1213,7 +1221,7 @@ exports.updateMobile = function (req, res) {
                                 facebookFriends: model.facebookFriends,
                                 facebookAvatarUrl: model.facebookAvatarUrl
 
-                            }, function (err, raw) {
+                            }, function (err) {
                                 if (err)
                                     res.json({data: {}, status: "5", result: "0"});
                                 else {
@@ -1244,7 +1252,7 @@ exports.updateMobile = function (req, res) {
                         facebookFriends: model.facebookFriends,
                         facebookAvatarUrl: model.facebookAvatarUrl
 
-                    }, function (err, raw) {
+                    }, function (err) {
                         if (err)
                             res.json({data: {}, status: "5", result: "0"});
                         else {
@@ -1275,7 +1283,7 @@ exports.updateMobile = function (req, res) {
                 facebookFriends: model.facebookFriends,
                 facebookAvatarUrl: model.facebookAvatarUrl
 
-            }, function (err, raw) {
+            }, function (err) {
                 if (err)
                     res.json({data: {}, status: "5", result: "0"});
                 else {
@@ -1330,7 +1338,7 @@ exports.activate = function (req, res) {
             }
         }
     })
-}
+};
 
 //Get if an Biinie is active
 exports.isActivate = function (req, res) {
@@ -1338,13 +1346,13 @@ exports.isActivate = function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     mobileUser.findOne({'identifier': identifier, accountState: true}, function (err, foundBinnie) {
         if (err)
-            res.json({data: {}, status: "7", result: "0"})
+            res.json({data: {}, status: "7", result: "0"});
         else {
             var result = typeof(foundBinnie) !== 'undefined' && foundBinnie !== null;
             res.json({data: {}, status: "0", result: result});
         }
     });
-}
+};
 
 //Send an e-mail verification
 function sendVerificationMail(req, model, callback) {
@@ -1385,7 +1393,7 @@ function sendVerificationMail(req, model, callback) {
         html: htmlEmailTemplate
     };
     // send mail with defined transport object
-    transporter.sendMail(mailOptions, function (error, info) {
+    transporter.sendMail(mailOptions, function () {
         callback();
     });
 }
@@ -1397,11 +1405,11 @@ exports.delete = function (req, res) {
 
     mobileUser.remove({'identifier': identifier}, function (err) {
         if (err)
-            res.send(err, 500)
+            res.send(err, 500);
         else
             res.send(200);
     });
-}
+};
 
 //Post the Image of the Organization
 exports.uploadImage = function (req, res) {
@@ -1424,7 +1432,7 @@ exports.uploadImage = function (req, res) {
     } else {
         res.send(err, 500);
     }
-}
+};
 
 //Get the authentication of the user **To change **Deprecated
 exports.login = function (req, res) {

@@ -27,7 +27,7 @@ module.exports = function (app) {
             }
             // Redirect if it fails
             if (!user) {
-                return res.json({status: "success", url: "/accounts"});
+                return res.json({status: "failure", url: "/login"});
             }
             return res.json({status: "success", url: "/accounts"});
         })(req, res, next);

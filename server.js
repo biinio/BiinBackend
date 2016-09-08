@@ -17,8 +17,8 @@ var db = mongoose.connect(connectionString, function(err) {
     }
 });
 
-var debug = require('debug')('BinnCMS'),
-    app = require('./biin_modules/app')(db);
+var debug = require('debug')('BiinBackEnd'),
+    app = require('./app/app')();
 
 //Define local vars
 var isDevelopment = process.env.NODE_ENV === 'development';
@@ -38,12 +38,12 @@ var credentials = {key: privateKey, cert: certificate};
 
 //Http Server instance
 http.createServer(app).listen(httpPort, function () {
-    console.log("Listing server");
+    console.log(chalk.red("Listing server on port " + httpPort));
 });
 
 //Https Server instance
 if (!isDevelopment && !isQA && !isDemo) {
     https.createServer(credentials, app).listen(httpsPort, function () {
-        console.log("Listing https server");
+        console.log("Listing https server on port " + httpsPort);
     });
 }
