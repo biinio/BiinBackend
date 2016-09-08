@@ -1060,7 +1060,7 @@ exports.checkVersion = function (req, res) {
 };
 
 exports.registerForNotifications = function (req, res) {
-    var biinieIdentifier = req.param(["identifier"]);
+    var biinieIdentifier = req.params.identifier;
     var platform = req.body.model.platform;
     var tokenId = req.body.model.tokenId;
     biinieDevice.findOneAndUpdate({biinieIdentifier: biinieIdentifier}, {

@@ -65,7 +65,6 @@ exports.sendToUser = function (to, title, message, sound, badge, data) {
                 reject(error)
             } else {
                 console.log(body);
-                console.log(incomingMessage);
                 resolve();
             }
         }
