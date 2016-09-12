@@ -345,23 +345,23 @@ function setTrackingBeacon(actions, userIdentifier) {
 
         if (filteredActions.length > 0) {
             var biinsToFind = _.uniq(_.pluck(filteredActions, "to"));
-            biin.find({identifier: {$in: biinsToFind}}, {
+            organization.find({"site.identifier": {$in: biinsToFind}}, {
                 identifier: 1,
-                organizationIdentifier: 1,
-                siteIdentifier: 1
+                "sites.identifier": 1
             }, function (err, biinData) {
                 if (err)
                     reject(err);
                 var actionsToInsert = [];
                 for (var i = 0; i < filteredActions.length; i++) {
-                    var biinExtraInfo = _.findWhere(biinData, {identifier: filteredActions[i].to});
+                    var biinExtraInfo = _.find(biinData, function(organizationData){
+                        return _.findWhere(organizationData.sites,{"identifier":filteredActions[i].to})});
                     if (biinExtraInfo) {
                         var action = {};
 
                         action.userIdentifier = userIdentifier;
                         action.beaconIdentifier = filteredActions[i].to;
-                        action.organizationIdentifier = biinExtraInfo.organizationIdentifier;
-                        action.siteIdentifier = biinExtraInfo.siteIdentifier;
+                        action.organizationIdentifier = biinExtraInfo.identifier;
+                        action.siteIdentifier = filteredActions[i].to;
                         action.date = new Date(filteredActions[i].at);
                         action.action = filteredActions[i].did;
 
