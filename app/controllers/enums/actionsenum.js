@@ -25,5 +25,8 @@ module.exports = {
     EXIT_BIIN: "20", //TO->ID:beacon identifier
 
     OPEN_APP: "21", //TO->"biin_ios"
-    CLOSE_APP: "22" //TO->"biin_ios"
+    CLOSE_APP: "22", //TO->"biin_ios"
+
+    ON_ENTER_SITE:"24",
+    ON_EXIT_SITE:"25"
 };

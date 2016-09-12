@@ -338,7 +338,9 @@ function setTrackingBiined(actions, userIdentifier) {
 function setTrackingBeacon(actions, userIdentifier) {
     return new Promise(function (resolve, reject) {
         var filteredActions = _.filter(actions, function (item) {
-            return item.did == actionsEnum.ENTER_BIIN || item.did == actionsEnum.EXIT_BIIN || item.did == actionsEnum.ENTER_BIIN_REGION || item.did == actionsEnum.EXIT_BIIN_REGION
+            return item.did == actionsEnum.ENTER_BIIN || item.did == actionsEnum.EXIT_BIIN
+                || item.did == actionsEnum.ENTER_BIIN_REGION || item.did == actionsEnum.EXIT_BIIN_REGION ||
+                    item.did == actionsEnum.ON_EXIT_SITE || item.did == actionsEnum.ON_EXIT_SITE;
         });
 
         if (filteredActions.length > 0) {

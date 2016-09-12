@@ -61,7 +61,7 @@ exports.getVisitsReport = function (req, res) {
             organizationIdentifier: organizationId,
             siteIdentifier: siteId,
             date: {$gte: startDate, $lt: todayDate},
-            $or: [{action: actionsEnum.ENTER_BIIN}, {action: actionsEnum.ENTER_BIIN_REGION}]
+            $or: [{action: actionsEnum.ENTER_BIIN}, {action: actionsEnum.ENTER_BIIN_REGION},{action: actionsEnum.ON_ENTER_SITE}]
         }
     },
         // Stage 2
