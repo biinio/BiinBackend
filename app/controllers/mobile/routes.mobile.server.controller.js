@@ -340,12 +340,12 @@ function setTrackingBeacon(actions, userIdentifier) {
         var filteredActions = _.filter(actions, function (item) {
             return item.did == actionsEnum.ENTER_BIIN || item.did == actionsEnum.EXIT_BIIN
                 || item.did == actionsEnum.ENTER_BIIN_REGION || item.did == actionsEnum.EXIT_BIIN_REGION ||
-                    item.did == actionsEnum.ON_EXIT_SITE || item.did == actionsEnum.ON_EXIT_SITE;
+                    item.did == actionsEnum.ON_ENTER_SITE || item.did == actionsEnum.ON_EXIT_SITE;
         });
 
         if (filteredActions.length > 0) {
             var biinsToFind = _.uniq(_.pluck(filteredActions, "to"));
-            organization.find({"site.identifier": {$in: biinsToFind}}, {
+            organization.find({"sites.identifier": {$in: biinsToFind}}, {
                 identifier: 1,
                 "sites.identifier": 1
             }, function (err, biinData) {
