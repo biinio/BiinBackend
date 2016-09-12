@@ -84,7 +84,7 @@ exports.getCategories = function (req, res) {
                             "sites.categories.identifier": 1,
                             "sites.categories.identifier": 1,
                             "sites.isValid": 1,
-                            "identifier": 1,
+                            "identifier": 1
                         }, function (err, sitesCategories) {
                             if (err)
                                 res.json({data: {status: "5", data: {}, err: err}});
